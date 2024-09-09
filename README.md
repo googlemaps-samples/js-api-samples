@@ -2,7 +2,19 @@
 
 ## Description
 
-Samples to demonstrate features and usage of the Google Maps JavaScript API.
+Welcome to the js-api-samples repository, the home of Google Maps JavaScript API documentation samples.
+
+## Important Note: Repository Migration in Progress
+
+This repository (`js-api-samples`) is the new home for the Maps JavaScript API samples. 
+
+We are currently migrating all samples from the old repository (`js-samples`). During this transition,
+you may find some samples are still missing or under development.
+
+* [**js-samples GitHub Repository:**](https://github.com/googlemaps/js-samples)
+* [**Maps JavaScript API Documentation:**](https://developers.google.com/maps/documentation/javascript/)
+
+We appreciate your patience as we complete this migration. Please check back regularly for updates.
 
 Try the examples out at [Google Maps JavaScript API documentation](https://developers.google.com/maps/documentation/javascript/examples).
 
@@ -10,23 +22,28 @@ Try the examples out at [Google Maps JavaScript API documentation](https://devel
 
 Each example is one atomic unit, for which dependencies must be individually set up.
 
-{# TODO: Write up a description of how these are set up (single example, don't have to build the entire collection, yadda yadda yadda) #}
+### Build samples
 
-### Build
+1. Run `npm i` to install dependencies. You only need to do this once, and
+thereafter only to update dependencies.
+1. Navigate to the top level (`samples/`).
 
-1. Run `npm i` to install dependencies; this runs TSC, which compiles the JavaScript.
-1. Run `npm start` to test a single example locally.
+  - To build a single sample, run `npm run build --workspace=sample-name/`
+  - To build all samples, run `npm run build-all`.
+
+Build output is copied to the main `dist/` folder. Each individual sample folder
+also contains a `dist/` folder, but this is only used by Vite for live preview.
+
+### Run a single sample
+
+1. Navigate to the folder for the sample you want to run (`cd samples/sample-name`).
+1. Run `npm start` to start a server with that sample.
 
 ### Test
 
-{# TODO: verify these test steps #}
-1. `npm test` Test outputs.
-1. (Optional) `npm run lint` Fix lint issues with `npm run format`
-1. (Optional) `npm run test:playwright:playground:update-snapshots` Update snapshots. This uses an custom env var to only to only update screenshots that differ from the previous ones (Playwright only supports `none`, `all`, or `missing`). To update all screenshots, use `npm run test:playwright:playground:update-snapshots -- --update-snapshots`. It's possible to target a single sample by using `-g <sample-name>`.
-
-### Run
-
-1. Start a server with a single sample using `npm start`.
+{# OLD STEPS FOR REFERENCE (we are NEVER doing snapshots testing FYI) #}
+1. `npm test` Test outputs. {# !!! this assumes that we have a test command defined in package.json (right now to test, run `npx playwright test`) #}
+1. (Optional) `npm run lint` Fix lint issues with `npm run format` {# TODO: Verify this (look at the commands on js-samples). #}
 
 ## Contributing
 
@@ -40,7 +57,7 @@ This library is not a Google Maps Platform Core Service. Therefore, the Google M
 
 ## Support
 
-This library is offered via an open source [license](). It is not governed by the Google Maps Platform Support [Technical Support Services Guidelines](https://cloud.google.com/maps-platform/terms/tssg), the [SLA](https://cloud.google.com/maps-platform/terms/sla), or the [Deprecation Policy](https://cloud.google.com/maps-platform/terms) (however, any Google Maps Platform services used by the library remain subject to the Google Maps Platform Terms of Service).
+This library is offered via an open source [license](https://www.apache.org/licenses/LICENSE-2.0). It is not governed by the Google Maps Platform Support [Technical Support Services Guidelines](https://cloud.google.com/maps-platform/terms/tssg), the [SLA](https://cloud.google.com/maps-platform/terms/sla), or the [Deprecation Policy](https://cloud.google.com/maps-platform/terms) (however, any Google Maps Platform services used by the library remain subject to the Google Maps Platform Terms of Service).
 
 This library adheres to [semantic versioning](https://semver.org/) to indicate when backwards-incompatible changes are introduced. Accordingly, while the library is in version 0.x, backwards-incompatible changes may be introduced at any time. 
 
