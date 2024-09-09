@@ -1,0 +1,4 @@
+# Ignore node_modules in all subdirectories of samples/
+samples/**/node_modules/
+samples/.env
+node_modules/
