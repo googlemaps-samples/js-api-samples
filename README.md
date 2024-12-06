@@ -4,11 +4,19 @@
 
 Welcome to the js-api-samples repository, the home of Google Maps JavaScript API documentation samples.
 
-## FAQ
+## Important Note: Repository Migration in Progress
 
-**Q: What happened to js-samples?**
-**A:** The js-samples repository is no longer being updated. There are many reasons for this.
-We are in the process of migrating samples from the js-samples repo to this one.
+This repository (`js-api-samples`) is the new home for the Maps JavaScript API samples. 
+
+We are currently migrating all samples from the old repository (`js-samples`). During this transition,
+you may find some samples are still missing or under development.
+
+* [**js-samples GitHub Repository:**](https://github.com/googlemaps/js-samples)
+* [**Maps JavaScript API Documentation:**](https://developers.google.com/maps/documentation/javascript/)
+
+We appreciate your patience as we complete this migration. Please check back regularly for updates.
+
+If you have any questions or encounter any issues, please don't hesitate to [open an issue](link to issue tracker).
 
 Try the examples out at [Google Maps JavaScript API documentation](https://developers.google.com/maps/documentation/javascript/examples).
 
