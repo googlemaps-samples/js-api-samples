@@ -1,0 +1,20 @@
+{
+  "name": "js-api-samples",
+  "version": "1.0.0",
+  "description": "## Description",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.10.1"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security"
+  }
+}
