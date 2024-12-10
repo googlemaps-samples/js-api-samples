@@ -7,7 +7,7 @@
     "clean": "bash clean.sh"
   },
   "workspaces": [
-    "./*"
+    "samples/*"
   ],
   "devDependencies": {
     "@playwright/test": "^1.49.0",
