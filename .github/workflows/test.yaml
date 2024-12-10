@@ -31,14 +31,14 @@ jobs:
       (github.event_name == 'pull_request_review' &&
       github.event.review.state == 'approved')
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.SYNCED_GITHUB_TOKEN_REPO }} # required otherwise GitHub blocks infinite loops in pushes originating in an action
+      - uses: actions/checkout@v4
         if: github.actor != 'dependabot[bot]'
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         if: github.actor == 'dependabot[bot]'
-      - uses: actions/cache@v2
+      - uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
