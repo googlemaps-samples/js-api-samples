@@ -5,10 +5,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default defineConfig({
-    root: '../',
+    //root: '../',
     build: {
         emptyOutDir: true,
-        outDir: '../dist',
+        //outDir: '../dist',
+        outDir: './dist',
     },
 
     define: {
