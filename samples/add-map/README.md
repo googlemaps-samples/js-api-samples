@@ -9,22 +9,26 @@ https://github.com/googlemaps-samples/js-api-samples.
 
 ## Setup
 
-```sh
 ### Before starting run:
-npm i
+
+`$npm i`
 
 ### Run an example on a local web server
-First cd to the folder for the sample to run, then:
-npm start
+
+First `cd` to the folder for the sample to run, then:
+
+`$npm start`
 
 ### Build an individual example
-From samples/:
-npm run build --workspace=sample-name/
+
+From `samples/`:
+
+`$npm run build --workspace=sample-name/`
 
 ### Build all of the examples.
-from samples/:
-npm run build-all  # Run build for all samples and generate all production files.
-```
+
+From `samples/`:
+`$npm run build-all`
 
 ## Feedback
 

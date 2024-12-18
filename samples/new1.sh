@@ -1,15 +1,19 @@
 #!/bin/bash
 
 # A handy shell script to make migrating js-samples easier. This script will:
-#   - Create a new directory using the NAME you provide.
-#   - Generate all of the boilerplate files into the new directory.
-#   - Copy the required source files for the sample into the new directory.
+#  - Create a new directory using the NAME you provide.
+#  - Generate all of the boilerplate files into the new directory.
+#  - Copy the required source files for the sample into the new directory.
 #     These must come from the repo archive you downloaded.
+# To run this script:
+#  1. Fill in the NAME, REGION_TAG, TITLE, and API_LOADER below.
+#  2. cd to the root js-api–samples folder on your local computer.
+#  3. ./new1.sh
 
-# AUTHOR: Fill in the blanks with the values for the example to migrate.
-NAME="map-simple" # The name of the folder to create.
-REGION_TAG="maps_map_simple" # The region tag to use for the JSHTML.
-TITLE="Simple Map" # The title of the example.
+# AUTHOR: Update these values with those of the sample you are going to migrate.
+NAME="place-text-search" # The name of the folder to create.
+REGION_TAG="maps_place_text_search" # The region tag to use for the JSHTML.
+TITLE="Text Search" # The title of the example.
 API_LOADER="api_loader_dynamic" # The type of loader to use (api_loader_dynamic or api_loader_default).
 
 # Path to the source folder for the repo archive; substitute with your own path.
@@ -65,9 +69,10 @@ cat > "${OUTPUT_DIR}/${NAME}/package.json" << EOF
   "name": "@js-api-samples/${NAME}",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh ${NAME} && bash ../app.sh ${NAME} && bash ../docs.sh ${NAME}",
-    "build": "tsc && bash ../jsfiddle.sh ${NAME} && bash ../app.sh ${NAME} && bash ../docs.sh ${NAME} && vite build --base './'",
-    "start": "tsc && vite build --base './' && vite"
+    "build": "tsc && bash ../jsfiddle.sh ${NAME} && bash ../app.sh ${NAME} && bash ../docs.sh ${NAME} && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
   },
   "dependencies": {
     
@@ -97,26 +102,9 @@ cat > "${OUTPUT_DIR}/${NAME}/tsconfig.json" << EOF
 }
 EOF
 
-# Generate vite.config.js
-touch "${OUTPUT_DIR}/${NAME}/vite.config.js"
-cat > "${OUTPUT_DIR}/${NAME}/vite.config.js" << EOF
-import { defineConfig } from "vite";
-
-// https://vitejs.dev/config/
-export default defineConfig({
-  server: {
-    hmr:
-      process.env.CODESANDBOX_SSE || process.env.GITPOD_WORKSPACE_ID
-        ? 443
-        : undefined,
-  },
-});
-EOF
-
 # Generate README.md
-npmStr=$(printf '%q' "npm")
 touch "${OUTPUT_DIR}/${NAME}/README.md"
-cat > "${OUTPUT_DIR}/${NAME}/README.md" << EOF
+cat > "${OUTPUT_DIR}/${NAME}/README.md" << 'EOF'
 # Google Maps JavaScript Sample
 
 This sample is generated from @googlemaps/js-samples located at
@@ -124,22 +112,27 @@ https://github.com/googlemaps-samples/js-api-samples.
 
 ## Setup
 
-\`\`\`
 ### Before starting run:
-$npmStr i
+
+`npm i`
 
 ### Run an example on a local web server
-First cd to the folder for the sample to run, then:
-$npmStr start
+
+First `cd` to the folder for the sample to run, then:
+
+`npm start`
 
 ### Build an individual example
-From samples/:
-$npmStr run build --workspace=sample-name/
+
+From `samples/`:
+
+`npm run build --workspace=sample-name/`
 
 ### Build all of the examples.
-from samples/:
-$npmStr run build-all  # Run build for all samples and generate all production files.
-\`\`\`
+
+From `samples/`:
+
+`npm run build-all`
 
 ## Feedback
 
@@ -155,5 +148,4 @@ git add "${OUTPUT_DIR}/${NAME}/style.css"
 git add "${OUTPUT_DIR}/${NAME}/${NAME}.jshtml"
 git add "${OUTPUT_DIR}/${NAME}/package.json"
 git add "${OUTPUT_DIR}/${NAME}/tsconfig.json"
-git add "${OUTPUT_DIR}/${NAME}/vite.config.js"
 git add "${OUTPUT_DIR}/${NAME}/README.md"

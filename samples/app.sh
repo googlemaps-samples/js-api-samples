@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copy/generate files for Cloud Shell.
+# Copy/generate files for Cloud Shell and dist.
 
 # TODO: Test in the context of tsconfig.
 
@@ -27,6 +27,8 @@ cp "${OUTPUT_DIR}/${NAME}/package.json" "${DIST_DIR}/package.json"
 cp "${OUTPUT_DIR}/${NAME}/tsconfig.json" "${DIST_DIR}/tsconfig.json"
 cp "${OUTPUT_DIR}/${NAME}/README.md" "${DIST_DIR}/README.md"
 cp "${OUTPUT_DIR}/.env" "${DIST_DIR}/.env"
+
+cp -r "${OUTPUT_DIR}/${NAME}/dist" "${DIST_DIR}/dist"
 
 # Generate .eslintsrc.json
 touch "${DIST_DIR}/.eslintsrc.json"
