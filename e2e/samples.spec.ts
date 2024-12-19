@@ -1,8 +1,15 @@
+/**
+ * @license
+ * Copyright 2024 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 // e2e/samples.spec.ts
 import { test, expect } from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
 import childProcess from 'child_process'; // Import childProcess
+import { waitForGoogleMapsToLoad, failOnPageError } from "./utils";
 
 const samplesDir = path.join(__dirname, '..', 'samples');
 
@@ -43,7 +50,8 @@ sampleFolders.forEach((sampleFolder) => {
     try {
       await page.goto(url);
       await page.waitForLoadState('domcontentloaded');
-      // Add your assertions here
+      // wait for google.maps to be loaded
+      //await waitForGoogleMapsToLoad(page); // TODO: Figure out how to load Google up in here.
     } finally {
       viteProcess.kill();
     }
