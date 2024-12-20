@@ -127,7 +127,7 @@ https://github.com/googlemaps-samples/js-api-samples.
 ### Before starting run:
 
 \`\`\`
-$npmStr i
+${npmStr} i
 \`\`\`
 
 ### Run an example on a local web server
@@ -135,7 +135,7 @@ $npmStr i
 First `cd` to the folder for the sample to run, then:
 
 \`\`\`
-$npmStr start`
+${npmStr} start`
 \`\`\`
 
 ### Build an individual example
@@ -143,14 +143,14 @@ $npmStr start`
 From `samples/`:
 
 \`\`\`
-$npmStr run build --workspace=sample-name/
+${npmStr} run build --workspace=sample-name/
 \`\`\`
 
 ### Build all of the examples.
 
 From `samples/`:
 \`\`\`
-$npmStr run build-all
+${npmStr} run build-all
 \`\`\`
 
 ## Feedback
