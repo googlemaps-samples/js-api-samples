@@ -28,7 +28,7 @@ From `samples/`:
 ### Build all of the examples.
 
 From `samples/`:
-`$npmStr run build-all  # Run build for all samples and generate all production files.`
+`$npmStr run build-all`
 
 ## Feedback
 
