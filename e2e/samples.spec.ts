@@ -1,8 +1,18 @@
-/**
- * @license
- * Copyright 2024 Google LLC. All Rights Reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
+/*
+ * Copyright 2024 Google LLC 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 
 // e2e/samples.spec.ts
 import { test, expect } from '@playwright/test';
@@ -50,8 +60,15 @@ sampleFolders.forEach((sampleFolder) => {
     try {
       await page.goto(url);
       await page.waitForLoadState('domcontentloaded');
+
+      // START NEW
       // wait for google.maps to be loaded
-      //await waitForGoogleMapsToLoad(page); // TODO: Figure out how to load Google up in here.
+      await waitForGoogleMapsToLoad(page);
+
+      // Check whether the map container element is visible.
+      //await expect(page.locator('#map')).toBeVisible(); //TODO: Figure out how to get it to see the map element.
+      // END NEW
+
     } finally {
       viteProcess.kill();
     }
