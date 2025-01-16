@@ -39,7 +39,7 @@ async function initMap(): Promise<void> {
   // [START maps_add_map_instantiate_marker]
   // The marker, positioned at Uluru
   const marker = new AdvancedMarkerElement({map, position, title: 'Uluru'});
-  // [END maps_add_map_instantiate_marker]
+  // [END maps_add_map_instantiate_marker]  
 }
 initMap();
 // [END maps_add_map]
