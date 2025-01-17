@@ -30,7 +30,7 @@ sampleFolders.forEach((sampleFolder) => {
   test(`test ${sampleFolder}`, async ({ page }) => {
 
     // START Build the sample
-    const buildProcess = childProcess.spawn('npm', ['run', 'build'], {
+    const buildProcess = childProcess.spawn('npm', ['run', 'test'], {
       cwd: path.join(samplesDir, sampleFolder),
       stdio: 'inherit',
     });
