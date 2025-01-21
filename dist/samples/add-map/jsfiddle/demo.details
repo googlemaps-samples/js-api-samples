@@ -1,7 +1,0 @@
-name: add-map
-authors:
-  - Geo Developer IX Documentation Team
-tags:
-  - google maps
-load_type: h
-description: Sample code for Google Maps Platform JavaScript API
