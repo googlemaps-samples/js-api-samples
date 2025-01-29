@@ -12,12 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-version: 2
-updates:
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    ignore:
-      - dependency-name: "three"
-      - dependency-name: "@types/three"
+name: Dependabot
+on: pull_request
+
+permissions:
+  contents: write
+
+jobs:
+  dependabot:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    env:
+      PR_URL: ${{ github.event.pull_request.html_url }}
+      GITHUB_TOKEN: ${{ secrets.SYNCED_GITHUB_TOKEN_REPO }}
+    steps:
+      - name: approve
+        run: gh pr review --approve "$PR_URL"
+      - name: merge
+        run: gh pr merge --auto --squash --delete-branch "$PR_URL"
+        
