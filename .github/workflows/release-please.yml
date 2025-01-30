@@ -13,8 +13,9 @@
 # limitations under the License.
 
 ## Runs the release-please action for all new pushes to the main branch.
-##   This will create new release-PRs, create GitHub releases, update
-##   the CHANGELOG.md, and upload /dist to the Cloud bucket.
+##   This updates the CHANGELOG.md, and uploads the contents of /dist to
+##   the Cloud bucket. It does NOT release to Node, but it provides
+##   handy version incrementing which is useful for us.
 
 on:
     push:
@@ -68,27 +69,6 @@ jobs:
             git push origin
   
         # Upload /dist to the Cloud bucket.
-        - if:  ${{ steps.release.outputs.release_created }}
-          name: Upload to Cloud Bucket
-          run: |
-            bash ./upload-to-bucket.sh
-          env:
-            GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_CLOUD_CREDENTIALS }}
-
-        # NPM Publishing (unchanged)
-        - if: ${{ steps.release.outputs.release_created }}
-          name: Setup Node for Publishing
-          uses: actions/setup-node@v3
-          with:
-            node-version: 20
-            registry-url: "https://wombat-dressing-room.appspot.com/"
-  
-        - if: ${{ steps.release.outputs.release_created }}
-          name: Publish
-          run: npm publish
-          env:
-            NODE_AUTH_TOKEN: ${{ secrets.NPM_WOMBAT_TOKEN }}
-
         - if:  ${{ steps.release.outputs.release_created }}
           name: Upload to Cloud Bucket
           run: |
