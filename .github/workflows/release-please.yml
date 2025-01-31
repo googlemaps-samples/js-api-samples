@@ -18,12 +18,12 @@
 ##   handy version incrementing which is useful for us.
 
 on:
-    push:
-      branches: [main]
+  push:
+    branches: [main]
 
 permissions:
-    contents: write
-    pull-requests: write
+  contents: write
+  pull-requests: write
 
 name: Release Please
 
@@ -38,35 +38,7 @@ jobs:
             release-type: node
             token: ${{ secrets.SYNCED_GITHUB_TOKEN_REPO }}
             package-name: "@googlemaps-samples/js-api-samples"
-            bump-minor-pre-major: true
-  
-        - if: ${{ steps.release.outputs.release_created }}
-          name: Checkout
-          uses: actions/checkout@v3
-  
-        - if: ${{ steps.release.outputs.release_created }}
-          name: Setup Node
-          uses: actions/setup-node@v3
-          with:
-            node-version: 20
-            cache: 'npm' # Cache node_modules
-  
-        - if: ${{ steps.release.outputs.release_created }}
-          name: Install Dependencies
-          run: npm ci
-  
-        - if: ${{ steps.release.outputs.release_created }}
-          name: Build
-          run: npm run build
-  
-        - if: ${{ steps.release.outputs.release_created }}
-          name: Update dist
-          run: |
-            git config --global user.name 'googlemaps-bot'
-            git config --global user.email 'googlemaps-bot@google.com'
-            git add dist
-            git commit -m "chore: update dist folder [skip ci]" || true
-            git push origin
+            bump-minor-pre-major: true 
   
         # Upload /dist to the Cloud bucket.
         - if:  ${{ steps.release.outputs.release_created }}

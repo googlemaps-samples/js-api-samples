@@ -63,7 +63,7 @@ jobs:
       # - run: npm run build
       - run: npx playwright install-deps
       - run: npx playwright install
-      - run: npx playwright test -- --shard=${{matrix.shard}}/8
+      - run: npx playwright test
         env:
           CI: true
       - name: Push test report to artifacts
