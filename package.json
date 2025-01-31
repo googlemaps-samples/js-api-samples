@@ -1,5 +1,5 @@
 {
-  "name": "js-api-samples",
+  "name": "@googlemaps-samples/js-api-samples",
   "version": "1.0.0",
   "description": "Samples for the Google Maps JavaScript API.",
   "scripts": {

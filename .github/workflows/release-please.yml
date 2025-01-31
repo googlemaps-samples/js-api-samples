@@ -37,7 +37,7 @@ jobs:
           with:
             release-type: node
             token: ${{ secrets.SYNCED_GITHUB_TOKEN_REPO }}
-            package-name: "@googlemaps/js-api-samples"
+            package-name: "@googlemaps-samples/js-api-samples"
             bump-minor-pre-major: true
   
         - if: ${{ steps.release.outputs.release_created }}
