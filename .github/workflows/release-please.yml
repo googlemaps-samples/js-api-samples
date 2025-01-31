@@ -23,27 +23,19 @@ on:
   push:
     branches:
       - main
-
 jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
-      - id: release
-        name: Release Please
-        uses: actions/checkout@v3
+
+      # Debugging steps to return the contents of root and current branch name.
+      - uses: actions/checkout@v3
+      - run: ls -l
+      - run: echo "Current Branch - ${{ github.ref }}"
+
+      - uses: actions/checkout@v3
       - uses: google-github-actions/release-please-action@v3
         with:
           release-type: node
           token: ${{ secrets.SYNCED_GITHUB_TOKEN_REPO }}
           package-name: "@googlemaps-samples/js-api-samples"
-
-      - if: ${{ steps.release.outputs.release_created }}
-        name: Checkout
-        uses: actions/checkout@v3
-
-      # Debugging steps to return the contents of root and current branch name.
-      - if: ${{ steps.release.outputs.release_created }}
-        uses: actions/checkout@v3
-      - run: ls -l
-      - run: echo "Current Branch - ${{ github.ref }}"
-
