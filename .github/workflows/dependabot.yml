@@ -25,7 +25,7 @@ jobs:
     if: ${{ github.actor == 'dependabot[bot]' || github.event_name == 'pull_request' }}
     env:
       PR_URL: ${{ github.event.pull_request.html_url }}
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ github.token }}
     steps:
       - name: Debug Actor
         run: echo "Actor ${{ github.actor }}"
