@@ -22,7 +22,7 @@ permissions:
 jobs:
   dependabot:
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' || github.event_name == 'pull_request' }}
+    if: ${{ github.actor == 'dependabot[bot]' }}
     env:
       PR_URL: ${{ github.event.pull_request.html_url }}
       GH_TOKEN: ${{ github.token }}
