@@ -22,12 +22,17 @@ permissions:
 jobs:
   dependabot:
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' }}
     env:
       PR_URL: ${{ github.event.pull_request.html_url }}
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
+      - name: Check gh CLI
+        run: gh --version
+      - name: Debug Event
+        run: echo "Event ${{ github.event_name }}"
       - name: approve
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh pr review --approve "$PR_URL"
       - name: merge
         run: gh pr merge --auto --squash --delete-branch "$PR_URL"
