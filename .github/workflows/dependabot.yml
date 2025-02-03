@@ -27,6 +27,8 @@ jobs:
       PR_URL: ${{ github.event.pull_request.html_url }}
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
+      - name: Debug Event
+        run: echo "Event ${{ github.event_name }}"
       - name: approve
         run: gh pr review --approve "$PR_URL"
       - name: merge
