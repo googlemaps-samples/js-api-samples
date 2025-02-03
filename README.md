@@ -39,11 +39,9 @@ also contains a `dist/` folder, but this is only used by Vite for live preview.
 1. Navigate to the folder for the sample you want to run (`cd samples/sample-name`).
 1. Run `npm start` to start a server with that sample.
 
-### Test
+### Testing
 
-{# OLD STEPS FOR REFERENCE (we are NEVER doing snapshots testing FYI) #}
-1. `npm test` Test outputs. {# !!! this assumes that we have a test command defined in package.json (right now to test, run `npx playwright test`) #}
-1. (Optional) `npm run lint` Fix lint issues with `npm run format` {# TODO: Verify this (look at the commands on js-samples). #}
+- To test, navigate to project root and run `npx playwright test`.
 
 ## Contributing
 
