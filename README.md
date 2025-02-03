@@ -41,7 +41,7 @@ also contains a `dist/` folder, but this is only used by Vite for live preview.
 
 ### Testing
 
-- To test, navigate to project root and run `npx playwright test`.
+- To test, navigate to project root and run `npx playwright test`. {# TODO: Expand this section. #}
 
 ## Contributing
 
