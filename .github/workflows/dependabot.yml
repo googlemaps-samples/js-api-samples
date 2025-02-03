@@ -31,7 +31,7 @@ jobs:
       - name: Debug Event
         run: echo "Event ${{ github.event_name }}"
       - name: approve
-        env:
+        env:  
           GH_TOKEN: ${{ github.token }}
         run: gh pr review --approve "$PR_URL"
       - name: merge
