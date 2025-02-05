@@ -1,0 +1,19 @@
+
+{% spaceless %}{% include "maps/documentation/javascript/examples/full/_apikey.html" %}{% endspaceless %}<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Place Autocomplete map</title>
+    <style>
+{% includecode content_path="maps/documentation/javascript/examples/samples/place-autocomplete-map/style.css" region_tag="maps_place_autocomplete_map" html_escape="False" %}
+    </style>
+  </head>
+  <body>
+{% includecode content_path="maps/documentation/javascript/examples/samples/place-autocomplete-map/index.html" region_tag="maps_place_autocomplete_map_body" html_escape="False" %}
+{{ api_loader_dynamic }}
+    <script>
+{% includecode content_path="maps/documentation/javascript/examples/samples/place-autocomplete-map/index.js" region_tag="maps_place_autocomplete_map" html_escape="False" %}
+    </script>
+  </body>
+</html>
