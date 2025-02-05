@@ -12,3 +12,6 @@ samples/*/dist/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Ignore Firebase cache
+.firebase
