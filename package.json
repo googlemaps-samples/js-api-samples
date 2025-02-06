@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Samples for the Google Maps JavaScript API.",
   "scripts": {
-    "build-all": "npm run build --workspaces",
-    "clean": "bash clean.sh"
+    "build-all": "npm run clean && npm run build --workspaces",
+    "clean": "bash samples/clean.sh"
   },
   "workspaces": [
     "samples/*"
