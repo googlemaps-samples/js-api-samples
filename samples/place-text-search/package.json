@@ -2,7 +2,7 @@
   "name": "@js-api-samples/place-text-search",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh place-text-search && bash ../app.sh place-text-search && bash ../docs.sh place-text-search && vite build --base './'",
+    "build": "tsc && bash ../jsfiddle.sh place-text-search && bash ../app.sh place-text-search && bash ../docs.sh place-text-search &&  npm run build:vite --workspace=.",
     "test": "tsc && npm run build:vite --workspace=.",
     "start": "tsc && vite build --base './' && vite",
     "build:vite": "vite build --base './'",
