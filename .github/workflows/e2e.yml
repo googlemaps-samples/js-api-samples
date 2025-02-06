@@ -52,7 +52,9 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-e2e
           restore-keys: |
             ${{ runner.os }}-node-e2e
-      - run: npm ci
+      - run: |
+          npm install
+          npm ci --quiet --no-fund --no-audit # Comment out flags to see logs.
         env:
           # https://playwright.dev/docs/installation/#skip-browser-downloads
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
