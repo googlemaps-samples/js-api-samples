@@ -8,13 +8,13 @@
 # To run this script:
 #  1. Fill in the NAME, REGION_TAG, TITLE, and API_LOADER below.
 #     Get these values from the <sample-name>.json for the sample being migrated.
-#  2. cd to the root js-api–samples folder on your local computer.
+#  2. cd to the js-api–samples/samples folder on your local computer.
 #  3. ./new1.sh
 
 # AUTHOR: Update these values!
-NAME="add-map" # The name of the folder to create.
-REGION_TAG="maps_add_map" # The region tag to use for the JSHTML.
-TITLE="Add a Map" # The title of the example.
+NAME="map-simple" # The name of the folder to create (for example "map-simple").
+REGION_TAG="maps_map_simple" # The region tag to use for the JSHTML (for example "maps_map_simple").
+TITLE="Simple map" # The title of the example.
 API_LOADER="api_loader_dynamic" # The type of loader to use (api_loader_dynamic or api_loader_default).
 
 # Path to the source folder for the repo archive; substitute with your own path.
