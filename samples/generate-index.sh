@@ -27,7 +27,7 @@ find "${SCRIPT_DIR}" -maxdepth 1 -mindepth 1 -type d | while read -r subdir; do
 DIR_NAME=$(basename "${subdir}")
 
 # Construct the link.
-LINK_URL="${DIR_NAME}/app/dist/"
+LINK_URL="${DIR_NAME}/samples/app/dist/"
 LINK_TEXT="${DIR_NAME}"
 
 # Create the list item.
