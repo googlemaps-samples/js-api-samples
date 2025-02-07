@@ -2,6 +2,8 @@
 
 # Generate a new index.html for Firebase App Hosting.
 
+#https://maps-docs-team.web.app/samples/place-autocomplete-map/
+
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)" # Script directory (/samples)
 PROJECT_ROOT=$(dirname "$SCRIPT_DIR")  # Get the parent directory (js-api-samples)
 DIST_DIR="$PROJECT_ROOT/dist"
@@ -27,7 +29,7 @@ find "${SCRIPT_DIR}" -maxdepth 1 -mindepth 1 -type d | while read -r subdir; do
 DIR_NAME=$(basename "${subdir}")
 
 # Construct the link.
-LINK_URL="/samples/${DIR_NAME}/app/dist/"
+LINK_URL="/samples/${DIR_NAME}/dist"
 LINK_TEXT="${DIR_NAME}"
 
 # Create the list item.
