@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Copy/generate files for:
-#   - Cloud Shell
+# Copy/generate:
+#   - Files for Cloud Shell
 #   - Vite build output for hosting
 
 # Generate JSFiddle output as part of the build process.
@@ -25,10 +25,8 @@ cp "${OUTPUT_DIR}/${NAME}/style.css" "${APP_DIR}/style.css"
 cp "${OUTPUT_DIR}/${NAME}/package.json" "${APP_DIR}/package.json"
 cp "${OUTPUT_DIR}/${NAME}/tsconfig.json" "${APP_DIR}/tsconfig.json"
 cp "${OUTPUT_DIR}/${NAME}/README.md" "${APP_DIR}/README.md"
-cp "${OUTPUT_DIR}/.env" "${APP_DIR}/.env" # TODO: Update the .env with the new API key.
+cp "${OUTPUT_DIR}/.env" "${APP_DIR}/.env"
 cp -r "${OUTPUT_DIR}/${NAME}/dist" "${MAIN_DIR}"
-echo "OUTPUT_DIR ${OUTPUT_DIR}"
-echo "MAIN_DIR ${MAIN_DIR}"
 
 # Generate .eslintsrc.json
 touch "${APP_DIR}/.eslintsrc.json"
@@ -47,6 +45,3 @@ cat > "${APP_DIR}/.eslintsrc.json" << EOF
   }
 }
 EOF
-
-
-## TODO: Update this to copy
