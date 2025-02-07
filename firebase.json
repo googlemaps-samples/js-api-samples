@@ -9,8 +9,8 @@
   },
   "rewrites": [
     {
-      "source": "/samples/**/index.js",
-      "destination": "/samples/**/app/dist/index-*.js"
+      "source": "/samples/**/*",
+      "destination": "/samples/**/dist/assets/*"
     }
   ]
 }
