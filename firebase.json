@@ -1,16 +1,11 @@
 {
   "hosting": {
-    "public": "dist",
+    "public": ".",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ]
-  },
-  "rewrites": [
-    {
-      "source": "/samples/**/index.js",
-      "destination": "/samples/**/app/dist/index-*.js"
-    }
-  ]
+    ],
+    "nodeVersion": "22"
+  }
 }
