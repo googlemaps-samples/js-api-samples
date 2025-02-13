@@ -16,3 +16,4 @@ dist/samples/*/dist/assets/*.js
 
 # Ignore Firebase cache
 .firebase
+firebase-debug.log
