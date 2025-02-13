@@ -12,11 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-## Runs the release-please action for all new pushes to the main branch.
-##   This updates the CHANGELOG.md, and uploads the contents of /dist to
-##   the Cloud bucket. It does NOT release to Node, but it provides
-##   handy version incrementing which is useful for us.
-
 name: Release
 
 on:
@@ -44,7 +39,7 @@ jobs:
         with:
           node-version: '22.x'
       - run: npm i
-      - run: npm run build-all
+      - run: npm run build-prod
 
       - uses: google-github-actions/auth@v1
         with:

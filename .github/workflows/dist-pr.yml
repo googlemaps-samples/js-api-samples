@@ -1,0 +1,25 @@
+name: dist-pr
+
+on:
+  push:
+    branches:
+      - dist  # Trigger the workflow on pushes to the dist branch
+
+jobs:
+  approve-and-merge:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'github-actions[bot]' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create Pull Request
+        id: cpr
+        run: |
+          echo "pull_request_url=$(gh pr create --title "chore: automated output update (dist)" --body "This PR contains updated build output from the dist branch." --base main --head dist)" >> $GITHUB_OUTPUT
+
+      - name: Approve PR
+        run: gh pr review --approve ${{ steps.cpr.outputs.pull_request_url }}
+
+      - name: Merge PR
+        run: gh pr merge --auto --squash --delete-branch ${{ steps.cpr.outputs.pull_request_url }}
