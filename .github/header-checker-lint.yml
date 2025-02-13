@@ -1,0 +1,17 @@
+ignoreFiles: ["dist/**"]
+sourceFileExtensions:
+  - .build
+  - .css
+  - .go
+  - .h
+  - .html
+  - .java
+  - .js
+  - .kt
+  - .m
+  - .py
+  - .scss
+  - .sh
+  - .swift
+  - .ts
+  - .yml
