@@ -18,6 +18,7 @@ DIST_DIR="../../dist/samples/${NAME}/docs"
 mkdir -p ${DIST_DIR}
 
 # Copy files
+cp "${OUTPUT_DIR}/${NAME}/index.ts" "${DIST_DIR}/index.ts"
 cp "${OUTPUT_DIR}/${NAME}/index.js" "${DIST_DIR}/index.js"
 cp "${OUTPUT_DIR}/${NAME}/index.html" "${DIST_DIR}/index.html"
 cp "${OUTPUT_DIR}/${NAME}/style.css" "${DIST_DIR}/style.css"
