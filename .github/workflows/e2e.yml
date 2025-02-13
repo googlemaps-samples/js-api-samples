@@ -57,7 +57,7 @@ jobs:
         env:
           # https://playwright.dev/docs/installation/#skip-browser-downloads
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
-      - run: npm run build
+      - run: npm run build-all
       - run: npx playwright install-deps
       - run: npx playwright install
       - run: npx playwright test
