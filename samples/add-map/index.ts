@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-
+// TODO: remove this comment
 // [START maps_add_map]
 // Initialize and add the map
 let map;
