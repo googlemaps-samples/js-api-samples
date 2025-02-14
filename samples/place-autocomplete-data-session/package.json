@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/place-autocomplete-data-session",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh place-autocomplete-data-session && bash ../app.sh place-autocomplete-data-session && bash ../docs.sh place-autocomplete-data-session && npm run build:vite --workspace=.",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
