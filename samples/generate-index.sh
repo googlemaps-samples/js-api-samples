@@ -2,11 +2,15 @@
 
 # Generate a new index.html for Firebase App Hosting.
 
-#https://maps-docs-team.web.app/samples/place-autocomplete-map/
+echo ">>>Running generate-index.sh"
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)" # Script directory (/samples)
+# /Users/[USERNAME]/git/js-api-samples/samples
+
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )" # Script directory (/samples)
 PROJECT_ROOT=$(dirname "$SCRIPT_DIR")  # Get the parent directory (js-api-samples)
-DIST_DIR="$PROJECT_ROOT/dist"
+DIST_DIR="${PROJECT_ROOT}/dist"
+
+echo "PROJECT_ROOT: ${PROJECT_ROOT}"
 
 # Create the output file.
 OUTPUT_FILE="index.html"
@@ -42,7 +46,7 @@ echo "</html>" >> "${OUTPUT_FILE}"
 
 echo "HTML file generated: ${OUTPUT_FILE}"
 
-echo "from ${SCRIPT_DIR}/${OUTPUT_FILE}"
+echo "from ${PROJECT_ROOT}/${OUTPUT_FILE}"
 echo "to ${DIST_DIR}/${OUTPUT_FILE}"
 
-cp "${PROJECT_ROOT}/${OUTPUT_FILE}" "${DIST_DIR}/${OUTPUT_FILE}"
+echo cp "${PROJECT_ROOT}/${OUTPUT_FILE}" "${DIST_DIR}/${OUTPUT_FILE}"
