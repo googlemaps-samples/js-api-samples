@@ -4,12 +4,13 @@
 
 echo ">>>Running generate-index.sh"
 
-# Define path based on platform.
+# Set up paths.
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PROJECT_ROOT=$(dirname "$SCRIPT_DIR")  # Get the parent directory (js-api-samples)
+PROJECT_ROOT=$(dirname "$SCRIPT_DIR") 
 DIST_DIR="$PROJECT_ROOT/dist"
 
-echo "Project root ${PROJECT_ROOT}"
+echo "SCRIPT_DIR: ${SCRIPT_DIR}"
+echo "PROJECT_ROOT: ${PROJECT_ROOT}"
 
 # Create the output file.
 OUTPUT_FILE="index.html"
