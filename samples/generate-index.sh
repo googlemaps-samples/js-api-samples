@@ -5,16 +5,7 @@
 echo ">>>Running generate-index.sh"
 
 # Define path based on platform.
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  echo "Hello, Mac!"
-  SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-  echo "Project path: ${SCRIPT_DIR}"
-elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  echo "Hello, gLinux!"
-  SCRIPT_DIR="$(dirname "$0")"
-  echo "Project path: ${SCRIPT_DIR}"
-fi
-
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_ROOT=$(dirname "$SCRIPT_DIR")  # Get the parent directory (js-api-samples)
 DIST_DIR="$PROJECT_ROOT/dist"
 
