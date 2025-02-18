@@ -70,7 +70,7 @@ cat > "${OUTPUT_DIR}/${NAME}/package.json" << EOF
   "name": "@js-api-samples/${NAME}",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh ${NAME} && bash ../app.sh ${NAME} && bash ../docs.sh ${NAME} && npm run build:vite --workspace=.",
+    "build": "tsc && bash ../jsfiddle.sh ${NAME} && bash ../app.sh ${NAME} && bash ../docs.sh ${NAME} && npm run build:vite --workspace=. && bash ../dist.sh ${NAME}",
     "test": "tsc && npm run build:vite --workspace=.",
     "start": "tsc && vite build --base './' && vite",
     "build:vite": "vite build --base './'",
