@@ -2,11 +2,23 @@
 
 # Generate a new index.html for Firebase App Hosting.
 
-#https://maps-docs-team.web.app/samples/place-autocomplete-map/
+echo ">>>Running generate-index.sh"
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)" # Script directory (/samples)
+# Define path based on platform.
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  echo "Hello, Mac!"
+  SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+  echo "Project path: ${SCRIPT_DIR}"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  echo "Hello, gLinux!"
+  SCRIPT_DIR="$(dirname "$0")"
+  echo "Project path: ${SCRIPT_DIR}"
+fi
+
 PROJECT_ROOT=$(dirname "$SCRIPT_DIR")  # Get the parent directory (js-api-samples)
 DIST_DIR="$PROJECT_ROOT/dist"
+
+echo "Project root ${PROJECT_ROOT}"
 
 # Create the output file.
 OUTPUT_FILE="index.html"

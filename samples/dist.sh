@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Copy/generate files for doc snippets.
+# Copy/generate:
+#   - Vite build output for hosting
 
-echo ">>>Running docs.sh"
+echo ">>>Running dist.sh"
 
-# Copy static documentation files as part of the build process.
 NAME=$1 # The name of the folder, taken from package.json "build" line.
 
 # Relative path to the top-level of the examples folder.
@@ -21,13 +21,7 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 fi
 
 PROJECT_ROOT=$(dirname "$SCRIPT_DIR")  # Get the parent directory (js-api-samples)
-DOCS_DIR="${PROJECT_ROOT}/dist/samples/${NAME}/docs"
+SAMPLE_DIR="${PROJECT_ROOT}/dist/samples/${NAME}"
 
-# Create a new folder.
-mkdir -p ${DOCS_DIR}
-
-# Copy files
-cp "${SCRIPT_DIR}/${NAME}/index.ts" "${DOCS_DIR}/index.ts"
-cp "${SCRIPT_DIR}/${NAME}/index.js" "${DOCS_DIR}/index.js"
-cp "${SCRIPT_DIR}/${NAME}/index.html" "${DOCS_DIR}/index.html"
-cp "${SCRIPT_DIR}/${NAME}/style.css" "${DOCS_DIR}/style.css"
+# Copy Vite output files to /dist/samples/${NAME}/dist
+cp -r "${SCRIPT_DIR}/${NAME}/dist" "${SAMPLE_DIR}"
