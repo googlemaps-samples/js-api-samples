@@ -4,13 +4,15 @@
 
 echo ">>>Running generate-index.sh"
 
-# Set up paths.
-SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
-PROJECT_ROOT=$(dirname "$SCRIPT_DIR") 
-DIST_DIR="$PROJECT_ROOT/dist"
+# /Users/[USERNAME]/git/js-api-samples/samples
+
+PROJECT_ROOT="$(pwd)"
+SCRIPT_DIR="${PROJECT_ROOT}/samples"
+DIST_DIR="${PROJECT_ROOT}/dist"
 
 echo "SCRIPT_DIR: ${SCRIPT_DIR}"
 echo "PROJECT_ROOT: ${PROJECT_ROOT}"
+echo "pwd: $(pwd)"
 
 # Create the output file.
 OUTPUT_FILE="index.html"
