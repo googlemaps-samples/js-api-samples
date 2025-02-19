@@ -39,6 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
+          path: /home/runner/work/js-api-samples
           lfs: true
       - uses: actions/cache@v2
         with:
