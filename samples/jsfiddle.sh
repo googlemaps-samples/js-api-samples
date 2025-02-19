@@ -12,20 +12,16 @@ echo ">>>Running jsfiddle.sh"
 # Generate JSFiddle output as part of the build process.
 NAME=$1 # The name of the folder, taken from package.json "build" line.
 
-# /Users/[USERNAME]/git/js-api-samples/samples or similar
-# Define path based on platform.
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  echo "Hello, Mac!"
-  SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-  echo "Project path: ${SCRIPT_DIR}"
-elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  echo "Hello, gLinux!"
-  SCRIPT_DIR="$(dirname "$0")"
-  echo "Project path: ${SCRIPT_DIR}"
-fi
+# /Users/[USERNAME]/git/js-api-samples/samples
 
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )" # Script directory (/samples)
 PROJECT_ROOT=$(dirname "$SCRIPT_DIR")  # Get the parent directory (js-api-samples)
-DIST_DIR="$PROJECT_ROOT/dist"
+DIST_DIR="${PROJECT_ROOT}/dist"
+
+echo "PROJECT_ROOT: ${PROJECT_ROOT}"
+echo "SCRIPT_DIR: ${SCRIPT_DIR}"
+echo "DIST_DIR: ${DIST_DIR}"
+echo "NAME: ${NAME}"
 
 # Create a new folder.
 mkdir -p "${DIST_DIR}/samples/${NAME}/jsfiddle"

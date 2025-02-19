@@ -6,13 +6,11 @@ echo ">>>Running generate-index.sh"
 
 # /Users/[USERNAME]/git/js-api-samples/samples
 
-PROJECT_ROOT="$(pwd)"
-SCRIPT_DIR="${PROJECT_ROOT}/samples"
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )" # Script directory (/samples)
+PROJECT_ROOT=$(dirname "$SCRIPT_DIR")  # Get the parent directory (js-api-samples)
 DIST_DIR="${PROJECT_ROOT}/dist"
 
-echo "SCRIPT_DIR: ${SCRIPT_DIR}"
 echo "PROJECT_ROOT: ${PROJECT_ROOT}"
-echo "pwd: $(pwd)"
 
 # Create the output file.
 OUTPUT_FILE="index.html"
@@ -48,7 +46,7 @@ echo "</html>" >> "${OUTPUT_FILE}"
 
 echo "HTML file generated: ${OUTPUT_FILE}"
 
-echo "from ${SCRIPT_DIR}/${OUTPUT_FILE}"
+echo "from ${PROJECT_ROOT}/${OUTPUT_FILE}"
 echo "to ${DIST_DIR}/${OUTPUT_FILE}"
 
-cp "${PROJECT_ROOT}/${OUTPUT_FILE}" "${DIST_DIR}/${OUTPUT_FILE}"
+echo cp "${PROJECT_ROOT}/${OUTPUT_FILE}" "${DIST_DIR}/${OUTPUT_FILE}"
