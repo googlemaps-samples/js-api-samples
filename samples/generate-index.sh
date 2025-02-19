@@ -5,7 +5,7 @@
 echo ">>>Running generate-index.sh"
 
 # Set up paths.
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
 PROJECT_ROOT=$(dirname "$SCRIPT_DIR") 
 DIST_DIR="$PROJECT_ROOT/dist"
 
