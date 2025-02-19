@@ -14,8 +14,6 @@
  * limitations under the License.
 */
 
-// TODO: Remove this comment.
-
 // [START maps_place_autocomplete_map]
 let map: google.maps.Map;
 let marker: google.maps.marker.AdvancedMarkerElement;
