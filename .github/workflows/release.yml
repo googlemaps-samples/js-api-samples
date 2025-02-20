@@ -28,9 +28,14 @@ jobs:
       env:
         GOOGLE_MAPS_JS_SAMPLES_KEY: "${{ secrets.GOOGLE_MAPS_JS_SAMPLES_KEY }}"
       steps:
-        - uses: actions/checkout@v3
+        - name: Checkout code
+          uses: actions/checkout@v3
           with:
             token: ${{ secrets.GITHUB_TOKEN }}
+        - name: Set Git Identity
+          run: |
+            git config user.name 'github-actions[bot]'
+            git config user.email 'github-actions[bot]@users.noreply.github.com'
         - uses: actions/cache@v3
           with:
             path: ~/.npm
