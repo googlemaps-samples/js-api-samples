@@ -32,10 +32,6 @@ jobs:
           uses: actions/checkout@v3
           with:
             token: ${{ secrets.GITHUB_TOKEN }}
-        - name: Clear Git config cache
-          run: |
-            git config --global --unset-all user.name
-            git config --global --unset-all user.email
         - name: Set Git Identity
           run: |
             git config --global user.name 'googlemaps-bot'
