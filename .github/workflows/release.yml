@@ -34,6 +34,8 @@ jobs:
             token: ${{ secrets.GITHUB_TOKEN }}
         - name: Set Git Identity
           run: |
+            git config --global --unset-all user.name
+            git config --global --unset-all user.email
             git config --global user.name 'googlemaps-bot'
             git config --global user.email 'googlemaps-bot@users.noreply.github.com'
         - uses: actions/cache@v3
