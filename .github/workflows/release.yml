@@ -28,6 +28,11 @@ jobs:
       env:
         GOOGLE_MAPS_JS_SAMPLES_KEY: "${{ secrets.GOOGLE_MAPS_JS_SAMPLES_KEY }}"
       steps:
+        - name: Clear GitHub Actions Cache (Force a Miss)
+          uses: actions/cache@v3
+          with:
+            path: ~/.gitconfig
+            key: gitconfig-${{ github.run_id }}
         - name: Checkout code
           uses: actions/checkout@v3
           with:
