@@ -24,6 +24,8 @@ if ! git show-ref --verify --quiet refs/heads/dist; then
     git branch dist
 fi
 
+git pull origin dist || true
+
 # Checkout the dist branch
 git checkout dist || git checkout -b dist
 
