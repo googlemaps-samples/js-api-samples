@@ -14,12 +14,21 @@
 
 #!/bin/bash
 
+echo ">>>Running post-build.sh"
+
+#!/bin/bash
+
 # Checkout the dist branch
 git checkout dist || git checkout -b dist
 
 # Add and commit the changes to the dist folder
 git add dist
-git commit -m "Update dist folder"
+git add index.html
 
-# Push the changes to the dist branch
-git push origin dist
+# Check if there are any changes to commit
+if [[ -n $(git status --porcelain) ]]; then
+    git commit -m "Update dist folder"
+    git push origin dist
+else
+    echo "No changes to commit"
+fi
