@@ -20,14 +20,13 @@ echo ">>>Running post-build.sh"
 
 # Create dist branch if it doesn't exist already
 if ! git show-ref --verify --quiet refs/heads/dist; then
-    # Create the dist branch if it doesn't exist
-    git branch dist
+    # Delete the dist branch locally
+    git branch -D dist
+    # Delete the dist branch remotely
+    git push origin --delete dist
 fi
 
-git pull origin dist || true
-
-# Checkout the dist branch
-git checkout dist || git checkout -b dist
+git checkout -b dist
 
 # Add and commit the changes to the dist folder
 git add dist
