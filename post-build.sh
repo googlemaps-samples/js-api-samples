@@ -19,7 +19,7 @@ echo ">>>Running post-build.sh"
 #!/bin/bash
 
 # Create dist branch if it doesn't exist already
-if! git show-ref --verify --quiet refs/heads/dist; then
+if ! git show-ref --verify --quiet refs/heads/dist; then
     # Create the dist branch if it doesn't exist
     git branch dist
 fi
