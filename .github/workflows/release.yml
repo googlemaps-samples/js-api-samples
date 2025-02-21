@@ -92,36 +92,9 @@ jobs:
         - name: Add and commit changes to the dist folder
           run: |
             git add dist
-            git add index.html
             if [[ -n $(git status --porcelain) ]]; then
                 git commit -m "Update dist folder"
                 git push origin dist
             else
                 echo "No changes to commit"
             fi
-
-        - name: debugging steps
-          run: |
-            echo "github.ref is ${{ github.ref }}"
-            echo "github.actor is ${{ github.actor }}"
-
-    approve-and-merge:
-      runs-on: ubuntu-latest
-      if: ${{ github.event_name == 'workflow_dispatch' && github.actor == 'googlemaps-bot[bot]' }}
-      env:
-        PR_URL: ${{ github.event.pull_request.html_url }}
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
-
-        - name: Create Pull Request
-          id: cpr
-          run: |
-            echo "pull_request_url=$(gh pr create --title 'chore: automated output update (dist)' --body 'This PR contains updated build output from the dist branch.' --base main --head dist)" >> $GITHUB_OUTPUT
-
-        - name: Approve PR
-          run: gh pr review --approve ${{ steps.cpr.outputs.pull_request_url }}
-
-        - name: Merge PR
-          run: gh pr merge --auto --squash --delete-branch ${{ steps.cpr.outputs.pull_request_url }}
