@@ -18,9 +18,6 @@ on:
   pull_request:
     types: [closed]
     branches: [main]
-  push:
-    branches:
-      - dist
 
 jobs:
     release:
@@ -78,19 +75,8 @@ jobs:
         - name: Deploy to Firebase Hosting
           run: firebase deploy --only hosting
 
-        - name: Check for existing 'dist' branch
-          run: |
-            if git ls-remote --exit-code --heads origin dist;
-            then
-              git push origin --delete dist
-            fi
-
-        - name: Create and push new 'dist' branch
-          run: |
-            git checkout -b dist
-            git add dist
-            git commit -m "Automated build output"
-            git push origin dist
+        - name: Post Build
+          run: ./samples/post-build.sh
 
     approve-and-merge:
       runs-on: ubuntu-latest
