@@ -98,6 +98,7 @@ jobs:
                 git push origin dist
             else
                 echo "No changes to commit"
+            fi
 
     approve-and-merge:
       runs-on: ubuntu-latest
