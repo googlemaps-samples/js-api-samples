@@ -107,16 +107,13 @@ jobs:
 
     approve-and-merge:
       runs-on: ubuntu-latest
-      if: ${{ github.actor == 'googlemaps-bot[bot]' }}
+      if: ${{ github.event_name == 'workflow_dispatch' && github.actor == 'googlemaps-bot[bot]' }}
       env:
         PR_URL: ${{ github.event.pull_request.html_url }}
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       steps:
         - name: Checkout code
           uses: actions/checkout@v3
-
-        - name: Debug github.ref
-          run: echo "github.ref is ${{ github.ref }}"
 
         - name: Create Pull Request
           id: cpr
