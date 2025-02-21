@@ -63,7 +63,7 @@ jobs:
             node-version: '22.x'
 
         - run: npm i
-        - run: npm run build-prod
+        - run: npm run build-all
 
         - uses: google-github-actions/auth@v1
           with:
