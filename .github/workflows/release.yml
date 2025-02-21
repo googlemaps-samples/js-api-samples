@@ -76,7 +76,7 @@ jobs:
           run: firebase deploy --only hosting
 
         - name: Post Build
-          run: ../../samples/post-build.sh
+          run: ls ../../samples
 
     approve-and-merge:
       runs-on: ubuntu-latest
