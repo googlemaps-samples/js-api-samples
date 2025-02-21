@@ -18,6 +18,10 @@ on:
   pull_request:
     types: [closed]
     branches: [main]
+  push:
+    branches:
+      - dist
+
 jobs:
     release:
       runs-on: ubuntu-latest
@@ -33,18 +37,22 @@ jobs:
           with:
             path: ~/.gitconfig
             key: gitconfig-${{ github.run_id }}
+
         - name: Checkout code
           uses: actions/checkout@v3
           with:
             token: ${{ secrets.GITHUB_TOKEN }}
+  
         - name: Clear Git config cache
           run: |
             git config --global --unset-all user.name || true
             git config --global --unset-all user.email || true
+
         - name: Set Git Identity
           run: |
             git config --global user.name 'googlemaps-bot'
             git config --global user.email 'googlemaps-bot@users.noreply.github.com'
+
         - uses: actions/cache@v3
           with:
             path: ~/.npm
@@ -52,9 +60,11 @@ jobs:
             restore-keys: |
               ${{ runner.os }}-node
               mode: 'max'
+
         - uses: actions/setup-node@v3
           with:
             node-version: '22.x'
+
         - run: npm i
         - run: npm run build-prod
 
@@ -67,3 +77,35 @@ jobs:
 
         - name: Deploy to Firebase Hosting
           run: firebase deploy --only hosting
+
+        - name: Checkout dist branch
+          run: |
+            git fetch origin
+            git branch -D dist || true
+            git checkout -b dist
+
+        - name: Add and commit build output
+          run: |
+            git add .
+            git commit -m "Automated build output"
+
+        - name: Push to dist branch
+          run: git push origin dist --force
+
+    approve-and-merge:
+      runs-on: ubuntu-latest
+      if: ${{ github.ref == 'refs/heads/dist' }}
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+
+        - name: Create Pull Request
+          id: cpr
+          run: |
+            echo "pull_request_url=$(gh pr create --title 'chore: automated output update (dist)' --body 'This PR contains updated build output from the dist branch.' --base main --head dist)" >> $GITHUB_OUTPUT
+
+        - name: Approve PR
+          run: gh pr review --approve ${{ steps.cpr.outputs.pull_request_url }}
+
+        - name: Merge PR
+          run: gh pr merge --auto --squash --delete-branch ${{ steps.cpr.outputs.pull_request_url }}
