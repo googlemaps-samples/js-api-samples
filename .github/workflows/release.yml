@@ -78,19 +78,19 @@ jobs:
         - name: Deploy to Firebase Hosting
           run: firebase deploy --only hosting
 
-        - name: Checkout dist branch
+        - name: Check for existing 'dist' branch
           run: |
-            git fetch origin
-            git branch -D dist || true
+            if git ls-remote --exit-code --heads origin dist;
+            then
+              git push origin --delete dist
+            fi
+
+        - name: Create and push new 'dist' branch
+          run: |
             git checkout -b dist
-
-        - name: Add and commit build output
-          run: |
-            git add .
+            git add dist
             git commit -m "Automated build output"
-
-        - name: Push to dist branch
-          run: git push origin dist --force
+            git push origin dist
 
     approve-and-merge:
       runs-on: ubuntu-latest
