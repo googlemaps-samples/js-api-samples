@@ -22,7 +22,7 @@ on:
 jobs:
   approve-and-merge:
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'googlemaps-bot[bot]' }}
+    if: github.ref == 'refs/heads/dist'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
