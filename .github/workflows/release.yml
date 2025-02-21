@@ -103,6 +103,9 @@ jobs:
     approve-and-merge:
       runs-on: ubuntu-latest
       if: ${{ github.ref == 'refs/heads/dist' }}
+      env:
+        PR_URL: ${{ github.event.pull_request.html_url }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       steps:
         - name: Checkout code
           uses: actions/checkout@v3
