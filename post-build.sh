@@ -18,15 +18,17 @@ echo ">>>Running post-build.sh"
 
 #!/bin/bash
 
-# Create dist branch if it doesn't exist already
-if ! git show-ref --verify --quiet refs/heads/dist; then
-    # Delete the dist branch locally
-    git branch -D dist
+# Check if the dist branch exists remotely
+if git ls-remote --exit-code --heads origin dist; then
+    # Delete the dist branch locally if it exists
+    if git show-ref --verify --quiet refs/heads/dist; then
+        git branch -D dist
+    fi
     # Delete the dist branch remotely
     git push origin --delete dist
 fi
 
-git checkout -b dist
+git checkout -b dist main
 
 # Add and commit the changes to the dist folder
 git add dist
