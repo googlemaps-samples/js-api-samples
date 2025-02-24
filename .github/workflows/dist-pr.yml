@@ -31,7 +31,7 @@ jobs:
         - name: Create Pull Request
           uses: peter-evans/create-pull-request@v5
           with:
-            token: ${{ secrets.GH_TOKEN_RELEASE }}
+            token: ${{ secrets.GH_MERGE_TOKEN }}
             commit-message: 'chore: automated output update (dist)'
             title: 'chore: automated output update (dist)'
             body: 'This PR contains updated build output from the dist branch.'
