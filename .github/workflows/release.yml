@@ -87,13 +87,33 @@ jobs:
 
         - name: Checkout and create dist branch from main
           run: git checkout -b dist main
-        
-        - name: Add and commit changes to the dist folder
+
+        - name: Commit and Push Changes (to dist)
           run: |
             git add dist
-            if [[ -n $(git status --porcelain) ]]; then
-                git commit -m "Update dist folder"
-                git push origin dist
+            if git diff --staged --quiet; then
+              echo "No changes to commit"
             else
-                echo "No changes to commit"
+              git commit -m "Update dist folder [skip ci]"
+
+              # --- ADD THESE DEBUGGING STEPS ---
+              echo "--- Before Push ---"
+              echo "Current Branch:"
+              git branch
+              echo "Remote Branches:"
+              git branch -r
+              echo "Local Branches:"
+              git branch -l
+              echo "Last Commit on dist (local):"
+              git log -n 1 dist
+              echo "Pushing to origin dist..."
+              # --- END DEBUGGING STEPS ---
+
+              git push origin dist
+
+              # --- ADD THESE DEBUGGING STEPS ---
+              echo "--- After Push ---"
+              echo "Remote Branches (after push):"
+              git branch -r
+              # --- END DEBUGGING STEPS ---
             fi
