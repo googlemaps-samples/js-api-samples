@@ -40,6 +40,11 @@ jobs:
           git fetch origin main:main  # Fetch main
           git merge --no-ff --allow-unrelated-histories -m "Merge main into dist" main # Merge main into dist
 
+      - name: Set Git Identity
+        run: |
+          git config --global user.name 'googlemaps-bot'
+          git config --global user.email 'googlemaps-bot@users.noreply.github.com'
+
       - uses: actions/cache@v3
         with:
           path: ~/.npm
