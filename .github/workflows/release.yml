@@ -79,5 +79,5 @@ jobs:
             git fetch origin main  # Ensure we have the latest main
             git checkout -B dist origin/main  # Force checkout of dist, overwriting with main
             git add dist
-            git commit -m "Update dist folder [skip ci]"
-            git push --force origin dist # Force push to dist
+            git commit -m "Update dist folder"
+            git push --force origin dist
