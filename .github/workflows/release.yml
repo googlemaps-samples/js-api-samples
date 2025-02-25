@@ -35,6 +35,16 @@ jobs:
           ref: dist  # Checkout the dist branch
           token: ${{ secrets.GH_MERGE_TOKEN }}  # Use the PAT
 
+      - name: Clear Git config cache (Global)  # Keep this!
+        run: |
+          git config --global --unset-all user.name || true
+          git config --global --unset-all user.email || true
+
+      - name: Set Git Identity  # Keep this!
+        run: |
+          git config --global user.name 'googlemaps-bot'
+          git config --global user.email 'googlemaps-bot@users.noreply.github.com'
+
       - name: Merge main into dist
         run: |
           git fetch origin main:main  # Fetch main
