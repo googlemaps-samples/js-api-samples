@@ -38,6 +38,7 @@ jobs:
           uses: actions/checkout@v3
           with:
             token: ${{ secrets.GH_MERGE_TOKEN }}
+            fetch-depth: 0
   
         - name: Clear Git config cache
           run: |
@@ -76,8 +77,8 @@ jobs:
 
         - name: Force Checkout dist and Overwrite
           run: |
-            git fetch origin main  # Ensure we have the latest main
-            git checkout -B dist origin/main  # Force checkout of dist, overwriting with main
+            git fetch origin main
+            git checkout -B dist origin/main
             git add dist
             git commit -m "Update dist folder"
             git push --force origin dist
