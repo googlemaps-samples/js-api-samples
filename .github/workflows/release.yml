@@ -37,7 +37,7 @@ jobs:
         - name: Checkout code
           uses: actions/checkout@v3
           with:
-            token: ${{ secrets.GITHUB_TOKEN }}
+            token: ${{ secrets.GH_MERGE_TOKEN }}
   
         - name: Clear Git config cache
           run: |
