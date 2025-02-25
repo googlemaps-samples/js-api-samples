@@ -15,85 +15,63 @@
 name: Release
 
 on:
-  push:  # Trigger on pushes to main
+  push:
     branches:
       - main
 
 jobs:
-    release:
-      runs-on: ubuntu-latest
-      permissions:
-        contents: write
-        id-token: write
-      env:
-        GOOGLE_MAPS_JS_SAMPLES_KEY: "${{ secrets.GOOGLE_MAPS_JS_SAMPLES_KEY }}"
-      steps:
-        - name: Clear GitHub Actions Cache (Force a Miss)
-          uses: actions/cache@v3
-          with:
-            path: ~/.gitconfig
-            key: gitconfig-${{ github.run_id }}
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Needed for pushing to dist
+      id-token: write  # Needed for Firebase deployment
+    env:
+      GOOGLE_MAPS_JS_SAMPLES_KEY: "${{ secrets.GOOGLE_MAPS_JS_SAMPLES_KEY }}"
+    steps:
+      - name: Checkout code (main branch)
+        uses: actions/checkout@v3
+        with:
+          ref: main  # Checkout *main*, not dist
+          token: ${{ secrets.GH_MERGE_TOKEN }}
 
-        - name: Checkout code
-          uses: actions/checkout@v3
-          with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-  
-        - name: Clear Git config cache
-          run: |
-            git config --global --unset-all user.name || true
-            git config --global --unset-all user.email || true
+      - name: Clear Git config cache (Global)
+        run: |
+          git config --global --unset-all user.name || true
+          git config --global --unset-all user.email || true
 
-        - name: Set Git Identity
-          run: |
-            git config --global user.name 'googlemaps-bot'
-            git config --global user.email 'googlemaps-bot@users.noreply.github.com'
+      - name: Set Git Identity
+        run: |
+          git config --global user.name 'googlemaps-bot'
+          git config --global user.email 'googlemaps-bot@users.noreply.github.com'
 
-        - uses: actions/cache@v3
-          with:
-            path: ~/.npm
-            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-            restore-keys: |
-              ${{ runner.os }}-node
-              mode: 'max'
+      - uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node
 
-        - uses: actions/setup-node@v3
-          with:
-            node-version: '22.x'
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '22.x'
 
-        - run: npm i
-        - run: npm run build-all
+      - run: npm i
+      - run: npm run build-all
 
-        - uses: google-github-actions/auth@v1
-          with:
-            credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+      - uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
 
-        - name: Install Firebase CLI
-          run: npm install -g firebase-tools
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
 
-        - name: Deploy to Firebase Hosting
-          run: firebase deploy --only hosting
+      - name: Deploy to Firebase Hosting
+        run: firebase deploy --only hosting
 
-        - name: Check if the dist branch exists remotely
-          run: |
-            if git ls-remote --exit-code --heads origin dist; then
-                # Delete the dist branch locally if it exists
-                if git show-ref --verify --quiet refs/heads/dist; then
-                    git branch -D dist
-                fi
-                # Delete the dist branch remotely
-                git push origin --delete dist
-            fi
-
-        - name: Checkout and create dist branch from main
-          run: git checkout -b dist main
-        
-        - name: Add and commit changes to the dist folder
-          run: |
-            git add dist
-            if [[ -n $(git status --porcelain) ]]; then
-                git commit -m "Update dist folder"
-                git push origin dist
-            else
-                echo "No changes to commit"
-            fi
+      - name: Force Checkout dist and Overwrite
+        run: |
+          git fetch origin main  # Ensure we have the latest main
+          git checkout -B dist origin/main  # Force checkout of dist, overwriting with main
+          git add dist
+          git commit -m "Update dist folder [skip ci]"
+          git push --force origin dist # Force push to dist
