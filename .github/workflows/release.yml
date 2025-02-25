@@ -74,46 +74,10 @@ jobs:
         - name: Deploy to Firebase Hosting
           run: firebase deploy --only hosting
 
-        - name: Check if the dist branch exists remotely
+        - name: Force Checkout dist and Overwrite
           run: |
-            if git ls-remote --exit-code --heads origin dist; then
-                # Delete the dist branch locally if it exists
-                if git show-ref --verify --quiet refs/heads/dist; then
-                    git branch -D dist
-                fi
-                # Delete the dist branch remotely
-                git push origin --delete dist
-            fi
-
-        - name: Checkout and create dist branch from main
-          run: git checkout -b dist main
-
-        - name: Commit and Push Changes (to dist)
-          run: |
+            git fetch origin main  # Ensure we have the latest main
+            git checkout -B dist origin/main  # Force checkout of dist, overwriting with main
             git add dist
-            if git diff --staged --quiet; then
-              echo "No changes to commit"
-            else
-              git commit -m "Update dist folder [skip ci]"
-
-              # --- ADD THESE DEBUGGING STEPS ---
-              echo "--- Before Push ---"
-              echo "Current Branch:"
-              git branch
-              echo "Remote Branches:"
-              git branch -r
-              echo "Local Branches:"
-              git branch -l
-              echo "Last Commit on dist (local):"
-              git log -n 1 dist
-              echo "Pushing to origin dist..."
-              # --- END DEBUGGING STEPS ---
-
-              git push origin dist
-
-              # --- ADD THESE DEBUGGING STEPS ---
-              echo "--- After Push ---"
-              echo "Remote Branches (after push):"
-              git branch -r
-              # --- END DEBUGGING STEPS ---
-            fi
+            git commit -m "Update dist folder [skip ci]"
+            git push --force origin dist # Force push to dist
