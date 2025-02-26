@@ -28,10 +28,14 @@ jobs:
           with:
             ref: dist
             token: ${{ secrets.GH_MERGE_TOKEN }}
-            fetch-depth: 2
+
+        - name: Fetch Previous Commit
+          run: |
+            git fetch origin ${{ github.event.before }}:refs/remotes/origin/before_commit
         
         - name: Checkout Previous Commit
-          run: git checkout ${{ github.event.before }}
+          run: |
+            git checkout refs/remotes/origin/before_commit
 
         - name: Create Pull Request
           uses: peter-evans/create-pull-request@v5
