@@ -28,6 +28,7 @@ jobs:
           with:
             ref: dist
             token: ${{ secrets.GH_MERGE_TOKEN }}
+            fetch-depth: 2
         
         - name: Checkout Previous Commit
           run: git checkout ${{ github.event.before }}
