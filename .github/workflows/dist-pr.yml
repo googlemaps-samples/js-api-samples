@@ -42,4 +42,3 @@ jobs:
               automated pr
               dist-update
             draft: false # Or true, if you want to review before enabling auto-merge
-            push-to-org-branch: 'dist'
