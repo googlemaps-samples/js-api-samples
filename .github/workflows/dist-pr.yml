@@ -28,14 +28,11 @@ jobs:
           with:
             ref: dist
             token: ${{ secrets.GH_MERGE_TOKEN }}
+            fetch-depth: 0 # Fetch entire history
 
-        - name: Fetch Previous Commit
-          run: |
-            git fetch origin ${{ github.event.before }}:refs/remotes/origin/before_commit
-        
-        - name: Checkout Previous Commit
-          run: |
-            git checkout refs/remotes/origin/before_commit
+        - name: Get Previous Commit SHA
+          id: get-previous-commit
+          run: echo "previous_commit=$(git rev-parse HEAD^)" >> $GITHUB_OUTPUT
 
         - name: Create Pull Request
           uses: peter-evans/create-pull-request@v5
@@ -50,3 +47,4 @@ jobs:
               automated pr
               dist-update
             draft: false # Or true, if you want to review before enabling auto-merge
+            head: dist
