@@ -55,7 +55,7 @@ async function initMap(): Promise<void> {
     // [START maps_place_autocomplete_map_listener]
     // Add the gmp-placeselect listener, and display the results on the map.
     //@ts-ignore
-    placeAutocomplete.addEventListener('gmp-placeselect', async ({ place }) => { // TODO: gmp-placeselect -> gmp-select; place -> placePrediction.
+    placeAutocomplete.addEventListener('gmp-placeselect', async ({ place }) => { // TODO: gmp-placeselect -> gmp-select; place -> placePrediction
         await place.fetchFields({ fields: ['displayName', 'formattedAddress', 'location'] });
 
         // If the place has a geometry, then present it on a map.
