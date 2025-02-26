@@ -26,8 +26,11 @@ jobs:
         - name: Checkout code
           uses: actions/checkout@v3
           with:
-            ref: ${{ github.event.before }} # Checkout previous commit on dist.
+            ref: dist
             token: ${{ secrets.GH_MERGE_TOKEN }}
+        
+        - name: Checkout Previous Commit
+          run: git checkout ${{ github.event.before }}
 
         - name: Create Pull Request
           uses: peter-evans/create-pull-request@v5
@@ -36,8 +39,8 @@ jobs:
             commit-message: 'chore: automated output update (dist)'
             title: 'chore: automated output update (dist)'
             body: 'This PR contains updated build output from the dist branch.'
-            branch: 'dist-to-main-pr'  # Use a dedicated PR branch
-            base: main
+            branch: 'dist-to-main-pr'  # PR branch
+            base: main # Target branch
             labels: |
               automated pr
               dist-update
