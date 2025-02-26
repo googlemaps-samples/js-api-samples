@@ -26,7 +26,7 @@ jobs:
         - name: Checkout code
           uses: actions/checkout@v3
           with:
-            # No ref specified: defaults to checking out the 'dist' branch
+            ref: ${{ github.event.before }} # Checkout previous commit on dist.
             token: ${{ secrets.GH_MERGE_TOKEN }}
 
         - name: Create Pull Request
