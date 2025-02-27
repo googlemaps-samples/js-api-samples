@@ -51,22 +51,32 @@ jobs:
           with:
             node-version: '22.x'
 
-        - name: Fetch Main
-          run: git fetch origin main:main  # Fetch main branch
-  
-        - name: Copy main to dist (excluding dist directory)
-          run: |
-            git checkout main -- .  # Checkout all files from main
-            rm -rf dist  # Remove existing dist directory (if any)
-  
         - run: npm i
         - run: npm run build-all
-  
-        - name: Commit and Push Changes (to dist)
+
+        - name: Check if the dist branch exists remotely
+          run: |
+            if git ls-remote --exit-code --heads origin dist; then
+                # Delete the dist branch locally if it exists
+                if git show-ref --verify --quiet refs/heads/dist; then
+                    git branch -D dist
+                fi
+                # Delete the dist branch remotely
+                git push origin --delete dist
+            fi
+
+        - name: Checkout and create dist branch from main
+          run: git checkout -b dist main
+        
+        - name: Add and commit changes to the dist folder
           run: |
             git add dist
-            git commit -m "Update dist folder"
-            git push --force origin dist
+            if [[ -n $(git status --porcelain) ]]; then
+                git commit -m "Update dist folder"
+                git push origin dist
+            else
+                echo "No changes to commit"
+            fi
   
         - uses: google-github-actions/auth@v1
           with:
