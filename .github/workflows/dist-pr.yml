@@ -37,7 +37,7 @@ jobs:
       - name: Create Branch for PR
         run: |
             git fetch origin main
-            git checkout -b dist-to-main-pr origin/dist
+            git checkout -b dist-to-main-pr
 
       - name: Create Pull Request
         run: |
