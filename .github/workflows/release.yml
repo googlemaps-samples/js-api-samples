@@ -53,30 +53,6 @@ jobs:
 
         - run: npm i
         - run: npm run build-all
-
-        - name: Check if the dist branch exists remotely
-          run: |
-            if git ls-remote --exit-code --heads origin dist; then
-                # Delete the dist branch locally if it exists
-                if git show-ref --verify --quiet refs/heads/dist; then
-                    git branch -D dist
-                fi
-                # Delete the dist branch remotely
-                git push origin --delete dist
-            fi
-
-        - name: Checkout and create dist branch from main
-          run: git checkout -b dist main
-        
-        - name: Add and commit changes to the dist folder
-          run: |
-            git add dist
-            if [[ -n $(git status --porcelain) ]]; then
-                git commit -m "Update dist folder"
-                git push origin dist
-            else
-                echo "No changes to commit"
-            fi
   
         - uses: google-github-actions/auth@v1
           with:
@@ -87,3 +63,11 @@ jobs:
   
         - name: Deploy to Firebase Hosting
           run: firebase deploy --only hosting
+
+        - name: Force Checkout dist and Overwrite
+          run: |
+            git fetch origin main
+            git checkout -B dist origin/main
+            git add dist
+            git commit -m "Update dist folder"
+            git push --force origin dist
