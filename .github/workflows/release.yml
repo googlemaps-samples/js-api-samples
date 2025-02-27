@@ -75,6 +75,6 @@ jobs:
 
       - name: Commit and Push Changes (to dist)
         run: |
-          git add dist/samples
+          git add dist/*
           git commit -m "Update dist folder"
           git push --force origin dist
