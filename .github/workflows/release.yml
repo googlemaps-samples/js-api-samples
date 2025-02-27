@@ -24,14 +24,14 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      id-token: write  # Needed for Firebase
+      id-token: write
     env:
       GOOGLE_MAPS_JS_SAMPLES_KEY: "${{ secrets.GOOGLE_MAPS_JS_SAMPLES_KEY }}"
     steps:
-      - name: Checkout dist
+      - name: Checkout main
         uses: actions/checkout@v3
         with:
-          ref: dist  # Checkout the *dist* branch initially.
+          ref: main  # Checkout *main* initially
           token: ${{ secrets.GH_MERGE_TOKEN }}
           fetch-depth: 0
 
@@ -39,14 +39,6 @@ jobs:
         run: |
           git config --global user.name 'googlemaps-bot'
           git config --global user.email 'googlemaps-bot@users.noreply.github.com'
-      
-      - name: Fetch main
-        run: git fetch origin main:main
-
-      - name: Copy Files from Main (Except dist)
-        run: |
-            git checkout main -- .
-            rm -rf dist
 
       - uses: actions/cache@v3
         with:
@@ -71,13 +63,18 @@ jobs:
 
       - name: Deploy to Firebase Hosting
         run: firebase deploy --only hosting
-        
+
+      - name: Checkout dist branch
+        run: git checkout -B dist origin/dist || git checkout -b dist
+
+      - name: Clear dist/samples
+        run: rm -rf dist/samples/*
+
+      - name: Copy Built Output to dist/samples
+        run: cp -r dist/samples/* dist/samples/
+
       - name: Commit and Push Changes (to dist)
         run: |
-          git add dist
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Update dist folder"
-            git push --force origin dist
-          fi
+          git add dist/*
+          git commit -m "Update dist folder"
+          git push --force origin dist
