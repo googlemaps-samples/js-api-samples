@@ -31,7 +31,7 @@ jobs:
       - name: Checkout main
         uses: actions/checkout@v3
         with:
-          ref: main  # Checkout *main* initially
+          ref: main
           token: ${{ secrets.GH_MERGE_TOKEN }}
           fetch-depth: 0
 
@@ -64,17 +64,11 @@ jobs:
       - name: Deploy to Firebase Hosting
         run: firebase deploy --only hosting
 
-      - name: Checkout dist branch
-        run: git checkout -B dist origin/dist || git checkout -b dist
+      - name: Create temporary branch
+        run: git checkout -b temp-build-branch
 
-      - name: Prepare dist folder
+      - name: Commit and Push Changes (to temp branch)
         run: |
-          rm -rf samples
-          mkdir -p dist
-          cp -r ./dist/* ./dist/
-
-      - name: Commit and Push Changes (to dist)
-        run: |
-          git add .
+          git add dist
           git commit -m "Update dist folder"
-          git push --force origin dist
+          git push --force origin temp-build-branch

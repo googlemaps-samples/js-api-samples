@@ -21,19 +21,17 @@ on:
       - synchronize
       - reopened
     branches:
-      - main # Only trigger for PRs targeting main
-    paths: # Optional but recommended: only trigger for changes in specific parts of the repo
-      - 'dist/**'
+      - main
 
 jobs:
   approve-and-merge:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.user.login == 'googlemaps-bot[bot]' && github.event.pull_request.head.ref == 'dist-to-main-pr'
+    if: github.event.pull_request.user.login == 'googlemaps-bot[bot]' && github.event.pull_request.head.ref == 'temp-build-branch' # change here
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.pull_request.head.sha }} # Checkout the PR's head commit
+          ref: ${{ github.event.pull_request.head.ref }} # Checkout the PR's head commit
           token: ${{ secrets.GH_MERGE_TOKEN }}
 
       - name: Approve PR
