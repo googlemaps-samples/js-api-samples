@@ -17,7 +17,7 @@ name: Create release PR for dist
 on:
   push:
     branches:
-      - dist
+      - temp-build-branch
 
 jobs:
   create-pr:
