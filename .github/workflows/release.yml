@@ -69,5 +69,12 @@ jobs:
 
       - name: Prepare dist folder
         run: |
-          ls -a dist
-          ls -a ./dist
+          rm -rf samples
+          mkdir -p dist
+          cp -r ./dist/* ./dist/
+
+      - name: Commit and Push Changes (to dist)
+        run: |
+          git add .
+          git commit -m "Update dist folder"
+          git push --force origin dist
