@@ -31,6 +31,7 @@ jobs:
         - name: Checkout code
           uses: actions/checkout@v3
           with:
+            ref: dist
             token: ${{ secrets.GH_MERGE_TOKEN }}
             fetch-depth: 0
 
@@ -50,23 +51,29 @@ jobs:
           with:
             node-version: '22.x'
 
+        - name: Fetch Main
+          run: git fetch origin main:main  # Fetch main branch
+  
+        - name: Copy main to dist (excluding dist directory)
+          run: |
+            git checkout main -- .  # Checkout all files from main
+            rm -rf dist  # Remove existing dist directory (if any)
+  
         - run: npm i
         - run: npm run build-all
-
-        - uses: google-github-actions/auth@v1
-          with:
-            credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
-
-        - name: Install Firebase CLI
-          run: npm install -g firebase-tools
-
-        - name: Deploy to Firebase Hosting
-          run: firebase deploy --only hosting
-
-        - name: Force Checkout dist and Overwrite
+  
+        - name: Commit and Push Changes (to dist)
           run: |
-            git fetch origin main
-            git checkout -B dist origin/main
             git add dist
             git commit -m "Update dist folder"
             git push --force origin dist
+  
+        - uses: google-github-actions/auth@v1
+          with:
+            credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+  
+        - name: Install Firebase CLI
+          run: npm install -g firebase-tools
+  
+        - name: Deploy to Firebase Hosting
+          run: firebase deploy --only hosting
