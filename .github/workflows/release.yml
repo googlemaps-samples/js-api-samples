@@ -67,14 +67,16 @@ jobs:
       - name: Checkout dist branch
         run: git checkout -B dist origin/dist || git checkout -b dist
 
-      - name: Clear dist/samples
+      - name: Clear existing dist/samples
         run: rm -rf dist/samples/*
-
+        
       - name: Copy Built Output to dist/samples
-        run: cp -r dist/samples/* dist/samples/
+        run: |
+          mkdir -p dist/samples
+          cp -r ./dist/* dist/samples/
 
       - name: Commit and Push Changes (to dist)
         run: |
-          git add dist/*
+          git add dist/samples
           git commit -m "Update dist folder"
           git push --force origin dist
