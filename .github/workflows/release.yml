@@ -15,59 +15,69 @@
 name: Release
 
 on:
-  push:  # Trigger on pushes to main
+  push:
     branches:
       - main
 
 jobs:
-    release:
-      runs-on: ubuntu-latest
-      permissions:
-        contents: write
-        id-token: write
-      env:
-        GOOGLE_MAPS_JS_SAMPLES_KEY: "${{ secrets.GOOGLE_MAPS_JS_SAMPLES_KEY }}"
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
-          with:
-            ref: dist
-            token: ${{ secrets.GH_MERGE_TOKEN }}
-            fetch-depth: 0
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write  # Needed for Firebase
+    env:
+      GOOGLE_MAPS_JS_SAMPLES_KEY: "${{ secrets.GOOGLE_MAPS_JS_SAMPLES_KEY }}"
+    steps:
+      - name: Checkout dist
+        uses: actions/checkout@v3
+        with:
+          ref: dist  # Checkout the *dist* branch initially.
+          token: ${{ secrets.GH_MERGE_TOKEN }}
+          fetch-depth: 0
 
-        - name: Set Git Identity
-          run: |
-            git config --global user.name 'googlemaps-bot'
-            git config --global user.email 'googlemaps-bot@users.noreply.github.com'
+      - name: Set Git Identity
+        run: |
+          git config --global user.name 'googlemaps-bot'
+          git config --global user.email 'googlemaps-bot@users.noreply.github.com'
+      
+      - name: Fetch main
+        run: git fetch origin main:main
 
-        - uses: actions/cache@v3
-          with:
-            path: ~/.npm
-            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-            restore-keys: |
-              ${{ runner.os }}-node
+      - name: Copy Files from Main (Except dist)
+        run: |
+            git checkout main -- .
+            rm -rf dist
 
-        - uses: actions/setup-node@v3
-          with:
-            node-version: '22.x'
+      - uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node
 
-        - run: npm i
-        - run: npm run build-all
-  
-        - uses: google-github-actions/auth@v1
-          with:
-            credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
-  
-        - name: Install Firebase CLI
-          run: npm install -g firebase-tools
-  
-        - name: Deploy to Firebase Hosting
-          run: firebase deploy --only hosting
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '22.x'
 
-        - name: Force Checkout dist and Overwrite
-          run: |
-            git fetch origin main
-            git checkout -B dist origin/main
-            git add dist
+      - run: npm i
+      - run: npm run build-all
+
+      - uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Deploy to Firebase Hosting
+        run: firebase deploy --only hosting
+        
+      - name: Commit and Push Changes (to dist)
+        run: |
+          git add dist
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
             git commit -m "Update dist folder"
             git push --force origin dist
+          fi
