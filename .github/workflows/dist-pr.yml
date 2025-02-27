@@ -34,9 +34,17 @@ jobs:
           git config --global user.name 'googlemaps-bot'
           git config --global user.email 'googlemaps-bot@users.noreply.github.com'
           
-      - name: Clean Workspace
+      - name: Aggressively clean Workspace
         run: |
+          git reset --hard
           git clean -fdx
+          ls -la # List all files (including hidden ones)
+
+      - name: List contents of dist
+        run: |
+            git fetch origin dist
+            git checkout origin/dist
+            ls -la dist
 
       - name: Create Branch for PR
         run: |
