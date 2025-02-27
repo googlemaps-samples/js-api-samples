@@ -27,47 +27,20 @@ jobs:
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_MERGE_TOKEN }}
-          fetch-depth: 0 # Fetch all history
+          fetch-depth: 0
 
       - name: Set Git Identity
         run: |
           git config --global user.name 'googlemaps-bot'
           git config --global user.email 'googlemaps-bot@users.noreply.github.com'
-          
-      - name: Aggressively clean Workspace
-        run: |
-          git reset --hard
-          git clean -fdx
-          ls -la # List all files (including hidden ones)
-
-      - name: List contents of dist
-        run: |
-            git fetch origin dist
-            git checkout origin/dist
-            ls -la dist
-
-      - name: Create Branch for PR
-        run: |
-            git fetch origin main
-            git checkout -b dist-to-main-pr
 
       - name: Create Pull Request
         run: |
           gh pr create \
             --base main \
-            --head dist-to-main-pr \
+            --head dist \
             --title "chore: automated output update (dist)" \
             --body "This PR contains updated build output from the dist branch." \
             --label "automated pr,dist-update"
-        env:
-          GH_TOKEN: ${{ secrets.GH_MERGE_TOKEN }}
-
-      - name: Check for Existing PR and Close (Optional)
-        run: |
-          EXISTING_PR=$(gh pr list --base main --head dist-to-main-pr --state open --json number -q '.[].number')
-          if [[ -n "$EXISTING_PR" ]]; then
-            echo "Found existing open PR(s) for dist-to-main-pr: $EXISTING_PR"
-            gh pr close "$EXISTING_PR"
-          fi
         env:
           GH_TOKEN: ${{ secrets.GH_MERGE_TOKEN }}
