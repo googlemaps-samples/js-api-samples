@@ -22,6 +22,7 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    if: github.event.commits[0].message != 'Update dist folder'
     permissions:
       contents: write
       id-token: write
@@ -80,5 +81,5 @@ jobs:
       - name: Commit and Push Changes (to temp branch)
         run: |
           git add dist
-          git commit -m "Update dist folder [skip ci]" 
+          git commit -m "Update dist folder" 
           git push --force origin temp-build-branch
