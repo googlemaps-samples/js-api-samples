@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/advanced-markers-animation",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh advanced-markers-animation && bash ../app.sh advanced-markers-animation && bash ../docs.sh advanced-markers-animation && npm run build:vite --workspace=. && bash ../dist.sh advanced-markers-animation",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
