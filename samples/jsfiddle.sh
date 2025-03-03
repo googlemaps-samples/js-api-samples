@@ -27,38 +27,38 @@ echo "NAME: ${NAME}"
 mkdir -p "${DIST_DIR}/samples/${NAME}/jsfiddle"
 
 # Copy files
-echo "Copy ${SCRIPT_DIR}/${NAME}/index.js to ${DIST_DIR}/samples/${NAME}/jsfiddle/index.js"
-cp "${SCRIPT_DIR}/${NAME}/index.js" "${DIST_DIR}/samples/${NAME}/jsfiddle/index.js"
-cp "${SCRIPT_DIR}/${NAME}/index.html" "${DIST_DIR}/samples/${NAME}/jsfiddle/index.html"
-cp "${SCRIPT_DIR}/${NAME}/style.css" "${DIST_DIR}/samples/${NAME}/jsfiddle/style.css"
+echo "Copy ${SCRIPT_DIR}/${NAME}/index.js to ${DIST_DIR}/samples/${NAME}/jsfiddle/demo.js"
+cp "${SCRIPT_DIR}/${NAME}/index.js" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.js"
+cp "${SCRIPT_DIR}/${NAME}/index.html" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
+cp "${SCRIPT_DIR}/${NAME}/style.css" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.css"
 
 # Remove region tags from files by type, since they all have different comment conventions.
 # We use a conditional here since sed behaves differently on Linux.
-echo "Remove region tags from ${DIST_DIR}/samples/${NAME}/jsfiddle/index.js"
+echo "Remove region tags from ${DIST_DIR}/samples/${NAME}/jsfiddle/demo.js"
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  sed -i "" "s/\/\/ \[START .*]//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/index.js"
-  sed -i "" "s/\/\/ \[END .*]//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/index.js"
+  sed -i "" "s/\/\/ \[START .*]//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.js"
+  sed -i "" "s/\/\/ \[END .*]//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.js"
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  sed -i "s/\/\/ \[START.*]//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/index.js"
-  sed -i "s/\/\/ \[END.*]//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/index.js"
+  sed -i "s/\/\/ \[START.*]//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.js"
+  sed -i "s/\/\/ \[END.*]//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.js"
 fi
 
-echo "Remove region tags from ${DIST_DIR}/samples/${NAME}/jsfiddle/index.html"
+echo "Remove region tags from ${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  sed -i "" "s/<!--\s*\[START .*\]\s*-->//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/index.html"
-  sed -i "" "s/<!--\s*\[END .*\]\s*-->//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/index.html"
+  sed -i "" "s/<!--\s*\[START .*\]\s*-->//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
+  sed -i "" "s/<!--\s*\[END .*\]\s*-->//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  sed -i "s/<!--\s*\[START .*\]\s*-->//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/index.html"
-  sed -i "s/<!--\s*\[END .*\]\s*-->//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/index.html"
+  sed -i "s/<!--\s*\[START .*\]\s*-->//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
+  sed -i "s/<!--\s*\[END .*\]\s*-->//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
 fi
 
-echo "Remove region tags from ${DIST_DIR}/samples/${NAME}/jsfiddle/style.css"
+echo "Remove region tags from ${DIST_DIR}/samples/${NAME}/jsfiddle/demo.css"
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  sed -i "" "s/\/\* \[START maps_.*] \*\///g" "${DIST_DIR}/samples/${NAME}/jsfiddle/style.css"
-  sed -i "" "s/\/\* \[END maps_.*] \*\///g" "${DIST_DIR}/samples/${NAME}/jsfiddle/style.css"
+  sed -i "" "s/\/\* \[START maps_.*] \*\///g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.css"
+  sed -i "" "s/\/\* \[END maps_.*] \*\///g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.css"
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  sed -i "s/\/\* \[START maps_.*] \*\///g" "${DIST_DIR}/samples/${NAME}/jsfiddle/style.css"
-  sed -i "s/\/\* \[END maps_.*] \*\///g" "${DIST_DIR}/samples/${NAME}/jsfiddle/style.css"
+  sed -i "s/\/\* \[START maps_.*] \*\///g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.css"
+  sed -i "s/\/\* \[END maps_.*] \*\///g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.css"
 fi
 
 # Generate demo.details.
