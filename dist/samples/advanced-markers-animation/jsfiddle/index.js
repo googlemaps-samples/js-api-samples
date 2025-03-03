@@ -40,7 +40,7 @@ const intersectionObserver = new IntersectionObserver((entries) => {
 async function initMap() {
     // Request needed libraries.
     const { Map } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
     const position = { lat: 37.4242011827985, lng: -122.09242296450893 };
     const map = new Map(document.getElementById("map"), {
         zoom: 14,
@@ -50,7 +50,7 @@ async function initMap() {
     // Create 100 markers to animate.
     google.maps.event.addListenerOnce(map, 'idle', () => {
         for (let i = 0; i < 100; i++) {
-            createMarker(map, AdvancedMarkerElement);
+            createMarker(map, AdvancedMarkerElement, PinElement);
         }
     });
     // Add a button to reset the example.
@@ -65,12 +65,14 @@ async function initMap() {
     controlDiv.appendChild(controlUI);
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(controlDiv);
 }
-function createMarker(map, AdvancedMarkerElement) {
+function createMarker(map, AdvancedMarkerElement, PinElement) {
+    const pinElement = new PinElement();
+    const content = pinElement.element;
     const advancedMarker = new AdvancedMarkerElement({
         position: getRandomPosition(map),
         map: map,
+        content: content,
     });
-    const content = advancedMarker.content;
     content.style.opacity = '0';
     content.addEventListener('animationend', (event) => {
         content.classList.remove('drop');
