@@ -46,7 +46,7 @@
   async function initMap(): Promise<void> {
     // Request needed libraries.
     const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
+    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
 
     const position = {lat: 37.4242011827985, lng: -122.09242296450893};
 
@@ -59,7 +59,7 @@
     // Create 100 markers to animate.
     google.maps.event.addListenerOnce(map, 'idle', () => {
       for (let i = 0; i < 100; i++) {
-        createMarker(map, AdvancedMarkerElement);
+        createMarker(map, AdvancedMarkerElement, PinElement);
       }
     });
   
@@ -77,12 +77,15 @@
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(controlDiv);
   }
  
-  function createMarker(map, AdvancedMarkerElement) {    
+  function createMarker(map, AdvancedMarkerElement, PinElement) {    
+    const pinElement = new PinElement();
+    const content = pinElement.element;
     const advancedMarker = new AdvancedMarkerElement({
       position: getRandomPosition(map),
       map: map,
+      content: content,
     });
-    const content = advancedMarker.content as HTMLElement;
+
     content.style.opacity = '0'; 
     content.addEventListener('animationend', (event) => { 
       content.classList.remove('drop');
