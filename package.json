@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "Samples for the Google Maps JavaScript API.",
   "scripts": {
-    "build-all": "npm run generate-index && npm run clean && npm run build --workspaces",
-    "build-prod": "npm run generate-index && npm run clean && npm run build --workspaces && bash post-build.sh",
+    "build-all": "npm run clean && npm run build --workspaces && npm run generate-index",
     "clean": "bash samples/clean.sh",
     "generate-index": "bash samples/generate-index.sh"
   },
