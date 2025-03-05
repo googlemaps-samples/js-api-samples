@@ -65,7 +65,7 @@ async function makeAutocompleteRequest(inputEvent) {
         });
         a.innerText = placePrediction!.text.toString();
 
-        // Create a new list element.
+        // Create a new list item element.
         const li = document.createElement('li');
         li.appendChild(a);
         resultsContainerElement.appendChild(li);
