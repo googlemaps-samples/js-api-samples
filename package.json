@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "Samples for the Google Maps JavaScript API.",
   "scripts": {
-    "build-all": "npm run generate-index && npm run clean && npm run build --workspaces",
-    "build-prod": "npm run generate-index && npm run clean && npm run build --workspaces && bash post-build.sh",
+    "build-all": "npm run clean && npm run build --workspaces && npm run generate-index",
     "clean": "bash samples/clean.sh",
     "generate-index": "bash samples/generate-index.sh"
   },
@@ -17,7 +16,7 @@
     "@types/node": "^22.13.8",
     "rimraf": "^6.0.1",
     "typescript": "^5.7.3",
-    "vite": "^6.1.1"
+    "vite": "^6.2.0"
   },
   "dependencies": {
     "dotenv": "^16.4.5"
