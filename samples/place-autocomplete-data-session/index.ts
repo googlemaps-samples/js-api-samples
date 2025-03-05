@@ -12,25 +12,23 @@ let token;
 
 // Add an initial request body.
 let request = {
-    input: "",
+    input: '',
     locationRestriction: { west: -122.44, north: 37.8, east: -122.39, south: 37.78 },
     origin: { lat: 37.7893, lng: -122.4039 },
-    includedPrimaryTypes: ["restaurant"],
-    language: "en-US",
-    region: "us",
+    includedPrimaryTypes: ['restaurant'],
+    language: 'en-US',
+    region: 'us',
 };
 
 async function init() {
-    token = new google.maps.places.AutocompleteSessionToken();
-
     title = document.getElementById('title');
     results = document.getElementById('results');
-    input = document.querySelector("input");
-    input.addEventListener("input", makeAcRequest);
-    request = refreshToken(request) as any;
+    input = document.querySelector('input');
+    input.addEventListener('input', makeAutocompleteRequest);
+    await refreshToken(request);
 }
 
-async function makeAcRequest(input) {
+async function makeAutocompleteRequest(input) {
     // Reset elements and exit if an empty string is received.
     if (input.target.value == '') {
         title.innerText = '';
@@ -45,7 +43,7 @@ async function makeAcRequest(input) {
     // @ts-ignore
     const { suggestions } = await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
 
-    title.innerText = 'Query predictions for "' + request.input + '"';
+    title.innerText = `Query predictions for "${request.input}"`;
 
     // Clear the list first.
     results.replaceChildren();
@@ -72,7 +70,7 @@ async function onPlaceSelected(place) {
     await place.fetchFields({
         fields: ['displayName', 'formattedAddress'],
     });
-    let placeText = document.createTextNode(place.displayName + ': ' + place.formattedAddress);
+    let placeText = document.createTextNode(`${place.displayName}: ${place.formattedAddress}`);
     results.replaceChildren(placeText);
     title.innerText = 'Selected Place:';
     input.value = '';
@@ -83,8 +81,7 @@ async function onPlaceSelected(place) {
 async function refreshToken(request) {
     // Create a new session token and add it to the request.
     token = new google.maps.places.AutocompleteSessionToken();
-    request.sessionToken = token;
-    return request;
+    request.sessionToken = token;    
 }
 
 declare global {
