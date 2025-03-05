@@ -5,9 +5,9 @@
  */
 
 // [START maps_place_autocomplete_data_session]
-let title;
-let results;
-let input;
+let titleElement;
+let resultsContainerElement;
+let inputElement;
 
 let newestRequestId = 0;
 
@@ -22,23 +22,23 @@ const request = {
 };
 
 function init() {
-    title = document.getElementById('title');
-    results = document.getElementById('results');
-    input = document.querySelector('input');
-    input.addEventListener('input', makeAutocompleteRequest);
+    titleElement = document.getElementById('title');
+    resultsContainerElement = document.getElementById('results');
+    inputElement = document.querySelector('input');
+    inputElement.addEventListener('input', makeAutocompleteRequest);
     refreshToken(request);
 }
 
-async function makeAutocompleteRequest(input) {
+async function makeAutocompleteRequest(inputEvent) {
     // Reset elements and exit if an empty string is received.
-    if (input.target.value == '') {
-        title.innerText = '';
-        results.replaceChildren();
+    if (inputEvent.target.value == '') {
+        titleElement.innerText = '';
+        resultsContainerElement.replaceChildren();
         return;
     }
 
     // Add the latest char sequence to the request.
-    request.input = input.target.value;
+    request.input = inputEvent.target.value;
 
     // To avoid race conditions, store the request ID and compare after the request.
     const requestId = ++newestRequestId;
@@ -50,10 +50,10 @@ async function makeAutocompleteRequest(input) {
     // If the request has been superseded by a newer request, do not render the output.
     if (requestId !== newestRequestId) return;
 
-    title.innerText = `Query predictions for "${request.input}"`;
+    titleElement.innerText = `Query predictions for "${request.input}"`;
 
     // Clear the list first.
-    results.replaceChildren();
+    resultsContainerElement.replaceChildren();
 
     for (const suggestion of suggestions) {
         const placePrediction = suggestion.placePrediction;
@@ -68,7 +68,7 @@ async function makeAutocompleteRequest(input) {
         // Create a new list element.
         const li = document.createElement('li');
         li.appendChild(a);
-        results.appendChild(li);
+        resultsContainerElement.appendChild(li);
     }
 }
 
@@ -78,9 +78,9 @@ async function onPlaceSelected(place) {
         fields: ['displayName', 'formattedAddress'],
     });
     const placeText = document.createTextNode(`${place.displayName}: ${place.formattedAddress}`);
-    results.replaceChildren(placeText);
-    title.innerText = 'Selected Place:';
-    input.value = '';
+    resultsContainerElement.replaceChildren(placeText);
+    titleElement.innerText = 'Selected Place:';
+    inputElement.value = '';
     refreshToken(request);
 }
 
