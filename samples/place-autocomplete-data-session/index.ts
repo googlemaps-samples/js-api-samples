@@ -8,10 +8,11 @@
 let title;
 let results;
 let input;
-let token;
+
+let newestRequestId = 0;
 
 // Add an initial request body.
-let request = {
+const request = {
     input: '',
     locationRestriction: { west: -122.44, north: 37.8, east: -122.39, south: 37.78 },
     origin: { lat: 37.7893, lng: -122.4039 },
@@ -20,12 +21,12 @@ let request = {
     region: 'us',
 };
 
-async function init() {
+function init() {
     title = document.getElementById('title');
     results = document.getElementById('results');
     input = document.querySelector('input');
     input.addEventListener('input', makeAutocompleteRequest);
-    await refreshToken(request);
+    refreshToken(request);
 }
 
 async function makeAutocompleteRequest(input) {
@@ -39,9 +40,15 @@ async function makeAutocompleteRequest(input) {
     // Add the latest char sequence to the request.
     request.input = input.target.value;
 
+    // To avoid race conditions, store the request ID and compare after the request.
+    const requestId = ++newestRequestId;
+
     // Fetch autocomplete suggestions and show them in a list.
     // @ts-ignore
     const { suggestions } = await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
+
+    // If the request has been superseded by a newer request, do not render the output.
+    if (requestId !== newestRequestId) return;
 
     title.innerText = `Query predictions for "${request.input}"`;
 
@@ -70,7 +77,7 @@ async function onPlaceSelected(place) {
     await place.fetchFields({
         fields: ['displayName', 'formattedAddress'],
     });
-    let placeText = document.createTextNode(`${place.displayName}: ${place.formattedAddress}`);
+    const placeText = document.createTextNode(`${place.displayName}: ${place.formattedAddress}`);
     results.replaceChildren(placeText);
     title.innerText = 'Selected Place:';
     input.value = '';
@@ -78,10 +85,9 @@ async function onPlaceSelected(place) {
 }
 
 // Helper function to refresh the session token.
-async function refreshToken(request) {
+function refreshToken(request) {
     // Create a new session token and add it to the request.
-    token = new google.maps.places.AutocompleteSessionToken();
-    request.sessionToken = token;    
+    request.sessionToken = new google.maps.places.AutocompleteSessionToken();
 }
 
 declare global {
