@@ -22,7 +22,6 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    if: github.event.commits[0].message != 'Update dist folder'
     permissions:
       contents: write
       id-token: write
