@@ -81,5 +81,5 @@ jobs:
       - name: Commit and Push Changes (to temp branch)
         run: |
           git add dist index.html
-          git commit -m "Update dist folder" 
+          git commit -m "Update dist folder [skip ci]" 
           git push --force origin temp-build-branch
