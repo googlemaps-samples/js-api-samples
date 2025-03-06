@@ -5,50 +5,55 @@
  */
 
 // [START maps_place_autocomplete_data_session]
-let title;
-let results;
-let input;
-let token;
+let titleElement;
+let resultsContainerElement;
+let inputElement;
+
+let newestRequestId = 0;
 
 // Add an initial request body.
-let request = {
-    input: "",
+const request = {
+    input: '',
     locationRestriction: { west: -122.44, north: 37.8, east: -122.39, south: 37.78 },
     origin: { lat: 37.7893, lng: -122.4039 },
-    includedPrimaryTypes: ["restaurant"],
-    language: "en-US",
-    region: "us",
+    includedPrimaryTypes: ['restaurant'],
+    language: 'en-US',
+    region: 'us',
 };
 
-async function init() {
-    token = new google.maps.places.AutocompleteSessionToken();
-
-    title = document.getElementById('title');
-    results = document.getElementById('results');
-    input = document.querySelector("input");
-    input.addEventListener("input", makeAcRequest);
-    request = refreshToken(request) as any;
+function init() {
+    titleElement = document.getElementById('title');
+    resultsContainerElement = document.getElementById('results');
+    inputElement = document.querySelector('input');
+    inputElement.addEventListener('input', makeAutocompleteRequest);
+    refreshToken(request);
 }
 
-async function makeAcRequest(input) {
+async function makeAutocompleteRequest(inputEvent) {
     // Reset elements and exit if an empty string is received.
-    if (input.target.value == '') {
-        title.innerText = '';
-        results.replaceChildren();
+    if (inputEvent.target.value == '') {
+        titleElement.innerText = '';
+        resultsContainerElement.replaceChildren();
         return;
     }
 
     // Add the latest char sequence to the request.
-    request.input = input.target.value;
+    request.input = inputEvent.target.value;
+
+    // To avoid race conditions, store the request ID and compare after the request.
+    const requestId = ++newestRequestId;
 
     // Fetch autocomplete suggestions and show them in a list.
     // @ts-ignore
     const { suggestions } = await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
 
-    title.innerText = 'Query predictions for "' + request.input + '"';
+    // If the request has been superseded by a newer request, do not render the output.
+    if (requestId !== newestRequestId) return;
+
+    titleElement.innerText = `Query predictions for "${request.input}"`;
 
     // Clear the list first.
-    results.replaceChildren();
+    resultsContainerElement.replaceChildren();
 
     for (const suggestion of suggestions) {
         const placePrediction = suggestion.placePrediction;
@@ -60,10 +65,10 @@ async function makeAcRequest(input) {
         });
         a.innerText = placePrediction!.text.toString();
 
-        // Create a new list element.
+        // Create a new list item element.
         const li = document.createElement('li');
         li.appendChild(a);
-        results.appendChild(li);
+        resultsContainerElement.appendChild(li);
     }
 }
 
@@ -72,19 +77,17 @@ async function onPlaceSelected(place) {
     await place.fetchFields({
         fields: ['displayName', 'formattedAddress'],
     });
-    let placeText = document.createTextNode(place.displayName + ': ' + place.formattedAddress);
-    results.replaceChildren(placeText);
-    title.innerText = 'Selected Place:';
-    input.value = '';
+    const placeText = document.createTextNode(`${place.displayName}: ${place.formattedAddress}`);
+    resultsContainerElement.replaceChildren(placeText);
+    titleElement.innerText = 'Selected Place:';
+    inputElement.value = '';
     refreshToken(request);
 }
 
 // Helper function to refresh the session token.
-async function refreshToken(request) {
+function refreshToken(request) {
     // Create a new session token and add it to the request.
-    token = new google.maps.places.AutocompleteSessionToken();
-    request.sessionToken = token;
-    return request;
+    request.sessionToken = new google.maps.places.AutocompleteSessionToken();
 }
 
 declare global {
