@@ -5,9 +5,11 @@
  */
 /* [START maps_ui_kit_place_details] */
 // Use querySelector to select elements for interaction.
+/* [START maps_ui_kit_place_details_query_selector] */
 const map = document.querySelector('gmp-map') as any;
 const placeDetails = document.querySelector('gmp-place-details') as any;
 const marker = document.querySelector('gmp-advanced-marker') as any;
+/* [END maps_ui_kit_place_details_query_selector] */
 
 async function initMap(): Promise<void> {
     // Request needed libraries.
@@ -22,6 +24,7 @@ async function initMap(): Promise<void> {
   // Hide the map type control.
   map.innerMap.setOptions({mapTypeControl: false});
 
+  /* [START maps_ui_kit_place_details_event] */
   // Add an event listener to handle map clicks.
   map.innerMap.addListener('click', async (event) => {
     marker.position = null;
@@ -39,6 +42,7 @@ async function initMap(): Promise<void> {
     marker.style.display = 'block';
   });
 }
+/* [END maps_ui_kit_place_details_event] */
 
 // Helper function for geolocation.
 async function findCurrentLocation() {

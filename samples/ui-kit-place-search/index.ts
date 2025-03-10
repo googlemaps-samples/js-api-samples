@@ -4,14 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 /* [START maps_ui_kit_place_search] */
+/* [START maps_ui_kit_place_search_query_selectors] */
 const map = document.querySelector("gmp-map") as any;
 const placeList = document.querySelector("gmp-place-list") as any;
 const typeSelect = document.querySelector(".type-select") as any;
-const searchButton = document.querySelector(".search-button") as any;
 const placeDetails = document.querySelector("gmp-place-details") as any;
 let marker = document.querySelector('gmp-advanced-marker') as any;
-let infowindow;
+/* [END maps_ui_kit_place_search_query_selectors] */
 let markers = {};
+let infowindow;
 let mapCenter;
 
 async function initMap(): Promise<void>  {
@@ -36,7 +37,7 @@ async function initMap(): Promise<void>  {
         clickableIcons: false,
     });
 
-    //searchButton.addEventListener("click", () => {
+    /* [START maps_ui_kit_place_search_event] */
     typeSelect.addEventListener("change", (event) => {
         // First remove all existing markers.
         for(marker in markers){
@@ -58,6 +59,7 @@ async function initMap(): Promise<void>  {
             });
         }
     });
+    /* [END maps_ui_kit_place_search_event] */
 }
 
 async function addMarkers(){
