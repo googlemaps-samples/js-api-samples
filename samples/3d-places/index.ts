@@ -12,6 +12,7 @@
  * limitations under the License.
 */
 
+// @ts-nocheck
 // [START maps3d_places]
 let map3DElement = null;
 async function init() {
