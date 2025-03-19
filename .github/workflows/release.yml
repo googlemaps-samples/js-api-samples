@@ -80,7 +80,7 @@ jobs:
       - name: Commit and Push Changes (to temp branch)
         run: |
           git add dist index.html
-          if git diff-index --quiet HEAD --; then
+          if [ -z "$(git status --porcelain)" ]; then
             echo "No changes to commit"
             exit 0
           fi
