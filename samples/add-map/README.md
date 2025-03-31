@@ -1,7 +1,3 @@
-TODO: Update this file with relevant instructions for building the sample
-in the new regime.
-
-
 # Google Maps JavaScript Sample
 
 This sample is generated from @googlemaps/js-samples located at
