@@ -17,6 +17,7 @@
 let map;
 let marker;
 let infoWindow;
+let center = { lat: 40.749933, lng: -73.98633 }; // New York City
 async function initMap() {
     // Request needed libraries.
     //@ts-ignore
@@ -26,7 +27,7 @@ async function initMap() {
     ]);
     // Initialize the map.
     map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 40.749933, lng: -73.98633 },
+        center,
         zoom: 13,
         mapId: '4504f8b37365c3d0',
         mapTypeControl: false,
@@ -36,6 +37,7 @@ async function initMap() {
     const placeAutocomplete = new google.maps.places.PlaceAutocompleteElement();
     //@ts-ignore
     placeAutocomplete.id = 'place-autocomplete-input';
+    placeAutocomplete.locationBias = center;
     const card = document.getElementById('place-autocomplete-card');
     //@ts-ignore
     card.appendChild(placeAutocomplete);
@@ -49,7 +51,8 @@ async function initMap() {
     // [START maps_place_autocomplete_map_listener]
     // Add the gmp-placeselect listener, and display the results on the map.
     //@ts-ignore
-    placeAutocomplete.addEventListener('gmp-placeselect', async ({ place }) => {
+    placeAutocomplete.addEventListener('gmp-select', async ({ placePrediction }) => {
+        const place = placePrediction.toPlace();
         await place.fetchFields({ fields: ['displayName', 'formattedAddress', 'location'] });
         // If the place has a geometry, then present it on a map.
         if (place.viewport) {
