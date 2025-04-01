@@ -17,7 +17,6 @@
 async function initMap() {
     // [START maps_place_autocomplete_element_add]
     // Request needed libraries.
-    //@ts-ignore
     await google.maps.importLibrary("places");
     // Create the input HTML element, and append it.
     //@ts-ignore
@@ -35,7 +34,8 @@ async function initMap() {
     // [START maps_place_autocomplete_element_listener]
     // Add the gmp-placeselect listener, and display the results.
     //@ts-ignore
-    placeAutocomplete.addEventListener('gmp-placeselect', async ({ place }) => {
+    placeAutocomplete.addEventListener('gmp-select', async ({ placePrediction }) => {
+        const place = placePrediction.toPlace();
         await place.fetchFields({ fields: ['displayName', 'formattedAddress', 'location'] });
         selectedPlaceTitle.textContent = 'Selected Place:';
         selectedPlaceInfo.textContent = JSON.stringify(place.toJSON(), /* replacer */ null, /* space */ 2);
