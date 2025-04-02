@@ -16,3 +16,6 @@ samples/*/*.js
 # Ignore Firebase cache
 .firebase
 firebase-debug.log
+
+# Ignore all gha-creds-*.json files
+gha-creds-*.json

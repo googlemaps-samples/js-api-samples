@@ -80,5 +80,9 @@ jobs:
       - name: Commit and Push Changes (to temp branch)
         run: |
           git add dist index.html
-          git commit -m "Update dist folder [skip ci]" 
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Update dist folder [skip ci]"
           git push --force origin temp-build-branch

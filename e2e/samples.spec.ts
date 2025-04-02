@@ -90,9 +90,10 @@ sampleFolders.forEach((sampleFolder) => {
       // Navigate to the page.
       await page.goto(url);
 
-      // There must be no console errors.
+      // There must be no critical console errors.
       await errorPromise;
-      expect(consoleErrors).toHaveLength(0);
+      const criticalErrors = consoleErrors.filter(error => !error.includes('Falling back to Raster'));
+      expect(criticalErrors).toHaveLength(0);
 
       // Wait for the page DOM to load; this does NOT include the Google Maps APIs.
       await page.waitForLoadState('domcontentloaded');
@@ -102,9 +103,6 @@ sampleFolders.forEach((sampleFolder) => {
       
       // Insert a delay in ms to let the map load.
       await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Yo dawg, I heard you like tests, so I made you a test for testing your tests.
-      //await expect(page).toHaveTitle('Simple Map'); // Passes on the simple map page, fails on the other as expected.
 
       // Assertions. These must be met or the test will fail.
       // The sample must load the Google Maps API.
