@@ -1,0 +1,36 @@
+/*
+ * @license
+ * Copyright 2025 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* 
+ * Optional: Makes the sample page fill the window. 
+ */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  font-size: 16px;
+  text-align: center;
+}
+
+gmp-map {
+  height: 400px;
+}
+
+gmp-place-details {
+  visibility: hidden;
+  background-color: #fff;
+  border-radius: 8px;
+  margin: 20px;
+  width: 400px;
+}
+
+gmp-advanced-marker {
+    display: none;
+}
