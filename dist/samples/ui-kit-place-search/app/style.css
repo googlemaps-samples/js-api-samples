@@ -24,9 +24,12 @@ html,
   gmp-map {
       box-sizing: border-box;
       padding: 0 20px 20px;
+      height: 600px;
   }
 
   .overlay {
+      position: relative;
+      top: 40px;
       margin: 20px;
       width: 400px;
   }
@@ -55,7 +58,7 @@ html,
   }
 
   .list-container {
-      height: 600px;
+      height: 400px;
       overflow: auto;
       border-radius: 10px;
   }
