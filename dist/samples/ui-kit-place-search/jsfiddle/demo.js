@@ -76,7 +76,7 @@ async function addMarkers() {
                     map: map.innerMap
                 });
                 placeDetails.addEventListener('gmp-load', () => {
-                    map.innerMap.fitBounds(place.viewport, { top: 400, left: 200 });
+                    map.innerMap.fitBounds(place.viewport, { top: 500, left: 400 });
                 });
             });
             map.innerMap.setCenter(bounds.getCenter());
