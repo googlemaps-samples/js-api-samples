@@ -12,16 +12,18 @@ const placeDetails = document.querySelector("gmp-place-details");
 let marker = document.querySelector('gmp-advanced-marker');
 /* [END maps_ui_kit_place_search_query_selectors] */
 let markers = {};
-let infowindow;
+let infoWindow;
 let mapCenter;
 async function initMap() {
     await google.maps.importLibrary("places");
     const { InfoWindow } = await google.maps.importLibrary("maps");
     const { spherical } = await google.maps.importLibrary("geometry");
-    infowindow = new google.maps.InfoWindow;
+    infoWindow = new google.maps.InfoWindow;
     function getContainingCircle(bounds) {
         const diameter = spherical.computeDistanceBetween(bounds.getNorthEast(), bounds.getSouthWest());
-        return { center: bounds.getCenter(), radius: diameter / 2 };
+        const calculatedRadius = diameter / 2;
+        const cappedRadius = Math.min(calculatedRadius, 50000); // Cap the radius to avoid an error.
+        return { center: bounds.getCenter(), radius: cappedRadius };
     }
     findCurrentLocation();
     map.innerMap.setOptions({
@@ -32,7 +34,6 @@ async function initMap() {
     typeSelect.addEventListener("change", (event) => {
         // First remove all existing markers.
         for (marker in markers) {
-            console.log(marker);
             markers[marker].map = null;
         }
         markers = {};
@@ -41,6 +42,7 @@ async function initMap() {
                 locationRestriction: getContainingCircle(map.innerMap.getBounds()),
                 includedPrimaryTypes: [typeSelect.value],
             }).then(addMarkers);
+            // Handle user selection in Place Details.
             placeList.addEventListener("gmp-placeselect", ({ place }) => {
                 markers[place.id].click();
             });
@@ -61,20 +63,20 @@ async function addMarkers() {
             markers[place.id] = marker;
             bounds.extend(place.location);
             marker.addListener('gmp-click', (event) => {
-                if (infowindow.isOpen) {
-                    infowindow.close();
+                if (infoWindow.isOpen) {
+                    infoWindow.close();
                 }
                 placeDetails.configureFromPlace(place);
                 placeDetails.style.width = "350px";
-                infowindow.setOptions({
+                infoWindow.setOptions({
                     content: placeDetails
                 });
-                infowindow.open({
+                infoWindow.open({
                     anchor: marker,
                     map: map.innerMap
                 });
                 placeDetails.addEventListener('gmp-load', () => {
-                    map.innerMap.fitBounds(place.viewport, { top: placeDetails.offsetHeight || 206, left: 200 });
+                    map.innerMap.fitBounds(place.viewport, { top: 400, left: 200 });
                 });
             });
             map.innerMap.setCenter(bounds.getCenter());
