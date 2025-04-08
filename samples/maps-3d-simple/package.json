@@ -1,0 +1,14 @@
+{
+    "name": "@js-api-samples/maps-3d-simple",
+    "version": "1.0.0",
+    "scripts": {
+      "build": "tsc && bash ../jsfiddle.sh maps-3d-simple && bash ../app.sh maps-3d-simple && bash ../docs.sh maps-3d-simple &&  npm run build:vite --workspace=. && bash ../dist.sh maps-3d-simple",
+      "test": "tsc && npm run build:vite --workspace=.",
+      "start": "tsc && vite build --base './' && vite",
+      "build:vite": "vite build --base './'",
+      "preview": "vite preview"
+    },
+    "dependencies": {
+      
+    }
+  }
