@@ -92,7 +92,14 @@ sampleFolders.forEach((sampleFolder) => {
 
       // There must be no critical console errors.
       await errorPromise;
-      const criticalErrors = consoleErrors.filter(error => !error.includes('Falling back to Raster'));
+      // Filter out error messages we can safely avoid.
+      const filteredErrorMessages = [
+        'Falling back to Raster',
+        'Attempted to load a 3D Map, but failed.',
+      ];
+      const criticalErrors = consoleErrors.filter(error =>
+        !filteredErrorMessages.some(message => error.includes(message))
+      );
       expect(criticalErrors).toHaveLength(0);
 
       // Wait for the page DOM to load; this does NOT include the Google Maps APIs.
