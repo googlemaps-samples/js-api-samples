@@ -12,7 +12,7 @@
  * limitations under the License.
 */
 //@ts-nocheck
-// [START maps3d_places]
+// [START maps_3d_places]
 let map3DElement = null;
 async function init() {
     const { Map3DElement } = await google.maps.importLibrary("maps3d");
@@ -47,4 +47,4 @@ async function init() {
 
 }
 init(); 
-// [END maps3d_places]
+// [END maps_3d_places]

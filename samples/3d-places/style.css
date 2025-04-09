@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-/* [START 3d_places] */
+/* [START maps_3d_places] */
 /* * Always set the map height explicitly to define the size of the div element
  * that contains the map. 
  */
@@ -52,4 +52,4 @@ body {
     border-radius: 15px;
 }
 
-/* [END 3d_places] */
+/* [END maps_3d_places] */

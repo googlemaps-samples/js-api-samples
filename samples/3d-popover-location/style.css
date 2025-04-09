@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-/* [START 3d-popover-location] */
+/* [START maps_3d_popover_location] */
 /* * Always set the map height explicitly to define the size of the div element
  * that contains the map. 
  */
@@ -24,4 +24,4 @@ body {
 map {
   height: 100%;
 }
-/* [END 3d-popover-location] */
+/* [END maps_3d_popover_location] */

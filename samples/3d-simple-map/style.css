@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-/* [START 3d_simple_map] */
+/* [START maps_3d_simple_map] */
 /* * Always set the map height explicitly to define the size of the div element
  * that contains the map. 
  */
@@ -24,4 +24,4 @@ body {
     margin: 0;
     padding: 0;
 }
-/* [END 3d_simple_map] */
+/* [END maps_3d_simple_map] */

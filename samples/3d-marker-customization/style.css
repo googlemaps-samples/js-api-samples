@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-/* [START 3d-marker-customization] */
+/* [START maps_3d_marker_customization] */
 /* * Always set the map height explicitly to define the size of the div element
  * that contains the map. 
  */
@@ -24,4 +24,4 @@ body {
   margin: 0;
   padding: 0;
 }
-/* [END 3d-marker-customization] */
+/* [END maps_3d_marker_customization] */

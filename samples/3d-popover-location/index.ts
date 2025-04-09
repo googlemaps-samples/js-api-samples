@@ -13,7 +13,7 @@
 */
 
 // @ts-nocheck
-// [START 3d-popover-location]
+// [START maps_3d_popover_location]
 async function init() {
 const { AltitudeMode, Map3DElement, MapMode, PopoverElement } = await google.maps.importLibrary("maps3d");
 
@@ -37,4 +37,4 @@ document.body.append(map);
 }
 
 init();
-// [END 3d-popover-location]
+// [END maps_3d_popover_location]

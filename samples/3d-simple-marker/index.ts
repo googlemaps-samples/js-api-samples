@@ -12,7 +12,7 @@
  * limitations under the License.
 */
 //@ts-nocheck
-// [START 3d_simple_marker]
+// [START maps_3d_simple_marker]
 async function init() {
     // Make sure the Marker3DElement is included.
     const { Map3DElement, Marker3DElement } = await google.maps.importLibrary("maps3d");
@@ -36,4 +36,4 @@ async function init() {
 }
 
 init();
-// [END 3d_simple_marker]
+// [END maps_3d_simple_marker]

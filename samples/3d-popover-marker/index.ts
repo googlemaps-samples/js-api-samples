@@ -13,7 +13,7 @@
 */
 
 // @ts-nocheck
-// [START 3d-popover-marker]
+// [START maps_3d_popover_marker]
 async function init() {
     const { AltitudeMode, Map3DElement, Marker3DInteractiveElement, MapMode, PopoverElement } = await google.maps.importLibrary("maps3d");
 
@@ -48,4 +48,4 @@ async function init() {
 }
 
 init();
-// [END 3d-popover-marker]
+// [END maps_3d_popover_marker]

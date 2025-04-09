@@ -13,7 +13,7 @@
 */
 
 // @ts-nocheck
-// [START 3d-marker-customization]
+// [START maps_3d_marker_customization]
 async function init() {
     const { Map3DElement, Marker3DElement } = await google.maps.importLibrary("maps3d");
     const { PinElement } = await google.maps.importLibrary("marker");
@@ -105,4 +105,4 @@ async function init() {
 }
 
 init();
-// [END 3d-marker-customization]
+// [END maps_3d_marker_customization]
