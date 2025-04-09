@@ -64,6 +64,7 @@ export default defineConfig({
         launchOptions: {
           args: ['--enable-webgl', '--ignore-gpu-blocklist'],
         },
+      },
     },
     /**
     {
