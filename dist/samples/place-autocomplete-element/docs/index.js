@@ -1,3 +1,4 @@
+"use strict";
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
@@ -33,4 +34,4 @@ async function initMap() {
     // [END maps_place_autocomplete_element_listener]
 }
 initMap();
-export {};
+// [END maps_place_autocomplete_element]

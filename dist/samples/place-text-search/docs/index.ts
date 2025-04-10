@@ -69,5 +69,3 @@ async function findPlaces() {
 
 initMap();
 // [END maps_place_text_search]
-
-export { };

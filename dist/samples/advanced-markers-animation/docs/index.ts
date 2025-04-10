@@ -109,4 +109,3 @@
 
 initMap();
 // [END maps_advanced_markers_animation]
-export { };

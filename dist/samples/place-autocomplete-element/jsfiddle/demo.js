@@ -1,3 +1,4 @@
+"use strict";
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
@@ -33,4 +34,4 @@ async function initMap() {
     
 }
 initMap();
-export {};
+

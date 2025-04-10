@@ -97,4 +97,5 @@ declare global {
   }
   window.init = init;
 // [END maps_place_autocomplete_data_session]
+void 0; // No-op to preserve the last region tag comment.
 export { };

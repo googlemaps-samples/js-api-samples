@@ -1,3 +1,4 @@
+"use strict";
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
@@ -27,7 +28,7 @@ async function initMap() {
         mapTypeControl: false,
         clickableIcons: false,
     });
-    searchByTextRequest('tacos near me');
+    searchByTextRequest('tacos in Mountain View');
 }
 /* [END maps_ui_kit_place_search_text_init_map] */
 /* [START maps_ui_kit_place_search_text_query] */
@@ -87,6 +88,5 @@ function offsetLatLngRight(latLng, longitudeOffset) {
     const newLng = latLng.lng + longitudeOffset;
     return new google.maps.LatLng(latLng.lat, newLng);
 }
-window.initMap = initMap;
-/* [END maps_ui_kit_place_search_text] */
-export {};
+initMap();
+/* [END maps_ui_kit_place_search_text] */ 

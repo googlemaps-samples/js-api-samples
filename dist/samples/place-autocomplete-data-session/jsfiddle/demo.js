@@ -75,4 +75,6 @@ function refreshToken(request) {
     request.sessionToken = new google.maps.places.AutocompleteSessionToken();
 }
 window.init = init;
+
+void 0; // No-op to preserve the last region tag comment.
 export {};

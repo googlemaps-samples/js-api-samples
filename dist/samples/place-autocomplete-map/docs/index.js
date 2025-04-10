@@ -1,3 +1,4 @@
+"use strict";
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
@@ -72,4 +73,4 @@ function updateInfoWindow(content, center) {
     });
 }
 initMap();
-export {};
+// [END maps_place_autocomplete_map]
