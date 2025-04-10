@@ -1,0 +1,31 @@
+<!--
+ @license
+ Copyright 2025 Google LLC. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Place List Text Search with Google Maps</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="module" src="./index.js"></script>
+  </head>
+  <body>
+    
+    <gmp-map center="-37.813,144.963" zoom="10" map-id="DEMO_MAP_ID">
+      <div class="overlay" slot="control-inline-start-block-start">
+        <div class="list-container">
+          <gmp-place-list selectable></gmp-place-list>
+        </div>
+      </div>
+      <gmp-place-details size="large"></gmp-place-details>
+    </gmp-map>
+    
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8&libraries=maps&callback=initMap&v=alpha"
+      defer
+    ></script>
+  </body>
+</html>
