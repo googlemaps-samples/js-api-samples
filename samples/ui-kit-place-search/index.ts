@@ -124,11 +124,5 @@ async function findCurrentLocation(){
 
 }
 
-declare global {
-    interface Window {
-      initMap: () => void;
-    }
-  }
-  window.initMap = initMap;
+initMap();
 /* [END maps_ui_kit_place_search] */
-export{};
