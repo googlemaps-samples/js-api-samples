@@ -32,7 +32,7 @@ async function initMap(): Promise<void>  {
         clickableIcons: false,
     });
 
-    searchByTextRequest('tacos near me');
+    searchByTextRequest('tacos in Mountain View');
 }
 /* [END maps_ui_kit_place_search_text_init_map] */
 
@@ -100,11 +100,5 @@ function offsetLatLngRight(latLng, longitudeOffset) {
     return new google.maps.LatLng(latLng.lat, newLng);
 }
 
-declare global {
-    interface Window {
-      initMap: () => void;
-    }
-  }
-  window.initMap = initMap;
+initMap();
 /* [END maps_ui_kit_place_search_text] */
-export{};
