@@ -88,5 +88,5 @@ function offsetLatLngRight(latLng, longitudeOffset) {
     return new google.maps.LatLng(latLng.lat, newLng);
 }
 window.initMap = initMap;
-/* [START maps_ui_kit_place_search_text] */
+/* [END maps_ui_kit_place_search_text] */
 export {};
