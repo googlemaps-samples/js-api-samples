@@ -29,6 +29,7 @@ async function initMap() {
     map.innerMap.setZoom(16);
     marker.position = placeDetails.place.location;
     marker.style.display = 'block';
+    marker.collisionBehavior = google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
     /* [START maps_ui_kit_place_details_event] */
     // Add an event listener to handle map clicks.
     map.innerMap.addListener('click', async (event) => {
