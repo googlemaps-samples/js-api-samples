@@ -40,4 +40,3 @@ async function initMap(): Promise<void> {
 
 initMap();
 // [END maps_place_autocomplete_element]
-export { };

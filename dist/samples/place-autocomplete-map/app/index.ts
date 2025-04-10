@@ -83,4 +83,3 @@ function updateInfoWindow(content, center) {
 
 initMap();
 // [END maps_place_autocomplete_map]
-export { };

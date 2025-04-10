@@ -1,3 +1,4 @@
+"use strict";
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
@@ -56,4 +57,4 @@ async function findPlaces() {
     }
 }
 initMap();
-export {};
+// [END maps_place_text_search]

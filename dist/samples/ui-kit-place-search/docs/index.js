@@ -1,3 +1,4 @@
+"use strict";
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
@@ -101,5 +102,5 @@ async function findCurrentLocation() {
         map.innerMap.setZoom(14);
     }
 }
-window.initMap = initMap;
-export {};
+initMap();
+/* [END maps_ui_kit_place_search] */ 

@@ -12,6 +12,6 @@
         "dom.iterable"
       ],
       "moduleResolution": "Node",
-      "jsx": "preserve"
+      "jsx": "preserve",
     }
   }

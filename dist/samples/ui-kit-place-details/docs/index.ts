@@ -56,19 +56,13 @@ async function initMap(): Promise<void> {
     map.innerMap.panTo(adjustedCenter);
   });
 }
+/* [END maps_ui_kit_place_details_event] */
 
 // Helper function to offset the map center.
 function offsetLatLngRight(latLng, longitudeOffset) {
   const newLng = latLng.lng() + longitudeOffset;
   return new google.maps.LatLng(latLng.lat(), newLng);
 }
-/* [END maps_ui_kit_place_details_event] */
 
-declare global {
-  interface Window {
-    initMap: () => void;
-  }
-}
-window.initMap = initMap;
+initMap();
 /* [END maps_ui_kit_place_details] */
-export {};

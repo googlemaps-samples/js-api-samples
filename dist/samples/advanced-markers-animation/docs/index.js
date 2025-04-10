@@ -1,3 +1,4 @@
+"use strict";
 /**
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
@@ -93,4 +94,4 @@ function refreshMap() {
     initMap();
 }
 initMap();
-export {};
+// [END maps_advanced_markers_animation]

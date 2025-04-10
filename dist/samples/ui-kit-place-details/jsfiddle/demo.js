@@ -1,3 +1,4 @@
+"use strict";
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
@@ -51,10 +52,11 @@ async function initMap() {
         map.innerMap.panTo(adjustedCenter);
     });
 }
+/* [END maps_ui_kit_place_details_event] */
 // Helper function to offset the map center.
 function offsetLatLngRight(latLng, longitudeOffset) {
     const newLng = latLng.lng() + longitudeOffset;
     return new google.maps.LatLng(latLng.lat(), newLng);
 }
-window.initMap = initMap;
-export {};
+initMap();
+/* [END maps_ui_kit_place_details] */
