@@ -3,7 +3,7 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-/* [START maps_ui_kit_place_search] */
+/* [START maps_ui_kit_place_search_text] */
 html,
   body {
       height: 100%;
@@ -65,4 +65,4 @@ html,
   gmp-place-list {
       background-color: #fff;
   }
-/* [END maps_ui_kit_place_search] */
+/* [END maps_ui_kit_place_search_text] */
