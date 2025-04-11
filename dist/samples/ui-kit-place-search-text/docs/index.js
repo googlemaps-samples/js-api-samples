@@ -15,10 +15,12 @@ let marker = document.querySelector('gmp-advanced-marker');
 let markers = {};
 let infoWindow;
 let center = { lat: 37.395641, lng: -122.077627 };
+let bounds;
 async function initMap() {
-    await google.maps.importLibrary("places");
-    const { InfoWindow } = await google.maps.importLibrary("maps");
+    const { Map, InfoWindow } = await google.maps.importLibrary("maps");
     const { Place } = await google.maps.importLibrary("places");
+    // Set bounds for location restriction.
+    bounds = new google.maps.LatLngBounds({ lat: 37.37808200917261, lng: -122.13741583377849 }, { lat: 37.416676154341324, lng: -122.02261728794109 });
     infoWindow = new google.maps.InfoWindow;
     // Center the map
     let adjustedCenter = offsetLatLngRight(center, -0.005);
@@ -35,7 +37,7 @@ async function initMap() {
 async function searchByTextRequest(textQuery) {
     if (textQuery) {
         placeList.configureFromSearchByTextRequest({
-            locationRestriction: map.innerMap.getBounds(),
+            locationRestriction: bounds,
             includedType: "restaurant",
             textQuery: textQuery,
         }).then(addMarkers);
