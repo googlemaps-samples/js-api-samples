@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/3d-camera-to-around",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh 3d-camera-to-around && bash ../app.sh 3d-camera-to-around && bash ../docs.sh 3d-camera-to-around &&  npm run build:vite --workspace=. && bash ../dist.sh 3d-camera-to-around",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
