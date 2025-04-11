@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/3d-polyline-click-event",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh 3d-polyline-click-event && bash ../app.sh 3d-polyline-click-event && bash ../docs.sh 3d-polyline-click-event &&  npm run build:vite --workspace=. && bash ../dist.sh 3d-polyline-click-event",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
