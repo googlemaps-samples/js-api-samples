@@ -18,7 +18,7 @@ async function init() {
     const { Map3DElement } = await google.maps.importLibrary("maps3d");
 
     const map = new Map3DElement(
-        { center: { lat: 37.79810773998413, lng : -122.41784275049939, altitude: 89.08476932205978 }, range: 6062.016931506805, tilt: 81.17100663963272 ,heading: -56.047035719765596, }
+        { center: { lat: 37.79810773998413, lng : -122.41784275049939, altitude: 89.08476932205978 }, range: 6062.016931506805, tilt: 81.17100663963272, heading: -56.047035719765596, }
     );
 
     map.mode = "SATELLITE";
@@ -52,8 +52,8 @@ async function init() {
     }, {once: true}); // Stop after the flying around.
 
     // At any time stop the animation.
-    map3DElement.addEventListener('gmp-click', (event) => {
-        map3DElement.stopCameraAnimation();
+    map.addEventListener('gmp-click', (event) => {
+        map.stopCameraAnimation();
     });
 }
 
