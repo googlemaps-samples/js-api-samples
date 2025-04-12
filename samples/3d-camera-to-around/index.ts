@@ -1,15 +1,7 @@
 /*
- * Copyright 2025 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * * https://www.apache.org/licenses/LICENSE-2.0
- * * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+* @license
+* Copyright 2025 Google LLC. All Rights Reserved.
+* SPDX-License-Identifier: Apache-2.0
 */
 
 // @ts-nocheck
@@ -25,13 +17,13 @@ async function init() {
 
     document.body.append(map);
 
-    // We will use this for foth the flying to function but also the location to fly around.
+    // Used for both the fly to function and the location to fly around.
     const flyToCamera = { 
         center: { lat: 21.263523536467105, lng : -157.80663691939296, altitude: 80.28936069489404 }, 
         range: 1500.8202963253427, tilt: 76.9173260789542 ,heading: -44.59196007522445,
     }; 
 
-    // Fly the camera from San Francisco to Hawaii, we could put this behind a button if we liked.
+    // Fly the camera from San Francisco to Hawaii, can be controlled by a button alternatively.
     map.flyCameraTo({
         // Where we are going to.
         endCamera: flyToCamera,
@@ -39,17 +31,17 @@ async function init() {
         durationMillis: 30000,
     });
 
-    // When the animation has completed fly around the location.
+    // When the animation has completed, fly around the location.
     map.addEventListener('gmp-animationend', () => {
         map.flyCameraAround({
-            // What we are flying around.
+            // Location to fly around.
             camera: flyToCamera,
-            // How long we want it to take.
+            // Length of time to fly to the location.
             durationMillis: 50000,
-            // How many time it should fly around in the time we specified.
+            // Number of rotations to make in the specified time.
             rounds: 1
         });
-    }, {once: true}); // Stop after the flying around.
+    }, {once: true}); // Stop animation after flying around.
 
     // At any time stop the animation.
     map.addEventListener('gmp-click', (event) => {
