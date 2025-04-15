@@ -1,0 +1,21 @@
+/*
+* @license
+* Copyright 2025 Google LLC. All Rights Reserved.
+* SPDX-License-Identifier: Apache-2.0
+*/
+/* [START maps_3d_simple_map_declarative] */
+/* * Always set the map height explicitly to define the size of the div element
+ * that contains the map. 
+ */
+html,
+gmp-map-3d {
+    height: 100%;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+/* [END maps_3d_simple_map_declarative] */
