@@ -13,7 +13,7 @@ async function initMap() {
         center: { lat: -36.86, lng: 174.76, altitude: 10000 },
         tilt: 67.5,
         mode: 'HYBRID',
-        bounds: {south: -48.30, west: 163.56, north: -32.86, east: -180};
+        bounds: {south: -48.30, west: 163.56, north: -32.86, east: -180},
     });
 
     document.body.append(map);
