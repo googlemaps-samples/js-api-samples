@@ -7,6 +7,7 @@
 // @ts-nocheck
 
 async function init() {
+    // Import the needed libraries.
     const { Map3DElement, Model3DElement } = await google.maps.importLibrary("maps3d");
     const map = new Map3DElement({
         center: { lat: 39.1178, lng: -106.4452, altitude: 4395.4952 }, range: 1500, tilt: 74, heading: 0,
