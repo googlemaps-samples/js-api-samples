@@ -7,6 +7,7 @@
 // @ts-nocheck
 // [START maps_3d_model]
 async function init() {
+    // Import the needed libraries.
     const { Map3DElement, Model3DElement } = await google.maps.importLibrary("maps3d");
 
     const map = new Map3DElement({
