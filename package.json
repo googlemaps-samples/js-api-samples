@@ -11,12 +11,12 @@
     "samples/*"
   ],
   "devDependencies": {
-    "@playwright/test": "^1.51.1",
+    "@playwright/test": "^1.52.0",
     "@types/google.maps": "^3.58.1",
     "@types/node": "^22.14.1",
     "rimraf": "^6.0.1",
     "typescript": "^5.8.3",
-    "vite": "^6.2.6"
+    "vite": "^6.3.2"
   },
   "dependencies": {
     "dotenv": "^16.5.0"
