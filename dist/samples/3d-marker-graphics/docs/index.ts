@@ -20,7 +20,7 @@ async function init() {
 
     // A marker with a with a URL pointing to a PNG.
     const beachFlagImg = document.createElement('img');
-    beachFlagImg.src = './beachflag.png';
+    beachFlagImg.src = 'https://maps-docs-team.web.app/assets/beachflag.png';
 
     const beachFlagMarker = new Marker3DElement({
         position: { lat: 37.434, lng: -122.082 },
