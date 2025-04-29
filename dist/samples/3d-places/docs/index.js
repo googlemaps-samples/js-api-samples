@@ -19,6 +19,7 @@ async function init() {
     });
     document.body.append(map3DElement);
     map3DElement.addEventListener('gmp-click', async (event) => {
+        event.preventDefault();
         if (event.placeId) {
             const place = await event.fetchPlace();
             await place.fetchFields({ fields: ['*'] });
