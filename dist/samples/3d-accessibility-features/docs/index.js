@@ -44,9 +44,7 @@ async function initMap() {
             scale: 1.5,
             glyphColor: "#FFFFFF"
         });
-        const popover = new PopoverElement({
-            open: true,
-        });
+        const popover = new PopoverElement();
         const content = `${i + 1}. ${title}`;
         const header = document.createElement('span');
         // Include the label for screen readers.
@@ -55,6 +53,8 @@ async function initMap() {
         popover.append(header);
         popover.append(content);
         const interactiveMarker = new Marker3DInteractiveElement({
+            // Include a title, used for accessibility text for use by screen readers.
+            title,
             position,
             gmpPopoverTargetElement: popover
         });
