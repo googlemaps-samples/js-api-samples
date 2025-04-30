@@ -1,0 +1,15 @@
+{
+    "name": "@js-api-samples/ui-kit-place-details-compact",
+    "version": "1.0.0",
+    "scripts": {
+      "build": "tsc && bash ../jsfiddle.sh ui-kit-place-details-compact && bash ../app.sh ui-kit-place-details-compact && bash ../docs.sh ui-kit-place-details-compact && npm run build:vite --workspace=. && bash ../dist.sh ui-kit-place-details-compact",
+      "test": "tsc && npm run build:vite --workspace=.",
+      "start": "tsc && vite build --base './' && vite",
+      "build:vite": "vite build --base './'",
+      "preview": "vite preview"
+    },
+    "dependencies": {
+      
+    }
+  }
+  
