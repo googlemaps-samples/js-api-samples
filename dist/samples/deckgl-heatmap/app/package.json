@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/deckgl-heatmap",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh deckgl-heatmap && bash ../app.sh deckgl-heatmap && bash ../docs.sh deckgl-heatmap && npm run build:vite --workspace=. && bash ../dist.sh deckgl-heatmap",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}

@@ -6,7 +6,8 @@
 -->
 <html>
   <head>
-    <title>deck.gl PolygonLayer and Google Maps Platform</title>
+    <title>deck.gl HeatmapLayer and Google Maps Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Use Material Design Progress indicator -->
     <link
@@ -17,7 +18,8 @@
     <script src="https://unpkg.com/deck.gl@8.9.22/dist.min.js"></script>
     <script src="https://unpkg.com/@deck.gl/google-maps@8.9.22/dist.min.js"></script>
 
-    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" crossorigin href="./assets/index-Bq-nlDlf.css">
   </head>
   <body>
    <div
@@ -48,18 +50,18 @@
    };
  </script>
 
-    <h1>Population Density</h1>
-    <button id="toggleButton">Hide Polygon Layer</button>
+    <h1>Bike Parking Heatmap</h1>
 
     <div id="map"></div>
 
     <div id="legend">
-      <div><span style="background-color: #148c00;"></span>0 - 2400</div>
-      <div><span style="background-color: #3c8c00;"></span>2401 - 4800</div>
-      <div><span style="background-color: #648c00;"></span>4801 - 7200</div>
-      <div><span style="background-color: #8c8c00;"></span>7201 - 9600</div>
-      <div><span style="background-color: #b48c00;"></span>9601 - 12000</div>
-      <div><span style="background-color: #dc8c00;"></span>12001+</div>
+      <h4>Bike Parking Spaces</h4>
+      <div><span style="background-color: #ffffe5;"></span>0 - 33</div>
+      <div><span style="background-color: #ffffb2;"></span>34 - 66</div>
+      <div><span style="background-color: #fecc5c;"></span>67 - 100</div>
+      <div><span style="background-color: #fd8d3c;"></span>101 - 133</div>
+      <div><span style="background-color: #f03b20;"></span>134 - 166</div>
+      <div><span style="background-color: #bd0026;"></span>167+</div>
     </div>
 
     <!--
@@ -69,11 +71,11 @@
       https://developers.google.com/maps/documentation/javascript/load-maps-js-api
       for more information.
       -->
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8&v=weekly"
+      
+      <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjDvyUAyOXvcBYCA4gxAW4TWBZgxHQwlA&v=weekly"
       defer
     ></script>
-  <div id="tooltip"></div>
-  <script src="index.js" defer></script>
+    <button id="toggleButton">Hide Heatmap Layer</button>
   </body>
 </html>
