@@ -1,5 +1,5 @@
 {
-  "name": "@js-api-samples/add-map",
+  "name": "@js-api-samples/deckgl-polygon",
   "version": "1.0.0",
   "scripts": {
     "build": "tsc && bash ../jsfiddle.sh add-map && bash ../app.sh add-map && bash ../docs.sh add-map && npm run build:vite --workspace=. && bash ../dist.sh add-map",
