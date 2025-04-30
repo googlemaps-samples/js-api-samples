@@ -1,0 +1,48 @@
+/*
+ * @license
+ * Copyright 2025 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* 
+ * Optional: Makes the sample page fill the window. 
+ */
+body {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+gmp-map {
+  height: 400px;
+}
+
+gmp-place-details-compact {
+  /* --- Custom Properties for Color --- */
+  /* Sets the color for text and icons on the surface */
+  /* Adapts automatically to the user's system light/dark mode preference */
+  --gmp-mat-color-on-surface: light-dark(black, white);
+  /* Sets the background color of the surface */
+  /* Adapts automatically to the user's system light/dark mode preference */
+  --gmp-mat-color-surface: light-dark(white, black);
+
+  /* --- Custom Properties for Typography --- */
+  /* Defines the primary font stack used within the component */
+  --gmp-mat-font-family: Google Sans Text, sans-serif;
+  /* Defines the style for medium body text (e.g., address, descriptions) */
+  --gmp-mat-font-body-medium: normal 400 0.875em/1.25em var(--gmp-mat-font-family, 'Google Sans Text');
+
+  margin: 20px;
+  width: 400px;
+  padding: 12px;
+  margin-top: 10px;
+  overflow-y: auto;
+}
+
+.widget-container {
+  height: 500px;
+  width: 457px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
