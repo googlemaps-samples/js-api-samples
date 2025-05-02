@@ -21,3 +21,6 @@ firebase-debug.log
 
 # Ignore all gha-creds-*.json files
 gha-creds-*.json
+
+# local dev
+samples/deckgl-kml-raster/*
