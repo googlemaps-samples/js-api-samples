@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/deckgl-kml",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh deckgl-kml && bash ../app.sh deckgl-kml && bash ../docs.sh deckgl-kml && npm run build:vite --workspace=. && bash ../dist.sh deckgl-kml",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@loaders.gl/kml": "^3.4.15"
+  }
+}
