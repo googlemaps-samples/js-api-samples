@@ -20,6 +20,7 @@
 
     <link rel="stylesheet" href="style.css">
 
+    <script type="module" src="index.js" defer></script>
   </head>
   <body>
    <div
@@ -73,10 +74,8 @@
       -->
       
       <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8&v=weekly"
-      defer
+      async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8&v=weekly&callback=initMap"
     ></script>
     <button id="toggleButton">Hide Heatmap Layer</button>
-    <script type="module" src="index.js" defer></script>
   </body>
 </html>

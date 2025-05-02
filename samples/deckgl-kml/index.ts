@@ -210,6 +210,5 @@ function hexOrAabbggrrToRgba(color: string): number[] | null {
  return null; // Invalid format
 }
 
-initMap();
 // Expose initMap to the global scope
 (window as any).initMap = initMap;

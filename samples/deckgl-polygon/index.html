@@ -18,6 +18,9 @@
     <script src="https://unpkg.com/@deck.gl/google-maps@8.9.22/dist.min.js"></script>
 
     <link rel="stylesheet" href="style.css">
+
+    <script type="module" src="index.js" defer></script>
+
   </head>
   <body>
    <div
@@ -69,11 +72,9 @@
       https://developers.google.com/maps/documentation/javascript/load-maps-js-api
       for more information.
       -->
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8&v=weekly"
-      defer
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8&v=weekly&callback=initMap"
     ></script>
   <div id="tooltip"></div>
-  <script type="module" src="index.js" defer></script>
   </body>
 </html>
