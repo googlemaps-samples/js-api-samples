@@ -24,3 +24,4 @@ samples/deckgl-editable-geojson
 samples/deckgl-kml-raster
 
 /dist/
+.env
