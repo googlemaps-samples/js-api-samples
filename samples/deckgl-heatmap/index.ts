@@ -70,8 +70,7 @@ async function initMap(): Promise<void> {
     fullscreenControl: false, // Disable fullscreen control
     clickableIcons: false, // Disable clicks on base map POIs
   });
-  // [END maps_add_map_instantiate_map]
-
+  
   // Deck.gl Layer and Overlay
   // Use global deck object
   heatmapLayer = new deck.HeatmapLayer({ // Assign to the outer heatmapLayer

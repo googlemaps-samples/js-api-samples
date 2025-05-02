@@ -45,7 +45,6 @@ declare namespace deck {
   // Add other Deck.gl types used globally if needed
 }
 
-// [START maps_add_map_deckgl_kml_updated]
 // Initialize and add the map
 let map: google.maps.Map;
 let geojsonLayer: deck.GeoJsonLayer;
@@ -91,7 +90,6 @@ async function initMap(): Promise<void> {
     zoomControl:true,
     clickableIcons: false, // Disable clicks on base map POIs
   });
-  // [END maps_add_map_deckgl_kml_updated]
 
   // Deck.gl Layer and Overlay
   geojsonLayer = new deck.GeoJsonLayer({

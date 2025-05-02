@@ -20,7 +20,6 @@ declare namespace deck {
   // Add other Deck.gl types used globally if needed
 }
 
-// [START maps_add_map]
 // Initialize and add the map
 let map: google.maps.Map;
 let polygonLayer: deck.PolygonLayer; // Declare polygonLayer outside for button access
@@ -145,4 +144,3 @@ async function initMap(): Promise<void> {
 }
 
 initMap();
-// [END maps_add_map]
