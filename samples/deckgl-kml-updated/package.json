@@ -9,6 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@loaders.gl/kml": "^3.4.15"
+    "@loaders.gl/kml": "^4.0.0"
+  },
+  "devDependencies": {
+    "apache-arrow": "^15.0.0"
   }
 }
