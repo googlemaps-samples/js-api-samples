@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@deck.gl/geo-layers": "^8.9.22",
     "@loaders.gl/kml": "^3.4.15"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@js-api-samples/deckgl-kml",
+  "name": "@js-api-samples/deckgl-kml-updated",
   "version": "1.0.0",
   "scripts": {
     "build": "tsc && bash ../jsfiddle.sh deckgl-kml && bash ../app.sh deckgl-kml && bash ../docs.sh deckgl-kml && npm run build:vite --workspace=. && bash ../dist.sh deckgl-kml",
@@ -9,7 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@deck.gl/geo-layers": "^8.9.22",
     "@loaders.gl/kml": "^3.4.15"
   }
 }
