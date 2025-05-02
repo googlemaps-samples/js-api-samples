@@ -197,4 +197,3 @@ async function initMap(): Promise<void> {
 }
 
 initMap();
-// [END maps_add_map]
