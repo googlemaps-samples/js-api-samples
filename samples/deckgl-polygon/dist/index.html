@@ -1,0 +1,79 @@
+<!doctype html>
+<!--
+ @license
+ Copyright 2019 Google LLC. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+-->
+<html>
+  <head>
+    <title>deck.gl PolygonLayer and Google Maps Platform</title>
+
+    <!-- Use Material Design Progress indicator -->
+    <link
+      href="https://unpkg.com/material-components-web@6.0.0/dist/material-components-web.css"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/material-components-web@6.0.0/dist/material-components-web.min.js"></script>
+    <script src="https://unpkg.com/deck.gl@8.9.22/dist.min.js"></script>
+    <script src="https://unpkg.com/@deck.gl/google-maps@8.9.22/dist.min.js"></script>
+
+    <script type="module" crossorigin src="./assets/index-BO5qK1Y_.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-5cxXJn4L.css">
+  </head>
+  <body>
+   <div
+   role="progressbar"
+   class="mdc-linear-progress"
+   aria-label="Data Progress Bar"
+ >
+   <div class="mdc-linear-progress__buffer">
+     <div class="mdc-linear-progress__buffer-bar"></div>
+     <div class="mdc-linear-progress__buffer-dots"></div>
+   </div>
+   <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+     <span class="mdc-linear-progress__bar-inner"></span>
+   </div>
+   <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+     <span class="mdc-linear-progress__bar-inner"></span>
+   </div>
+ </div>
+ <script>
+   var progress, progressDiv;
+   progressDiv = document.querySelector(".mdc-linear-progress");
+   progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
+   progress.open();
+   progress.determinate = false;
+   progress.done = function () {
+     progress.close();
+     progressDiv.remove();
+   };
+ </script>
+
+    <h1>Population Density</h1>
+    <button id="toggleButton">Hide Polygon Layer</button>
+
+    <div id="map"></div>
+
+    <div id="legend">
+      <div><span style="background-color: #148c00;"></span>0 - 2400</div>
+      <div><span style="background-color: #3c8c00;"></span>2401 - 4800</div>
+      <div><span style="background-color: #648c00;"></span>4801 - 7200</div>
+      <div><span style="background-color: #8c8c00;"></span>7201 - 9600</div>
+      <div><span style="background-color: #b48c00;"></span>9601 - 12000</div>
+      <div><span style="background-color: #dc8c00;"></span>12001+</div>
+    </div>
+
+    <!--
+      The `defer` attribute causes the script to execute after the full HTML
+      document has been parsed. For non-blocking uses, avoiding race conditions,
+      and consistent behavior across browsers, consider loading using Promises. See
+      https://developers.google.com/maps/documentation/javascript/load-maps-js-api
+      for more information.
+      -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8&v=weekly"
+      defer
+    ></script>
+  <div id="tooltip"></div>
+  </body>
+</html>

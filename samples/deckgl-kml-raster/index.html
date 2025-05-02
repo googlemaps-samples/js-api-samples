@@ -1,0 +1,73 @@
+<!doctype html>
+<!--
+ @license
+ Copyright 2025 Google LLC. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+-->
+<html>
+  <head>
+    <title>deck.gl KMLLoader and Google Maps Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Use Material Design Progress indicator -->
+    <link
+      href="https://unpkg.com/material-components-web@6.0.0/dist/material-components-web.css"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/material-components-web@6.0.0/dist/material-components-web.min.js"></script>
+    <script src="https://unpkg.com/deck.gl@8.9.22/dist.min.js"></script>
+    <script src="https://unpkg.com/@deck.gl/google-maps@8.9.22/dist.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+
+  </head>
+  <body>
+   <div
+   role="progressbar"
+   class="mdc-linear-progress"
+   aria-label="Data Progress Bar"
+ >
+   <div class="mdc-linear-progress__buffer">
+     <div class="mdc-linear-progress__buffer-bar"></div>
+     <div class="mdc-linear-progress__buffer-dots"></div>
+   </div>
+   <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+     <span class="mdc-linear-progress__bar-inner"></span>
+   </div>
+   <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+     <span class="mdc-linear-progress__bar-inner"></span>
+   </div>
+ </div>
+ <script>
+   var progress, progressDiv;
+   progressDiv = document.querySelector(".mdc-linear-progress");
+   progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
+   progress.open();
+   progress.determinate = false;
+   progress.done = function () {
+     progress.close();
+     progressDiv.remove();
+   };
+ </script>
+
+    <h1>Deck.gl KMLLoader</h1>
+
+    <div id="map"></div>
+
+    <div id="tooltip" class="tooltip"></div>
+
+    <!--
+      The `defer` attribute causes the script to execute after the full HTML
+      document has been parsed. For non-blocking uses, avoiding race conditions,
+      and consistent behavior across browsers, consider loading using Promises. See
+      https://developers.google.com/maps/documentation/javascript/load-maps-js-api
+      for more information.
+      -->
+
+      <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8&v=weekly"
+      defer
+    ></script>
+    <script src="index.js" type="module" defer></script>
+  </body>
+</html>

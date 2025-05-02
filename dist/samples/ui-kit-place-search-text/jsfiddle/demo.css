@@ -1,0 +1,68 @@
+/*
+ * @license
+ * Copyright 2025 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+html,
+  body {
+      height: 100%;
+      margin: 0;
+  }
+
+  body {
+      display: flex;
+      flex-direction: column;
+      font-family: Arial, Helvetica, sans-serif;
+  }
+
+  h1 {
+      font-size: 16px;
+      text-align: center;
+  }
+
+  gmp-map {
+      box-sizing: border-box;
+      height: 500px;
+  }
+
+  .overlay {
+      position: relative;
+      top: 20px;
+      margin: 20px;
+      width: 400px;
+  }
+
+  .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+      height: 32px;
+  }
+
+  .search-button {
+      background-color: #5491f5;
+      color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100px;
+      cursor: pointer;
+  }
+
+  .type-select {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      flex-grow: 1;
+      padding: 0 10px;
+  }
+
+  .list-container {
+      height: 400px;
+      overflow: auto;
+      border-radius: 10px;
+  }
+
+  gmp-place-list {
+      background-color: #fff;
+  }
+
