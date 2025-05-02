@@ -2,7 +2,7 @@
   "name": "@js-api-samples/deckgl-kml-updated",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh deckgl-kml && bash ../app.sh deckgl-kml && bash ../docs.sh deckgl-kml && npm run build:vite --workspace=. && bash ../dist.sh deckgl-kml",
+    "build": "tsc && bash ../jsfiddle.sh deckgl-kml-updated && bash ../app.sh deckgl-kml-updated && bash ../docs.sh deckgl-kml-updated && npm run build:vite --workspace=. && bash ../dist.sh deckgl-kml-updated",
     "test": "tsc && npm run build:vite",
     "start": "vite",
     "build:vite": "vite build --base './'",
