@@ -196,5 +196,4 @@ async function initMap(): Promise<void> {
   }
 }
 
-// Expose initMap to the global scope
-(window as any).initMap = initMap;
+initMap();
