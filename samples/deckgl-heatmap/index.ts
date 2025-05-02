@@ -46,7 +46,6 @@ async function initMap(): Promise<void> {
   }
 
 
-  // [START maps_add_map_instantiate_map]
   // The location for the map center.
   const position = {lat:37.77325660358167, lng:-122.41712341793448}; // Using the center from original deckgl-polygon.js
 

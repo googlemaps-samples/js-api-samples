@@ -43,7 +43,6 @@ async function initMap(): Promise<void> {
   }
 
 
-  // [START maps_add_map_instantiate_map]
   // The location for the map center.
   const position = {lat: 37.752954624496304, lng:-122.44754059928648}; // Using the center from original deckgl-polygon.js
 
@@ -67,7 +66,6 @@ async function initMap(): Promise<void> {
     streetViewControl: false,
     // clickableIcons: false, // Disable clicks on base map POIs
   });
-  // [END maps_add_map_instantiate_map]
 
   // Deck.gl Layer and Overlay
   polygonLayer = new deck.PolygonLayer({ // Assign to the outer polygonLayer
