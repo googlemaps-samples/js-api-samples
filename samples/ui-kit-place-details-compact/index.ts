@@ -13,7 +13,7 @@ const marker = document.querySelector('gmp-advanced-marker') as any;
 async function initMap(): Promise<void> {
   // Request needed libraries.
   const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
-  const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
+  const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
   const { Place } = await google.maps.importLibrary("places") as google.maps.PlacesLibrary;
   // Hide the map type control.
   map.innerMap.setOptions({ mapTypeControl: false });

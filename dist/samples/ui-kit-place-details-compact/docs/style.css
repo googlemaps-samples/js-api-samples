@@ -31,17 +31,13 @@ gmp-place-details-compact {
   --gmp-mat-font-family: Google Sans Text, sans-serif;
   /* Defines the style for medium body text (e.g., address, descriptions) */
   --gmp-mat-font-body-medium: normal 400 0.875em/1.25em var(--gmp-mat-font-family, 'Google Sans Text');
-
-  margin: 20px;
-  width: 400px;
-  padding: 12px;
-  margin-top: 10px;
-  overflow-y: auto;
+  
+  width: 360px;
 }
 /* [END maps_ui_kit_place_details_compact_style] */
 .widget-container {
-  height: 500px;
-  width: 457px;
+  width: 380px;
+  margin-top: 100px;
   overflow-y: hidden;
   overflow-x: hidden;
 }
