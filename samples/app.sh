@@ -30,7 +30,6 @@ cp "${SCRIPT_DIR}/${NAME}/style.css" "${APP_DIR}/style.css"
 cp "${SCRIPT_DIR}/${NAME}/package.json" "${APP_DIR}/package.json"
 cp "${SCRIPT_DIR}/${NAME}/tsconfig.json" "${APP_DIR}/tsconfig.json"
 cp "${SCRIPT_DIR}/${NAME}/README.md" "${APP_DIR}/README.md"
-cp "${SCRIPT_DIR}/.env" "${APP_DIR}/.env"
 
 # Generate .eslintsrc.json
 touch "${APP_DIR}/.eslintsrc.json"
