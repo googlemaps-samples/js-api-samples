@@ -115,7 +115,7 @@ function handleExampleSelectChange(event) {
   }
 }
 
-// *** Clear Form Handler ***
+// Clear Form Handler
 function handleClearForm() {
   streetAddress1Input!.value = '';
   streetAddress2Input!.value = '';
@@ -128,7 +128,7 @@ function handleClearForm() {
   console.log('Cleared form');
 }
 
-// --- Example Address Data ---
+// Example Address Data
 const examples = {
   google: {
       streetAddress1: '1600 Amphitheatre Parkway',
@@ -180,7 +180,7 @@ const examples = {
   },
 };
 
-// *** Helper function to populate form fields with example address data ***
+// Helper function to populate form fields with example address data
 function populateAddressFields(exampleAddress) {
   if (!exampleAddress) {
       console.warn("No example address data provided.");
