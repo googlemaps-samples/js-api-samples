@@ -13,13 +13,14 @@ html {
     font-family: "Google Sans", sans-serif;
     font-size: 20px;
     color: #333;
-    background-color: #f4f4f9
 }
 
 #sidebar {
     width: 800px;
     max-width: calc(100% - 2rem);
     background-color: #fff;
+    border-color: #9ca3af;
+    border-style: solid;
     border-radius: .5rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1), 0 2px 4px -1px rgba(0, 0, 0, .06);
     display: flex;
