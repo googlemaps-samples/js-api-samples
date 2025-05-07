@@ -1,0 +1,71 @@
+/*
+ * @license
+ * Copyright 2025 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+ 
+  /*
+  * Always set the map height explicitly to define the size of the div element
+  * that contains the map.
+  */
+  #map {
+    height: 100%;
+    flex-grow: 1; /* Make map take up remaining space */
+  }
+
+  /*
+   * Optional: Makes the sample page fill the window.
+   */
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack children vertically */
+    position: relative; /* Set body as positioning context */
+    font-family: 'Roboto', Arial, sans-serif; /* Set font family */
+}
+  
+
+.tooltip {
+  position: absolute;
+  z-index: 1001; /* Ensure it's above the map */
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 4px;
+  pointer-events: none; /* Allows interaction with elements behind the tooltip */
+  display: none; /* Hidden by default */
+  font-size: 12px;
+}
+
+h1 {
+  text-align: center;
+  margin:10px;
+}
+
+.legend {
+  position: absolute;
+  top: 140px;
+  right: 10px;
+  z-index: 1000; /* Ensure it's above the map but below tooltip */
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 14px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border: 1px solid #000; /* Border for color swatch */
+}
