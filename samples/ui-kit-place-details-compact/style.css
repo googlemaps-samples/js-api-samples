@@ -14,11 +14,10 @@ body {
 }
 
 gmp-map {
-  height: 400px;
+  height: 600px;
 }
 /* [START maps_ui_kit_place_details_compact_style] */
 gmp-place-details-compact {
-  /* --- Custom Properties for Color --- */
   /* Sets the color for text and icons on the surface */
   /* Adapts automatically to the user's system light/dark mode preference */
   --gmp-mat-color-on-surface: light-dark(black, white);
@@ -26,23 +25,15 @@ gmp-place-details-compact {
   /* Adapts automatically to the user's system light/dark mode preference */
   --gmp-mat-color-surface: light-dark(white, black);
 
-  /* --- Custom Properties for Typography --- */
   /* Defines the primary font stack used within the component */
   --gmp-mat-font-family: Google Sans Text, sans-serif;
   /* Defines the style for medium body text (e.g., address, descriptions) */
   --gmp-mat-font-body-medium: normal 400 0.875em/1.25em var(--gmp-mat-font-family, 'Google Sans Text');
 
-  margin: 20px;
-  width: 400px;
-  padding: 12px;
-  margin-top: 10px;
-  overflow-y: auto;
+  width: 360px;
+  margin-top: 100px;
+  overflow-y: hidden;
 }
 /* [END maps_ui_kit_place_details_compact_style] */
-.widget-container {
-  height: 500px;
-  width: 457px;
-  overflow-y: hidden;
-  overflow-x: hidden;
-}
+
 /* [END maps_ui_kit_place_details_compact] */
