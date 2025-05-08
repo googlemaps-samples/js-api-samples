@@ -8,13 +8,12 @@
 // Use querySelector to select elements for interaction.
 const map = document.querySelector('gmp-map');
 //@ts-ignore
-const placeDetails = document.querySelector('gmp-place-details-compact');
 const marker = document.querySelector('gmp-advanced-marker');
 async function initMap() {
     // Request needed libraries.
     const { Map } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
-    const { Place } = await google.maps.importLibrary("places");
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+    await google.maps.importLibrary("places");
     // Hide the map type control.
     map.innerMap.setOptions({ mapTypeControl: false });
     // Set marker collision behavior.
@@ -23,4 +22,4 @@ async function initMap() {
     marker.position = { lat: 47.75972, lng: -122.25094 };
 }
 initMap();
-/* [END maps_ui_kit_place_details_compact] */ 
+/* [END maps_ui_kit_place_details_compact] */
