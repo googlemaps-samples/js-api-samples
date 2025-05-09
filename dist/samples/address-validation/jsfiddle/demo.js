@@ -5,13 +5,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// --- DOM Refs ---
+// DOM Refs
 const addressForm = document.getElementById('address-form');
 const validateButton = document.getElementById('validate-button');
 const clearFormButton = document.getElementById('clear-form-button');
 const resultDisplay = document.getElementById('result-display');
 const loadingText = document.getElementById('loading-text');
-// --- Input field refs ---
+// Input field refs
 const streetAddress1Input = document.getElementById('street-address-1');
 const streetAddress2Input = document.getElementById('street-address-2');
 const cityInput = document.getElementById('city');
@@ -19,7 +19,7 @@ const stateInput = document.getElementById('state');
 const zipCodeInput = document.getElementById('zip-code');
 const regionSelect = document.getElementById('region-select');
 const exampleSelect = document.getElementById('example-select');
-// --- Core Initialization ---
+// Core Initialization
 async function init() {
     // Load the Address Validation library
     await google.maps.importLibrary('addressValidation');
@@ -29,7 +29,7 @@ async function init() {
     clearFormButton.addEventListener('click', handleClearForm);
 }
 
-// --- Validation Handler ---
+// Validation Handler
 async function handleValidationSubmit(event) {
     event.preventDefault(); // Prevent default form submission
     resultDisplay.textContent = 'Validating...'; // Clear previous results

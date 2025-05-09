@@ -5,13 +5,13 @@
  */
 
 // [START maps_address_validation]
-// --- DOM Refs ---
+// DOM Refs
 const addressForm = document.getElementById('address-form');
 const validateButton = document.getElementById('validate-button');
 const clearFormButton = document.getElementById('clear-form-button');
 const resultDisplay = document.getElementById('result-display');
 const loadingText = document.getElementById('loading-text');
-// --- Input field refs ---
+// Input field refs
 const streetAddress1Input = document.getElementById('street-address-1') as HTMLInputElement;
 const streetAddress2Input = document.getElementById('street-address-2') as HTMLInputElement;
 const cityInput = document.getElementById('city') as HTMLInputElement;
@@ -20,7 +20,7 @@ const zipCodeInput = document.getElementById('zip-code') as HTMLInputElement;
 const regionSelect = document.getElementById('region-select') as HTMLSelectElement;
 const exampleSelect = document.getElementById('example-select') as HTMLSelectElement;
 
-// --- Core Initialization ---
+// Core Initialization
 async function init() {
   // Load the Address Validation library
   await google.maps.importLibrary('addressValidation');
@@ -31,7 +31,7 @@ async function init() {
 }
 
 // [START maps_address_validation_form_handler]
-// --- Validation Handler ---
+// Validation Handler
 async function handleValidationSubmit(event) {
   event.preventDefault();  // Prevent default form submission
   resultDisplay!.textContent = 'Validating...';  // Clear previous results
