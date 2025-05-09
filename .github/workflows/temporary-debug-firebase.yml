@@ -1,0 +1,16 @@
+name: Debug Firebase Secret
+on: workflow_dispatch # This allows you to run it manually from the Actions tab
+
+jobs:
+  print_secret_email:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Service Account Email
+        run: |
+          # Decode the base64 content (if encoded, which it often is by the action)
+          # and try to extract the client_email from the JSON.
+          # We'll only print the first few lines to avoid exposing the full key in logs.
+          echo "Attempting to extract service account email from FIREBASE_SERVICE_ACCOUNT_KEY..."
+          echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}" | head -n 50 | grep -o '"client_email": "[^"]*"' | head -n 1
+        env:
+          FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
