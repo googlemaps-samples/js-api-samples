@@ -18,7 +18,7 @@ async function initMap(): Promise<void> {
   const {AdvancedMarkerElement} =
       await google.maps.importLibrary('marker') as google.maps.MarkerLibrary;
 
-  // The map, centered at Uluru
+  // The map, centered at Uluru.
   map = new Map(document.getElementById('map') as HTMLElement, {
     zoom: 4,
     center: position,
