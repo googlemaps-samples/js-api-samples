@@ -36,7 +36,7 @@ async function handleValidationSubmit(event) {
   event.preventDefault();  // Prevent default form submission
   resultDisplay!.textContent = 'Validating...';  // Clear previous results
 
-  // Validate the address
+  // Validate the address.
   try {
     //@ts-ignore
     const result = await google.maps.addressValidation.AddressValidation.fetchAddressValidation({
