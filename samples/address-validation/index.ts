@@ -22,7 +22,7 @@ const exampleSelect = document.getElementById('example-select') as HTMLSelectEle
 
 // Core Initialization
 async function init() {
-  // Load the Address Validation library
+  // Load the Address Validation library.
   await google.maps.importLibrary('addressValidation');
   // Set event listeners
   addressForm!.addEventListener('submit', handleValidationSubmit);
