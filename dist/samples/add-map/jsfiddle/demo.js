@@ -22,7 +22,7 @@ async function initMap() {
     });
     
     
-    // The marker, positioned at Uluru
+    // The marker, positioned at Uluru.
     const marker = new AdvancedMarkerElement({ map, position, title: 'Uluru' });
       
 }
