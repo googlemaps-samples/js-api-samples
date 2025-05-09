@@ -29,7 +29,7 @@ jobs:
     permissions:
       contents: write
       id-token: write
-    if: github.event.pull_request.user.login == 'googlemaps-bot[bot]' && github.event.pull_request.head.ref == 'temp-build-branch'
+    if: github.event.pull_request.user.login == 'googlemaps-bot' && github.event.pull_request.head.ref == 'temp-build-branch'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
