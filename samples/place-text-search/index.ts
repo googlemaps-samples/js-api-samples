@@ -48,7 +48,7 @@ async function findPlaces() {
         const { LatLngBounds } = await google.maps.importLibrary("core") as google.maps.CoreLibrary;
         const bounds = new LatLngBounds();
         
-        // Loop through and get all the results.
+        // Loop through and get all the results
         places.forEach((place) => {
             const markerView = new AdvancedMarkerElement({
                 map,
