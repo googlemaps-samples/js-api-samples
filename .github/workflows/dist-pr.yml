@@ -32,7 +32,7 @@ jobs:
       - name: Set Git Identity
         run: |
           git config --global user.name 'googlemaps-bot'
-          git config --global user.email 'googlemaps-bot@google.com'
+          git config --global user.email 'googlemaps-bot@users.noreply.github.com'
 
       - name: Create Pull Request
         run: |
