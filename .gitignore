@@ -24,3 +24,6 @@ samples/deckgl-editable-geojson
 samples/deckgl-kml-raster
 
 .env
+
+# Ignore .DS_Store
+.DS_Store
