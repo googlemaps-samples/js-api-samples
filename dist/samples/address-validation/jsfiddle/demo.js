@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// DOM Refs
+// --- DOM Refs
 const addressForm = document.getElementById('address-form');
 const validateButton = document.getElementById('validate-button');
 const clearFormButton = document.getElementById('clear-form-button');
