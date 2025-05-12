@@ -76,3 +76,11 @@ jobs:
           fi
           git commit -m "Update dist folder [skip ci]"
           git push --force origin temp-build-branch
+
+      - name: Trigger Create Release Workflow
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: 'Create release PR for dist'
+          ref: 'temp-build-branch'
+          token: ${{ secrets.GH_MERGE_TOKEN }} # Use the same token that pushed, it needs 'workflows: write' permissions
+          inputs: '{ "source_run_id": "${{ github.run_id }}" }' # Optional: Pass the run ID for traceability
