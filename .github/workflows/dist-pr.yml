@@ -15,13 +15,14 @@
 name: Create release PR for dist
 
 on:
-  push:
-    branches:
-      - temp-build-branch
+  workflow_dispatch:
 
 jobs:
   create-pr:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
