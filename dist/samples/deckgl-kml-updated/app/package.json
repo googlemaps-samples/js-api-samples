@@ -12,6 +12,6 @@
     "@loaders.gl/kml": "^4.0.0"
   },
   "devDependencies": {
-    "apache-arrow": "^15.0.0"
+    "apache-arrow": "^19.0.1"
   }
 }
