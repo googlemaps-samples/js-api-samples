@@ -28,6 +28,7 @@ jobs:
   # This job will run unconditionally to dump the PR event context
   debug_pr_event:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.user.login == 'googlemaps-bot' && github.event.pull_request.head.ref == 'temp-build-branch'
     steps:
       - name: Dump Pull Request Event Context
         run: |
