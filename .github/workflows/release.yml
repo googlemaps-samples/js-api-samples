@@ -80,7 +80,7 @@ jobs:
       - name: Trigger Create Release Workflow
         run: |
           curl -X POST \
-          -H "Authorization: Bearer ${{ secrets.GH_APPROVE_TOKEN }}" \
+          -H "Authorization: Bearer ${{ secrets.GH_MERGE_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/googlemaps-samples/js-api-samples/actions/workflows/dist-pr.yml/dispatches \
           -d '{"ref":"main"}'
