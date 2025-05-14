@@ -82,5 +82,5 @@ jobs:
         with:
           workflow: dist-pr.yml
           ref: 'temp-build-branch'
-          token: ${{ secrets.GH_APPROVE_TOKEN }} # Use the same token that pushed, it needs 'workflows: write' permissions
+          token: ${{ secrets.GH_APPROVER_TOKEN }} # Use the same token that pushed, it needs 'workflows: write' permissions
           inputs: '{ "source_run_id": "${{ github.run_id }}" }' # Optional: Pass the run ID for traceability
