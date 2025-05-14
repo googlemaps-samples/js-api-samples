@@ -78,9 +78,9 @@ jobs:
           git push --force origin temp-build-branch
 
       - name: Trigger Create Release Workflow
-        run: |
-          curl -X POST \
-          -H "Authorization: Bearer ${{ secrets.GH_MERGE_TOKEN }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/googlemaps-samples/js-api-samples/actions/workflows/dist-pr.yml/dispatches \
-          -d '{"ref":"main"}'
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: dist-pr.yml
+          ref: 'temp-build-branch'
+          token: ${{ secrets.GH_APPROVE_TOKEN }} # Use the same token that pushed, it needs 'workflows: write' permissions
+          inputs: '{ "source_run_id": "${{ github.run_id }}" }' # Optional: Pass the run ID for traceability
