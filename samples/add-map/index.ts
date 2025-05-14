@@ -9,7 +9,7 @@
 let map;
 async function initMap(): Promise<void> {
   // [START maps_add_map_instantiate_map]
-  // The location of Uluru.
+  // The location of Uluru
   const position = {lat: -25.344, lng: 131.031};
 
   //  Request needed libraries.
