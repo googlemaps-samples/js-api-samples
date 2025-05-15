@@ -16,6 +16,11 @@ name: Create release PR for dist
 
 on:
   workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: 'ID of the upstream workflow run that triggered this'
+        required: false
+        type: string
 
 jobs:
   create-pr:
