@@ -15,6 +15,7 @@ body {
 
 gmp-map {
   height: 600px;
+  pointer-events: none; 
 }
 /* [START maps_ui_kit_place_details_compact_style] */
 gmp-place-details-compact {
