@@ -3,14 +3,14 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-/* [START maps_ui_kit_place_search] */
-/* [START maps_ui_kit_place_search_query_selectors] */
+/* [START maps_ui_kit_place_search_nearby] */
+/* [START maps_ui_kit_place_search_nearby_query_selectors] */
 const map = document.querySelector("gmp-map") as any;
 const placeList = document.querySelector("gmp-place-list") as any;
 const typeSelect = document.querySelector(".type-select") as any;
 const placeDetails = document.querySelector("gmp-place-details") as any;
 let marker = document.querySelector('gmp-advanced-marker') as any;
-/* [END maps_ui_kit_place_search_query_selectors] */
+/* [END maps_ui_kit_place_search_nearby_query_selectors] */
 let markers = {};
 let infoWindow;
 let mapCenter;
@@ -39,7 +39,7 @@ async function initMap(): Promise<void>  {
         clickableIcons: false,
     });
 
-    /* [START maps_ui_kit_place_search_event] */
+    /* [START maps_ui_kit_place_search_nearby_event] */
     typeSelect.addEventListener("change", (event) => {
         // First remove all existing markers.
         for(marker in markers){
@@ -60,7 +60,7 @@ async function initMap(): Promise<void>  {
             });
         }
     });
-    /* [END maps_ui_kit_place_search_event] */
+    /* [END maps_ui_kit_place_search_nearby_event] */
 }
 
 async function addMarkers(){
@@ -125,4 +125,4 @@ async function findCurrentLocation(){
 }
 
 initMap();
-/* [END maps_ui_kit_place_search] */
+/* [END maps_ui_kit_place_search_nearby] */

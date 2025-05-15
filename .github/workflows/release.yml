@@ -38,7 +38,7 @@ jobs:
       - name: Set Git Identity
         run: |
           git config --global user.name 'googlemaps-bot'
-          git config --global user.email 'googlemaps-bot@users.noreply.github.com'
+          git config --global user.email 'googlemaps-bot@google.com'
 
       - uses: actions/cache@v3
         with:
@@ -64,16 +64,6 @@ jobs:
       - name: Deploy to Firebase Hosting
         run: firebase deploy --only hosting
 
-      - name: Close Existing PRs (temp-build-branch to main)
-        run: |
-          EXISTING_PR=$(gh pr list --base main --head temp-build-branch --state open --json number -q '.[].number')
-          if [[ -n "$EXISTING_PR" ]]; then
-            echo "Found existing open PR(s) for temp-build-branch to main: $EXISTING_PR"
-            gh pr close "$EXISTING_PR"
-          fi
-        env:
-          GH_TOKEN: ${{ secrets.GH_MERGE_TOKEN }}
-
       - name: Create temporary branch
         run: git checkout -b temp-build-branch
 
@@ -86,3 +76,11 @@ jobs:
           fi
           git commit -m "Update dist folder [skip ci]"
           git push --force origin temp-build-branch
+
+      - name: Trigger Create Release Workflow
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: dist-pr.yml
+          ref: 'temp-build-branch'
+          token: ${{ secrets.GH_APPROVER_TOKEN }} # Use the same token that pushed, it needs 'workflows: write' permissions
+          inputs: '{ "source_run_id": "${{ github.run_id }}" }' # Optional: Pass the run ID for traceability

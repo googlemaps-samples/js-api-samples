@@ -34,7 +34,7 @@ async function initMap() {
     card.appendChild(placeAutocomplete);
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
     
-    // Create the marker and infowindow
+    // Create the marker and infowindow.
     marker = new google.maps.marker.AdvancedMarkerElement({
         map,
     });
