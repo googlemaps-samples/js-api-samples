@@ -1,0 +1,42 @@
+<!--
+ @license
+ Copyright 2025 Google LLC. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+-->
+<!--[START maps_ui_kit_place_search_details_compact] -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GMP Places UI Kit: Place text search with Google Maps</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="map-container"></div>
+      <div class="controls">
+          <input type="text" class="query-input" />
+          <button class="search-button">Search</button>
+      </div>
+      <div class="list-container">
+          <gmp-place-list selectable></gmp-place-list>
+      </div>
+<pre class="prettyprint"><code>  &lt;div id=&#34;details-container&#34;&gt;
+      &lt;gmp-place-details-compact orientation=&#34;vertical&#34;&gt;
+          &lt;gmp-place-details-place-request&gt;&lt;/gmp-place-details-place-request&gt; 
+          &lt;gmp-place-all-content&gt;&lt;/gmp-place-all-content&gt;
+      &lt;/gmp-place-details-compact&gt;
+  &lt;/div&gt;
+&lt;/div&gt;   
+
+&lt;script&gt;
+  (g=&gt;{var h,a,k,p=&#34;The Google Maps JavaScript API&#34;,c=&#34;google&#34;,l=&#34;importLibrary&#34;,q=&#34;__ib__&#34;,m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=&gt;h||(h=new Promise(async(f,n)=&gt;{await (a=m.createElement(&#34;script&#34;));e.set(&#34;libraries&#34;,[...r]+&#34;&#34;);for(k in g)e.set(k.replace(/[A-Z]/g,t=&gt;&#34;_&#34;+t[0].toLowerCase()),g[k]);e.set(&#34;callback&#34;,c+&#34;.maps.&#34;+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=&gt;h=n(Error(p+&#34; could not load.&#34;));a.nonce=m.querySelector(&#34;script[nonce]&#34;)?.nonce||&#34;&#34;;m.head.append(a)}));d[l]?console.warn(p+&#34; only loads once. Ignoring:&#34;,g):d[l]=(f,...n)=&gt;r.add(f)&amp;&amp;u().then(()=&gt;d[l](f,...n))})({
+    key: &#34;AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&#34;,
+    v: &#34;alpha&#34;
+  });
+&lt;/script&gt;
+&lt;script type=&#34;text/JavaScript&#34; src=&#34;app.js&#34;&gt;&lt;/script&gt;
+</code></pre>
+<p></body>
+</html>
+<!--[END maps_ui_kit_place_search_details_compact] -->
