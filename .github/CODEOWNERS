@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#.github/ @googlemaps-samples/admin
-.github/auto-approve.yml  @googleapis/github-automation
+.github/ @googlemaps-samples/admin
+.github/ @googlemaps-samples/devrel
+.github/auto-approve.yml  @googlemaps-samples/googlebots
 dist/samples/*/index.js @willum070 @wangela
 samples/*/src/index.ts @willum070 @wangela
