@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-.github/ @googlemaps-samples/devrel-admin
-dist/samples/*/index.js @chrisjshull @willum070 @wangela
-samples/*/src/index.ts @chrisjshull @willum070 @wangela
+#.github/ @googlemaps-samples/devrel-admin
+.github/auto-approve.yml  @googleapis/github-automation
+dist/samples/*/index.js @willum070 @wangela
+samples/*/src/index.ts @willum070 @wangela
