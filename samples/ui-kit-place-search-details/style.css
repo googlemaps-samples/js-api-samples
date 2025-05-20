@@ -1,0 +1,78 @@
+/*
+ * @license
+ * Copyright 2025 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/* [START maps_ui_kit_place_search_details] */
+
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex; 
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    font-size: 16px;
+    text-align: center;
+}
+
+gmp-map {
+    box-sizing: border-box;
+    padding: 0 20px 20px;
+}
+
+.overlay {
+    margin: 20px;
+    width: 400px;
+}
+
+.controls {
+    display: flex; 
+    gap: 10px;
+    margin-bottom: 10px;
+    height: 32px;
+}
+
+.search-button {
+    background-color: #5491f5;
+    color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100px;
+}
+
+.query-input {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    flex-grow: 1;
+    padding: 10px;
+}
+
+.list-container {
+    height: 600px;
+    overflow: auto;
+    border-radius: 10px;
+}
+
+gmp-place-list {
+    background-color: #fff;
+    display: none;
+}
+
+gmp-place-details {
+    width: 320px;
+    display: none;
+}
+
+.vAygCK-api-load-alpha-banner{
+    display: none;
+}
+/* [END maps_ui_kit_place_search_details] */
+
