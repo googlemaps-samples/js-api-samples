@@ -18,6 +18,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'samples/**'
 
 jobs:
   release:
