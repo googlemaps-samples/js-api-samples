@@ -9,6 +9,9 @@ const map = document.querySelector("gmp-map") as any;
 const placeList = document.querySelector("gmp-place-list") as any;
 const placeDetails = document.querySelector("gmp-place-details") as any;
 let marker = document.querySelector('gmp-advanced-marker') as any;
+const textSearchInput = document.getElementById('textSearchInput') as any;
+const textSearchButton = document.getElementById('textSearchButton') as HTMLButtonElement;
+
 /* [END maps_ui_kit_place_search_text_query_selectors] */
 /* [START maps_ui_kit_place_search_text_init_map] */
 let markers = {};
@@ -38,17 +41,22 @@ async function initMap(): Promise<void>  {
         clickableIcons: false,
     });
 
-    searchByTextRequest('tacos in Mountain View');
+    textSearchButton.addEventListener('click', searchByTextRequest);
+    textSearchInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            searchByTextRequest();
+        }
+    });
 }
 /* [END maps_ui_kit_place_search_text_init_map] */
 
 /* [START maps_ui_kit_place_search_text_query] */
-async function searchByTextRequest(textQuery) {
-    if (textQuery) {
+async function searchByTextRequest() {
+    if (textSearchInput.value !== "") {
+        placeList.style.display = "block";
         placeList.configureFromSearchByTextRequest({
             locationRestriction: bounds,
-            includedType: "restaurant",
-            textQuery: textQuery,
+            textQuery: textSearchInput.value,
         }).then(addMarkers);
         // Handle user selection in Place Details.
         placeList.addEventListener("gmp-placeselect", ({ place }) => {
@@ -57,6 +65,7 @@ async function searchByTextRequest(textQuery) {
     }
 }
 /* [END maps_ui_kit_place_search_text_query] */
+
 /* [START maps_ui_kit_place_search_text_add_markers] */
 async function addMarkers(){
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
@@ -80,6 +89,7 @@ async function addMarkers(){
                     infoWindow.close();
                 }
                 placeDetails.configureFromPlace(place);
+                placeDetails.style.display = "block";
                 placeDetails.style.width = "350px";
                 infoWindow.setOptions({
                     content: placeDetails
