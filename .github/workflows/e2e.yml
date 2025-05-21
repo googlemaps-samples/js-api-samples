@@ -17,11 +17,15 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'samples/**'
   pull_request_review:
     types: [submitted]
   push:
     branches:
       - main
+    paths:
+      - 'samples/**'
   schedule:
     - cron: "0 12 * * *"
 concurrency:
