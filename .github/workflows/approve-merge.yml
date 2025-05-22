@@ -48,3 +48,18 @@ jobs:
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GH_APPROVER_TOKEN }}
+
+  # --- TEMPORARY DEBUG JOB ---
+  # This job will run unconditionally to dump the PR event context
+  debug_pr_event:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump Pull Request Event Context
+        run: |
+          echo "--- Debugging PR Event Context ---"
+          echo "PR User Login (github.event.pull_request.user.login): ${{ github.event.pull_request.user.login }}"
+          echo "PR Head Ref (github.event.pull_request.head.ref): ${{ github.event.pull_request.head.ref }}"
+          echo ""
+          echo "--- Full Pull Request Event JSON (for more details) ---"
+          echo "${{ toJson(github.event.pull_request) }}"
+          echo "--- End Debugging ---"
