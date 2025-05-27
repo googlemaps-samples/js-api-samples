@@ -9,54 +9,44 @@
 /* [START maps_ui_kit_place_details_query_selector] */
 const map = document.querySelector('gmp-map');
 const placeDetails = document.querySelector('gmp-place-details');
+const placeDetailsRequest = document.querySelector('gmp-place-details-place-request');
 const marker = document.querySelector('gmp-advanced-marker');
 /* [END maps_ui_kit_place_details_query_selector] */
 let center = { lat: 47.759737, lng: -122.250632 };
 async function initMap() {
     // Request needed libraries.
-    const { Map } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
-    const { Place } = await google.maps.importLibrary("places");
+    await google.maps.importLibrary("maps");
+    await google.maps.importLibrary("marker");
+    await google.maps.importLibrary("places");
     // Hide the map type control.
     map.innerMap.setOptions({ mapTypeControl: false });
-    // Set the default selection.
-    const place = new Place({
-        id: "ChIJC8HakaIRkFQRiOgkgdHmqkk",
-        requestedLanguage: "en", // optional
+    // Set up map once widget is loaded.
+    placeDetails.addEventListener('gmp-load', (event) => {
+        map.innerMap.panTo(placeDetails.place.location);
+        map.innerMap.setZoom(16); // Set zoom after panning if needed
+        marker.position = placeDetails.place.location;
+        marker.style.display = 'block';
+        marker.collisionBehavior = google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
     });
-    await placeDetails.configureFromPlace(place);
-    let adjustedCenter = offsetLatLngRight(placeDetails.place.location, -0.005);
-    map.innerMap.panTo(adjustedCenter);
-    map.innerMap.setZoom(16);
-    marker.position = placeDetails.place.location;
-    marker.style.display = 'block';
-    marker.collisionBehavior = google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
     /* [START maps_ui_kit_place_details_event] */
-    // Add an event listener to handle map clicks.
+    // Add an event listener to handle clicks.
     map.innerMap.addListener('click', async (event) => {
         marker.position = null;
         event.stop();
         if (event.placeId) {
             // Fire when the user clicks a POI.
-            await placeDetails.configureFromPlace({ id: event.placeId });
+            placeDetailsRequest.place = event.placeId;
         }
         else {
             // Fire when the user clicks the map (not on a POI).
-            await placeDetails.configureFromLocation(event.latLng);
+            console.log('No place was selected.');
         }
-        // Get the offset center.
-        let adjustedCenter = offsetLatLngRight(placeDetails.place.location, -0.005);
         // Show the marker at the selected place.
         marker.position = placeDetails.place.location;
         marker.style.display = 'block';
-        map.innerMap.panTo(adjustedCenter);
+        marker.collisionBehavior = google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
     });
 }
 /* [END maps_ui_kit_place_details_event] */
-// Helper function to offset the map center.
-function offsetLatLngRight(latLng, longitudeOffset) {
-    const newLng = latLng.lng() + longitudeOffset;
-    return new google.maps.LatLng(latLng.lat(), newLng);
-}
 initMap();
 /* [END maps_ui_kit_place_details] */

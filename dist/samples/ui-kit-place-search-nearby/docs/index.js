@@ -39,6 +39,7 @@ async function initMap() {
         }
         markers = {};
         if (typeSelect.value) {
+            placeList.style.display = "block";
             placeList.configureFromSearchNearbyRequest({
                 locationRestriction: getContainingCircle(map.innerMap.getBounds()),
                 includedPrimaryTypes: [typeSelect.value],

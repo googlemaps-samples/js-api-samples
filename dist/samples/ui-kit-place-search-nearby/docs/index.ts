@@ -48,6 +48,7 @@ async function initMap(): Promise<void>  {
         markers = {};
 
         if (typeSelect.value) {
+            placeList.style.display = "block";
             placeList.configureFromSearchNearbyRequest({
                 locationRestriction: getContainingCircle(
                     map.innerMap.getBounds()
