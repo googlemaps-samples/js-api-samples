@@ -23,13 +23,21 @@ async function initMap(): Promise<void> {
   // Hide the map type control.
   map.innerMap.setOptions({mapTypeControl: false});
 
+  // Function to update map and marker based on place details
+  const updateMapAndMarker = () => {
+    if (placeDetails.place && placeDetails.place.location) {
+      let adjustedCenter = offsetLatLngRight(placeDetails.place.location, -0.005);
+      map.innerMap.panTo(adjustedCenter);
+      map.innerMap.setZoom(16); // Set zoom after panning if needed
+      marker.position = placeDetails.place.location;
+      marker.collisionBehavior = google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
+      marker.style.display = 'block';
+    }
+  };
+
   // Set up map once widget is loaded.
   placeDetails.addEventListener('gmp-load', (event) => {
-    map.innerMap.panTo(placeDetails.place.location);
-    map.innerMap.setZoom(16); // Set zoom after panning if needed
-    marker.position = placeDetails.place.location;
-    marker.style.display = 'block';
-    marker.collisionBehavior = google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
+    updateMapAndMarker();
   });
 
   /* [START maps_ui_kit_place_details_event] */
@@ -40,18 +48,21 @@ async function initMap(): Promise<void> {
     if (event.placeId) {
       // Fire when the user clicks a POI.
       placeDetailsRequest.place = event.placeId;
+      updateMapAndMarker();
     } else {
       // Fire when the user clicks the map (not on a POI).
       console.log('No place was selected.');
+      marker.style.display = 'none';
     }
-
-    // Show the marker at the selected place.
-    marker.position = placeDetails.place.location;
-    marker.style.display = 'block';
-    marker.collisionBehavior = google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
   });
 }
 /* [END maps_ui_kit_place_details_event] */
+
+// Helper function to offset marker placement for better visual appearance.
+function offsetLatLngRight(latLng, longitudeOffset) {
+  const newLng = latLng.lng() + longitudeOffset;
+  return new google.maps.LatLng(latLng.lat(), newLng);
+}
 
 initMap();
 /* [END maps_ui_kit_place_details] */
