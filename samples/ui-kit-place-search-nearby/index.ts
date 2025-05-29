@@ -44,23 +44,7 @@ async function initMap(): Promise<void>  {
     /* [START maps_ui_kit_place_search_nearby_event] */
     placeDetails.addEventListener('gmp-load', (event) => {
         console.log('gmp-load event fired on placeDetails! Current place data:', placeDetails.place);
-
-        // Adjust the position by using the viewport.
-        const placeViewport = placeDetails.place.viewport;
-        const infoWindowPadding = {
-            top: 500,   // Padding from the top edge of the map
-            bottom: 10, // Padding from the bottom edge of the map
-            left: 360, // Padding from the left edge (e.g., info window width + small margin)
-            right: 10  // Padding from the right edge
-        };
-        // Create a new LatLngBounds from the placeViewport
-        const newBounds = new LatLngBounds(
-            placeViewport.getSouthWest(),
-            placeViewport.getNorthEast()
-        );
-
-        // Fit the bounds with the calculated padding
-        map.innerMap.fitBounds(newBounds, infoWindowPadding);
+        map.innerMap.fitBounds(placeDetails.place.viewport, { top: 500, left: 400 });
     });
 
     typeSelect.addEventListener('change', (event) => {
