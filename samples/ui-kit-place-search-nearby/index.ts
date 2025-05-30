@@ -11,8 +11,8 @@ const placeList = document.querySelector("gmp-place-list") as any;
 const typeSelect = document.querySelector(".type-select") as any;
 const placeDetails = document.querySelector("gmp-place-details") as any;
 const placeDetailsRequest = document.querySelector('gmp-place-details-place-request') as any;
-let marker = document.querySelector('gmp-advanced-marker') as any;
 /* [END maps_ui_kit_place_search_nearby_query_selectors] */
+let marker;
 let markers = {};
 let infoWindow;
 
@@ -30,7 +30,7 @@ async function initMap(): Promise<void>  {
             bounds.getSouthWest()
         );
         const calculatedRadius = diameter / 2;
-        const cappedRadius = Math.min(calculatedRadius, 50000); // Cap the radius to avoid an error.
+        const cappedRadius = Math.min(calculatedRadius, 50000); // Radius cannot be more than 50000.
         return { center: bounds.getCenter(), radius: cappedRadius };
     }
 
@@ -43,7 +43,7 @@ async function initMap(): Promise<void>  {
 
     /* [START maps_ui_kit_place_search_nearby_event] */
     placeDetails.addEventListener('gmp-load', (event) => {
-        console.log('gmp-load event fired on placeDetails! Current place data:', placeDetails.place);
+        // Center the info window on the map.
         map.innerMap.fitBounds(placeDetails.place.viewport, { top: 500, left: 400 });
     });
 
