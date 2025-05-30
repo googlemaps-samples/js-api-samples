@@ -12,7 +12,6 @@ const typeSelect = document.querySelector(".type-select") as any;
 const placeDetails = document.querySelector("gmp-place-details") as any;
 const placeDetailsRequest = document.querySelector('gmp-place-details-place-request') as any;
 /* [END maps_ui_kit_place_search_nearby_query_selectors] */
-let marker;
 let markers = {};
 let infoWindow;
 
@@ -23,6 +22,7 @@ async function initMap(): Promise<void>  {
     const { spherical } = await google.maps.importLibrary('geometry') as google.maps.GeometryLibrary;
 
     infoWindow = new InfoWindow;
+    let marker;
 
     function getContainingCircle(bounds) {
         const diameter = spherical.computeDistanceBetween(
