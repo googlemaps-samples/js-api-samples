@@ -84,6 +84,12 @@ async function addMarkers(){
 
     const bounds = new LatLngBounds();
 
+    // First remove all existing markers.
+    for(marker in markers){
+        markers[marker].map = null;
+    }
+    markers = {};
+    
     if(placeList.places.length > 0){
         placeList.places.forEach((place) => {
             let marker = new AdvancedMarkerElement({
