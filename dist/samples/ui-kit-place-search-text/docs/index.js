@@ -69,6 +69,11 @@ async function addMarkers() {
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
     const { LatLngBounds } = await google.maps.importLibrary("core");
     const bounds = new LatLngBounds();
+    // First remove all existing markers.
+    for (marker in markers) {
+        markers[marker].map = null;
+    }
+    markers = {};
     if (placeList.places.length > 0) {
         placeList.places.forEach((place) => {
             let marker = new AdvancedMarkerElement({
@@ -106,4 +111,4 @@ async function addMarkers() {
 }
 /* [END maps_ui_kit_place_search_text_add_markers] */
 initMap();
-/* [END maps_ui_kit_place_search_text] */ 
+/* [END maps_ui_kit_place_search_text] */
