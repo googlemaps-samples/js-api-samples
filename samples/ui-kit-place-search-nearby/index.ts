@@ -87,6 +87,7 @@ async function addMarkers(){
             markers[place.id] = marker;
             bounds.extend(place.location);
 
+            /* [START maps_ui_kit_place_search_nearby_click_event] */
             marker.addListener('gmp-click', (event) => {
                 if(infoWindow.isOpen){
                     infoWindow.close();
@@ -103,6 +104,7 @@ async function addMarkers(){
                     map: map.innerMap
                 });
             });
+            /* [END maps_ui_kit_place_search_nearby_click_event] */
 
             map.innerMap.setCenter(bounds.getCenter());
             map.innerMap.fitBounds(bounds);
