@@ -10,20 +10,21 @@ const map = document.querySelector("gmp-map");
 const placeList = document.querySelector("gmp-place-list");
 const typeSelect = document.querySelector(".type-select");
 const placeDetails = document.querySelector("gmp-place-details");
-let marker = document.querySelector('gmp-advanced-marker');
+const placeDetailsRequest = document.querySelector('gmp-place-details-place-request');
 /* [END maps_ui_kit_place_search_nearby_query_selectors] */
 let markers = {};
 let infoWindow;
-let mapCenter;
 async function initMap() {
-    await google.maps.importLibrary("places");
-    const { InfoWindow } = await google.maps.importLibrary("maps");
-    const { spherical } = await google.maps.importLibrary("geometry");
-    infoWindow = new google.maps.InfoWindow;
+    await google.maps.importLibrary('places');
+    const { LatLngBounds } = await google.maps.importLibrary('core');
+    const { InfoWindow } = await google.maps.importLibrary('maps');
+    const { spherical } = await google.maps.importLibrary('geometry');
+    infoWindow = new InfoWindow;
+    let marker;
     function getContainingCircle(bounds) {
         const diameter = spherical.computeDistanceBetween(bounds.getNorthEast(), bounds.getSouthWest());
         const calculatedRadius = diameter / 2;
-        const cappedRadius = Math.min(calculatedRadius, 50000); // Cap the radius to avoid an error.
+        const cappedRadius = Math.min(calculatedRadius, 50000); // Radius cannot be more than 50000.
         return { center: bounds.getCenter(), radius: cappedRadius };
     }
     findCurrentLocation();
@@ -32,20 +33,24 @@ async function initMap() {
         clickableIcons: false,
     });
     /* [START maps_ui_kit_place_search_nearby_event] */
-    typeSelect.addEventListener("change", (event) => {
+    placeDetails.addEventListener('gmp-load', (event) => {
+        // Center the info window on the map.
+        map.innerMap.fitBounds(placeDetails.place.viewport, { top: 500, left: 400 });
+    });
+    typeSelect.addEventListener('change', (event) => {
         // First remove all existing markers.
         for (marker in markers) {
             markers[marker].map = null;
         }
         markers = {};
         if (typeSelect.value) {
-            placeList.style.display = "block";
+            placeList.style.display = 'block';
             placeList.configureFromSearchNearbyRequest({
                 locationRestriction: getContainingCircle(map.innerMap.getBounds()),
                 includedPrimaryTypes: [typeSelect.value],
             }).then(addMarkers);
             // Handle user selection in Place Details.
-            placeList.addEventListener("gmp-placeselect", ({ place }) => {
+            placeList.addEventListener('gmp-placeselect', ({ place }) => {
                 markers[place.id].click();
             });
         }
@@ -53,8 +58,8 @@ async function initMap() {
     /* [END maps_ui_kit_place_search_nearby_event] */
 }
 async function addMarkers() {
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-    const { LatLngBounds } = await google.maps.importLibrary("core");
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+    const { LatLngBounds } = await google.maps.importLibrary('core');
     const bounds = new LatLngBounds();
     if (placeList.places.length > 0) {
         placeList.places.forEach((place) => {
@@ -64,30 +69,30 @@ async function addMarkers() {
             });
             markers[place.id] = marker;
             bounds.extend(place.location);
+            /* [START maps_ui_kit_place_search_nearby_click_event] */
             marker.addListener('gmp-click', (event) => {
                 if (infoWindow.isOpen) {
                     infoWindow.close();
                 }
-                placeDetails.configureFromPlace(place);
-                placeDetails.style.width = "350px";
+                placeDetailsRequest.place = place.id;
+                placeDetails.style.display = 'block';
+                placeDetails.style.width = '350px';
                 infoWindow.setOptions({
-                    content: placeDetails
+                    content: placeDetails,
                 });
                 infoWindow.open({
                     anchor: marker,
                     map: map.innerMap
                 });
-                placeDetails.addEventListener('gmp-load', () => {
-                    map.innerMap.fitBounds(place.viewport, { top: 500, left: 400 });
-                });
             });
+            /* [END maps_ui_kit_place_search_nearby_click_event] */
             map.innerMap.setCenter(bounds.getCenter());
             map.innerMap.fitBounds(bounds);
         });
     }
 }
 async function findCurrentLocation() {
-    const { LatLng } = await google.maps.importLibrary("core");
+    const { LatLng } = await google.maps.importLibrary('core');
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
             const pos = new LatLng(position.coords.latitude, position.coords.longitude);
@@ -99,9 +104,9 @@ async function findCurrentLocation() {
         });
     }
     else {
-        console.log("Your browser doesn't support geolocation");
+        console.log('Your browser doesn\'t support geolocation');
         map.innerMap.setZoom(14);
     }
 }
 initMap();
-/* [END maps_ui_kit_place_search_nearby] */ 
+/* [END maps_ui_kit_place_search_nearby] */
