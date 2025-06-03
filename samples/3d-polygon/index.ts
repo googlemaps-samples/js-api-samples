@@ -28,8 +28,7 @@ async function init() {
     examplePolygon.outerCoordinates = [
         { lat: 40.7144, lng: -74.0208 },
         { lat: 40.6993, lng: -74.019 },
-        { lat: 40.7035, lng: -74.0004 },
-        { lat: 40.7144, lng: -74.0208 }
+        { lat: 40.7035, lng: -74.0004 }
     ];
 
     map3DElement.append(examplePolygon);
