@@ -30,16 +30,14 @@ async function init() {
     examplePolygon.outerCoordinates = [
         { lat: 40.7144, lng: -74.0208, altitude: 200 },
         { lat: 40.6993, lng: -74.019, altitude: 200 },
-        { lat: 40.7035, lng: -74.0004, altitude: 200 },
-        { lat: 40.7144, lng: -74.0208, altitude: 200 }
+        { lat: 40.7035, lng: -74.0004, altitude: 200 }
     ];
 
     examplePolygon.innerCoordinates = [
         [
             { lat: 40.71, lng: -74.0175, altitude: 200 },
             { lat: 40.703, lng: -74.0165, altitude: 200 },
-            { lat: 40.7035, lng: -74.006, altitude: 200 },
-            { lat: 40.71, lng: -74.0175, altitude: 200 }
+            { lat: 40.7035, lng: -74.006, altitude: 200 }
         ]
     ];
 
