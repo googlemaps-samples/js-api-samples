@@ -1,0 +1,15 @@
+{
+    "name": "@js-api-samples/ui-kit-customization",
+    "version": "1.0.0",
+    "scripts": {
+      "build": "tsc && bash ../jsfiddle.sh ui-kit-customization && bash ../app.sh ui-kit-customization && bash ../docs.sh ui-kit-customization && npm run build:vite --workspace=. && bash ../dist.sh ui-kit-customization",
+      "test": "tsc && npm run build:vite --workspace=.",
+      "start": "tsc && vite build --base './' && vite",
+      "build:vite": "vite build --base './'",
+      "preview": "vite preview"
+    },
+    "dependencies": {
+      
+    }
+  }
+  
