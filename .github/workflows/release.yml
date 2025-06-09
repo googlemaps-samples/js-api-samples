@@ -54,7 +54,22 @@ jobs:
           node-version: '22.x'
 
       - run: npm i
-      - run: npm run build-all
+
+      - name: Get Affected Workspaces
+        id: get_workspaces
+        run: bash samples/find-changes.sh origin/main
+
+      - name: Build Affected Projects
+        if: steps.get_workspaces.outputs.changed_workspaces != ''
+        run: |
+          IFS=$'\n'
+          AFFECTED_WORKSPACES_ARRAY=(${{ steps.get_workspaces.outputs.changed_workspaces }})
+          
+          echo "Building affected workspaces:"
+          for workspace in "${AFFECTED_WORKSPACES_ARRAY[@]}"; do
+            echo "  - samples/$workspace"
+            npm run build --workspace=samples/$workspace
+          done
 
       - uses: google-github-actions/auth@v1
         with:
