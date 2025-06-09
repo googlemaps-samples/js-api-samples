@@ -68,11 +68,9 @@ jobs:
           echo "Building affected workspaces:"
           for workspace in "${AFFECTED_WORKSPACES_ARRAY[@]}"; do
             echo "  - samples/$workspace"
-            npm run build --workspace=samples/$workspace
           done
 
-      - name: Generate index
-        run: npm run generate-index
+      - run: npm run build-all
 
       - uses: google-github-actions/auth@v1
         with:
