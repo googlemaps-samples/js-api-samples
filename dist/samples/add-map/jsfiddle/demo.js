@@ -9,7 +9,7 @@
 let map;
 async function initMap() {
     
-    // The location of Uluru.
+    // The location of Uluru, Australia.
     const position = { lat: -25.344, lng: 131.031 };
     //  Request the needed libraries.
     const { Map } = await google.maps.importLibrary('maps');
