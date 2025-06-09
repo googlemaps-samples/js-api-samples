@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script is intended to be run from the root directory.
+# Run this script from the root folder.
 
 # --- Configuration ---
 BASE_REF=${1:-"origin/main"}
