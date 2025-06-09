@@ -5,7 +5,7 @@
  */
 
 // [START maps_add_map]
-// Initialize and add the map
+// Initialize and add the map.
 let map;
 async function initMap(): Promise<void> {
   // [START maps_add_map_instantiate_map]
@@ -18,7 +18,7 @@ async function initMap(): Promise<void> {
   const {AdvancedMarkerElement} =
       await google.maps.importLibrary('marker') as google.maps.MarkerLibrary;
 
-  // The map, centered at Uluru.
+  // The map, centered at Uluru, Australia.
   map = new Map(document.getElementById('map') as HTMLElement, {
     zoom: 4,
     center: position,
