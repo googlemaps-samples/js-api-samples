@@ -4,37 +4,39 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 /* [START maps_ui_kit_place_details_compact] */
-/* 
- * Optional: Makes the sample page fill the window. 
- */
+ html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
 body {
   display: flex;
   width: 100%;
   height: 100%;
 }
 
-gmp-map {
-  height: 600px;
-  pointer-events: none; 
+h1 {
+  font-size: 16px;
+  text-align: center;
 }
-/* [START maps_ui_kit_place_details_compact_style] */
+
+#map-container {
+    box-sizing: border-box;
+    width: 100%;
+}
+
 gmp-place-details-compact {
   /* Sets the color for text and icons on the surface */
-  /* Adapts automatically to the user's system light/dark mode preference */
-  --gmp-mat-color-on-surface: light-dark(black, white);
+  --gmp-mat-color-on-surface: black;
   /* Sets the background color of the surface */
-  /* Adapts automatically to the user's system light/dark mode preference */
-  --gmp-mat-color-surface: light-dark(white, black);
-
+  --gmp-mat-color-surface: white);
   /* Defines the primary font stack used within the component */
   --gmp-mat-font-family: Google Sans Text, sans-serif;
   /* Defines the style for medium body text (e.g., address, descriptions) */
   --gmp-mat-font-body-medium: normal 400 0.875em/1.25em var(--gmp-mat-font-family, 'Google Sans Text');
-
   width: 360px;
-  margin-top: 100px;
+  border: none;
   overflow-y: hidden;
 }
-/* [END maps_ui_kit_place_details_compact_style] */
-
 /* [END maps_ui_kit_place_details_compact] */
