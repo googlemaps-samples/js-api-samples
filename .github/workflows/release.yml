@@ -57,7 +57,7 @@ jobs:
 
       - name: Get Affected Workspaces
         id: get_workspaces
-        run: bash samples/find-changes.sh origin/main
+        run: bash samples/find-changes.sh ${{ github.event.before }}
 
       - name: Build Affected Projects
         if: steps.get_workspaces.outputs.changed_workspaces != ''
