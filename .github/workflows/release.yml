@@ -71,6 +71,9 @@ jobs:
             npm run build --workspace=samples/$workspace
           done
 
+      - name: Generate index
+        run: npm run generate-index
+
       - uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
