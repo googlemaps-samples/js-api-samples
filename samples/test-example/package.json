@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/test-example",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh test-example && bash ../app.sh test-example && bash ../docs.sh test-example && npm run build:vite --workspace=. && bash ../dist.sh test-example",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}

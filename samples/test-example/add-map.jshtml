@@ -1,0 +1,18 @@
+{% spaceless %}{% include "maps/documentation/javascript/examples/full/_apikey.html" %}{% endspaceless %}<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Add Map</title>
+    <style>
+{% includecode content_path="maps/documentation/javascript/examples/collection/test-example/style.css" region_tag="maps_test_example" html_escape="False" %}
+    </style>
+  </head>
+  <body>
+{% includecode content_path="maps/documentation/javascript/examples/collection/test-example/index.html" region_tag="maps_test_example_body" html_escape="False" %}
+{{ api_loader_dynamic }}
+    <script>
+{% includecode content_path="maps/documentation/javascript/examples/collection/test-example/index.js" region_tag="maps_test_example" html_escape="False" %}
+    </script>
+  </body>
+</html>

@@ -4,11 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// [START maps_add_map]
+// [START maps_test_example]
 // Initialize and add the map.
 let map;
 async function initMap(): Promise<void> {
-  // [START maps_add_map_instantiate_map]
+  // [START maps_test_example_instantiate_map]
   // The location of Uluru, Australia.
   const position = {lat: -25.344, lng: 131.031};
 
@@ -24,12 +24,12 @@ async function initMap(): Promise<void> {
     center: position,
     mapId: 'DEMO_MAP_ID',
   });
-  // [END maps_add_map_instantiate_map]
+  // [END maps_test_example_instantiate_map]
 
-  // [START maps_add_map_instantiate_marker]
+  // [START maps_test_example_instantiate_marker]
   // The marker, positioned at Uluru.
   const marker = new AdvancedMarkerElement({map, position, title: 'Uluru'});
-  // [END maps_add_map_instantiate_marker]  
+  // [END maps_test_example_instantiate_marker]  
 }
 initMap();
-// [END maps_add_map]
+// [END maps_test_example]
