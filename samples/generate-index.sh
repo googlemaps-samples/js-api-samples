@@ -41,7 +41,7 @@ find "${SCRIPT_DIR}" -maxdepth 1 -mindepth 1 -type d | sort | while read -r subd
   DIR_NAME=$(basename "${subdir}")
 
   # Construct the link.
-  LINK_URL="/samples/${DIR_NAME}/dist"
+  LINK_URL="/samples/${DIR_NAME}/"
   LINK_TEXT="${DIR_NAME}"
 
   # Create the list item.
