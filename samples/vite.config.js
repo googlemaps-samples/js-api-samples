@@ -22,7 +22,7 @@ dotenv.config();
 export default defineConfig({
     root: '../',
     build: {
-        emptyOutDir: true,
+        emptyOutDir: false,
         outDir: '../dist',
     },
     preview: {
