@@ -68,7 +68,8 @@ jobs:
           echo "Building affected workspaces:"
           for workspace in "${AFFECTED_WORKSPACES_ARRAY[@]}"; do
             echo "  - samples/$workspace"
-
+            rm -rf dist/samples/$workspace
+            (cd samples/ && npm run build --workspace=$workspace)
           done
 
       - name: Get Deleted Workspaces
@@ -84,8 +85,6 @@ jobs:
           for workspace in "${DELETED_WORKSPACES_ARRAY[@]}"; do
             echo "  - samples/$workspace"
           done
-
-      - run: npm run build-all
 
       - uses: google-github-actions/auth@v1
         with:
