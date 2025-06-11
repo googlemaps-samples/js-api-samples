@@ -68,12 +68,10 @@ jobs:
           echo "Building affected workspaces:"
           for workspace in "${AFFECTED_WORKSPACES_ARRAY[@]}"; do
             echo "  - samples/$workspace"
-            rm -rf dist/samples/$workspace
-            (cd samples/ && npm run build --workspace=$workspace)
+
           done
 
-      - name: Generate Index
-        run: bash samples/generate-index.sh
+      - run: npm run build-all
 
       - name: Get Deleted Workspaces
         id: get_deleted
