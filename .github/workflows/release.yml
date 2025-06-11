@@ -72,6 +72,9 @@ jobs:
             (cd samples/ && npm run build --workspace=$workspace)
           done
 
+      - name: Generate Index
+        run: bash samples/generate-index.sh
+
       - name: Get Deleted Workspaces
         id: get_deleted
         run: bash samples/find-deleted-subfolders.sh ${{ github.event.before }}
