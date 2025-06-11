@@ -3,7 +3,7 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-// TEST COMMENT 002
+// TEST COMMENT 003
 // [START maps_test_example]
 // Initialize and add the map.
 let map;
