@@ -13,29 +13,24 @@
     <script type="module" src="./index.js"></script>
   </head>
   <body>
-    <!--[START maps_ui_kit_place_details_compact_container]-->
-    <gmp-map center="47.75972, -122.25094" zoom="19" map-id="DEMO_MAP_ID">
-      <gmp-place-details-compact orientation = "horizontal" slot="control-block-start-inline-center">
-        <!--[START maps_ui_kit_place_details_compact_request]-->
-        <gmp-place-details-place-request place = "ChIJC8HakaIRkFQRiOgkgdHmqkk"></gmp-place-details-place-request>
-        <!--[END maps_ui_kit_place_details_compact_request]-->
-        <!--[START maps_ui_kit_place_details_compact_config]-->
-        <gmp-place-content-config>
-            <gmp-place-media lightbox-preferred></gmp-place-media>
-            <gmp-place-rating></gmp-place-rating>
-            <gmp-place-type></gmp-place-type>
-            <gmp-place-price></gmp-place-price>
-            <gmp-place-accessible-entrance-icon></gmp-place-accessible-entrance-icon>
-            <gmp-place-open-now-status></gmp-place-open-now-status>
-            <gmp-place-attribution light-scheme-color="gray" dark-scheme-color="white"></gmp-place-attribution>
-        </gmp-place-content-config>
-        <!--[END maps_ui_kit_place_details_compact_config]-->
-      </gmp-place-details-compact>
-      <gmp-advanced-marker></gmp-advanced-marker>
-    </gmp-map>
-    <!--[END maps_ui_kit_place_details_compact_container]-->
-    <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
-        ({key: "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8", v: "weekly"});</script>
+  <!--[START maps_ui_kit_place_details_compact_container]-->
+    <div id = "map-container">
+        <gmp-place-details-compact orientation="horizontal">
+            <!--[START maps_ui_kit_place_details_compact_request]-->
+            <gmp-place-details-place-request place = ChIJn97JQNpC1moRIcJsVMEQLI8></gmp-place-details-place-request>
+            <!--[END maps_ui_kit_place_details_compact_request]-->
+            <!--[START maps_ui_kit_place_details_compact_config]-->  
+            <gmp-place-all-content></gmp-place-all-content>
+            <!--[END maps_ui_kit_place_details_compact_config]-->  
+        </gmp-place-details-compact>
+    </div>
+<!--[END maps_ui_kit_place_details_compact_container]-->
+    <script>
+        (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+        key: "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8",
+        v: "weekly"
+        });
+    </script>  
   </body>
 </html>
 <!--[END maps_ui_kit_place_details_compact] -->
