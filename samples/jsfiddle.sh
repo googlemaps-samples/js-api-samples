@@ -45,11 +45,11 @@ fi
 
 echo "Remove region tags from ${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  sed -i "" "s/<!--\s*\[START .*\]\s*-->//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
-  sed -i "" "s/<!--\s*\[END .*\]\s*-->//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
+  sed -i "" "s/<!--[[:space:]]*\[START .*\][[:space:]]*-->//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
+  sed -i "" "s/<!--[[:space:]]*\[END .*\][[:space:]]*-->//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  sed -i "s/<!--\s*\[START .*\]\s*-->//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
-  sed -i "s/<!--\s*\[END .*\]\s*-->//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
+  sed -i "s/<!--[[:space:]]*\[START .*\][[:space:]]*-->//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
+  sed -i "s/<!--[[:space:]]*\[END .*\][[:space:]]*-->//g" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
 fi
 
 echo "Remove region tags from ${DIST_DIR}/samples/${NAME}/jsfiddle/demo.css"
