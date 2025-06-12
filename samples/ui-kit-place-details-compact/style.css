@@ -4,20 +4,24 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 /* [START maps_ui_kit_place_details_compact] */
-/* 
- * Optional: Makes the sample page fill the window. 
- */
+html,
 body {
   display: flex;
   width: 100%;
   height: 100%;
+  margin: 0;
 }
 
-gmp-map {
-  height: 600px;
-  pointer-events: none; 
+h1 {
+  font-size: 16px;
+  text-align: center;
 }
-/* [START maps_ui_kit_place_details_compact_style] */
+
+#map-container {
+    box-sizing: border-box;
+    width: 100%;
+}
+
 gmp-place-details-compact {
   /* Sets the color for text and icons on the surface */
   /* Adapts automatically to the user's system light/dark mode preference */
@@ -25,16 +29,49 @@ gmp-place-details-compact {
   /* Sets the background color of the surface */
   /* Adapts automatically to the user's system light/dark mode preference */
   --gmp-mat-color-surface: light-dark(white, black);
-
   /* Defines the primary font stack used within the component */
   --gmp-mat-font-family: Google Sans Text, sans-serif;
   /* Defines the style for medium body text (e.g., address, descriptions) */
   --gmp-mat-font-body-medium: normal 400 0.875em/1.25em var(--gmp-mat-font-family, 'Google Sans Text');
-
+  
   width: 360px;
-  margin-top: 100px;
+  border: none;
   overflow-y: hidden;
 }
-/* [END maps_ui_kit_place_details_compact_style] */
 
+.gm-style-iw button {
+    display: none !important;
+}
+
+.gm-style-iw-c {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.gm-style-iw-d {
+    padding: 0 !important;
+    margin: 0 !important; /* Sometimes margin can also contribute to unwanted space */
+    overflow: visible !important; /* If you don't want scrollbars, but be careful with content overflow */
+}
+
+.gm-style-iw-c * { /* Target all elements inside the infowindow content container */
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+
+    .gm-style-iw.gm-style-iw-c,
+    .gm-style .gm-style-iw-d,
+    .gm-style .gm-style-iw-d::-webkit-scrollbar-track, 
+    .gm-style .gm-style-iw-d::-webkit-scrollbar-track-piece,
+    .gm-style .gm-style-iw-c,
+    .gm-style .gm-style-iw-t::after,
+    .gm-style .gm-style-iw-tc::after { 
+        background-color: #000 !important;
+    }
+    .gm-ui-hover-effect>span {
+        background-color: #fff !important;
+    }
+}
 /* [END maps_ui_kit_place_details_compact] */
