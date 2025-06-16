@@ -94,7 +94,7 @@ jobs:
           echo "Building affected workspaces:"
           for workspace in "${AFFECTED_WORKSPACES_ARRAY[@]}"; do
             echo "  - samples/$workspace"
-                npm run build --workspace=samples/$workspace
+            npm run build --workspace=samples/$workspace
           done
 
       - name: Generate Index (Run Once After Builds)
