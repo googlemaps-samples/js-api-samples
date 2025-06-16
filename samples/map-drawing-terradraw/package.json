@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.8",
-    "terra-draw": "^2.1.1",
-    "terra-draw-google-maps-adapter": "^2.1.1"
+    "terra-draw": "latest",
+    "terra-draw-google-maps-adapter": "latest"
   },
   "devDependencies": {
     "typescript": "^5.0.0",
