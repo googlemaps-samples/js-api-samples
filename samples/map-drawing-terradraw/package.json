@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build"
+    "build": "tsc && vite build",
+    "test": "tsc && vite build"
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.8",
