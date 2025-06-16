@@ -13,6 +13,7 @@
     "terra-draw-google-maps-adapter": "latest"
   },
   "devDependencies": {
+    "@types/google.maps": "latest",
     "typescript": "^5.0.0",
     "vite": "^5.0.0"
   }
