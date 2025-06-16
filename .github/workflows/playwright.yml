@@ -1,4 +1,3 @@
-
 # Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,37 +12,168 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Test
+name: Playwright Tests
+
 on:
-  push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
     types: [opened, synchronize, edited]
     paths:
       - 'samples/**'
+      - 'e2e/samples.spec.ts'
+      - 'playwright.config.ts'
+      - 'package.json'
+    paths-ignore:
+      - '.github/dependabot.yml'
+      - 'package-lock.json'
+  push:
+    branches:
+      - main
+    paths:
+      - 'samples/**'
+      - 'e2e/samples.spec.ts'
+      - 'playwright.config.ts'
+      - 'package.json'
+    paths-ignore:
+      - '.github/dependabot.yml'
+      - 'package-lock.json'
+  schedule:
+    - cron: "0 12 * * *"
+
 concurrency:
-  group: test-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
-  test:
-    if: github.event.pull_request.merged == false
+  pr_and_push_tests:
+    name: Playwright PR/Push Tests
+    if: |
+      (github.event_name == 'pull_request' && github.event.pull_request.merged == false) ||
+      (github.event_name == 'push' && !contains(github.event.head_commit.message, 'chore: update dist folder'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        if: github.actor != 'dependabot[bot]'
-      - uses: actions/cache@v4
+        with:
+          lfs: true
+
+      - name: Get Affected Workspaces
+        id: get_workspaces
+        run: bash samples/find-changes.sh ${{ github.event_name == 'pull_request' && github.base_ref || 'origin/main' }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node
-      - uses: actions/cache@v4 # Cache Playwright browsers
+            ${{ runner.os }}-node-
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('playwright.config.ts', 'package.json') }} # Cache key based on config files
+          key: ${{ runner.os }}-playwright-${{ hashFiles('playwright.config.ts', 'package.json') }}
           restore-keys: |
             ${{ runner.os }}-playwright-
-      - run: npm i
-      - run: npx playwright install
-      - run: npx playwright test
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Affected Projects
+        if: steps.get_workspaces.outputs.affected_workspaces != ''
+        run: |
+          IFS=$'\n'
+          AFFECTED_WORKSPACES_ARRAY=(${{ steps.get_workspaces.outputs.affected_workspaces }})
+          
+          echo "Building affected workspaces:"
+          for workspace in "${AFFECTED_WORKSPACES_ARRAY[@]}"; do
+            echo "  - samples/$workspace"
+                npm run build --workspace=samples/$workspace
+          done
+
+      - name: Generate Index (Run Once After Builds)
+        run: bash samples/generate-index.sh
+        # Consider adding an 'if' condition if it only needs to run when 'samples/' changed at all.
+        # if: |
+        #   steps.get_workspaces.outputs.affected_workspaces != '' || # If any workspace built
+        #   contains(github.event.pull_request.paths.*, 'samples/generate-index.sh') # Or if the script itself changed
+
+      - name: Install Playwright browsers and system dependencies
+        run: |
+          npx playwright install-deps
+          npx playwright install
+
+      - name: Run All Playwright Tests
+        run: npx playwright test e2e/samples.spec.ts
+        env:
+          CI: true
+
+      - name: Upload Test Report Artifact
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: Test Results
+          path: test-results/
+
+  scheduled_full_test:
+    name: Scheduled Full E2E Tests
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('playwright.config.ts', 'package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build All Projects
+        run: npm run build-all
+
+      - name: Generate Index (Run Once After Full Builds)
+        run: bash generate-index.sh
+
+      - name: Install Playwright system dependencies
+        run: npx playwright install-deps
+
+      - name: Install Playwright browsers
+        run: npx playwright install
+
+      - name: Run Full E2E Tests (Scheduled)
+        run: npx playwright test e2e/samples.spec.ts
+        env:
+          CI: true
+
+      - name: Upload Test Report Artifact
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: Test Results
+          path: test-results/
