@@ -97,7 +97,7 @@ jobs:
         run: npm install -g firebase-tools
 
       - name: Deploy to Firebase Hosting
-        run: firebase hosting:channel:deploy staging-preview
+        run: firebase deploy --only hosting
 
       - name: Create temporary branch
         run: git checkout -b temp-build-branch
