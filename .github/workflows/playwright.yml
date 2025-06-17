@@ -24,9 +24,6 @@ on:
       - 'e2e/samples.spec.ts'
       - 'playwright.config.ts'
       - 'package.json'
-    paths-ignore:
-      - '.github/dependabot.yml'
-      - 'package-lock.json'
   push:
     branches:
       - main
@@ -35,9 +32,6 @@ on:
       - 'e2e/samples.spec.ts'
       - 'playwright.config.ts'
       - 'package.json'
-    paths-ignore:
-      - '.github/dependabot.yml'
-      - 'package-lock.json'
   schedule:
     - cron: "0 12 * * *"
 
