@@ -49,11 +49,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           lfs: true
 
       - name: Get Affected Workspaces
         id: get_workspaces
-        run: bash samples/find-changes.sh ${{ github.event_name == 'pull_request' && github.base_ref || 'origin/main' }}
+        # For PRs, compare against the origin's version of the base branch.
+        # For pushes, compare against the commit before the push.
+        run: bash samples/find-changes.sh ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -71,10 +74,11 @@ jobs:
       - name: Cache Playwright browsers
         uses: actions/cache@v4
         with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('playwright.config.ts', 'package.json') }}
+          path: ~/.cache/ms-playwright # Default Playwright cache path
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('playwright.config.ts') }}
           restore-keys: |
-            ${{ runner.os }}-playwright-
+            ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}- # Fallback for lock file changes
+            ${{ runner.os }}-playwright- # Broader fallback
 
       - name: Install dependencies
         run: npm ci
@@ -106,6 +110,8 @@ jobs:
       - name: Run All Playwright Tests
         run: npx playwright test e2e/samples.spec.ts
         env:
+          # Pass the correct base reference for find-changes.sh when called by samples.spec.ts
+          GIT_BASE_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
           CI: true
 
       - name: Upload Test Report Artifact
@@ -140,10 +146,11 @@ jobs:
       - name: Cache Playwright browsers
         uses: actions/cache@v4
         with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('playwright.config.ts', 'package.json') }}
+          path: ~/.cache/ms-playwright # Default Playwright cache path
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('playwright.config.ts') }}
           restore-keys: |
-            ${{ runner.os }}-playwright-
+            ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}- # Fallback for lock file changes
+            ${{ runner.os }}-playwright- # Broader fallback
 
       - name: Install dependencies
         run: npm ci
