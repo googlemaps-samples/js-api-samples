@@ -42,17 +42,36 @@ const getChangedSampleFolders = (): string[] => {
 
     // Execute the script from the project root.
     const projectRoot = path.join(__dirname, '..'); 
-    const output = execSync(`sh ${scriptPath}`, { cwd: projectRoot, encoding: 'utf-8' });
+    //const output = execSync(`sh ${scriptPath}`, { cwd: projectRoot, encoding: 'utf-8' });
+    const baseRefForScript = process.env.GIT_BASE_REF;
+    let commandToExecute = `bash ${scriptPath}`; // Use bash to ensure consistency with shebang
+    if (baseRefForScript) {
+      commandToExecute = `bash ${scriptPath} "${baseRefForScript}"`;
+    }
+    console.log(`Executing: ${commandToExecute}`);
+    const output = execSync(commandToExecute, { cwd: projectRoot, encoding: 'utf-8' });
     
-    // Get all folder names outputted by the script
-    const rawChangedFolders = output.trim().split('\n');
-    // Filter out empty strings that might result from multiple newlines or a trailing newline
-    const changedFolders = rawChangedFolders.filter(folder => folder.trim().length > 0);
+    const outputLines = output.trim().split('\n');
+    const changedFolders: string[] = [];
+    const markerLine = "Changed (added or modified) subfolders in 'samples/':";
+    let foundMarker = false;
 
-    if (changedFolders.length === 0) {
-      // This means find-changes.sh ran successfully and reported no changes.
-      console.log("find-changes.sh reported no changed folders. Skipping tests.");
-      return []; 
+    for (const line of outputLines) {
+      if (foundMarker) {
+        const folderName = line.trim();
+        if (folderName.length > 0) {
+          changedFolders.push(folderName);
+        }
+      }
+      if (line.trim() === markerLine) {
+        foundMarker = true;
+      }
+    }
+
+    if (!foundMarker || changedFolders.length === 0) {
+      console.log("No changed sample folders identified from find-changes.sh output in the expected format. Skipping tests.");
+      console.log("Full output from find-changes.sh for debugging:\n", output);
+      return [];
     }
 
     // Validate that changed folders actually exist in samplesDir
@@ -61,17 +80,19 @@ const getChangedSampleFolders = (): string[] => {
       return fs.existsSync(folderPath) && fs.statSync(folderPath).isDirectory();
     });
 
-    if (validChangedFolders.length === 0 && changedFolders.length > 0 && changedFolders[0] !== "") {
-      console.warn("find-changes.sh outputted folder names, but none are valid sample directories. Running for all samples.");
-      return [];
+    if (validChangedFolders.length === 0) {
+      console.warn("Folder names were extracted from find-changes.sh output, but none are valid sample directories. Skipping tests.");
+      console.log("Extracted folder names that were considered invalid:", changedFolders);
+      console.log("Full output from find-changes.sh for debugging:\n", output);
+      return []; // Fallback to do nothing
     }
 
     console.log("Running tests only for changed samples: ", validChangedFolders);
     return validChangedFolders;
 
   } catch (error) {
-    console.error("Error running find-changes.sh, falling back to all samples:", error);
-    return getAllSampleFolders();
+    console.error("Error running find-changes.sh. Skipping tests:", error);
+    return []; // Fallback to do nothing
   }
 };
 
