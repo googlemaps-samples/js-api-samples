@@ -102,10 +102,8 @@ jobs:
         #   steps.get_workspaces.outputs.affected_workspaces != '' || # If any workspace built
         #   contains(github.event.pull_request.paths.*, 'samples/generate-index.sh') # Or if the script itself changed
 
-      - name: Install Playwright browsers and system dependencies
-        run: |
-          npx playwright install-deps
-          npx playwright install
+      - name: Install Playwright browsers with OS dependencies
+        run: npx playwright install --with-deps
 
       - name: Run All Playwright Tests
         run: npx playwright test e2e/samples.spec.ts
@@ -161,11 +159,8 @@ jobs:
       - name: Generate Index (Run Once After Full Builds)
         run: bash generate-index.sh
 
-      - name: Install Playwright system dependencies
-        run: npx playwright install-deps
-
-      - name: Install Playwright browsers
-        run: npx playwright install
+      - name: Install Playwright browsers with OS dependencies
+        run: npx playwright install --with-deps
 
       - name: Run Full E2E Tests (Scheduled)
         run: npx playwright test e2e/samples.spec.ts
