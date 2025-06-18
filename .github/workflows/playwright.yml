@@ -157,7 +157,7 @@ jobs:
         run: npm run build-all
 
       - name: Generate Index (Run Once After Full Builds)
-        run: bash generate-index.sh
+        run: bash samples/generate-index.sh
 
       - name: Install Playwright browsers with OS dependencies
         run: npx playwright install --with-deps
