@@ -75,9 +75,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright # Default Playwright cache path
-          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('playwright.config.ts') }}
+          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}-${{ hashFiles('playwright.config.ts') }}
           restore-keys: |
-            ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}- # Fallback for lock file changes
+            ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}- # Fallback for lock file changes
             ${{ runner.os }}-playwright- # Broader fallback
 
       - name: Install dependencies
@@ -148,9 +148,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright # Default Playwright cache path
-          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('playwright.config.ts') }}
+          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}-${{ hashFiles('playwright.config.ts') }}
           restore-keys: |
-            ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}- # Fallback for lock file changes
+            ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}- # Fallback for lock file changes
             ${{ runner.os }}-playwright- # Broader fallback
 
       - name: Install dependencies
