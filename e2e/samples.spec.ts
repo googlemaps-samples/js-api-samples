@@ -69,8 +69,7 @@ const getChangedSampleFolders = (): string[] => {
     }
 
     if (!foundMarker || changedFolders.length === 0) {
-      console.log("No changed sample folders identified from find-changes.sh output in the expected format. Skipping tests.");
-      console.log("Full output from find-changes.sh for debugging:\n", output);
+      console.log("No changed sample folders found. Skipping tests.");
       return [];
     }
 
@@ -81,7 +80,7 @@ const getChangedSampleFolders = (): string[] => {
     });
 
     if (validChangedFolders.length === 0) {
-      console.warn("Folder names were extracted from find-changes.sh output, but none are valid sample directories. Skipping tests.");
+      console.warn("Folders were found, but none were valid sample directories. Skipping tests.");
       console.log("Extracted folder names that were considered invalid:", changedFolders);
       console.log("Full output from find-changes.sh for debugging:\n", output);
       return []; // Fallback to do nothing
@@ -99,7 +98,7 @@ const getChangedSampleFolders = (): string[] => {
 const foldersToTest = getChangedSampleFolders();
 
 if (foldersToTest.length === 0) {
-  console.log("No sample folders identified to test. This might indicate no changes or an issue with find-changes.sh.");
+  console.log("No sample folders found.");
 } else {
   console.log(`Will run tests for the following folders: ${foldersToTest.join(', ')}`);
 }
