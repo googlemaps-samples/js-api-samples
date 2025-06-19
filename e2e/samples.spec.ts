@@ -33,15 +33,15 @@ const getAllSampleFolders = () => {
 // Function to return only changed sample folders.
 const getChangedSampleFolders = (): string[] => {
   try {
-    const scriptPath = path.join(__dirname, '..', 'samples', 'find-changes.sh'); 
-    
+    const scriptPath = path.join(__dirname, '..', 'samples', 'find-changes.sh');
+
     if (!fs.existsSync(scriptPath)) {
       console.warn(`Warning: find-changes.sh not found at ${scriptPath}. Running tests for all samples.`);
       return getAllSampleFolders();
     }
 
     // Execute the script from the project root.
-    const projectRoot = path.join(__dirname, '..'); 
+    const projectRoot = path.join(__dirname, '..');
     //const output = execSync(`sh ${scriptPath}`, { cwd: projectRoot, encoding: 'utf-8' });
     const baseRefForScript = process.env.GIT_BASE_REF;
     let commandToExecute = `bash ${scriptPath}`; // Use bash to ensure consistency with shebang
@@ -50,7 +50,7 @@ const getChangedSampleFolders = (): string[] => {
     }
     console.log(`Executing: ${commandToExecute}`);
     const output = execSync(commandToExecute, { cwd: projectRoot, encoding: 'utf-8' });
-    
+
     const outputLines = output.trim().split('\n');
     const changedFolders: string[] = [];
     const markerLine = "Changed (added or modified) subfolders in 'samples/':";
@@ -95,25 +95,39 @@ const getChangedSampleFolders = (): string[] => {
   }
 };
 
-const foldersToTest = getChangedSampleFolders();
+let foldersToTest: string[];
+const testScope = process.env.TEST_SCOPE;
 
-if (foldersToTest.length === 0) {
-  console.log("No sample folders found.");
+if (testScope === 'all') {
+  console.log('Collecting ALL samples for testing.');
+  foldersToTest = getAllSampleFolders();
+} else if (testScope === 'affected') {
+  console.log('Collecting CHANGED samples for testing.');
+  foldersToTest = getChangedSampleFolders();
 } else {
-  console.log(`Will run tests for the following folders: ${foldersToTest.join(', ')}`);
+  // Default behavior if TEST_SCOPE is not set or has an unexpected value
+  console.warn(`TEST_SCOPE is unset or has an unknown value ("${testScope}"). Defaulting to changed samples.`);
+  foldersToTest = getChangedSampleFolders();
 }
 
-// Iterate through samples and run the same test for each one.
-foldersToTest.forEach((sampleFolder) => {
-  test(`test ${sampleFolder}`, async ({ page }) => {
+if (foldersToTest.length === 0) {
+  console.log("No sample folders found. Marking test suite as skipped.");
+  test.skip('No samples met the criteria for testing in this run', () => {
+    // This test will be marked as skipped and won't execute.
+  });
+} else {
+  console.log(`Will run tests for the following folders: ${foldersToTest.join(', ')}`);
+  // Iterate through samples and run the same test for each one.
+  foldersToTest.forEach((sampleFolder) => {
+    test(`test ${sampleFolder}`, async ({ page }) => {
 
-    // START Build the sample
-    const buildProcess = childProcess.spawn('npm', ['run', 'build'], {
-      cwd: path.join(samplesDir, sampleFolder),
-      stdio: 'inherit',
-    });
+      // START Build the sample
+      const buildProcess = childProcess.spawn('npm', ['run', 'build'], {
+        cwd: path.join(samplesDir, sampleFolder),
+        stdio: 'inherit',
+      });
 
-    await new Promise((resolve, reject) => {
+      await new Promise((resolve, reject) => {
         buildProcess.on('close', (code) => {
           if (code === 0) {
             resolve(true);
@@ -122,99 +136,100 @@ foldersToTest.forEach((sampleFolder) => {
           }
         });
         buildProcess.on('error', (err) => {
-            reject(new Error(`Failed to start build process for ${sampleFolder}: ${err.message}`));
+          reject(new Error(`Failed to start build process for ${sampleFolder}: ${err.message}`));
         });
       });
-    // END Build the sample
+      // END Build the sample
 
-    // START run the preview
-    // Get an available port
-    const port = 8080;
-    const url = `http://localhost:${port}/`;
+      // START run the preview
+      // Get an available port
+      const port = 8080;
+      const url = `http://localhost:${port}/`;
 
-    const viteProcess = childProcess.spawn('vite', ['preview', `--port=${port}`], {
-      cwd: path.join(samplesDir, sampleFolder),
-      stdio: 'inherit',
-      detached: true, // Allows parent to exit independently, though we kill it in finally
+      const viteProcess = childProcess.spawn('vite', ['preview', `--port=${port}`], {
+        cwd: path.join(samplesDir, sampleFolder),
+        stdio: 'inherit',
+        detached: true, // Allows parent to exit independently, though we kill it in finally
+      });
+
+      //await new Promise((resolve) => setTimeout(resolve, 500)); // Set a timeout to let the web server start.
+      await page.waitForTimeout(500);
+      // END run the preview
+
+      /**
+       * Run all of the tests. Each method call either runs a test or inserts a timeout for loading.
+       * `expect`s are assertions that test for conditions.
+       * Run `npx playwright test --ui` to launch Playwright in UI mode to iteratively debug this file.
+       */
+      try {
+        const consoleErrors: string[] = [];
+        // Capture console errors and page errors
+        page.on('console', (msg) => {
+          if (msg.type() === 'error') {
+            consoleErrors.push(msg.text());
+          }
+        });
+        page.on('pageerror', (exception) => {
+          consoleErrors.push(exception.message);
+        });
+
+        // Navigate to the page.
+        //await page.goto(url, { waitUntil: 'networkidle', timeout: 500 });
+        await page.goto(url);
+
+        // Allow some time for async operations and errors to be caught
+        await page.waitForTimeout(500);
+
+        // Filter out error messages we can safely avoid.
+        const filteredErrorMessages = [
+          'Falling back to Raster',
+          'Attempted to load a 3D Map, but failed.',
+        ];
+        const criticalErrors = consoleErrors.filter(error =>
+          !filteredErrorMessages.some(message => error.includes(message))
+        );
+
+        if (criticalErrors.length > 0) {
+          console.error(`Critical console errors found in ${sampleFolder}:`, criticalErrors);
+        }
+        expect(criticalErrors).toHaveLength(0);
+
+        // Wait for the page DOM to load; this does NOT include the Google Maps APIs.
+        await page.waitForLoadState('domcontentloaded', { timeout: 500 });
+
+        // Wait for Google Maps to load.
+        await page.waitForFunction(() => window.google && window.google.maps, { timeout: 500 });
+
+        // Insert a delay in ms to let the map load.
+        await page.waitForTimeout(500);
+
+        // Assertions. These must be met or the test will fail.
+        // The sample must load the Google Maps API.
+        const hasGoogleMaps = await page.evaluate(() => {
+          return typeof window.google !== 'undefined' && typeof window.google.maps !== 'undefined';
+        });
+        await expect(hasGoogleMaps).toBeTruthy();
+
+        /**const mapElement = await page.locator('#map');
+        if (await page.locator('#map').isVisible()) {
+          console.log(`✅ Assertion passed: Map is visible.`);
+        } else {
+          console.error(`❌ Assertion failed: Map is not visible.`);
+          throw new Error('Assertion failed: Map is not visible.');
+        }*/
+      } finally {
+        //viteProcess.kill(); // We used to just kill the process. Curious to see about how the other stuff works.
+        if (viteProcess.pid) {
+          try {
+            // Use process.kill for cross-platform compatibility, sending SIGINT
+            process.kill(viteProcess.pid, 'SIGINT');
+          } catch (e) {
+            console.warn(`Failed to kill Vite process for ${sampleFolder} (PID: ${viteProcess.pid}):`, e.message);
+          }
+        }
+        // Add a small delay to allow the process to terminate
+        await page.waitForTimeout(500);
+      }
     });
-
-    //await new Promise((resolve) => setTimeout(resolve, 500)); // Set a timeout to let the web server start.
-    await page.waitForTimeout(500);
-    // END run the preview
-
-    /**
-     * Run all of the tests. Each method call either runs a test or inserts a timeout for loading.
-     * `expect`s are assertions that test for conditions.
-     * Run `npx playwright test --ui` to launch Playwright in UI mode to iteratively debug this file.
-     */
-    try {
-      const consoleErrors: string[] = [];
-      // Capture console errors and page errors
-      page.on('console', (msg) => {
-        if (msg.type() === 'error') {
-          consoleErrors.push(msg.text());
-        }
-      });
-      page.on('pageerror', (exception) => {
-        consoleErrors.push(exception.message);
-      });
-      
-      // Navigate to the page.
-      //await page.goto(url, { waitUntil: 'networkidle', timeout: 500 });
-      await page.goto(url);
-
-      // Allow some time for async operations and errors to be caught
-      await page.waitForTimeout(500);
-
-      // Filter out error messages we can safely avoid.
-      const filteredErrorMessages = [
-        'Falling back to Raster',
-        'Attempted to load a 3D Map, but failed.',
-      ];
-      const criticalErrors = consoleErrors.filter(error =>
-        !filteredErrorMessages.some(message => error.includes(message))
-      );
-
-      if (criticalErrors.length > 0) {
-        console.error(`Critical console errors found in ${sampleFolder}:`, criticalErrors);
-      }
-      expect(criticalErrors).toHaveLength(0);
-
-      // Wait for the page DOM to load; this does NOT include the Google Maps APIs.
-      await page.waitForLoadState('domcontentloaded', { timeout: 500 });
-
-      // Wait for Google Maps to load.
-      await page.waitForFunction(() => window.google && window.google.maps, { timeout: 500 });
-      
-      // Insert a delay in ms to let the map load.
-      await page.waitForTimeout(500);
-
-      // Assertions. These must be met or the test will fail.
-      // The sample must load the Google Maps API.
-      const hasGoogleMaps = await page.evaluate(() => {
-        return typeof window.google !== 'undefined' && typeof window.google.maps !== 'undefined';
-      });
-      await expect(hasGoogleMaps).toBeTruthy();
-
-      /**const mapElement = await page.locator('#map');
-      if (await page.locator('#map').isVisible()) {
-        console.log(`✅ Assertion passed: Map is visible.`);
-      } else {
-        console.error(`❌ Assertion failed: Map is not visible.`);
-        throw new Error('Assertion failed: Map is not visible.');
-      }*/
-    } finally {
-      //viteProcess.kill(); // We used to just kill the process. Curious to see about how the other stuff works.
-      if (viteProcess.pid) {
-        try {
-          // Use process.kill for cross-platform compatibility, sending SIGINT
-          process.kill(viteProcess.pid, 'SIGINT');
-        } catch (e) {
-          console.warn(`Failed to kill Vite process for ${sampleFolder} (PID: ${viteProcess.pid}):`, e.message);
-        }
-      }
-      // Add a small delay to allow the process to terminate
-      await page.waitForTimeout(500);
-    }
   });
-});
+}
