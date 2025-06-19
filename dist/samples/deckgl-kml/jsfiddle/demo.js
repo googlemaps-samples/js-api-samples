@@ -4,10 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 // Import necessary loader
-import { registerLoaders } from '@loaders.gl/core';
 import { KMLLoader } from '@loaders.gl/kml';
-// Register the KML loader
-registerLoaders(KMLLoader);
 // Initialize and add the map
 let map;
 let geojsonLayer;
@@ -49,6 +46,7 @@ async function initMap() {
     geojsonLayer = new deck.GeoJsonLayer({
         id: 'geojson-layer',
         data: 'https://googlearchive.github.io/js-v2-samples/ggeoxml/cta.kml',
+        loaders: [KMLLoader],
         pickable: true,
         stroked: true, // Set to true to render lines
         filled: false, // Set to false for lines
