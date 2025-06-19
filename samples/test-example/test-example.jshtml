@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>Add Map</title>
+    <title>Test Example</title>
     <style>
 {% includecode content_path="maps/documentation/javascript/examples/collection/test-example/style.css" region_tag="maps_test_example" html_escape="False" %}
     </style>

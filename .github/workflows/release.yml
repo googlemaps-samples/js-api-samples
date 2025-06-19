@@ -68,10 +68,8 @@ jobs:
           echo "Building affected workspaces:"
           for workspace in "${AFFECTED_WORKSPACES_ARRAY[@]}"; do
             echo "  - samples/$workspace"
-
+            (cd samples/ && npm run build --workspace=$workspace)
           done
-
-      - run: npm run build-all
 
       - name: Get Deleted Workspaces
         id: get_deleted
@@ -82,10 +80,14 @@ jobs:
         run: |
           IFS=$'\n'
           DELETED_WORKSPACES_ARRAY=({{ steps.get_deleted.outputs.deleted_workspaces }})
-          echo: "Removing deleted project output:"
+          echo "Removing deleted project output:"
           for workspace in "${DELETED_WORKSPACES_ARRAY[@]}"; do
             echo "  - samples/$workspace"
+            rm -rf dist/samples/$workspace
           done
+          
+      - name: Generate Index
+        run: bash samples/generate-index.sh
 
       - uses: google-github-actions/auth@v1
         with:

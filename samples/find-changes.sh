@@ -62,6 +62,17 @@ if [ -z "$UNIQUE_CHANGED_WORKSPACES" ]; then
   exit 0
 fi
 
+# --- Post-process UNIQUE_CHANGED_WORKSPACES to remove any '-e ' prefix ---
+# This addresses an observed issue where folder names might be unexpectedly prefixed.
+CLEANED_WORKSPACES_BUFFER=""
+while IFS= read -r line; do
+  if [ -n "$line" ]; then # Process only non-empty lines
+    cleaned_line=$(echo "$line" | sed 's/^-e[[:space:]]*//') # Match -e followed by zero or more spaces
+    CLEANED_WORKSPACES_BUFFER+="$cleaned_line\n"
+  fi
+done <<< "$UNIQUE_CHANGED_WORKSPACES"
+UNIQUE_CHANGED_WORKSPACES=$(echo -e "$CLEANED_WORKSPACES_BUFFER" | sed '/^$/d') # Remove any trailing empty line
+
 echo "Changed (added or modified) subfolders in '$PROJECTS_ROOT_DIR':"
 echo "$UNIQUE_CHANGED_WORKSPACES"
 
