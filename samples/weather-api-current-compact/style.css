@@ -3,7 +3,7 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-/* [START maps_map_simple] */
+/* [START maps_weather_api_current_compact] */
 /* 
  * Always set the map height explicitly to define the size of the div element
  * that contains the map. 
@@ -21,8 +21,6 @@ body {
   margin: 0;
   padding: 0;
 }
-
-/* [END maps_map_simple] */
 
 /* Styles for the weather widget */
 .widget-container {
@@ -238,3 +236,4 @@ body {
         font-size: 0.9em; /* Adjust button font size */
     }
 }
+/* [END maps_weather_api_current_compact] */
