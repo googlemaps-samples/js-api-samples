@@ -64,10 +64,10 @@ jobs:
         run: |
           IFS=$'\n'
           AFFECTED_WORKSPACES_ARRAY=(${{ steps.get_workspaces.outputs.changed_workspaces }})
-          
           echo "Building affected workspaces:"
           for workspace in "${AFFECTED_WORKSPACES_ARRAY[@]}"; do
             echo "  - samples/$workspace"
+            rm -rf dist/samples/$workspace
             (cd samples/ && npm run build --workspace=$workspace)
           done
 
