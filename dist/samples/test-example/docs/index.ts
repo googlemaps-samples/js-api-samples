@@ -9,7 +9,7 @@
 let map;
 async function initMap(): Promise<void> {
   // [START maps_test_example_instantiate_map]
-  // The location of Uluru, Australia.
+  // The location of Uluru.
   const position = {lat: -25.344, lng: 131.031};
 
   //  Request the needed libraries.
@@ -18,7 +18,7 @@ async function initMap(): Promise<void> {
   const {AdvancedMarkerElement} =
       await google.maps.importLibrary('marker') as google.maps.MarkerLibrary;
 
-  // The map, centered at Uluru, Australia.
+  // The map, centered at Uluru.
   map = new Map(document.getElementById('map') as HTMLElement, {
     zoom: 4,
     center: position,
