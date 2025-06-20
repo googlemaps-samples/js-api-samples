@@ -1,4 +1,3 @@
-"use strict";
 /*
 * @license
 * Copyright 2025 Google LLC. All Rights Reserved.
@@ -18,7 +17,7 @@ async function init() {
     });
     // A marker with a with a URL pointing to a PNG.
     const beachFlagImg = document.createElement('img');
-    beachFlagImg.src = 'https://maps-docs-team.web.app/assets/beachflag.png';
+    beachFlagImg.src = new URL('images/beachflag.png', import.meta.url);
     const beachFlagMarker = new Marker3DElement({
         position: { lat: 37.434, lng: -122.082 },
     });
@@ -75,4 +74,5 @@ async function init() {
     document.body.append(map);
 }
 init();
+export {};
 // [END maps_3d_marker_graphics]
