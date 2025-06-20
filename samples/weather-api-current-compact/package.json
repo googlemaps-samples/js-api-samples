@@ -1,8 +1,8 @@
 {
-  "name": "@js-api-samples/weather-api-compact",
+  "name": "@js-api-samples/weather-api-current-compact",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh map-simple && bash ../app.sh map-simple && bash ../docs.sh map-simple &&  npm run build:vite --workspace=. && bash ../dist.sh map-simple",
+    "build": "tsc && bash ../jsfiddle.sh weather-api-current-compact && bash ../app.sh weather-api-current-compact && bash ../docs.sh weather-api-current-compact &&  npm run build:vite --workspace=. && bash ../dist.sh weather-api-current-compact",
     "test": "tsc && npm run build:vite --workspace=.",
     "start": "vite --port 5173",
     "build:vite": "vite build --base './'",
