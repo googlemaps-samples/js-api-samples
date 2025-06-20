@@ -75,9 +75,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright # Default Playwright cache path
-          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}-${{ hashFiles('playwright.config.ts') }}
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('playwright.config.ts') }}
           restore-keys: |
-            ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}- # Fallback for lock file changes
+            ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}- # Fallback for lock file changes
             ${{ runner.os }}-playwright- # Broader fallback
 
       - name: Install dependencies
@@ -113,6 +113,7 @@ jobs:
         env:
           # Pass the correct base reference for find-changes.sh when called by samples.spec.ts
           GIT_BASE_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
+          TEST_SCOPE: 'affected'
           CI: true
 
       - name: Upload Test Report Artifact
@@ -148,9 +149,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright # Default Playwright cache path
-          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}-${{ hashFiles('playwright.config.ts') }}
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('playwright.config.ts') }}
           restore-keys: |
-            ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}- # Fallback for lock file changes
+            ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}- # Fallback for lock file changes
             ${{ runner.os }}-playwright- # Broader fallback
 
       - name: Install dependencies
@@ -164,10 +165,14 @@ jobs:
 
       - name: Install Playwright browsers with OS dependencies
         run: npx playwright install --with-deps
+        env:
+          DEBUG: pw:install # Enable Playwright's own install verbose logging
+          PLAYWRIGHT_BROWSERS_PATH: ~/.cache/ms-playwright # Explicitly set, though it's the default on Linux
 
       - name: Run Full E2E Tests (Scheduled)
         run: npx playwright test e2e/samples.spec.ts
         env:
+          TEST_SCOPE: 'all'
           CI: true
 
       - name: Upload Test Report Artifact
