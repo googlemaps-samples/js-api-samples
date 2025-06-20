@@ -71,6 +71,12 @@ jobs:
             (cd samples/ && npm run build --workspace=$workspace)
           done
 
+      - name: Copy Root Assets to Dist
+        run: |
+          if [ -d "assets" ]; then
+            cp -R assets dist/
+          fi
+
       - name: Get Deleted Workspaces
         id: get_deleted
         run: bash samples/find-deleted-subfolders.sh ${{ github.event.before }}
