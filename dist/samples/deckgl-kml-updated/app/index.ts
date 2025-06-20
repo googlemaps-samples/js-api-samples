@@ -5,11 +5,7 @@
   */
 
 // Import necessary loader
-import { registerLoaders } from '@loaders.gl/core';
 import { KMLLoader } from '@loaders.gl/kml';
-
-// Register the KML loader
-registerLoaders(KMLLoader);
 
 // Declare global namespace for Deck.gl to satisfy TypeScript compiler
 declare namespace deck {
@@ -95,6 +91,7 @@ async function initMap(): Promise<void> {
   geojsonLayer = new deck.GeoJsonLayer({
     id: 'geojson-layer',
     data: `https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_week_age.kml?t=${Date.now()}`, // Append timestamp to prevent caching
+    loaders: [KMLLoader],
     pickable: true,
     stroked: true, // Set to true to add a border
     getLineColor: [0, 0, 0, 255], // Set border color to black

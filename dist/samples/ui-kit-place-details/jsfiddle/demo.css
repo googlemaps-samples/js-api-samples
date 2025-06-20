@@ -9,10 +9,10 @@
  */
 html,
 body {
-  height: 100%;
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  display: block;
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center the content horizontally */
+    align-items: flex-start; /* Align items to the top */
+    width: 100%
 }
 
 h1 {
@@ -25,13 +25,11 @@ gmp-map {
 }
 
 gmp-place-details {
-  background-color: #fff;
-  border-radius: 8px;
+  border-radius: 0px;
   margin: 20px;
   width: 400px;
-  padding: 12px;
-  margin-top: 10px;
-  overflow-y: auto;
+  height: 400px;
+  margin-top: 0px;
 }
 
 gmp-advanced-marker {
@@ -39,8 +37,8 @@ gmp-advanced-marker {
 }
 
 .widget-container {
-  height: 400px;
-  width: 457px; 
-  overflow-y: auto;
-  overflow-x: hidden;
+  min-width: 400px;
+  overflow-y: none;
+  overflow-x: none;
 }
+

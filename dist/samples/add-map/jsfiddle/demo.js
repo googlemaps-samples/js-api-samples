@@ -5,16 +5,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Initialize and add the map
+// Initialize and add the map.
 let map;
 async function initMap() {
     
-    // The location of Uluru.
+    // The location of Uluru, Australia.
     const position = { lat: -25.344, lng: 131.031 };
     //  Request the needed libraries.
     const { Map } = await google.maps.importLibrary('maps');
     const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
-    // The map, centered at Uluru.
+    // The map, centered at Uluru, Australia.
     map = new Map(document.getElementById('map'), {
         zoom: 4,
         center: position,

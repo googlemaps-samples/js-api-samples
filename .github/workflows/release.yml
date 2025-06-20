@@ -54,7 +54,46 @@ jobs:
           node-version: '22.x'
 
       - run: npm i
-      - run: npm run build-all
+
+      - name: Get Affected Workspaces
+        id: get_workspaces
+        run: bash samples/find-changes.sh ${{ github.event.before }}
+
+      - name: Build Affected Projects
+        if: steps.get_workspaces.outputs.changed_workspaces != ''
+        run: |
+          IFS=$'\n'
+          AFFECTED_WORKSPACES_ARRAY=(${{ steps.get_workspaces.outputs.changed_workspaces }})
+          echo "Building affected workspaces:"
+          for workspace in "${AFFECTED_WORKSPACES_ARRAY[@]}"; do
+            echo "  - samples/$workspace"
+            rm -rf dist/samples/$workspace
+            (cd samples/ && npm run build --workspace=$workspace)
+          done
+
+      - name: Copy Root Assets to Dist
+        run: |
+          if [ -d "assets" ]; then
+            cp -R assets dist/
+          fi
+
+      - name: Get Deleted Workspaces
+        id: get_deleted
+        run: bash samples/find-deleted-subfolders.sh ${{ github.event.before }}
+
+      - name: Remove Output for Deleted Folders
+        if: steps.get_deleted.outputs.deleted_workspaces != ''
+        run: |
+          IFS=$'\n'
+          DELETED_WORKSPACES_ARRAY=({{ steps.get_deleted.outputs.deleted_workspaces }})
+          echo "Removing deleted project output:"
+          for workspace in "${DELETED_WORKSPACES_ARRAY[@]}"; do
+            echo "  - samples/$workspace"
+            rm -rf dist/samples/$workspace
+          done
+          
+      - name: Generate Index
+        run: bash samples/generate-index.sh
 
       - uses: google-github-actions/auth@v1
         with:
