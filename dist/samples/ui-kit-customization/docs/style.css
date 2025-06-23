@@ -24,20 +24,20 @@ h1 {
 input[type="text"],
 select {
   border: 1px solid #ccc;
-  padding: 10px 8px;
+  padding: 5px 3px;
   border-radius: 5px;
-  width: 100%;
+  width: 96%;
 }
 
 input[type="text"] {
-  width: 96%;
+  width: 94%;
 }
 
 label {
   display: block;
   color: #4a5568;
-  font-size: 0.8rem;
-  margin: 8px 0 3px 0;
+  font-size: 0.7rem;
+  margin: 3px 0 3px 0;
 }
 
 p.note {
@@ -55,7 +55,7 @@ hr {
 a.reset,
 span {
   color: #4a5568;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }
 
 #container {
@@ -66,7 +66,6 @@ span {
 
 .controls {
   width: 40%;
-  padding: 20px;
   max-height: 1000px;
   overflow: scroll;
 }
@@ -78,7 +77,8 @@ section {
 
 gmp-place-autocomplete {
   display: inline-block;
-  width: 100%;
+  width: 96%;
+  height: 30px;
 }
 
 .content-element-container {
@@ -101,7 +101,7 @@ gmp-place-autocomplete {
 }
 
 .content-elements,
-.style-config {
+.style-config section {
   display: grid;
   grid-template-columns: auto auto;
 }
@@ -158,7 +158,35 @@ gmp-place-details {
   margin: 0 auto 10px auto;
 }
 
-.vAygCK-api-load-alpha-banner {
-  display: none;
+.accordion {
+  background-color: #e8f0fe;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  transition: 0.4s;
 }
-/* [END maps_ui_kit_customization] */
+
+.accordion:after {
+  content: '\002B';
+  color: #777;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.accordion.active, .accordion:hover {
+  background-color: #ccc;
+}
+
+.style-config section.panel {
+  padding: 0 18px;
+  background-color: white;
+  display: none;
+  overflow: hidden;
+  transition: 0.2s ease-out;
+}
