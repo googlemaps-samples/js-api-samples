@@ -83,6 +83,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
       - name: Build Affected Projects
         if: steps.get_workspaces.outputs.affected_workspaces != ''
         run: |
