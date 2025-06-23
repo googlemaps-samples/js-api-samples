@@ -105,12 +105,6 @@ jobs:
         #   steps.get_workspaces.outputs.affected_workspaces != '' || # If any workspace built
         #   contains(github.event.pull_request.paths.*, 'samples/generate-index.sh') # Or if the script itself changed
 
-      - name: Install Playwright browsers with OS dependencies
-        run: npx playwright install --with-deps
-        env:
-          DEBUG: pw:install # Enable Playwright's own install verbose logging
-          PLAYWRIGHT_BROWSERS_PATH: ~/.cache/ms-playwright # Explicitly set, though it's the default on Linux
-
       - name: Run All Playwright Tests
         run: npx playwright test e2e/samples.spec.ts
         env:
