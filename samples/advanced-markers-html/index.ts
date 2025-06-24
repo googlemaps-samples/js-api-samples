@@ -201,4 +201,3 @@ const properties = [{
 
 initMap();
 // [END maps_advanced_markers_html]
-export { };
