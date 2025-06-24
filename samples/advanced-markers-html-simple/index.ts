@@ -30,4 +30,3 @@ async function initMap() {
 // [END maps_advanced_markers_html_simple_snippet]
 initMap();
 // [END maps_advanced_markers_html_simple]
-export { };
