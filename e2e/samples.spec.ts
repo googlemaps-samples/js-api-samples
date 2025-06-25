@@ -107,26 +107,6 @@ if (foldersToTest.length === 0) {
 foldersToTest.forEach((sampleFolder) => {
   test(`test ${sampleFolder}`, async ({ page }) => {
 
-    // START Build the sample
-    const buildProcess = childProcess.spawn('npm', ['run', 'build'], {
-      cwd: path.join(samplesDir, sampleFolder),
-      stdio: 'inherit',
-    });
-
-    await new Promise((resolve, reject) => {
-        buildProcess.on('close', (code) => {
-          if (code === 0) {
-            resolve(true);
-          } else {
-            reject(new Error(`Build process for ${sampleFolder} exited with code ${code}`));
-          }
-        });
-        buildProcess.on('error', (err) => {
-            reject(new Error(`Failed to start build process for ${sampleFolder}: ${err.message}`));
-        });
-      });
-    // END Build the sample
-
     // START run the preview
     // Get an available port
     const port = 8080;
