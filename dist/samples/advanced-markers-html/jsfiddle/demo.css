@@ -48,7 +48,7 @@ body {
   position: relative;
   transition: all 0.3s ease-out;
   width: 30px;
-  transform: translateY(-9px)
+  transform: translateY(-9px);
 }
 
 .property::after {
@@ -205,4 +205,5 @@ body {
 .property:not(.highlight):has(.fa-shop)::after {
   border-top: 9px solid var(--shop-color);
 }
+
 

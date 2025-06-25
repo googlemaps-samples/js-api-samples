@@ -48,7 +48,7 @@ body {
   position: relative;
   transition: all 0.3s ease-out;
   width: 30px;
-  transform: translateY(-9px)
+  transform: translateY(-9px);
 }
 
 .property::after {
