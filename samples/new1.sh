@@ -12,9 +12,9 @@
 #  3. ./new1.sh
 
 # AUTHOR: Update these values!
-NAME="advanced-markers-simple" # The name of the folder to create (for example "map-simple").
-REGION_TAG="maps_advanced_markers_simple" # The region tag to use for the JSHTML (for example "maps_map_simple").
-TITLE="Add an advanced marker to a map." # The title of the example.
+NAME="map-simple" # The name of the folder to create (for example "map-simple").
+REGION_TAG="maps_map_simple" # The region tag to use for the JSHTML (for example "maps_map_simple").
+TITLE="Simple Map" # The title of the example.
 API_LOADER="api_loader_dynamic" # The type of loader to use (api_loader_dynamic or api_loader_default).
 
 # Path to the source folder for the repo archive; substitute with your own path.
