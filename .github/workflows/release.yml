@@ -110,6 +110,10 @@ jobs:
 
       - name: Commit and Push Changes (to temp branch)
         run: |
+          echo "--- Debugging package-lock.json state ---"
+          git status --porcelain package-lock.json || true # Show if it's modified
+          git diff package-lock.json || true # Show actual diff if modified
+          echo "-------------------------------------"
           git add dist/ package-lock.json
           if [ -z "$(git status --porcelain)" ]; then
             echo "No changes to commit"
