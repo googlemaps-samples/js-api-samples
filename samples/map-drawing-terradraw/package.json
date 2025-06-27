@@ -1,0 +1,21 @@
+{
+  "name": "map-drawing-terradraw-basic",
+  "version": "1.0.0",
+  "description": "Basic sample for Terra Draw with Google Maps API.",
+  "private": true,
+  "scripts": {
+    "start": "vite",
+    "build": "tsc && vite build",
+    "test": "tsc && vite build"
+  },
+  "dependencies": {
+    "@googlemaps/js-api-loader": "^1.16.8",
+    "terra-draw": "latest",
+    "terra-draw-google-maps-adapter": "latest"
+  },
+  "devDependencies": {
+    "@types/google.maps": "latest",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0"
+  }
+}
