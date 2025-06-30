@@ -16,7 +16,7 @@
     "@types/node": "^24.0.7",
     "rimraf": "^6.0.1",
     "typescript": "^5.8.3",
-    "vite": "^6.3.5"
+    "vite": "^7.0.0"
   },
   "dependencies": {
     "dotenv": "^16.5.0"
