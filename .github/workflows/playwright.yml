@@ -81,7 +81,7 @@ jobs:
             ${{ runner.os }}-playwright- # Broader fallback
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
@@ -106,6 +106,7 @@ jobs:
         #   contains(github.event.pull_request.paths.*, 'samples/generate-index.sh') # Or if the script itself changed
 
       - name: Run All Playwright Tests
+        if: steps.get_workspaces.outputs.affected_workspaces != ''
         run: npx playwright test e2e/samples.spec.ts
         env:
           # Pass the correct base reference for find-changes.sh when called by samples.spec.ts

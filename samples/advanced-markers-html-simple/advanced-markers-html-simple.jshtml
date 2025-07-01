@@ -1,0 +1,19 @@
+
+{% spaceless %}{% include "maps/documentation/javascript/examples/full/_apikey.html" %}{% endspaceless %}<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Create advanced markers using HTML and CSS</title>
+    <style>
+{% includecode content_path="maps/documentation/javascript/examples/samples/advanced-markers-html-simple/style.css" region_tag="maps_advanced_markers_html_simple" html_escape="False" %}
+    </style>
+  </head>
+  <body>
+{% includecode content_path="maps/documentation/javascript/examples/samples/advanced-markers-html-simple/index.html" region_tag="maps_advanced_markers_html_simple_body" html_escape="False" %}
+{{ api_loader_dynamic }}
+    <script>
+{% includecode content_path="maps/documentation/javascript/examples/samples/advanced-markers-html-simple/index.js" region_tag="maps_advanced_markers_html_simple" html_escape="False" %}
+    </script>
+  </body>
+</html>
