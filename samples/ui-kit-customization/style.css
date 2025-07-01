@@ -158,7 +158,32 @@ gmp-place-details {
   margin: 0 auto 10px auto;
 }
 
-.vAygCK-api-load-alpha-banner {
-  display: none;
+.accordion {
+  background-color: #e8f0fe;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  transition: 0.4s;
+}
+
+.accordion:after {
+  content: '\002B';
+  color: #777;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.accordion.active:after {
+  content: '\002D';
+}
+
+.accordion.active, .accordion:hover {
+  background-color: #ccc;
 }
 /* [END maps_ui_kit_customization] */
