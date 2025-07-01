@@ -24,19 +24,19 @@ h1 {
 input[type="text"],
 select {
   border: 1px solid #ccc;
-  padding: 10px 8px;
+  padding: 5px 3px;
   border-radius: 5px;
   width: 100%;
 }
 
 input[type="text"] {
-  width: 96%;
+  width: 97%;
 }
 
 label {
   display: block;
   color: #4a5568;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   margin: 8px 0 3px 0;
 }
 
@@ -55,7 +55,7 @@ hr {
 a.reset,
 span {
   color: #4a5568;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }
 
 #container {
@@ -66,7 +66,6 @@ span {
 
 .controls {
   width: 40%;
-  padding: 20px;
   max-height: 1000px;
   overflow: scroll;
 }
