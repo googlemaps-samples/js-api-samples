@@ -101,7 +101,7 @@ gmp-place-autocomplete {
 }
 
 .content-elements,
-.style-config {
+.style-config section {
   display: grid;
   grid-template-columns: auto auto;
 }
@@ -186,5 +186,13 @@ gmp-place-details {
 
 .accordion.active, .accordion:hover {
   background-color: #ccc;
+}
+
+.style-config section.panel {
+  padding: 0 18px;
+  background-color: white;
+  display: none;
+  overflow: hidden;
+  transition: 0.2s ease-out;
 }
 /* [END maps_ui_kit_customization] */
