@@ -84,10 +84,29 @@ async function init() {
     gmpPlaceAll = document.createElement('gmp-place-all-content');
     gmpPlaceStandard = document.createElement('gmp-place-standard-content');
     gmpContentConfig = document.createElement('gmp-place-content-config');
+    initAccordion();
     detailsConstructor(); //Construct the place details element
     initSearchPlace(); //Initialize Autocomplete search
     widgetSelector(); //Handlers for controls
     styleCustomization(); //css properties
+}
+/* style properties accordion */
+function initAccordion() {
+    let accordions = document.getElementsByClassName('accordion');
+    Array.from(accordions).forEach((item) => {
+        item.addEventListener('click', () => {
+            item.classList.toggle('active');
+            let panel = item.nextElementSibling;
+            if (panel) {
+                if (panel.style.display === 'grid') {
+                    panel.style.display = 'none';
+                }
+                else {
+                    panel.style.display = 'grid';
+                }
+            }
+        });
+    });
 }
 /* Initialize Autocomplete for searching places */
 function initSearchPlace() {
