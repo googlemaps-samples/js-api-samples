@@ -39,7 +39,7 @@ gmp-place-details-compact {
   padding: 0;
   margin: 0;
   position: relative;
-  transform: translate(0, calc(- 20px));
+  transform: translate(0, calc(-20px));
 }
 
 /* This creates the pointer attached to the bottom of the element. */
