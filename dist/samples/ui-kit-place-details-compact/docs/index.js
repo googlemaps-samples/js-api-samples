@@ -7,19 +7,16 @@
 /* [START maps_ui_kit_place_details_compact] */
 // Use querySelector to select elements for interaction.
 const mapContainer = document.getElementById("map-container");
-const detailsContainer = document.getElementById("details-container");
 const placeDetails = document.querySelector("gmp-place-details-compact");
 const placeDetailsRequest = document.querySelector("gmp-place-details-place-request");
 let gMap;
-let infowindow;
 let marker;
 async function initMap() {
     const { PlaceDetailsCompactElement, PlaceDetailsPlaceRequestElement } = await google.maps.importLibrary("places");
-    const { Map, InfoWindow } = await google.maps.importLibrary("maps");
+    const { Map } = await google.maps.importLibrary("maps");
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
     gMap = new Map(mapContainer, { mapId: 'DEMO_MAP_ID' });
     marker = new AdvancedMarkerElement({ map: gMap });
-    infowindow = new InfoWindow({});
     // Hide the map type control.
     gMap.setOptions({ mapTypeControl: false });
     // Set up map, marker, and infowindow once widget is loaded.
@@ -30,7 +27,6 @@ async function initMap() {
     });
     // Add an event listener to handle clicks.
     gMap.addListener("click", async (event) => {
-        marker.position = null;
         event.stop();
         // Fire when the user clicks on a POI.
         if (event.placeId) {
@@ -49,22 +45,22 @@ async function initMap() {
     const updateMapAndMarker = () => {
         console.log("function called");
         if (placeDetails.place && placeDetails.place.location) {
-            gMap.panTo(placeDetails.place.location);
+            marker.gMap = null;
+            let adjustedCenter = offsetLatLngRight(placeDetails.place.location, 0.002);
+            gMap.panTo(adjustedCenter);
             gMap.setZoom(16); // Set zoom after panning if needed
+            marker.content = placeDetails;
             marker.position = placeDetails.place.location;
-            marker.collisionBehavior = google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
-            marker.style.display = 'block';
-            //@ts-ignore
-            infowindow.setOptions({
-                content: placeDetails
-            });
-            //@ts-ignore
-            infowindow.open({
-                anchor: marker,
-                map: gMap,
-            });
+        }
+        else {
+            console.log("else");
         }
     };
+}
+// Helper function to offset marker placement for better visual appearance.
+function offsetLatLngRight(latLng, latitudeOffset) {
+    const newLat = latLng.lat() + latitudeOffset;
+    return new google.maps.LatLng(newLat, latLng.lng());
 }
 initMap();
 /* [END maps_ui_kit_place_details_compact] */
