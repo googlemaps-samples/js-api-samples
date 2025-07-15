@@ -120,6 +120,7 @@ jobs:
       - name: Debug Affected Workspaces Output
         run: |
           echo "Affected workspaces: ${{ steps.get_workspaces.outputs.affected_workspaces }}"
+          echo "Affected workspaces (length): ${{ steps.get_workspaces.outputs.affected_workspaces.length }}"
 
       - name: Run All Playwright Tests
         if: steps.get_workspaces.outputs.affected_workspaces != ''
