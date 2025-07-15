@@ -50,26 +50,14 @@ jobs:
           fetch-depth: 0
           lfs: true
 
-      - name: Fetch base branch for PR comparison
-        if: github.event_name == 'pull_request'
-        run: git fetch origin ${{ github.base_ref }}:${{ github.base_ref }}
-
-      - name: Set BASE_REF
-        id: set_base_ref
-        run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            echo "It's a pull_request!!!"
-            echo "base_ref=origin/${{ github.base_ref }}" >> $GITHUB_OUTPUT
-          else
-            echo "It's the previous commit!!!"
-            echo "base_ref=${{ github.event.before }}" >> $GITHUB_OUTPUT
-          fi
-
       - name: Get Affected Workspaces
         id: get_workspaces
-        # For PRs, compare against the origin's version of the base branch.
-        # For pushes, compare against the commit before the push.
-        run: bash samples/find-changes.sh ${{ steps.set_base_ref.outputs.base_ref }}
+        run: |
+          BASE_REF=$([ "${{ github.event_name }}" == "pull_request" ] && echo "origin/${{ github.base_ref }}" || echo "${{ github.event.before }}")
+          echo "Using BASE_REF: $BASE_REF"  # Optional: for debugging
+          bash samples/find-changes.sh "$BASE_REF"
+        env:
+          GIT_BASE_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
