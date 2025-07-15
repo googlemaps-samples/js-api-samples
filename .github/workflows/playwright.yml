@@ -85,7 +85,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Build Affected Projects
-        if: steps.get_workspaces.outputs.affected_workspaces != ''
+        #if: steps.get_workspaces.outputs.affected_workspaces != ''
         run: |
           IFS=$'\n'
           AFFECTED_WORKSPACES_ARRAY=(${{ steps.get_workspaces.outputs.affected_workspaces }})
