@@ -13,12 +13,12 @@
   "devDependencies": {
     "@playwright/test": "^1.54.1",
     "@types/google.maps": "^3.58.1",
-    "@types/node": "^24.0.10",
+    "@types/node": "^24.0.13",
     "rimraf": "^6.0.1",
     "typescript": "^5.8.3",
-    "vite": "^7.0.2"
+    "vite": "^7.0.4"
   },
   "dependencies": {
-    "dotenv": "^17.0.1"
+    "dotenv": "^17.2.0"
   }
 }
