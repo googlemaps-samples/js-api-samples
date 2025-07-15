@@ -77,6 +77,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}- # Fallback for lock file changes
             ${{ runner.os }}-playwright- # Broader fallback
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: ~/.cache/ms-playwright
 
       - name: Install dependencies
         run: npm install
