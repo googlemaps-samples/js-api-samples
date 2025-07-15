@@ -50,6 +50,10 @@ jobs:
           fetch-depth: 0
           lfs: true
 
+      - name: Fetch base branch for PR comparison
+        if: github.event_name == 'pull_request'
+        run: git fetch origin ${{ github.base_ref }}:${{ github.base_ref }}
+
       - name: Set BASE_REF
         id: set_base_ref
         run: |
