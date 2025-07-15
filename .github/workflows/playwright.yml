@@ -56,8 +56,6 @@ jobs:
           BASE_REF=$([ "${{ github.event_name }}" == "pull_request" ] && echo "origin/${{ github.base_ref }}" || echo "${{ github.event.before }}")
           echo "Using BASE_REF: $BASE_REF"  # Optional: for debugging
           bash samples/find-changes.sh "$BASE_REF"
-        env:
-          GIT_BASE_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
