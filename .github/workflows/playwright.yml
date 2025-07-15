@@ -58,8 +58,10 @@ jobs:
         id: set_base_ref
         run: |
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "It's a pull_request!!!"
             echo "base_ref=origin/${{ github.base_ref }}" >> $GITHUB_OUTPUT
           else
+            echo "It's the previous commit!!!"
             echo "base_ref=${{ github.event.before }}" >> $GITHUB_OUTPUT
           fi
 
