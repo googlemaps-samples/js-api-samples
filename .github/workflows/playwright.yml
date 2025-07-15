@@ -93,6 +93,7 @@ jobs:
         run: |
           IFS=$'\n'
           AFFECTED_WORKSPACES_ARRAY=(${{ steps.get_workspaces.outputs.affected_workspaces }})
+          echo "Affected Workspaces Array: ${AFFECTED_WORKSPACES_ARRAY[@]}"
           
           echo "Building affected workspaces:"
           for workspace in "${AFFECTED_WORKSPACES_ARRAY[@]}"; do
