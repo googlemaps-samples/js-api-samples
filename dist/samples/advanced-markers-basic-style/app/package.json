@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/advanced-markers-basic-style",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh advanced-markers-basic-style && bash ../app.sh advanced-markers-basic-style && bash ../docs.sh advanced-markers-basic-style && npm run build:vite --workspace=. && bash ../dist.sh advanced-markers-basic-style",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
