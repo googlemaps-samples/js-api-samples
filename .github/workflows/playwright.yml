@@ -54,7 +54,11 @@ jobs:
         id: get_workspaces
         # For PRs, compare against the origin's version of the base branch.
         # For pushes, compare against the commit before the push.
-        run: bash samples/find-changes.sh ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
+        run: |
+          bash samples/find-changes.sh ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
+          echo "Let's verify that we got the varname wrong (should be changed_workspaces)"
+          echo "Affected workspaces (worng): ${{ steps.get_workspaces.outputs.affected_workspaces }}"
+          echo "Changed workspaces (ding ding ding): ${{ steps.get_workspaces.outputs.changed_workspaces }}"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
