@@ -52,10 +52,9 @@ jobs:
 
       - name: Get Affected Workspaces
         id: get_workspaces
-        run: |
-          BASE_REF=$([ "${{ github.event_name }}" == "pull_request" ] && echo "origin/${{ github.base_ref }}" || echo "${{ github.event.before }}")
-          echo "Using BASE_REF: $BASE_REF"  # Optional: for debugging
-          bash samples/find-changes.sh "$BASE_REF"
+        # For PRs, compare against the origin's version of the base branch.
+        # For pushes, compare against the commit before the push.
+        run: bash samples/find-changes.sh ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
