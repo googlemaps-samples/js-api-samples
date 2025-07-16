@@ -54,7 +54,8 @@ async function handleValidationSubmit(event) {
                 `Formatted address: ${result.address.formattedAddress}\n` +
                 `Entered: ${result.verdict.inputGranularity}\n` +
                 `Validated: ${result.verdict.validationGranularity}\n` +
-                `Geocoded: ${result.verdict.geocodeGranularity}\n\n` +
+                `Geocoded: ${result.verdict.geocodeGranularity}\n` +
+                `Possible next action: ${result.verdict.possibleNextAction}\n\n` +
                 `${getVerdictMessage(result.verdict, 'addressComplete')}\n` +
                 `${getVerdictMessage(result.verdict, 'hasUnconfirmedComponents')}\n` +
                 `${getVerdictMessage(result.verdict, 'hasInferredComponents')}\n` +
@@ -70,7 +71,7 @@ async function handleValidationSubmit(event) {
     }
 }
 // [END maps_address_validation_form_handler]
-// --- Verdict Messages ---
+// Verdict messages
 const verdictMessages = {
     addressComplete: {
         trueMessage: '- The API found no unresolved, unexpected, or missing address elements.',
@@ -98,12 +99,11 @@ function getVerdictMessage(verdict, key) {
 }
 // Handler for Dropdown Change
 function handleExampleSelectChange(event) {
-    const selectedValue = event.target.value; // e.g., "google", "suite", ""
+    const selectedValue = event.target.value;
     if (selectedValue && examples[selectedValue]) {
         populateAddressFields(examples[selectedValue]);
     }
     else if (!selectedValue) {
-        // Optional: Clear fields if the "-- Select --" option is chosen
         populateAddressFields(null); // Pass null to clear fields
     }
 }
@@ -185,7 +185,7 @@ function populateAddressFields(exampleAddress) {
     regionSelect.value = exampleAddress.region || '';
     // Clear previous results and errors
     resultDisplay.textContent = 'Result will appear here...';
-    console.log("Populated fields with example:", exampleAddress);
+    console.log("Populated fields with example: ", exampleAddress);
 }
 init();
 // [END maps_address_validation]

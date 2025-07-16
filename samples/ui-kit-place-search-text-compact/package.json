@@ -1,0 +1,15 @@
+{
+    "name": "@js-api-samples/ui-kit-place-search-text-compact",
+    "version": "1.0.0",
+    "scripts": {
+      "build": "tsc && bash ../jsfiddle.sh ui-kit-place-search-text-compact && bash ../app.sh ui-kit-place-search-text-compact && bash ../docs.sh ui-kit-place-search-text-compact && npm run build:vite --workspace=. && bash ../dist.sh ui-kit-place-search-text-compact",
+      "test": "tsc && npm run build:vite --workspace=.",
+      "start": "tsc && vite build --base './' && vite",
+      "build:vite": "vite build --base './'",
+      "preview": "vite preview"
+    },
+    "dependencies": {
+      
+    }
+  }
+  

@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/place-class",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh place-class && bash ../app.sh place-class && bash ../docs.sh place-class && npm run build:vite --workspace=. && bash ../dist.sh place-class",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
