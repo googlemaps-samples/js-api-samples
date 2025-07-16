@@ -77,4 +77,5 @@ echo "Changed (added or modified) subfolders in '$PROJECTS_ROOT_DIR':"
 echo "$UNIQUE_CHANGED_WORKSPACES"
 
 # Set the output variable for GitHub Actions
-set_gh_output "changed_workspaces" "$UNIQUE_CHANGED_WORKSPACES"
+# set_gh_output "changed_workspaces" "$UNIQUE_CHANGED_WORKSPACES"
+echo "changed_workspaces=$UNIQUE_CHANGED_WORKSPACES" >> "$GITHUB_OUTPUT"
