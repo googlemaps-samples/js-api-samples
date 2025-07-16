@@ -110,7 +110,7 @@ jobs:
 
       - name: Commit and Push Changes (to temp branch)
         run: |
-          git add dist/ package-lock.json
+          git add dist/ package-lock.json index.html
           if [ -z "$(git status --porcelain)" ]; then
             echo "No changes to commit"
             exit 0
