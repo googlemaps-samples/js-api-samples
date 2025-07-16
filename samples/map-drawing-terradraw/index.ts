@@ -1,4 +1,11 @@
-// [START maps_drawing_terradraw_libraries]
+/*
+ * @license
+ * Copyright 2025 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// [START maps_map_drawing_terradraw]
+// [START maps_map_drawing_terradraw_libraries]
 import { Loader } from '@googlemaps/js-api-loader';
 
 import {
@@ -13,7 +20,7 @@ import {
 } from 'terra-draw';
 import { TerraDrawGoogleMapsAdapter } from 'terra-draw-google-maps-adapter';
 
-// [END maps_drawing_terradraw_libraries]
+// [END maps_map_drawing_terradraw_libraries]
 
 const colorPalette = [
   "#E74C3C",
@@ -499,3 +506,4 @@ loader.load().then(async () => {
 }).catch(e => {
   console.error("Error loading Google Maps API:", e);
 });
+// [END maps_map_drawing_terradraw]
