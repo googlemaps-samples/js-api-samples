@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/place-autocomplete-basic-map",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh place-autocomplete-basic-map && bash ../app.sh place-autocomplete-basic-map && bash ../docs.sh place-autocomplete-basic-map && npm run build:vite --workspace=. && bash ../dist.sh place-autocomplete-basic-map",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
