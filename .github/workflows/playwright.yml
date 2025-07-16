@@ -71,6 +71,7 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Cache Playwright browsers
+        id: playwright-cache
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright # Default Playwright cache path
@@ -85,6 +86,7 @@ jobs:
         run: npm install
 
       - name: Install Playwright Browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
 
       - name: Build Changed Workspaces
