@@ -2,8 +2,8 @@
 
 This sample demonstrates a basic implementation of Terra Draw with the Google Maps JavaScript API. It includes various drawing modes such as Point, LineString, Polygon, Rectangle, Circle, and Freehand.
 
-![Roadmap View](./screenshots/roadmap-draw.png)
-![Satellite View](./screenshots/satellite-draw.png)
+![Roadmap View](./screenshots/draw-roadmap.png)
+![Satellite View](./screenshots/draw-satellite.png)
 
 # Google Maps JavaScript Sample
 
