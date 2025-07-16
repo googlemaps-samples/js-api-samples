@@ -1,12 +1,13 @@
 {
-  "name": "map-drawing-terradraw-basic",
+  "name": "@js-api-samples/map-drawing-terradraw",
   "version": "1.0.0",
   "description": "Basic sample for Terra Draw with Google Maps API.",
-  "private": true,
-  "scripts": {
-    "start": "vite",
-    "build": "tsc && vite build",
-    "test": "tsc && vite build"
+   "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh map-drawing-terradraw && bash ../app.sh map-drawing-terradraw && bash ../docs.sh map-drawing-terradraw && npm run build:vite --workspace=. && bash ../dist.sh map-drawing-terradraw",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.8",
