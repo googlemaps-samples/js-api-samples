@@ -60,7 +60,7 @@ jobs:
       - name: Debug Affected Workspaces
         run: |
           echo "Let's verify that we got the varname wrong (should be changed_workspaces)"
-          echo "Affected workspaces (worng): ${{ steps.get_workspaces.outputs.affected_workspaces }}"
+          echo "Affected workspaces (worng): ${{ steps.get_workspaces.outputs.changed_workspaces }}"
           echo "Changed workspaces (ding ding ding): ${{ steps.get_workspaces.outputs.changed_workspaces }}"
 
       - name: Setup Node.js
@@ -96,11 +96,11 @@ jobs:
       - name: Build Affected Projects
         run: |
           IFS=$'\n'
-          AFFECTED_WORKSPACES_ARRAY=(${{ steps.get_workspaces.outputs.affected_workspaces }})
-          echo "Affected Workspaces Array: ${AFFECTED_WORKSPACES_ARRAY[@]}"
+          CHANGED_WORKSPACES_ARRAY=(${{ steps.get_workspaces.outputs.changed_workspaces }})
+          echo "Affected Workspaces Array: ${CHANGED_WORKSPACES_ARRAY[@]}"
           
           echo "Building affected workspaces:"
-          for workspace in "${AFFECTED_WORKSPACES_ARRAY[@]}"; do
+          for workspace in "${CHANGED_WORKSPACES_ARRAY[@]}"; do
             echo "  - samples/$workspace"
             npm run build --workspace=samples/$workspace
           done
@@ -109,16 +109,11 @@ jobs:
         run: bash samples/generate-index.sh
         # Consider adding an 'if' condition if it only needs to run when 'samples/' changed at all.
         # if: |
-        #   steps.get_workspaces.outputs.affected_workspaces != '' || # If any workspace built
+        #   steps.get_workspaces.outputs.changed_workspaces != '' || # If any workspace built
         #   contains(github.event.pull_request.paths.*, 'samples/generate-index.sh') # Or if the script itself changed
 
-      - name: Debug Affected Workspaces Output
-        run: |
-          echo "Affected workspaces: ${{ steps.get_workspaces.outputs.affected_workspaces }}"
-          echo "Affected workspaces (length): ${{ steps.get_workspaces.outputs.affected_workspaces.length }}"
-
       - name: Run All Playwright Tests
-        if: steps.get_workspaces.outputs.affected_workspaces != ''
+        if: steps.get_workspaces.outputs.changed_workspaces != ''
         run: npx playwright test e2e/samples.spec.ts
         env:
           # Pass the correct base reference for find-changes.sh when called by samples.spec.ts
