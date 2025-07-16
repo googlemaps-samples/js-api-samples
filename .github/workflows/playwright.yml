@@ -50,18 +50,12 @@ jobs:
           fetch-depth: 0
           lfs: true
 
-      - name: Get Affected Workspaces
+      - name: Get Changed Workspaces
         id: get_workspaces
         # For PRs, compare against the origin's version of the base branch.
         # For pushes, compare against the commit before the push.
         run: |
           bash samples/find-changes.sh ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
-
-      - name: Debug Affected Workspaces
-        run: |
-          echo "Let's verify that we got the varname wrong (should be changed_workspaces)"
-          echo "Affected workspaces (worng): ${{ steps.get_workspaces.outputs.changed_workspaces }}"
-          echo "Changed workspaces (ding ding ding): ${{ steps.get_workspaces.outputs.changed_workspaces }}"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -93,13 +87,13 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: Build Affected Projects
+      - name: Build Changed Workspaces
         run: |
           IFS=$'\n'
           CHANGED_WORKSPACES_ARRAY=(${{ steps.get_workspaces.outputs.changed_workspaces }})
-          echo "Affected Workspaces Array: ${CHANGED_WORKSPACES_ARRAY[@]}"
+          echo "Changed Workspaces Array: ${CHANGED_WORKSPACES_ARRAY[@]}"
           
-          echo "Building affected workspaces:"
+          echo "Building changed workspaces:"
           for workspace in "${CHANGED_WORKSPACES_ARRAY[@]}"; do
             echo "  - samples/$workspace"
             npm run build --workspace=samples/$workspace
