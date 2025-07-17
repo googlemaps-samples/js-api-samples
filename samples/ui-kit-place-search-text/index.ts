@@ -5,130 +5,162 @@
  */
 /* [START maps_ui_kit_place_search_text] */
 /* [START maps_ui_kit_place_search_text_query_selectors] */
-const map = document.querySelector("gmp-map") as any;
-const placeList = document.querySelector("gmp-place-list") as any;
-const placeDetails = document.querySelector("gmp-place-details") as any;
-let marker = document.querySelector('gmp-advanced-marker') as any;
-const textSearchInput = document.getElementById('textSearchInput') as any;
-const textSearchButton = document.getElementById('textSearchButton') as HTMLButtonElement;
-const placeDetailsRequest = document.querySelector('gmp-place-details-place-request') as any;
-
+const mapContainer = document.getElementById('map-container') as any;
+const placeSearch = document.querySelector('gmp-place-search') as any;
+const placeSearchQuery =
+    document.querySelector('gmp-place-text-search-request') as any;
+const queryInput = document.querySelector('.query-input') as any;
+const searchButton = document.querySelector('.search-button') as any;
+const detailsContainer = document.getElementById('details-container') as any;
+const placeDetails = document.querySelector('gmp-place-details-compact') as any;
+const placeRequest =
+    document.querySelector('gmp-place-details-place-request') as any;
 /* [END maps_ui_kit_place_search_text_query_selectors] */
-/* [START maps_ui_kit_place_search_text_init_map] */
+
 let markers = {};
-let infoWindow;
-let center = { lat: 37.395641, lng: -122.077627 }; // Mountain View, CA.
-let bounds;
+let previousSearchQuery = '';
+let gMap;
+let placeDetailsPopup;
 
-async function initMap(): Promise<void>  {
-    const { Map, InfoWindow } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
-    const { Place } = await google.maps.importLibrary("places") as google.maps.PlacesLibrary;
+let AdvancedMarkerElement;
+let LatLngBounds;
+let LatLng;
 
-    // Set bounds for location restriction.
-    bounds = new google.maps.LatLngBounds(
-        { lat: 37.37808200917261, lng: -122.13741583377849 },
-        { lat: 37.416676154341324, lng: -122.02261728794109 }
-    );
+/* [START maps_ui_kit_place_search_text_init_map] */
+async function initMap() {
+  //@ts-ignore
+  const {Map} = await google.maps.importLibrary('maps');
+  //@ts-ignore
+  await google.maps.importLibrary('places');
+  //@ts-ignore
+  ({AdvancedMarkerElement} = await google.maps.importLibrary('marker'));
+  //@ts-ignore
+  ({LatLngBounds, LatLng} = await google.maps.importLibrary('core'));
 
-    infoWindow = new google.maps.InfoWindow;
+  let mapOptions = {
+    center: {lat: 37.422, lng: -122.085},
+    zoom: 2,
+    mapTypeControl: false,
+    clickableIcons: false,
+    mapId: 'DEMO_MAP_ID'
+  };
 
-    // Center the map
-    map.innerMap.panTo(center);
-    map.innerMap.setZoom(14);
+  gMap = new Map(mapContainer, mapOptions);
 
-    map.innerMap.setOptions({
-        mapTypeControl: false,
-        clickableIcons: false,
-    });
+  placeDetailsPopup = new AdvancedMarkerElement(
+      {map: null, content: placeDetails, zIndex: 100});
 
-    /* [START maps_ui_kit_place_search_tex_event_handlers] */
-    // Fire when the Place Details Element is loaded.
-    placeDetails.addEventListener('gmp-load', (event) => {
-        // Center the info window on the map.
-        map.innerMap.fitBounds(placeDetails.place.viewport, { top: 500, left: 400 });
-    });
+  findCurrentLocation();
 
-    // Handle clicks on the search button.
-    textSearchButton.addEventListener('click', searchByTextRequest);
+  /* [START maps_ui_kit_place_search_text_event_handlers] */
 
-    // Handle enter key on text input.
-    textSearchInput.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-            searchByTextRequest();
-        }
-    });
-    /* [END maps_ui_kit_place_search_tex_event_handlers] */
+  gMap.addListener('click', (e) => {
+    hidePlaceDetailsPopup();
+  });
+
+  searchButton.addEventListener('click', searchPlaces);
+  queryInput.addEventListener('keydown', (event) => {
+    if (event.key == 'Enter') {
+      event.preventDefault();
+      searchPlaces();
+    }
+  });
+
+  placeSearch.addEventListener('gmp-select', ({place}) => {
+    if (markers[place.id]) {
+      markers[place.id].click();
+    }
+  });
+  /* [END maps_ui_kit_place_search_text_event_handlers] */
 }
 /* [END maps_ui_kit_place_search_text_init_map] */
 
 /* [START maps_ui_kit_place_search_text_query] */
-async function searchByTextRequest() {
-    if (textSearchInput.value !== "") {
-        placeList.style.display = "block";
-        placeList.configureFromSearchByTextRequest({
-            locationRestriction: bounds,
-            textQuery: textSearchInput.value,
-        }).then(addMarkers);
-        // Handle user selection in Place Details.
-        placeList.addEventListener("gmp-placeselect", ({ place }) => {
-            markers[place.id].click();
-        });
+function searchPlaces() {
+  if (queryInput.value.trim() === previousSearchQuery) {
+    return;
+  }
+  previousSearchQuery = queryInput.value.trim();
+  placeDetailsPopup.map = null;
+
+  for (const markerId in markers) {
+    if (Object.prototype.hasOwnProperty.call(markers, markerId)) {
+      markers[markerId].map = null;
     }
+  }
+  markers = {};
+  if (queryInput.value) {
+    // mapContainer.style.height = '75vh';
+    placeSearch.style.display = 'block';
+    placeSearchQuery.textQuery = queryInput.value;
+    placeSearchQuery.locationBias = gMap.getBounds();
+    placeSearch.addEventListener('gmp-load', addMarkers, {once: true});
+  }
 }
 /* [END maps_ui_kit_place_search_text_query] */
 
 /* [START maps_ui_kit_place_search_text_add_markers] */
-async function addMarkers(){
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
-    const { LatLngBounds } = await google.maps.importLibrary("core") as google.maps.CoreLibrary;
+async function addMarkers() {
+  const bounds = new LatLngBounds();
 
-    const bounds = new LatLngBounds();
+  if (placeSearch.places.length > 0) {
+    placeSearch.places.forEach((place) => {
+      let marker =
+          new AdvancedMarkerElement({map: gMap, position: place.location});
 
-    // First remove all existing markers.
-    for(marker in markers){
-        markers[marker].map = null;
-    }
-    markers = {};
-    
-    if(placeList.places.length > 0){
-        placeList.places.forEach((place) => {
-            let marker = new AdvancedMarkerElement({
-                map: map.innerMap,
-                position: place.location,
-            });
+      marker.metadata = {id: place.id};
+      markers[place.id] = marker;
+      bounds.extend(place.location);
 
-            markers[place.id] = marker;
-            bounds.extend(place.location);
-            marker.collisionBehavior = google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
-            
-            /* [START maps_ui_kit_place_search_text_click_event] */
-            marker.addListener('gmp-click',(event) => {
-                if(infoWindow.isOpen){
-                    infoWindow.close();
-                }
-                // Set the Place Details request to the selected place.
-                placeDetailsRequest.place = place.id;
-                placeDetails.style.display = "block";
-                placeDetails.style.width = "350px";
-                infoWindow.setOptions({
-                    content: placeDetails
-                });
-                infoWindow.open({
-                    anchor: marker,
-                    map: map.innerMap
-                });
-                placeDetails.addEventListener('gmp-load',() => {
-                    map.innerMap.fitBounds(place.viewport, { top: 400, left: 400 });
-                });
+      /* [START maps_ui_kit_place_search_text_click_event] */
 
-            });
-            /* [END maps_ui_kit_place_search_text_click_event] */
-            map.innerMap.setCenter(bounds.getCenter());
-            map.innerMap.fitBounds(bounds);
-        });
-    }
+      marker.addListener('click', (event) => {
+        placeRequest.place = place;
+        placeDetails.style.display = 'block';
+
+
+        placeDetailsPopup.position = place.location;
+        placeDetailsPopup.map = gMap;
+
+        gMap.fitBounds(place.viewport, {top: 200, right: 450});
+      });
+      /* [END maps_ui_kit_place_search_text_click_event] */
+
+      gMap.setCenter(bounds.getCenter());
+      gMap.fitBounds(bounds);
+    });
+  }
 }
 /* [END maps_ui_kit_place_search_text_add_markers] */
+
+async function findCurrentLocation() {
+  //@ts-ignore
+  const {LatLng} = await google.maps.importLibrary('core');
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const pos =
+              new LatLng(position.coords.latitude, position.coords.longitude);
+          gMap.panTo(pos);
+          gMap.setZoom(16);
+        },
+        () => {
+          console.log('The Geolocation service failed.');
+          gMap.setZoom(16);
+        },
+    );
+  } else {
+    console.log('Your browser doesn\'t support geolocation');
+    gMap.setZoom(16);
+  }
+}
+
+function hidePlaceDetailsPopup() {
+  if (placeDetailsPopup.map) {
+    placeDetailsPopup.map = null;
+    placeDetails.style.display = 'none';
+  }
+}
 
 initMap();
 /* [END maps_ui_kit_place_search_text] */
