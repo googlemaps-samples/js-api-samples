@@ -91,7 +91,7 @@ function searchPlaces() {
     mapContainer.style.height = '75vh';
     placeSearch.style.display = 'block';
     placeSearchQuery.maxResultCount = 10;
-    placeSearchQuery.locationRestriction = {center: cent, radius: cappedRadius};
+    placeSearchQuery.locationRestriction = { center: { lat: cent.lat(), lng: cent.lng() }, radius: cappedRadius };
     //@ts-ignore
     placeSearchQuery.includedTypes = [typeSelect.value];
     placeSearch.addEventListener('gmp-load', addMarkers, {once: true});
