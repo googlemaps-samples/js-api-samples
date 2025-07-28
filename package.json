@@ -19,6 +19,6 @@
     "vite": "^7.0.4"
   },
   "dependencies": {
-    "dotenv": "^17.2.0"
+    "dotenv": "^17.2.1"
   }
 }
