@@ -68,7 +68,7 @@ async function findPlaces(query) {
 
         // First remove all existing markers.
         for (marker in markers) {
-            marker.map = null;
+            markers[marker].map = null;
         }
         markers = {};
         
