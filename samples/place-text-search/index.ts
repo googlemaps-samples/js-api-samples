@@ -82,7 +82,9 @@ async function findPlaces(query) {
                 updateInfoWindow(place.displayName, place.id, marker);
             });
 
-            bounds.extend(place.location as google.maps.LatLng);
+            if (place.location != null) {
+                bounds.extend(place.location);
+            }
         });
 
         map.fitBounds(bounds);
