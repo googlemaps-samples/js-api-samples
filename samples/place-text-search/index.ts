@@ -6,14 +6,13 @@
 
 // [START maps_place_text_search]
 let map;
-let marker;
 let markers = {};
 let center;
-let textInput;
-let textInputButton;
 let infoWindow;
 
 async function initMap() {
+    let textInput;
+    let textInputButton;
     const { Map, InfoWindow } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
 
     center = { lat: 37.4161493, lng: -122.0812166 };
