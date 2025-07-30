@@ -78,9 +78,8 @@ async function findPlaces(query) {
             markers[place.id] = marker;
 
             marker.addListener('gmp-click', () => {
-                console.log(`${place.displayName}: ${place.id}`);
                 map.panTo(place.location);
-                updateInfoWindow(`${place.displayName}`, `${place.id}`, marker);
+                updateInfoWindow(place.displayName, place.id, marker);
             });
 
             bounds.extend(place.location as google.maps.LatLng);
