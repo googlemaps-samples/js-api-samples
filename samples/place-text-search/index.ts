@@ -83,7 +83,7 @@ async function findPlaces(query) {
             marker.addListener('gmp-click', () => {
                 console.log(`${place.displayName}: ${place.id}`);
                 map.panTo(place.location);
-                updateInfoWindow(`<b>${place.displayName}</b>: ${place.id}`, marker);
+                updateInfoWindow(`${place.displayName}`, `${place.id}`, marker);
             });
 
             bounds.extend(place.location as google.maps.LatLng);
@@ -97,8 +97,9 @@ async function findPlaces(query) {
 }
 
 // Helper function to create an info window.
-async function updateInfoWindow(content, anchor) {
+async function updateInfoWindow(title, content, anchor) {
     infoWindow.setContent(content);
+    infoWindow.setHeaderContent(title);
     infoWindow.open({
         map,
         anchor,
