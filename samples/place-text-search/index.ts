@@ -7,13 +7,12 @@
 // [START maps_place_text_search]
 let map;
 let markers = {};
-let center;
 let infoWindow;
 
 async function initMap() {
     const { Map, InfoWindow } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
 
-    center = { lat: 37.4161493, lng: -122.0812166 };
+    const center = { lat: 37.4161493, lng: -122.0812166 };
     map = new Map(document.getElementById('map') as HTMLElement, {
         center: center,
         zoom: 11,
