@@ -67,9 +67,9 @@ async function findPlaces(query) {
         const bounds = new LatLngBounds();
 
         // First remove all existing markers.
-        for (marker in markers) {
-            markers[marker].map = null;
-        }
+        for (const id in markers) {
+            markers[id].map = null;
+        };
         markers = {};
         
         // Loop through and get all the results.
