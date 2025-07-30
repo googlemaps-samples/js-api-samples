@@ -11,8 +11,6 @@ let center;
 let infoWindow;
 
 async function initMap() {
-    let textInput;
-    let textInputButton;
     const { Map, InfoWindow } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
 
     center = { lat: 37.4161493, lng: -122.0812166 };
@@ -23,8 +21,8 @@ async function initMap() {
         mapId: 'DEMO_MAP_ID',
     });
 
-    textInput = document.getElementById('text-input') as HTMLInputElement;
-    textInputButton = document.getElementById('text-input-button') as HTMLButtonElement;
+    const textInput = document.getElementById('text-input') as HTMLInputElement;
+    const textInputButton = document.getElementById('text-input-button') as HTMLButtonElement;
     const card = document.getElementById('text-input-card') as HTMLElement;
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
 
