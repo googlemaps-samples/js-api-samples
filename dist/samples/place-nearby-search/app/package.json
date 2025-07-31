@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/place-nearby-search",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh place-nearby-search && bash ../app.sh place-nearby-search && bash ../docs.sh place-nearby-search && npm run build:vite --workspace=. && bash ../dist.sh place-nearby-search",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
