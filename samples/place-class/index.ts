@@ -5,20 +5,15 @@
  */
 
 // [START maps_place_class]
-let map: google.maps.Map;
-let centerCoordinates = { lat: 37.4161493, lng: -122.0812166 };
+const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+let innerMap;
+let infoWindow;
 
 async function initMap() {
-    const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
+    const { Map, InfoWindow } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
 
-    map = new Map(document.getElementById('map') as HTMLElement, {
-        center: centerCoordinates,
-        zoom: 14,
-        // [START_EXCLUDE]
-        mapId: '4504f8b37365c3d0',
-        // [END_EXCLUDE]
-    });
-
+    innerMap = mapElement.innerMap;
+    infoWindow = new InfoWindow();
     getPlaceDetails();
 }
 
@@ -28,22 +23,42 @@ async function getPlaceDetails() {
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
     // Use place ID to create a new Place instance.
     const place = new Place({
-        id: 'ChIJN5Nz71W3j4ARhx5bwpTQEGg',
-        requestedLanguage: 'en', // optional
+        id: 'ChIJyYB_SZVU2YARR-I1Jjf08F0', // San Diego Zoo
     });
 
     // Call fetchFields, passing the desired data fields.
-    await place.fetchFields({ fields: ['displayName', 'formattedAddress', 'location'] });
-
-    // Log the result
-    console.log(place.displayName);
-    console.log(place.formattedAddress);
+    await place.fetchFields({ fields: ['displayName', 'formattedAddress', 'location', 'googleMapsURI'] });
 
     // Add an Advanced Marker
     const marker = new AdvancedMarkerElement({
-        map,
+        map: innerMap,
         position: place.location,
         title: place.displayName,
+    });
+
+    // Assemble the info window content.
+    const content = document.createElement('div');
+    const address = document.createElement('div');
+    const placeId = document.createElement('div');
+    address.textContent = place.formattedAddress || '';
+    placeId.textContent = place.id;
+    content.append(placeId, address);
+
+    if (place.googleMapsURI) {
+        const link = document.createElement('a');
+        link.href = place.googleMapsURI;
+        link.target = '_blank';
+        link.textContent = 'View Details on Google Maps';
+        content.appendChild(link);
+    }
+
+    // Display an info window.
+    infoWindow.setHeaderContent(place.displayName);
+    infoWindow.setContent(content);
+    infoWindow.open({
+        map: innerMap,
+        anchor: marker,
+        shouldFocus: false,
     });
 }
 // [END maps_place_class_fetchfields]
