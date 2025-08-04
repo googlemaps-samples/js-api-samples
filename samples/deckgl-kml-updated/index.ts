@@ -3,7 +3,7 @@
   * Copyright 2025 Google LLC. All Rights Reserved.
   * SPDX-License-Identifier: Apache-2.0
   */
- /* [START maps_deckgl_kml-updated] */
+/* [START maps_deckgl_kml-updated] */
 // Import necessary loader
 import { KMLLoader } from '@loaders.gl/kml';
 
