@@ -3,7 +3,7 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-/* [START maps_add_map] */
+/* [START maps_deckgl_heatmap] */
  /*
  * Always set the map height explicitly to define the size of the div element
  * that contains the map.
@@ -26,7 +26,6 @@ body {
   position: relative; /* Set body as positioning context */
   font-family: 'Roboto', Arial, sans-serif; /* Set font family */
 }
-/* [END maps_add_map] */
 
 #toggleButton {
 position: absolute;
@@ -102,3 +101,4 @@ margin:10px;
     top: auto; /* Remove top positioning */
   }
 }
+/* [START maps_deckgl_heatmap] */
