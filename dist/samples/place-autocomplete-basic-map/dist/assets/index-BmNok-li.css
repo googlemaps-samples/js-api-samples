@@ -1,5 +1,0 @@
-/**
- * @license
- * Copyright 2025 Google LLC. All Rights Reserved.
- * SPDX-License-Identifier: Apache-2.0
- */html,body{height:100%;margin:0;padding:0}#map-container{display:flex;flex-direction:row;height:100%}#gmp-map{height:100%}gmp-basic-place-autocomplete{position:absolute;height:50px;top:10px;left:10px;z-index:1;box-shadow:2px 2px 5px #0003;color-scheme:light;border-radius:10px}gmp-place-details-compact{width:360px;max-height:300px;border:none;padding:0;margin:0;position:absolute;transform:translate(-180px,-215px);box-shadow:2px 2px 5px #0003;color-scheme:light}gmp-place-details-compact:after{content:"";position:absolute;top:100%;left:50%;transform:translate(-50%);width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-top:20px solid var(--gmp-mat-color-surface, light-dark(white, black))}
