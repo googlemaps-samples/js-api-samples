@@ -1,0 +1,5 @@
+/**
+ * @license
+ * Copyright 2025 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */html,body{height:100%;margin:0;padding:0}#map-container{height:100%}gmp-basic-place-autocomplete{position:absolute;height:50px;width:500px;top:10px;left:10px;z-index:1;box-shadow:2px 2px 5px rgba(0,0,0,0 2);color-scheme:light;border-radius:10px}gmp-place-details-compact{width:360px;min-width:300px;max-height:300px;border:none;background-color:#fff;color-scheme:light}
