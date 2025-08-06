@@ -3,7 +3,7 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
+/* [START maps_deckgl_heatmap] */
 // Declare global namespace for Deck.gl to satisfy TypeScript compiler
 declare namespace deck {
   class HeatmapLayer {
@@ -19,7 +19,6 @@ declare namespace deck {
   }
   // Add other Deck.gl types used globally if needed
 }
-
 
 // Initialize and add the map
 let map: google.maps.Map;
@@ -44,7 +43,6 @@ async function initMap(): Promise<void> {
       progressDiv?.remove(); // Use optional chaining in case progressDiv is null
     };
   }
-
 
   // The location for the map center.
   const position = {lat:37.77325660358167, lng:-122.41712341793448}; // Using the center from original deckgl-polygon.js
@@ -197,3 +195,4 @@ async function initMap(): Promise<void> {
 }
 
 initMap();
+/* [END maps_deckgl_heatmap] */
