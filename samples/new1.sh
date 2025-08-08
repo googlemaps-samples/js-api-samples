@@ -12,9 +12,9 @@
 #  3. ./new1.sh
 
 # AUTHOR: Update these values!
-NAME="advanced-markers-zoom" # The name of the folder to create (for example "map-simple").
-REGION_TAG="maps_advanced_markers_zoom" # The region tag to use (for example "maps_map_simple").
-TITLE="Demonstrates a Maps feature." # The title of the example.
+NAME="sample-name" # The name of the folder to create (for example "map-simple").
+REGION_TAG="maps_sample_name" # The region tag to use (for example "maps_map_simple").
+TITLE="Descriptive text for sample." # The title of the example.
 API_LOADER="api_loader_dynamic" # The type of loader to use (api_loader_dynamic or api_loader_default).
 
 # Path to the source folder for the repo archive; substitute with your own path.
