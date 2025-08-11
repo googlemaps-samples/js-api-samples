@@ -3,8 +3,8 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 /* [START maps_deckgl_heatmap] */
+
 // Declare global namespace for Deck.gl to satisfy TypeScript compiler
 declare namespace deck {
   class HeatmapLayer {

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 /* [START maps_deckgl_polygon] */
+
 // Declare global namespace for Deck.gl to satisfy TypeScript compiler
 declare namespace deck {
   class PolygonLayer {
@@ -40,7 +41,6 @@ async function initMap(): Promise<void> {
       progressDiv?.remove(); // Use optional chaining in case progressDiv is null
     };
   }
-
 
   // The location for the map center.
   const position = {lat: 37.752954624496304, lng:-122.44754059928648}; // Using the center from original deckgl-polygon.js
