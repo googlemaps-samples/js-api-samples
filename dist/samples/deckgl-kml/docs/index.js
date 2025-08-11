@@ -3,6 +3,7 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+/* [START maps_deckgl_kml] */
 // Import necessary loader
 import { KMLLoader } from '@loaders.gl/kml';
 // Initialize and add the map
@@ -161,3 +162,4 @@ function hexOrAabbggrrToRgba(color) {
     return null; // Invalid format
 }
 initMap();
+/* [END maps_deckgl_kml] */ 
