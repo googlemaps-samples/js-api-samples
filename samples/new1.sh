@@ -12,9 +12,9 @@
 #  3. ./new1.sh
 
 # AUTHOR: Update these values!
-NAME="advanced-markers-simple" # The name of the folder to create (for example "map-simple").
-REGION_TAG="maps_advanced_markers_simple" # The region tag to use for the JSHTML (for example "maps_map_simple").
-TITLE="Add an advanced marker to a map." # The title of the example.
+NAME="sample-name" # The name of the folder to create (for example "map-simple").
+REGION_TAG="maps_sample_name" # The region tag to use (for example "maps_map_simple").
+TITLE="Descriptive text for sample." # The title of the example.
 API_LOADER="api_loader_dynamic" # The type of loader to use (api_loader_dynamic or api_loader_default).
 
 # Path to the source folder for the repo archive; substitute with your own path.
@@ -37,30 +37,6 @@ cp "${INPUT_DIR}/dist/samples/${NAME}/docs/style.css" "${OUTPUT_DIR}/${NAME}/"
 touch "${OUTPUT_DIR}/${NAME}/index.js"
 cat > "${OUTPUT_DIR}/${NAME}/index.js" << EOF
 <!-- Placeholder for index.js (run TSC to generate). -->
-EOF
-
-# Generate the JSHTML.
-touch "${OUTPUT_DIR}/${NAME}/${NAME}.jshtml"
-cat > "${OUTPUT_DIR}/${NAME}/${NAME}.jshtml" << EOF
-
-{% spaceless %}{% include "maps/documentation/javascript/examples/full/_apikey.html" %}{% endspaceless %}<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>${TITLE}</title>
-    <style>
-{% includecode content_path="maps/documentation/javascript/examples/samples/${NAME}/style.css" region_tag="${REGION_TAG}" html_escape="False" %}
-    </style>
-  </head>
-  <body>
-{% includecode content_path="maps/documentation/javascript/examples/samples/${NAME}/index.html" region_tag="${REGION_TAG}_body" html_escape="False" %}
-{{ ${API_LOADER} }}
-    <script>
-{% includecode content_path="maps/documentation/javascript/examples/samples/${NAME}/index.js" region_tag="${REGION_TAG}" html_escape="False" %}
-    </script>
-  </body>
-</html>
 EOF
 
 # Generate package.json
@@ -106,7 +82,7 @@ EOF
 
 # Generate README.md
 touch "${OUTPUT_DIR}/${NAME}/README.md"
-cat > "${OUTPUT_DIR}/${NAME}/README.md" << 'EOF'
+cat > "${OUTPUT_DIR}/${NAME}/README.md" << EOF
 # Google Maps JavaScript Sample
 
 This sample is generated from @googlemaps/js-samples located at
@@ -116,25 +92,32 @@ https://github.com/googlemaps-samples/js-api-samples.
 
 ### Before starting run:
 
-`npm i`
+\`npm i\`
 
 ### Run an example on a local web server
 
-First `cd` to the folder for the sample to run, then:
-
-`npm start`
+\`cd samples/${NAME}\`
+\`npm start\`
 
 ### Build an individual example
 
-From `samples/`:
+\`cd samples/${NAME}\`
+\`npm run build\`
 
-`npm run build --workspace=sample-name/`
+From 'samples':
+
+\`npm run build --workspace=${NAME}/\`
 
 ### Build all of the examples.
 
-From `samples/`:
+From 'samples':
 
-`npm run build-all`
+\`npm run build-all\`
+
+### Run lint to check for problems
+
+\`cd samples/${NAME}\`
+\`npx eslint index.ts\` 
 
 ## Feedback
 
@@ -147,7 +130,6 @@ git add "${OUTPUT_DIR}/${NAME}/index.ts"
 git add "${OUTPUT_DIR}/${NAME}/index.js"
 git add "${OUTPUT_DIR}/${NAME}/index.html"
 git add "${OUTPUT_DIR}/${NAME}/style.css"
-git add "${OUTPUT_DIR}/${NAME}/${NAME}.jshtml"
 git add "${OUTPUT_DIR}/${NAME}/package.json"
 git add "${OUTPUT_DIR}/${NAME}/tsconfig.json"
 git add "${OUTPUT_DIR}/${NAME}/README.md"
