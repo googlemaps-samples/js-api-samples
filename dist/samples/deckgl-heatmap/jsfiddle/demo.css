@@ -27,7 +27,6 @@ body {
   font-family: 'Roboto', Arial, sans-serif; /* Set font family */
 }
 
-
 #toggleButton {
 position: absolute;
 top: 70px; /* Position towards the top of the map area */
@@ -102,3 +101,4 @@ margin:10px;
     top: auto; /* Remove top positioning */
   }
 }
+

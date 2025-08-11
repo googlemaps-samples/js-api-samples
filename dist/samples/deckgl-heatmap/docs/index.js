@@ -1,9 +1,4 @@
 "use strict";
-/*
- * @license
- * Copyright 2025 Google LLC. All Rights Reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
 // Initialize and add the map
 let map;
 // Use global types for Deck.gl components
@@ -159,3 +154,4 @@ async function initMap() {
     }
 }
 initMap();
+/* [END maps_deckgl_heatmap] */ 
