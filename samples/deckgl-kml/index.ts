@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 /* [START maps_deckgl_kml] */
+
 // Import necessary loader
 import { KMLLoader } from '@loaders.gl/kml';
 
