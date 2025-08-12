@@ -3,7 +3,7 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-/* [START maps_add_map] */
+/* [START maps_deckgl_polygon] */
  /*
  * Always set the map height explicitly to define the size of the div element
  * that contains the map.
@@ -26,7 +26,6 @@
     position: relative; /* Set body as positioning context */
     font-family: 'Roboto', Arial, sans-serif; /* Set font family */
 }
-  /* [END maps_add_map] */
   
 #toggleButton {
   position: absolute;
@@ -83,3 +82,4 @@ h1 {
   margin-right: 5px;
   border: 1px solid #000; /* Add a border to the color box */
 }
+/* [END maps_deckgl_polygon] */
