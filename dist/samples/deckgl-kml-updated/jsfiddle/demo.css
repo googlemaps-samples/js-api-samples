@@ -26,7 +26,6 @@
     position: relative; /* Set body as positioning context */
     font-family: 'Roboto', Arial, sans-serif; /* Set font family */
 }
-  
 
 .tooltip {
   position: absolute;
@@ -69,3 +68,4 @@ h1 {
   margin-right: 10px;
   border: 1px solid #000; /* Border for color swatch */
 }
+ 

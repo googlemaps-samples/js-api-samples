@@ -3,7 +3,7 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
+/* [START maps_deckgl_polygon] */
 // Declare global namespace for Deck.gl to satisfy TypeScript compiler
 declare namespace deck {
   class PolygonLayer {
@@ -144,3 +144,4 @@ async function initMap(): Promise<void> {
 }
 
 initMap();
+/* [END maps_deckgl_polygon] */
