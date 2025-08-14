@@ -11,21 +11,28 @@ https://github.com/googlemaps-samples/js-api-samples.
 
 ### Run an example on a local web server
 
-First `cd` to the folder for the sample to run, then:
-
+`cd samples/advanced-markers-draggable`
 `npm start`
 
 ### Build an individual example
 
-From `samples/`:
+`cd samples/advanced-markers-draggable`
+`npm run build`
 
-`npm run build --workspace=sample-name/`
+From 'samples':
+
+`npm run build --workspace=advanced-markers-draggable/`
 
 ### Build all of the examples.
 
-From `samples/`:
+From 'samples':
 
 `npm run build-all`
+
+### Run lint to check for problems
+
+`cd samples/advanced-markers-draggable`
+`npx eslint index.ts` 
 
 ## Feedback
 
