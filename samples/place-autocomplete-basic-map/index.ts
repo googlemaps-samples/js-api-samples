@@ -103,7 +103,7 @@ async function initMap(): Promise<void> {
         lat: newCenter.lat(),
         lng: newCenter.lng(),
       },
-      radius: 10000, // 10km in meters
+      radius: 10000, // 10km in meters.
     });
   });
 }
