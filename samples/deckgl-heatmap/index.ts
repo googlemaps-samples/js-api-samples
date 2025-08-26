@@ -5,6 +5,14 @@
  */
 
 /* [START maps_deckgl_heatmap] */
+// Initialize and add the map
+let map: google.maps.Map;
+// Use global types for Deck.gl components
+let heatmapLayer: deck.HeatmapLayer;
+let googleMapsOverlay: deck.GoogleMapsOverlay;
+let marker: google.maps.marker.AdvancedMarkerElement | undefined;
+let infoWindow: google.maps.InfoWindow;
+
 // Declare global namespace for Deck.gl to satisfy TypeScript compiler
 declare namespace deck {
   class HeatmapLayer {
@@ -20,14 +28,6 @@ declare namespace deck {
   }
   // Add other Deck.gl types used globally if needed
 }
-
-// Initialize and add the map
-let map: google.maps.Map;
-// Use global types for Deck.gl components
-let heatmapLayer: deck.HeatmapLayer;
-let googleMapsOverlay: deck.GoogleMapsOverlay;
-let marker: google.maps.marker.AdvancedMarkerElement | undefined;
-let infoWindow: google.maps.InfoWindow;
 
 async function initMap(): Promise<void> {
   // Progress bar logic moved from index.html
