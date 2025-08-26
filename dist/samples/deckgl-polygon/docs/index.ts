@@ -4,6 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 /* [START maps_deckgl_polygon] */
+// Initialize and add the map
+let map: google.maps.Map;
+let polygonLayer: deck.PolygonLayer; // Declare polygonLayer outside for button access
+let googleMapsOverlay: deck.GoogleMapsOverlay; // Declare googleMapsOverlay outside for button access
+
 // Declare global namespace for Deck.gl to satisfy TypeScript compiler
 declare namespace deck {
   class PolygonLayer {
@@ -19,11 +24,6 @@ declare namespace deck {
   }
   // Add other Deck.gl types used globally if needed
 }
-
-// Initialize and add the map
-let map: google.maps.Map;
-let polygonLayer: deck.PolygonLayer; // Declare polygonLayer outside for button access
-let googleMapsOverlay: deck.GoogleMapsOverlay; // Declare googleMapsOverlay outside for button access
 
 async function initMap(): Promise<void> {
   // Progress bar logic moved from index.html
