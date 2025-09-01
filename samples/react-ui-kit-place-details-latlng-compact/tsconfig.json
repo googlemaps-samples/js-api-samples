@@ -13,6 +13,10 @@
       ],
       "moduleResolution": "node",
       "jsx": "react-jsx",
-      "allowSyntheticDefaultImports": true
-    }
+      "allowSyntheticDefaultImports": true,
+      "verbatimModuleSyntax": true,
+      "types": [
+        "vite/client"
+      ]
+    },
   }
