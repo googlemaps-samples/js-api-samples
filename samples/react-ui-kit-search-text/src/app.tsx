@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 // [START maps_react_places_ui_kit_search_text]
-import React, {useState, useEffect, useRef, RefObject} from 'react';
+import React, {useState, useEffect, useRef, type RefObject} from 'react';
 import {createRoot} from 'react-dom/client';
 import {
   APIProvider,
