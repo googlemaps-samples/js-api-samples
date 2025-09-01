@@ -1,3 +1,4 @@
+// [START maps_react_places_ui_kit_search_nearby]
 import React, {useState, useEffect, useRef, RefObject} from 'react';
 import {createRoot} from 'react-dom/client';
 import {
@@ -208,3 +209,4 @@ root.render(
     <App />
   </React.StrictMode>
 );
+// [END maps_react_places_ui_kit_search_nearby]
