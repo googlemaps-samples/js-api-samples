@@ -10,12 +10,7 @@ import {APIProvider, useMapsLibrary} from '@vis.gl/react-google-maps';
 
 import './styles.css';
 
-const API_KEY =
-  globalThis.GOOGLE_MAPS_API_KEY ?? (process.env.GOOGLE_MAPS_API_KEY as string);
-
-if (!API_KEY) {
-  console.error('Missing Google Maps API key');
-}
+const API_KEY = "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8";
 
 type PlaceDetailsProps = {
   lat: number;

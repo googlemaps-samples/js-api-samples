@@ -16,8 +16,7 @@ import {
 
 import './styles.css';
 
-const API_KEY =
-  (globalThis as any).GOOGLE_MAPS_API_KEY ?? (import.meta as any).env.VITE_GOOGLE_MAPS_API_KEY;
+const API_KEY = "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8";
 
 if (!API_KEY) {
   console.error('Missing Google Maps API key');
