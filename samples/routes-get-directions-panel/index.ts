@@ -52,36 +52,6 @@ async function initMap(): Promise<void> {
 
   // [START maps_routes_get_directions_panel_steps]
   // Render navigation instructions
-  /*   const directionsPanel = document.getElementById('directions-panel') as HTMLElement;
-    for (let i = 0; i < routes[0].legs.length; i++) {
-      const legTitle = `Leg ${i + 1} of ${routes[0].legs.length} ------------`;
-      const legTitleNode = document.createTextNode(legTitle);
-      directionsPanel.appendChild(legTitleNode);
-  
-      for (const step of routes[0].legs[i].steps) {
-        const direction = document.createElement('div');
-        direction.classList.add('direction');
-  
-        // Create the maneuver text node.
-        const maneuverNode = document.createElement('div');
-        maneuverNode.textContent = step.maneuver;
-        maneuverNode.classList.add('maneuver');
-        direction.appendChild(maneuverNode);
-  
-        // Create the distance text node.
-        const distanceNode = document.createElement('div');
-        distanceNode.textContent = `${step.localizedValues.distance} (${step.localizedValues.staticDuration})`;
-        distanceNode.classList.add('distance');
-        direction.appendChild(distanceNode);
-  
-        // Create the instructions text node.
-        const instructionsNode = document.createElement('div');
-        instructionsNode.textContent = step.instructions;
-        instructionsNode.classList.add('instruction');
-        direction.appendChild(instructionsNode);
-        directionsPanel.appendChild(direction);
-      }
-    } */
   const directionsPanel = document.getElementById("directions-panel");
 
   if (!routes || routes.length === 0) {
