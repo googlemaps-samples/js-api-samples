@@ -11,50 +11,18 @@ body {
   padding: 0;
 }
 
-#map-container {
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-}
-
-#gmp-map {
+gmp-map {
   height: 100%;
 }
 
 gmp-basic-place-autocomplete {
   position: absolute;
-  height: 50px;
+  height: 30px;
+  width: 500px;
   top: 10px;
   left: 10px;
-  z-index: 1;
-  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.2); 
+  box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.2);
   color-scheme: light;
   border-radius: 10px;
-}
-
-gmp-place-details-compact {
-  width: 360px;
-  max-height: 300px;
-  border: none;
-  padding: 0;
-  margin: 0;
-  position: absolute;
-  transform: translate(calc(-180px), calc(-215px)); 
-  box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.2); 
-  color-scheme: light;
-}
-
-/* This creates the pointer attached to the bottom of the element. */
-gmp-place-details-compact::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 16px solid transparent;
-  border-right: 16px solid transparent;
-  border-top: 20px solid var(--gmp-mat-color-surface, light-dark(white, black));
 }
 /* [END maps_place_autocomplete_basic_map] */

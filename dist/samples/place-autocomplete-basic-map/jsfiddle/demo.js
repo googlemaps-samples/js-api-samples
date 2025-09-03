@@ -5,50 +5,79 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-const mapContainer = document.getElementById("map-container");
-const autocompleteElement = document.querySelector('gmp-basic-place-autocomplete');
-const detailsElement = document.querySelector('gmp-place-details-compact');
-const mapElement = document.querySelector('gmp-map');
-const advancedMarkerElement = document.querySelector('gmp-advanced-marker');
-let center = { lat: 40.749933, lng: -73.98633 }; // New York City
+const placeAutocompleteElement = document.querySelector('gmp-basic-place-autocomplete');
+const placeDetailsElement = document.querySelector('gmp-place-details-compact');
+const placeDetailsParent = placeDetailsElement.parentElement;
+const gmpMapElement = document.querySelector('gmp-map');
 async function initMap() {
-    //@ts-ignore
-    const { BasicPlaceAutocompleteElement, PlaceDetailsElement } = await google.maps.importLibrary('places');
-    //@ts-ignore
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
-    //@ts-ignore
-    const { LatLngBounds } = await google.maps.importLibrary('core');
-    // Set the initial map location and autocomplete location bias
-    mapElement.center = center;
-    autocompleteElement.locationBias = center;
-    // Get the underlying google.maps.Map object to add listeners
-    const map = mapElement.innerMap;
-    // Add the listener tochange locationBias to locationRestriction when the map moves
-    map.addListener('bounds_changed', () => {
-        autocompleteElement.locationBias = null;
-        autocompleteElement.locationRestriction = map.getBounds();
-        console.log("bias changed to restriction");
+    // Asynchronously load required libraries from the Google Maps JS API.
+    await google.maps.importLibrary('places');
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
+    const { InfoWindow } = (await google.maps.importLibrary('maps'));
+    // Get the initial center directly from the gmp-map element's property.
+    const center = gmpMapElement.center;
+    // Set the initial location bias for the autocomplete element.
+    placeAutocompleteElement.locationBias = center;
+    // Update the map object with specified options.
+    const map = gmpMapElement.innerMap;
+    map.setOptions({
+        clickableIcons: false,
+        mapTypeControl: false,
+        streetViewControl: false,
+    });
+    // Create an advanced marker to show the location of a selected place.
+    const advancedMarkerElement = new AdvancedMarkerElement({
+        map: map,
+        collisionBehavior: google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL,
+    });
+    // Create an InfoWindow to hold the place details component.
+    const infoWindow = new InfoWindow({
+        minWidth: 360,
+        disableAutoPan: true,
+        headerDisabled: true,
+        pixelOffset: new google.maps.Size(0, -10),
     });
     
-    // Add the listener to update the Place Request element when the user selects a prediction
-    autocompleteElement.addEventListener('gmp-select', async (event) => {
-        const placeDetailsRequest = document.querySelector('gmp-place-details-place-request');
+    // Event listener for when a place is selected from the autocomplete list.
+    placeAutocompleteElement.addEventListener('gmp-select', (event) => {
+        // Reset marker and InfoWindow, and prepare the details element.
+        placeDetailsParent.appendChild(placeDetailsElement);
+        placeDetailsElement.style.display = 'block';
+        advancedMarkerElement.position = null;
+        infoWindow.close();
+        // Request details for the selected place.
+        const placeDetailsRequest = placeDetailsElement.querySelector('gmp-place-details-place-request');
         placeDetailsRequest.place = event.place.id;
     });
     
-    // Add the listener to update the marker when the Details element loads
-    detailsElement.addEventListener('gmp-load', async () => {
-        const location = detailsElement.place.location;
-        detailsElement.style.display = "block";
+    // Event listener for when the place details have finished loading.
+    placeDetailsElement.addEventListener('gmp-load', () => {
+        const location = placeDetailsElement.place.location;
+        // Position the marker and open the InfoWindow at the place's location.
         advancedMarkerElement.position = location;
-        advancedMarkerElement.content = detailsElement;
-        if (detailsElement.place.viewport) {
-            map.fitBounds(detailsElement.place.viewport);
-        }
-        else {
-            map.setCenter(location);
-            map.setZoom(17);
-        }
+        infoWindow.setContent(placeDetailsElement);
+        infoWindow.open({
+            map,
+            anchor: advancedMarkerElement,
+        });
+        map.setCenter(location);
+    });
+    // Event listener to close the InfoWindow when the map is clicked.
+    map.addListener('click', () => {
+        infoWindow.close();
+        advancedMarkerElement.position = null;
+    });
+    // Event listener for when the map finishes moving (panning or zooming).
+    map.addListener('idle', () => {
+        const newCenter = map.getCenter();
+        // Update the autocomplete's location bias to a 10km radius around the new map center.
+        placeAutocompleteElement.locationBias = new google.maps.Circle({
+            center: {
+                lat: newCenter.lat(),
+                lng: newCenter.lng(),
+            },
+            radius: 10000, // 10km in meters.
+        });
     });
 }
 initMap();

@@ -26,7 +26,6 @@
     position: relative; /* Set body as positioning context */
     font-family: 'Roboto', Arial, sans-serif; /* Set font family */
 }
-  
 
 .tooltip {
   position: absolute;
@@ -44,3 +43,4 @@ h1 {
   text-align: center;
   margin:10px;
 }
+ 

@@ -104,6 +104,8 @@ jobs:
 
       - name: Deploy to Firebase Hosting
         run: firebase deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 
       - name: Create temporary branch
         run: git checkout -b temp-build-branch

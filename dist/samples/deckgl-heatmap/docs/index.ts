@@ -4,6 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* [START maps_deckgl_heatmap] */
+// Initialize and add the map
+let map: google.maps.Map;
+// Use global types for Deck.gl components
+let heatmapLayer: deck.HeatmapLayer;
+let googleMapsOverlay: deck.GoogleMapsOverlay;
+let marker: google.maps.marker.AdvancedMarkerElement | undefined;
+let infoWindow: google.maps.InfoWindow;
+
 // Declare global namespace for Deck.gl to satisfy TypeScript compiler
 declare namespace deck {
   class HeatmapLayer {
@@ -20,15 +29,6 @@ declare namespace deck {
   // Add other Deck.gl types used globally if needed
 }
 
-
-// Initialize and add the map
-let map: google.maps.Map;
-// Use global types for Deck.gl components
-let heatmapLayer: deck.HeatmapLayer;
-let googleMapsOverlay: deck.GoogleMapsOverlay;
-let marker: google.maps.marker.AdvancedMarkerElement | undefined;
-let infoWindow: google.maps.InfoWindow;
-
 async function initMap(): Promise<void> {
   // Progress bar logic moved from index.html
   var progress, progressDiv = document.querySelector(".mdc-linear-progress");
@@ -44,7 +44,6 @@ async function initMap(): Promise<void> {
       progressDiv?.remove(); // Use optional chaining in case progressDiv is null
     };
   }
-
 
   // The location for the map center.
   const position = {lat:37.77325660358167, lng:-122.41712341793448}; // Using the center from original deckgl-polygon.js
@@ -197,3 +196,4 @@ async function initMap(): Promise<void> {
 }
 
 initMap();
+/* [END maps_deckgl_heatmap] */

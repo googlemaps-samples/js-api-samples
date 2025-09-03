@@ -3,6 +3,11 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+/* [START maps_deckgl_polygon] */
+// Initialize and add the map
+let map: google.maps.Map;
+let polygonLayer: deck.PolygonLayer; // Declare polygonLayer outside for button access
+let googleMapsOverlay: deck.GoogleMapsOverlay; // Declare googleMapsOverlay outside for button access
 
 // Declare global namespace for Deck.gl to satisfy TypeScript compiler
 declare namespace deck {
@@ -19,11 +24,6 @@ declare namespace deck {
   }
   // Add other Deck.gl types used globally if needed
 }
-
-// Initialize and add the map
-let map: google.maps.Map;
-let polygonLayer: deck.PolygonLayer; // Declare polygonLayer outside for button access
-let googleMapsOverlay: deck.GoogleMapsOverlay; // Declare googleMapsOverlay outside for button access
 
 async function initMap(): Promise<void> {
   // Progress bar logic moved from index.html
@@ -144,3 +144,4 @@ async function initMap(): Promise<void> {
 }
 
 initMap();
+/* [END maps_deckgl_polygon] */
