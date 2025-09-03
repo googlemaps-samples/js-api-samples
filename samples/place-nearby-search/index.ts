@@ -5,7 +5,9 @@
  */
 
 // [START maps_place_nearby_search]
+const mapElement = document.querySelector('gmp-map') as any;
 let map;
+const advancedMarkerElement = document.querySelector('gmp-advanced-marker') as any;
 let center;
 let typeSelect;
 let markers = {};
@@ -13,25 +15,22 @@ let infoWindow;
 
 async function initMap() {
     const { Map, InfoWindow } = await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
+    const {LatLng} = await google.maps.importLibrary("core") as google.maps.CoreLibrary;
 
-    center = new google.maps.LatLng(45.438646, 12.327573); // Venice, Italy
+    center = new LatLng(45.438646, 12.327573); // Venice, Italy
 
-    map = new Map(document.getElementById('map') as HTMLElement, {
-        center: center,
-        zoom: 15,
-        mapId: 'DEMO_MAP_ID',
+    map = await mapElement.innerMap;
+    map.setOptions ({
         mapTypeControl: false,
     });
 
     typeSelect = document.querySelector(".type-select");
-    const card = document.getElementById('controls') as HTMLElement;
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
 
     typeSelect.addEventListener('change', () => {
         nearbySearch();
     });
 
-    infoWindow = new google.maps.InfoWindow();
+    infoWindow = new InfoWindow();
 }
 
 async function nearbySearch() {
@@ -39,8 +38,8 @@ async function nearbySearch() {
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
     const { spherical } = await google.maps.importLibrary('geometry') as google.maps.GeometryLibrary;
     // [START maps_place_nearby_search_request]
-
     // Get bounds and radius to constrain search.
+    
     center = map.getCenter();
     let bounds = map.getBounds();
     let ne = bounds.getNorthEast();
@@ -52,8 +51,8 @@ async function nearbySearch() {
         // required parameters
         fields: ['displayName', 'location', 'formattedAddress', 'googleMapsLinks'],
         locationRestriction: {
-            center: center,
-            radius: radius,
+            center,
+            radius,
         },
         // optional parameters
         includedPrimaryTypes: [typeSelect.value],
