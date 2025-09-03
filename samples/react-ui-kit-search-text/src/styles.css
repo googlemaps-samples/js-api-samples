@@ -1,0 +1,131 @@
+/*
+ * @license
+ * Copyright 2025 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    font-size: large;
+    text-align: center;
+}
+
+#app {
+  height: 100%;
+  width: 100%;
+}
+
+.map-container {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.controls {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+}
+
+.search-button {
+    background-color: #4b4b4b;
+    color: #fff;
+    border: 1px solid #000;
+    border-radius: 10px;
+    width: 80px;
+    height: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
+}
+
+.query-input {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 315px;
+    height: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
+}
+
+.place-list-wrapper {
+    position: absolute;
+    top: 100px;
+    right: 40px;
+    width: 400px;
+    max-height: 500px;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+gmp-place-search {
+     width: 100%;
+     margin: 0;
+      border-radius: 10px;
+     display: block;
+     border: none;
+}
+
+gmp-place-details-compact {
+    width: 350px;
+    max-height: 800px;
+    display: none;
+    border: none;
+    transform: translateY(calc(-40%));
+}
+
+gmp-place-details-compact::after {
+    content: '';
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    box-shadow: 2px 2px 5px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+    clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+    transform-origin: center center;
+}
+
+@media (max-width: 768px) {
+    .place-list-wrapper {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        right: 0;
+        max-height: 40vh;
+        z-index: 10;
+    }
+
+    .controls {
+        position: absolute;
+        top: auto;
+        bottom: 10px;
+        right: 0;
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        z-index: 10;
+    }
+
+    .query-input, .search-button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    /* Style for Dark mode */
+    gmp-place-details-compact::after {
+        background-color: #131314;
+    }
+}
