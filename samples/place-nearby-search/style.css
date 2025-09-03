@@ -8,7 +8,13 @@
  * Always set the map height explicitly to define the size of the div element
  * that contains the map. 
  */
-#map {
+gmp-map {
+  height: 100%;
+}
+
+#map-container {
+  display: flex;
+  flex-direction: row;
   height: 100%;
 }
 
