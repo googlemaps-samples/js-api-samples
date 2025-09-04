@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+      "module": "esnext",
+      "target": "esnext",
+      "strict": true,
+      "noImplicitAny": false,
+      "lib": [
+        "es2015",
+        "esnext",
+        "es6",
+        "dom",
+        "dom.iterable"
+      ],
+      "moduleResolution": "node",
+      "jsx": "react-jsx",
+      "allowSyntheticDefaultImports": true,
+      "types": [
+        "vite/client",
+        "node"
+      ]
+    }
+  }
