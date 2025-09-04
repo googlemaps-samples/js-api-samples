@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/routes-get-directions",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh routes-get-directions && bash ../app.sh routes-get-directions && bash ../docs.sh routes-get-directions && npm run build:vite --workspace=. && bash ../dist.sh routes-get-directions",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
