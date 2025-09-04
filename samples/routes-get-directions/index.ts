@@ -12,10 +12,12 @@ const center = { lat: 37.447646, lng: -122.113878 }; // Palo Alto, CA
 // Initialize and add the map.
 async function initMap(): Promise<void> {
   //  Request the needed libraries.
-  const { Map } = await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
-  const { Place } = await google.maps.importLibrary('places') as google.maps.PlacesLibrary;
-  //@ts-ignore
-  const { Route } = await google.maps.importLibrary('routes') as google.maps.Routes;
+  const [{Map}, {Place}, {Route}] = await Promise.all([
+    google.maps.importLibrary('maps') as Promise<google.maps.MapsLibrary>,
+    google.maps.importLibrary('places') as Promise<google.maps.PlacesLibrary>,
+    //@ts-ignore
+    google.maps.importLibrary('routes') as Promise<google.maps.Routes>
+  ]);
 
   map = new Map(document.getElementById("map") as HTMLElement, {
     zoom: 12,
