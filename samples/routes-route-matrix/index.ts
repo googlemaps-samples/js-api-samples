@@ -10,7 +10,7 @@ let markers: google.maps.marker.AdvancedMarkerElement[] = [];
 let center = { lat: 51.55, lng: -1.8 };
 
 async function initMap(): Promise<void> {
-  //  Request the needed libraries.  
+  //  Request the needed libraries.
   //@ts-ignore
   const [{Map}, {Place}, {AdvancedMarkerElement, PinElement}, {RouteMatrix}] = await Promise.all([
     google.maps.importLibrary('maps') as Promise<google.maps.MapsLibrary>,
@@ -41,10 +41,12 @@ async function initMap(): Promise<void> {
     id: "ChIJ9VPsNNQCbkgRDmeGZdsGNBQ", // Cardiff, UK
   });
 
-  await origin1.fetchFields({ fields: ['location', 'displayName']});
-  await origin2.fetchFields({ fields: ['location', 'displayName']});
-  await destinationA.fetchFields({ fields: ['location', 'displayName']});
-  await destinationB.fetchFields({ fields: ['location', 'displayName']});
+  await Promise.all([
+    origin1.fetchFields({ fields: ['location', 'displayName']}),
+    origin2.fetchFields({ fields: ['location', 'displayName']}),
+    destinationA.fetchFields({ fields: ['location', 'displayName']}),
+    destinationB.fetchFields({ fields: ['location', 'displayName']}),
+  ]);
 
   const request = {
     origins: [origin1, origin2], 
