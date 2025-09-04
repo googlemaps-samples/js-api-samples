@@ -5,12 +5,11 @@
  */
 
 // [START maps_place_nearby_search]
-const mapElement = document.querySelector('gmp-map') as any;
+const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
 let map;
-const advancedMarkerElement = document.querySelector('gmp-advanced-marker') as any;
+const advancedMarkerElement = document.querySelector('gmp-advanced-marker') as google.maps.marker.AdvancedMarkerElement;
 let center;
 let typeSelect;
-let markers = {};
 let infoWindow;
 
 async function initMap() {
@@ -19,7 +18,7 @@ async function initMap() {
 
     center = new LatLng(45.438646, 12.327573); // Venice, Italy
 
-    map = await mapElement.innerMap;
+    map = mapElement.innerMap;
     map.setOptions ({
         mapTypeControl: false,
     });
@@ -31,6 +30,9 @@ async function initMap() {
     });
 
     infoWindow = new InfoWindow();
+
+    // Kick off an initial search.
+    nearbySearch();
 }
 
 async function nearbySearch() {
@@ -49,7 +51,7 @@ async function nearbySearch() {
 
     const request = {
         // required parameters
-        fields: ['displayName', 'location', 'formattedAddress', 'googleMapsLinks'],
+        fields: ['displayName', 'location', 'formattedAddress', 'googleMapsURI'],
         locationRestriction: {
             center,
             radius,
@@ -58,8 +60,6 @@ async function nearbySearch() {
         includedPrimaryTypes: [typeSelect.value],
         maxResultCount: 5,
         rankPreference: SearchNearbyRankPreference.POPULARITY,
-        language: 'en-US',
-        region: 'us',
     };
 
     const { places } = await Place.searchNearby(request);
@@ -70,34 +70,42 @@ async function nearbySearch() {
         const bounds = new LatLngBounds();
 
         // First remove all existing markers.
-        for (const id in markers) {
-            markers[id].map = null;
-        };
-        markers = {};
+        for (const marker of mapElement.querySelectorAll('gmp-advanced-marker')) marker.remove();
         
         // Loop through and get all the results.
         places.forEach(place => {
+            if (!place.location) return;
+            bounds.extend(place.location);
+
             const marker = new AdvancedMarkerElement({
                 map,
                 position: place.location,
                 title: place.displayName,
             });
-            markers[place.id] = marker;
 
-           //@ts-expect-error
-           let content = `${place.formattedAddress}<br/>${place.id}<br/><a href="${place.googleMapsLinks.placeURI}">View Details on Google Maps</a>`;
+            // Build the content of the InfoWindow safely using DOM elements.
+            const content = document.createElement('div');
+            const address = document.createElement('div');
+            address.textContent = place.formattedAddress as string;
+            const placeId = document.createElement('div');
+            placeId.textContent = place.id;
+            content.append(address, placeId);
+
+            if (place.googleMapsURI) {
+                const link = document.createElement('a');
+                link.href = place.googleMapsURI;
+                link.target = '_blank';
+                link.textContent = 'View Details on Google Maps';
+                content.appendChild(link);
+            }
 
             marker.addListener('gmp-click', () => {
                 map.panTo(place.location);
                 updateInfoWindow(place.displayName, content, marker);
             });
-
-            if (place.location != null) {
-                bounds.extend(place.location);
-            }
         });
 
-        map.fitBounds(bounds);
+        map.fitBounds(bounds, 100);
 
     } else {
         console.log('No results');
