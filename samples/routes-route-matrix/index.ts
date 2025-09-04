@@ -25,7 +25,7 @@ async function initMap(): Promise<void> {
     mapId: 'DEMO_MAP_ID',
   });
 
-  // Build the request using Place instances
+  // Build the request using Place instances.
   const origin1 = new Place({
     id: "ChIJ83WZp86p2EcRbMrkYqGncBQ", // Greenwich, London, UK
   });
@@ -45,58 +45,18 @@ async function initMap(): Promise<void> {
   await destinationB.fetchFields({ fields: ['location', 'displayName']});
 
   const request = {
-    //origins: [{ origin1, routeModifiers: { avoidHighways: false, avoidTolls: false } }, origin2], //?????? it don't work!
-    origins: [origin1, origin2], // TODO: Show how to define routeModifiers for origins. 
+    origins: [origin1, origin2], 
     destinations: [destinationA, destinationB],
-    travelMode: google.maps.TravelMode.DRIVING, // QUESTION: String vs. Object; does it matter?
+    travelMode: 'DRIVING',
     units: google.maps.UnitSystem.METRIC,
     fields: ['distanceMeters', 'durationMillis', 'condition'],
-    //fields: ['*'],
   };
 
-  /**
-   * JSON for routeModifiers; how would this look in a JS request?
-   {
-  "origins": [
-    {
-      "waypoint": {
-        "lat": 42.340173523716736,
-        "lng": -71.05997968330408
-      },
-      "routeModifiers": {
-        "vehicleInfo": {
-          "emissionType": "GASOLINE"
-        },
-        "tollPasses": [
-          "US_MA_EZPASSMA",
-          "US_WA_GOOD_TO_GO"
-        ]
-      }
-    }
-  ],
-  "destinations": [
-    {
-      "lat": 42.075698891472804,
-      "lng": -72.59806562080408
-    }
-  ],
-  "travelMode": "DRIVING",
-  "extraComputations": [
-    "TOLLS"
-  ],
-  "fields": [
-    "travelAdvisory.tollInfo"
-  ]
-}
-   */
-
-  // put request on page
+  // Show the request.
   (document.getElementById("request") as HTMLDivElement).innerText =
     JSON.stringify(request, null, 2);
 
   // Get the RouteMatrix response.
-  // Call the computeRoutes() method to get a route.
-  //@ts-ignore
   const response = await RouteMatrix.computeRouteMatrix(request); 
 
   // Show the response.
