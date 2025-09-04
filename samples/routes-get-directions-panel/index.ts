@@ -13,10 +13,11 @@ let center = { lat: 37.447646, lng: -122.113878 }; // Palo Alto, CA
 // Initialize and add the map.
 async function initMap(): Promise<void> {
   // Request the needed libraries.
-  //  Request the needed libraries.
-  const { Map } = await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
-  //@ts-ignore
-  const { Route } = await google.maps.importLibrary('routes') as google.maps.Routes;
+  const [{Map}, {Route}] = await Promise.all([
+    google.maps.importLibrary('maps') as Promise<google.maps.MapsLibrary>,
+    //@ts-ignore
+    google.maps.importLibrary('routes') as Promise<google.maps.Routes>
+  ]);
 
   map = new Map(document.getElementById("map") as HTMLElement, {
     zoom: 12,
@@ -52,7 +53,7 @@ async function initMap(): Promise<void> {
 
   // [START maps_routes_get_directions_panel_steps]
   // Render navigation instructions
-  const directionsPanel = document.getElementById("directions-panel");
+  const directionsPanel = document.getElementById("directions");
 
   if (!routes || routes.length === 0) {
     if (directionsPanel) {
@@ -73,7 +74,6 @@ async function initMap(): Promise<void> {
   route.legs.forEach((leg, index) => {
     const legContainer = document.createElement("div");
     legContainer.className = "directions-leg";
-    legContainer.setAttribute("aria-label", `Leg ${index + 1}`);
 
     // Leg Title
     const legTitleElement = document.createElement("h3");
@@ -88,14 +88,16 @@ async function initMap(): Promise<void> {
       leg.steps.forEach((step, stepIndex) => {
         const stepItem = document.createElement("li");
         stepItem.className = "direction-step";
-        stepItem.setAttribute("aria-label", `Step ${stepIndex + 1}`);
+
+        const directionWrapper = document.createElement("div");
+        directionWrapper.className = "direction";
 
         // Maneuver
         if (step.maneuver) {
           const maneuverNode = document.createElement("p");
           maneuverNode.textContent = step.maneuver;
           maneuverNode.className = "maneuver";
-          stepItem.appendChild(maneuverNode);
+          directionWrapper.appendChild(maneuverNode);
         }
 
         // Distance and Duration
@@ -103,7 +105,7 @@ async function initMap(): Promise<void> {
           const distanceNode = document.createElement("p");
           distanceNode.textContent = `${step.localizedValues.distance} (${step.localizedValues.staticDuration})`;
           distanceNode.className = "distance";
-          stepItem.appendChild(distanceNode);
+          directionWrapper.appendChild(distanceNode);
         }
 
         // Instructions
@@ -111,9 +113,10 @@ async function initMap(): Promise<void> {
           const instructionsNode = document.createElement("p");
           instructionsNode.textContent = step.instructions;
           instructionsNode.className = "instruction";
-          stepItem.appendChild(instructionsNode);
+          directionWrapper.appendChild(instructionsNode);
         }
 
+        stepItem.appendChild(directionWrapper);
         stepsList.appendChild(stepItem);
       });
       legContainer.appendChild(stepsList);
