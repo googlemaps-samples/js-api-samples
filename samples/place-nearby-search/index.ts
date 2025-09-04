@@ -6,7 +6,7 @@
 
 // [START maps_place_nearby_search]
 const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-let map;
+let innerMap;
 const advancedMarkerElement = document.querySelector('gmp-advanced-marker') as google.maps.marker.AdvancedMarkerElement;
 let center;
 let typeSelect;
@@ -16,12 +16,10 @@ async function initMap() {
     const { Map, InfoWindow } = await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
     const { LatLng } = await google.maps.importLibrary("core") as google.maps.CoreLibrary;
 
-    map = mapElement.innerMap;
-    map.setOptions({
+    innerMap = mapElement.innerMap;
+    innerMap.setOptions({
         mapTypeControl: false,
     });
-
-    center = map.getCenter;
 
     typeSelect = document.querySelector(".type-select");
 
@@ -42,8 +40,8 @@ async function nearbySearch() {
     // [START maps_place_nearby_search_request]
     // Get bounds and radius to constrain search.
 
-    center = map.getCenter();
-    let bounds = map.getBounds();
+    center = mapElement.center;
+    let bounds = innerMap.getBounds();
     const ne = bounds.getNorthEast();
     const sw = bounds.getSouthWest();
     const diameter = spherical.computeDistanceBetween(ne, sw);
@@ -78,7 +76,7 @@ async function nearbySearch() {
             bounds.extend(place.location);
 
             const marker = new AdvancedMarkerElement({
-                map,
+                map: innerMap,
                 position: place.location,
                 title: place.displayName,
             });
@@ -100,12 +98,12 @@ async function nearbySearch() {
             }
 
             marker.addListener('gmp-click', () => {
-                map.panTo(place.location);
+                innerMap.panTo(place.location);
                 updateInfoWindow(place.displayName, content, marker);
             });
         });
 
-        map.fitBounds(bounds, 100);
+        innerMap.fitBounds(bounds, 100);
 
     } else {
         console.log('No results');
@@ -116,9 +114,7 @@ function updateInfoWindow(title, content, anchor) {
     infoWindow.setContent(content);
     infoWindow.setHeaderContent(title);
     infoWindow.open({
-        map,
         anchor,
-        shouldFocus: false,
     });
 }
 
