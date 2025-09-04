@@ -111,7 +111,7 @@ async function nearbySearch() {
         console.log('No results');
     }
 
-    async function updateInfoWindow(title, content, anchor) {
+    function updateInfoWindow(title, content, anchor) {
         infoWindow.setContent(content);
         infoWindow.setHeaderContent(title);
         infoWindow.open({
