@@ -39,7 +39,6 @@ async function nearbySearch() {
     const { spherical } = await google.maps.importLibrary('geometry') as google.maps.GeometryLibrary;
     // [START maps_place_nearby_search_request]
     // Get bounds and radius to constrain search.
-
     center = mapElement.center;
     let bounds = innerMap.getBounds();
     const ne = bounds.getNorthEast();
