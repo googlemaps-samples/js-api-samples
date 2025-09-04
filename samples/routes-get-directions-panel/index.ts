@@ -59,6 +59,7 @@ async function initMap(): Promise<void> {
     if (directionsPanel) {
       directionsPanel.textContent = "No routes available.";
     }
+    return;
   }
 
   const route = routes[0];
