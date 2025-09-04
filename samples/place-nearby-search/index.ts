@@ -14,14 +14,14 @@ let infoWindow;
 
 async function initMap() {
     const { Map, InfoWindow } = await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
-    const {LatLng} = await google.maps.importLibrary("core") as google.maps.CoreLibrary;
-
-    center = new LatLng(45.438646, 12.327573); // Venice, Italy
+    const { LatLng } = await google.maps.importLibrary("core") as google.maps.CoreLibrary;
 
     map = mapElement.innerMap;
-    map.setOptions ({
+    map.setOptions({
         mapTypeControl: false,
     });
+
+    center = map.getCenter;
 
     typeSelect = document.querySelector(".type-select");
 
@@ -41,13 +41,13 @@ async function nearbySearch() {
     const { spherical } = await google.maps.importLibrary('geometry') as google.maps.GeometryLibrary;
     // [START maps_place_nearby_search_request]
     // Get bounds and radius to constrain search.
-    
+
     center = map.getCenter();
     let bounds = map.getBounds();
-    let ne = bounds.getNorthEast();
-    let sw = bounds.getSouthWest();
-    let diameter = spherical.computeDistanceBetween(ne, sw);
-    let radius = Math.min((diameter / 2 ), 50000); // Radius cannot be more than 50000.
+    const ne = bounds.getNorthEast();
+    const sw = bounds.getSouthWest();
+    const diameter = spherical.computeDistanceBetween(ne, sw);
+    const radius = Math.min((diameter / 2), 50000); // Radius cannot be more than 50000.
 
     const request = {
         // required parameters
@@ -71,7 +71,7 @@ async function nearbySearch() {
 
         // First remove all existing markers.
         for (const marker of mapElement.querySelectorAll('gmp-advanced-marker')) marker.remove();
-        
+
         // Loop through and get all the results.
         places.forEach(place => {
             if (!place.location) return;
@@ -86,7 +86,7 @@ async function nearbySearch() {
             // Build the content of the InfoWindow safely using DOM elements.
             const content = document.createElement('div');
             const address = document.createElement('div');
-            address.textContent = place.formattedAddress as string;
+            address.textContent = place.formattedAddress || '';
             const placeId = document.createElement('div');
             placeId.textContent = place.id;
             content.append(address, placeId);
@@ -110,16 +110,16 @@ async function nearbySearch() {
     } else {
         console.log('No results');
     }
+}
 
-    function updateInfoWindow(title, content, anchor) {
-        infoWindow.setContent(content);
-        infoWindow.setHeaderContent(title);
-        infoWindow.open({
-            map,
-            anchor,
-            shouldFocus: false,
-        });
-    }
+function updateInfoWindow(title, content, anchor) {
+    infoWindow.setContent(content);
+    infoWindow.setHeaderContent(title);
+    infoWindow.open({
+        map,
+        anchor,
+        shouldFocus: false,
+    });
 }
 
 initMap();
