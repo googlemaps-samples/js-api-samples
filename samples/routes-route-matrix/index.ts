@@ -11,12 +11,12 @@ let center = { lat: 51.55, lng: -1.8 };
 
 async function initMap(): Promise<void> {
   //  Request the needed libraries.  
+  //@ts-ignore
   const [{Map}, {Place}, {AdvancedMarkerElement, PinElement}, {RouteMatrix}] = await Promise.all([
     google.maps.importLibrary('maps') as Promise<google.maps.MapsLibrary>,
     google.maps.importLibrary('places') as Promise<google.maps.PlacesLibrary>,
     google.maps.importLibrary('marker') as Promise<google.maps.MarkerLibrary>,
-    //@ts-ignore
-    google.maps.importLibrary('routes') as Promise<google.maps.Routes>
+    google.maps.importLibrary('routes') as Promise<google.maps.RoutesLibrary>
   ]);
 
   const bounds = new google.maps.LatLngBounds();
