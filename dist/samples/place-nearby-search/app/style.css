@@ -8,7 +8,13 @@
  * Always set the map height explicitly to define the size of the div element
  * that contains the map. 
  */
-#map {
+gmp-map {
+  height: 100%;
+}
+
+#map-container {
+  display: flex;
+  flex-direction: row;
   height: 100%;
 }
 
@@ -21,5 +27,16 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.type-select {
+    width: 400px;
+    height: 32px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    flex-grow: 1;
+    padding: 0 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+  }
 
 /* [END maps_place_nearby_search] */
