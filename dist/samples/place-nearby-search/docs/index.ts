@@ -29,8 +29,10 @@ async function initMap() {
 
     infoWindow = new InfoWindow();
 
-    // Kick off an initial search.
-    nearbySearch();
+    // Kick off an initial search once map has loaded.
+    google.maps.event.addListenerOnce(innerMap, 'idle', () => {
+        nearbySearch();
+    });
 }
 
 async function nearbySearch() {

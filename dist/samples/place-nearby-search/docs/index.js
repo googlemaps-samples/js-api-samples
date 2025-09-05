@@ -23,8 +23,10 @@ async function initMap() {
         nearbySearch();
     });
     infoWindow = new InfoWindow();
-    // Kick off an initial search.
-    nearbySearch();
+    // Kick off an initial search once map has loaded.
+    google.maps.event.addListenerOnce(innerMap, 'idle', () => {
+        nearbySearch();
+    });
 }
 async function nearbySearch() {
     const { Place, SearchNearbyRankPreference } = await google.maps.importLibrary('places');
