@@ -68,7 +68,7 @@ async function initMap() {
     };
     // [END maps_routes_get_directions_request_pluscode]
     // [START maps_routes_get_directions_request_simple]
-    // Define a simple request.
+    // Define a routes request.
     const request = {
         origin: 'Mountain View, CA',
         destination: 'San Francisco, CA',

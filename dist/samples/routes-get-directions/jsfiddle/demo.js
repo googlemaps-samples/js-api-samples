@@ -68,7 +68,7 @@ async function initMap() {
     };
     
     
-    // Define a simple request.
+    // Define a routes request.
     const request = {
         origin: 'Mountain View, CA',
         destination: 'San Francisco, CA',
