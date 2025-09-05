@@ -67,6 +67,7 @@ async function initMap() {
         fields: ['path'],
     };
     // [END maps_routes_get_directions_request_pluscode]
+    // [START maps_routes_get_directions_request_complete]
     // [START maps_routes_get_directions_request_simple]
     // Define a routes request.
     const request = {
@@ -77,12 +78,9 @@ async function initMap() {
     };
     // [END maps_routes_get_directions_request_simple]
     // Call computeRoutes to get the directions.
-    //@ts-ignore
     // [START maps_routes_get_directions_compute]
     const { routes, fallbackInfo, geocodingResults } = await Route.computeRoutes(request);
     // [END maps_routes_get_directions_compute]
-    // Display the raw JSON for the result in the console.
-    console.log(`Response:\n ${JSON.stringify(routes, null, 2)}`);
     // [START maps_routes_get_directions_polyline]
     // Use createPolylines to create polylines for the route.
     mapPolylines = routes[0].createPolylines();
@@ -93,6 +91,10 @@ async function initMap() {
     // Add markers to the map
     markers.forEach((marker) => marker.setMap(map));
     // [END maps_routes_get_directions_polyline]
+    // [END maps_routes_get_directions_request_complete]
+    // Display the raw JSON for the result in the console.
+    console.log(`Response:\n ${JSON.stringify(routes, null, 2)}`);
+    // Fit the map to the path.
     fitMapToPath(routes[0].path);
 }
 // Helper function to fit the map to the path.

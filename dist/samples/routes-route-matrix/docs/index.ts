@@ -48,6 +48,7 @@ async function initMap(): Promise<void> {
     destinationB.fetchFields({ fields: ['location', 'displayName']}),
   ]);
 
+  // [START maps_routes_route_matrix_request]
   const request = {
     origins: [origin1, origin2], 
     destinations: [destinationA, destinationB],
@@ -55,6 +56,7 @@ async function initMap(): Promise<void> {
     units: google.maps.UnitSystem.METRIC,
     fields: ['distanceMeters', 'durationMillis', 'condition'],
   };
+  // [END maps_routes_route_matrix_request]
 
   // Show the request.
   (document.getElementById("request") as HTMLDivElement).innerText =

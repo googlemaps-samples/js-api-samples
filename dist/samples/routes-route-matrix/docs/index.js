@@ -43,6 +43,7 @@ async function initMap() {
         destinationA.fetchFields({ fields: ['location', 'displayName'] }),
         destinationB.fetchFields({ fields: ['location', 'displayName'] }),
     ]);
+    // [START maps_routes_route_matrix_request]
     const request = {
         origins: [origin1, origin2],
         destinations: [destinationA, destinationB],
@@ -50,6 +51,7 @@ async function initMap() {
         units: google.maps.UnitSystem.METRIC,
         fields: ['distanceMeters', 'durationMillis', 'condition'],
     };
+    // [END maps_routes_route_matrix_request]
     // Show the request.
     document.getElementById("request").innerText =
         JSON.stringify(request, null, 2);
