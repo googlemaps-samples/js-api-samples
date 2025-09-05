@@ -56,9 +56,7 @@ async function getPlaceDetails() {
     infoWindow.setHeaderContent(place.displayName);
     infoWindow.setContent(content);
     infoWindow.open({
-        map: innerMap,
         anchor: marker,
-        shouldFocus: false,
     });
 }
 // [END maps_place_class_fetchfields]
