@@ -68,6 +68,7 @@ async function initMap() {
     };
     
     
+    
     // Define a routes request.
     const request = {
         origin: 'Mountain View, CA',
@@ -77,12 +78,9 @@ async function initMap() {
     };
     
     // Call computeRoutes to get the directions.
-    //@ts-ignore
     
     const { routes, fallbackInfo, geocodingResults } = await Route.computeRoutes(request);
     
-    // Display the raw JSON for the result in the console.
-    console.log(`Response:\n ${JSON.stringify(routes, null, 2)}`);
     
     // Use createPolylines to create polylines for the route.
     mapPolylines = routes[0].createPolylines();
@@ -93,6 +91,10 @@ async function initMap() {
     // Add markers to the map
     markers.forEach((marker) => marker.setMap(map));
     
+    
+    // Display the raw JSON for the result in the console.
+    console.log(`Response:\n ${JSON.stringify(routes, null, 2)}`);
+    // Fit the map to the path.
     fitMapToPath(routes[0].path);
 }
 // Helper function to fit the map to the path.
