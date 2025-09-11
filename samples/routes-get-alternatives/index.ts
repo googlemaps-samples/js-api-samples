@@ -15,11 +15,6 @@ async function initMap() {
   //  Request the needed libraries.
   const { Map } = await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
 
-  // This doesn't work as expected (Map not found?)
-  // const [{ Map }] = await Promise.all([
-  //   google.maps.importLibrary('maps')
-  // ]);
-
   innerMap = mapElement.innerMap;
   innerMap.setOptions({
       mapTypeControl: false,
