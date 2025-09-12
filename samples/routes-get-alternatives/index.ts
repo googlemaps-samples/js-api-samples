@@ -49,26 +49,29 @@ async function getDirections() {
   // [START maps_routes_get_alternatives_compute]
   // Call computeRoutes to get the directions.
   const result = await Route.computeRoutes(request);
+  if (!result.routes || result.routes.length === 0) {
+    console.warn("No routes found");
+    return;
+  }
 
-  if (result.routes) {
-    let primaryRoute;
-    for (const [index, route] of result.routes.entries()) {
-      // Save the primary route for last so it's drawn on top.
-      if (
-        // Check for the default route.
-        route.routeLabels?.includes(
-          RouteLabel.DEFAULT_ROUTE,
-        )
-      ) {
-        primaryRoute = route;
-      } else {
-        await drawRoute(route, false);
-      }
+  let primaryRoute;
+  
+  for (const route of result.routes) {
+    // Save the primary route for last so it's drawn on top.
+    if (
+      // Check for the default route.
+      route.routeLabels?.includes(RouteLabel.DEFAULT_ROUTE)
+    ) {
+      primaryRoute = route;
+    } else {
+      drawRoute(route, false);
     }
-    if (primaryRoute) {
-      await drawRoute(primaryRoute, true);
-      innerMap.fitBounds(primaryRoute.viewport, 100);
-    }
+  }
+  
+  if (primaryRoute) {
+    drawRoute(primaryRoute, true);
+    await primaryRoute.createWaypointAdvancedMarkers({ map: innerMap });
+    innerMap.fitBounds(primaryRoute.viewport, 100);
   }
   // [END maps_routes_get_alternatives_compute]
   // [END maps_routes_get_alternatives_request_full]
