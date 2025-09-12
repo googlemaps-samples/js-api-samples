@@ -80,7 +80,7 @@ async function getDirections() {
   console.log(`Response:\n ${JSON.stringify(result, null, 2)}`);
 }
 
-async function drawRoute(route, isPrimaryRoute) {
+function drawRoute(route, isPrimaryRoute) {
   mapPolylines = mapPolylines.concat(
     route.createPolylines({
       polylineOptions: isPrimaryRoute
@@ -89,13 +89,11 @@ async function drawRoute(route, isPrimaryRoute) {
             map: innerMap,
             strokeColor: "#669DF6",
             strokeOpacity: 0.5,
-            strokeWeight: 8,
+            strokeWidth: 8,
           },
       colorScheme: innerMap.get("colorScheme"),
     }),
   );
-  // Create markers for start and end points.
-  await route.createWaypointAdvancedMarkers({map: innerMap});
 }
 
 initMap();
