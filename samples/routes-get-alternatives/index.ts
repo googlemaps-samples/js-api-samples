@@ -13,7 +13,7 @@ let innerMap;
 // Initialize and add the map.
 async function initMap() {
   //  Request the needed libraries.
-  const { Map } = await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
+  await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
 
   innerMap = mapElement.innerMap;
   innerMap.setOptions({
