@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/routes-markers",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh routes-markers && bash ../app.sh routes-markers && bash ../docs.sh routes-markers && npm run build:vite --workspace=. && bash ../dist.sh routes-markers",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
