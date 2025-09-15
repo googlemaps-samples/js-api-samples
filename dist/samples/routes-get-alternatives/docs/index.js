@@ -5,7 +5,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 // [START maps_routes_get_alternatives]
-// Initialize and add the map.
 let mapPolylines = [];
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
