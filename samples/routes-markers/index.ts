@@ -52,7 +52,8 @@ async function getDirections() {
     console.warn("No routes found");
     return;
   }
-
+  // [END maps_routes_markers_request_full]
+  
   // [START maps_routes_markers_style_maker]
   // Alter style based on marker index.
   function markerOptionsMaker(
