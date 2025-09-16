@@ -61,7 +61,8 @@ async function getDirections() {
     if (primaryRoute) {
         drawRoute(primaryRoute, true);
         await primaryRoute.createWaypointAdvancedMarkers({ map: innerMap });
-        innerMap.fitBounds(primaryRoute.viewport, 100);
+        innerMap.fitBounds(primaryRoute.viewport, 50);
+        innerMap.setHeading(70);
     }
     
     
