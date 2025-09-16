@@ -17,14 +17,14 @@ async function initMap() {
         mapId: "4504f8b37365c3d0",
     });
     for (const property of properties) {
-        const AdvancedMarkerElement = new google.maps.marker.AdvancedMarkerElement({
+        const advancedMarkerElement = new google.maps.marker.AdvancedMarkerElement({
             map,
             content: buildContent(property),
             position: property.position,
             title: property.description,
         });
-        AdvancedMarkerElement.addListener("click", () => {
-            toggleHighlight(AdvancedMarkerElement, property);
+        advancedMarkerElement.addListener("click", () => {
+            toggleHighlight(advancedMarkerElement, property);
         });
     }
 }

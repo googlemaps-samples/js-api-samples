@@ -5,7 +5,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Initialize and add the map.
 let mapPolylines = [];
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
@@ -62,7 +61,8 @@ async function getDirections() {
     if (primaryRoute) {
         drawRoute(primaryRoute, true);
         await primaryRoute.createWaypointAdvancedMarkers({ map: innerMap });
-        innerMap.fitBounds(primaryRoute.viewport, 100);
+        innerMap.fitBounds(primaryRoute.viewport, 50);
+        innerMap.setHeading(70);
     }
     
     
