@@ -5,31 +5,54 @@
  */
 
 // [START maps_place_autocomplete_data_session]
-let titleElement;
-let resultsContainerElement;
-let inputElement;
+const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+let innerMap;
+let marker: google.maps.marker.AdvancedMarkerElement | undefined;
+let titleElement: HTMLElement;
+let resultsContainerElement: HTMLElement;
+let inputElement: HTMLInputElement;
+let tokenStatusElement: HTMLElement;
+let request: any;
 
-let newestRequestId = 0;
+let newestRequestId: number = 0;
 
-// Add an initial request body.
-const request = {
-    input: '',
-    locationRestriction: { west: -122.44, north: 37.8, east: -122.39, south: 37.78 },
-    origin: { lat: 37.7893, lng: -122.4039 },
-    includedPrimaryTypes: ['restaurant'],
-    language: 'en-US',
-    region: 'us',
-};
+async function initMap() {
+    await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
 
-function init() {
-    titleElement = document.getElementById('title');
-    resultsContainerElement = document.getElementById('results');
-    inputElement = document.querySelector('input');
+    innerMap = mapElement.innerMap;
+    innerMap.setOptions({
+        mapId: 'DEMO_MAP_ID',
+        mapTypeControl: false,
+    });
+
+    google.maps.event.addListenerOnce(innerMap, 'idle', async () => {
+        // Add an initial request body.
+        request = {
+            input: '',
+            locationRestriction: innerMap.getBounds(),
+            origin: innerMap.getCenter(),
+            includedPrimaryTypes: ['restaurant', 'cafe', 'museum', 'park'],
+            language: 'en-US',
+            region: 'us',
+        };
+        await refreshToken(request);
+    });
+
+    titleElement = document.getElementById('title') as HTMLElement;
+    resultsContainerElement = document.getElementById('results') as HTMLElement;
+    inputElement = document.querySelector('input') as HTMLInputElement;
+    tokenStatusElement = document.getElementById('token-status') as HTMLElement;
+
     inputElement.addEventListener('input', makeAutocompleteRequest);
-    refreshToken(request);
 }
 
 async function makeAutocompleteRequest(inputEvent) {
+    const { AutocompleteSuggestion } = await google.maps.importLibrary('places') as google.maps.PlacesLibrary;
+
+    if (!request.sessionToken) {
+        await refreshToken(request);
+    }
+
     // Reset elements and exit if an empty string is received.
     if (inputEvent.target.value == '') {
         titleElement.innerText = '';
@@ -44,8 +67,7 @@ async function makeAutocompleteRequest(inputEvent) {
     const requestId = ++newestRequestId;
 
     // Fetch autocomplete suggestions and show them in a list.
-    // @ts-ignore
-    const { suggestions } = await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
+    const { suggestions } = await AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
 
     // If the request has been superseded by a newer request, do not render the output.
     if (requestId !== newestRequestId) return;
@@ -74,28 +96,50 @@ async function makeAutocompleteRequest(inputEvent) {
 
 // Event handler for clicking on a suggested place.
 async function onPlaceSelected(place) {
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker') as google.maps.MarkerLibrary;
+
     await place.fetchFields({
-        fields: ['displayName', 'formattedAddress'],
+        fields: ['displayName', 'formattedAddress', 'location'],
     });
+
+
     const placeText = document.createTextNode(`${place.displayName}: ${place.formattedAddress}`);
     resultsContainerElement.replaceChildren(placeText);
     titleElement.innerText = 'Selected Place:';
     inputElement.value = '';
-    refreshToken(request);
+    
+    request.sessionToken = null;
+    tokenStatusElement.textContent = 'Token: Terminated';
+
+    // Remove the previous marker, if it exists.
+    if (marker) {
+        marker.map = null;
+    }
+
+    // Create a new marker.
+    marker = new AdvancedMarkerElement({
+        map: innerMap,
+        position: place.location,
+        title: place.displayName,
+    });
+
+    // Center the map on the selected place.
+    innerMap.setCenter(place.location);
+    innerMap.setZoom(15);
 }
 
 // Helper function to refresh the session token.
-function refreshToken(request) {
+async function refreshToken(request) {
+    const { AutocompleteSessionToken } = await google.maps.importLibrary('places') as google.maps.PlacesLibrary;
     // Create a new session token and add it to the request.
-    request.sessionToken = new google.maps.places.AutocompleteSessionToken();
+    request.sessionToken = new AutocompleteSessionToken();
+
+    // Indicate that a new token is active.
+    tokenStatusElement.textContent = 'Token: Active';
+
+    console.log(`Newest request ID: ${newestRequestId}, session token: ${request.sessionToken}`);
 }
 
-declare global {
-    interface Window {
-      init: () => void;
-    }
-  }
-  window.init = init;
+initMap();
+
 // [END maps_place_autocomplete_data_session]
-void 0; // No-op to preserve the last region tag comment.
-export { };
