@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 // [START maps_routes_markers]
-// Initialize and add the map.
 let mapPolylines: google.maps.Polyline[] = [];
 const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
 let innerMap;
