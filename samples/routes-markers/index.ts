@@ -110,8 +110,6 @@ async function getDirections() {
   const markers = await result.routes[0].createWaypointAdvancedMarkers(markerOptionsMaker);
   // [END maps_routes_markers_style_maker]
 
-  // Add markers to the map
-  markers.forEach((marker) => marker.setMap(innerMap));
 
   // Fit the map to the route.
   innerMap.fitBounds(result.routes[0].viewport);
