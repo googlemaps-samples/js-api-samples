@@ -32,4 +32,31 @@ input {
   width: 300px;
 }
 
+/* Styles for the floating panel */
+#controls {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  font-family: sans-serif;
+  font-size: small;
+  margin: 12px;
+  padding: 1rem;
+}
+
+#title {
+  font-weight: bold;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+#results {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#results li {
+  padding: 0.5rem 0;
+}
+
 /* [END maps_place_autocomplete_data_session] */
