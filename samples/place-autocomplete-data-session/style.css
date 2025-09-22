@@ -28,12 +28,14 @@ a {
   color: blue;
 }
 
-input {
+.input {
   width: 300px;
+  font-size: small;
+  margin-bottom: 1rem;
 }
 
 /* Styles for the floating panel */
-#controls {
+.controls {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
@@ -43,19 +45,19 @@ input {
   padding: 1rem;
 }
 
-#title {
+.title {
   font-weight: bold;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
 }
 
-#results {
+.results {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
 
-#results li {
+.results li {
   padding: 0.5rem 0;
 }
 
