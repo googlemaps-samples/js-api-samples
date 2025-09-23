@@ -72,12 +72,15 @@ async function getDirections() {
 function drawRoute(route, isPrimaryRoute) {
     mapPolylines = mapPolylines.concat(route.createPolylines({
         polylineOptions: isPrimaryRoute
-            ? { map: innerMap }
+            ? {
+                map: innerMap,
+                strokeWeight: 5,
+            }
             : {
                 map: innerMap,
                 strokeColor: "#669DF6",
                 strokeOpacity: 0.5,
-                strokeWidth: 8,
+                strokeWeight: 5,
             },
         colorScheme: innerMap.get("colorScheme"),
     }));
