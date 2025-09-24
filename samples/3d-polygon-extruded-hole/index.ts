@@ -27,13 +27,13 @@ async function init() {
 
     const examplePolygon = new google.maps.maps3d.Polygon3DElement(polygonOptions);
 
-    examplePolygon.outerCoordinates = [
+    examplePolygon.path = [
         { lat: 40.7144, lng: -74.0208, altitude: 200 },
         { lat: 40.6993, lng: -74.019, altitude: 200 },
         { lat: 40.7035, lng: -74.0004, altitude: 200 }
     ];
 
-    examplePolygon.innerCoordinates = [
+    examplePolygon.innerPaths = [
         [
             { lat: 40.71, lng: -74.0175, altitude: 200 },
             { lat: 40.703, lng: -74.0165, altitude: 200 },
