@@ -15,7 +15,7 @@ async function initMap() {
 
     google.maps.event.addListenerOnce(innerMap, 'idle', () => {
       innerMap.data.loadGeoJson(
-         'https://maps-docs-team.web.app/assets/google.json'
+         'google.json'
       );
     });
 }
