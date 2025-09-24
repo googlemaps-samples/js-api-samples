@@ -9,7 +9,7 @@
  * that contains the map. 
  */
 #map {
-  height: 100%;
+    height: 100%;
 }
 
 /* 
@@ -17,48 +17,48 @@
  */
 html,
 body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 a {
-  cursor: pointer;
-  text-decoration: underline;
-  color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+    color: blue;
 }
 
 .input {
-  width: 300px;
-  font-size: small;
-  margin-bottom: 1rem;
+    width: 300px;
+    font-size: small;
+    margin-bottom: 1rem;
 }
 
 /* Styles for the floating panel */
 .controls {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  font-family: sans-serif;
-  font-size: small;
-  margin: 12px;
-  padding: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    font-family: sans-serif;
+    font-size: small;
+    margin: 12px;
+    padding: 1rem;
 }
 
 .title {
-  font-weight: bold;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .results {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 .results li {
-  padding: 0.5rem 0;
+    padding: 0.5rem 0;
 }
 
 /* [END maps_place_autocomplete_data_session] */
