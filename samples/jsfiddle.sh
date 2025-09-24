@@ -32,6 +32,12 @@ cp "${SCRIPT_DIR}/${NAME}/index.js" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.j
 cp "${SCRIPT_DIR}/${NAME}/index.html" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
 cp "${SCRIPT_DIR}/${NAME}/style.css" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.css"
 
+# Copy the data folder if one is found.
+[ -d "data" ] && cp -r "data" "${DIST_DIR}/samples/${NAME}/jsfiddle/data"
+
+# Copy the images folder if one is found.
+[ -d "images" ] && cp -r "data" "${DIST_DIR}/samples/${NAME}/jsfiddle/data"
+
 # Remove region tags from files by type, since they all have different comment conventions.
 # We use a conditional here since sed behaves differently on Linux.
 echo "Remove region tags from ${DIST_DIR}/samples/${NAME}/jsfiddle/demo.js"
