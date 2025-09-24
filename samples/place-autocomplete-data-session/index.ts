@@ -39,16 +39,6 @@ async function initMap() {
         region: 'us',
     }
 
-    // Update request center and bounds when the map finishes loading.
-    // google.maps.event.addListenerOnce(innerMap, 'idle', async () => {
-    //     // Update the request from the innerMap.
-    //     request!.locationRestriction = innerMap.getBounds();
-    //     request!.origin = innerMap.getCenter();
-
-    //     // Refresh the session token.
-    //     await refreshToken(request);
-    // });
-
     // Update request center and bounds when the map bounds change.
     google.maps.event.addListener(innerMap, 'bounds_changed', async () => {
         request!.locationRestriction = innerMap.getBounds()
