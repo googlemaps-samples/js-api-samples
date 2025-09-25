@@ -28,4 +28,4 @@ cp "${SCRIPT_DIR}/${NAME}/index.html" "${DOCS_DIR}/index.html"
 cp "${SCRIPT_DIR}/${NAME}/style.css" "${DOCS_DIR}/style.css"
 
 # Copy the data folder if one is found.
-[ -d "public" ] && cp -r public/* "${DOCS_DIR}/"
+# [ -d "public" ] && cp -r public/* "${DOCS_DIR}/"
