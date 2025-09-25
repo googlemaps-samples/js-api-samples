@@ -118,7 +118,7 @@ async function init() {
       },
       destination: {
         location: buildComputeRoutesLocation(
-          destinationAUtocompleteSelection,
+          destinationAutocompleteSelection,
           formData.get('destination_location'),
           formData.get('heading_dest'),
           travelMode,
@@ -491,7 +491,7 @@ async function init() {
 
     [
       [originAutocomplete, originAutocompleteSelection],
-      [destinationAutocomplete, destinationAUtocompleteSelection],
+      [destinationAutocomplete, destinationAutocompleteSelection],
     ].forEach(([autocomplete, autocompleteData]) => {
       autocomplete.addEventListener(
         'gmp-select',
