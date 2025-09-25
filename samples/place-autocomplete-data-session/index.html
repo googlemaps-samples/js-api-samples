@@ -19,20 +19,18 @@
         <!-- // [START maps_place_autocomplete_data_session_html] -->
         <gmp-map center="37.7893, -122.4039" zoom="12" map-id="DEMO_MAP_ID">
             <div
-                id="controls"
                 class="controls"
                 slot="control-inline-start-block-start"
             >
                 <input
-                    id="input"
                     type="text"
                     class="input"
                     placeholder="Search for a place..."
                     autocomplete="off"
                 /><!-- Turn off the input's own autocomplete (not supported by all browsers).-->
-                <div id="token-status" class="token-status"></div>
+                <div class="token-status"></div>
                 <div id="title" class="title"></div>
-                <ul id="results" class="results"></ul>
+                <ol id="results" class="results"></ol>
             </div>
         </gmp-map>
         <!-- // [END maps_place_autocomplete_data_session_html] -->
