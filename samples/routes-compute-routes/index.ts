@@ -17,7 +17,7 @@ const originAutocompleteSelection: PlaceAutocompleteSelection = {
   predictionText: null,
   location: null,
 };
-const destinationAUtocompleteSelection: PlaceAutocompleteSelection = {
+const destinationAutocompleteSelection: PlaceAutocompleteSelection = {
   predictionText: null,
   location: null,
 };
