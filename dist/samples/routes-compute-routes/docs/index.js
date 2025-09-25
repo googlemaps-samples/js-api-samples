@@ -12,7 +12,7 @@ const originAutocompleteSelection = {
     predictionText: null,
     location: null,
 };
-const destinationAUtocompleteSelection = {
+const destinationAutocompleteSelection = {
     predictionText: null,
     location: null,
 };
@@ -77,7 +77,7 @@ async function init() {
                 sideOfRoad: formData.get('origin_side_of_road') === 'on',
             },
             destination: {
-                location: buildComputeRoutesLocation(destinationAUtocompleteSelection, formData.get('destination_location'), formData.get('heading_dest'), travelMode),
+                location: buildComputeRoutesLocation(destinationAutocompleteSelection, formData.get('destination_location'), formData.get('heading_dest'), travelMode),
                 vehicleStopover: formData.get('destination_stopover') === 'on',
                 sideOfRoad: formData.get('destination_side_of_road') === 'on',
             },
@@ -344,7 +344,7 @@ async function init() {
         });
         [
             [originAutocomplete, originAutocompleteSelection],
-            [destinationAutocomplete, destinationAUtocompleteSelection],
+            [destinationAutocomplete, destinationAutocompleteSelection],
         ].forEach(([autocomplete, autocompleteData]) => {
             autocomplete.addEventListener('gmp-select', 
             //@ts-ignore
