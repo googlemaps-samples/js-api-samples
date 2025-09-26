@@ -95,15 +95,17 @@ async function makeAutocompleteRequest(inputEvent) {
         }
 
         // Create a link for the place, add an event handler to fetch the place.
-        const a = document.createElement('a');
-        a.addEventListener('click', () => {
+        // We are using a button element to take advantage of its a11y capabilities.
+        const link = document.createElement('button');
+        link.addEventListener('click', () => {
             onPlaceSelected(placePrediction.toPlace());
-        })
-        a.textContent = placePrediction.text.toString();
+        });
+        link.textContent = placePrediction.text.toString();
+        link.classList.add('link-button');
 
         // Create a new list item element.
         const li = document.createElement('li');
-        li.appendChild(a);
+        li.appendChild(link);
         resultsContainerElement.appendChild(li);
     }
 }
