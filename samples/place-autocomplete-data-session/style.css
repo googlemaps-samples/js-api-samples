@@ -22,10 +22,43 @@ body {
     padding: 0;
 }
 
-a {
-    cursor: pointer;
-    text-decoration: underline;
-    color: blue;
+.link-button {
+  /* Remove default styling */
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+
+  /* Inherit text styling from parent to match surrounding text */
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-align: left; /* Default button text is centered, links are left-aligned */
+
+  /* Set cursor to show it's interactive, like a link */
+  cursor: pointer;
+
+  /* Standard blue link color */
+  color: #007bff; /* A common, accessible blue */
+  
+  /* Add an underline to mimic a link */
+  text-decoration: underline;
+}
+
+/* Hover state: Change color on mouse hover */
+.link-button:hover {
+  color: #0056b3; /* A darker blue for better contrast */
+  text-decoration: none; /* Remove underline on hover (optional, but common) */
+}
+
+/* * A11y Best Practice: Always ensure a visible focus indicator for keyboard users.
+ * The 'focus-visible' pseudo-class is great as it only shows the ring when 
+ * the element is focused via the keyboard, not just a mouse click.
+ */
+.link-button:focus-visible {
+  outline: 2px solid #0056b3; /* Strong, clear outline for accessibility */
+  outline-offset: 2px;
+  border-radius: 2px; /* Slight rounding for a modern look */
 }
 
 .input {
