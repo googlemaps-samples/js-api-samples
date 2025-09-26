@@ -26,8 +26,6 @@ const request: google.maps.places.AutocompleteRequest = {
         'park',
         'botanical_garden',
     ],
-    language: 'en-US',
-    region: 'us',
 }
 
 async function initMap() {
