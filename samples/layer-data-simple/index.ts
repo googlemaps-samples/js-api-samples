@@ -6,6 +6,7 @@
 
 // [START maps_layer_data_simple]
 async function initMap() {
+  // Import the Maps library.
   (await google.maps.importLibrary("maps")) as google.maps.MapsLibrary;
 
   const mapElement = document.querySelector(
