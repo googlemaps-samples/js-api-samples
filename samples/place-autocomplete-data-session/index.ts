@@ -12,7 +12,6 @@ let titleElement = document.querySelector('.title') as HTMLElement;
 let resultsContainerElement = document.querySelector('.results') as HTMLElement;
 let inputElement = document.querySelector('input') as HTMLInputElement;
 let tokenStatusElement = document.querySelector('.token-status') as HTMLElement;
-
 let newestRequestId = 0;
 let tokenCount = 0;
 
@@ -30,7 +29,6 @@ const request: google.maps.places.AutocompleteRequest = {
 
 async function initMap() {
     await google.maps.importLibrary('maps');
-
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
         mapTypeControl: false,
@@ -41,6 +39,8 @@ async function initMap() {
         request.locationRestriction = innerMap.getBounds();
         request.origin = innerMap.getCenter();
     });
+
+    await refreshToken();
 
     inputElement.addEventListener('input', makeAutocompleteRequest);
 }
@@ -53,19 +53,10 @@ async function makeAutocompleteRequest(inputEvent) {
         'places'
     )) as google.maps.PlacesLibrary;
 
-    // If the request is not initialized, do not proceed.
-    if (!request) return;
-
-    if (!request.sessionToken) {
-        await refreshToken(request);
-    }
-
     // Reset elements and exit if an empty string is received.
-    if (
-        !inputEvent.target ||
-        (inputEvent.target as HTMLInputElement).value === ''
-    ) {
-        titleElement.textContent = ''
+    if (!inputEvent.target ||
+        inputEvent.target.value === '') {
+        titleElement.textContent = '';
         resultsContainerElement.replaceChildren();
         return;
     }
@@ -122,11 +113,7 @@ async function onPlaceSelected(place: google.maps.places.Place) {
     titleElement.textContent = 'Selected Place:';
     inputElement.value = '';
 
-    if (request) {
-        request.sessionToken = undefined;
-    }
-
-    tokenStatusElement.textContent = `Session token count: ${tokenCount}`;
+    await refreshToken();
 
     // Remove the previous marker, if it exists.
     if (marker) {
@@ -148,7 +135,7 @@ async function onPlaceSelected(place: google.maps.places.Place) {
 }
 
 // Helper function to refresh the session token.
-async function refreshToken(request: google.maps.places.AutocompleteRequest) {
+async function refreshToken() {
     const { AutocompleteSessionToken } = (await google.maps.importLibrary(
         'places'
     )) as google.maps.PlacesLibrary;
@@ -158,6 +145,7 @@ async function refreshToken(request: google.maps.places.AutocompleteRequest) {
 
     // Create a new session token and add it to the request.
     request.sessionToken = new AutocompleteSessionToken();
+    tokenStatusElement.textContent = `Session token count: ${tokenCount}`;
 }
 
 initMap();
