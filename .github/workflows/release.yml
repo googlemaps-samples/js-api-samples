@@ -111,16 +111,20 @@ jobs:
         run: git checkout -b temp-build-branch
 
       - name: Commit and Push Changes (to temp branch)
+        id: commit_and_push
         run: |
           git add dist/ package-lock.json index.html
           if [ -z "$(git status --porcelain)" ]; then
             echo "No changes to commit"
+            echo "changes_pushed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git commit -m "Update dist folder [skip ci]"
           git push --force origin temp-build-branch
+          echo "changes_pushed=true" >> "$GITHUB_OUTPUT"
 
       - name: Trigger Create Release Workflow
+        if: steps.commit_and_push.outputs.changes_pushed == 'true'
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: dist-pr.yml
