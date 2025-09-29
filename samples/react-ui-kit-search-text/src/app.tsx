@@ -3,7 +3,7 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-// [START maps_react_places_ui_kit_search_text]
+{/* [START maps_react_places_ui_kit_search_text] */}
 import React, {useState, useEffect, useRef, type RefObject} from 'react';
 import {createRoot} from 'react-dom/client';
 import {
@@ -211,4 +211,4 @@ root.render(
     <App />
   </React.StrictMode>
 );
-// [END maps_react_places_ui_kit_search_text]
+{/* [END maps_react_places_ui_kit_search_text] */}

@@ -3,7 +3,7 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-// [START maps_react_ui_kit_place_details]
+{/* [START maps_react_ui_kit_place_details] */}
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {APIProvider, useMapsLibrary} from '@vis.gl/react-google-maps';
@@ -90,5 +90,5 @@ export function renderToDom(container: HTMLElement) {
     </React.StrictMode>
   );
 }
-// [END maps_react_ui_kit_place_details]
 
+{/* [END maps_react_ui_kit_place_details] */}

@@ -3,7 +3,7 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-// [START maps_react_ui_kit_place_details_by_latlng_compact]
+{/* [START maps_react_ui_kit_place_details_by_latlng_compact] */}
 import React, {useEffect, useRef} from 'react';
 import {createRoot} from 'react-dom/client';
 import {APIProvider, useMapsLibrary} from '@vis.gl/react-google-maps';
@@ -85,4 +85,4 @@ export function renderToDom(container: HTMLElement) {
     </React.StrictMode>
   );
 }
-// [END maps_react_ui_kit_place_details_by_latlng_compact]
+{/* [END maps_react_ui_kit_place_details_by_latlng_compact] */}
