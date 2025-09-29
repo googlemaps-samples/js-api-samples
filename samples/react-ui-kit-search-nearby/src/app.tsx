@@ -76,7 +76,7 @@ const PlacesSearchLayout = () => {
 };
 
 interface PlaceSearchControllerProps {
-    placeSearchRef: RefObject<HTMLDivElement>;
+    placeSearchRef: RefObject<HTMLDivElement | null>;
     selectedType: string;
     setPlaces: (places: any[]) => void;
     setSelectedPlace: (place: any | null) => void;
