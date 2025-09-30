@@ -31,7 +31,7 @@ async function init() {
             // Length of time to fly to the location.
             durationMillis: 50000,
             // Number of rotations to make in the specified time.
-            rounds: 1
+            repeatCount: 1
         });
     }, { once: true }); // Stop animation after flying around.
     // At any time stop the animation.
