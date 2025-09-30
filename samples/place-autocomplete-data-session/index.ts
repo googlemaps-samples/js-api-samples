@@ -40,8 +40,6 @@ async function initMap() {
         request.origin = innerMap.getCenter();
     });
 
-    await refreshToken();
-
     inputElement.addEventListener('input', makeAutocompleteRequest);
 }
 
