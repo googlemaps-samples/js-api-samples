@@ -14,9 +14,7 @@ async function initMap() {
 
   let innerMap = mapElement.innerMap;
 
-  google.maps.event.addListenerOnce(innerMap, "idle", () => {
-    innerMap.data.loadGeoJson("google.json");
-  });
+  innerMap.data.loadGeoJson("google.json");
 }
 
 initMap();
