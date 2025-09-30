@@ -1,4 +1,9 @@
-// [START maps_react_places_ui_kit_search_nearby]
+/*
+ * @license
+ * Copyright 2025 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+{/* [START maps_react_places_ui_kit_search_nearby] */}
 import React, {useState, useEffect, useRef, type RefObject} from 'react';
 import {createRoot} from 'react-dom/client';
 import {
@@ -71,7 +76,7 @@ const PlacesSearchLayout = () => {
 };
 
 interface PlaceSearchControllerProps {
-    placeSearchRef: RefObject<HTMLDivElement>;
+    placeSearchRef: RefObject<HTMLDivElement | null>;
     selectedType: string;
     setPlaces: (places: any[]) => void;
     setSelectedPlace: (place: any | null) => void;
@@ -204,4 +209,4 @@ root.render(
     <App />
   </React.StrictMode>
 );
-// [END maps_react_places_ui_kit_search_nearby]
+{/* [END maps_react_places_ui_kit_search_nearby] */}
