@@ -2,4 +2,4 @@
  * @license
  * Copyright 2019 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
- */async function c(){await google.maps.importLibrary("maps");let r=document.querySelector("gmp-map").innerMap;google.maps.event.addListenerOnce(r,"idle",()=>{r.data.loadGeoJson("google.json")})}c();
+ */async function c(){await google.maps.importLibrary("maps"),document.querySelector("gmp-map").innerMap.data.loadGeoJson("google.json")}c();
