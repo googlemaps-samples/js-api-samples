@@ -6,6 +6,7 @@
 
 // [START maps_layer_data_quakes_red]
 let innerMap;
+let earthquakeData;
 
 async function initMap() {
   (await google.maps.importLibrary("maps")) as google.maps.MapsLibrary;
@@ -16,17 +17,9 @@ async function initMap() {
 
   innerMap = mapElement.innerMap;
 
-  // Get the earthquake data (JSONP format)
-  // This feed is a copy from the USGS feed, you can find the originals here:
-  //   http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
-  const script = document.createElement("script");
-
-  script.setAttribute(
-    "src",
-    "quakes.geo.json"
-  );
-  
-  document.getElementsByTagName("head")[0].appendChild(script);
+  if (earthquakeData) {
+    innerMap.data.addGeoJson(earthquakeData);
+  }
 
   // Add a basic style.
   innerMap.data.setStyle((feature) => {
@@ -45,7 +38,11 @@ async function initMap() {
 
 // Defines the callback function referenced in the jsonp file.
 function eqfeed_callback(data: any) {
-  innerMap.data.addGeoJson(data);
+  if (innerMap) {
+    innerMap.data.addGeoJson(data);
+  } else {
+    earthquakeData = data;
+  }
 }
 
 window.eqfeed_callback = eqfeed_callback;
