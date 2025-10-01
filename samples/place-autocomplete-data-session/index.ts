@@ -7,7 +7,7 @@
 // [START maps_place_autocomplete_data_session]
 const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
 let innerMap: google.maps.Map;
-let marker: google.maps.marker.AdvancedMarkerElement | undefined;
+let marker: google.maps.marker.AdvancedMarkerElement;
 let titleElement = document.querySelector('.title') as HTMLElement;
 let resultsContainerElement = document.querySelector('.results') as HTMLElement;
 let inputElement = document.querySelector('input') as HTMLInputElement;
