@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "vite",
-    "build": "tsc && vite build",
-    "test": "tsc",
+    "build": "tsc && bash ../react-docs.sh react-ui-kit-place-details && npm run build:vite --workspace=. && bash ../dist.sh react-ui-kit-place-details",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
     "preview": "vite preview"
   },
   "dependencies": {
