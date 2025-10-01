@@ -23,15 +23,21 @@ async function initMap() {
 }
 
 // Defines the callback function referenced in the jsonp file.
-function eqfeed_callback(data: any) {
+window.eqfeed_callback = function (data: any) {
   if (innerMap) {
     innerMap.data.addGeoJson(data);
   } else {
     earthquakeData = data;
   }
-}
-
-window.eqfeed_callback = eqfeed_callback;
+};
 
 initMap();
+
+declare global {
+  interface Window {
+    eqfeed_callback: (results: any) => void;
+  }
+}
+
+export {};
 // [END maps_layer_data_quakes_simple]
