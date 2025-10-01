@@ -17,27 +17,24 @@ async function initMap() {
 
   innerMap = mapElement.innerMap;
 
-  if (earthquakeData) {
-    innerMap.data.addGeoJson(earthquakeData);
-  }
+    // Get the earthquake data (JSONP format)
+  // This feed is a copy from the USGS feed, you can find the originals here:
+  //   http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
+  const script = document.createElement("script");
+
+  script.setAttribute(
+    "src",
+    "quakes.geo.json"
+  );
+
+  document.getElementsByTagName("head")[0].appendChild(script);
 }
 
 // Defines the callback function referenced in the jsonp file.
-window.eqfeed_callback = function (data: any) {
-  if (innerMap) {
-    innerMap.data.addGeoJson(data);
-  } else {
-    earthquakeData = data;
-  }
-};
-
-initMap();
-
-declare global {
-  interface Window {
-    eqfeed_callback: (results: any) => void;
-  }
+function eqfeed_callback(data: any) {
+  innerMap.data.addGeoJson(data);
 }
 
-export {};
+window.eqfeed_callback = eqfeed_callback;
+initMap();
 // [END maps_layer_data_quakes_simple]
