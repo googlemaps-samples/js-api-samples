@@ -27,7 +27,7 @@ const request: google.maps.places.AutocompleteRequest = {
     ],
 }
 
-async function initMap() {
+async function init() {
     await google.maps.importLibrary('maps');
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
@@ -45,15 +45,13 @@ async function initMap() {
 
 async function makeAutocompleteRequest(inputEvent) {
     // To avoid race conditions, store the request ID and compare after the request.
-    const requestId = ++newestRequestId
+    const requestId = ++newestRequestId;
 
     const { AutocompleteSuggestion } = (await google.maps.importLibrary(
         'places'
     )) as google.maps.PlacesLibrary;
 
-    // Reset elements and exit if an empty string is received.
-    if (!inputEvent.target ||
-        inputEvent.target.value === '') {
+    if (!inputEvent.target?.value) {
         titleElement.textContent = '';
         resultsContainerElement.replaceChildren();
         return;
@@ -78,21 +76,21 @@ async function makeAutocompleteRequest(inputEvent) {
         const placePrediction = suggestion.placePrediction;
 
         if (!placePrediction) {
-            continue
+            continue;
         }
 
         // Create a link for the place, add an event handler to fetch the place.
         // We are using a button element to take advantage of its a11y capabilities.
-        const link = document.createElement('button');
-        link.addEventListener('click', () => {
+        const placeButton = document.createElement('button');
+        placeButton.addEventListener('click', () => {
             onPlaceSelected(placePrediction.toPlace());
         });
-        link.textContent = placePrediction.text.toString();
-        link.classList.add('link-button');
+        placeButton.textContent = placePrediction.text.toString();
+        placeButton.classList.add('place-button');
 
         // Create a new list item element.
         const li = document.createElement('li');
-        li.appendChild(link);
+        li.appendChild(placeButton);
         resultsContainerElement.appendChild(li);
     }
 }
@@ -115,7 +113,7 @@ async function onPlaceSelected(place: google.maps.places.Place) {
 
     // Remove the previous marker, if it exists.
     if (marker) {
-        marker.remove();
+        marker.map = null;
     }
 
     // Create a new marker.
@@ -146,5 +144,5 @@ async function refreshToken() {
     tokenStatusElement.textContent = `Session token count: ${tokenCount}`;
 }
 
-initMap();
+init();
 // [END maps_place_autocomplete_data_session]
