@@ -2,4 +2,4 @@
 * @license
 * Copyright 2025 Google LLC. All Rights Reserved.
 * SPDX-License-Identifier: Apache-2.0
-*/async function s(){const{Map3DElement:a,Marker3DInteractiveElement:n}=await google.maps.importLibrary("maps3d"),o={center:{lat:39.1178,lng:-106.4452,altitude:4395.4952},range:1500,tilt:74,heading:0},r=new a({...o,mode:"SATELLITE"}),e=new n({position:{lat:39.1178,lng:-106.4452,altitude:100},altitudeMode:"RELATIVE_TO_MESH",extruded:!0,label:"Mount Elbert"});e.addEventListener("gmp-click",t=>{r.flyCameraAround({camera:o,durationMillis:5e4,rounds:1})}),r.append(e),document.body.append(r)}s();
+*/async function s(){const{Map3DElement:a,Marker3DInteractiveElement:n}=await google.maps.importLibrary("maps3d"),o={center:{lat:39.1178,lng:-106.4452,altitude:4395.4952},range:1500,tilt:74,heading:0},r=new a({...o,mode:"SATELLITE"}),e=new n({position:{lat:39.1178,lng:-106.4452,altitude:100},altitudeMode:"RELATIVE_TO_MESH",extruded:!0,label:"Mount Elbert"});e.addEventListener("gmp-click",t=>{r.flyCameraAround({camera:o,durationMillis:5e4,repeatCount:1})}),r.append(e),document.body.append(r)}s();

@@ -29,7 +29,7 @@ async function initMap() {
         map.flyCameraAround({
             camera: originalCamera,
             durationMillis: 50000,
-            rounds: 1
+            repeatCount: 1
         });
     });
     map.append(interactiveMarker);
