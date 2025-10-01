@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/layer-data-quakes-simple",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh layer-data-quakes-simple && bash ../app.sh layer-data-quakes-simple && bash ../docs.sh layer-data-quakes-simple && npm run build:vite --workspace=. && bash ../dist.sh layer-data-quakes-simple",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
