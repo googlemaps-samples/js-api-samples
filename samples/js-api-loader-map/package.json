@@ -5,8 +5,8 @@
   "scripts": {
     "build": "tsc && parcel build index.html",
     "test": "tsc",
-    "start": "parcel index.html",
-    "preview": "parcel index.html --port 5173"
+    "start": "parcel index.html --port 5173",
+    "preview": "npm run start"
   },
   "keywords": [],
   "author": "",

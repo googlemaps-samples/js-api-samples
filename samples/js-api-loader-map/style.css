@@ -1,3 +1,9 @@
+/**
+ * @license
+ * Copyright 2019 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/* [START maps_js_api_loader_map] */
 html, body {
   height: calc(100vh - 100px);
   padding: 0;
@@ -17,3 +23,4 @@ h1{
     font-size: 1.2em;
   }
 }
+/* [START maps_js_api_loader_map] */
