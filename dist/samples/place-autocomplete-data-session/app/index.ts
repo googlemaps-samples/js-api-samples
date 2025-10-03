@@ -5,52 +5,69 @@
  */
 
 // [START maps_place_autocomplete_data_session]
-let titleElement;
-let resultsContainerElement;
-let inputElement;
-
+const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+let innerMap: google.maps.Map;
+let marker: google.maps.marker.AdvancedMarkerElement;
+let titleElement = document.querySelector('.title') as HTMLElement;
+let resultsContainerElement = document.querySelector('.results') as HTMLElement;
+let inputElement = document.querySelector('input') as HTMLInputElement;
+let tokenStatusElement = document.querySelector('.token-status') as HTMLElement;
 let newestRequestId = 0;
+let tokenCount = 0;
 
-// Add an initial request body.
-const request = {
+// Create an initial request body.
+const request: google.maps.places.AutocompleteRequest = {
     input: '',
-    locationRestriction: { west: -122.44, north: 37.8, east: -122.39, south: 37.78 },
-    origin: { lat: 37.7893, lng: -122.4039 },
-    includedPrimaryTypes: ['restaurant'],
-    language: 'en-US',
-    region: 'us',
-};
+    includedPrimaryTypes: [
+        'restaurant',
+        'cafe',
+        'museum',
+        'park',
+        'botanical_garden',
+    ],
+}
 
-function init() {
-    titleElement = document.getElementById('title');
-    resultsContainerElement = document.getElementById('results');
-    inputElement = document.querySelector('input');
+async function init() {
+    await google.maps.importLibrary('maps');
+    innerMap = mapElement.innerMap;
+    innerMap.setOptions({
+        mapTypeControl: false,
+    });
+
+    // Update request center and bounds when the map bounds change.
+    google.maps.event.addListener(innerMap, 'bounds_changed', async () => {
+        request.locationRestriction = innerMap.getBounds();
+        request.origin = innerMap.getCenter();
+    });
+
     inputElement.addEventListener('input', makeAutocompleteRequest);
-    refreshToken(request);
 }
 
 async function makeAutocompleteRequest(inputEvent) {
-    // Reset elements and exit if an empty string is received.
-    if (inputEvent.target.value == '') {
-        titleElement.innerText = '';
+    // To avoid race conditions, store the request ID and compare after the request.
+    const requestId = ++newestRequestId;
+
+    const { AutocompleteSuggestion } = (await google.maps.importLibrary(
+        'places'
+    )) as google.maps.PlacesLibrary;
+
+    if (!inputEvent.target?.value) {
+        titleElement.textContent = '';
         resultsContainerElement.replaceChildren();
         return;
     }
 
     // Add the latest char sequence to the request.
-    request.input = inputEvent.target.value;
-
-    // To avoid race conditions, store the request ID and compare after the request.
-    const requestId = ++newestRequestId;
+    request.input = (inputEvent.target as HTMLInputElement).value;
 
     // Fetch autocomplete suggestions and show them in a list.
-    // @ts-ignore
-    const { suggestions } = await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
+    const { suggestions } =
+        await AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
 
     // If the request has been superseded by a newer request, do not render the output.
     if (requestId !== newestRequestId) return;
 
-    titleElement.innerText = `Query predictions for "${request.input}"`;
+    titleElement.innerText = `Place predictions for "${request.input}"`;
 
     // Clear the list first.
     resultsContainerElement.replaceChildren();
@@ -58,44 +75,74 @@ async function makeAutocompleteRequest(inputEvent) {
     for (const suggestion of suggestions) {
         const placePrediction = suggestion.placePrediction;
 
+        if (!placePrediction) {
+            continue;
+        }
+
         // Create a link for the place, add an event handler to fetch the place.
-        const a = document.createElement('a');
-        a.addEventListener('click', () => {
-            onPlaceSelected(placePrediction!.toPlace());
+        // We are using a button element to take advantage of its a11y capabilities.
+        const placeButton = document.createElement('button');
+        placeButton.addEventListener('click', () => {
+            onPlaceSelected(placePrediction.toPlace());
         });
-        a.innerText = placePrediction!.text.toString();
+        placeButton.textContent = placePrediction.text.toString();
+        placeButton.classList.add('place-button');
 
         // Create a new list item element.
         const li = document.createElement('li');
-        li.appendChild(a);
+        li.appendChild(placeButton);
         resultsContainerElement.appendChild(li);
     }
 }
 
 // Event handler for clicking on a suggested place.
-async function onPlaceSelected(place) {
+async function onPlaceSelected(place: google.maps.places.Place) {
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
+        'marker'
+    )) as google.maps.MarkerLibrary;
+
     await place.fetchFields({
-        fields: ['displayName', 'formattedAddress'],
+        fields: ['displayName', 'formattedAddress', 'location'],
     });
-    const placeText = document.createTextNode(`${place.displayName}: ${place.formattedAddress}`);
-    resultsContainerElement.replaceChildren(placeText);
-    titleElement.innerText = 'Selected Place:';
+
+    resultsContainerElement.textContent = `${place.displayName}: ${place.formattedAddress}`;
+    titleElement.textContent = 'Selected Place:';
     inputElement.value = '';
-    refreshToken(request);
+
+    await refreshToken();
+
+    // Remove the previous marker, if it exists.
+    if (marker) {
+        marker.remove();
+    }
+
+    // Create a new marker.
+    marker = new AdvancedMarkerElement({
+        map: innerMap,
+        position: place.location,
+        title: place.displayName,
+    })
+
+    // Center the map on the selected place.
+    if (place.location) {
+        innerMap.setCenter(place.location);
+        innerMap.setZoom(15);
+    }
 }
 
 // Helper function to refresh the session token.
-function refreshToken(request) {
+async function refreshToken() {
+    const { AutocompleteSessionToken } = (await google.maps.importLibrary(
+        'places'
+    )) as google.maps.PlacesLibrary;
+
+    // Increment the token counter.
+    tokenCount++;
+
     // Create a new session token and add it to the request.
-    request.sessionToken = new google.maps.places.AutocompleteSessionToken();
+    request.sessionToken = new AutocompleteSessionToken();
+    tokenStatusElement.textContent = `Session token count: ${tokenCount}`;
 }
 
-declare global {
-    interface Window {
-      init: () => void;
-    }
-  }
-  window.init = init;
+init();
 // [END maps_place_autocomplete_data_session]
-void 0; // No-op to preserve the last region tag comment.
-export { };
