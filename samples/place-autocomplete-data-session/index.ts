@@ -113,7 +113,7 @@ async function onPlaceSelected(place: google.maps.places.Place) {
 
     // Remove the previous marker, if it exists.
     if (marker) {
-        marker.map = null;
+        marker.remove();
     }
 
     // Create a new marker.
