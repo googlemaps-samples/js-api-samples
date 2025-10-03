@@ -23,18 +23,16 @@ body {
 }
 
 .place-button {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
+  height: 3rem;
+  width: 100%;
+  background-color: transparent;
   text-align: left;
-  color: #007bff;
+  border: none;
+  cursor: pointer;
 }
-.place-button:hover {
-  color: #0056b3;
-}
+
 .place-button:focus-visible {
   outline: 2px solid #0056b3;
-  outline-offset: 2px;
   border-radius: 2px;
 }
 
@@ -67,8 +65,12 @@ body {
   padding: 0;
 }
 
-.results li {
-  padding: 0.5rem 0;
+.results li:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+}
+
+.results li:hover {
+  background-color: #eee;
 }
 
 /* [END maps_place_autocomplete_data_session] */
