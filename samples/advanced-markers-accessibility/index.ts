@@ -53,11 +53,12 @@ async function initMap() {
         // [START maps_advanced_markers_accessibility_marker]
         const marker = new AdvancedMarkerElement({
             position,
-            map: innerMap,
             title: `${i + 1}. ${title}`,
             content: pin.element,
             gmpClickable: true,
         });
+
+        mapElement.append(marker);
         // [END maps_advanced_markers_accessibility_marker]
         // [START maps_advanced_markers_accessibility_event_listener]
         // Add a click listener for each marker, and set up the info window.
