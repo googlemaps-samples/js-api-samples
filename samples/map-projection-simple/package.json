@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/map-projection-simple",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh map-projection-simple && bash ../app.sh map-projection-simple && bash ../docs.sh map-projection-simple && npm run build:vite --workspace=. && bash ../dist.sh map-projection-simple",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
