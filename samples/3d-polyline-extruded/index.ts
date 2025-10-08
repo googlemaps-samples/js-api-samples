@@ -1,21 +1,25 @@
 /*
-* @license
-* Copyright 2025 Google LLC. All Rights Reserved.
-* SPDX-License-Identifier: Apache-2.0
-*/
+ * @license
+ * Copyright 2025 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 // @ts-nocheck
 // [START maps_3d_polyline_extruded]
-let map;
+let map
 async function init() {
-    const { Map3DElement, MapMode, AltitudeMode, Polyline3DElement } = await google.maps.importLibrary("maps3d");
+    const { Map3DElement, MapMode, AltitudeMode, Polyline3DElement } =
+        await google.maps.importLibrary('maps3d')
 
     map = new Map3DElement({
-        center: { lat: 37.7927, lng: -122.4020, altitude: 65.93 }, range: 3362.87, tilt: 64.01, heading: 25.00,
+        center: { lat: 37.7927, lng: -122.402, altitude: 65.93 },
+        range: 3362.87,
+        tilt: 64.01,
+        heading: 25.0,
         mode: MapMode.SATELLITE,
-    });
+    })
 
-    document.body.append(map);
+    document.body.append(map)
 
     const polyline = new Polyline3DElement({
         path: [
@@ -29,16 +33,16 @@ async function init() {
             { lat: 37.78861484290265, lng: -122.4019489189814, altitude: 100 },
             { lat: 37.78618687561075, lng: -122.398969592545, altitude: 100 },
             { lat: 37.7892310309145, lng: -122.3951458683092, altitude: 100 },
-            { lat: 37.7916358762409, lng: -122.3981969390652, altitude: 100 }
+            { lat: 37.7916358762409, lng: -122.3981969390652, altitude: 100 },
         ],
         strokeColor: '#0000FF80',
         strokeWidth: 10,
         altitudeMode: AltitudeMode.RELATIVE_TO_GROUND, // Place it on the ground (as it has no altitude it will just be at ground height).
-        extruded: true
-    });
+        extruded: true,
+    })
 
-    map.append(polyline);
+    map.append(polyline)
 }
 
-init();
+init()
 // [END maps_3d_polyline_extruded]
