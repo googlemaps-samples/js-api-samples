@@ -15,7 +15,7 @@ async function init() {
     });
     document.body.append(map);
     const polyline = new Polyline3DElement({
-        coordinates: [
+        path: [
             { lat: 37.80515638571346, lng: -122.4032569467164 },
             { lat: 37.80337073509504, lng: -122.4012878349353 },
             { lat: 37.79925208843463, lng: -122.3976697250461 },

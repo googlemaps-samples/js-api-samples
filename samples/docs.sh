@@ -26,3 +26,8 @@ cp "${SCRIPT_DIR}/${NAME}/index.ts" "${DOCS_DIR}/index.ts"
 cp "${SCRIPT_DIR}/${NAME}/index.js" "${DOCS_DIR}/index.js"
 cp "${SCRIPT_DIR}/${NAME}/index.html" "${DOCS_DIR}/index.html"
 cp "${SCRIPT_DIR}/${NAME}/style.css" "${DOCS_DIR}/style.css"
+
+# Copy the data folder if one is found.
+if [ -d "public" ] && [ "$(ls -A public)" ]; then
+  cp -r public/* "${DOCS_DIR}/"
+fi
