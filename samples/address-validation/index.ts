@@ -47,8 +47,7 @@ async function handleValidationSubmit(event) {
     // Validate the address
     try {
         //@ts-ignore
-        const result =
-            await google.maps.addressValidation.AddressValidation.fetchAddressValidation(
+        const result = await google.maps.addressValidation.AddressValidation.fetchAddressValidation(
                 {
                     address: {
                         regionCode: regionSelect!.value.trim(),
