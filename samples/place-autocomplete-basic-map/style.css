@@ -6,23 +6,23 @@
 /* [START maps_place_autocomplete_basic_map] */
 html,
 body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 gmp-map {
-  height: 100%;
+    height: 100%;
 }
 
 gmp-basic-place-autocomplete {
-  position: absolute;
-  height: 30px;
-  width: 500px;
-  top: 10px;
-  left: 10px;
-  box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.2);
-  color-scheme: light;
-  border-radius: 10px;
+    position: absolute;
+    height: 30px;
+    width: 500px;
+    top: 10px;
+    left: 10px;
+    box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.2);
+    color-scheme: light;
+    border-radius: 10px;
 }
 /* [END maps_place_autocomplete_basic_map] */

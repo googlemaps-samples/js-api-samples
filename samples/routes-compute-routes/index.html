@@ -6,306 +6,582 @@
 -->
 <!-- [START maps_routes_compute_routes] -->
 <html>
+    <head>
+        <title>Get routes</title>
 
-  <head>
-    <title>Get routes</title>
+        <link rel="stylesheet" type="text/css" href="./style.css" />
+        <script type="module" src="./index.js"></script>
+    </head>
 
-    <link rel="stylesheet" type="text/css" href="./style.css" />
-    <script type="module" src="./index.js"></script>
-  </head>
+    <body>
+        <div class="main-content">
+            <div class="alert" id="alert">
+                <p>error</p>
+                <button class="button-secondary close">&times;</button>
+            </div>
+            <div class="control-panel">
+                <form id="compute-routes-form">
+                    <section>
+                        <h2>Input locations</h2>
+                        <div class="row">
+                            <div class="location-input-wrapper">
+                                <label class="text">Origin*</label>
+                                <div id="origin-input"></div>
+                            </div>
+                            <div class="heading-wrapper">
+                                <label for="heading_org" class="text"
+                                    >Heading</label
+                                >
+                                <input
+                                    type="text"
+                                    id="heading_org"
+                                    name="heading_org"
+                                    value=""
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="location-options-wrapper">
+                                <input
+                                    type="checkbox"
+                                    id="origin_stopover"
+                                    name="origin_stopover"
+                                />
+                                <label for="origin_stopover">Stopover</label>
+                                <input
+                                    type="checkbox"
+                                    id="side_of_road_org"
+                                    name="origin_side_of_road"
+                                />
+                                <label for="side_of_road_org"
+                                    >Side of Road</label
+                                >
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="location-input-wrapper">
+                                <label class="text">Destination*</label>
+                                <div id="destination-input"></div>
+                            </div>
+                            <div class="heading-wrapper">
+                                <label for="heading_des" class="text"
+                                    >Heading</label
+                                >
+                                <input
+                                    type="text"
+                                    id="heading_des"
+                                    name="heading_des"
+                                    value=""
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="location-options-wrapper">
+                                <input
+                                    type="checkbox"
+                                    id="destination_stopover"
+                                    name="destination_stopover"
+                                />
+                                <label for="destination_stopover"
+                                    >Stopover</label
+                                >
+                                <input
+                                    type="checkbox"
+                                    id="side_of_road_des"
+                                    name="destination_side_of_road"
+                                />
+                                <label for="side_of_road_des"
+                                    >Side of Road</label
+                                >
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <h2>Travel Mode</h2>
+                        <div class="row">
+                            <div class="travel-mode-wrapper">
+                                <select name="travel_mode" id="travel-mode">
+                                    <option value="DRIVING">Driving</option>
+                                    <option value="WALKING">Walking</option>
+                                    <option value="BICYCLING">Bicycling</option>
+                                    <option value="TWO_WHEELER">
+                                        Two Wheeler (two-wheeled motorized
+                                        vehicle)
+                                    </option>
+                                    <option value="TRANSIT">Transit</option>
+                                </select>
+                            </div>
+                        </div>
 
-  <body>
-    <div class="main-content">
-      <div class="alert" id="alert">
-        <p>error</p>
-        <button class="button-secondary close">&times;</button>
-      </div>
-      <div class="control-panel">
-        <form id="compute-routes-form">
-          <section>
-            <h2>Input locations</h2>
-            <div class="row">
-              <div class="location-input-wrapper">
-                <label class="text">Origin*</label>
-                <div id="origin-input"></div>
-              </div>
-              <div class="heading-wrapper">
-                <label for="heading_org" class="text">Heading</label>
-                <input type="text" id="heading_org" name="heading_org" value="" />
-              </div>
-            </div>
-            <div class="row">
-              <div class="location-options-wrapper">
-                <input type="checkbox" id="origin_stopover" name="origin_stopover" />
-                <label for="origin_stopover">Stopover</label>
-                <input type="checkbox" id="side_of_road_org" name="origin_side_of_road" />
-                <label for="side_of_road_org">Side of Road</label>
-              </div>
-            </div>
-            <hr />
-            <div class="row">
-              <div class="location-input-wrapper">
-                <label class="text">Destination*</label>
-                <div id="destination-input"></div>
-              </div>
-              <div class="heading-wrapper">
-                <label for="heading_des" class="text">Heading</label>
-                <input type="text" id="heading_des" name="heading_des" value="" />
-              </div>
-            </div>
-            <div class="row">
-              <div class="location-options-wrapper">
-                <input type="checkbox" id="destination_stopover" name="destination_stopover" />
-                <label for="destination_stopover">Stopover</label>
-                <input type="checkbox" id="side_of_road_des" name="destination_side_of_road" />
-                <label for="side_of_road_des">Side of Road</label>
-              </div>
-            </div>
-          </section>
-          <section>
-            <h2>Travel Mode</h2>
-            <div class="row">
-              <div class="travel-mode-wrapper">
-                <select name="travel_mode" id="travel-mode">
-                  <option value="DRIVING">Driving</option>
-                  <option value="WALKING">Walking</option>
-                  <option value="BICYCLING">Bicycling</option>
-                  <option value="TWO_WHEELER">Two Wheeler (two-wheeled motorized vehicle)</option>
-                  <option value="TRANSIT">Transit</option>
-                </select>
-              </div>
-            </div>
+                        <div
+                            class="row"
+                            id="transit-options"
+                            style="display: none"
+                        >
+                            <div class="transit-modes-wrapper">
+                                <h3>Transit Modes</h3>
+                                <ul id="transitModes">
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="bus"
+                                            value="BUS"
+                                            id="bus"
+                                            checked
+                                        />
+                                        <label for="bus">Bus</label>
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="subway"
+                                            value="SUBWAY"
+                                            id="subway"
+                                            checked
+                                        />
+                                        <label for="subway">Subway</label>
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="train"
+                                            value="TRAIN"
+                                            id="train"
+                                            checked
+                                        />
+                                        <label for="train">Train</label>
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="light_rail"
+                                            value="LIGHT_RAIL"
+                                            id="light_rail"
+                                            checked
+                                        />
+                                        <label for="light_rail"
+                                            >Light rail</label
+                                        >
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="transit-routing-preference-wrapper">
+                                <h3>Transit Routing Preference</h3>
+                                <select
+                                    name="transit_preference"
+                                    id="transitPreference"
+                                >
+                                    <option value=""></option>
+                                    <option value="LESS_WALKING">
+                                        Less walking
+                                    </option>
+                                    <option value="FEWER_TRANSFERS">
+                                        Fewer transfers
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <h2>Departure Time (Your local time)</h2>
+                        <p>
+                            Choose your <b>local time</b>. The selected time
+                            will be converted to <b>UTC format time</b>.
+                        </p>
+                        <p>
+                            If you set the departure time, the routing
+                            preference has to be either TRAFFIC_AWARE or
+                            TRAFFIC_AWARE_OPTIMAL. TRAFFIC_AWARE_OPTIMAL
+                            calculates best routes by factoring in real-time
+                            road conditions, including closures.
+                        </p>
+                        <div class="row">
+                            <div class="departure-time-wrapper">
+                                <input
+                                    type="datetime-local"
+                                    id="departure-time"
+                                    name="departure_time"
+                                />
+                                <p id="utc-output"></p>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <h2>Route Options</h2>
+                        <div class="row">
+                            <div class="route-options-wrapper">
+                                <div class="row">
+                                    <h3 class="route-option-name-wrapper">
+                                        Polyline Quality
+                                    </h3>
+                                    <select
+                                        class="route-option-input"
+                                        name="polyline_quality"
+                                        id="polyline_quality"
+                                    >
+                                        <option value=""></option>
+                                        <option value="HIGH_QUALITY">
+                                            High quality
+                                        </option>
+                                        <option value="OVERVIEW">
+                                            Overview
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <h3 class="route-option-name-wrapper">
+                                        Traffic Awareness
+                                    </h3>
+                                    <select
+                                        class="route-option-input"
+                                        name="routing_preference"
+                                        id="routing-preference"
+                                    >
+                                        <option value=""></option>
+                                        <option value="TRAFFIC_UNAWARE">
+                                            Traffic unaware
+                                        </option>
+                                        <option value="TRAFFIC_AWARE">
+                                            Traffic aware
+                                        </option>
+                                        <option value="TRAFFIC_AWARE_OPTIMAL">
+                                            Traffic aware optimal (best routes
+                                            with accurate ETA)
+                                        </option>
+                                    </select>
+                                </div>
 
-            <div class="row" id="transit-options" style="display: none">
-              <div class="transit-modes-wrapper">
-                <h3>Transit Modes</h3>
-                <ul id="transitModes">
-                  <li>
-                    <input type="checkbox" name="bus" value="BUS" id="bus" checked />
-                    <label for="bus">Bus</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="subway" value="SUBWAY" id="subway" checked />
-                    <label for="subway">Subway</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="train" value="TRAIN" id="train" checked />
-                    <label for="train">Train</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="light_rail" value="LIGHT_RAIL" id="light_rail" checked />
-                    <label for="light_rail">Light rail</label>
-                  </li>
-                </ul>
-              </div>
-              <div class="transit-routing-preference-wrapper">
-                <h3>Transit Routing Preference</h3>
-                <select name="transit_preference" id="transitPreference">
-                  <option value=""></option>
-                  <option value="LESS_WALKING">Less walking</option>
-                  <option value="FEWER_TRANSFERS">Fewer transfers</option>
-                </select>
-              </div>
-            </div>
-          </section>
-          <section>
-            <h2>Departure Time (Your local time)</h2>
-            <p>
-              Choose your <b>local time</b>. The selected time will be converted to
-              <b>UTC format time</b>.
-            </p>
-            <p>
-              If you set the departure time, the routing preference has to be either TRAFFIC_AWARE
-              or TRAFFIC_AWARE_OPTIMAL. TRAFFIC_AWARE_OPTIMAL calculates best routes by factoring in
-              real-time road conditions, including closures.
-            </p>
-            <div class="row">
-              <div class="departure-time-wrapper">
-                <input type="datetime-local" id="departure-time" name="departure_time" />
-                <p id="utc-output"></p>
-              </div>
-            </div>
-          </section>
-          <section>
-            <h2>Route Options</h2>
-            <div class="row">
-              <div class="route-options-wrapper">
-                <div class="row">
-                  <h3 class="route-option-name-wrapper">Polyline Quality</h3>
-                  <select class="route-option-input" name="polyline_quality" id="polyline_quality">
-                    <option value=""></option>
-                    <option value="HIGH_QUALITY">High quality</option>
-                    <option value="OVERVIEW">Overview</option>
-                  </select>
-                </div>
-                <div class="row">
-                  <h3 class="route-option-name-wrapper">Traffic Awareness</h3>
-                  <select class="route-option-input" name="routing_preference" id="routing-preference">
-                    <option value=""></option>
-                    <option value="TRAFFIC_UNAWARE">Traffic unaware</option>
-                    <option value="TRAFFIC_AWARE">Traffic aware</option>
-                    <option value="TRAFFIC_AWARE_OPTIMAL">
-                      Traffic aware optimal (best routes with accurate ETA)
-                    </option>
-                  </select>
-                </div>
+                                <div class="row">
+                                    <h3 class="route-option-name-wrapper">
+                                        Traffic Aware Polyline
+                                    </h3>
+                                    <div class="route-option-input">
+                                        <input
+                                            type="checkbox"
+                                            name="traffic_aware_polyline"
+                                            id="traffic-aware-polyline"
+                                            disabled
+                                        />
+                                        <label
+                                            for="traffic-aware-polyline"
+                                        ></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="route-options-wrapper">
+                                <h3>Route Modifiers</h3>
+                                <ul>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="avoid_tolls"
+                                            value="avoid_tolls"
+                                            id="avoid_tolls"
+                                        />
+                                        <label for="avoid_tolls"
+                                            >Avoid tolls</label
+                                        >
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="avoid_highways"
+                                            value="avoid_highways"
+                                            id="avoid_highways"
+                                        />
+                                        <label for="avoid_highways"
+                                            >Avoid highways</label
+                                        >
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="avoid_ferries"
+                                            value="avoid_ferries"
+                                            id="avoid_ferries"
+                                        />
+                                        <label for="avoid_ferries"
+                                            >Avoid ferries</label
+                                        >
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="avoid_indoor"
+                                            value="avoid_indoor"
+                                            id="avoid_indoor"
+                                        />
+                                        <label for="avoid_indoor"
+                                            >Avoid indoor</label
+                                        >
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
 
-                <div class="row">
-                  <h3 class="route-option-name-wrapper">Traffic Aware Polyline</h3>
-                  <div class="route-option-input">
-                    <input type="checkbox" name="traffic_aware_polyline" id="traffic-aware-polyline" disabled />
-                    <label for="traffic-aware-polyline"></label>
-                  </div>
-                </div>
-              </div>
-              <div class="route-options-wrapper">
-                <h3>Route Modifiers</h3>
-                <ul>
-                  <li>
-                    <input type="checkbox" name="avoid_tolls" value="avoid_tolls" id="avoid_tolls" />
-                    <label for="avoid_tolls">Avoid tolls</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="avoid_highways" value="avoid_highways" id="avoid_highways" />
-                    <label for="avoid_highways">Avoid highways</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="avoid_ferries" value="avoid_ferries" id="avoid_ferries" />
-                    <label for="avoid_ferries">Avoid ferries</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="avoid_indoor" value="avoid_indoor" id="avoid_indoor" />
-                    <label for="avoid_indoor">Avoid indoor</label>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </section>
+                    <section>
+                        <h2>Reference routes</h2>
+                        <div class="row">
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    name="compute_alternative_routes"
+                                    id="compute_alternative_routes"
+                                />
+                                <label for="compute_alternative_routes"
+                                    >Alternative Routes</label
+                                >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    name="shorter_distance"
+                                    id="shorter_distance"
+                                />
+                                <label for="shorter_distance"
+                                    >Shorter Distance Routes</label
+                                >
+                            </div>
+                        </div>
 
-          <section>
-            <h2>Reference routes</h2>
-            <div class="row">
-              <div>
-                <input type="checkbox" name="compute_alternative_routes" id="compute_alternative_routes" />
-                <label for="compute_alternative_routes">Alternative Routes</label>
-              </div>
-            </div>
-            <div class="row">
-              <div>
-                <input type="checkbox" name="shorter_distance" id="shorter_distance" />
-                <label for="shorter_distance">Shorter Distance Routes</label>
-              </div>
-            </div>
+                        <hr />
 
-            <hr />
+                        <div class="row">
+                            <div class="eco-friendly-options-wrapper">
+                                <div>
+                                    <input
+                                        type="checkbox"
+                                        name="eco_routes"
+                                        id="eco-routes"
+                                    />
+                                    <label for="eco-routes"
+                                        >Eco-friendly Routes</label
+                                    >
+                                </div>
+                            </div>
+                            <div
+                                class="eco-friendly-options-wrapper"
+                                id="enginetype"
+                            >
+                                <h3>Emission Type</h3>
+                                <select
+                                    name="emission_type"
+                                    id="emission-type"
+                                    disabled
+                                >
+                                    <option value="GASOLINE">Gasoline</option>
+                                    <option value="ELECTRIC">Electric</option>
+                                    <option value="HYBRID">Hybrid</option>
+                                    <option value="DIESEL">Diesel</option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
 
-            <div class="row">
-              <div class="eco-friendly-options-wrapper">
-                <div>
-                  <input type="checkbox" name="eco_routes" id="eco-routes" />
-                  <label for="eco-routes">Eco-friendly Routes</label>
-                </div>
-              </div>
-              <div class="eco-friendly-options-wrapper" id="enginetype">
-                <h3>Emission Type</h3>
-                <select name="emission_type" id="emission-type" disabled>
-                  <option value="GASOLINE">Gasoline</option>
-                  <option value="ELECTRIC">Electric</option>
-                  <option value="HYBRID">Hybrid</option>
-                  <option value="DIESEL">Diesel</option>
-                </select>
-              </div>
-            </div>
-          </section>
+                    <section>
+                        <h2>Fields</h2>
+                        <div class="row" id="field-mask">
+                            <div>
+                                <h3>Fields</h3>
+                                <ul id="fields">
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="route_labels"
+                                            value="routeLabels"
+                                            id="route_labels"
+                                            checked
+                                            disabled
+                                        />
+                                        <label for="route_labels"
+                                            >routeLabels</label
+                                        >
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="legs"
+                                            value="legs"
+                                            id="legs"
+                                            checked
+                                        />
+                                        <label for="legs">legs</label>
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="distance_meters"
+                                            value="distanceMeters"
+                                            id="distance_meters"
+                                        />
+                                        <label for="distance_meters"
+                                            >distanceMeters</label
+                                        >
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="duration_millis"
+                                            value="durationMillis"
+                                            id="duration_millis"
+                                        />
+                                        <label for="duration_millis"
+                                            >durationMillis</label
+                                        >
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="static_duration_millis"
+                                            value="staticDurationMillis"
+                                            id="static_duration_millis"
+                                        />
+                                        <label for="static_duration_millis"
+                                            >staticDurationMillis</label
+                                        >
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="path"
+                                            value="path"
+                                            id="path"
+                                            checked
+                                            disabled
+                                        />
+                                        <label for="path">path</label>
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="polyline_details"
+                                            value="polylineDetails"
+                                            id="polyline_details"
+                                        />
+                                        <label for="polyline_details"
+                                            >polylineDetails</label
+                                        >
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="description"
+                                            value="description"
+                                            id="description"
+                                        />
+                                        <label for="description"
+                                            >description</label
+                                        >
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="warnings"
+                                            value="warnings"
+                                            id="warnings"
+                                        />
+                                        <label for="warnings">warnings</label>
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="viewport"
+                                            value="viewport"
+                                            id="viewport"
+                                            checked
+                                            disabled
+                                        />
+                                        <label for="viewport">viewport</label>
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="travel_advisory"
+                                            value="travelAdvisory"
+                                            id="travel_advisory"
+                                        />
+                                        <label for="travel_advisory"
+                                            >travelAdvisory</label
+                                        >
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="optimized_intermediate_waypoint_indices"
+                                            value="optimizedIntermediateWaypointIndices"
+                                            id="optimized_intermediate_waypoint_indices"
+                                        />
+                                        <label
+                                            for="optimized_intermediate_waypoint_indices"
+                                            >optimizedIntermediateWaypointIndices</label
+                                        >
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="localized_values"
+                                            value="localizedValues"
+                                            id="localized_values"
+                                            checked
+                                            disabled
+                                        />
+                                        <label for="localized_values"
+                                            >localizedValues</label
+                                        >
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="route_token"
+                                            value="routeToken"
+                                            id="route_token"
+                                        />
+                                        <label for="route_token"
+                                            >routeToken</label
+                                        >
+                                    </li>
+                                    <li>
+                                        <input
+                                            type="checkbox"
+                                            name="speed_paths"
+                                            value="speedPaths"
+                                            id="speed_paths"
+                                        />
+                                        <label for="speed_paths"
+                                            >speedPaths</label
+                                        >
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
 
-          <section>
-            <h2>Fields</h2>
-            <div class="row" id="field-mask">
-              <div>
-                <h3>Fields</h3>
-                <ul id="fields">
-                  <li>
-                    <input type="checkbox" name="route_labels" value="routeLabels" id="route_labels" checked disabled />
-                    <label for="route_labels">routeLabels</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="legs" value="legs" id="legs" checked />
-                    <label for="legs">legs</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="distance_meters" value="distanceMeters" id="distance_meters" />
-                    <label for="distance_meters">distanceMeters</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="duration_millis" value="durationMillis" id="duration_millis" />
-                    <label for="duration_millis">durationMillis</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="static_duration_millis" value="staticDurationMillis"
-                      id="static_duration_millis" />
-                    <label for="static_duration_millis">staticDurationMillis</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="path" value="path" id="path" checked disabled />
-                    <label for="path">path</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="polyline_details" value="polylineDetails" id="polyline_details" />
-                    <label for="polyline_details">polylineDetails</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="description" value="description" id="description" />
-                    <label for="description">description</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="warnings" value="warnings" id="warnings" />
-                    <label for="warnings">warnings</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="viewport" value="viewport" id="viewport" checked disabled />
-                    <label for="viewport">viewport</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="travel_advisory" value="travelAdvisory" id="travel_advisory" />
-                    <label for="travel_advisory">travelAdvisory</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="optimized_intermediate_waypoint_indices"
-                      value="optimizedIntermediateWaypointIndices" id="optimized_intermediate_waypoint_indices" />
-                    <label for="optimized_intermediate_waypoint_indices">optimizedIntermediateWaypointIndices</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="localized_values" value="localizedValues" id="localized_values" checked
-                      disabled />
-                    <label for="localized_values">localizedValues</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="route_token" value="routeToken" id="route_token" />
-                    <label for="route_token">routeToken</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="speed_paths" value="speedPaths" id="speed_paths" />
-                    <label for="speed_paths">speedPaths</label>
-                  </li>
-                </ul>
-              </div>
+                    <section>
+                        <div class="row">
+                            <button class="button-primary" type="submit">
+                                Get routes
+                            </button>
+                        </div>
+                    </section>
+                </form>
             </div>
-          </section>
-
-          <section>
-            <div class="row">
-              <button class="button-primary" type="submit">Get routes</button>
+            <div class="map-container">
+                <gmp-map
+                    id="map"
+                    class="map"
+                    center="-34.397, 150.644"
+                    zoom="4"
+                    map-id="DEMO_MAP_ID"
+                ></gmp-map>
             </div>
-          </section>
-        </form>
-      </div>
-      <div class="map-container">
-        <gmp-map id="map" class="map" center="-34.397, 150.644" zoom="4" map-id="DEMO_MAP_ID"></gmp-map>
-      </div>
-    </div>
-    <!-- prettier-ignore -->
-    <script>(g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })
+        </div>
+        <!-- prettier-ignore -->
+        <script>(g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })
         ({ key: "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8", v: "beta" });</script>
-  </body>
+    </body>
 </html>
 <!-- [END maps_routes_compute_routes] -->
