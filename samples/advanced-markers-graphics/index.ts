@@ -30,7 +30,6 @@ async function initMap() {
         position: { lat: 37.42475, lng: -122.094 },
         content: pinSvg,
         title: 'A marker using a custom SVG image.',
-        //@ts-ignore
         anchorLeft: "-50%",
         anchorTop: "-50%",
     });
