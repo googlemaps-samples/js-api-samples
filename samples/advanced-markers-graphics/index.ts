@@ -90,7 +90,6 @@ async function initMap() {
         content: pinElement.element,
         title: place.displayName,
     });
-
     // [END maps_advanced_markers_graphics_place_icon]
 
     // [START maps_advanced_markers_graphics_fontawesome]
