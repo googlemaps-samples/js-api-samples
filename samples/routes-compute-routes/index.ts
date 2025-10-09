@@ -184,11 +184,9 @@ async function init() {
             requestedReferenceRoutes.push(ReferenceRoute.FUEL_EFFICIENT)
             extraComputations.push(
                 ComputeRoutesExtraComputation.FUEL_CONSUMPTION
-            )
-            ;//@ts-ignore
-            (
-                request.routeModifiers as google.maps.routes.RouteModifiers
-            ).vehicleInfo = {
+            );
+            //@ts-ignore
+            (request.routeModifiers as google.maps.routes.RouteModifiers).vehicleInfo = {
                 emissionType: formData.get(
                     'emission_type'
                     //@ts-ignore
@@ -511,9 +509,7 @@ async function init() {
             autocomplete.addEventListener(
                 'gmp-select',
                 //@ts-ignore
-                async (
-                    event: google.maps.places.PlacePredictionSelectEvent
-                ) => {
+                async ( event: google.maps.places.PlacePredictionSelectEvent) => {
                     autocompleteData.predictionText =
                         event.placePrediction.text.text
 
