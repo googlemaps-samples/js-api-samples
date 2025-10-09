@@ -5,22 +5,24 @@
  */
 
 // [START maps_advanced_markers_draggable]
+const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+let innerMap;
+
  async function initMap() {
     // Request needed libraries.
     const { Map, InfoWindow } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
     
-    const map = new Map(document.getElementById('map') as HTMLElement, {
-        center: {lat: 37.39094933041195, lng: -122.02503913145092},
-        zoom: 14,
-        mapId: '4504f8b37365c3d0',
+    innerMap = mapElement.innerMap;
+    innerMap.setOptions({
+        mapTypeControl: false,
     });
 
     const infoWindow = new InfoWindow();
 
     // [START maps_advanced_markers_draggable_marker]
     const draggableMarker = new AdvancedMarkerElement({
-        map,
+        map: innerMap,
         position: {lat: 37.39094933041195, lng: -122.02503913145092},
         gmpDraggable: true,
         title: "This marker is draggable.",

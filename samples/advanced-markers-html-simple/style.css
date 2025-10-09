@@ -8,7 +8,7 @@
  * Always set the map height explicitly to define the size of the div element
  * that contains the map. 
  */
-#map {
+gmp-map {
   height: 100%;
 }
 
@@ -24,9 +24,9 @@ body {
 
 /* HTML marker styles */
 .price-tag {
-  background-color: #4285F4;
+  background-color: #4285f4;
   border-radius: 8px;
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 14px;
   padding: 10px 15px;
   position: relative;
@@ -43,7 +43,7 @@ body {
   height: 0;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-top: 8px solid #4285F4;
+  border-top: 8px solid #4285f4;
 }
 
 /* [END maps_advanced_markers_html_simple] */
