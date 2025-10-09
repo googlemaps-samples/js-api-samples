@@ -28,9 +28,7 @@ async function initMap(): Promise<void> {
     // [START maps_place_autocomplete_element_listener]
     // Add the gmp-placeselect listener, and display the results.
     //@ts-ignore
-    placeAutocomplete.addEventListener(
-        'gmp-select',
-        async ({ placePrediction }) => {
+    placeAutocomplete.addEventListener('gmp-select', async ({ placePrediction }) => {
             const place = placePrediction.toPlace()
             await place.fetchFields({
                 fields: ['displayName', 'formattedAddress', 'location'],
