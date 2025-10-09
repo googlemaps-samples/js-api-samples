@@ -25,7 +25,6 @@ async function initMap() {
     
     const pinSvg =
         parser.parseFromString(pinSvgString, 'image/svg+xml').documentElement;
-    
     const pinSvgMarkerView = new AdvancedMarkerElement({
         map,
         position: { lat: 37.42475, lng: -122.094 },
