@@ -6,8 +6,8 @@
 
 class SimpleWeatherWidget extends HTMLElement {
     constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
+        super()
+        this.attachShadow({ mode: 'open' })
         this.shadowRoot!.innerHTML = `
             <style>
                 :host {
@@ -153,86 +153,103 @@ class SimpleWeatherWidget extends HTMLElement {
                     <span id="rain-qpf"></span>
                 </div>
             </div>
-        `;
+        `
     }
 
     set data(weatherData: any) {
-        const iconElement = this.shadowRoot!.getElementById('condition-icon') as HTMLImageElement;
-        const temperatureElement = this.shadowRoot!.getElementById('temperature') as HTMLSpanElement;
-        const rainProbabilityElement = this.shadowRoot!.getElementById('rain-probability') as HTMLSpanElement;
-        const rainQpfElement = this.shadowRoot!.getElementById('rain-qpf') as HTMLSpanElement;
-        const rainDetailsElement = this.shadowRoot!.getElementById('rain-details') as HTMLDivElement;
-
+        const iconElement = this.shadowRoot!.getElementById(
+            'condition-icon'
+        ) as HTMLImageElement
+        const temperatureElement = this.shadowRoot!.getElementById(
+            'temperature'
+        ) as HTMLSpanElement
+        const rainProbabilityElement = this.shadowRoot!.getElementById(
+            'rain-probability'
+        ) as HTMLSpanElement
+        const rainQpfElement = this.shadowRoot!.getElementById(
+            'rain-qpf'
+        ) as HTMLSpanElement
+        const rainDetailsElement = this.shadowRoot!.getElementById(
+            'rain-details'
+        ) as HTMLDivElement
 
         if (!weatherData || weatherData.error) {
-            iconElement.style.display = 'none';
-            rainDetailsElement.style.display = 'none';
+            iconElement.style.display = 'none'
+            rainDetailsElement.style.display = 'none'
             if (weatherData && weatherData.error) {
-                 temperatureElement.textContent = weatherData.error;
-                 temperatureElement.classList.add('error-message'); // Add error class
-              } else {
-                 temperatureElement.textContent = 'N/A';
-                 temperatureElement.classList.remove('error-message'); // Remove error class
-              }
-            return;
+                temperatureElement.textContent = weatherData.error
+                temperatureElement.classList.add('error-message') // Add error class
+            } else {
+                temperatureElement.textContent = 'N/A'
+                temperatureElement.classList.remove('error-message') // Remove error class
+            }
+            return
         }
 
         // Check if the data is current conditions or forecast day structure
-        const isForecastDay = weatherData.daytimeForecast || weatherData.nighttimeForecast;
+        const isForecastDay =
+            weatherData.daytimeForecast || weatherData.nighttimeForecast
 
-        let temperature: number | undefined, iconBaseUri: string | undefined, rainProbability: number | undefined, rainQpf: number | undefined;
+        let temperature: number | undefined,
+            iconBaseUri: string | undefined,
+            rainProbability: number | undefined,
+            rainQpf: number | undefined
 
         if (isForecastDay) {
             // Data is a forecast day object
-            const conditions = weatherData;
-            temperature = conditions.maxTemperature?.degrees;
-            iconBaseUri = conditions.daytimeForecast?.weatherCondition?.iconBaseUri || conditions.nighttimeForecast?.weatherCondition?.iconBaseUri;
-            rainProbability = conditions.precipitation?.probability?.percent;
-            rainQpf = conditions.precipitation?.qpf?.quantity;
+            const conditions = weatherData
+            temperature = conditions.maxTemperature?.degrees
+            iconBaseUri =
+                conditions.daytimeForecast?.weatherCondition?.iconBaseUri ||
+                conditions.nighttimeForecast?.weatherCondition?.iconBaseUri
+            rainProbability = conditions.precipitation?.probability?.percent
+            rainQpf = conditions.precipitation?.qpf?.quantity
         } else {
             // Data is a current conditions object
-            const conditions = weatherData;
-            temperature = conditions.temperature?.degrees;
-            iconBaseUri = conditions.weatherCondition?.iconBaseUri;
-            rainProbability = conditions.precipitation?.probability?.percent;
+            const conditions = weatherData
+            temperature = conditions.temperature?.degrees
+            iconBaseUri = conditions.weatherCondition?.iconBaseUri
+            rainProbability = conditions.precipitation?.probability?.percent
             // For current conditions, prioritize qpf from history if available
-            rainQpf = conditions.currentConditionsHistory?.qpf?.quantity !== undefined ? conditions.currentConditionsHistory.qpf.quantity : conditions.precipitation?.qpf?.quantity;
+            rainQpf =
+                conditions.currentConditionsHistory?.qpf?.quantity !== undefined
+                    ? conditions.currentConditionsHistory.qpf.quantity
+                    : conditions.precipitation?.qpf?.quantity
         }
 
-        let iconSrc = ''; // Initialize iconSrc
+        let iconSrc = '' // Initialize iconSrc
 
         if (iconBaseUri) {
             // Use the full iconBaseUri and append .svg
-            iconSrc = `${iconBaseUri}.svg`;
+            iconSrc = `${iconBaseUri}.svg`
         } else {
-             // Fallback to a default local icon if iconBaseUri is not available
-             iconSrc = '/icons/cloud-cover-white.svg';
+            // Fallback to a default local icon if iconBaseUri is not available
+            iconSrc = '/icons/cloud-cover-white.svg'
         }
 
-        iconElement.style.display = 'none'; // Explicitly hide the icon before setting src
+        iconElement.style.display = 'none' // Explicitly hide the icon before setting src
         iconElement.onload = () => {
-            iconElement.style.display = 'inline-block'; // Show the icon after loading
-        };
+            iconElement.style.display = 'inline-block' // Show the icon after loading
+        }
         iconElement.onerror = () => {
-            console.error('Failed to load weather icon:', iconSrc);
-            iconElement.style.display = 'none'; // Hide the icon if loading fails
-        };
-        iconElement.src = iconSrc;
+            console.error('Failed to load weather icon:', iconSrc)
+            iconElement.style.display = 'none' // Hide the icon if loading fails
+        }
+        iconElement.src = iconSrc
 
+        temperatureElement.textContent = `${temperature !== undefined ? temperature.toFixed(0) : 'N/A'}°C` // Rounded temperature
+        temperatureElement.classList.remove('error-message') // Remove error class if data is valid
 
-        temperatureElement.textContent = `${temperature !== undefined ? temperature.toFixed(0) : 'N/A'}°C`; // Rounded temperature
-        temperatureElement.classList.remove('error-message'); // Remove error class if data is valid
-        
         if (rainProbability !== undefined && rainProbability !== null) {
-            rainProbabilityElement.textContent = `${rainProbability}%`;
+            rainProbabilityElement.textContent = `${rainProbability}%`
         } else {
-            rainProbabilityElement.textContent = '0%';
+            rainProbabilityElement.textContent = '0%'
         }
 
         if (rainQpf !== undefined && rainQpf !== null) {
-            rainQpfElement.textContent = `${rainQpf.toFixed(1)}mm`; // Rounded QPF to 1 decimal place
+            rainQpfElement.textContent = `${rainQpf.toFixed(1)}mm` // Rounded QPF to 1 decimal place
         } else {
-            rainQpfElement.textContent = '0.0mm'; // Display 0.0mm if data is not available
+            rainQpfElement.textContent = '0.0mm' // Display 0.0mm if data is not available
         }
     }
 
@@ -242,11 +259,11 @@ class SimpleWeatherWidget extends HTMLElement {
      */
     setMode(mode: 'light' | 'dark') {
         if (mode === 'dark') {
-            this.classList.add('dark-mode');
+            this.classList.add('dark-mode')
         } else {
-            this.classList.remove('dark-mode');
+            this.classList.remove('dark-mode')
         }
     }
 }
 
-customElements.define('simple-weather-widget', SimpleWeatherWidget);
+customElements.define('simple-weather-widget', SimpleWeatherWidget)
