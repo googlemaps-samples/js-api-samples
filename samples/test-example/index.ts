@@ -33,3 +33,7 @@ async function initMap(): Promise<void> {
 }
 initMap();
 // [END maps_test_example]
+
+/**
+ * Test comment. Let us pray together.
+ */
