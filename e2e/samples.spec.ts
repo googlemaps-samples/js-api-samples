@@ -21,11 +21,6 @@ import childProcess, { execSync } from 'child_process';
 
 const samplesDir = path.join(__dirname, '..', 'samples');
 
-// Add sample folders to this list to exclude them from the test run.
-const excludedFolders = [
-  'map-drawing-terradraw',
-];
-
 // Function to return all sample folders.
 const getAllSampleFolders = () => {
   return fs.readdirSync(samplesDir).filter((file) => {
@@ -101,9 +96,7 @@ const getChangedSampleFolders = (): string[] => {
 };
 
 // Get changed folders, filtering out excluded ones.
-const foldersToTest = getChangedSampleFolders().filter(
-  (folder) => !excludedFolders.includes(folder)
-);
+const foldersToTest = getChangedSampleFolders();
 
 if (foldersToTest.length === 0) {
   console.log("No sample folders found.");
