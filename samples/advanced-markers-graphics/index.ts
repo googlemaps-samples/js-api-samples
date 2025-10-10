@@ -30,6 +30,7 @@ async function initMap() {
         position: { lat: 37.42475, lng: -122.094 },
         content: pinSvg,
         title: 'A marker using a custom SVG image.',
+        //@ts-ignore
         anchorLeft: "-50%",
         anchorTop: "-50%",
     });
@@ -45,6 +46,7 @@ async function initMap() {
         position: { lat: 37.434, lng: -122.082 },
         content: beachFlagImg,
         title: 'A marker using a custom PNG Image',
+        //@ts-ignore
         anchorLeft: "0px",
         anchorTop: "100%",
     });
