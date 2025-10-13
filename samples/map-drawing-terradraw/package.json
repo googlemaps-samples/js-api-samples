@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@types/google.maps": "latest",
-    "typescript": "^5.9.2",
+    "typescript": "^5.9.3",
     "vite": "^7.1.7"
   }
 }
