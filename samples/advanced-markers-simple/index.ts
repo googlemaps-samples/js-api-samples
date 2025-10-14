@@ -15,9 +15,6 @@ async function initMap() {
     const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
 
     innerMap = mapElement.innerMap;
-    innerMap.setOptions({
-        mapTypeControl: false,
-    });
 
     const marker = new AdvancedMarkerElement({
         map: innerMap,
