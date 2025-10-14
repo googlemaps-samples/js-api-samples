@@ -24,9 +24,6 @@ async function initMap(): Promise<void> {
   let collisionBehavior = google.maps.CollisionBehavior.REQUIRED;
 
   innerMap = mapElement.innerMap;
-  innerMap.setOptions({
-    mapTypeControl: false,
-  });
 
   // @ts-ignore
   const select = new mdc.select.MDCSelect(
