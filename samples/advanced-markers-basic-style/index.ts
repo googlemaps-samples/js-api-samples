@@ -15,9 +15,6 @@ async function initMap() {
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
 
     innerMap = mapElement.innerMap;
-    innerMap.setOptions({
-        mapTypeControl: false,
-    });
 
     // Each PinElement is paired with a MarkerView to demonstrate setting each parameter.
 
