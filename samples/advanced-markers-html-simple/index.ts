@@ -7,7 +7,6 @@
 // [START maps_advanced_markers_html_simple]
 // [START maps_advanced_markers_html_simple_snippet]
 const mapElement = document.querySelector("gmp-map") as google.maps.MapElement;
-let innerMap;
 
 async function initMap() {
   // Request needed libraries.
@@ -18,20 +17,15 @@ async function initMap() {
     "marker"
   )) as google.maps.MarkerLibrary;
 
-  innerMap = mapElement.innerMap;
-  innerMap.setOptions({
-    mapTypeControl: false,
-  });
-
   const priceTag = document.createElement("div");
   priceTag.className = "price-tag";
   priceTag.textContent = "$2.5M";
 
   const marker = new AdvancedMarkerElement({
-    map: innerMap,
     position: { lat: 37.42, lng: -122.1 },
     content: priceTag,
   });
+  mapElement.append(marker);
 }
 // [END maps_advanced_markers_html_simple_snippet]
 initMap();
