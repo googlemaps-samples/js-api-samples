@@ -95,6 +95,7 @@ const getChangedSampleFolders = (): string[] => {
   }
 };
 
+// Get changed folders, filtering out excluded ones.
 const foldersToTest = getChangedSampleFolders();
 
 if (foldersToTest.length === 0) {
