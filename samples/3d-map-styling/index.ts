@@ -5,7 +5,7 @@
 */
 
 //@ts-nocheck
-// [START maps_3d_simple_map]
+// [START maps_3d_map_styling]
 async function initMap() {
     const { Map3DElement } = await google.maps.importLibrary("maps3d");
 
@@ -23,4 +23,4 @@ async function initMap() {
 }
 
 initMap();
-// [END maps_3d_simple_map]
+// [END maps_3d_map_styling]
