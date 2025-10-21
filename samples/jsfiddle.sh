@@ -32,8 +32,15 @@ cp "${SCRIPT_DIR}/${NAME}/index.js" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.j
 cp "${SCRIPT_DIR}/${NAME}/index.html" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
 cp "${SCRIPT_DIR}/${NAME}/style.css" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.css"
 
-# Copy the data folder if one is found.
-[ -d "public" ] && cp -r public/* "${DIST_DIR}/samples/${NAME}/jsfiddle/"
+# Copy the public folder if one is found (graphics, other static files).
+if [ -d "public" ] && [ "$(ls -A public)" ]; then
+  cp -r public/* "${DOCS_DIR}/"
+fi
+
+# Copy the src folder if one is found (.js, .json, anything parseable by Vite).
+if [ -d "src" ] && [ "$(ls -A src)" ]; then
+  cp -r src/* "${DOCS_DIR}/"
+fi
 
 # Remove region tags from files by type, since they all have different comment conventions.
 # We use a conditional here since sed behaves differently on Linux.
