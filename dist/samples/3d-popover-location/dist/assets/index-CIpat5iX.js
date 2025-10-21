@@ -2,4 +2,4 @@
 * @license
 * Copyright 2025 Google LLC. All Rights Reserved.
 * SPDX-License-Identifier: Apache-2.0
-*/async function c(){const{AltitudeMode:s,Map3DElement:o,MapMode:n,PopoverElement:r}=await google.maps.importLibrary("maps3d"),e=new o({center:{lat:37.8204,lng:-122.4783,altitude:.407},range:4e3,tilt:74,heading:38,mode:n.HYBRID}),t=new r({altitudeMode:s.ABSOLUTE,open:!0,positionAnchor:{lat:37.819852,lng:-122.478549,altitude:150}});t.append("Golden Gate Bridge"),e.append(t),document.body.append(e)}c();
+*/async function c(){const{AltitudeMode:s,Map3DElement:o,MapMode:n,PopoverElement:r}=await google.maps.importLibrary("maps3d"),e=new o({center:{lat:37.8204,lng:-122.4783,altitude:.407},range:4e3,tilt:74,heading:38,mode:n.HYBRID,gestureHandling:"COOPERATIVE"}),t=new r({altitudeMode:s.ABSOLUTE,open:!0,positionAnchor:{lat:37.819852,lng:-122.478549,altitude:150}});t.append("Golden Gate Bridge"),e.append(t),document.body.append(e)}c();

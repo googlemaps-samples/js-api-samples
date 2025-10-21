@@ -13,7 +13,8 @@ async function init() {
         center: { lat: 37.4239163, lng: -122.0947209, altitude: 0 },
         tilt: 67.5,
         range: 1000,
-        mode: 'SATELLITE'
+        mode: 'SATELLITE',
+        gestureHandling: "COOPERATIVE"
     });
     const marker = new Marker3DElement({
         position: { lat: 37.4239163, lng: -122.0947209, altitude: 50 }, // (Required) Marker must have a lat / lng, but doesn't need an altitude.

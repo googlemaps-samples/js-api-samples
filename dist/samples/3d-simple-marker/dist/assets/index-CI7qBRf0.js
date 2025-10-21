@@ -2,4 +2,4 @@
 * @license
 * Copyright 2025 Google LLC. All Rights Reserved.
 * SPDX-License-Identifier: Apache-2.0
-*/async function c(){const{Map3DElement:s,Marker3DElement:r}=await google.maps.importLibrary("maps3d"),o=new s({center:{lat:37.4239163,lng:-122.0947209,altitude:0},tilt:67.5,range:1e3,mode:"SATELLITE"}),n=new r({position:{lat:37.4239163,lng:-122.0947209,altitude:50},altitudeMode:"ABSOLUTE",extruded:!0,label:"Basic Marker"});o.append(n),document.body.append(o)}c();
+*/async function c(){const{Map3DElement:s,Marker3DElement:r}=await google.maps.importLibrary("maps3d"),o=new s({center:{lat:37.4239163,lng:-122.0947209,altitude:0},tilt:67.5,range:1e3,mode:"SATELLITE",gestureHandling:"COOPERATIVE"}),n=new r({position:{lat:37.4239163,lng:-122.0947209,altitude:50},altitudeMode:"ABSOLUTE",extruded:!0,label:"Basic Marker"});o.append(n),document.body.append(o)}c();

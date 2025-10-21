@@ -10,11 +10,12 @@ async function init() {
     const { Map3DElement } = await google.maps.importLibrary("maps3d");
     {  }
     map3DElement = new Map3DElement({
-        center: { lat: 51.532, lng : -0.124, altitude: 30 }, 
-        range: 1400, 
+        center: { lat: 51.532, lng : -0.124, altitude: 30 },
+        range: 1400,
         tilt: 64,
         heading: -5,
-        mode: 'HYBRID'
+        mode: 'HYBRID',
+        gestureHandling: "COOPERATIVE"
     });
 
     document.body.append(map3DElement);
