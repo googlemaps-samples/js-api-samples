@@ -11,6 +11,7 @@ async function init() {
     const map = new Map3DElement({
         center: { lat: 37.8204, lng: -122.4783, altitude: 0.407 }, range: 4000, tilt: 74, heading: 38,
         mode: MapMode.HYBRID,
+        gestureHandling: "COOPERATIVE"
     });
     // Popovers can only be added to interactive Markers
     const interactiveMarker = new Marker3DInteractiveElement({

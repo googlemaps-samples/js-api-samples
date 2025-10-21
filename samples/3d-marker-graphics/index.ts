@@ -14,8 +14,9 @@ async function init() {
     const map = new Map3DElement({
         center: { lat: 37.426, lng: -122.082, altitude: 18 },
         tilt: 67.5,
-        range: 4000, 
-        mode: 'SATELLITE'
+        range: 4000,
+        mode: 'SATELLITE',
+        gestureHandling: "COOPERATIVE"
     });
 
     // A marker with a with a URL pointing to a PNG.
