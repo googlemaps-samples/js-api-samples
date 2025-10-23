@@ -15,7 +15,8 @@ async function init() {
         range: 1400,
         tilt: 64,
         heading: -5,
-        mode: 'HYBRID'
+        mode: 'HYBRID',
+        gestureHandling: "COOPERATIVE"
     });
     document.body.append(map3DElement);
     map3DElement.addEventListener('gmp-click', async (event) => {

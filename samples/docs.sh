@@ -27,7 +27,12 @@ cp "${SCRIPT_DIR}/${NAME}/index.js" "${DOCS_DIR}/index.js"
 cp "${SCRIPT_DIR}/${NAME}/index.html" "${DOCS_DIR}/index.html"
 cp "${SCRIPT_DIR}/${NAME}/style.css" "${DOCS_DIR}/style.css"
 
-# Copy the data folder if one is found.
+# Copy the public folder if one is found (graphics, other static files).
 if [ -d "public" ] && [ "$(ls -A public)" ]; then
   cp -r public/* "${DOCS_DIR}/"
+fi
+
+# Copy the src folder if one is found (.js, .json, anything parseable by Vite).
+if [ -d "src" ] && [ "$(ls -A src)" ]; then
+  cp -r src/* "${DOCS_DIR}/"
 fi

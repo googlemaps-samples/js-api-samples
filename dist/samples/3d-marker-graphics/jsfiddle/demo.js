@@ -13,7 +13,8 @@ async function init() {
         center: { lat: 37.426, lng: -122.082, altitude: 18 },
         tilt: 67.5,
         range: 4000,
-        mode: 'SATELLITE'
+        mode: 'SATELLITE',
+        gestureHandling: "COOPERATIVE"
     });
     // A marker with a with a URL pointing to a PNG.
     const beachFlagImg = document.createElement('img');
