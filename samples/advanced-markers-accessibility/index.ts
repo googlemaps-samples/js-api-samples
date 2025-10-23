@@ -48,7 +48,8 @@ async function initMap() {
     // Create the markers.
     tourStops.forEach(({position, title}, i) => {
         const pin = new PinElement({
-            glyph: `${i + 1}`,
+            //@ts-ignore
+            glyphText: `${i + 1}`,
             scale: 1.5,
         });
         // [START maps_advanced_markers_accessibility_marker]
