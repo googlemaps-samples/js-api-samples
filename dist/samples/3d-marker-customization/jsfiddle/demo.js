@@ -49,7 +49,7 @@ async function init() {
     // Change many elements together and extrude marker.
     const pinTextGlyph = new PinElement({
         background: '#F0F6FC',
-        glyph: 'E',
+        glyphText: 'E',
         glyphColor: 'red',
         borderColor: '#0000FF',
     });
@@ -61,7 +61,7 @@ async function init() {
     markerWithGlyphText.append(pinTextGlyph);
     // Hide the glyph.
     const pinNoGlyph = new PinElement({
-        glyph: '',
+        glyphText: '',
     });
     const markerWithNoGlyph = new Marker3DElement({
         position: { lat: 37.415, lng: -122.005 },

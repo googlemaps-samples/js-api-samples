@@ -64,7 +64,8 @@ async function initMap() {
     for (const origin of request.origins) {
         if (origin.location) {
             const pin = new PinElement({
-                glyph: "O",
+                //@ts-ignore
+                glyphText: "O",
                 glyphColor: "white",
                 background: "#137333",
                 borderColor: "white",
@@ -84,7 +85,8 @@ async function initMap() {
         const destination = request.destinations[i];
         if (destination.location) {
             const pin = new PinElement({
-                glyph: "D",
+                //@ts-ignore
+                glyphText: "D",
                 glyphColor: "white",
                 background: "#C5221F",
                 borderColor: "white",

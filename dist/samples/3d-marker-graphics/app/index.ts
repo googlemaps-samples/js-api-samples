@@ -36,7 +36,7 @@ async function init() {
     const glyphImgUrl = 'https://www.gstatic.com/images/branding/productlogos/maps/v7/192px.svg';
     const glyphSvgPinElement = new PinElement({
         background: 'white',
-        glyph: new URL(glyphImgUrl),
+        glyphSrc: new URL(glyphImgUrl),
     });
     const glyphSvgMarker = new Marker3DElement({
         position: { lat: 37.425, lng: -122.07, altitude: 100 },
@@ -61,7 +61,7 @@ async function init() {
 
     const pinElement = new PinElement({
         background: place.iconBackgroundColor,
-        glyph: new URL(String(place.svgIconMaskURI)),
+        glyphSrc: new URL(String(place.svgIconMaskURI)),
     });
     const placeIconMarker = new Marker3DElement({
         position: place.location,
