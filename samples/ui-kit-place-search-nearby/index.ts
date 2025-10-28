@@ -6,132 +6,166 @@
 /* [START maps_ui_kit_place_search_nearby] */
 
 /* [START maps_ui_kit_place_search_nearby_query_selectors] */
-const map = document.querySelector("gmp-map") as any;
-const placeList = document.querySelector("gmp-place-list") as any;
-const typeSelect = document.querySelector(".type-select") as any;
-const placeDetails = document.querySelector("gmp-place-details") as any;
-const placeDetailsRequest = document.querySelector('gmp-place-details-place-request') as any;
+// Query selectors for various elements in the HTML file.
+const map = document.querySelector('gmp-map') as google.maps.MapElement
+const placeSearch = document.querySelector('gmp-place-search') as any
+const placeSearchQuery = document.querySelector(
+    'gmp-place-nearby-search-request'
+) as any
+const placeDetails = document.querySelector('gmp-place-details-compact') as any
+const placeRequest = document.querySelector(
+    'gmp-place-details-place-request'
+) as any
+const typeSelect = document.querySelector('.type-select') as HTMLSelectElement
 /* [END maps_ui_kit_place_search_nearby_query_selectors] */
-let markers = {};
-let infoWindow;
 
-async function initMap(): Promise<void>  {
-    await google.maps.importLibrary('places');
-    const { LatLngBounds } = await google.maps.importLibrary('core') as google.maps.CoreLibrary;
-    const { InfoWindow } = await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
-    const { spherical } = await google.maps.importLibrary('geometry') as google.maps.GeometryLibrary;
+// Global variables for the map, markers, and info window.
+const markers: Map<string, google.maps.marker.AdvancedMarkerElement> = new Map()
+let infoWindow
 
-    infoWindow = new InfoWindow;
-    let marker;
+let AdvancedMarkerElement: typeof google.maps.marker.AdvancedMarkerElement
+let LatLngBounds: typeof google.maps.LatLngBounds
 
-    function getContainingCircle(bounds) {
-        const diameter = spherical.computeDistanceBetween(
-            bounds.getNorthEast(),
-            bounds.getSouthWest()
-        );
-        const calculatedRadius = diameter / 2;
-        const cappedRadius = Math.min(calculatedRadius, 50000); // Radius cannot be more than 50000.
-        return { center: bounds.getCenter(), radius: cappedRadius };
-    }
+// The init function is called when the page loads.
+async function init(): Promise<void> {
+    // Import the necessary libraries from the Google Maps API.
+    const { InfoWindow } = (await google.maps.importLibrary(
+        'maps'
+    )) as google.maps.MapsLibrary
+    await google.maps.importLibrary('places')
+    const markerLib = (await google.maps.importLibrary(
+        'marker'
+    )) as google.maps.MarkerLibrary
+    const coreLib = (await google.maps.importLibrary(
+        'core'
+    )) as google.maps.CoreLibrary
 
-    findCurrentLocation();
+    AdvancedMarkerElement = markerLib.AdvancedMarkerElement
+    LatLngBounds = coreLib.LatLngBounds
 
+    // Create a new info window and set its content to the place details element.
+    infoWindow = new InfoWindow({
+        content: placeDetails,
+        ariaLabel: 'Place Details',
+        headerDisabled: true,
+        pixelOffset: { width: 0, height: -40 } as google.maps.Size,
+    })
+
+    // Set the map options.
     map.innerMap.setOptions({
-        mapTypeControl: false,
         clickableIcons: false,
-    });
+        mapTypeControl: false,
+        streetViewControl: false,
+    })
 
+    // Add a click listener to the map to hide the info window when the map is clicked.
+    map.innerMap.addListener('click', () => {
+        hideInfoWindow()
+    })
     /* [START maps_ui_kit_place_search_nearby_event] */
-    placeDetails.addEventListener('gmp-load', (event) => {
-        // Center the info window on the map.
-        map.innerMap.fitBounds(placeDetails.place.viewport, { top: 500, left: 400 });
-    });
+    // Add event listeners to the type select and place search elements.
+    typeSelect.addEventListener('change', searchPlaces)
 
-    typeSelect.addEventListener('change', (event) => {
-        // First remove all existing markers.
-        for(marker in markers){
-            markers[marker].map = null;
+    placeSearch.addEventListener('gmp-select', (event: Event) => {
+        const { place } = event as any
+        if (markers.has(place.id)) {
+            markers.get(place.id)!.click()
         }
-        markers = {};
+    })
+    placeSearch.addEventListener(
+        'gmp-load',
+        () => {
+            searchPlaces()
+        },
+        { once: true }
+    )
+}
+/* [END maps_ui_kit_place_search_nearby_event] */
+// The searchPlaces function is called when the user changes the type select or when the page loads.
+function searchPlaces() {
+    // Get the map bounds and center.
+    const bounds = map.innerMap.getBounds()!
+    const cent = map.innerMap.getCenter()!
+    const ne = bounds.getNorthEast()
+    const sw = bounds.getSouthWest()
+    // Calculate the diameter of the map bounds and cap the radius at 50000.
+    const diameter = google.maps.geometry.spherical.computeDistanceBetween(
+        ne,
+        sw
+    )
+    const cappedRadius = Math.min(diameter / 2, 50000) // Radius cannot be more than 50000.
 
-        if (typeSelect.value) {
-            placeList.style.display = 'block';
-            placeList.configureFromSearchNearbyRequest({
-                locationRestriction: getContainingCircle(
-                    map.innerMap.getBounds()
-                ),
-                includedPrimaryTypes: [typeSelect.value],
-            }).then(addMarkers);
-            // Handle user selection in Place Details.
-            placeList.addEventListener('gmp-placeselect', ({ place }) => {
-                markers[place.id].click();
-            });
+    // Close the info window and clear the markers.
+    infoWindow.close()
+
+    for (const marker of markers.values()) {
+        marker.map = null
+    }
+    markers.clear()
+
+    // Set the place search query and add an event listener to the place search element.
+    if (typeSelect.value) {
+        // map.style.height = '75vh';
+        placeSearch.style.visibility = 'visible'
+        placeSearchQuery.maxResultCount = 10
+        placeSearchQuery.locationRestriction = {
+            center: { lat: cent.lat(), lng: cent.lng() },
+            radius: cappedRadius,
         }
-    });
-    /* [END maps_ui_kit_place_search_nearby_event] */
+        placeSearchQuery.includedTypes = [typeSelect.value]
+        placeSearch.addEventListener('gmp-load', () => addMarkers(), {
+            once: true,
+        })
+    }
 }
 
-async function addMarkers(){
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker') as google.maps.MarkerLibrary;
-    const { LatLngBounds } = await google.maps.importLibrary('core') as google.maps.CoreLibrary;
+// The addMarkers function is called when the place search element loads.
+async function addMarkers() {
+    // Create a new LatLngBounds object and make the place search element visible.
+    const bounds = new LatLngBounds()
+    placeSearch.style.visibility = 'visible'
 
-    const bounds = new LatLngBounds();
-
-    if(placeList.places.length > 0){
-        placeList.places.forEach((place) => {
-            let marker = new AdvancedMarkerElement({
+    // Iterate over the places and create a marker for each place.
+    if (placeSearch.places.length > 0) {
+        placeSearch.places.forEach((place) => {
+            const marker = new AdvancedMarkerElement({
                 map: map.innerMap,
-                position: place.location
-            });
+                position: place.location,
+                collisionBehavior:
+                    google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL,
+            })
 
-            markers[place.id] = marker;
-            bounds.extend(place.location);
+            // Add the marker to the markers map and extend the bounds.
+            markers.set(place.id, marker)
+            bounds.extend(place.location)
 
             /* [START maps_ui_kit_place_search_nearby_click_event] */
-            marker.addListener('gmp-click', (event) => {
-                if(infoWindow.isOpen){
-                    infoWindow.close();
+            // Add a click listener to the marker to show the info window.
+            marker.addListener('click', () => {
+                if (place.viewport) {
+                    map.innerMap.fitBounds(place.viewport)
+                } else {
+                    map.innerMap.panTo(place.location)
+                    map.innerMap.setZoom(18)
                 }
-
-                placeDetailsRequest.place = place.id;
-                placeDetails.style.display = 'block';
-                placeDetails.style.width = '350px';
-                infoWindow.setOptions({
-                    content: placeDetails,
-                });
-                infoWindow.open({
-                    anchor: marker,
-                    map: map.innerMap
-                });
-            });
+                placeRequest.place = place
+                infoWindow.setPosition(place.location)
+                placeDetails.style.visibility = 'visible' // Ensure place details are visible
+                infoWindow.open(map.innerMap)
+            })
             /* [END maps_ui_kit_place_search_nearby_click_event] */
-
-            map.innerMap.setCenter(bounds.getCenter());
-            map.innerMap.fitBounds(bounds);
-        });
+        })
+        // Set the map center and fit the bounds.
+        map.innerMap.setCenter(bounds.getCenter())
+        map.innerMap.fitBounds(bounds)
     }
 }
 
-async function findCurrentLocation(){
-    const { LatLng } = await google.maps.importLibrary('core') as google.maps.CoreLibrary;
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const pos = new LatLng(position.coords.latitude,position.coords.longitude);
-            map.innerMap.panTo(pos);
-            map.innerMap.setZoom(14);
-          },
-          () => {
-            console.log('The Geolocation service failed.');
-            map.innerMap.setZoom(14);
-          },
-        );
-      } else {
-        console.log('Your browser doesn\'t support geolocation');
-        map.innerMap.setZoom(14);
-      }
-
+// The hideInfoWindow function is called when the user clicks on the map.
+function hideInfoWindow() {
+    infoWindow.close()
+    placeDetails.style.visibility = 'hidden'
 }
 
-initMap();
+init()
 /* [END maps_ui_kit_place_search_nearby] */
