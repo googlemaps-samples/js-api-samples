@@ -24,8 +24,7 @@ async function initMap() {
   // Get the inner map.
   const innerMap = mapElement.innerMap;
 
-  //@ts-ignore
-  featureLayer = innerMap.getFeatureLayer('LOCALITY');
+  featureLayer = innerMap.getFeatureLayer(google.maps.FeatureType.LOCALITY);
   
   // [START maps_boundaries_simple_style_single]
   // Define a style with purple fill and border.
