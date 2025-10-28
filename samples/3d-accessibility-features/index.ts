@@ -12,7 +12,8 @@ async function initMap() {
 
   const map = new Map3DElement({
     center: { lat: 34.8405, lng : -111.7909, altitude: 1322.70 }, range: 13279.50, tilt: 67.44 ,heading: 0.01,
-    mode: 'SATELLITE'
+    mode: 'SATELLITE',
+    gestureHandling: "COOPERATIVE"
   });
 
   // Set LatLng and title text for the markers. The first marker (Boynton Pass)
@@ -43,7 +44,7 @@ async function initMap() {
 
   tourStops.forEach(({ position, title }, i) => {
     const pin = new PinElement({
-      glyph: `${i + 1}`,
+      glyphText: `${i + 1}`,
       scale: 1.5,
       glyphColor: "#FFFFFF"
     });

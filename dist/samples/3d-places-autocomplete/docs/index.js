@@ -15,7 +15,8 @@ async function init() {
         range: 0,
         heading: 0,
         roll: 0,
-        mode: 'HYBRID'
+        mode: 'HYBRID',
+        gestureHandling: "COOPERATIVE"
     });
     document.body.append(map);
     initAutocomplete();

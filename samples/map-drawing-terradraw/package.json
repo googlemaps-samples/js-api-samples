@@ -10,13 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@googlemaps/js-api-loader": "^2.0.0",
+    "@googlemaps/js-api-loader": "^2.0.1",
     "terra-draw": "latest",
     "terra-draw-google-maps-adapter": "latest"
   },
   "devDependencies": {
     "@types/google.maps": "latest",
     "typescript": "^5.9.3",
-    "vite": "^7.1.9"
+    "vite": "^7.1.11"
   }
 }

@@ -68,7 +68,7 @@ async function getDirections() {
         ...defaultOptions,
         map: innerMap,
         content: new PinElement({
-          glyph: (index + 1).toString(),
+          glyphText: (index + 1).toString(),
           glyphColor: 'white',
           background: 'green',
           borderColor: 'green',
@@ -82,7 +82,7 @@ async function getDirections() {
         ...defaultOptions,
         map: innerMap,
         content: new PinElement({
-          glyph: (index + 1).toString(),
+          glyphText: (index + 1).toString(),
           glyphColor: 'white',
           background: 'blue',
           borderColor: 'blue',
@@ -96,7 +96,7 @@ async function getDirections() {
         ...defaultOptions,
         map: innerMap,
         content: new PinElement({
-          glyph: (index + 1).toString(),
+          glyphText: (index + 1).toString(),
           glyphColor: 'white',
           background: 'red',
           borderColor: 'red',

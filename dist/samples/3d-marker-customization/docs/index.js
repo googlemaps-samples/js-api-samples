@@ -13,7 +13,8 @@ async function init() {
         center: { lat: 37.4176, lng: -122.02, altitude: 0 },
         tilt: 67.5,
         range: 7000,
-        mode: 'HYBRID'
+        mode: 'HYBRID',
+        gestureHandling: "COOPERATIVE"
     });
     map.mode = "SATELLITE";
     // Change the border color.
@@ -48,7 +49,7 @@ async function init() {
     // Change many elements together and extrude marker.
     const pinTextGlyph = new PinElement({
         background: '#F0F6FC',
-        glyph: 'E',
+        glyphText: 'E',
         glyphColor: 'red',
         borderColor: '#0000FF',
     });
@@ -60,7 +61,7 @@ async function init() {
     markerWithGlyphText.append(pinTextGlyph);
     // Hide the glyph.
     const pinNoGlyph = new PinElement({
-        glyph: '',
+        glyphText: '',
     });
     const markerWithNoGlyph = new Marker3DElement({
         position: { lat: 37.415, lng: -122.005 },
