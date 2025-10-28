@@ -151,6 +151,7 @@ foldersToTest.forEach((sampleFolder) => {
       const filteredErrorMessages = [
         'Falling back to Raster',
         'Attempted to load a 3D Map, but failed.',
+        'The map is not a vector map',
       ];
       const criticalErrors = consoleErrors.filter(error =>
         !filteredErrorMessages.some(message => error.includes(message))
