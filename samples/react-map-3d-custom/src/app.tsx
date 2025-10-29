@@ -5,9 +5,9 @@ import {APIProvider, MapMouseEvent} from '@vis.gl/react-google-maps';
 
 import {Map3D, Map3DCameraProps} from './map-3d';
 
-import './style.css';
+import './styles.css';
 
-const API_KEY = process.env.GOOGLE_MAPS_API_KEY as string;
+const API_KEY = "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8" as string;
 
 const INITIAL_VIEW_PROPS = {
   center: {lat: 37.69637422900176, lng:-118.5041096347873, altitude: 4020000},
@@ -17,6 +17,7 @@ const INITIAL_VIEW_PROPS = {
   roll: 0
 };
 
+// [START maps_react_3d_custom_example]
 const Map3DExample = () => {
   const [viewProps, setViewProps] = useState(INITIAL_VIEW_PROPS);
 
@@ -41,25 +42,18 @@ const Map3DExample = () => {
     </>
   );
 };
+// [END maps_react_3d_custom_example]
 
+// [START maps_react_3d_custom_app]
 const App = () => {
-  const nonAlphaVersionLoaded = Boolean(
-    globalThis &&
-      globalThis.google?.maps?.version &&
-      !globalThis.google?.maps?.version.endsWith('-alpha')
-  );
-
-  if (nonAlphaVersionLoaded) {
-    location.reload();
-    return;
-  }
 
   return (
-    <APIProvider apiKey={API_KEY} version={'nightly'}>
+    <APIProvider apiKey={API_KEY} version={'weekly'}>
       <Map3DExample />
     </APIProvider>
   );
 };
+// [END maps_react_3d_custom_app]
 export default App;
 
 export function renderToDom(container: HTMLElement) {

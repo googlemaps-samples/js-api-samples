@@ -1,17 +1,18 @@
 {
-  "name": "@js-api-samples/react-map-3d-custom",
+  "name": "@js-api-samples/react-map-3d-custom-gpx",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
     "build": "tsc && bash ../react-docs.sh react-map-3d-custom && npm run build:vite --workspace=. && bash ../dist.sh react-map-3d-custom",
     "test": "tsc && npm run build:vite --workspace=.",
-    "start": "tsc && vite build --base './' && vite",
+    "start": "tsc && vite build --base './' && vite preview --port 5173",
     "build:vite": "vite build --base './'",
     "preview": "vite preview"
   },
   "dependencies": {
     "@turf/turf": "^7.1.0",
     "@vis.gl/react-google-maps": "1.5.5",
+    "@xmldom/xmldom": "^0.8.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

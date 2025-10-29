@@ -51,3 +51,24 @@ export function useDebouncedEffect(
     [timeout, ...deps]
   );
 }
+
+export const getFormattedTime = (point: Element, forMarker: boolean = false) => {
+  const timeElement = point.querySelector('time');
+  if (timeElement && timeElement.textContent) {
+    const date = new Date(timeElement.textContent);
+    if (forMarker) {
+      const time = date.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      });
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      return `${time}\n${month}/${day}/${year}`;
+    }
+    return date.toLocaleString();
+  }
+  return null;
+};

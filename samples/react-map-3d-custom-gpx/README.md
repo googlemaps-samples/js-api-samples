@@ -1,4 +1,3 @@
-# [START maps_react_3d_custom_map_readme]
 # Google Maps JavaScript Sample
 
 This sample is generated from @googlemaps/js-samples located at
@@ -31,4 +30,3 @@ From `samples/`:
 
 For feedback related to this sample, please open a new issue on
 [GitHub](https://github.com/googlemaps-samples/js-api-samples/issues).
-# [END maps_react_3d_custom_map_readme]

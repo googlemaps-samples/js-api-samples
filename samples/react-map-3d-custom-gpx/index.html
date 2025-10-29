@@ -17,10 +17,14 @@
         height: 100vh;
       }
     </style>
-    <script type="module" crossorigin src="./assets/index-Dqf12wk2.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BgSD6qdp.css">
   </head>
   <body>
+    <!-- [START maps_react_3d_custom_gpx_map_html] -->
     <div id="app"></div>
+    <script type="module">
+      import {renderToDom} from './src/app';
+      renderToDom(document.querySelector('#app'));
+    </script>
+    <!-- [END maps_react_3d_custom_gpx_map_html] -->
   </body>
 </html>

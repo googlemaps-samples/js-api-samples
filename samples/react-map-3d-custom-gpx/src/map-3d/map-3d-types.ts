@@ -13,9 +13,28 @@ declare module '@vis.gl/react-google-maps' {
 // temporary fix until @types/google.maps is updated with the latest changes
 declare global {
   namespace google.maps.maps3d {
+    interface CameraOptions {
+      center?: google.maps.LatLngAltitude | google.maps.LatLngAltitudeLiteral;
+      heading?: number;
+      range?: number;
+      roll?: number;
+      tilt?: number;
+    }
+
+    interface FlyAroundAnimationOptions {
+      camera: CameraOptions;
+      durationMillis?: number;
+      repeatCount?: number;
+    }
+
+    interface LocationClickEvent extends Event {
+      position: google.maps.LatLngAltitude | null;
+    }
+
     interface Map3DElement extends HTMLElement {
       mode?: 'HYBRID' | 'SATELLITE';
       mapId?: string;
+      flyCameraAround(options: FlyAroundAnimationOptions): void;
     }
   }
 }
@@ -28,6 +47,10 @@ declare module 'react' {
       ['gmp-map-3d']: CustomElement<
         google.maps.maps3d.Map3DElement,
         google.maps.maps3d.Map3DElement
+      >;
+      ['gmp-polyline-3d']: CustomElement<
+        google.maps.maps3d.Polyline3DElement,
+        google.maps.maps3d.Polyline3DElementOptions
       >;
     }
   }
