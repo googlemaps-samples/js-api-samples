@@ -8,6 +8,11 @@ samples/.env
 samples/*/dist/
 samples/**/*.js
 
+samples/react-map-3d-custom/dist/
+samples/react-map-3d-custom/node_modules/
+samples/react-map-3d-custom-gpx/dist/
+samples/react-map-3d-custom-gpx/node_modules/
+
 # Ignore playwright outputs
 /test-results/
 /playwright-report/
