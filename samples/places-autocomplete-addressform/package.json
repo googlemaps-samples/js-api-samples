@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/places-autocomplete-addressform",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh places-autocomplete-addressform && bash ../app.sh places-autocomplete-addressform && bash ../docs.sh places-autocomplete-addressform && npm run build:vite --workspace=. && bash ../dist.sh places-autocomplete-addressform",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
