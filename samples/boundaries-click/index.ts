@@ -150,4 +150,4 @@ function updateInfoWindow(content, center) {
 }
 
 initMap();
-//  [END maps_boundaries_click_event]
+// [END maps_boundaries_click_event]
