@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/boundaries-text-search",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh boundaries-text-search && bash ../app.sh boundaries-text-search && bash ../docs.sh boundaries-text-search && npm run build:vite --workspace=. && bash ../dist.sh boundaries-text-search",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
