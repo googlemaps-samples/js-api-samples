@@ -6,7 +6,6 @@
 
 // [START maps_advanced_markers_altitude]
 const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-let innerMap;
 
 async function initMap() {
     // Request needed libraries.
