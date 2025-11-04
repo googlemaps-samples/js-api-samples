@@ -6,14 +6,11 @@
 
 // [START maps_advanced_markers_accessibility]
 const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-let innerMap;
 
 async function initMap() {
     // Request needed libraries.
     const { Map, InfoWindow } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
-
-    innerMap = mapElement.innerMap;
 
     // Set LatLng and title text for the markers. The first marker (Boynton Pass)
     // receives the initial focus when tab is pressed. Use arrow keys to move
