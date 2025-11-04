@@ -26,10 +26,10 @@ async function initMap() {
     });
 
     const marker = new AdvancedMarkerElement({
-        content: pin.element,
         // Set altitude to 20 meters above the ground.
         position: { lat: 47.65170843460547, lng: -122.30754, altitude: 20 } as google.maps.LatLngAltitudeLiteral,
     });
+    marker.append(pin);
 
     mapElement.append(marker);
     // [END maps_advanced_markers_altitude_marker]
