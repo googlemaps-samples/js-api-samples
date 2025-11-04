@@ -24,25 +24,31 @@ async function initMap() {
         position: { lat: 37.42475, lng: -122.094 },
         content: pinSvg,
         title: 'A marker using a custom SVG image.',
+        //@ts-ignore
+        anchorLeft: "-50%",
+        anchorTop: "-50%",
     });
     
     
     // A marker with a with a URL pointing to a PNG.
     const beachFlagImg = document.createElement('img');
-    beachFlagImg.src = new URL('./images/beachflag.png', import.meta.url).href;
+    beachFlagImg.src = new URL('./public/beachflag.png', import.meta.url).href;
     const beachFlagMarkerView = new AdvancedMarkerElement({
         map,
         position: { lat: 37.434, lng: -122.082 },
         content: beachFlagImg,
         title: 'A marker using a custom PNG Image',
+        //@ts-ignore
+        anchorLeft: "0px",
+        anchorTop: "100%",
     });
     
     
     // A marker with a custom SVG glyph.
-    const glyphImg = document.createElement('img');
-    glyphImg.src = new URL('./images/google_logo_g.svg', import.meta.url).href;
+    const glyphImgSrc = new URL('./public/google_logo_g.svg', import.meta.url);
     const glyphSvgPinElement = new PinElement({
-        glyph: glyphImg,
+        //@ts-ignore
+        glyphSrc: glyphImgSrc,
     });
     const glyphSvgMarkerView = new AdvancedMarkerElement({
         map,
@@ -60,30 +66,14 @@ async function initMap() {
     await place.fetchFields({ fields: ['location', 'displayName', 'svgIconMaskURI', 'iconBackgroundColor'] });
     const pinElement = new PinElement({
         background: place.iconBackgroundColor,
-        glyph: new URL(String(place.svgIconMaskURI)),
+        //@ts-ignore
+        glyphSrc: new URL(String(place.svgIconMaskURI)),
     });
     const placeIconMarkerView = new AdvancedMarkerElement({
         map,
         position: place.location,
         content: pinElement.element,
         title: place.displayName,
-    });
-    
-    
-    // A marker using a Font Awesome icon for the glyph.
-    const icon = document.createElement('div');
-    icon.innerHTML = '<i class="fa fa-pizza-slice fa-lg"></i>';
-    const faPin = new PinElement({
-        glyph: icon,
-        glyphColor: '#ff8300',
-        background: '#FFD514',
-        borderColor: '#ff8300',
-    });
-    const faMarker = new AdvancedMarkerElement({
-        map,
-        position: { lat: 37.412, lng: -122.095829650878 },
-        content: faPin.element,
-        title: 'A marker using a FontAwesome icon for the glyph.'
     });
     
 }

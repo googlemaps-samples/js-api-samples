@@ -10,14 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@vis.gl/react-google-maps": "1.5.5",
+    "@vis.gl/react-google-maps": "1.7.1",
     "react": "^19.2.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
-    "@types/react": "^19.2.0",
-    "@types/react-dom": "^19.1.9",
-    "typescript": "^5.5.3",
-    "vite": "^7.1.7"
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.11"
   }
 }

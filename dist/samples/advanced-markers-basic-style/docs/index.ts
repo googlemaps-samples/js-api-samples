@@ -79,7 +79,8 @@ async function initMap() {
 
     // [START maps_advanced_markers_basic_style_text_glyph]
     const pinTextGlyph = new PinElement({
-        glyph: 'T',
+        //@ts-ignore
+        glyphText: 'T',
         glyphColor: 'white',
     });
     const markerViewGlyphText = new AdvancedMarkerElement({
@@ -92,7 +93,8 @@ async function initMap() {
     // [START maps_advanced_markers_basic_style_hide_glyph]
     // Hide the glyph.
     const pinNoGlyph = new PinElement({
-        glyph: '',
+        //@ts-ignore
+        glyphText: '',
     });
     const markerViewNoGlyph = new AdvancedMarkerElement({
         map,

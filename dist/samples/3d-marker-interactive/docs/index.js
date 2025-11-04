@@ -13,7 +13,8 @@ async function init() {
         center: { lat: 37.4690, lng: -122.1074, altitude: 0 },
         tilt: 67.5,
         range: 45000,
-        mode: 'HYBRID'
+        mode: 'HYBRID',
+        gestureHandling: "COOPERATIVE"
     });
     map.mode = "SATELLITE";
     for (const position of positions) {

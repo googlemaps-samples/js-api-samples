@@ -13,7 +13,8 @@ async function init() {
         center: { lat: 37.426, lng: -122.082, altitude: 18 },
         tilt: 67.5,
         range: 4000,
-        mode: 'SATELLITE'
+        mode: 'SATELLITE',
+        gestureHandling: "COOPERATIVE"
     });
     // A marker with a with a URL pointing to a PNG.
     const beachFlagImg = document.createElement('img');
@@ -29,7 +30,7 @@ async function init() {
     const glyphImgUrl = 'https://www.gstatic.com/images/branding/productlogos/maps/v7/192px.svg';
     const glyphSvgPinElement = new PinElement({
         background: 'white',
-        glyph: new URL(glyphImgUrl),
+        glyphSrc: new URL(glyphImgUrl),
     });
     const glyphSvgMarker = new Marker3DElement({
         position: { lat: 37.425, lng: -122.07, altitude: 100 },
@@ -51,7 +52,7 @@ async function init() {
     await place.fetchFields({ fields: ['location', 'displayName', 'svgIconMaskURI', 'iconBackgroundColor'] });
     const pinElement = new PinElement({
         background: place.iconBackgroundColor,
-        glyph: new URL(String(place.svgIconMaskURI)),
+        glyphSrc: new URL(String(place.svgIconMaskURI)),
     });
     const placeIconMarker = new Marker3DElement({
         position: place.location,
