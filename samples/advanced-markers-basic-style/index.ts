@@ -13,15 +13,15 @@ async function initMap() {
     const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
 
-    // Each PinElement is paired with a MarkerView to demonstrate setting each parameter.
+    // Each PinElement is paired with a marker to demonstrate setting each parameter.
 
     // [START maps_advanced_markers_basic_style_title]
     // Default marker with title text (no PinElement).
-    const markerViewWithText = new AdvancedMarkerElement({
+    const markerWithText = new AdvancedMarkerElement({
         position: { lat: 37.419, lng: -122.03 },
         title: 'Title text for the marker at lat: 37.419, lng: -122.03',
     });
-    mapElement.append(markerViewWithText);
+    mapElement.append(markerWithText);
     // [END maps_advanced_markers_basic_style_title]
 
     // [START maps_advanced_markers_basic_style_scale]
@@ -29,11 +29,11 @@ async function initMap() {
     const pinScaled = new PinElement({
         scale: 1.5,
     });
-    const markerViewScaled = new AdvancedMarkerElement({
+    const markerScaled = new AdvancedMarkerElement({
         position: { lat: 37.419, lng: -122.02 },
-        content: pinScaled.element,
     });
-    mapElement.append(markerViewScaled);
+    markerScaled.append(pinScaled);
+    mapElement.append(markerScaled);
     // [END maps_advanced_markers_basic_style_scale]
 
     // [START maps_advanced_markers_basic_style_background]
@@ -41,11 +41,11 @@ async function initMap() {
     const pinBackground = new PinElement({
         background: '#FBBC04',
     });
-    const markerViewBackground = new AdvancedMarkerElement({
+    const markerBackground = new AdvancedMarkerElement({
         position: { lat: 37.419, lng: -122.01 },
-        content: pinBackground.element,
     });
-    mapElement.append(markerViewBackground);
+    markerBackground.append(pinBackground);
+    mapElement.append(markerBackground);
     // [END maps_advanced_markers_basic_style_background]
 
     // [START maps_advanced_markers_basic_style_border]
@@ -53,11 +53,11 @@ async function initMap() {
     const pinBorder = new PinElement({
         borderColor: '#137333',
     });
-    const markerViewBorder = new AdvancedMarkerElement({
+    const markerBorder = new AdvancedMarkerElement({
         position: { lat: 37.415, lng: -122.035 },
-        content: pinBorder.element,
     });
-    mapElement.append(markerViewBorder);
+    markerBorder.append(pinBorder);
+    mapElement.append(markerBorder);
     // [END maps_advanced_markers_basic_style_border]
 
     // [START maps_advanced_markers_basic_style_glyph]
@@ -65,11 +65,11 @@ async function initMap() {
     const pinGlyph = new PinElement({
         glyphColor: 'white',
     });
-    const markerViewGlyph = new AdvancedMarkerElement({
+    const markerGlyph = new AdvancedMarkerElement({
         position: { lat: 37.415, lng: -122.025 },
-        content: pinGlyph.element,
     });
-    mapElement.append(markerViewGlyph);
+    markerGlyph.append(pinGlyph);
+    mapElement.append(markerGlyph);
     // [END maps_advanced_markers_basic_style_glyph]
 
     // [START maps_advanced_markers_basic_style_text_glyph]
@@ -78,11 +78,11 @@ async function initMap() {
         glyphText: 'T',
         glyphColor: 'white',
     });
-    const markerViewGlyphText = new AdvancedMarkerElement({
+    const markerGlyphText = new AdvancedMarkerElement({
         position: { lat: 37.415, lng: -122.015 },
-        content: pinTextGlyph.element,
     });
-    mapElement.append(markerViewGlyphText);
+    markerGlyphText.append(pinTextGlyph);
+    mapElement.append(markerGlyphText);
     // [END maps_advanced_markers_basic_style_text_glyph]
 
     // [START maps_advanced_markers_basic_style_hide_glyph]
@@ -91,11 +91,11 @@ async function initMap() {
         //@ts-ignore
         glyphText: '',
     });
-    const markerViewNoGlyph = new AdvancedMarkerElement({
+    const markerNoGlyph = new AdvancedMarkerElement({
         position: { lat: 37.415, lng: -122.005 },
-        content: pinNoGlyph.element,
     });
-    mapElement.append(markerViewNoGlyph);
+    markerNoGlyph.append(pinNoGlyph);
+    mapElement.append(markerNoGlyph);
     // [END maps_advanced_markers_basic_style_hide_glyph]
 
 }
