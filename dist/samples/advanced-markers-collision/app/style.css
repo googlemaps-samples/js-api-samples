@@ -40,13 +40,13 @@ body {
   flex-basis: 15rem;
   flex-grow: 1;
   padding: 1rem;
-  max-width: 30rem;
+  max-width: 33rem;
   height: 100%;
   box-sizing: border-box;
   overflow: auto;
 }
 
-#map {
+gmp-map {
   flex-basis: 0;
   flex-grow: 4;
   height: 100%;
