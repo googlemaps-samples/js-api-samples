@@ -13,6 +13,7 @@ async function init() {
      map = new Map3DElement({
         center: { lat: 37.7927, lng : -122.4020, altitude: 65.93 }, range: 3362.87, tilt: 64.01 ,heading: 25.00,
         mode: MapMode.SATELLITE,
+        gestureHandling: "COOPERATIVE"
     });
 
     document.body.append(map);

@@ -12,7 +12,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@googlemaps/js-api-loader": "^1.0.0"
+    "@googlemaps/js-api-loader": "^2.0.2"
   },
   "devDependencies": {
     "@types/google.maps": "^3.49.2",

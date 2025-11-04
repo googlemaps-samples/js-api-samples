@@ -13,6 +13,7 @@ async function init() {
     const map = new Map3DElement({
         center: { lat: 39.1178, lng: -106.4452, altitude: 4395.4952 }, range: 1500, tilt: 74, heading: 0,
         mode: "HYBRID",
+        gestureHandling: "COOPERATIVE"
     });
 
     const model = new Model3DInteractiveElement({

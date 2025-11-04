@@ -13,6 +13,7 @@ async function initMap() {
         tilt: 67.5,
         mode: 'HYBRID',
         bounds: { south: -48.30, west: 163.56, north: -32.86, east: -180 },
+        gestureHandling: "COOPERATIVE"
     });
     document.body.append(map);
 }
