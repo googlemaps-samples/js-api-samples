@@ -6,69 +6,58 @@
 /* [START maps_ui_kit_place_search_nearby] */
 html,
 body {
-  height: 100%;
-  margin: 0;
+    height: 100%;
+    margin: 0;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
-  font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 h1 {
-  font-size: large;
-  text-align: center;
+    font-size: large;
+    text-align: center;
 }
 
 .container {
-  display: flex;
-  height: 100vh;
-  width: 100%;
+    display: flex;
+    height: 100vh;
+    width: 100%;
 }
 
 gmp-map {
-  flex-grow: 1;
+    flex-grow: 1;
 }
 
 .ui-panel {
-  width: 400px;
-  margin-left: 20px;
-  overflow-y: auto;
+    width: 400px;
+    margin-left: 20px;
+    overflow-y: auto;
 }
 
 .controls {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .list-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.type-select {
-  width: 100%;
-  height: 32px;
-  border: 1px solid #000;
-  border-radius: 10px;
-  flex-grow: 1;
-  padding: 0 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 gmp-place-search {
-  width: 100%;
-  margin: 0;
-  border-radius: 10px;
-  border: none;
-  visibility: hidden;
-  color-scheme: light;
+    width: 100%;
+    margin: 0;
+    border-radius: 10px;
+    border: none;
+    color-scheme: light;
 }
 
 gmp-place-details-compact {
-  max-height: 300px;
-  border: none;
-  visibility: hidden;
-  color-scheme: light;
+    max-height: 300px;
+    border: none;
+    color-scheme: light;
 }
 
 /* [END maps_ui_kit_place_search_nearby] */

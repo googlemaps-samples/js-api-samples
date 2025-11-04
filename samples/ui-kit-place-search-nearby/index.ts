@@ -22,7 +22,6 @@ const typeSelect = document.querySelector('.type-select') as HTMLSelectElement
 // Global variables for the map, markers, and info window.
 const markers: Map<string, google.maps.marker.AdvancedMarkerElement> = new Map()
 let infoWindow
-
 let AdvancedMarkerElement: typeof google.maps.marker.AdvancedMarkerElement
 let LatLngBounds: typeof google.maps.LatLngBounds
 
@@ -32,7 +31,9 @@ async function init(): Promise<void> {
     const { InfoWindow } = (await google.maps.importLibrary(
         'maps'
     )) as google.maps.MapsLibrary
-    await google.maps.importLibrary('places')
+    const { Place } = (await google.maps.importLibrary(
+        'places'
+    )) as google.maps.PlacesLibrary
     const markerLib = (await google.maps.importLibrary(
         'marker'
     )) as google.maps.MarkerLibrary
@@ -59,9 +60,7 @@ async function init(): Promise<void> {
     })
 
     // Add a click listener to the map to hide the info window when the map is clicked.
-    map.innerMap.addListener('click', () => {
-        hideInfoWindow()
-    })
+    map.innerMap.addListener('click', () => infoWindow.close())
     /* [START maps_ui_kit_place_search_nearby_event] */
     // Add event listeners to the type select and place search elements.
     typeSelect.addEventListener('change', searchPlaces)
@@ -79,6 +78,7 @@ async function init(): Promise<void> {
         },
         { once: true }
     )
+    placeSearch.style.visibility = 'hidden'
 }
 /* [END maps_ui_kit_place_search_nearby_event] */
 // The searchPlaces function is called when the user changes the type select or when the page loads.
@@ -99,7 +99,7 @@ function searchPlaces() {
     infoWindow.close()
 
     for (const marker of markers.values()) {
-        marker.map = null
+        marker.remove()
     }
     markers.clear()
 
@@ -150,22 +150,16 @@ async function addMarkers() {
                 }
                 placeRequest.place = place
                 infoWindow.setPosition(place.location)
-                placeDetails.style.visibility = 'visible' // Ensure place details are visible
                 infoWindow.open(map.innerMap)
             })
             /* [END maps_ui_kit_place_search_nearby_click_event] */
         })
         // Set the map center and fit the bounds.
-        map.innerMap.setCenter(bounds.getCenter())
         map.innerMap.fitBounds(bounds)
     }
 }
 
 // The hideInfoWindow function is called when the user clicks on the map.
-function hideInfoWindow() {
-    infoWindow.close()
-    placeDetails.style.visibility = 'hidden'
-}
 
 init()
 /* [END maps_ui_kit_place_search_nearby] */
