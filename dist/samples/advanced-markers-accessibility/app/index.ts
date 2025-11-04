@@ -5,16 +5,12 @@
  */
 
 // [START maps_advanced_markers_accessibility]
+const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+
 async function initMap() {
     // Request needed libraries.
     const { Map, InfoWindow } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
-
-    const map = new Map(document.getElementById("map") as HTMLElement, {
-        zoom: 12,
-        center: { lat: 34.84555, lng: -111.8035 },
-        mapId: '4504f8b37365c3d0',
-    });
 
     // Set LatLng and title text for the markers. The first marker (Boynton Pass)
     // receives the initial focus when tab is pressed. Use arrow keys to move
@@ -47,19 +43,19 @@ async function initMap() {
 
     // Create the markers.
     tourStops.forEach(({position, title}, i) => {
+        // [START maps_advanced_markers_accessibility_marker]
         const pin = new PinElement({
             //@ts-ignore
             glyphText: `${i + 1}`,
             scale: 1.5,
         });
-        // [START maps_advanced_markers_accessibility_marker]
         const marker = new AdvancedMarkerElement({
             position,
-            map,
             title: `${i + 1}. ${title}`,
-            content: pin.element,
             gmpClickable: true,
         });
+        marker.append(pin);
+        mapElement.append(marker);
         // [END maps_advanced_markers_accessibility_marker]
         // [START maps_advanced_markers_accessibility_event_listener]
         // Add a click listener for each marker, and set up the info window.
