@@ -49,12 +49,12 @@ async function initMap() {
 
   const beachFlagMarker = new AdvancedMarkerElement({
     position: { lat: 37.434, lng: -122.082 },
-    content: beachFlagImg,
     title: 'A marker using a custom PNG Image',
     //@ts-ignore
     anchorLeft: '0px',
     anchorTop: '100%',
   });
+  beachFlagMarker.append(beachFlagImg);
   mapElement.append(beachFlagMarker);
   // [END maps_advanced_markers_graphics_png]
 
