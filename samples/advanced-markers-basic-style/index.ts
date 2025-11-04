@@ -7,24 +7,21 @@
 // [START maps_advanced_markers_basic_style]
 const parser = new DOMParser();
 const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-let innerMap;
 
 async function initMap() {
     // Request needed libraries.
     const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
 
-    innerMap = mapElement.innerMap;
-
     // Each PinElement is paired with a MarkerView to demonstrate setting each parameter.
 
     // [START maps_advanced_markers_basic_style_title]
     // Default marker with title text (no PinElement).
     const markerViewWithText = new AdvancedMarkerElement({
-        map: innerMap,
         position: { lat: 37.419, lng: -122.03 },
         title: 'Title text for the marker at lat: 37.419, lng: -122.03',
     });
+    mapElement.append(markerViewWithText);
     // [END maps_advanced_markers_basic_style_title]
 
     // [START maps_advanced_markers_basic_style_scale]
@@ -33,10 +30,10 @@ async function initMap() {
         scale: 1.5,
     });
     const markerViewScaled = new AdvancedMarkerElement({
-        map: innerMap,
         position: { lat: 37.419, lng: -122.02 },
         content: pinScaled.element,
     });
+    mapElement.append(markerViewScaled);
     // [END maps_advanced_markers_basic_style_scale]
 
     // [START maps_advanced_markers_basic_style_background]
@@ -45,10 +42,10 @@ async function initMap() {
         background: '#FBBC04',
     });
     const markerViewBackground = new AdvancedMarkerElement({
-        map: innerMap,
         position: { lat: 37.419, lng: -122.01 },
         content: pinBackground.element,
     });
+    mapElement.append(markerViewBackground);
     // [END maps_advanced_markers_basic_style_background]
 
     // [START maps_advanced_markers_basic_style_border]
@@ -57,10 +54,10 @@ async function initMap() {
         borderColor: '#137333',
     });
     const markerViewBorder = new AdvancedMarkerElement({
-        map: innerMap,
         position: { lat: 37.415, lng: -122.035 },
         content: pinBorder.element,
     });
+    mapElement.append(markerViewBorder);
     // [END maps_advanced_markers_basic_style_border]
 
     // [START maps_advanced_markers_basic_style_glyph]
@@ -69,34 +66,36 @@ async function initMap() {
         glyphColor: 'white',
     });
     const markerViewGlyph = new AdvancedMarkerElement({
-        map: innerMap,
         position: { lat: 37.415, lng: -122.025 },
         content: pinGlyph.element,
     });
+    mapElement.append(markerViewGlyph);
     // [END maps_advanced_markers_basic_style_glyph]
 
     // [START maps_advanced_markers_basic_style_text_glyph]
     const pinTextGlyph = new PinElement({
-        glyph: 'T',
+        //@ts-ignore
+        glyphText: 'T',
         glyphColor: 'white',
     });
     const markerViewGlyphText = new AdvancedMarkerElement({
-        map: innerMap,
         position: { lat: 37.415, lng: -122.015 },
         content: pinTextGlyph.element,
     });
+    mapElement.append(markerViewGlyphText);
     // [END maps_advanced_markers_basic_style_text_glyph]
 
     // [START maps_advanced_markers_basic_style_hide_glyph]
     // Hide the glyph.
     const pinNoGlyph = new PinElement({
-        glyph: '',
+        //@ts-ignore
+        glyphText: '',
     });
     const markerViewNoGlyph = new AdvancedMarkerElement({
-        map: innerMap,
         position: { lat: 37.415, lng: -122.005 },
         content: pinNoGlyph.element,
     });
+    mapElement.append(markerViewNoGlyph);
     // [END maps_advanced_markers_basic_style_hide_glyph]
 
 }
