@@ -5,44 +5,45 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 // [START maps_advanced_markers_zoom]
+const mapElement = document.querySelector('gmp-map');
 async function initMap() {
     // Request needed libraries.
-    const { Map } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-    const map = new Map(document.getElementById('map'), {
-        center: { lat: 37.424563902650114, lng: -122.09512859577026 },
-        zoom: 17,
-        mapId: '4504f8b37365c3d0',
-    });
-    const marker01 = new AdvancedMarkerElement({
-        map,
-        position: { lat: 37.4239163, lng: -122.094 },
-        title: 'This marker is visible at zoom level 15 and higher.'
-    });
-    const marker02 = new AdvancedMarkerElement({
-        map,
-        position: { lat: 37.4245, lng: -122.096 },
-        title: 'This marker is visible at zoom level 16 and higher.'
-    });
-    const marker03 = new AdvancedMarkerElement({
-        map,
-        position: { lat: 37.4249, lng: -122.095 },
-        title: 'This marker is visible at zoom level 17 and higher.'
-    });
-    const marker04 = new AdvancedMarkerElement({
-        map,
-        position: { lat: 37.425, lng: -122.0955 },
-        title: 'This marker is visible at zoom level 18 and higher.'
-    });
+    const { Map } = (await google.maps.importLibrary('maps'));
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
+    const markerOptions = [
+        {
+            position: { lat: 37.4239163, lng: -122.094 },
+            title: 'This marker is visible at zoom level 15 and higher.',
+            minZoom: 14,
+        },
+        {
+            position: { lat: 37.4245, lng: -122.096 },
+            title: 'This marker is visible at zoom level 16 and higher.',
+            minZoom: 15,
+        },
+        {
+            position: { lat: 37.4249, lng: -122.095 },
+            title: 'This marker is visible at zoom level 17 and higher.',
+            minZoom: 16,
+        },
+        {
+            position: { lat: 37.425, lng: -122.0955 },
+            title: 'This marker is visible at zoom level 18 and higher.',
+            minZoom: 17,
+        },
+    ];
+    const markers = [];
+    for (const { position, title } of markerOptions) {
+        const marker = new AdvancedMarkerElement({ position, title });
+        mapElement.append(marker);
+        markers.push(marker);
+    }
     // [START maps_advanced_markers_zoom_listener]
-    map.addListener('zoom_changed', () => {
-        const zoom = map.getZoom();
-        if (zoom) {
-            // Only show each marker above a certain zoom level.
-            marker01.map = zoom > 14 ? map : null;
-            marker02.map = zoom > 15 ? map : null;
-            marker03.map = zoom > 16 ? map : null;
-            marker04.map = zoom > 17 ? map : null;
+    mapElement.innerMap.addListener('zoom_changed', () => {
+        let zoom = mapElement.innerMap.getZoom();
+        for (let i = 0; i < markers.length; i++) {
+            const { position, minZoom } = markerOptions[i];
+            markers[i].position = zoom > minZoom ? position : null;
         }
     });
     // [END maps_advanced_markers_zoom_listener]
