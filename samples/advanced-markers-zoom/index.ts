@@ -42,7 +42,7 @@ async function initMap() {
   const markers: google.maps.marker.AdvancedMarkerElement[] = [];
   for (const { position, title } of markerOptions) {
     const marker = new AdvancedMarkerElement({ position, title });
-    mapElement.appendChild(marker);
+    mapElement.append(marker);
     markers.push(marker);
   }
 
