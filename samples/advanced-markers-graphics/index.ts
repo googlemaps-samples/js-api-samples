@@ -31,15 +31,15 @@ async function initMap() {
     pinSvgString,
     'image/svg+xml'
   ).documentElement;
-  const pinSvgMarkerView = new AdvancedMarkerElement({
+  const pinSvgMarker = new AdvancedMarkerElement({
     position: { lat: 37.42475, lng: -122.094 },
-    content: pinSvg,
     title: 'A marker using a custom SVG image.',
     //@ts-ignore
     anchorLeft: '-50%',
     anchorTop: '-50%',
   });
-  mapElement.append(pinSvgMarkerView);
+  pinSvgMarker.append(pinSvg);
+  mapElement.append(pinSvgMarker);
   // [END maps_advanced_markers_graphics_inline]
 
   // [START maps_advanced_markers_graphics_png]
@@ -47,7 +47,7 @@ async function initMap() {
   const beachFlagImg = document.createElement('img');
   beachFlagImg.src = new URL('./public/beachflag.png', import.meta.url).href;
 
-  const beachFlagMarkerView = new AdvancedMarkerElement({
+  const beachFlagMarker = new AdvancedMarkerElement({
     position: { lat: 37.434, lng: -122.082 },
     content: beachFlagImg,
     title: 'A marker using a custom PNG Image',
@@ -55,7 +55,7 @@ async function initMap() {
     anchorLeft: '0px',
     anchorTop: '100%',
   });
-  mapElement.append(beachFlagMarkerView);
+  mapElement.append(beachFlagMarker);
   // [END maps_advanced_markers_graphics_png]
 
   // [START maps_advanced_markers_graphics_svg_glyph]
@@ -67,12 +67,12 @@ async function initMap() {
     glyphSrc: glyphImgSrc,
   });
 
-  const glyphSvgMarkerView = new AdvancedMarkerElement({
+  const glyphSvgMarker = new AdvancedMarkerElement({
     position: { lat: 37.425, lng: -122.07 },
-    content: glyphSvgPinElement.element,
     title: 'A marker using a custom SVG for the glyph.',
   });
-  mapElement.append(glyphSvgMarkerView);
+  glyphSvgMarker.append(glyphSvgPinElement);
+  mapElement.append(glyphSvgMarker);
   // [END maps_advanced_markers_graphics_svg_glyph]
 
   // [START maps_advanced_markers_graphics_place_icon]
@@ -97,12 +97,12 @@ async function initMap() {
     glyphSrc: new URL(String(place.svgIconMaskURI)),
   });
 
-  const placeIconMarkerView = new AdvancedMarkerElement({
+  const placeIconMarker = new AdvancedMarkerElement({
     position: place.location,
-    content: pinElement.element,
     title: place.displayName,
   });
-  mapElement.append(placeIconMarkerView);
+  placeIconMarker.append(pinElement);
+  mapElement.append(placeIconMarker);
   // [END maps_advanced_markers_graphics_place_icon]
 }
 
