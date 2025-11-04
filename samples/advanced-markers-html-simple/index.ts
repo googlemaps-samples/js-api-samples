@@ -23,8 +23,8 @@ async function initMap() {
 
   const marker = new AdvancedMarkerElement({
     position: { lat: 37.42, lng: -122.1 },
-    content: priceTag,
   });
+  marker.append(priceTag);
   mapElement.append(marker);
 }
 // [END maps_advanced_markers_html_simple_snippet]
