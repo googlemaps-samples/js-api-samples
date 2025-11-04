@@ -13,9 +13,7 @@ async function initMap() {
     const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
 
-    innerMap = mapElement.innerMap;
-
-    innerMap.setOptions ({
+    mapElement.innerMap.setOptions ({
         tilt: 67.5,
         heading: 45,
     });
