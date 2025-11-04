@@ -7,7 +7,6 @@
 // eslint-disable no-undef
 // [START maps_advanced_markers_collision]
 const mapElement = document.querySelector("gmp-map") as google.maps.MapElement;
-let innerMap;
 
 // Initialize and add the map
 async function initMap(): Promise<void> {
@@ -22,8 +21,6 @@ async function initMap(): Promise<void> {
   let markers: google.maps.marker.AdvancedMarkerElement[] = [];
 
   let collisionBehavior = google.maps.CollisionBehavior.REQUIRED;
-
-  innerMap = mapElement.innerMap;
 
   // @ts-ignore
   const select = new mdc.select.MDCSelect(
@@ -60,9 +57,9 @@ async function initMap(): Promise<void> {
     // [START maps_advanced_markers_collision_create_marker]
     const advancedMarker = new AdvancedMarkerElement({
       position: new google.maps.LatLng({ lat, lng }),
-      map: innerMap,
       collisionBehavior: collisionBehavior,
     });
+    mapElement.appendChild(advancedMarker);
     // [END maps_advanced_markers_collision_create_marker]
     markers.push(advancedMarker);
   });
