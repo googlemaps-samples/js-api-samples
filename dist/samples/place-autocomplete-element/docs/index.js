@@ -10,9 +10,7 @@ async function initMap() {
     // Request needed libraries.
     await google.maps.importLibrary("places");
     // Create the input HTML element, and append it.
-    //@ts-ignore
-    const placeAutocomplete = new google.maps.places.PlaceAutocompleteElement();
-    //@ts-ignore
+    const placeAutocomplete = new google.maps.places.PlaceAutocompleteElement({});
     document.body.appendChild(placeAutocomplete);
     // [END maps_place_autocomplete_element_add]
     // Inject HTML UI.
