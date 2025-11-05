@@ -5,38 +5,32 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-let map;
+const mapElement = document.querySelector('gmp-map');
+const placeAutocomplete = document.querySelector('gmp-place-autocomplete');
+let innerMap;
 let marker;
 let infoWindow;
 let center = { lat: 40.749933, lng: -73.98633 }; // New York City
 async function initMap() {
     // Request needed libraries.
-    //@ts-ignore
-    const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
-        google.maps.importLibrary("marker"),
-        google.maps.importLibrary("places")
+    const [] = await Promise.all([
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('places'),
     ]);
-    // Initialize the map.
-    map = new google.maps.Map(document.getElementById('map'), {
-        center,
-        zoom: 13,
-        mapId: '4504f8b37365c3d0',
+    
+    // Get the inner map.
+    innerMap = mapElement.innerMap;
+    innerMap.setOptions({
         mapTypeControl: false,
     });
-    
-    //@ts-ignore
-    const placeAutocomplete = new google.maps.places.PlaceAutocompleteElement();
-    //@ts-ignore
-    placeAutocomplete.id = 'place-autocomplete-input';
-    placeAutocomplete.locationBias = center;
-    const card = document.getElementById('place-autocomplete-card');
-    //@ts-ignore
-    card.appendChild(placeAutocomplete);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
+    // Use the bounds_changed event to restrict results to the current map bounds.
+    google.maps.event.addListener(innerMap, 'bounds_changed', async () => {
+        placeAutocomplete.locationRestriction = innerMap.getBounds();
+    });
     
     // Create the marker and infowindow.
     marker = new google.maps.marker.AdvancedMarkerElement({
-        map,
+        map: innerMap,
     });
     infoWindow = new google.maps.InfoWindow({});
     
@@ -44,19 +38,25 @@ async function initMap() {
     //@ts-ignore
     placeAutocomplete.addEventListener('gmp-select', async ({ placePrediction }) => {
         const place = placePrediction.toPlace();
-        await place.fetchFields({ fields: ['displayName', 'formattedAddress', 'location'] });
+        await place.fetchFields({
+            fields: ['displayName', 'formattedAddress', 'location'],
+        });
         // If the place has a geometry, then present it on a map.
         if (place.viewport) {
-            map.fitBounds(place.viewport);
+            innerMap.fitBounds(place.viewport);
         }
         else {
-            map.setCenter(place.location);
-            map.setZoom(17);
+            innerMap.setCenter(place.location);
+            innerMap.setZoom(17);
         }
-        let content = '<div id="infowindow-content">' +
-            '<span id="place-displayname" class="title">' + place.displayName + '</span><br />' +
-            '<span id="place-address">' + place.formattedAddress + '</span>' +
-            '</div>';
+        let content = document.createElement('div');
+        let nameText = document.createElement('span');
+        nameText.textContent = place.displayName;
+        content.appendChild(nameText);
+        content.appendChild(document.createElement('br'));
+        let addressText = document.createElement('span');
+        addressText.textContent = place.formattedAddress;
+        content.appendChild(addressText);
         updateInfoWindow(content, place.location);
         marker.position = place.location;
     });
@@ -67,7 +67,7 @@ function updateInfoWindow(content, center) {
     infoWindow.setContent(content);
     infoWindow.setPosition(center);
     infoWindow.open({
-        map,
+        map: innerMap,
         anchor: marker,
         shouldFocus: false,
     });
