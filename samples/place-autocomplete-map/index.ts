@@ -15,8 +15,7 @@ let infoWindow: google.maps.InfoWindow;
 let center = { lat: 40.749933, lng: -73.98633 }; // New York City
 async function initMap(): Promise<void> {
   // Request needed libraries.
-  //@ts-ignore
-  const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
+  const [] = await Promise.all([
     google.maps.importLibrary('marker'),
     google.maps.importLibrary('places'),
   ]);
