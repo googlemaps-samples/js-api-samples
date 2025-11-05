@@ -5,15 +5,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+const mapElement = document.querySelector('gmp-map');
 async function initMap() {
     // Request needed libraries.
     const { Map, InfoWindow } = await google.maps.importLibrary("maps");
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
-    const map = new Map(document.getElementById("map"), {
-        zoom: 12,
-        center: { lat: 34.84555, lng: -111.8035 },
-        mapId: '4504f8b37365c3d0',
-    });
     // Set LatLng and title text for the markers. The first marker (Boynton Pass)
     // receives the initial focus when tab is pressed. Use arrow keys to move
     // between markers; press tab again to cycle through the map controls.
@@ -43,19 +39,19 @@ async function initMap() {
     const infoWindow = new InfoWindow();
     // Create the markers.
     tourStops.forEach(({ position, title }, i) => {
+        
         const pin = new PinElement({
             //@ts-ignore
             glyphText: `${i + 1}`,
             scale: 1.5,
         });
-        
         const marker = new AdvancedMarkerElement({
             position,
-            map,
             title: `${i + 1}. ${title}`,
-            content: pin.element,
             gmpClickable: true,
         });
+        marker.append(pin);
+        mapElement.append(marker);
         
         
         // Add a click listener for each marker, and set up the info window.

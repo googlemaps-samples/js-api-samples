@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2019 Google LLC. All Rights Reserved.
+ * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 /* [START maps_advanced_markers_graphics] */
@@ -8,7 +8,7 @@
  * Always set the map height explicitly to define the size of the div element
  * that contains the map. 
  */
-#map {
+gmp-map {
   height: 100%;
 }
 
