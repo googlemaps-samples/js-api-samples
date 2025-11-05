@@ -6,67 +6,63 @@
  */
 
 const parser = new DOMParser();
+const mapElement = document.querySelector('gmp-map');
 async function initMap() {
     // Request needed libraries.
     const { Map } = await google.maps.importLibrary("maps");
     const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
-    const map = new Map(document.getElementById('map'), {
-        center: { lat: 37.419, lng: -122.02 },
-        zoom: 14,
-        mapId: '4504f8b37365c3d0',
-    });
-    // Each PinElement is paired with a MarkerView to demonstrate setting each parameter.
+    // Each PinElement is paired with a marker to demonstrate setting each parameter.
     
     // Default marker with title text (no PinElement).
-    const markerViewWithText = new AdvancedMarkerElement({
-        map,
+    const markerWithText = new AdvancedMarkerElement({
         position: { lat: 37.419, lng: -122.03 },
         title: 'Title text for the marker at lat: 37.419, lng: -122.03',
     });
+    mapElement.append(markerWithText);
     
     
     // Adjust the scale.
     const pinScaled = new PinElement({
         scale: 1.5,
     });
-    const markerViewScaled = new AdvancedMarkerElement({
-        map,
+    const markerScaled = new AdvancedMarkerElement({
         position: { lat: 37.419, lng: -122.02 },
-        content: pinScaled.element,
     });
+    markerScaled.append(pinScaled);
+    mapElement.append(markerScaled);
     
     
     // Change the background color.
     const pinBackground = new PinElement({
         background: '#FBBC04',
     });
-    const markerViewBackground = new AdvancedMarkerElement({
-        map,
+    const markerBackground = new AdvancedMarkerElement({
         position: { lat: 37.419, lng: -122.01 },
-        content: pinBackground.element,
     });
+    markerBackground.append(pinBackground);
+    mapElement.append(markerBackground);
     
     
     // Change the border color.
     const pinBorder = new PinElement({
         borderColor: '#137333',
     });
-    const markerViewBorder = new AdvancedMarkerElement({
-        map,
+    const markerBorder = new AdvancedMarkerElement({
         position: { lat: 37.415, lng: -122.035 },
-        content: pinBorder.element,
     });
+    markerBorder.append(pinBorder);
+    mapElement.append(markerBorder);
     
     
     // Change the glyph color.
     const pinGlyph = new PinElement({
         glyphColor: 'white',
     });
-    const markerViewGlyph = new AdvancedMarkerElement({
-        map,
+    const markerGlyph = new AdvancedMarkerElement({
         position: { lat: 37.415, lng: -122.025 },
-        content: pinGlyph.element,
     });
+    markerGlyph.append(pinGlyph);
+    mapElement.append(markerGlyph);
     
     
     const pinTextGlyph = new PinElement({
@@ -74,11 +70,11 @@ async function initMap() {
         glyphText: 'T',
         glyphColor: 'white',
     });
-    const markerViewGlyphText = new AdvancedMarkerElement({
-        map,
+    const markerGlyphText = new AdvancedMarkerElement({
         position: { lat: 37.415, lng: -122.015 },
-        content: pinTextGlyph.element,
     });
+    markerGlyphText.append(pinTextGlyph);
+    mapElement.append(markerGlyphText);
     
     
     // Hide the glyph.
@@ -86,11 +82,11 @@ async function initMap() {
         //@ts-ignore
         glyphText: '',
     });
-    const markerViewNoGlyph = new AdvancedMarkerElement({
-        map,
+    const markerNoGlyph = new AdvancedMarkerElement({
         position: { lat: 37.415, lng: -122.005 },
-        content: pinNoGlyph.element,
     });
+    markerNoGlyph.append(pinNoGlyph);
+    mapElement.append(markerNoGlyph);
     
 }
 initMap();
