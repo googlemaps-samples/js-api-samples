@@ -75,7 +75,7 @@ function createMarker(map, AdvancedMarkerElement, PinElement) {
         content: content,
     });
     content.style.opacity = '0';
-    content.addEventListener('animationend', (event) => {
+    content.addListener('animationend', (event) => {
         content.classList.remove('drop');
         content.style.opacity = '1';
     });
