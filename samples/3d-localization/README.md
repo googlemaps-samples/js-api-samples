@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## 3d-localization
+
+The 3d-localization sample demonstrates how to localize a 3D map by changing the language and region.
+
+Follow these instructions to set up and run 3d-localization sample on your local computer.
 
 ## Setup
 
@@ -19,7 +22,7 @@ First `cd` to the folder for the sample to run, then:
 
 From `samples/`:
 
-`$npm run build --workspace=sample-name/`
+`$npm run build --workspace=3d-localization/`
 
 ### Build all of the examples.
 

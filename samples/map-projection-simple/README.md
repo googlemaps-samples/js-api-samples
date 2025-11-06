@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## map-projection-simple
+
+The map-projection-simple sample demonstrates a simple example of how to use map projections.
+
+Follow these instructions to set up and run map-projection-simple sample on your local computer.
 
 ## Setup
 

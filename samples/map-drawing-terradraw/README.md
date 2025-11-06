@@ -7,8 +7,11 @@ This sample demonstrates a basic implementation of Terra Draw with the Google Ma
 
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## map-drawing-terradraw
+
+The map-drawing-terradraw sample demonstrates how to use Terra Draw with the Google Maps JavaScript API to draw on a map.
+
+Follow these instructions to set up and run map-drawing-terradraw sample on your local computer.
 
 ## Setup
 
@@ -26,7 +29,7 @@ First `cd` to the folder for the sample to run, then:
 
 From `samples/`:
 
-`$npm run build --workspace=sample-name/`
+`$npm run build --workspace=map-drawing-terradraw/`
 
 ### Build all of the examples.
 
@@ -37,4 +40,3 @@ From `samples/`:
 
 For feedback related to this sample, please open a new issue on
 [GitHub](https://github.com/googlemaps-samples/js-api-samples/issues).
-

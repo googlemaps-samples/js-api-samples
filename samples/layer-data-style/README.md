@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## layer-data-style
+
+The layer-data-style sample demonstrates how to style a data layer.
+
+Follow these instructions to set up and run layer-data-style sample on your local computer.
 
 ## Setup
 
