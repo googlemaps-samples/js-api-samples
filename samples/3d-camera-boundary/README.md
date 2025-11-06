@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## 3d-camera-boundary
+
+The 3d-camera-boundary sample demonstrates how to set a boundary for the camera in a 3D map to restrict the user's view.
+
+Follow these instructions to set up and run 3d-camera-boundary sample on your local computer.
 
 ## Setup
 

@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## 3d-accessibility-features
+
+The 3d-accessibility-features sample demonstrates how to use accessibility features in a 3D map, such as keyboard and screen reader support.
+
+Follow these instructions to set up and run 3d-accessibility-features sample on your local computer.
 
 ## Setup
 
