@@ -1,0 +1,5 @@
+/**
+ * @license
+ * Copyright 2019 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */gmp-map{height:100%}html,body{height:100%;margin:0;padding:0}#container{display:flex;flex-direction:row;height:100%;font-family:Roboto;font-size:14px}#sidebar{background-color:#fff;border-radius:5px;margin:1rem;padding:5px;flex-basis:15rem;flex-grow:1;box-sizing:border-box;overflow:auto;display:table}#title{color:#fff;background-color:#4d90fe;font-size:22px;font-weight:500;padding:6px 12px;border-radius:5px}gmp-place-autocomplete{background-color:#fff;border-radius:5px;margin-bottom:10px;font-family:Roboto,sans-serif;font-size:large;font-weight:700}.pac-controls{height:32px;border-radius:5px;margin-top:10px;width:-webkit-fill-available}#pac-content{margin-top:10px}#place-info{font-size:14px}#color-controls{display:flex;align-items:center}label{display:flex;align-items:center;font-size:14px}.unsupported-feature{color:red}
