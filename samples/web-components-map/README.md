@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## web-components-map
+
+The web-components-map sample demonstrates how to use Web Components to create a map.
+
+Follow these instructions to set up and run web-components-map sample on your local computer.
 
 ## Setup
 
