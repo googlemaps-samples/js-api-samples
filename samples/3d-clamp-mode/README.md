@@ -1,9 +1,12 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## 3d-clamp-mode
 
 ## Setup
+
+The 3d-clamp-mode sample demonstrates how different clamp modes impact how a polyline is rendered on the map.
+
+Follow these instructions to set up and run 3d-clamp-mode sample on your local computer.
 
 ### Before starting run:
 
@@ -19,7 +22,7 @@ First `cd` to the folder for the sample to run, then:
 
 From `samples/`:
 
-`$npm run build --workspace=sample-name/`
+`$npm run build --workspace=3d-clamp-mode/`
 
 ### Build all of the examples.
 
