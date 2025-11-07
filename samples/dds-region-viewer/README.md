@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-The Region Viewer lets you view all types of boundaries for every supported region.
-It is intended as a utility rather than a direct code demonstration.
+## dds-region-viewer
+
+The dds-region-viewer sample demonstrates how to build a tool that lets you view all types of boundaries for every supported region.
+
+Follow these instructions to set up and run dds-region-viewer sample on your local computer.
 
 ## Run the conversion scripts
 

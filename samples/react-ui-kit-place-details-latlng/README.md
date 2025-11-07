@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## react-ui-kit-place-details-latlng
+
+The react-ui-kit-place-details-latlng sample demonstrates how to use the UI Kit Place Details element with a lat/lng, using the React framework.
+
+Follow these instructions to set up and run react-ui-kit-place-details-latlng sample on your local computer.
 
 ## Setup
 
@@ -19,7 +22,7 @@ First `cd` to the folder for the sample to run, then:
 
 From `samples/`:
 
-`$npm run build --workspace=sample-name/`
+`$npm run build --workspace=react-ui-kit-place-details-latlng/`
 
 ### Build all of the examples.
 

@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## advanced-markers-zoom
+
+The advanced-markers-zoom sample demonstrates how to change the size of advanced markers based on the zoom level.
+
+Follow these instructions to set up and run advanced-markers-zoom sample on your local computer.
 
 ## Setup
 

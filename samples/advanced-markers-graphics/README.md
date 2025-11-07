@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## advanced-markers-graphics
+
+The advanced-markers-graphics sample demonstrates how to use graphics with advanced markers.
+
+Follow these instructions to set up and run advanced-markers-graphics sample on your local computer.
 
 ## Setup
 
@@ -19,7 +22,7 @@ First `cd` to the folder for the sample to run, then:
 
 From `samples/`:
 
-`npm run build --workspace=sample-name/`
+`npm run build --workspace=advanced-markers-graphics/`
 
 ### Build all of the examples.
 

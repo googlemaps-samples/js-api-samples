@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## ui-kit-place-details
+
+The ui-kit-place-details sample demonstrates how to use the UI Kit Place Details element.
+
+Follow these instructions to set up and run ui-kit-place-details sample on your local computer.
 
 ## Setup
 
@@ -19,7 +22,7 @@ First `cd` to the folder for the sample to run, then:
 
 From `samples/`:
 
-`$npm run build --workspace=sample-name/`
+`$npm run build --workspace=ui-kit-place-details/`
 
 ### Build all of the examples.
 
@@ -30,4 +33,3 @@ From `samples/`:
 
 For feedback related to this sample, please open a new issue on
 [GitHub](https://github.com/googlemaps-samples/js-api-samples/issues).
-

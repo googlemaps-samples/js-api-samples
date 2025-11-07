@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## 3d-map-styling
+
+The 3d-map-styling sample demonstrates how to apply custom styles to a 3D map.
+
+Follow these instructions to set up and run 3d-map-styling sample on your local computer.
 
 ## Setup
 
@@ -19,7 +22,7 @@ First `cd` to the folder for the sample to run, then:
 
 From `samples/`:
 
-`$npm run build --workspace=sample-name/`
+`$npm run build --workspace=3d-map-styling/`
 
 ### Build all of the examples.
 
