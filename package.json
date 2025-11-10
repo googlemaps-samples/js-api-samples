@@ -18,7 +18,7 @@
     "@playwright/test": "^1.56.1",
     "@types/google.maps": "^3.58.1",
     "@types/node": "^24.9.1",
-    "eslint": "^9.38.0",
+    "eslint": "^9.39.1",
     "globals": "^16.5.0",
     "rimraf": "^6.1.0",
     "typescript": "^5.9.3",
