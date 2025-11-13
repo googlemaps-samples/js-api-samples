@@ -6,58 +6,72 @@
 
 // [START maps_place_autocomplete_data_simple]
 async function init() {
-    const { Place, AutocompleteSessionToken, AutocompleteSuggestion } = await google.maps.importLibrary("places") as google.maps.PlacesLibrary;
+  const { Place, AutocompleteSessionToken, AutocompleteSuggestion } =
+    (await google.maps.importLibrary("places")) as google.maps.PlacesLibrary;
 
-    // [START maps_place_autocomplete_data_simple_request]
-    // Add an initial request body.
-    // [START maps_place_autocomplete_data_simple_request_body]
-    let request = {
-        input: "Tadi",
-        locationRestriction: { west: -122.44, north: 37.8, east: -122.39, south: 37.78 },
-        origin: { lat: 37.7893, lng: -122.4039 },
-        includedPrimaryTypes: ["restaurant"],
-        language: "en-US",
-        region: "us",
-    };
-    // [END maps_place_autocomplete_data_simple_request_body]
+  // [START maps_place_autocomplete_data_simple_request]
+  // Add an initial request body.
+  // [START maps_place_autocomplete_data_simple_request_body]
+  let request = {
+    input: "Tadi",
+    locationRestriction: {
+      west: -122.44,
+      north: 37.8,
+      east: -122.39,
+      south: 37.78,
+    },
+    origin: { lat: 37.7893, lng: -122.4039 },
+    includedPrimaryTypes: ["restaurant"],
+    language: "en-US",
+    region: "us",
+  };
+  // [END maps_place_autocomplete_data_simple_request_body]
 
-    // [START maps_place_autocomplete_data_simple_token]
-    // Create a session token.
-    const token = new AutocompleteSessionToken();
-    // Add the token to the request.
-    // @ts-ignore
-    request.sessionToken = token;
-    // [END maps_place_autocomplete_data_simple_token]
-    // [END maps_place_autocomplete_data_simple_request]
-    // [START maps_place_autocomplete_data_simple_get_suggestions]
-    // Fetch autocomplete suggestions.
-    const { suggestions } = await AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
+  // [START maps_place_autocomplete_data_simple_token]
+  // Create a session token.
+  const token = new AutocompleteSessionToken();
+  // Add the token to the request.
+  // @ts-ignore
+  request.sessionToken = token;
+  // [END maps_place_autocomplete_data_simple_token]
+  // [END maps_place_autocomplete_data_simple_request]
+  // [START maps_place_autocomplete_data_simple_get_suggestions]
+  // Fetch autocomplete suggestions.
+  const { suggestions } =
+    await AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
 
-    const title = document.getElementById('title') as HTMLElement;
-    title.appendChild(document.createTextNode('Query predictions for "' + request.input + '":'));
+  const title = document.getElementById("title") as HTMLElement;
+  title.appendChild(
+    document.createTextNode('Query predictions for "' + request.input + '":')
+  );
+  
+  const resultsElement = document.getElementById("results") as HTMLElement;
 
-    for (let suggestion of suggestions) {
-        const placePrediction = suggestion.placePrediction;
+  for (let suggestion of suggestions) {
+    const placePrediction = suggestion.placePrediction;
 
-        // Create a new list element.
-        const listItem = document.createElement('li');
-        const resultsElement = document.getElementById("results") as HTMLElement;
-        listItem.appendChild(document.createTextNode(placePrediction!.text.toString()));
-        resultsElement.appendChild(listItem);
-    }
-    // [END maps_place_autocomplete_data_simple_get_suggestions]
+    // Create a new list element.
+    const listItem = document.createElement("li");
 
-    // [START maps_place_autocomplete_data_simple_prediction]
-    let place = suggestions[0].placePrediction!.toPlace(); // Get first predicted place.
-    // [START maps_place_autocomplete_data_simple_fetch]
-    await place.fetchFields({
-        fields: ['displayName', 'formattedAddress'],
-    });
-    // [END maps_place_autocomplete_data_simple_fetch]
+    listItem.appendChild(
+      document.createTextNode(placePrediction!.text.toString())
+    );
+    resultsElement.appendChild(listItem);
+  }
+  // [END maps_place_autocomplete_data_simple_get_suggestions]
 
-    const placeInfo = document.getElementById("prediction") as HTMLElement;
-    placeInfo.textContent = 'First predicted place: ' + place.displayName + ': ' + place.formattedAddress;
-    // [END maps_place_autocomplete_data_simple_prediction]
+  // [START maps_place_autocomplete_data_simple_prediction]
+  let place = suggestions[0].placePrediction!.toPlace(); // Get first predicted place.
+  // [START maps_place_autocomplete_data_simple_fetch]
+  await place.fetchFields({
+    fields: ["displayName", "formattedAddress"],
+  });
+  // [END maps_place_autocomplete_data_simple_fetch]
+
+  const placeInfo = document.getElementById("prediction") as HTMLElement;
+  placeInfo.textContent =
+    `First predicted place: ${place.displayName}: ${place.formattedAddress}`;
+  // [END maps_place_autocomplete_data_simple_prediction]
 }
 
 init();
