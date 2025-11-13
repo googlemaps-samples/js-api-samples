@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## 3d-marker-collision-behavior
+
+The 3d-marker-collision-behavior sample demonstrates how to control the collision behavior of 3D markers.
+
+Follow these instructions to set up and run 3d-marker-collision-behavior sample on your local computer.
 
 ## Setup
 
@@ -19,7 +22,7 @@ First `cd` to the folder for the sample to run, then:
 
 From `samples/`:
 
-`$npm run build --workspace=sample-name/`
+`$npm run build --workspace=3d-marker-collision-behavior/`
 
 ### Build all of the examples.
 

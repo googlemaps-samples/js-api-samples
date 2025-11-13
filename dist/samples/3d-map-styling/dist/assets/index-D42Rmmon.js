@@ -1,5 +1,0 @@
-(function(){const r=document.createElement("link").relList;if(r&&r.supports&&r.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))i(e);new MutationObserver(e=>{for(const t of e)if(t.type==="childList")for(const o of t.addedNodes)o.tagName==="LINK"&&o.rel==="modulepreload"&&i(o)}).observe(document,{childList:!0,subtree:!0});function s(e){const t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?t.credentials="include":e.crossOrigin==="anonymous"?t.credentials="omit":t.credentials="same-origin",t}function i(e){if(e.ep)return;e.ep=!0;const t=s(e);fetch(e.href,t)}})();/*
-* @license
-* Copyright 2025 Google LLC. All Rights Reserved.
-* SPDX-License-Identifier: Apache-2.0
-*/async function c(){const{Map3DElement:n}=await google.maps.importLibrary("maps3d"),r=new n({center:{lat:37.75183154601466,lng:-119.52369070507672,altitude:2200},tilt:67.5,heading:108.94057782079429,range:6605.57279990986,mapId:"bcce776b92de1336e22c569f",mode:"HYBRID",gestureHandling:"COOPERATIVE"});document.body.append(r)}c();
