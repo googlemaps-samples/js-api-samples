@@ -5,65 +5,52 @@
  */
 /* [START maps_ui_kit_place_search_nearby] */
 html,
-  body {
-      height: 100%;
-      margin: 0;
-  }
+body {
+    height: 100%;
+    margin: 0;
+}
 
-  body {
-      display: flex;
-      flex-direction: column;
-      font-family: Arial, Helvetica, sans-serif;
-  }
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
-  h1 {
-      font-size: large;
-      text-align: center;
-  }
+h1 {
+    font-size: large;
+    text-align: center;
+}
 
-  gmp-map {
-      box-sizing: border-box;
-      height: 600px;
-  }
+.container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
 
-  .overlay {
-      position: relative;
-      top: 40px;
-      margin: 20px;
-      width: 400px;
-  }
+gmp-map {
+    flex-grow: 1;
+}
 
-  .controls {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-      height: 32px;
-  }
+.ui-panel {
+    width: 400px;
+    margin-left: 20px;
+    overflow-y: auto;
+}
 
-  .search-button {
-      background-color: #5491f5;
-      color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      width: 100px;
-      cursor: pointer;
-  }
+.controls {
+    margin-bottom: 20px;
+}
 
-  .type-select {
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      flex-grow: 1;
-      padding: 0 10px;
-  }
+.list-container {
+    display: flex;
+    flex-direction: column;
+}
 
-  .list-container {
-      height: 400px;
-      overflow: auto;
-      border-radius: 10px;
-  }
+gmp-place-search {
+    width: 100%;
+    margin: 0;
+    border: none;
+    color-scheme: light;
+}
 
-  gmp-place-list {
-      background-color: #fff;
-      font-size: large
-  }
 /* [END maps_ui_kit_place_search_nearby] */
