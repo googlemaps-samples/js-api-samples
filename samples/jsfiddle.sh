@@ -32,15 +32,21 @@ cp "${SCRIPT_DIR}/${NAME}/index.js" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.j
 cp "${SCRIPT_DIR}/${NAME}/index.html" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
 cp "${SCRIPT_DIR}/${NAME}/style.css" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.css"
 
-# Copy the public folder if one is found (graphics, other static files).
-if [ -d "public" ] && [ "$(ls -A public)" ]; then
-  cp -r public/* "${DOCS_DIR}/"
-fi
+# Replace local asset paths with production URLs.
+PROD_URL_BASE="https://maps-docs-team.web.app/samples/${NAME}/dist"
+JSFIDDLE_DIR="${DIST_DIR}/samples/${NAME}/jsfiddle"
 
-# Copy the src folder if one is found (.js, .json, anything parseable by Vite).
-if [ -d "src" ] && [ "$(ls -A src)" ]; then
-  cp -r src/* "${DOCS_DIR}/"
-fi
+# Find all asset files in public and src directories.
+find "${SCRIPT_DIR}/${NAME}" \( -path "*/public/*" -o -path "*/src/*" \) -type f \( -name "*.png" -o -name "*.gif" -o -name "*.svg" -o -name "*.json" -o -name "*.js" \) | while read -r asset_file; do
+  # Get the asset's path relative to the sample directory (e.g., public/icon.png)
+  relative_path=${asset_file#*"${SCRIPT_DIR}/${NAME}/"}
+  asset_name=$(basename "$relative_path")
+  
+  # Replace paths in the demo files. Note: This handles paths like './asset.png' and 'asset.png'.
+  sed -i.bak "s|\(['\"(]\)\(\./\)*${asset_name}\(['\")']\)|\1${PROD_URL_BASE}/${asset_name}\3|g" "${JSFIDDLE_DIR}/demo.js" "${JSFIDDLE_DIR}/demo.html" "${JSFIDDLE_DIR}/demo.css"
+done
+
+rm -f "${JSFIDDLE_DIR}"/*.bak # Clean up backup files created by sed.
 
 # Remove region tags from files by type, since they all have different comment conventions.
 # We use a conditional here since sed behaves differently on Linux.
