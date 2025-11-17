@@ -4,21 +4,5 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 /* [START maps_web_components_markers] */
-/* 
- * Always set the map height explicitly to define the size of the div element
- * that contains the map. 
- */
-gmp-map {
-  height: 100%;
-}
-
-/* 
- * Optional: Makes the sample page fill the window. 
- */
-html,
-body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
+/* Note: This CSS file is intentionally blank. */
 /* [END maps_web_components_markers] */
