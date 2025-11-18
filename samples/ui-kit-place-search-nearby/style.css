@@ -16,11 +16,6 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-h1 {
-    font-size: large;
-    text-align: center;
-}
-
 .container {
     display: flex;
     height: 100vh;
@@ -34,11 +29,9 @@ gmp-map {
 .ui-panel {
     width: 400px;
     margin-left: 20px;
+    margin-top: 10px;
     overflow-y: auto;
-}
-
-.controls {
-    margin-bottom: 20px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .list-container {
