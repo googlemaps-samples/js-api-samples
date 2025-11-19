@@ -21,7 +21,7 @@ import childProcess, { execSync } from 'child_process';
 
 const samplesDir = path.join(__dirname, '..', 'samples');
 
-// List of samples to exclude from testing.
+// List folders to exclude from testing.
 const excludedFolders = ["js-api-loader-map"];
 
 // Function to return all sample folders.
@@ -81,17 +81,17 @@ const getChangedSampleFolders = (): string[] => {
       const folderPath = path.join(samplesDir, folderName);
       return fs.existsSync(folderPath) && fs.statSync(folderPath).isDirectory();
     });
-    
-    // Filter out the samples we want to skip.
+
+    // Filter out excluded folders.
     validChangedFolders.filter(folder => !excludedFolders.includes(folder));
-    
+
     if (validChangedFolders.length === 0) {
       console.warn("Folders were found, but none were valid sample directories. Skipping tests.");
       console.log("Extracted folder names that were considered invalid:", changedFolders);
       console.log("Full output from find-changes.sh for debugging:\n", output);
       return []; // Fallback to do nothing
     }
-    
+
     console.log("Running tests only for changed samples: ", validChangedFolders);
     return validChangedFolders;
 
@@ -151,14 +151,13 @@ foldersToTest.forEach((sampleFolder) => {
       await page.goto(url);
 
       // Allow some time for async operations and errors to be caught
-      //await page.waitForTimeout(500);
+      await page.waitForTimeout(500);
 
       // Filter out error messages we can safely avoid.
       const filteredErrorMessages = [
         'Falling back to Raster',
         'Attempted to load a 3D Map, but failed.',
         'The map is not a vector map',
-        "Property 'importLibrary' does not exist on type 'Loader'",
       ];
       const criticalErrors = consoleErrors.filter(error =>
         !filteredErrorMessages.some(message => error.includes(message))
