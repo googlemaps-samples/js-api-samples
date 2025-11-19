@@ -21,6 +21,9 @@ import childProcess, { execSync } from 'child_process';
 
 const samplesDir = path.join(__dirname, '..', 'samples');
 
+// List of samples to exclude from testing.
+const excludedFolders = ["js-api-loader-map"];
+
 // Function to return all sample folders.
 const getAllSampleFolders = () => {
   return fs.readdirSync(samplesDir).filter((file) => {
@@ -78,14 +81,17 @@ const getChangedSampleFolders = (): string[] => {
       const folderPath = path.join(samplesDir, folderName);
       return fs.existsSync(folderPath) && fs.statSync(folderPath).isDirectory();
     });
-
+    
+    // Filter out the samples we want to skip.
+    validChangedFolders.filter(folder => !excludedFolders.includes(folder));
+    
     if (validChangedFolders.length === 0) {
       console.warn("Folders were found, but none were valid sample directories. Skipping tests.");
       console.log("Extracted folder names that were considered invalid:", changedFolders);
       console.log("Full output from find-changes.sh for debugging:\n", output);
       return []; // Fallback to do nothing
     }
-
+    
     console.log("Running tests only for changed samples: ", validChangedFolders);
     return validChangedFolders;
 
@@ -97,14 +103,6 @@ const getChangedSampleFolders = (): string[] => {
 
 // Get changed folders, filtering out excluded ones.
 const foldersToTest = getChangedSampleFolders();
- 
-// Function to omit specific sample folders from testing.
-const omitSampleFolders = (folders: string[]): string[] => {
-  const excludedFolders = [
-    "js-api-loader-map",
-  ];
-  return folders.filter(folder => !excludedFolders.includes(folder));
-};
 
 if (foldersToTest.length === 0) {
   console.log("No sample folders found.");
