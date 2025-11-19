@@ -3,46 +3,48 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-{/* [START maps_react_ui_kit_place_details_by_latlng] */}
-import React from 'react';
-import {createRoot} from 'react-dom/client';
-import {APIProvider, useMapsLibrary} from '@vis.gl/react-google-maps';
+{
+    /* [START maps_react_ui_kit_place_details_by_latlng] */
+}
+import React from 'react'
+import { createRoot } from 'react-dom/client'
+import { APIProvider, useMapsLibrary } from '@vis.gl/react-google-maps'
 
-import './styles.css';
+import './styles.css'
 
-const API_KEY = "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8";
+const API_KEY = 'AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8'
 
 type PlaceDetailsProps = {
-  lat: number;
-  lng: number;
-};
+    lat: number
+    lng: number
+}
 
 // Renders place details using a latitude and longitude.
-const PlaceDetails = ({lat, lng}: PlaceDetailsProps) => {
-  const places = useMapsLibrary('places');
-  const containerRef = React.useRef<HTMLDivElement>(null);
+const PlaceDetails = ({ lat, lng }: PlaceDetailsProps) => {
+    const places = useMapsLibrary('places')
+    const containerRef = React.useRef<HTMLDivElement>(null)
 
-  React.useEffect(() => {
-    if (!places || !containerRef.current) {
-      return;
-    }
-    // Create the gmp-place-details element.
-    const placeDetails = document.createElement('gmp-place-details');
+    React.useEffect(() => {
+        if (!places || !containerRef.current) {
+            return
+        }
+        // Create the gmp-place-details element.
+        const placeDetails = document.createElement('gmp-place-details')
 
-    // Create the gmp-place-details-location-request element.
-    const locationRequest = document.createElement(
-      'gmp-place-details-location-request',
-    );
+        // Create the gmp-place-details-location-request element.
+        const locationRequest = document.createElement(
+            'gmp-place-details-location-request'
+        )
 
-    // Set the location on the location request element.
-    locationRequest.setAttribute('location', `${lat},${lng}`);
+        // Set the location on the location request element.
+        locationRequest.setAttribute('location', `${lat},${lng}`)
 
-    // Append the location request to the place details element.
-    placeDetails.appendChild(locationRequest);
+        // Append the location request to the place details element.
+        placeDetails.appendChild(locationRequest)
 
-    // Create and append the content config and its children.
-    const contentConfig = document.createElement('gmp-place-content-config');
-    contentConfig.innerHTML = `
+        // Create and append the content config and its children.
+        const contentConfig = document.createElement('gmp-place-content-config')
+        contentConfig.innerHTML = `
       <gmp-place-address></gmp-place-address>
       <gmp-place-rating></gmp-place-rating>
       <gmp-place-type></gmp-place-type>
@@ -59,36 +61,38 @@ const PlaceDetails = ({lat, lng}: PlaceDetailsProps) => {
       <gmp-place-attribution
         light-scheme-color="gray"
         dark-scheme-color="white"></gmp-place-attribution>
-    `;
-    placeDetails.appendChild(contentConfig);
+    `
+        placeDetails.appendChild(contentConfig)
 
-    // Append the place details element to the container.
-    containerRef.current.innerHTML = ''; // Clear previous content
-    containerRef.current.appendChild(placeDetails);
-  }, [places, lat, lng]);
+        // Append the place details element to the container.
+        containerRef.current.innerHTML = '' // Clear previous content
+        containerRef.current.appendChild(placeDetails)
+    }, [places, lat, lng])
 
-  return <div ref={containerRef} className="place-details-container" />;
-};
+    return <div ref={containerRef} className="place-details-container" />
+}
 
 const App = () => {
-  return (
-    <APIProvider apiKey={API_KEY} libraries={['places']}>
-      <div className="places-ui-kit">
-        <PlaceDetails lat={48.8566} lng={2.3522} />
-      </div>
-    </APIProvider>
-  );
-};
+    return (
+        <APIProvider apiKey={API_KEY} libraries={['places']}>
+            <div className="places-ui-kit">
+                <PlaceDetails lat={48.8566} lng={2.3522} />
+            </div>
+        </APIProvider>
+    )
+}
 
-export default App;
+export default App
 
 export function renderToDom(container: HTMLElement) {
-  const root = createRoot(container);
+    const root = createRoot(container)
 
-  root.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  );
+    root.render(
+        <React.StrictMode>
+            <App />
+        </React.StrictMode>
+    )
 }
-{/* [END maps_react_ui_kit_place_details_by_latlng] */}
+{
+    /* [END maps_react_ui_kit_place_details_by_latlng] */
+}

@@ -5,45 +5,46 @@
  */
 
 // [START maps_place_autocomplete_map]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map') as google.maps.MapElement
 const placeAutocomplete = document.querySelector(
-  'gmp-place-autocomplete'
-) as google.maps.places.PlaceAutocompleteElement;
-let innerMap;
-let marker: google.maps.marker.AdvancedMarkerElement;
-let infoWindow: google.maps.InfoWindow;
-let center = { lat: 40.749933, lng: -73.98633 }; // New York City
+    'gmp-place-autocomplete'
+) as google.maps.places.PlaceAutocompleteElement
+let innerMap
+let marker: google.maps.marker.AdvancedMarkerElement
+let infoWindow: google.maps.InfoWindow
+let center = { lat: 40.749933, lng: -73.98633 } // New York City
 async function initMap(): Promise<void> {
-  // Request needed libraries.
-  const [] = await Promise.all([
-    google.maps.importLibrary('marker'),
-    google.maps.importLibrary('places'),
-  ]);
+    // Request needed libraries.
+    const [] = await Promise.all([
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('places'),
+    ])
 
-  // [START maps_place_autocomplete_map_add]
-  // Get the inner map.
-  innerMap = mapElement.innerMap;
-  innerMap.setOptions({
-    mapTypeControl: false,
-  });
+    // [START maps_place_autocomplete_map_add]
+    // Get the inner map.
+    innerMap = mapElement.innerMap
+    innerMap.setOptions({
+        mapTypeControl: false,
+    })
 
-  // Use the bounds_changed event to restrict results to the current map bounds.
-  google.maps.event.addListener(innerMap, 'bounds_changed', async () => {
-    placeAutocomplete.locationRestriction = innerMap.getBounds();
-  });
-  // [END maps_place_autocomplete_map_add]
+    // Use the bounds_changed event to restrict results to the current map bounds.
+    google.maps.event.addListener(innerMap, 'bounds_changed', async () => {
+        placeAutocomplete.locationRestriction = innerMap.getBounds()
+    })
+    // [END maps_place_autocomplete_map_add]
 
-  // Create the marker and infowindow.
-  marker = new google.maps.marker.AdvancedMarkerElement({
-    map: innerMap,
-  });
+    // Create the marker and infowindow.
+    marker = new google.maps.marker.AdvancedMarkerElement({
+        map: innerMap,
+    })
 
-  infoWindow = new google.maps.InfoWindow({});
+    infoWindow = new google.maps.InfoWindow({})
 
-  // [START maps_place_autocomplete_map_listener]
-  // Add the gmp-placeselect listener, and display the results on the map.
-  //@ts-ignore
-  placeAutocomplete.addEventListener('gmp-select', async ({ placePrediction }) => {
+    // [START maps_place_autocomplete_map_listener]
+    // Add the gmp-placeselect listener, and display the results on the map.
+    // prettier-ignore
+    //@ts-ignore
+    placeAutocomplete.addEventListener('gmp-select', async ({ placePrediction }) => {
       const place = placePrediction.toPlace();
       await place.fetchFields({
         fields: ['displayName', 'formattedAddress', 'location'],
@@ -70,19 +71,19 @@ async function initMap(): Promise<void> {
       marker.position = place.location;
     }
   );
-  // [END maps_place_autocomplete_map_listener]
+    // [END maps_place_autocomplete_map_listener]
 }
 
 // Helper function to create an info window.
 function updateInfoWindow(content, center) {
-  infoWindow.setContent(content);
-  infoWindow.setPosition(center);
-  infoWindow.open({
-    map: innerMap,
-    anchor: marker,
-    shouldFocus: false,
-  });
+    infoWindow.setContent(content)
+    infoWindow.setPosition(center)
+    infoWindow.open({
+        map: innerMap,
+        anchor: marker,
+        shouldFocus: false,
+    })
 }
 
-initMap();
+initMap()
 // [END maps_place_autocomplete_map]
