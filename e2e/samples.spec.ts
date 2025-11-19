@@ -167,7 +167,7 @@ foldersToTest.forEach((sampleFolder) => {
       await page.waitForLoadState('domcontentloaded', { timeout: 500 });
 
       // Wait for Google Maps to load.
-      await page.waitForFunction(() => window.google && window.google.maps, { timeout: 500 });
+      await page.waitForFunction(() => window.google && window.google.maps, { timeout: 1000 });
       
       // Insert a delay in ms to let the map load.
       await page.waitForTimeout(500);
