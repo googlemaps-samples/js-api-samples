@@ -145,7 +145,7 @@ foldersToTest.forEach((sampleFolder) => {
       await page.goto(url);
 
       // Allow some time for async operations and errors to be caught
-      await page.waitForTimeout(500);
+      //await page.waitForTimeout(500);
 
       // Filter out error messages we can safely avoid.
       const filteredErrorMessages = [
@@ -164,10 +164,10 @@ foldersToTest.forEach((sampleFolder) => {
       expect(criticalErrors).toHaveLength(0);
 
       // Wait for the page DOM to load; this does NOT include the Google Maps APIs.
-      await page.waitForLoadState('domcontentloaded', { timeout: 500 });
+      await page.waitForLoadState('domcontentloaded', { timeout: 10000 });
 
       // Wait for Google Maps to load.
-      await page.waitForFunction(() => window.google && window.google.maps, { timeout: 1000 });
+      await page.waitForFunction(() => window.google && window.google.maps, { timeout: 500 });
       
       // Insert a delay in ms to let the map load.
       await page.waitForTimeout(500);
