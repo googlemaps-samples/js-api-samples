@@ -10,22 +10,31 @@ let polyline;
 async function init() {
     const { Map3DElement, AltitudeMode, Polyline3DElement } = await google.maps.importLibrary("maps3d");
     const map = new Map3DElement({
-        center: { lat: 47.6205, lng: -122.3493, altitude: 300 },
-        tilt: 67.5,
-        range: 2000,
-        heading: 0,
+        center: { lat: 47.660545553614604, lng: -122.4196302033452, altitude: 100 },
+        tilt: 61,
+        range: 4800,
+        heading: 31,
         mode: 'SATELLITE',
         gestureHandling: "COOPERATIVE"
     });
-    // Create an east-west polyline through the Space Needle
     polyline = new Polyline3DElement({
         path: [
-            { lat: 47.6205, lng: -122.3593, altitude: 100 }, // West point
-            { lat: 47.6205, lng: -122.3393, altitude: 100 } // East point
+            { lat: 47.65890, lng: -122.43012, altitude: 10 },
+            { lat: 47.65598, lng: -122.42500, altitude: 10 },
+            { lat: 47.65515, lng: -122.42219, altitude: 10 },
+            { lat: 47.65623, lng: -122.41895, altitude: 10 },
+            { lat: 47.65775, lng: -122.41426, altitude: 10 },
+            { lat: 47.65770, lng: -122.41089, altitude: 10 },
+            { lat: 47.66206, lng: -122.40507, altitude: 10 },
+            { lat: 47.66370, lng: -122.40547, altitude: 10 },
+            { lat: 47.66488, lng: -122.41075, altitude: 10 },
+            { lat: 47.66620, lng: -122.40877, altitude: 10 },
+            { lat: 47.67166, lng: -122.40812, altitude: 10 }
         ],
         strokeColor: 'red',
         strokeWidth: 5,
         altitudeMode: AltitudeMode.CLAMP_TO_GROUND,
+        drawsOccludedSegments: true,
     });
     map.append(polyline);
     document.body.append(map);
