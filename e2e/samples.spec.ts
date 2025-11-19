@@ -83,7 +83,7 @@ const getChangedSampleFolders = (): string[] => {
     });
 
     // Filter out excluded folders.
-    validChangedFolders = validChangedFolders.filter(folder => !excludedFolders.includes(folder));
+    validChangedFolders = validChangedFolders.filter(folderName => !excludedFolders.includes(folderName));
 
     if (validChangedFolders.length === 0) {
       console.warn("Folders were found, but none were valid sample directories. Skipping tests.");
