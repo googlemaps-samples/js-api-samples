@@ -152,7 +152,7 @@ foldersToTest.forEach((sampleFolder) => {
         'Falling back to Raster',
         'Attempted to load a 3D Map, but failed.',
         'The map is not a vector map',
-        'Property \'importLibrary\' does not exist on type \'Loader\'.'
+        'Property \'importLibrary\' does not exist on type \'Loader\'',
       ];
       const criticalErrors = consoleErrors.filter(error =>
         !filteredErrorMessages.some(message => error.includes(message))
@@ -164,7 +164,7 @@ foldersToTest.forEach((sampleFolder) => {
       expect(criticalErrors).toHaveLength(0);
 
       // Wait for the page DOM to load; this does NOT include the Google Maps APIs.
-      await page.waitForLoadState('domcontentloaded', { timeout: 10000 });
+      await page.waitForLoadState('domcontentloaded', { timeout: 500 });
 
       // Wait for Google Maps to load.
       await page.waitForFunction(() => window.google && window.google.maps, { timeout: 500 });
