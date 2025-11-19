@@ -17,7 +17,10 @@ body {
   padding: 0;
 }
 selector {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
     padding: 2px;
-    float: right;
 }
 /* [END maps_3d_clamp_mode] */
