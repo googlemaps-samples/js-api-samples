@@ -1,38 +1,41 @@
 /*
-* @license
-* Copyright 2025 Google LLC. All Rights Reserved.
-* SPDX-License-Identifier: Apache-2.0
-*/
+ * @license
+ * Copyright 2025 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 // @ts-nocheck
 // [START maps_3d_polygon_click_event]
 async function init() {
-    const { Map3DElement, MapMode, Polygon3DInteractiveElement } = await google.maps.importLibrary("maps3d");
+    const { Map3DElement, MapMode, Polygon3DInteractiveElement } =
+        await google.maps.importLibrary('maps3d');
 
     const map = new Map3DElement({
         center: { lat: 40.6842, lng: -74.0019, altitude: 1000 },
         heading: 340,
         tilt: 70,
         mode: MapMode.HYBRID,
-        gestureHandling: "COOPERATIVE"
+        gestureHandling: 'COOPERATIVE',
     });
 
     document.body.append(map);
 
     const polygonOptions = {
-        strokeColor: "#0000ff80",
+        strokeColor: '#0000ff80',
         strokeWidth: 8,
-        fillColor: "#ff000080",
+        fillColor: '#ff000080',
         drawsOccludedSegments: false,
-    }
+    };
 
-    const examplePolygon = new google.maps.maps3d.Polygon3DInteractiveElement(polygonOptions);
+    const examplePolygon = new google.maps.maps3d.Polygon3DInteractiveElement(
+        polygonOptions
+    );
 
     examplePolygon.path = [
         { lat: 40.7144, lng: -74.0208 },
         { lat: 40.6993, lng: -74.019 },
         { lat: 40.7035, lng: -74.0004 },
-        { lat: 40.7144, lng: -74.0208 }
+        { lat: 40.7144, lng: -74.0208 },
     ];
 
     examplePolygon.addEventListener('gmp-click', (event) => {
@@ -55,7 +58,7 @@ function randomizeHexColor(originalHexColor) {
     const g = Math.floor(Math.random() * 256);
     const b = Math.floor(Math.random() * 256);
 
-    console.log(r + " " + g + " " + b);
+    console.log(r + ' ' + g + ' ' + b);
 
     // Convert decimal to 2-digit hex, padding with '0' if needed
     const rHex = ('0' + r.toString(16)).slice(-2);
