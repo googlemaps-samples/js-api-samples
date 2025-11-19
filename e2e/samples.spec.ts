@@ -97,6 +97,14 @@ const getChangedSampleFolders = (): string[] => {
 
 // Get changed folders, filtering out excluded ones.
 const foldersToTest = getChangedSampleFolders();
+ 
+// Function to omit specific sample folders from testing.
+const omitSampleFolders = (folders: string[]): string[] => {
+  const excludedFolders = [
+    "js-api-loader-map",
+  ];
+  return folders.filter(folder => !excludedFolders.includes(folder));
+};
 
 if (foldersToTest.length === 0) {
   console.log("No sample folders found.");
