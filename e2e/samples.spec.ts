@@ -21,6 +21,9 @@ import childProcess, { execSync } from 'child_process';
 
 const samplesDir = path.join(__dirname, '..', 'samples');
 
+// List folders to exclude from testing.
+const excludedFolders = ["js-api-loader-map"];
+
 // Function to return all sample folders.
 const getAllSampleFolders = () => {
   return fs.readdirSync(samplesDir).filter((file) => {
@@ -74,10 +77,13 @@ const getChangedSampleFolders = (): string[] => {
     }
 
     // Validate that changed folders actually exist in samplesDir
-    const validChangedFolders = changedFolders.filter(folderName => {
+    let validChangedFolders = changedFolders.filter(folderName => {
       const folderPath = path.join(samplesDir, folderName);
       return fs.existsSync(folderPath) && fs.statSync(folderPath).isDirectory();
     });
+
+    // Filter out excluded folders.
+    validChangedFolders = validChangedFolders.filter(folderName => !excludedFolders.includes(folderName));
 
     if (validChangedFolders.length === 0) {
       console.warn("Folders were found, but none were valid sample directories. Skipping tests.");

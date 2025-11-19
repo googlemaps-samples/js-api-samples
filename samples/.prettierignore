@@ -1,0 +1,5 @@
+# Ignore JSON
+*.json
+
+# Ignore dist output
+dist

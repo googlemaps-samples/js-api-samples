@@ -83,7 +83,7 @@ async function createInfoWindow(event) {
 
     // Create a new div to hold the text content.
     let content = document.createElement('div');
-    
+
     // Get the text values.
     let nameText = document.createElement('span');
     nameText.textContent = `Display name: ${place.displayName}`;
@@ -91,7 +91,7 @@ async function createInfoWindow(event) {
     placeIdText.textContent = `Place ID: ${feature.placeId}`;
     let featureTypeText = document.createElement('span');
     featureTypeText.textContent = `Feature type: ${feature.featureType}`;
-    
+
     // Append the text to the div.
     content.appendChild(nameText);
     content.appendChild(document.createElement('br'));
