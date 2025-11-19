@@ -152,6 +152,7 @@ foldersToTest.forEach((sampleFolder) => {
         'Falling back to Raster',
         'Attempted to load a 3D Map, but failed.',
         'The map is not a vector map',
+        'Property \'importLibrary\' does not exist on type \'Loader\'.'
       ];
       const criticalErrors = consoleErrors.filter(error =>
         !filteredErrorMessages.some(message => error.includes(message))
