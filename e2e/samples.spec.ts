@@ -77,13 +77,13 @@ const getChangedSampleFolders = (): string[] => {
     }
 
     // Validate that changed folders actually exist in samplesDir
-    const validChangedFolders = changedFolders.filter(folderName => {
+    let validChangedFolders = changedFolders.filter(folderName => {
       const folderPath = path.join(samplesDir, folderName);
       return fs.existsSync(folderPath) && fs.statSync(folderPath).isDirectory();
     });
 
     // Filter out excluded folders.
-    validChangedFolders.filter(folder => !excludedFolders.includes(folder));
+    validChangedFolders = validChangedFolders.filter(folder => !excludedFolders.includes(folder));
 
     if (validChangedFolders.length === 0) {
       console.warn("Folders were found, but none were valid sample directories. Skipping tests.");
