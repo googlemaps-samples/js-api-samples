@@ -24,3 +24,4 @@ async function initMap(): Promise<void> {
 
 initMap();
 // [END maps_js_api_loader_map]
+/* A small change */
