@@ -91,27 +91,12 @@ jobs:
 
       - name: Build Changed Workspaces
         run: |
-          # Read the workflow output into a variable
-          raw="${{ steps.get_workspaces.outputs.changed_workspaces }}"
-
-          # Show the raw output with visible line endings to catch CR (\r) or other odd chars
-          printf '<<RAW OUTPUT (visible endings)>>\n'
-          printf '%s' "$raw" | sed -n 'l'
-          printf '<<END RAW OUTPUT>>\n'
-
-          # Remove any stray carriage returns that can cause truncation or strange splitting
-          raw="${raw//$'\r'/}"
-
-          # Use mapfile/readarray to split by newline reliably into an array
-          mapfile -t CHANGED_WORKSPACES_ARRAY <<< "$raw"
-
-          echo "Changed Workspaces Array (${#CHANGED_WORKSPACES_ARRAY[@]} items):"
+          IFS=$'\n'
+          CHANGED_WORKSPACES_ARRAY=(${{ steps.get_workspaces.outputs.changed_workspaces }})
+          echo "Changed Workspaces Array: ${CHANGED_WORKSPACES_ARRAY[@]}"
+          
+          echo "Building changed workspaces:"
           for workspace in "${CHANGED_WORKSPACES_ARRAY[@]}"; do
-            # skip any empty entries
-            if [ -z "$workspace" ]; then
-              continue
-            fi
-
             echo "  - samples/$workspace"
             npm run build --workspace=samples/$workspace
           done
