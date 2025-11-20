@@ -35,7 +35,7 @@ From 'samples':
 ### Run lint to check for problems
 
 `cd samples/map-projection-simple`
-`npx eslint index.ts` 
+`npx eslint index.ts`
 
 ## Feedback
 

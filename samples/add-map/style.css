@@ -9,7 +9,7 @@
  * that contains the map.
  */
 gmp-map {
-  height: 100%;
+    height: 100%;
 }
 
 /*
@@ -17,15 +17,15 @@ gmp-map {
    */
 html,
 body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 /* [END maps_add_map] */
 
 #controls h3 {
-  font-size: 1.5em;
-  background-color: white;
-  margin: 8px;
-  padding: 2px;
+    font-size: 1.5em;
+    background-color: white;
+    margin: 8px;
+    padding: 2px;
 }

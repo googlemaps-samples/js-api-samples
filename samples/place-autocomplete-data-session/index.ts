@@ -25,7 +25,7 @@ const request: google.maps.places.AutocompleteRequest = {
         'park',
         'botanical_garden',
     ],
-}
+};
 
 async function init() {
     await google.maps.importLibrary('maps');
@@ -121,7 +121,7 @@ async function onPlaceSelected(place: google.maps.places.Place) {
         map: innerMap,
         position: place.location,
         title: place.displayName,
-    })
+    });
 
     // Center the map on the selected place.
     if (place.location) {

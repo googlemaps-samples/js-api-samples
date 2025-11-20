@@ -34,7 +34,7 @@ From 'samples':
 ### Run lint to check for problems
 
 `cd samples/place-autocomplete-data-simple`
-`npx eslint index.ts` 
+`npx eslint index.ts`
 
 ## Feedback
 

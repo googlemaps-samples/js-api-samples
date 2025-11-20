@@ -9,10 +9,15 @@ const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
 
 async function initMap() {
     // Request needed libraries.
-    const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
+    const { Map } = (await google.maps.importLibrary(
+        'maps'
+    )) as google.maps.MapsLibrary;
+    const { AdvancedMarkerElement, PinElement } =
+        (await google.maps.importLibrary(
+            'marker'
+        )) as google.maps.MarkerLibrary;
 
-    mapElement.innerMap.setOptions ({
+    mapElement.innerMap.setOptions({
         tilt: 67.5,
         heading: 45,
     });
@@ -27,7 +32,11 @@ async function initMap() {
 
     const marker = new AdvancedMarkerElement({
         // Set altitude to 20 meters above the ground.
-        position: { lat: 47.65170843460547, lng: -122.30754, altitude: 20 } as google.maps.LatLngAltitudeLiteral,
+        position: {
+            lat: 47.65170843460547,
+            lng: -122.30754,
+            altitude: 20,
+        } as google.maps.LatLngAltitudeLiteral,
     });
     marker.append(pin);
 
