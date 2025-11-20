@@ -1,89 +1,128 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-    <title>Create JSFiddle</title>
-    <style>
-        body { font-family: sans-serif; display: grid; place-content: center; text-align: left; height: 100vh; margin: 0; }
-        button { font-size: 1.5em; padding: 0.5em 1em; cursor: pointer; }
-        #error { color: red; font-weight: bold; font-size: smaller; margin-top: 5px; }
-        #sample-name-input { font-size: 1.5em; padding: 0.5em 1em; margin-bottom: 5px;}
-    </style>
-</head>
-<body>
-
-    <h1 id="title">Create a JSFiddle!!!</h1>
-    <p>Create a JSFiddle from any sample in a local branch of js-api-samples.</p>
-    <ol>
-        <li>Run <code>npm run build --workspace=sample-name</code> to build the needed sample.</li>
-        <li>Enter the sample name and click <b>Create Fiddle!</b></li>
-        <li>A fiddle will open in a new browser tab.</li>
-        <li>Update the default name and save the fiddle.</li>
-        <li>Copy the URL to send to collaborators!</li>
-    </ol>
-    
-    <input id="sample-name-input" placeholder="Enter a sample name..." autocomplete="off"></input>
-    <button id="create-fiddle-btn">Create Fiddle!</button>
-    <div id="error"></div>
-
-    <!-- This form will be populated and submitted by the script -->
-    <form id="fiddle-form" action="https://jsfiddle.net/api/post/library/pure/" method="post" target="_blank" style="display: none;">
-        <textarea name="html"></textarea>
-        <textarea name="css"></textarea>
-        <textarea name="js"></textarea>
-        <input type="text" name="resources" />
-        <input type="text" name="title" />
-    </form>
-
-    <script>
-        const sampleInput = document.querySelector('#sample-name-input');
-        const button = document.getElementById('create-fiddle-btn');
-        const titleEl = document.getElementById('title');
-        const errorEl = document.getElementById('error');
-
-
-        button.addEventListener('click', createFiddle);
-
-        async function createFiddle() {
-            errorEl.textContent = '';
-            titleEl.textContent = 'Creating Fiddle...';
-
-            const sampleName = sampleInput.value;
-
-            const form = document.getElementById('fiddle-form');
-            const basePath = `../dist/samples/${sampleName}/jsfiddle`;
-
-            try {
-                // 1. Fetch the file contents from the dist directory
-                const [htmlResponse, cssResponse, jsResponse] = await Promise.all([
-                    fetch(`${basePath}/demo.html`),
-                    fetch(`${basePath}/demo.css`),
-                    fetch(`${basePath}/demo.js`)
-                ]);
-
-                if (!htmlResponse.ok || !cssResponse.ok || !jsResponse.ok) {
-                    throw new Error(`Could not find files in ${basePath}. Double-check the sample name.`);
-                }
-
-                const htmlContent = await htmlResponse.text();
-                const cssContent = await cssResponse.text();
-                const jsContent = await jsResponse.text();
-
-                // 2. Prepare the code for JSFiddle.
-                const bodyContent = htmlContent.match(/<html>([\s\S]*)<\/html>/i)[1] || '';
-
-                // 3. Populate the form fields
-                form.querySelector('textarea[name="html"]').value = bodyContent.trim();
-                form.querySelector('textarea[name="css"]').value = cssContent;
-                form.querySelector('textarea[name="js"]').value = jsContent.trim();
-                form.querySelector('input[name="title"]').value = `Maps JS API Sample: ${sampleName}`;
-
-                // 4. Submit the form to create the fiddle
-                form.submit();
-            } catch (e) {
-                errorEl.textContent = e.message;
+    <head>
+        <title>Create JSFiddle</title>
+        <style>
+            body {
+                font-family: sans-serif;
+                display: grid;
+                place-content: center;
+                text-align: left;
+                height: 100vh;
+                margin: 0;
             }
-        }
-    </script>
+            button {
+                font-size: 1.5em;
+                padding: 0.5em 1em;
+                cursor: pointer;
+            }
+            #error {
+                color: red;
+                font-weight: bold;
+                font-size: smaller;
+                margin-top: 5px;
+            }
+            #sample-name-input {
+                font-size: 1.5em;
+                padding: 0.5em 1em;
+                margin-bottom: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 id="title">Create a JSFiddle!!!</h1>
+        <p>
+            Create a JSFiddle from any sample in a local branch of
+            js-api-samples.
+        </p>
+        <ol>
+            <li>
+                Run <code>npm run build --workspace=sample-name</code> to build
+                the needed sample.
+            </li>
+            <li>Enter the sample name and click <b>Create Fiddle!</b></li>
+            <li>A fiddle will open in a new browser tab.</li>
+            <li>Update the default name and save the fiddle.</li>
+            <li>Copy the URL to send to collaborators!</li>
+        </ol>
 
-</body>
+        <input
+            id="sample-name-input"
+            placeholder="Enter a sample name..."
+            autocomplete="off" />
+        <button id="create-fiddle-btn">Create Fiddle!</button>
+        <div id="error"></div>
+
+        <!-- This form will be populated and submitted by the script -->
+        <form
+            id="fiddle-form"
+            action="https://jsfiddle.net/api/post/library/pure/"
+            method="post"
+            target="_blank"
+            style="display: none">
+            <textarea name="html"></textarea>
+            <textarea name="css"></textarea>
+            <textarea name="js"></textarea>
+            <input type="text" name="resources" />
+            <input type="text" name="title" />
+        </form>
+
+        <script>
+            const sampleInput = document.querySelector('#sample-name-input');
+            const button = document.getElementById('create-fiddle-btn');
+            const titleEl = document.getElementById('title');
+            const errorEl = document.getElementById('error');
+
+            button.addEventListener('click', createFiddle);
+
+            async function createFiddle() {
+                errorEl.textContent = '';
+                titleEl.textContent = 'Creating Fiddle...';
+
+                const sampleName = sampleInput.value;
+
+                const form = document.getElementById('fiddle-form');
+                const basePath = `../dist/samples/${sampleName}/jsfiddle`;
+
+                try {
+                    // 1. Fetch the file contents from the dist directory
+                    const [htmlResponse, cssResponse, jsResponse] =
+                        await Promise.all([
+                            fetch(`${basePath}/demo.html`),
+                            fetch(`${basePath}/demo.css`),
+                            fetch(`${basePath}/demo.js`),
+                        ]);
+
+                    if (!htmlResponse.ok || !cssResponse.ok || !jsResponse.ok) {
+                        throw new Error(
+                            `Could not find files in ${basePath}. Double-check the sample name.`
+                        );
+                    }
+
+                    const htmlContent = await htmlResponse.text();
+                    const cssContent = await cssResponse.text();
+                    const jsContent = await jsResponse.text();
+
+                    // 2. Prepare the code for JSFiddle.
+                    const bodyContent =
+                        htmlContent.match(/<html>([\s\S]*)<\/html>/i)[1] || '';
+
+                    // 3. Populate the form fields
+                    form.querySelector('textarea[name="html"]').value =
+                        bodyContent.trim();
+                    form.querySelector('textarea[name="css"]').value =
+                        cssContent;
+                    form.querySelector('textarea[name="js"]').value =
+                        jsContent.trim();
+                    form.querySelector('input[name="title"]').value =
+                        `Maps JS API Sample: ${sampleName}`;
+
+                    // 4. Submit the form to create the fiddle
+                    form.submit();
+                } catch (e) {
+                    errorEl.textContent = e.message;
+                }
+            }
+        </script>
+    </body>
 </html>
