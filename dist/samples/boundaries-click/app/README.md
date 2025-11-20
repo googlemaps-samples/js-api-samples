@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## boundaries-click
+
+The boundaries-click sample demonstrates how to handle click events on administrative boundaries.
+
+Follow these instructions to set up and run boundaries-click sample on your local computer.
 
 ## Setup
 
