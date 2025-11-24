@@ -23,7 +23,7 @@
     "rimraf": "^6.1.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.48.0",
-    "vite": "^7.2.2"
+    "vite": "^7.2.4"
   },
   "dependencies": {
     "dotenv": "^17.2.3"
