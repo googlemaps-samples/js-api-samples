@@ -22,39 +22,7 @@
 
         <div class="container">
             <!-- map-id is required to use advanced markers. See https://developers.google.com/maps/documentation/javascript/map-ids/mapid-over. -->
-            <gmp-map
-                center="-37.813,144.963"
-                zoom="16"
-                map-id="DEMO_MAP_ID"
-                disable-default-ui>
-                <!--
-                  The gmp-place-details-compact element is styled inline because it is
-                  conditionally rendered and moved into the info window, which is
-                  part of the map's shadow DOM.
-                -->
-                <gmp-place-details-compact
-                    orientation="horizontal"
-                    truncation-preferred
-                    style="
-                        width: 400px;
-                        padding: 0;
-                        margin: 0;
-                        border: none;
-                        background-color: transparent;
-                        color-scheme: light;
-                    ">
-                    <gmp-place-details-place-request></gmp-place-details-place-request>
-                    <gmp-place-content-config>
-                        <gmp-place-media></gmp-place-media>
-                        <gmp-place-rating></gmp-place-rating>
-                        <gmp-place-price></gmp-place-price>
-                        <gmp-place-accessible-entrance-icon></gmp-place-accessible-entrance-icon>
-                        <gmp-place-open-now-status></gmp-place-open-now-status>
-                        <gmp-place-attribution
-                            light-scheme-color="gray"
-                            dark-scheme-color="white"></gmp-place-attribution>
-                    </gmp-place-content-config>
-                </gmp-place-details-compact>
+            <gmp-map center="-37.813,144.963" zoom="16" map-id="DEMO_MAP_ID">
             </gmp-map>
             <div class="ui-panel">
                 <div class="controls">
@@ -78,6 +46,35 @@
                 </div>
             </div>
         </div>
+
+        <!--
+        The gmp-place-details-compact element is styled inline because it is
+        conditionally rendered and moved into the info window, which is
+        part of the map's shadow DOM.
+    -->
+        <gmp-place-details-compact
+            orientation="horizontal"
+            truncation-preferred
+            style="
+                width: 400px;
+                padding: 0;
+                margin: 0;
+                border: none;
+                background-color: transparent;
+                color-scheme: light;
+            ">
+            <gmp-place-details-place-request></gmp-place-details-place-request>
+            <gmp-place-content-config>
+                <gmp-place-media></gmp-place-media>
+                <gmp-place-rating></gmp-place-rating>
+                <gmp-place-price></gmp-place-price>
+                <gmp-place-accessible-entrance-icon></gmp-place-accessible-entrance-icon>
+                <gmp-place-open-now-status></gmp-place-open-now-status>
+                <gmp-place-attribution
+                    light-scheme-color="gray"
+                    dark-scheme-color="white"></gmp-place-attribution>
+            </gmp-place-content-config>
+        </gmp-place-details-compact>
 
         <!--[END maps_ui_kit_place_search_nearby_map] -->
     </body>

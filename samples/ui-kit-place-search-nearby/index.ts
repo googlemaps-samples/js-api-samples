@@ -27,22 +27,15 @@ let infoWindow: google.maps.InfoWindow;
 // The init function is called when the page loads.
 async function init(): Promise<void> {
     // Import the necessary libraries from the Google Maps API.
-    const [{ InfoWindow }, { Place }, markerLib, coreLib] = await Promise.all([
+    const [{ InfoWindow }, { Place }] = await Promise.all([
         google.maps.importLibrary('maps') as Promise<google.maps.MapsLibrary>,
         google.maps.importLibrary(
             'places'
         ) as Promise<google.maps.PlacesLibrary>,
-        google.maps.importLibrary(
-            'marker'
-        ) as Promise<google.maps.MarkerLibrary>,
-        google.maps.importLibrary('core') as Promise<google.maps.CoreLibrary>,
     ]);
 
-    const AdvancedMarkerElement = markerLib.AdvancedMarkerElement;
-
-    const LatLngBounds = coreLib.LatLngBounds;
-
     // Create a new info window and set its content to the place details element.
+    placeDetails.remove(); // Hide the place details element because it is not needed until the info window opens
     infoWindow = new InfoWindow({
         content: placeDetails,
         ariaLabel: 'Place Details',
@@ -55,33 +48,26 @@ async function init(): Promise<void> {
         streetViewControl: false,
     });
 
-    // Add a click listener to the map to hide the info window when the map is clicked.
-    map.innerMap.addListener('click', () => infoWindow.close());
     /* [START maps_ui_kit_place_search_nearby_event] */
     // Add event listeners to the type select and place search elements.
-    typeSelect.addEventListener('change', () =>
-        searchPlaces(AdvancedMarkerElement, LatLngBounds)
-    );
+    typeSelect.addEventListener('change', () => searchPlaces());
 
     placeSearch.addEventListener('gmp-select', (event: Event) => {
         const { place } = event as any;
         markers.get(place.id)?.click();
         if (place.location) {
-            map.innerMap.setCenter(place.location);
+            map.center = place.location;
         }
     });
     placeSearch.addEventListener('gmp-load', () => {
-        addMarkers(AdvancedMarkerElement, LatLngBounds);
+        addMarkers();
     });
 
-    searchPlaces(AdvancedMarkerElement, LatLngBounds);
+    searchPlaces();
 }
 /* [END maps_ui_kit_place_search_nearby_event] */
 // The searchPlaces function is called when the user changes the type select or when the page loads.
-function searchPlaces(
-    AdvancedMarkerElement: typeof google.maps.marker.AdvancedMarkerElement,
-    LatLngBounds: typeof google.maps.LatLngBounds
-) {
+async function searchPlaces() {
     // Close the info window and clear the markers.
     infoWindow.close();
     for (const marker of markers.values()) {
@@ -91,23 +77,27 @@ function searchPlaces(
 
     // Set the place search query and add an event listener to the place search element.
     if (typeSelect.value) {
-        const center = map.innerMap.getCenter()!;
+        const center = map.center!;
         placeSearchQuery.locationRestriction = {
-            center: { lat: center.lat(), lng: center.lng() },
+            center,
             radius: 50000, // 50km radius
         };
         placeSearchQuery.locationBias = {
-            center: { lat: center.lat(), lng: center.lng() },
+            center,
         };
         placeSearchQuery.includedTypes = [typeSelect.value];
     }
 }
 
 // The addMarkers function is called when the place search element loads.
-async function addMarkers(
-    AdvancedMarkerElement: typeof google.maps.marker.AdvancedMarkerElement,
-    LatLngBounds: typeof google.maps.LatLngBounds
-) {
+async function addMarkers() {
+    // Import the necessary libraries from the Google Maps API.
+    const [{ AdvancedMarkerElement }, { LatLngBounds }] = await Promise.all([
+        google.maps.importLibrary(
+            'marker'
+        ) as Promise<google.maps.MarkerLibrary>,
+        google.maps.importLibrary('core') as Promise<google.maps.CoreLibrary>,
+    ]);
     const bounds = new LatLngBounds();
 
     if (placeSearch.places.length === 0) {
