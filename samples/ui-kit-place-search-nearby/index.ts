@@ -55,9 +55,6 @@ async function init(): Promise<void> {
     placeSearch.addEventListener('gmp-select', (event: Event) => {
         const { place } = event as any;
         markers.get(place.id)?.click();
-        if (place.location) {
-            map.center = place.location;
-        }
     });
     placeSearch.addEventListener('gmp-load', () => {
         addMarkers();
