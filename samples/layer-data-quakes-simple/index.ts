@@ -9,30 +9,27 @@ let innerMap;
 let earthquakeData;
 
 async function initMap() {
-  (await google.maps.importLibrary("maps")) as google.maps.MapsLibrary;
+    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
 
-  const mapElement = document.querySelector(
-    "gmp-map"
-  ) as google.maps.MapElement;
+    const mapElement = document.querySelector(
+        'gmp-map'
+    ) as google.maps.MapElement;
 
-  innerMap = mapElement.innerMap;
+    innerMap = mapElement.innerMap;
 
     // Get the earthquake data (JSONP format)
-  // This feed is a copy from the USGS feed, you can find the originals here:
-  //   http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
-  const script = document.createElement("script");
+    // This feed is a copy from the USGS feed, you can find the originals here:
+    //   http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
+    const script = document.createElement('script');
 
-  script.setAttribute(
-    "src",
-    "quakes.geo.json"
-  );
+    script.setAttribute('src', 'quakes.geo.json');
 
-  document.getElementsByTagName("head")[0].appendChild(script);
+    document.getElementsByTagName('head')[0].appendChild(script);
 }
 
 // Defines the callback function referenced in the jsonp file.
 function eqfeed_callback(data: any) {
-  innerMap.data.addGeoJson(data);
+    innerMap.data.addGeoJson(data);
 }
 
 window.eqfeed_callback = eqfeed_callback;

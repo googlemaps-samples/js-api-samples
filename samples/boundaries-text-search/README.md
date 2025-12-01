@@ -35,7 +35,7 @@ From 'samples':
 ### Run lint to check for problems
 
 `cd samples/boundaries-text-search`
-`npx eslint index.ts` 
+`npx eslint index.ts`
 
 ## Feedback
 
