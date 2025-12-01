@@ -9,7 +9,7 @@
  * that contains the map. 
  */
 gmp-map {
-  height: 100%;
+    height: 100%;
 }
 
 /* 
@@ -17,32 +17,32 @@ gmp-map {
  */
 html,
 body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .place-autocomplete-card {
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  margin: 10px;
-  padding: 5px;
-  font-family: Roboto, sans-serif;
-  font-size: large;
-  font-weight: bold;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin: 10px;
+    padding: 5px;
+    font-family: Roboto, sans-serif;
+    font-size: large;
+    font-weight: bold;
 }
 
 gmp-place-autocomplete {
-  width: 300px;
+    width: 300px;
 }
 
 #infowindow-content .title {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 #map #infowindow-content {
-  display: inline;
+    display: inline;
 }
 
 

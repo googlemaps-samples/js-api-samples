@@ -9,8 +9,8 @@ const parser = new DOMParser();
 const mapElement = document.querySelector('gmp-map');
 async function initMap() {
     // Request needed libraries.
-    const { Map } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+    const { Map } = (await google.maps.importLibrary('maps'));
+    const { AdvancedMarkerElement, PinElement } = (await google.maps.importLibrary('marker'));
     // Each PinElement is paired with a marker to demonstrate setting each parameter.
     // [START maps_advanced_markers_basic_style_title]
     // Default marker with title text (no PinElement).

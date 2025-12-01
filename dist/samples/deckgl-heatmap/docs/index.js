@@ -14,7 +14,7 @@ let marker;
 let infoWindow;
 async function initMap() {
     // Progress bar logic moved from index.html
-    var progress, progressDiv = document.querySelector(".mdc-linear-progress");
+    var progress, progressDiv = document.querySelector('.mdc-linear-progress');
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
@@ -30,8 +30,8 @@ async function initMap() {
     // The location for the map center.
     const position = { lat: 37.77325660358167, lng: -122.41712341793448 }; // Using the center from original deckgl-polygon.js
     //  Request needed libraries.
-    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+    const { Map, InfoWindow } = (await google.maps.importLibrary('maps'));
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
     const mapDiv = document.getElementById('map');
     if (!mapDiv) {
         console.error('Map element not found!');
@@ -50,6 +50,7 @@ async function initMap() {
     // Deck.gl Layer and Overlay
     // Use global deck object
     heatmapLayer = new deck.HeatmapLayer({
+        // Assign to the outer heatmapLayer
         id: 'HeatmapLayer', // Change layer ID
         data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/sf-bike-parking.json', // Use the loaded data
         getPosition: (d) => d.COORDINATES, // Use 'any' for simplicity, or define a proper type
@@ -58,6 +59,7 @@ async function initMap() {
         visible: true,
         pickable: true,
         onHover: (info) => {
+            // Use 'any' for info for simplicity, or define a proper type
             const tooltip = document.getElementById('tooltip');
             if (tooltip) {
                 console.log('Hovered object:', info.object);
@@ -83,17 +85,19 @@ async function initMap() {
                 }
                 console.log('Tooltip content set to:', tooltip.innerHTML);
             }
-        }
+        },
     });
     heatmapLayer.pickable = true; // Ensure pickable is true after creation
     // Use global deck object
     googleMapsOverlay = new deck.GoogleMapsOverlay({
+        // Assign to the outer googleMapsOverlay
         layers: [heatmapLayer],
-        controller: true // Enable Deck.gl to control map view
+        controller: true, // Enable Deck.gl to control map view
     });
     googleMapsOverlay.setMap(map);
     // Hide progress bar after data is loaded and layer is added
-    if (progress) { // Check if progress is defined
+    if (progress) {
+        // Check if progress is defined
         // Add a small delay to ensure the progress bar is removed
         setTimeout(() => {
             // @ts-ignore
@@ -115,7 +119,7 @@ async function initMap() {
                 gmpClickable: true,
             });
             // Add click listener to the marker
-            marker.addListener("click", () => {
+            marker.addListener('click', () => {
                 infoWindow.close();
                 const content = `
             <div>Location: ${latLng.lat().toFixed(3)}, ${latLng.lng().toFixed(3)}</div>
@@ -146,16 +150,19 @@ async function initMap() {
     });
     // Button functionality
     const toggleButton = document.getElementById('toggleButton');
-    if (toggleButton) { // Check if toggleButton is found
+    if (toggleButton) {
+        // Check if toggleButton is found
         toggleButton.addEventListener('click', () => {
             const currentVisible = heatmapLayer.props.visible;
             // Create a new layer instance with toggled visibility and update the overlay
             const newLayer = heatmapLayer.clone({ visible: !currentVisible });
             googleMapsOverlay.setProps({
-                layers: [newLayer]
+                layers: [newLayer],
             });
             heatmapLayer = newLayer; // Update the heatmapLayer variable
-            toggleButton.textContent = !currentVisible ? 'Hide Heatmap Layer' : 'Show Heatmap Layer';
+            toggleButton.textContent = !currentVisible
+                ? 'Hide Heatmap Layer'
+                : 'Show Heatmap Layer';
         });
     }
 }

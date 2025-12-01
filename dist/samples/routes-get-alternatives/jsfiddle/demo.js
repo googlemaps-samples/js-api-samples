@@ -11,7 +11,7 @@ let innerMap;
 // Initialize and add the map.
 async function initMap() {
     //  Request the needed libraries.
-    await google.maps.importLibrary('maps');
+    (await google.maps.importLibrary('maps'));
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
         mapTypeControl: false,
@@ -26,7 +26,7 @@ async function getDirections() {
     //@ts-ignore
     // Request the needed libraries.
     const [{ Route, RouteLabel }] = await Promise.all([
-        google.maps.importLibrary('routes')
+        google.maps.importLibrary('routes'),
     ]);
     
     
@@ -43,7 +43,7 @@ async function getDirections() {
     // Call computeRoutes to get the directions.
     const result = await Route.computeRoutes(request);
     if (!result.routes || result.routes.length === 0) {
-        console.warn("No routes found");
+        console.warn('No routes found');
         return;
     }
     let primaryRoute;
@@ -78,11 +78,11 @@ function drawRoute(route, isPrimaryRoute) {
             }
             : {
                 map: innerMap,
-                strokeColor: "#669DF6",
+                strokeColor: '#669DF6',
                 strokeOpacity: 0.5,
                 strokeWeight: 5,
             },
-        colorScheme: innerMap.get("colorScheme"),
+        colorScheme: innerMap.get('colorScheme'),
     }));
 }
 initMap();

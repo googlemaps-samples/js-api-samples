@@ -6,80 +6,80 @@
  */
 /* [START maps_ui_kit_customization] */
 const searchPlace = document.querySelector('gmp-place-autocomplete');
-const componentType = document.getElementById("component");
-const layoutOrientation = document.getElementById("orientation");
-const widgetContainer = document.querySelector(".widget-container");
-const contentConfig = document.querySelectorAll(".content-config");
-const contentElemContainer = document.querySelector(".content-element-container");
-const contentElem = document.querySelectorAll(".content-element");
+const componentType = document.getElementById('component');
+const layoutOrientation = document.getElementById('orientation');
+const widgetContainer = document.querySelector('.widget-container');
+const contentConfig = document.querySelectorAll('.content-config');
+const contentElemContainer = document.querySelector('.content-element-container');
+const contentElem = document.querySelectorAll('.content-element');
 const contentsExtra = document.querySelectorAll('.extra-content');
 const styleColors = document.querySelectorAll("input[type='color']");
 const styleText = document.querySelectorAll(".style-config input[type='text']");
-const placeId = document.getElementById("place-id");
-const widthSlider = document.getElementById("width-slider");
-const truncationControl = document.getElementById("truncationpreferred");
-const styleReset = document.querySelectorAll(".reset");
+const placeId = document.getElementById('place-id');
+const widthSlider = document.getElementById('width-slider');
+const truncationControl = document.getElementById('truncationpreferred');
+const styleReset = document.querySelectorAll('.reset');
 let settings = {
-    "placeId": "ChIJ3S-JXmauEmsRUcIaWtf4MzE",
-    "element": "gmp-place-details-compact",
-    "orientation": "VERTICAL",
-    "all": true,
-    "standard": false,
-    "custom": false,
-    "contentType": "all",
-    "truncationPreferred": false,
-    "contents": {
-        "media": true,
-        "address": true,
-        "rating": true,
-        "type": true,
-        "price": true,
-        "accessible-entrance-icon": true,
-        "open-now-status": true,
-        "attribution": true
+    placeId: 'ChIJ3S-JXmauEmsRUcIaWtf4MzE',
+    element: 'gmp-place-details-compact',
+    orientation: 'VERTICAL',
+    all: true,
+    standard: false,
+    custom: false,
+    contentType: 'all',
+    truncationPreferred: false,
+    contents: {
+        media: true,
+        address: true,
+        rating: true,
+        type: true,
+        price: true,
+        'accessible-entrance-icon': true,
+        'open-now-status': true,
+        attribution: true,
     },
-    "extraContents": {
-        "website": true,
-        "phone-number": true,
-        "opening-hours": true,
-        "summary": true,
-        "type-specific-highlights": true,
-        "reviews": true,
-        "plus-code": true,
-        "feature-list": true
-    }
+    extraContents: {
+        website: true,
+        'phone-number': true,
+        'opening-hours': true,
+        summary: true,
+        'type-specific-highlights': true,
+        reviews: true,
+        'plus-code': true,
+        'feature-list': true,
+    },
 };
 let customizedStyle = {
-    "--gmp-mat-color-info": "",
-    "--gmp-mat-color-negative": "",
-    "--gmp-mat-color-neutral-container": "",
-    "--gmp-mat-color-on-secondary-container": "",
-    "--gmp-mat-color-on-surface": "",
-    "--gmp-mat-color-surface": "",
-    "--gmp-mat-color-on-surface-variant": "",
-    "--gmp-mat-color-outline-decorative": "",
-    "--gmp-mat-color-positive": "",
-    "--gmp-mat-color-primary": "",
-    "--gmp-mat-color-secondary-container": "",
-    "--gmp-mat-color-disabled-surface": "",
-    "--gmp-mat-font-body-medium": "",
-    "--gmp-mat-font-body-small": "",
-    "--gmp-mat-font-family": "",
-    "--gmp-mat-font-headline-medium": "",
-    "--gmp-mat-font-label-large": "",
-    "--gmp-mat-font-title-small": "",
-    "--gmp-mat-color-on-neutral-container": "",
-    "--gmp-mat-color-on-positive-container": "",
-    "--gmp-mat-color-positive-container": "",
-    "--gmp-mat-font-display-small": "",
-    "background-color": "",
-    "border": "",
-    "border-radius": "",
-    "font-size": ""
+    '--gmp-mat-color-info': '',
+    '--gmp-mat-color-negative': '',
+    '--gmp-mat-color-neutral-container': '',
+    '--gmp-mat-color-on-secondary-container': '',
+    '--gmp-mat-color-on-surface': '',
+    '--gmp-mat-color-surface': '',
+    '--gmp-mat-color-on-surface-variant': '',
+    '--gmp-mat-color-outline-decorative': '',
+    '--gmp-mat-color-positive': '',
+    '--gmp-mat-color-primary': '',
+    '--gmp-mat-color-secondary-container': '',
+    '--gmp-mat-color-disabled-surface': '',
+    '--gmp-mat-font-body-medium': '',
+    '--gmp-mat-font-body-small': '',
+    '--gmp-mat-font-family': '',
+    '--gmp-mat-font-headline-medium': '',
+    '--gmp-mat-font-label-large': '',
+    '--gmp-mat-font-title-small': '',
+    '--gmp-mat-color-on-neutral-container': '',
+    '--gmp-mat-color-on-positive-container': '',
+    '--gmp-mat-color-positive-container': '',
+    '--gmp-mat-font-display-small': '',
+    'background-color': '',
+    border: '',
+    'border-radius': '',
+    'font-size': '',
 };
 let placeElement, placeRequest, gmpPlaceAll, gmpPlaceStandard, gmpContentConfig, gmpContentConfigFull;
 async function init() {
-    await google.maps.importLibrary("places");
+    await google.maps.importLibrary('places');
     placeRequest = document.createElement('gmp-place-details-place-request');
     gmpPlaceAll = document.createElement('gmp-place-all-content');
     gmpPlaceStandard = document.createElement('gmp-place-standard-content');
@@ -111,9 +111,12 @@ function initAccordion() {
 /* Initialize Autocomplete for searching places */
 function initSearchPlace() {
     searchPlace.addEventListener('gmp-select', ({ placePrediction }) => {
-        placePrediction.toPlace().fetchFields({
-            fields: ['id']
-        }).then((place) => {
+        placePrediction
+            .toPlace()
+            .fetchFields({
+            fields: ['id'],
+        })
+            .then((place) => {
             placeId.value = place.place.id;
             settings.placeId = placeId.value;
             updateWidget();
@@ -122,22 +125,21 @@ function initSearchPlace() {
 }
 function widgetSelector() {
     /* Place ID input */
-    placeId.addEventListener("input", () => {
+    placeId.addEventListener('input', () => {
         settings.placeId = placeId.value;
         updateWidget();
     });
     /* Select a component */
-    componentType.addEventListener("change", () => {
+    componentType.addEventListener('change', () => {
         settings.element = componentType.value;
-        if (componentType.value == "gmp-place-details") {
-            layoutOrientation.disabled =
-                true; //horizontal orientation is not available for full version for now
+        if (componentType.value == 'gmp-place-details') {
+            layoutOrientation.disabled = true; //horizontal orientation is not available for full version for now
             settings.truncationPreferred = false;
             truncationControl.disabled = true;
             if (settings.custom) {
                 //display extra content elements config for full version
                 contentsExtra.forEach((item) => {
-                    item.style.display = "block";
+                    item.style.display = 'block';
                 });
             }
         }
@@ -147,51 +149,51 @@ function widgetSelector() {
             truncationControl.disabled = false;
             if (settings.custom) {
                 contentsExtra.forEach((item) => {
-                    item.style.display = "none";
+                    item.style.display = 'none';
                 });
             }
         }
         detailsConstructor();
     });
     /* Select widget orientation */
-    layoutOrientation.addEventListener("change", () => {
+    layoutOrientation.addEventListener('change', () => {
         settings.orientation = layoutOrientation.value;
         updateWidget();
     });
     /* Apply Truncation to widget */
-    truncationControl.addEventListener("change", () => {
+    truncationControl.addEventListener('change', () => {
         settings.truncationPreferred = truncationControl.checked;
         updateWidget();
     });
     /* Switch between Standard, All, Custom radio buttons */
     contentConfig.forEach((config) => {
-        config.addEventListener("change", (event) => {
+        config.addEventListener('change', (event) => {
             switch (event.target.value) {
                 case 'standard':
-                    contentElemContainer.style.display = "none";
+                    contentElemContainer.style.display = 'none';
                     settings.all = false;
                     settings.standard = true;
                     settings.custom = false;
                     break;
                 case 'all':
-                    contentElemContainer.style.display = "none";
+                    contentElemContainer.style.display = 'none';
                     settings.all = true;
                     settings.standard = false;
                     settings.custom = false;
                     break;
                 case 'custom':
-                    contentElemContainer.style.display = "grid";
+                    contentElemContainer.style.display = 'grid';
                     settings.all = false;
                     settings.standard = false;
                     settings.custom = true;
-                    if (settings.element == "gmp-place-details-compact") {
+                    if (settings.element == 'gmp-place-details-compact') {
                         contentsExtra.forEach((item) => {
-                            item.style.display = "none";
+                            item.style.display = 'none';
                         });
                     }
-                    else if (settings.element == "gmp-place-details") {
+                    else if (settings.element == 'gmp-place-details') {
                         contentsExtra.forEach((item) => {
-                            item.style.display = "block";
+                            item.style.display = 'block';
                         });
                     }
                     break;
@@ -200,13 +202,13 @@ function widgetSelector() {
         });
     });
     contentElem.forEach((element) => {
-        element.addEventListener("change", (event) => {
+        element.addEventListener('change', (event) => {
             settings.contents[event.target.value] = event.target.checked;
             updateWidget();
         });
     });
     contentsExtra.forEach((element) => {
-        element.addEventListener("change", (event) => {
+        element.addEventListener('change', (event) => {
             settings.extraContents[event.target.value] = event.target.checked;
             updateWidget();
         });
@@ -214,31 +216,29 @@ function widgetSelector() {
 }
 function styleCustomization() {
     styleColors.forEach((style) => {
-        style.addEventListener("input", (event) => {
+        style.addEventListener('input', (event) => {
             customizedStyle[event.target.id] = event.target.value;
-            placeElement.style.setProperty(event.target.id, event.target
-                .value);
+            placeElement.style.setProperty(event.target.id, event.target.value);
         });
     });
     styleReset.forEach((item) => {
-        item.addEventListener("click", (event) => {
+        item.addEventListener('click', (event) => {
             event.preventDefault();
             // @ts-ignore
             document.getElementById(event.target.dataset.style).value =
-                "#000000";
+                '#000000';
             placeElement.style.removeProperty(event.target.dataset.style);
         });
     });
     styleText.forEach((style) => {
-        style.addEventListener("input", (event) => {
-            placeElement.style.setProperty(event.target.id, event.target
-                .value);
+        style.addEventListener('input', (event) => {
+            placeElement.style.setProperty(event.target.id, event.target.value);
         });
     });
-    widthSlider.addEventListener("input", (event) => {
+    widthSlider.addEventListener('input', (event) => {
         placeElement.style.width = `${event.target.value}px`;
         // @ts-ignore
-        document.getElementById("width-output").innerHTML =
+        document.getElementById('width-output').innerHTML =
             `${event.target.value}px`;
     });
 }
@@ -305,10 +305,10 @@ function updateWidget() {
         placeElement.appendChild(gmpPlaceStandard);
     }
     if (settings.custom) {
-        if (settings.element == "gmp-place-details-compact") {
+        if (settings.element == 'gmp-place-details-compact') {
             placeElement.appendChild(gmpContentConfig);
         }
-        if (settings.element == "gmp-place-details") {
+        if (settings.element == 'gmp-place-details') {
             placeElement.appendChild(gmpContentConfigFull);
         }
     }
