@@ -5,15 +5,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 /* [START maps_ui_kit_place_search_text_compact] */
-const mapContainer = document.getElementById("map-container");
-const placeSearch = document.querySelector("gmp-place-search");
-const placeSearchQuery = document.querySelector("gmp-place-text-search-request");
-const queryInput = document.querySelector(".query-input");
-const searchButton = document.querySelector(".search-button");
-const detailsContainer = document.getElementById("details-container");
-const placeDetails = document.querySelector("gmp-place-details-compact");
-const placeRequest = document.querySelector("gmp-place-details-place-request");
-const warningMsg = document.querySelector(".warning");
+const mapContainer = document.getElementById('map-container');
+const placeSearch = document.querySelector('gmp-place-search');
+const placeSearchQuery = document.querySelector('gmp-place-text-search-request');
+const queryInput = document.querySelector('.query-input');
+const searchButton = document.querySelector('.search-button');
+const detailsContainer = document.getElementById('details-container');
+const placeDetails = document.querySelector('gmp-place-details-compact');
+const placeRequest = document.querySelector('gmp-place-details-place-request');
+const warningMsg = document.querySelector('.warning');
 let markers = {};
 let previousSearchQuery = '';
 let gMap;
@@ -23,37 +23,37 @@ let LatLngBounds;
 let LatLng;
 async function init() {
     //@ts-ignore
-    const { Map } = await google.maps.importLibrary("maps");
-    await google.maps.importLibrary("places");
+    const { Map } = await google.maps.importLibrary('maps');
+    await google.maps.importLibrary('places');
     //@ts-ignore
-    ({ AdvancedMarkerElement } = await google.maps.importLibrary("marker"));
+    ({ AdvancedMarkerElement } = await google.maps.importLibrary('marker'));
     //@ts-ignore
-    ({ LatLngBounds, LatLng } = await google.maps.importLibrary("core"));
+    ({ LatLngBounds, LatLng } = await google.maps.importLibrary('core'));
     let mapOptions = {
         center: { lat: 37.422, lng: -122.085 },
         zoom: 2,
         mapTypeControl: false,
         clickableIcons: false,
-        mapId: '2439f449ff38ce55'
+        mapId: '2439f449ff38ce55',
     };
     gMap = new Map(mapContainer, mapOptions);
     placeDetailsPopup = new AdvancedMarkerElement({
         map: null,
         content: placeDetails,
-        zIndex: 100
+        zIndex: 100,
     });
     findCurrentLocation();
     gMap.addListener('click', (e) => {
         hidePlaceDetailsPopup();
     });
-    searchButton.addEventListener("click", searchPlaces);
-    queryInput.addEventListener("keydown", (event) => {
+    searchButton.addEventListener('click', searchPlaces);
+    queryInput.addEventListener('keydown', (event) => {
         if (event.key == 'Enter') {
             event.preventDefault();
             searchPlaces();
         }
     });
-    placeSearch.addEventListener("gmp-select", ({ place }) => {
+    placeSearch.addEventListener('gmp-select', ({ place }) => {
         if (markers[place.id]) {
             markers[place.id].click();
         }
@@ -86,7 +86,7 @@ async function addMarkers() {
         placeSearch.places.forEach((place) => {
             let marker = new AdvancedMarkerElement({
                 map: gMap,
-                position: place.location
+                position: place.location,
             });
             marker.metadata = { id: place.id };
             markers[place.id] = marker;
@@ -103,12 +103,12 @@ async function addMarkers() {
         });
     }
     else {
-        warningMsg.style.display = "block";
+        warningMsg.style.display = 'block';
     }
 }
 async function findCurrentLocation() {
     //@ts-ignore
-    const { LatLng } = await google.maps.importLibrary("core");
+    const { LatLng } = await google.maps.importLibrary('core');
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
             const pos = new LatLng(position.coords.latitude, position.coords.longitude);

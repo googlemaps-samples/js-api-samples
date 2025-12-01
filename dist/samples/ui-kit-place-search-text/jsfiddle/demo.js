@@ -6,9 +6,9 @@
  */
 /* [START maps_ui_kit_place_search_text] */
 /* [START maps_ui_kit_place_search_text_query_selectors] */
-const map = document.querySelector("gmp-map");
-const placeList = document.querySelector("gmp-place-list");
-const placeDetails = document.querySelector("gmp-place-details");
+const map = document.querySelector('gmp-map');
+const placeList = document.querySelector('gmp-place-list');
+const placeDetails = document.querySelector('gmp-place-details');
 let marker = document.querySelector('gmp-advanced-marker');
 const textSearchInput = document.getElementById('textSearchInput');
 const textSearchButton = document.getElementById('textSearchButton');
@@ -20,11 +20,11 @@ let infoWindow;
 let center = { lat: 37.395641, lng: -122.077627 }; // Mountain View, CA.
 let bounds;
 async function initMap() {
-    const { Map, InfoWindow } = await google.maps.importLibrary("maps");
-    const { Place } = await google.maps.importLibrary("places");
+    const { Map, InfoWindow } = (await google.maps.importLibrary('maps'));
+    const { Place } = (await google.maps.importLibrary('places'));
     // Set bounds for location restriction.
     bounds = new google.maps.LatLngBounds({ lat: 37.37808200917261, lng: -122.13741583377849 }, { lat: 37.416676154341324, lng: -122.02261728794109 });
-    infoWindow = new google.maps.InfoWindow;
+    infoWindow = new google.maps.InfoWindow();
     // Center the map
     map.innerMap.panTo(center);
     map.innerMap.setZoom(14);
@@ -36,7 +36,10 @@ async function initMap() {
     // Fire when the Place Details Element is loaded.
     placeDetails.addEventListener('gmp-load', (event) => {
         // Center the info window on the map.
-        map.innerMap.fitBounds(placeDetails.place.viewport, { top: 500, left: 400 });
+        map.innerMap.fitBounds(placeDetails.place.viewport, {
+            top: 500,
+            left: 400,
+        });
     });
     // Handle clicks on the search button.
     textSearchButton.addEventListener('click', searchByTextRequest);
@@ -51,14 +54,16 @@ async function initMap() {
 /* [END maps_ui_kit_place_search_text_init_map] */
 /* [START maps_ui_kit_place_search_text_query] */
 async function searchByTextRequest() {
-    if (textSearchInput.value !== "") {
-        placeList.style.display = "block";
-        placeList.configureFromSearchByTextRequest({
+    if (textSearchInput.value !== '') {
+        placeList.style.display = 'block';
+        placeList
+            .configureFromSearchByTextRequest({
             locationRestriction: bounds,
             textQuery: textSearchInput.value,
-        }).then(addMarkers);
+        })
+            .then(addMarkers);
         // Handle user selection in Place Details.
-        placeList.addEventListener("gmp-placeselect", ({ place }) => {
+        placeList.addEventListener('gmp-placeselect', ({ place }) => {
             markers[place.id].click();
         });
     }
@@ -66,8 +71,8 @@ async function searchByTextRequest() {
 /* [END maps_ui_kit_place_search_text_query] */
 /* [START maps_ui_kit_place_search_text_add_markers] */
 async function addMarkers() {
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-    const { LatLngBounds } = await google.maps.importLibrary("core");
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
+    const { LatLngBounds } = (await google.maps.importLibrary('core'));
     const bounds = new LatLngBounds();
     // First remove all existing markers.
     for (marker in markers) {
@@ -82,7 +87,8 @@ async function addMarkers() {
             });
             markers[place.id] = marker;
             bounds.extend(place.location);
-            marker.collisionBehavior = google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
+            marker.collisionBehavior =
+                google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
             /* [START maps_ui_kit_place_search_text_click_event] */
             marker.addListener('gmp-click', (event) => {
                 if (infoWindow.isOpen) {
@@ -90,17 +96,20 @@ async function addMarkers() {
                 }
                 // Set the Place Details request to the selected place.
                 placeDetailsRequest.place = place.id;
-                placeDetails.style.display = "block";
-                placeDetails.style.width = "350px";
+                placeDetails.style.display = 'block';
+                placeDetails.style.width = '350px';
                 infoWindow.setOptions({
-                    content: placeDetails
+                    content: placeDetails,
                 });
                 infoWindow.open({
                     anchor: marker,
-                    map: map.innerMap
+                    map: map.innerMap,
                 });
                 placeDetails.addEventListener('gmp-load', () => {
-                    map.innerMap.fitBounds(place.viewport, { top: 400, left: 400 });
+                    map.innerMap.fitBounds(place.viewport, {
+                        top: 400,
+                        left: 400,
+                    });
                 });
             });
             /* [END maps_ui_kit_place_search_text_click_event] */

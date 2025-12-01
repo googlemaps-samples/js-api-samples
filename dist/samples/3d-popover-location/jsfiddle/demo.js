@@ -1,17 +1,20 @@
 "use strict";
 /*
-* @license
-* Copyright 2025 Google LLC. All Rights Reserved.
-* SPDX-License-Identifier: Apache-2.0
-*/
+ * @license
+ * Copyright 2025 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
 // @ts-nocheck
 
 async function init() {
-    const { AltitudeMode, Map3DElement, MapMode, PopoverElement } = await google.maps.importLibrary("maps3d");
+    const { AltitudeMode, Map3DElement, MapMode, PopoverElement } = await google.maps.importLibrary('maps3d');
     const map = new Map3DElement({
-        center: { lat: 37.8204, lng: -122.4783, altitude: 0.407 }, range: 4000, tilt: 74, heading: 38,
+        center: { lat: 37.8204, lng: -122.4783, altitude: 0.407 },
+        range: 4000,
+        tilt: 74,
+        heading: 38,
         mode: MapMode.HYBRID,
-        gestureHandling: "COOPERATIVE"
+        gestureHandling: 'COOPERATIVE',
     });
     const popover = new PopoverElement({
         altitudeMode: AltitudeMode.ABSOLUTE,

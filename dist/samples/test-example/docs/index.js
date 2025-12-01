@@ -12,15 +12,15 @@
 // TEST COMMENT 007
 // [START maps_test_example]
 // Declare the gmp-map element.
-const mapElement = document.querySelector("gmp-map");
+const mapElement = document.querySelector('gmp-map');
 let innerMap;
-const advancedMarkerElement = document.querySelector("gmp-advanced-marker");
+const advancedMarkerElement = document.querySelector('gmp-advanced-marker');
 let center;
 async function initMap() {
     // [START maps_test_example_instantiate_map]
     //  Request the needed libraries.
-    const { Map } = (await google.maps.importLibrary("maps"));
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary("marker"));
+    const { Map } = (await google.maps.importLibrary('maps'));
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
     // Get the inner map from the gmp-map element.
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
@@ -31,7 +31,11 @@ async function initMap() {
     center = innerMap.getCenter();
     // [START maps_test_example_instantiate_marker]
     // Add a marker, positioned at Uluru.
-    const marker = new AdvancedMarkerElement({ map: innerMap, position: center, title: "Uluru" });
+    const marker = new AdvancedMarkerElement({
+        map: innerMap,
+        position: center,
+        title: 'Uluru',
+    });
     // [END maps_test_example_instantiate_marker]
 }
 initMap();

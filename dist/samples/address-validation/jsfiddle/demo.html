@@ -4,131 +4,177 @@
  Copyright 2025 Google LLC. All Rights Reserved.
  SPDX-License-Identifier: Apache-2.0
 -->
- 
+
 <html>
-  <head>
-    <title>Address Validation</title>
+    <head>
+        <title>Address Validation</title>
 
-    <link rel="stylesheet" type="text/css" href="./style.css" />
-    <script type="module" src="./index.js"></script>
-  </head>
-  <body>
-      <!-- Address Validation Form Container -->
-      <div id="sidebar">
-        <!-- Header -->
-        <div class="sidebar-header">
-          <h2>Address Validation</h2>
+        <link rel="stylesheet" type="text/css" href="./style.css" />
+        <script type="module" src="./index.js"></script>
+    </head>
+    <body>
+        <!-- Address Validation Form Container -->
+        <div id="sidebar">
+            <!-- Header -->
+            <div class="sidebar-header">
+                <h2>Address Validation</h2>
+            </div>
+            <!-- Content: Address Form -->
+            <form id="address-form" class="sidebar-content" autocomplete="off">
+                <!-- Example Dropdown Section -->
+                <div
+                    id="example-dropdown-container"
+                    style="
+                        margin-bottom: 1rem;
+                        padding-bottom: 0.75rem;
+                        border-bottom: 1px solid #e5e7eb;
+                    ">
+                    <label for="example-select" style="margin-bottom: 0.5rem"
+                        >Load Example Address:</label
+                    >
+                    <select
+                        id="example-select"
+                        name="exampleSelect"
+                        class="form-select">
+                        <option value="" selected disabled>
+                            -- Select an Example --
+                        </option>
+                        <option value="google">Valid Address</option>
+                        <option value="nonExistentSubpremise">
+                            Non-existent Subpremise
+                        </option>
+                        <option value="missingSubpremise">
+                            Missing Subpremise
+                        </option>
+                        <option value="misspelledLocality">
+                            Misspelled Locality
+                        </option>
+                        <option value="missingLocality">
+                            Missing Locality
+                        </option>
+                        <option value="usPoBox">US PO Box</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="street-address-1">Street Address 1</label>
+                    <input
+                        id="street-address-1"
+                        name="streetAddress1"
+                        type="text"
+                        placeholder="e.g., 1600 Amphitheatre Parkway" />
+                </div>
+                <div>
+                    <label for="street-address-2"
+                        >Street Address 2 (Optional)</label
+                    >
+                    <input
+                        id="street-address-2"
+                        name="streetAddress2"
+                        type="text"
+                        placeholder="e.g., Suite 100" />
+                </div>
+                <!-- Use a div with grid class for City/State/ZIP layout -->
+                <div class="form-grid-triple">
+                    <div>
+                        <label for="city">City</label>
+                        <input
+                            id="city"
+                            name="city"
+                            type="text"
+                            placeholder="e.g., Mountain View" />
+                    </div>
+                    <div>
+                        <label for="state">State or territory</label>
+                        <input
+                            id="state"
+                            name="state"
+                            type="text"
+                            placeholder="e.g., CA" />
+                    </div>
+                    <div>
+                        <label for="zip-code">ZIP Code</label>
+                        <input
+                            id="zip-code"
+                            name="zipCode"
+                            type="text"
+                            placeholder="e.g., 94043" />
+                    </div>
+                </div>
+                <div id="region-select-container">
+                    <div>
+                        <label for="region-select">Region</label>
+                        <select
+                            id="region-select"
+                            name="regionSelect"
+                            class="form-select">
+                            <option value="AR">Argentina</option>
+                            <option value="AU">Australia</option>
+                            <option value="AT">Austria</option>
+                            <option value="BE">Belgium</option>
+                            <option value="BR">Brazil</option>
+                            <option value="BG">Bulgaria</option>
+                            <option value="CA">Canada</option>
+                            <option value="CL">Chile</option>
+                            <option value="CO">Colombia</option>
+                            <option value="HR">Croatia</option>
+                            <option value="CZ">Czechia</option>
+                            <option value="DK">Denmark</option>
+                            <option value="EE">Estonia</option>
+                            <option value="FI">Finland</option>
+                            <option value="FR">France</option>
+                            <option value="DE">Germany</option>
+                            <option value="HU">Hungary</option>
+                            <option value="IN">India</option>
+                            <option value="IE">Ireland</option>
+                            <option value="IT">Italy</option>
+                            <option value="JP">Japan</option>
+                            <option value="LV">Latvia</option>
+                            <option value="LT">Lithuania</option>
+                            <option value="LU">Luxembourg</option>
+                            <option value="MY">Malaysia</option>
+                            <option value="MX">Mexico</option>
+                            <option value="NL">Netherlands</option>
+                            <option value="NO">Norway</option>
+                            <option value="NZ">New Zealand</option>
+                            <option value="PL">Poland</option>
+                            <option value="PT">Portugal</option>
+                            <option value="PR">Puerto Rico</option>
+                            <option value="SG">Singapore</option>
+                            <option value="SK">Slovakia</option>
+                            <option value="SI">Slovenia</option>
+                            <option value="ES">Spain</option>
+                            <option value="SE">Sweden</option>
+                            <option value="CH">Switzerland</option>
+                            <option value="GB">United Kingdom</option>
+                            <option value="US" selected>United States</option>
+                            <option value="">Unknown</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="validate-button" type="submit">
+                    Validate Address
+                </button>
+
+                <button
+                    id="clear-form-button"
+                    type="button"
+                    event="handleClearForm">
+                    Clear Form
+                </button>
+
+                <!-- Result Display Area -->
+                <div id="result-container">
+                    <label for="result-display"
+                        >Validation Result (formatted address and JSON)</label
+                    >
+                    <pre id="result-display">Result will appear here...</pre>
+                </div>
+            </form>
         </div>
-        <!-- Content: Address Form -->
-        <form id="address-form" class="sidebar-content" autocomplete="off">
-          <!-- Example Dropdown Section -->
-          <div id="example-dropdown-container" style="margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid #e5e7eb;">
-            <label for="example-select" style="margin-bottom: 0.5rem;">Load Example Address:</label>
-            <select id="example-select" name="exampleSelect" class="form-select">
-              <option value="" selected disabled>-- Select an Example --</option>
-              <option value="google">Valid Address</option>
-              <option value="nonExistentSubpremise">Non-existent Subpremise</option>
-              <option value="missingSubpremise">Missing Subpremise</option>
-              <option value="misspelledLocality">Misspelled Locality</option>
-              <option value="missingLocality">Missing Locality</option>
-              <option value="usPoBox">US PO Box</option>
-            </select>
-          </div>
-          <div>
-            <label for="street-address-1">Street Address 1</label>
-            <input
-              id="street-address-1"
-              name="streetAddress1"
-              type="text"
-              placeholder="e.g., 1600 Amphitheatre Parkway"
-            />
-          </div>
-          <div>
-            <label for="street-address-2">Street Address 2 (Optional)</label>
-            <input
-              id="street-address-2"
-              name="streetAddress2"
-              type="text"
-              placeholder="e.g., Suite 100"
-            />
-          </div>
-          <!-- Use a div with grid class for City/State/ZIP layout -->
-          <div class="form-grid-triple">
-            <div>
-              <label for="city">City</label>
-              <input id="city" name="city" type="text" placeholder="e.g., Mountain View" />
-            </div>
-            <div>
-              <label for="state">State or territory</label>
-              <input id="state" name="state" type="text" placeholder="e.g., CA" />
-            </div>
-            <div>
-              <label for="zip-code">ZIP Code</label>
-              <input id="zip-code" name="zipCode" type="text" placeholder="e.g., 94043" />
-            </div>
-          </div>
-          <div id="region-select-container">
-            <div>
-              <label for="region-select">Region</label>
-              <select id="region-select" name="regionSelect" class="form-select">
-                <option value="AR">Argentina</option>
-                <option value="AU">Australia</option>
-                <option value="AT">Austria</option>
-                <option value="BE">Belgium</option>
-                <option value="BR">Brazil</option>
-                <option value="BG">Bulgaria</option>
-                <option value="CA">Canada</option>
-                <option value="CL">Chile</option>
-                <option value="CO">Colombia</option>
-                <option value="HR">Croatia</option>
-                <option value="CZ">Czechia</option>
-                <option value="DK">Denmark</option>
-                <option value="EE">Estonia</option>
-                <option value="FI">Finland</option>
-                <option value="FR">France</option>
-                <option value="DE">Germany</option>
-                <option value="HU">Hungary</option>
-                <option value="IN">India</option>
-                <option value="IE">Ireland</option>
-                <option value="IT">Italy</option>
-                <option value="JP">Japan</option>
-                <option value="LV">Latvia</option>
-                <option value="LT">Lithuania</option>
-                <option value="LU">Luxembourg</option>
-                <option value="MY">Malaysia</option>
-                <option value="MX">Mexico</option>
-                <option value="NL">Netherlands</option>
-                <option value="NO">Norway</option>
-                <option value="NZ">New Zealand</option>
-                <option value="PL">Poland</option>
-                <option value="PT">Portugal</option>
-                <option value="PR">Puerto Rico</option>
-                <option value="SG">Singapore</option>
-                <option value="SK">Slovakia</option>
-                <option value="SI">Slovenia</option>
-                <option value="ES">Spain</option>
-                <option value="SE">Sweden</option>
-                <option value="CH">Switzerland</option>
-                <option value="GB">United Kingdom</option>
-                <option value="US" selected>United States</option>
-                <option value="">Unknown</option>
-              </select>
-            </div>
-          </div>
-
-          <button id="validate-button" type="submit">Validate Address</button>
-
-          <button id="clear-form-button" type="button" event="handleClearForm">Clear Form</button>
-
-          <!-- Result Display Area -->
-          <div id="result-container">
-            <label for="result-display">Validation Result (formatted address and JSON)</label>
-            <pre id="result-display">Result will appear here...</pre>
-          </div>
-        </form>
-      </div>
-    <!-- prettier-ignore -->
-    <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+        <!-- prettier-ignore -->
+        <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
       ({key: "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8", v: "beta"});</script>
-  </body>
+    </body>
 </html>
+

@@ -6,10 +6,10 @@
  */
 
 async function initMap() {
-    (await google.maps.importLibrary("maps"));
-    const mapElement = document.querySelector("gmp-map");
+    (await google.maps.importLibrary('maps'));
+    const mapElement = document.querySelector('gmp-map');
     let innerMap = mapElement.innerMap;
-    innerMap.data.loadGeoJson("google.json");
+    innerMap.data.loadGeoJson('google.json');
 }
 initMap();
 

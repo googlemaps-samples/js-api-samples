@@ -6,15 +6,15 @@
 
 html,
 body {
-  display: flex;
-  width: 100%;
-  height: 400px;
-  margin: 0;
+    display: flex;
+    width: 100%;
+    height: 400px;
+    margin: 0;
 }
 
 h1 {
-  font-size: 16px;
-  text-align: center;
+    font-size: 16px;
+    text-align: center;
 }
 
 #map-container {
@@ -23,37 +23,39 @@ h1 {
 }
 
 gmp-place-details-compact {
-  /* Sets the color for text and icons on the surface */
-  /* Adapts automatically to the user's system light/dark mode preference */
-  --gmp-mat-color-on-surface: light-dark(black, white);
-  /* Sets the background color of the surface */
-  /* Adapts automatically to the user's system light/dark mode preference */
-  --gmp-mat-color-surface: light-dark(white, black);
-  /* Defines the primary font stack used within the component */
-  --gmp-mat-font-family: Google Sans Text, sans-serif;
-  /* Defines the style for medium body text (e.g., address, descriptions) */
-  --gmp-mat-font-body-medium: normal 400 0.875em/1.25em var(--gmp-mat-font-family, 'Google Sans Text');
+    /* Sets the color for text and icons on the surface */
+    /* Adapts automatically to the user's system light/dark mode preference */
+    --gmp-mat-color-on-surface: light-dark(black, white);
+    /* Sets the background color of the surface */
+    /* Adapts automatically to the user's system light/dark mode preference */
+    --gmp-mat-color-surface: light-dark(white, black);
+    /* Defines the primary font stack used within the component */
+    --gmp-mat-font-family: Google Sans Text, sans-serif;
+    /* Defines the style for medium body text (e.g., address, descriptions) */
+    --gmp-mat-font-body-medium: normal 400 0.875em/1.25em
+        var(--gmp-mat-font-family, 'Google Sans Text');
 
-  width: 360px;
-  border: none;
-  padding: 0;
-  margin: 0;
-  position: relative;
-  transform: translate(0, calc(-20px));
+    width: 360px;
+    border: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    transform: translate(0, calc(-20px));
 }
 
 /* This creates the pointer attached to the bottom of the element. */
 gmp-place-details-compact::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 16px solid transparent;
-  border-right: 16px solid transparent;
-  border-top: 20px solid var(--gmp-mat-color-surface, light-dark(white, black));
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+    border-top: 20px solid
+        var(--gmp-mat-color-surface, light-dark(white, black));
 }
 
 

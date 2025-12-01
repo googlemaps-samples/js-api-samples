@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## places-autocomplete-addressform
+
+The places-autocomplete-addressform sample demonstrates how to use the Places Autocomplete feature to automatically fill in a shipping address form.
+
+Follow these instructions to set up and run places-autocomplete-addressform sample on your local computer.
 
 ## Setup
 
@@ -32,7 +35,7 @@ From 'samples':
 ### Run lint to check for problems
 
 `cd samples/places-autocomplete-addressform`
-`npx eslint index.ts` 
+`npx eslint index.ts`
 
 ## Feedback
 

@@ -6,20 +6,20 @@
  */
 /* [START maps_ui_kit_place_search_nearby] */
 /* [START maps_ui_kit_place_search_nearby_query_selectors] */
-const map = document.querySelector("gmp-map");
-const placeList = document.querySelector("gmp-place-list");
-const typeSelect = document.querySelector(".type-select");
-const placeDetails = document.querySelector("gmp-place-details");
+const map = document.querySelector('gmp-map');
+const placeList = document.querySelector('gmp-place-list');
+const typeSelect = document.querySelector('.type-select');
+const placeDetails = document.querySelector('gmp-place-details');
 const placeDetailsRequest = document.querySelector('gmp-place-details-place-request');
 /* [END maps_ui_kit_place_search_nearby_query_selectors] */
 let markers = {};
 let infoWindow;
 async function initMap() {
     await google.maps.importLibrary('places');
-    const { LatLngBounds } = await google.maps.importLibrary('core');
-    const { InfoWindow } = await google.maps.importLibrary('maps');
-    const { spherical } = await google.maps.importLibrary('geometry');
-    infoWindow = new InfoWindow;
+    const { LatLngBounds } = (await google.maps.importLibrary('core'));
+    const { InfoWindow } = (await google.maps.importLibrary('maps'));
+    const { spherical } = (await google.maps.importLibrary('geometry'));
+    infoWindow = new InfoWindow();
     let marker;
     function getContainingCircle(bounds) {
         const diameter = spherical.computeDistanceBetween(bounds.getNorthEast(), bounds.getSouthWest());
@@ -35,7 +35,10 @@ async function initMap() {
     /* [START maps_ui_kit_place_search_nearby_event] */
     placeDetails.addEventListener('gmp-load', (event) => {
         // Center the info window on the map.
-        map.innerMap.fitBounds(placeDetails.place.viewport, { top: 500, left: 400 });
+        map.innerMap.fitBounds(placeDetails.place.viewport, {
+            top: 500,
+            left: 400,
+        });
     });
     typeSelect.addEventListener('change', (event) => {
         // First remove all existing markers.
@@ -45,10 +48,12 @@ async function initMap() {
         markers = {};
         if (typeSelect.value) {
             placeList.style.display = 'block';
-            placeList.configureFromSearchNearbyRequest({
+            placeList
+                .configureFromSearchNearbyRequest({
                 locationRestriction: getContainingCircle(map.innerMap.getBounds()),
                 includedPrimaryTypes: [typeSelect.value],
-            }).then(addMarkers);
+            })
+                .then(addMarkers);
             // Handle user selection in Place Details.
             placeList.addEventListener('gmp-placeselect', ({ place }) => {
                 markers[place.id].click();
@@ -58,14 +63,14 @@ async function initMap() {
     /* [END maps_ui_kit_place_search_nearby_event] */
 }
 async function addMarkers() {
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
-    const { LatLngBounds } = await google.maps.importLibrary('core');
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
+    const { LatLngBounds } = (await google.maps.importLibrary('core'));
     const bounds = new LatLngBounds();
     if (placeList.places.length > 0) {
         placeList.places.forEach((place) => {
             let marker = new AdvancedMarkerElement({
                 map: map.innerMap,
-                position: place.location
+                position: place.location,
             });
             markers[place.id] = marker;
             bounds.extend(place.location);
@@ -82,7 +87,7 @@ async function addMarkers() {
                 });
                 infoWindow.open({
                     anchor: marker,
-                    map: map.innerMap
+                    map: map.innerMap,
                 });
             });
             /* [END maps_ui_kit_place_search_nearby_click_event] */
@@ -92,7 +97,7 @@ async function addMarkers() {
     }
 }
 async function findCurrentLocation() {
-    const { LatLng } = await google.maps.importLibrary('core');
+    const { LatLng } = (await google.maps.importLibrary('core'));
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
             const pos = new LatLng(position.coords.latitude, position.coords.longitude);
@@ -104,7 +109,7 @@ async function findCurrentLocation() {
         });
     }
     else {
-        console.log('Your browser doesn\'t support geolocation');
+        console.log("Your browser doesn't support geolocation");
         map.innerMap.setZoom(14);
     }
 }

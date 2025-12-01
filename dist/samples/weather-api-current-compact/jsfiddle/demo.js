@@ -6,7 +6,7 @@
 
 import './simple-weather-widget'; // Import the custom element
 const CURRENT_CONDITIONS_API_URL = 'https://weather.googleapis.com/v1/currentConditions:lookup'; // Current Conditions API endpoint.
-const API_KEY = "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8"; // Use the hardcoded API key from index.html
+const API_KEY = 'AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8'; // Use the hardcoded API key from index.html
 const LIGHT_MAP_ID = 'c306b3c6dd3ed8d9';
 const DARK_MAP_ID = '6b73a9fe7e831a00';
 let map;
@@ -14,9 +14,9 @@ let activeWeatherWidget = null; // To keep track of the currently active widget
 let allMarkers = []; // To store all active markers
 let markersLoaded = false; // Flag to track if button markers are loaded
 async function initMap() {
-    const { Map } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-    map = new Map(document.getElementById("map"), {
+    const { Map } = (await google.maps.importLibrary('maps'));
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
+    map = new Map(document.getElementById('map'), {
         center: { lat: 48.8566, lng: 2.3522 }, // Set center to Paris initially, will change based on markers
         zoom: 6,
         minZoom: 5, // Set minimum zoom level to 5
@@ -27,7 +27,11 @@ async function initMap() {
     // Load a marker at the initial map center
     const initialCenter = map.getCenter();
     if (initialCenter) {
-        await createAndAddMarker({ name: 'Initial Location', lat: initialCenter.lat(), lng: initialCenter.lng() }, 'dynamic'); // Create and add dynamic marker at center
+        await createAndAddMarker({
+            name: 'Initial Location',
+            lat: initialCenter.lat(),
+            lng: initialCenter.lng(),
+        }, 'dynamic'); // Create and add dynamic marker at center
     }
     // Add a click listener to the map to handle creating a new marker or hiding the active widget
     map.addListener('click', async (event) => {
@@ -36,7 +40,9 @@ async function initMap() {
         let target = event.domEvent.target;
         let isClickOnMarker = false;
         while (target) {
-            if (target.tagName === 'SIMPLE-WEATHER-WIDGET' || target.classList.contains('gm-control-active')) { // Check for widget or default marker control
+            if (target.tagName === 'SIMPLE-WEATHER-WIDGET' ||
+                target.classList.contains('gm-control-active')) {
+                // Check for widget or default marker control
                 isClickOnMarker = true;
                 break;
             }
@@ -50,20 +56,24 @@ async function initMap() {
                 const activeWidgetContainer = activeWeatherWidget.shadowRoot.querySelector('.widget-container');
                 activeWidgetContainer.classList.remove('highlight');
                 // Find the marker associated with the active widget and reset its zIndex
-                const activeMarker = allMarkers.find(marker => marker.content === activeWeatherWidget);
+                const activeMarker = allMarkers.find((marker) => marker.content === activeWeatherWidget);
                 if (activeMarker) {
                     activeMarker.zIndex = null;
                 }
                 activeWeatherWidget = null; // Clear the active widget
             }
             // Remove the previous dynamic marker if it exists
-            const currentDynamicMarkerIndex = allMarkers.findIndex(marker => marker.markerType === 'dynamic');
+            const currentDynamicMarkerIndex = allMarkers.findIndex((marker) => marker.markerType === 'dynamic');
             if (currentDynamicMarkerIndex !== -1) {
                 allMarkers[currentDynamicMarkerIndex].map = null;
                 allMarkers.splice(currentDynamicMarkerIndex, 1);
             }
             // Create a new dynamic marker at the clicked location
-            await createAndAddMarker({ name: 'Clicked Location', lat: event.latLng.lat(), lng: event.latLng.lng() }, 'dynamic'); // Create and add dynamic marker
+            await createAndAddMarker({
+                name: 'Clicked Location',
+                lat: event.latLng.lat(),
+                lng: event.latLng.lng(),
+            }, 'dynamic'); // Create and add dynamic marker
         }
     });
 }
@@ -73,10 +83,10 @@ async function initMap() {
  * @param markerType The type of marker ('initial', 'button', 'dynamic').
  */
 async function createAndAddMarker(location, markerType) {
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
     const weatherWidget = document.createElement('simple-weather-widget');
     // Apply dark mode if the map container is in dark mode
-    const mapContainer = document.getElementById("map");
+    const mapContainer = document.getElementById('map');
     if (mapContainer.classList.contains('dark-mode')) {
         weatherWidget.setMode('dark');
     }
@@ -84,7 +94,7 @@ async function createAndAddMarker(location, markerType) {
         map: map,
         position: { lat: location.lat, lng: location.lng },
         content: weatherWidget,
-        title: location.name // Add a title for accessibility
+        title: location.name, // Add a title for accessibility
     });
     // Store the marker type
     marker.markerType = markerType;
@@ -98,7 +108,7 @@ async function createAndAddMarker(location, markerType) {
             const activeWidgetContainer = activeWeatherWidget.shadowRoot.querySelector('.widget-container');
             activeWidgetContainer.classList.remove('highlight');
             // Find the marker associated with the active widget and reset its zIndex
-            const activeMarker = allMarkers.find(marker => marker.content === activeWeatherWidget);
+            const activeMarker = allMarkers.find((marker) => marker.content === activeWeatherWidget);
             if (activeMarker) {
                 activeMarker.zIndex = null;
             }
@@ -125,7 +135,7 @@ async function createAndAddMarker(location, markerType) {
  * Toggles the dark mode class on the body element.
  */
 async function toggleDarkMode() {
-    const mapContainer = document.getElementById("map");
+    const mapContainer = document.getElementById('map');
     mapContainer.classList.toggle('dark-mode');
     const modeToggleButton = document.getElementById('mode-toggle');
     if (modeToggleButton) {
@@ -137,14 +147,16 @@ async function toggleDarkMode() {
         }
     }
     // Remove all markers from the map
-    allMarkers.forEach(marker => {
+    allMarkers.forEach((marker) => {
         marker.map = null;
     });
     // Re-initialize the map to apply the new map ID
-    const { Map } = await google.maps.importLibrary("maps");
+    const { Map } = (await google.maps.importLibrary('maps'));
     const currentCenter = map.getCenter();
     const currentZoom = map.getZoom();
-    const currentMapId = mapContainer.classList.contains('dark-mode') ? DARK_MAP_ID : LIGHT_MAP_ID;
+    const currentMapId = mapContainer.classList.contains('dark-mode')
+        ? DARK_MAP_ID
+        : LIGHT_MAP_ID;
     map = new Map(mapContainer, {
         center: currentCenter,
         zoom: currentZoom,
@@ -159,7 +171,7 @@ async function toggleDarkMode() {
     for (const marker of markersToReAdd) {
         marker.map = map; // Add marker to the new map
         const weatherWidget = marker.content;
-        const mapContainer = document.getElementById("map"); // Re-get map container
+        const mapContainer = document.getElementById('map'); // Re-get map container
         if (mapContainer.classList.contains('dark-mode')) {
             weatherWidget.setMode('dark');
         }
@@ -175,7 +187,9 @@ async function toggleDarkMode() {
         let target = event.domEvent.target;
         let isClickOnMarker = false;
         while (target) {
-            if (target.tagName === 'SIMPLE-WEATHER-WIDGET' || target.classList.contains('gm-control-active')) { // Check for widget or default marker control
+            if (target.tagName === 'SIMPLE-WEATHER-WIDGET' ||
+                target.classList.contains('gm-control-active')) {
+                // Check for widget or default marker control
                 isClickOnMarker = true;
                 break;
             }
@@ -188,20 +202,24 @@ async function toggleDarkMode() {
                 const activeWidgetContainer = activeWeatherWidget.shadowRoot.querySelector('.widget-container');
                 activeWidgetContainer.classList.remove('highlight');
                 // Find the marker associated with the active widget and reset its zIndex
-                const activeMarker = allMarkers.find(marker => marker.content === activeWeatherWidget);
+                const activeMarker = allMarkers.find((marker) => marker.content === activeWeatherWidget);
                 if (activeMarker) {
                     activeMarker.zIndex = null;
                 }
                 activeWeatherWidget = null; // Clear the active widget
             }
             // Remove the previous dynamic marker if it exists
-            const currentDynamicMarkerIndex = allMarkers.findIndex(marker => marker.markerType === 'dynamic');
+            const currentDynamicMarkerIndex = allMarkers.findIndex((marker) => marker.markerType === 'dynamic');
             if (currentDynamicMarkerIndex !== -1) {
                 allMarkers[currentDynamicMarkerIndex].map = null;
                 allMarkers.splice(currentDynamicMarkerIndex, 1);
             }
             // Create a new dynamic marker at the clicked location
-            await createAndAddMarker({ name: 'Clicked Location', lat: event.latLng.lat(), lng: event.latLng.lng() }, 'dynamic'); // Create and add dynamic marker
+            await createAndAddMarker({
+                name: 'Clicked Location',
+                lat: event.latLng.lat(),
+                lng: event.latLng.lng(),
+            }, 'dynamic'); // Create and add dynamic marker
         }
     });
 }
@@ -210,14 +228,14 @@ const locations = [
     { name: 'Brussels', lat: 50.8503, lng: 4.3517 },
     { name: 'Luxembourg', lat: 49.8153, lng: 6.1296 },
     { name: 'Amsterdam', lat: 52.3676, lng: 4.9041 },
-    { name: 'Berlin', lat: 52.5200, lng: 13.4050 },
+    { name: 'Berlin', lat: 52.52, lng: 13.405 },
     { name: 'Rome', lat: 41.9028, lng: 12.4964 },
     { name: 'Geneva', lat: 46.2044, lng: 6.14324 },
     { name: 'Barcelona', lat: 41.3874, lng: -2.1686 },
     { name: 'Milan', lat: 45.4685, lng: 9.1824 },
 ];
 async function loadWeatherMarkers() {
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
     for (const location of locations) {
         await createAndAddMarker(location, 'button'); // Create and add button markers
     }
@@ -225,7 +243,8 @@ async function loadWeatherMarkers() {
 function removeButtonMarkers() {
     // If a button marker widget is active, hide its rain details and reset zIndex
     if (activeWeatherWidget) {
-        const buttonMarker = allMarkers.find(marker => marker.content === activeWeatherWidget && marker.markerType === 'button');
+        const buttonMarker = allMarkers.find((marker) => marker.content === activeWeatherWidget &&
+            marker.markerType === 'button');
         if (buttonMarker) {
             const rainDetailsElement = activeWeatherWidget.shadowRoot.getElementById('rain-details');
             rainDetailsElement.style.display = 'none';
@@ -236,8 +255,8 @@ function removeButtonMarkers() {
         }
     }
     // Remove button markers from the map and the allMarkers array
-    const markersToRemove = allMarkers.filter(marker => marker.markerType === 'button');
-    markersToRemove.forEach(marker => {
+    const markersToRemove = allMarkers.filter((marker) => marker.markerType === 'button');
+    markersToRemove.forEach((marker) => {
         marker.map = null;
         const index = allMarkers.indexOf(marker);
         if (index > -1) {
@@ -254,8 +273,9 @@ async function updateWeatherDisplayForMarker(marker, widget, location) {
         if (!response.ok) {
             const errorBody = await response.json();
             console.error('API error response:', errorBody);
-            if (response.status === 404 && errorBody?.error?.status === 'NOT_FOUND') {
-                widget.data = { error: "Location not supported" };
+            if (response.status === 404 &&
+                errorBody?.error?.status === 'NOT_FOUND') {
+                widget.data = { error: 'Location not supported' };
             }
             else {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -269,7 +289,7 @@ async function updateWeatherDisplayForMarker(marker, widget, location) {
     }
     catch (error) {
         console.error('Error fetching weather data for marker:', error);
-        widget.data = { error: "Failed to fetch weather data" };
+        widget.data = { error: 'Failed to fetch weather data' };
     }
 }
 initMap();

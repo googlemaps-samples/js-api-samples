@@ -10,7 +10,7 @@ let featureLayer;
 let center;
 async function initMap() {
     // Load the needed libraries.
-    await google.maps.importLibrary('maps');
+    (await google.maps.importLibrary('maps'));
     center = { lat: 41.059, lng: -124.151 }; // Trinidad, CA
     // Get the gmp-map element.
     const mapElement = document.querySelector('gmp-map');

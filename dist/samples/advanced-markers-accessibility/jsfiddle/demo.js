@@ -8,31 +8,31 @@
 const mapElement = document.querySelector('gmp-map');
 async function initMap() {
     // Request needed libraries.
-    const { Map, InfoWindow } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+    const { Map, InfoWindow } = (await google.maps.importLibrary('maps'));
+    const { AdvancedMarkerElement, PinElement } = (await google.maps.importLibrary('marker'));
     // Set LatLng and title text for the markers. The first marker (Boynton Pass)
     // receives the initial focus when tab is pressed. Use arrow keys to move
     // between markers; press tab again to cycle through the map controls.
     const tourStops = [
         {
             position: { lat: 34.8791806, lng: -111.8265049 },
-            title: "Boynton Pass"
+            title: 'Boynton Pass',
         },
         {
             position: { lat: 34.8559195, lng: -111.7988186 },
-            title: "Airport Mesa"
+            title: 'Airport Mesa',
         },
         {
             position: { lat: 34.832149, lng: -111.7695277 },
-            title: "Chapel of the Holy Cross"
+            title: 'Chapel of the Holy Cross',
         },
         {
             position: { lat: 34.823736, lng: -111.8001857 },
-            title: "Red Rock Crossing"
+            title: 'Red Rock Crossing',
         },
         {
             position: { lat: 34.800326, lng: -111.7665047 },
-            title: "Bell Rock"
+            title: 'Bell Rock',
         },
     ];
     // Create an info window to share between markers.
