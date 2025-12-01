@@ -92,7 +92,7 @@ function createMarker(map, AdvancedMarkerElement, PinElement) {
     });
 
     content.style.opacity = '0';
-    content.addListener('animationend', (event) => {
+    content.addEventListener('animationend', (event) => {
         content.classList.remove('drop');
         content.style.opacity = '1';
     });
