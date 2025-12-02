@@ -34,8 +34,7 @@ async function init() {
     map.append(beachFlagMarker);
 
     // A marker with a custom SVG glyph and white background.
-    const glyphImgUrl =
-        'https://www.gstatic.com/images/branding/productlogos/maps/v7/192px.svg';
+    const glyphImgUrl = new URL('images/192px.svg', import.meta.url);
     const glyphSvgPinElement = new PinElement({
         background: 'white',
         glyphSrc: new URL(glyphImgUrl),
