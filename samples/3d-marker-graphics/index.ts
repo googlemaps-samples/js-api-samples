@@ -7,9 +7,8 @@
 // @ts-nocheck
 // [START maps_3d_marker_graphics]
 async function init() {
-    const { Map3DElement, Marker3DElement } = await google.maps.importLibrary(
-        'maps3d'
-    );
+    const { Map3DElement, Marker3DElement } =
+        await google.maps.importLibrary('maps3d');
     const { PinElement } = await google.maps.importLibrary('marker');
     const { Place } = await google.maps.importLibrary('places');
 
