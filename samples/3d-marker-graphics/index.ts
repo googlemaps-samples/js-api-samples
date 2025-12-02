@@ -7,8 +7,9 @@
 // @ts-nocheck
 // [START maps_3d_marker_graphics]
 async function init() {
-    const { Map3DElement, Marker3DElement } =
-        await google.maps.importLibrary('maps3d');
+    const { Map3DElement, Marker3DElement } = await google.maps.importLibrary(
+        'maps3d'
+    );
     const { PinElement } = await google.maps.importLibrary('marker');
     const { Place } = await google.maps.importLibrary('places');
 
@@ -34,8 +35,7 @@ async function init() {
     map.append(beachFlagMarker);
 
     // A marker with a custom SVG glyph and white background.
-    const glyphImgUrl =
-        'https://www.gstatic.com/images/branding/productlogos/maps/v7/192px.svg';
+    const glyphImgUrl = new URL('images/192px.svg', import.meta.url);
     const glyphSvgPinElement = new PinElement({
         background: 'white',
         glyphSrc: new URL(glyphImgUrl),
