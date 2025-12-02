@@ -35,6 +35,7 @@ async function initMap() {
     infoWindow = new google.maps.InfoWindow({});
     // [START maps_place_autocomplete_map_listener]
     // Add the gmp-placeselect listener, and display the results on the map.
+    //prettier-ignore
     //@ts-ignore
     placeAutocomplete.addEventListener('gmp-select', async ({ placePrediction }) => {
         const place = placePrediction.toPlace();

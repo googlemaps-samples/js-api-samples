@@ -9,32 +9,37 @@ const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
 
 async function initMap() {
     // Request needed libraries.
-    const { Map, InfoWindow } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
+    const { Map, InfoWindow } = (await google.maps.importLibrary(
+        'maps'
+    )) as google.maps.MapsLibrary;
+    const { AdvancedMarkerElement, PinElement } =
+        (await google.maps.importLibrary(
+            'marker'
+        )) as google.maps.MarkerLibrary;
 
     // Set LatLng and title text for the markers. The first marker (Boynton Pass)
     // receives the initial focus when tab is pressed. Use arrow keys to move
     // between markers; press tab again to cycle through the map controls.
     const tourStops = [
         {
-            position: { lat: 34.8791806, lng: -111.8265049 }, 
-            title: "Boynton Pass"
+            position: { lat: 34.8791806, lng: -111.8265049 },
+            title: 'Boynton Pass',
         },
         {
-            position: { lat: 34.8559195, lng: -111.7988186 }, 
-            title: "Airport Mesa"
+            position: { lat: 34.8559195, lng: -111.7988186 },
+            title: 'Airport Mesa',
         },
         {
-            position: { lat: 34.832149, lng: -111.7695277 }, 
-            title: "Chapel of the Holy Cross"
+            position: { lat: 34.832149, lng: -111.7695277 },
+            title: 'Chapel of the Holy Cross',
         },
         {
-            position: { lat: 34.823736, lng: -111.8001857 }, 
-            title: "Red Rock Crossing"
+            position: { lat: 34.823736, lng: -111.8001857 },
+            title: 'Red Rock Crossing',
         },
         {
-            position: { lat: 34.800326, lng: -111.7665047 }, 
-            title: "Bell Rock"
+            position: { lat: 34.800326, lng: -111.7665047 },
+            title: 'Bell Rock',
         },
     ];
 
@@ -42,7 +47,7 @@ async function initMap() {
     const infoWindow = new InfoWindow();
 
     // Create the markers.
-    tourStops.forEach(({position, title}, i) => {
+    tourStops.forEach(({ position, title }, i) => {
         // [START maps_advanced_markers_accessibility_marker]
         const pin = new PinElement({
             //@ts-ignore

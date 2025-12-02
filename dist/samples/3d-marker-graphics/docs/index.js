@@ -1,8 +1,8 @@
 /*
-* @license
-* Copyright 2025 Google LLC. All Rights Reserved.
-* SPDX-License-Identifier: Apache-2.0
-*/
+ * @license
+ * Copyright 2025 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
 // @ts-nocheck
 // [START maps_3d_marker_graphics]
 async function init() {
@@ -14,7 +14,7 @@ async function init() {
         tilt: 67.5,
         range: 4000,
         mode: 'SATELLITE',
-        gestureHandling: "COOPERATIVE"
+        gestureHandling: 'COOPERATIVE',
     });
     // A marker with a with a URL pointing to a PNG.
     const beachFlagImg = document.createElement('img');
@@ -35,7 +35,7 @@ async function init() {
     const glyphSvgMarker = new Marker3DElement({
         position: { lat: 37.425, lng: -122.07, altitude: 100 },
         extruded: true,
-        altitudeMode: "ABSOLUTE"
+        altitudeMode: 'ABSOLUTE',
     });
     glyphSvgMarker.append(glyphSvgPinElement);
     try {
@@ -49,7 +49,14 @@ async function init() {
         id: 'ChIJN5Nz71W3j4ARhx5bwpTQEGg',
     });
     // Call fetchFields, passing the desired data fields.
-    await place.fetchFields({ fields: ['location', 'displayName', 'svgIconMaskURI', 'iconBackgroundColor'] });
+    await place.fetchFields({
+        fields: [
+            'location',
+            'displayName',
+            'svgIconMaskURI',
+            'iconBackgroundColor',
+        ],
+    });
     const pinElement = new PinElement({
         background: place.iconBackgroundColor,
         glyphSrc: new URL(String(place.svgIconMaskURI)),

@@ -8,9 +8,11 @@
 async function initMap(): Promise<void> {
     // [START maps_place_autocomplete_element_add]
     // Request needed libraries.
-    await google.maps.importLibrary("places") as google.maps.PlacesLibrary;
+    (await google.maps.importLibrary('places')) as google.maps.PlacesLibrary;
     // Create the input HTML element, and append it.
-    const placeAutocomplete = new google.maps.places.PlaceAutocompleteElement({});
+    const placeAutocomplete = new google.maps.places.PlaceAutocompleteElement(
+        {}
+    );
     document.body.appendChild(placeAutocomplete);
     // [END maps_place_autocomplete_element_add]
 
@@ -25,6 +27,7 @@ async function initMap(): Promise<void> {
 
     // [START maps_place_autocomplete_element_listener]
     // Add the gmp-placeselect listener, and display the results.
+    //prettier-ignore
     //@ts-ignore
     placeAutocomplete.addEventListener('gmp-select', async ({ placePrediction }) => {
         const place = placePrediction.toPlace();

@@ -15,9 +15,9 @@ const marker = document.querySelector('gmp-advanced-marker');
 let center = { lat: 47.759737, lng: -122.250632 };
 async function initMap() {
     // Request needed libraries.
-    await google.maps.importLibrary("maps");
-    await google.maps.importLibrary("marker");
-    await google.maps.importLibrary("places");
+    (await google.maps.importLibrary('maps'));
+    (await google.maps.importLibrary('marker'));
+    (await google.maps.importLibrary('places'));
     // Hide the map type control.
     map.innerMap.setOptions({ mapTypeControl: false });
     // Function to update map and marker based on place details
@@ -27,7 +27,8 @@ async function initMap() {
             map.innerMap.panTo(adjustedCenter);
             map.innerMap.setZoom(16); // Set zoom after panning if needed
             marker.position = placeDetails.place.location;
-            marker.collisionBehavior = google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
+            marker.collisionBehavior =
+                google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
             marker.style.display = 'block';
         }
     };

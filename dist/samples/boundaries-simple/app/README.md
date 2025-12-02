@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## boundaries-simple
+
+The boundaries-simple sample demonstrates a simple example of how to display administrative boundaries on a map.
+
+Follow these instructions to set up and run boundaries-simple sample on your local computer.
 
 ## Setup
 
@@ -32,7 +35,7 @@ From 'samples':
 ### Run lint to check for problems
 
 `cd samples/boundaries-simple`
-`npx eslint index.ts` 
+`npx eslint index.ts`
 
 ## Feedback
 

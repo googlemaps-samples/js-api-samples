@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## layer-data-quakes-red
+
+The layer-data-quakes-red sample demonstrates how to visualize earthquake data on a map, with red markers.
+
+Follow these instructions to set up and run layer-data-quakes-red sample on your local computer.
 
 ## Setup
 
@@ -32,7 +35,7 @@ From 'samples':
 ### Run lint to check for problems
 
 `cd samples/layer-data-quakes-red`
-`npx eslint index.ts` 
+`npx eslint index.ts`
 
 ## Feedback
 

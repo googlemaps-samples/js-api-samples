@@ -11,7 +11,7 @@ let polygonLayer; // Declare polygonLayer outside for button access
 let googleMapsOverlay; // Declare googleMapsOverlay outside for button access
 async function initMap() {
     // Progress bar logic moved from index.html
-    var progress, progressDiv = document.querySelector(".mdc-linear-progress");
+    var progress, progressDiv = document.querySelector('.mdc-linear-progress');
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
@@ -27,7 +27,7 @@ async function initMap() {
     // The location for the map center.
     const position = { lat: 37.752954624496304, lng: -122.44754059928648 }; // Using the center from original deckgl-polygon.js
     //  Request needed libraries.
-    const { Map } = await google.maps.importLibrary('maps');
+    const { Map } = (await google.maps.importLibrary('maps'));
     const mapDiv = document.getElementById('map');
     if (!mapDiv) {
         console.error('Map element not found!');
@@ -45,6 +45,7 @@ async function initMap() {
     });
     // Deck.gl Layer and Overlay
     polygonLayer = new deck.PolygonLayer({
+        // Assign to the outer polygonLayer
         id: 'PolygonLayer',
         data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/sf-zipcodes.json',
         getPolygon: (d) => d.contour, // Use 'any' for simplicity
@@ -57,7 +58,8 @@ async function initMap() {
         opacity: 0.7, // Added opacity
         pickable: true,
         onDataLoad: () => {
-            if (progress) { // Check if progress is defined
+            if (progress) {
+                // Check if progress is defined
                 // Add a small delay to ensure the progress bar is removed
                 setTimeout(() => {
                     // @ts-ignore
@@ -66,6 +68,7 @@ async function initMap() {
             }
         },
         onHover: ({ object, x, y }) => {
+            // Use 'any' for object for simplicity
             const tooltip = document.getElementById('tooltip');
             if (tooltip) {
                 if (object) {
@@ -92,28 +95,34 @@ async function initMap() {
                     tooltip.style.display = 'none';
                 }
             }
-        }
+        },
     });
     googleMapsOverlay = new deck.GoogleMapsOverlay({
+        // Assign to the outer googleMapsOverlay
         layers: [polygonLayer],
     });
     googleMapsOverlay.setMap(map);
     // Button functionality
     const toggleButton = document.getElementById('toggleButton');
-    if (toggleButton) { // Check if toggleButton is found
+    if (toggleButton) {
+        // Check if toggleButton is found
         toggleButton.addEventListener('click', () => {
             const currentVisible = polygonLayer.props.visible;
             // Create a new layer instance with toggled visibility
-            const newPolygonLayer = polygonLayer.clone({ visible: !currentVisible });
+            const newPolygonLayer = polygonLayer.clone({
+                visible: !currentVisible,
+            });
             // Update the overlay with the new layer instance
             googleMapsOverlay.setProps({
-                layers: [newPolygonLayer]
+                layers: [newPolygonLayer],
             });
             // Update the polygonLayer variable to the new instance
             polygonLayer = newPolygonLayer;
-            toggleButton.textContent = !currentVisible ? 'Hide Polygon Layer' : 'Show Polygon Layer';
+            toggleButton.textContent = !currentVisible
+                ? 'Hide Polygon Layer'
+                : 'Show Polygon Layer';
         });
     }
 }
 initMap();
-/* [END maps_deckgl_polygon] */ 
+/* [END maps_deckgl_polygon] */

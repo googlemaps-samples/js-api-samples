@@ -10,7 +10,9 @@ let markers = {};
 let infoWindow;
 
 async function initMap() {
-    const { Map, InfoWindow } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
+    const { Map, InfoWindow } = (await google.maps.importLibrary(
+        'maps'
+    )) as google.maps.MapsLibrary;
 
     const center = { lat: 37.4161493, lng: -122.0812166 };
     map = new Map(document.getElementById('map') as HTMLElement, {
@@ -21,7 +23,9 @@ async function initMap() {
     });
 
     const textInput = document.getElementById('text-input') as HTMLInputElement;
-    const textInputButton = document.getElementById('text-input-button') as HTMLButtonElement;
+    const textInputButton = document.getElementById(
+        'text-input-button'
+    ) as HTMLButtonElement;
     const card = document.getElementById('text-input-card') as HTMLElement;
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
 
@@ -39,8 +43,12 @@ async function initMap() {
 }
 
 async function findPlaces(query) {
-    const { Place } = await google.maps.importLibrary("places") as google.maps.PlacesLibrary;
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
+    const { Place } = (await google.maps.importLibrary(
+        'places'
+    )) as google.maps.PlacesLibrary;
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
+        'marker'
+    )) as google.maps.MarkerLibrary;
     // [START maps_place_text_search_request]
     const request = {
         textQuery: query,
@@ -54,22 +62,24 @@ async function findPlaces(query) {
         minRating: 1, // Specify a minimum rating.
         region: 'us',
     };
-    
+
     const { places } = await Place.searchByText(request);
     // [END maps_place_text_search_request]
 
     if (places.length) {
-        const { LatLngBounds } = await google.maps.importLibrary("core") as google.maps.CoreLibrary;
+        const { LatLngBounds } = (await google.maps.importLibrary(
+            'core'
+        )) as google.maps.CoreLibrary;
         const bounds = new LatLngBounds();
 
         // First remove all existing markers.
         for (const id in markers) {
             markers[id].map = null;
-        };
+        }
         markers = {};
-        
+
         // Loop through and get all the results.
-        places.forEach(place => {
+        places.forEach((place) => {
             const marker = new AdvancedMarkerElement({
                 map,
                 position: place.location,
@@ -88,7 +98,6 @@ async function findPlaces(query) {
         });
 
         map.fitBounds(bounds);
-
     } else {
         console.log('No results');
     }

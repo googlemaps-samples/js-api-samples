@@ -35,6 +35,7 @@ async function handleValidationSubmit(event) {
     resultDisplay.textContent = 'Validating...'; // Clear previous results
     // Validate the address
     try {
+        //prettier-ignore
         //@ts-ignore
         const result = await google.maps.addressValidation.AddressValidation.fetchAddressValidation({
             address: {
@@ -42,15 +43,15 @@ async function handleValidationSubmit(event) {
                 languageCode: 'en',
                 addressLines: [
                     streetAddress1Input.value.trim(),
-                    streetAddress2Input.value.trim()
-                ].filter(line => line), // Filter out empty lines
+                    streetAddress2Input.value.trim(),
+                ].filter((line) => line), // Filter out empty lines
                 locality: cityInput.value.trim(),
                 administrativeArea: stateInput.value.trim(),
                 postalCode: zipCodeInput.value.trim(),
             },
         });
         resultDisplay.textContent =
-            "Verdict summary\n================\n" +
+            'Verdict summary\n================\n' +
                 `Formatted address: ${result.address.formattedAddress}\n` +
                 `Entered: ${result.verdict.inputGranularity}\n` +
                 `Validated: ${result.verdict.validationGranularity}\n` +
@@ -78,7 +79,7 @@ const verdictMessages = {
         falseMessage: '- At least one address element is unresolved, unexpected, or missing.',
     },
     hasUnconfirmedComponents: {
-        trueMessage: '- The API can\'t confirm at least one address component.',
+        trueMessage: "- The API can't confirm at least one address component.",
         falseMessage: '- The API confirmed all address components.',
     },
     hasInferredComponents: {
@@ -94,8 +95,9 @@ const verdictMessages = {
 function getVerdictMessage(verdict, key) {
     if (!verdict || !verdictMessages[key])
         return 'Unknown';
-    return verdict[key] ? verdictMessages[key].trueMessage :
-        verdictMessages[key].falseMessage;
+    return verdict[key]
+        ? verdictMessages[key].trueMessage
+        : verdictMessages[key].falseMessage;
 }
 // Handler for Dropdown Change
 function handleExampleSelectChange(event) {
@@ -127,7 +129,7 @@ const examples = {
         city: 'Mountain View',
         state: 'CA',
         zipCode: '94043',
-        region: 'US'
+        region: 'US',
     },
     nonExistentSubpremise: {
         streetAddress1: '2930 Pearl St.',
@@ -135,7 +137,7 @@ const examples = {
         city: 'Boulder',
         state: 'CO',
         zipCode: '', // Explicitly empty
-        region: 'US'
+        region: 'US',
     },
     missingSubpremise: {
         streetAddress1: '500 West 2nd Street',
@@ -143,7 +145,7 @@ const examples = {
         city: 'Austin',
         state: 'TX',
         zipCode: '78701',
-        region: 'US'
+        region: 'US',
     },
     misspelledLocality: {
         streetAddress1: '1600 Amphitheatre Pkwy',
@@ -151,7 +153,7 @@ const examples = {
         city: 'Montan View',
         state: 'CA',
         zipCode: '94043',
-        region: 'US'
+        region: 'US',
     },
     missingLocality: {
         streetAddress1: 'Brandschenkestrasse 110 8002',
@@ -159,7 +161,7 @@ const examples = {
         city: '',
         state: '',
         zipCode: '',
-        region: ''
+        region: '',
     },
     usPoBox: {
         streetAddress1: 'PO Box 1108',
@@ -167,13 +169,13 @@ const examples = {
         city: 'Sterling',
         state: 'VA',
         zipCode: '20166-1108',
-        region: 'US'
+        region: 'US',
     },
 };
 // Helper function to populate form fields with example address data
 function populateAddressFields(exampleAddress) {
     if (!exampleAddress) {
-        console.warn("No example address data provided.");
+        console.warn('No example address data provided.');
         return;
     }
     // Get values from example, providing empty string as default
@@ -185,7 +187,7 @@ function populateAddressFields(exampleAddress) {
     regionSelect.value = exampleAddress.region || '';
     // Clear previous results and errors
     resultDisplay.textContent = 'Result will appear here...';
-    console.log("Populated fields with example: ", exampleAddress);
+    console.log('Populated fields with example: ', exampleAddress);
 }
 init();
 // [END maps_address_validation]

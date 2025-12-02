@@ -1,24 +1,25 @@
 /*
-* @license
-* Copyright 2025 Google LLC. All Rights Reserved.
-* SPDX-License-Identifier: Apache-2.0
-*/
+ * @license
+ * Copyright 2025 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 // @ts-nocheck
 // [START maps_3d_marker_customization]
 async function init() {
-    const { Map3DElement, Marker3DElement } = await google.maps.importLibrary("maps3d");
-    const { PinElement } = await google.maps.importLibrary("marker");
+    const { Map3DElement, Marker3DElement } =
+        await google.maps.importLibrary('maps3d');
+    const { PinElement } = await google.maps.importLibrary('marker');
 
     const map = new Map3DElement({
         center: { lat: 37.4176, lng: -122.02, altitude: 0 },
         tilt: 67.5,
         range: 7000,
         mode: 'HYBRID',
-        gestureHandling: "COOPERATIVE"
+        gestureHandling: 'COOPERATIVE',
     });
 
-    map.mode = "SATELLITE";
+    map.mode = 'SATELLITE';
 
     // Change the border color.
     const pinBorder = new PinElement({
@@ -32,7 +33,7 @@ async function init() {
     // Add a label.
     const markerWithLabel = new Marker3DElement({
         position: { lat: 37.419, lng: -122.03 },
-        label: 'Simple label'
+        label: 'Simple label',
     });
 
     // Adjust the scale.
@@ -63,7 +64,7 @@ async function init() {
     const markerWithGlyphText = new Marker3DElement({
         position: { lat: 37.415, lng: -122.015, altitude: 50 },
         extruded: true,
-        altitudeMode: "RELATIVE_TO_GROUND",
+        altitudeMode: 'RELATIVE_TO_GROUND',
     });
     markerWithGlyphText.append(pinTextGlyph);
 

@@ -5,57 +5,57 @@
  */
 
 html,
-  body {
-      height: 100%;
-      margin: 0;
-  }
+body {
+    height: 100%;
+    margin: 0;
+}
 
-  gmp-map {
-      box-sizing: border-box;
-      height: 500px;
-  }
+gmp-map {
+    box-sizing: border-box;
+    height: 500px;
+}
 
-  gmp-place-list {
+gmp-place-list {
     background-color: #fff;
-    font-size: large
-  }
+    font-size: large;
+}
 
-  .overlay {
-      position: relative;
-      top: 20px;
-      margin: 20px;
-      width: 400px;
-  }
-  
-  .list-container {
+.overlay {
+    position: relative;
+    top: 20px;
+    margin: 20px;
+    width: 400px;
+}
+
+.list-container {
     height: 400px;
     overflow: auto;
     border-radius: 10px;
-  }
+}
 
-  /* Styles for the text search container and its elements */
-  .text-search-container {
+/* Styles for the text search container and its elements */
+.text-search-container {
     display: flex; /* Arrange input and button side-by-side */
     gap: 8px; /* Space between input and button */
     padding-bottom: 10px; /* Space below the search bar */
     border-bottom: 1px solid #eee; /* Separator line */
-  }
-  
-  #textSearchInput {
+}
+
+#textSearchInput {
     flex-grow: 1; /* Allow input to take available space */
     padding: 8px 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 1rem;
-  }
-  
-  #textSearchInput:focus {
+}
+
+#textSearchInput:focus {
     outline: none;
     border-color: #4a80e8; /* Highlight on focus */
     box-shadow: 0 0 0 2px rgba(74, 128, 232, 0.2);
-  }
-  
-  #textSearchButton {
+}
+
+#textSearchButton {
     padding: 8px 15px;
     background-color: #4a80e8; /* Example button color */
     color: white;
@@ -64,9 +64,9 @@ html,
     cursor: pointer;
     font-size: 1rem;
     transition: background-color 0.2s ease-in-out;
-  }
-  
-  #textSearchButton:hover {
+}
+
+#textSearchButton:hover {
     background-color: #356ac0; /* Darker shade on hover */
-  }
+}
 

@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/web-components-markers",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh web-components-markers && bash ../app.sh web-components-markers && bash ../docs.sh web-components-markers && npm run build:vite --workspace=. && bash ../dist.sh web-components-markers",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}

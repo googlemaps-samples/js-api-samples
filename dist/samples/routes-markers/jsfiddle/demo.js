@@ -43,7 +43,7 @@ async function getDirections() {
     // Call computeRoutes to get the directions.
     const result = await Route.computeRoutes(request);
     if (!result.routes || result.routes.length === 0) {
-        console.warn("No routes found");
+        console.warn('No routes found');
         return;
     }
     
@@ -63,7 +63,7 @@ async function getDirections() {
                     glyphColor: 'white',
                     background: 'green',
                     borderColor: 'green',
-                }).element
+                }).element,
             };
         }
         // Style all intermediate waypoints.
@@ -76,7 +76,7 @@ async function getDirections() {
                     glyphColor: 'white',
                     background: 'blue',
                     borderColor: 'blue',
-                }).element
+                }).element,
             };
         }
         // Style the destination waypoint.
@@ -89,7 +89,7 @@ async function getDirections() {
                     glyphColor: 'white',
                     background: 'red',
                     borderColor: 'red',
-                }).element
+                }).element,
             };
         }
         return { ...defaultOptions, map: innerMap };
