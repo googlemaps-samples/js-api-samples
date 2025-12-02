@@ -6,112 +6,95 @@
  */
 /* [START maps_ui_kit_place_search_nearby] */
 /* [START maps_ui_kit_place_search_nearby_query_selectors] */
+// Query selectors for various elements in the HTML file.
 const map = document.querySelector('gmp-map');
-const placeList = document.querySelector('gmp-place-list');
+const placeSearch = document.querySelector('gmp-place-search');
+const placeSearchQuery = document.querySelector('gmp-place-nearby-search-request');
+const placeDetails = document.querySelector('gmp-place-details-compact');
+const placeRequest = document.querySelector('gmp-place-details-place-request');
 const typeSelect = document.querySelector('.type-select');
-const placeDetails = document.querySelector('gmp-place-details');
-const placeDetailsRequest = document.querySelector('gmp-place-details-place-request');
 /* [END maps_ui_kit_place_search_nearby_query_selectors] */
-let markers = {};
+// Global variables for the map, markers, and info window.
+const markers = new Map();
 let infoWindow;
-async function initMap() {
-    await google.maps.importLibrary('places');
-    const { LatLngBounds } = (await google.maps.importLibrary('core'));
-    const { InfoWindow } = (await google.maps.importLibrary('maps'));
-    const { spherical } = (await google.maps.importLibrary('geometry'));
-    infoWindow = new InfoWindow();
-    let marker;
-    function getContainingCircle(bounds) {
-        const diameter = spherical.computeDistanceBetween(bounds.getNorthEast(), bounds.getSouthWest());
-        const calculatedRadius = diameter / 2;
-        const cappedRadius = Math.min(calculatedRadius, 50000); // Radius cannot be more than 50000.
-        return { center: bounds.getCenter(), radius: cappedRadius };
-    }
-    findCurrentLocation();
+// The init function is called when the page loads.
+async function init() {
+    // Import the necessary libraries from the Google Maps API.
+    const [{ InfoWindow }, { Place }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('places'),
+    ]);
+    // Create a new info window and set its content to the place details element.
+    placeDetails.remove(); // Hide the place details element because it is not needed until the info window opens
+    infoWindow = new InfoWindow({
+        content: placeDetails,
+        ariaLabel: 'Place Details',
+    });
+    // Set the map options.
     map.innerMap.setOptions({
-        mapTypeControl: false,
         clickableIcons: false,
+        mapTypeControl: false,
+        streetViewControl: false,
     });
     /* [START maps_ui_kit_place_search_nearby_event] */
-    placeDetails.addEventListener('gmp-load', (event) => {
-        // Center the info window on the map.
-        map.innerMap.fitBounds(placeDetails.place.viewport, {
-            top: 500,
-            left: 400,
-        });
+    // Add event listeners to the type select and place search elements.
+    typeSelect.addEventListener('change', () => searchPlaces());
+    placeSearch.addEventListener('gmp-select', (event) => {
+        const { place } = event;
+        markers.get(place.id)?.click();
     });
-    typeSelect.addEventListener('change', (event) => {
-        // First remove all existing markers.
-        for (marker in markers) {
-            markers[marker].map = null;
-        }
-        markers = {};
-        if (typeSelect.value) {
-            placeList.style.display = 'block';
-            placeList
-                .configureFromSearchNearbyRequest({
-                locationRestriction: getContainingCircle(map.innerMap.getBounds()),
-                includedPrimaryTypes: [typeSelect.value],
-            })
-                .then(addMarkers);
-            // Handle user selection in Place Details.
-            placeList.addEventListener('gmp-placeselect', ({ place }) => {
-                markers[place.id].click();
-            });
-        }
+    placeSearch.addEventListener('gmp-load', () => {
+        addMarkers();
     });
-    /* [END maps_ui_kit_place_search_nearby_event] */
+    searchPlaces();
 }
+/* [END maps_ui_kit_place_search_nearby_event] */
+// The searchPlaces function is called when the user changes the type select or when the page loads.
+async function searchPlaces() {
+    // Close the info window and clear the markers.
+    infoWindow.close();
+    for (const marker of markers.values()) {
+        marker.remove();
+    }
+    markers.clear();
+    // Set the place search query and add an event listener to the place search element.
+    if (typeSelect.value) {
+        const center = map.center;
+        placeSearchQuery.locationRestriction = {
+            center,
+            radius: 50000, // 50km radius
+        };
+        placeSearchQuery.locationBias = {
+            center,
+        };
+        placeSearchQuery.includedTypes = [typeSelect.value];
+    }
+}
+// The addMarkers function is called when the place search element loads.
 async function addMarkers() {
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
-    const { LatLngBounds } = (await google.maps.importLibrary('core'));
+    // Import the necessary libraries from the Google Maps API.
+    const [{ AdvancedMarkerElement }, { LatLngBounds }] = await Promise.all([
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('core'),
+    ]);
     const bounds = new LatLngBounds();
-    if (placeList.places.length > 0) {
-        placeList.places.forEach((place) => {
-            let marker = new AdvancedMarkerElement({
-                map: map.innerMap,
-                position: place.location,
-            });
-            markers[place.id] = marker;
-            bounds.extend(place.location);
-            /* [START maps_ui_kit_place_search_nearby_click_event] */
-            marker.addListener('gmp-click', (event) => {
-                if (infoWindow.isOpen) {
-                    infoWindow.close();
-                }
-                placeDetailsRequest.place = place.id;
-                placeDetails.style.display = 'block';
-                placeDetails.style.width = '350px';
-                infoWindow.setOptions({
-                    content: placeDetails,
-                });
-                infoWindow.open({
-                    anchor: marker,
-                    map: map.innerMap,
-                });
-            });
-            /* [END maps_ui_kit_place_search_nearby_click_event] */
-            map.innerMap.setCenter(bounds.getCenter());
-            map.innerMap.fitBounds(bounds);
+    if (placeSearch.places.length === 0) {
+        return;
+    }
+    for (const place of placeSearch.places) {
+        const marker = new AdvancedMarkerElement({
+            map: map.innerMap,
+            position: place.location,
+            collisionBehavior: google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL,
+        });
+        markers.set(place.id, marker);
+        bounds.extend(place.location);
+        marker.addListener('click', () => {
+            placeRequest.place = place;
+            infoWindow.open(map.innerMap, marker);
         });
     }
+    map.innerMap.fitBounds(bounds);
 }
-async function findCurrentLocation() {
-    const { LatLng } = (await google.maps.importLibrary('core'));
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-            const pos = new LatLng(position.coords.latitude, position.coords.longitude);
-            map.innerMap.panTo(pos);
-            map.innerMap.setZoom(14);
-        }, () => {
-            console.log('The Geolocation service failed.');
-            map.innerMap.setZoom(14);
-        });
-    }
-    else {
-        console.log("Your browser doesn't support geolocation");
-        map.innerMap.setZoom(14);
-    }
-}
-initMap();
+init();
 /* [END maps_ui_kit_place_search_nearby] */
