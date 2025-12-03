@@ -1,0 +1,23 @@
+{
+  "name": "@js-api-samples/js-api-loader-map",
+  "version": "1.0.0",
+  "description": "Demonstrates loading the Google Maps JavaScript API dynamically using @googlemaps/js-api-loader.",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh js-api-loader-map && bash ../docs.sh js-api-loader-map && npm run build:vite --workspace=. && bash ../dist.sh js-api-loader-map",
+    "test": "tsc",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "npm run start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@googlemaps/js-api-loader": "^2.0.2"
+  },
+  "devDependencies": {
+    "@types/google.maps": "^3.49.2",
+    "parcel": "^2.16.1",
+    "typescript": "^5.9.3"
+  }
+}
