@@ -12,7 +12,7 @@ const API_KEY = "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8";
 async function initMap(): Promise<void> {
   setOptions({ key: API_KEY });
 
-  const { Map } = await importLibrary("maps");
+  const { Map } = await importLibrary("maps") as google.maps.MapsLibrary;
 
   const mapOptions = {
     center: { lat: 48.8566, lng: 2.3522 },
