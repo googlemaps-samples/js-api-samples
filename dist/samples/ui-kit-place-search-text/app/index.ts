@@ -4,151 +4,128 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 /* [START maps_ui_kit_place_search_text] */
+
 /* [START maps_ui_kit_place_search_text_query_selectors] */
-const map = document.querySelector('gmp-map') as any;
-const placeList = document.querySelector('gmp-place-list') as any;
-const placeDetails = document.querySelector('gmp-place-details') as any;
-let marker = document.querySelector('gmp-advanced-marker') as any;
-const textSearchInput = document.getElementById('textSearchInput') as any;
-const textSearchButton = document.getElementById(
-    'textSearchButton'
-) as HTMLButtonElement;
-const placeDetailsRequest = document.querySelector(
+// Query selectors for various elements in the HTML file.
+const map = document.querySelector('gmp-map') as google.maps.MapElement;
+const placeSearch = document.querySelector('gmp-place-search') as any;
+const placeSearchQuery = document.querySelector(
+    'gmp-place-text-search-request'
+) as any;
+const placeDetails = document.querySelector('gmp-place-details-compact') as any;
+const placeRequest = document.querySelector(
     'gmp-place-details-place-request'
 ) as any;
-
+const queryInput = document.querySelector('.query-input') as HTMLInputElement;
+const searchButton = document.querySelector(
+    '.search-button'
+) as HTMLButtonElement;
 /* [END maps_ui_kit_place_search_text_query_selectors] */
-/* [START maps_ui_kit_place_search_text_init_map] */
-let markers = {};
-let infoWindow;
-let center = { lat: 37.395641, lng: -122.077627 }; // Mountain View, CA.
-let bounds;
 
-async function initMap(): Promise<void> {
-    const { Map, InfoWindow } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { Place } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
+// Global variables for the map, markers, and info window.
+const markers: Map<string, google.maps.marker.AdvancedMarkerElement> =
+    new Map();
+let infoWindow: google.maps.InfoWindow;
 
-    // Set bounds for location restriction.
-    bounds = new google.maps.LatLngBounds(
-        { lat: 37.37808200917261, lng: -122.13741583377849 },
-        { lat: 37.416676154341324, lng: -122.02261728794109 }
-    );
+// The init function is called when the page loads.
+async function init(): Promise<void> {
+    // Import the necessary libraries from the Google Maps API.
+    const [{ InfoWindow }, { Place }] = await Promise.all([
+        google.maps.importLibrary('maps') as Promise<google.maps.MapsLibrary>,
+        google.maps.importLibrary(
+            'places'
+        ) as Promise<google.maps.PlacesLibrary>,
+    ]);
 
-    infoWindow = new google.maps.InfoWindow();
+    // Create a new info window and set its content to the place details element.
+    placeDetails.remove(); // Hide the place details element because it is not needed until the info window opens
+    infoWindow = new InfoWindow({
+        content: placeDetails,
+        ariaLabel: 'Place Details',
+    });
 
-    // Center the map
-    map.innerMap.panTo(center);
-    map.innerMap.setZoom(14);
-
+    // Set the map options.
     map.innerMap.setOptions({
-        mapTypeControl: false,
         clickableIcons: false,
+        mapTypeControl: false,
+        streetViewControl: false,
     });
 
-    /* [START maps_ui_kit_place_search_tex_event_handlers] */
-    // Fire when the Place Details Element is loaded.
-    placeDetails.addEventListener('gmp-load', (event) => {
-        // Center the info window on the map.
-        map.innerMap.fitBounds(placeDetails.place.viewport, {
-            top: 500,
-            left: 400,
-        });
-    });
-
-    // Handle clicks on the search button.
-    textSearchButton.addEventListener('click', searchByTextRequest);
-
-    // Handle enter key on text input.
-    textSearchInput.addEventListener('keydown', (event) => {
+    /* [START maps_ui_kit_place_search_text_event] */
+    // Add event listeners to the query input and place search elements.
+    searchButton.addEventListener('click', () => searchPlaces());
+    queryInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
-            searchByTextRequest();
+            searchPlaces();
         }
     });
-    /* [END maps_ui_kit_place_search_tex_event_handlers] */
-}
-/* [END maps_ui_kit_place_search_text_init_map] */
 
-/* [START maps_ui_kit_place_search_text_query] */
-async function searchByTextRequest() {
-    if (textSearchInput.value !== '') {
-        placeList.style.display = 'block';
-        placeList
-            .configureFromSearchByTextRequest({
-                locationRestriction: bounds,
-                textQuery: textSearchInput.value,
-            })
-            .then(addMarkers);
-        // Handle user selection in Place Details.
-        placeList.addEventListener('gmp-placeselect', ({ place }) => {
-            markers[place.id].click();
-        });
+    placeSearch.addEventListener('gmp-select', (event: Event) => {
+        const { place } = event as any;
+        markers.get(place.id)?.click();
+    });
+    placeSearch.addEventListener('gmp-load', () => {
+        addMarkers();
+    });
+
+    searchPlaces();
+}
+/* [END maps_ui_kit_place_search_text_event] */
+// The searchPlaces function is called when the user changes the query input or when the page loads.
+async function searchPlaces() {
+    // Close the info window and clear the markers.
+    infoWindow.close();
+    for (const marker of markers.values()) {
+        marker.remove();
+    }
+    markers.clear();
+
+    // Set the place search query and add an event listener to the place search element.
+    if (queryInput.value) {
+        const center = map.center;
+        if (center) {
+            placeSearchQuery.locationBias = center;
+        }
+        // The textQuery property is required for the search element to load.
+        // Any other configured properties will be ignored if textQuery is not set.
+        placeSearchQuery.textQuery = queryInput.value;
     }
 }
-/* [END maps_ui_kit_place_search_text_query] */
 
-/* [START maps_ui_kit_place_search_text_add_markers] */
+// The addMarkers function is called when the place search element loads.
 async function addMarkers() {
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
-    const { LatLngBounds } = (await google.maps.importLibrary(
-        'core'
-    )) as google.maps.CoreLibrary;
-
+    // Import the necessary libraries from the Google Maps API.
+    const [{ AdvancedMarkerElement }, { LatLngBounds }] = await Promise.all([
+        google.maps.importLibrary(
+            'marker'
+        ) as Promise<google.maps.MarkerLibrary>,
+        google.maps.importLibrary('core') as Promise<google.maps.CoreLibrary>,
+    ]);
     const bounds = new LatLngBounds();
 
-    // First remove all existing markers.
-    for (marker in markers) {
-        markers[marker].map = null;
+    if (placeSearch.places.length === 0) {
+        return;
     }
-    markers = {};
 
-    if (placeList.places.length > 0) {
-        placeList.places.forEach((place) => {
-            let marker = new AdvancedMarkerElement({
-                map: map.innerMap,
-                position: place.location,
-            });
+    for (const place of placeSearch.places) {
+        const marker = new AdvancedMarkerElement({
+            map: map.innerMap,
+            position: place.location,
+            collisionBehavior:
+                google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL,
+        });
 
-            markers[place.id] = marker;
-            bounds.extend(place.location);
-            marker.collisionBehavior =
-                google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
+        markers.set(place.id, marker);
+        bounds.extend(place.location);
 
-            /* [START maps_ui_kit_place_search_text_click_event] */
-            marker.addListener('gmp-click', (event) => {
-                if (infoWindow.isOpen) {
-                    infoWindow.close();
-                }
-                // Set the Place Details request to the selected place.
-                placeDetailsRequest.place = place.id;
-                placeDetails.style.display = 'block';
-                placeDetails.style.width = '350px';
-                infoWindow.setOptions({
-                    content: placeDetails,
-                });
-                infoWindow.open({
-                    anchor: marker,
-                    map: map.innerMap,
-                });
-                placeDetails.addEventListener('gmp-load', () => {
-                    map.innerMap.fitBounds(place.viewport, {
-                        top: 400,
-                        left: 400,
-                    });
-                });
-            });
-            /* [END maps_ui_kit_place_search_text_click_event] */
-            map.innerMap.setCenter(bounds.getCenter());
-            map.innerMap.fitBounds(bounds);
+        marker.addListener('click', () => {
+            placeRequest.place = place;
+            infoWindow.open(map.innerMap, marker);
         });
     }
-}
-/* [END maps_ui_kit_place_search_text_add_markers] */
 
-initMap();
+    map.innerMap.fitBounds(bounds);
+}
+
+init();
 /* [END maps_ui_kit_place_search_text] */
