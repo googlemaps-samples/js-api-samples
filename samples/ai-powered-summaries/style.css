@@ -1,0 +1,112 @@
+/**
+ * @license
+ * Copyright 2025 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/* [START maps_ai_powered_summaries] */
+/* Reuse existing map height */
+gmp-map {
+    height: 100%;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Existing Autocomplete Card Style */
+.place-autocomplete-card {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin: 10px;
+    padding: 15px;
+    font-family: Roboto, sans-serif;
+    font-size: 1rem;
+}
+
+gmp-place-autocomplete {
+    width: 300px;
+}
+
+/* New: Summary Panel Styles */
+.summary-card {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin: 10px;
+    padding: 0; /* Padding handled by children */
+    font-family: Roboto, sans-serif;
+    width: 350px;
+    max-height: 80vh; /* Prevent overflow on small screens */
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden {
+    display: none;
+}
+
+#place-header {
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+}
+
+#place-header h2 {
+    margin: 0 0 5px 0;
+    font-size: 1.2rem;
+}
+
+#place-address {
+    margin: 0;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+/* Tab Navigation */
+.tab-container {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+}
+
+.tab-button {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #555;
+    border-bottom: 3px solid transparent;
+}
+
+.tab-button:hover {
+    background-color: #f1f1f1;
+}
+
+.tab-button.active {
+    color: #1a73e8;
+    border-bottom: 3px solid #1a73e8;
+}
+
+/* Content Area */
+.content-area {
+    padding: 15px;
+    line-height: 1.5;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.disclosure-footer {
+    font-size: 0.75rem;
+    color: #666;
+    padding: 10px 15px;
+    border-top: 1px solid #eee;
+    font-style: italic;
+}
+/* [END maps_ai_powered_summaries] */

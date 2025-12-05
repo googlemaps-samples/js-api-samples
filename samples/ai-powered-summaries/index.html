@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--
+ @license
+ Copyright 2025 Google LLC. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+-->
+<!-- [START maps_ai_powered_summaries] -->
+<html>
+    <head>
+        <title>AI Place Summaries</title>
+        <link rel="stylesheet" type="text/css" href="./style.css" />
+        <script type="module" src="./index.js"></script><!-- prettier-ignore -->
+        <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+        ({key: "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8", v: "weekly"});</script>
+    </head>
+    <body>
+        <gmp-map center="37.805, -122.425" zoom="14" map-id="DEMO_MAP_ID">
+            <!-- Search Input Card -->
+            <div
+                class="place-autocomplete-card"
+                slot="control-inline-start-block-start">
+                <p>Search for a place with AI summaries:</p>
+                <gmp-place-autocomplete></gmp-place-autocomplete>
+            </div>
+
+            <!-- Summary text panel (initially hidden) -->
+            <div
+                id="summary-panel"
+                class="summary-card hidden"
+                slot="control-inline-end-block-start">
+                <div id="place-header">
+                    <h2 id="place-name"></h2>
+                    <p id="place-address"></p>
+                </div>
+
+                <!-- Tabs for toggling summary types -->
+                <div class="tab-container" id="tab-container"></div>
+
+                <!-- Content display area -->
+                <div id="summary-content" class="content-area"></div>
+
+                <!-- Legal/AI Disclosure -->
+                <div id="ai-disclosure" class="disclosure-footer"></div>
+            </div>
+        </gmp-map>
+    </body>
+</html>
+<!-- [END maps_ai_powered_summaries] -->
