@@ -1,19 +1,31 @@
 /**
  * @license
- * Copyright 2019 Google LLC. All Rights Reserved.
+ * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 // [START maps_js_api_loader_map]
-import { setOptions, importLibrary } from "@googlemaps/js-api-loader";
-const API_KEY = "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8";
+// [START maps_js_api_loader_map_load]
+// Import the needed libraries.
+import { setOptions, importLibrary } from '@googlemaps/js-api-loader';
+// [END maps_js_api_loader_map_load]
+const API_KEY = 'AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8';
 async function initMap() {
-    setOptions({ key: API_KEY });
-    const { Map } = await importLibrary("maps");
+    // [START maps_js_api_loader_map_options]
+    // Set loader options.
+    setOptions({
+        key: API_KEY,
+        v: 'weekly',
+    });
+    // [END maps_js_api_loader_map_options]
+    // Load the Maps library.
+    const { Map } = (await importLibrary('maps'));
+    // Set map options.
     const mapOptions = {
         center: { lat: 48.8566, lng: 2.3522 },
         zoom: 3,
     };
-    const map = new Map(document.getElementById("map"), mapOptions);
+    // Declare the map.
+    const map = new Map(document.getElementById('map'), mapOptions);
 }
 initMap();
 // [END maps_js_api_loader_map]
