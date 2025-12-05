@@ -65,7 +65,8 @@ gmp-place-search {
     cursor: pointer;
 }
 
-.search-button:hover {
+.search-button:hover,
+.search-button:focus-visible {
     background-color: #1765cc;
 }
 
