@@ -49,6 +49,7 @@ async function init() {
     searchPlaces();
 }
 /* [END maps_ui_kit_place_search_nearby_event] */
+/* [START maps_ui_kit_place_search_nearby_function] */
 // The searchPlaces function is called when the user changes the type select or when the page loads.
 async function searchPlaces() {
     // Close the info window and clear the markers.
@@ -70,6 +71,7 @@ async function searchPlaces() {
         placeSearchQuery.includedTypes = [typeSelect.value];
     }
 }
+/* [END maps_ui_kit_place_search_nearby_function] */
 // The addMarkers function is called when the place search element loads.
 async function addMarkers() {
     // Import the necessary libraries from the Google Maps API.

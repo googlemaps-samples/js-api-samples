@@ -55,6 +55,7 @@ async function init() {
     searchPlaces();
 }
 /* [END maps_ui_kit_place_search_text_event] */
+/* [START maps_ui_kit_place_search_text_function] */
 // The searchPlaces function is called when the user changes the query input or when the page loads.
 async function searchPlaces() {
     // Close the info window and clear the markers.
@@ -74,6 +75,7 @@ async function searchPlaces() {
         placeSearchQuery.textQuery = queryInput.value;
     }
 }
+/* [END maps_ui_kit_place_search_text_function] */
 // The addMarkers function is called when the place search element loads.
 async function addMarkers() {
     // Import the necessary libraries from the Google Maps API.
