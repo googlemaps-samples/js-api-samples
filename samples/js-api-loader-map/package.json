@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@types/google.maps": "^3.49.2",
-    "parcel": "^2.16.1",
+    "parcel": "^2.16.3",
     "typescript": "^5.9.3"
   }
 }
