@@ -147,19 +147,7 @@ function updateSummaryPanel(place: google.maps.places.Place) {
         );
     }
 
-    // --- 2. Neighborhood Summary ---
-    //@ts-ignore
-    if (place.neighborhoodSummary?.overview?.content) {
-        createTab(
-            'Neighborhood',
-            //@ts-ignore
-            place.neighborhoodSummary.overview.content,
-            //@ts-ignore
-            place.neighborhoodSummary.disclosureText
-        );
-    }
-
-    // --- 3. Review Summary ---
+    // --- 2. Review Summary ---
     //@ts-ignore
     if (place.reviewSummary?.text) {
         createTab(
@@ -168,6 +156,18 @@ function updateSummaryPanel(place: google.maps.places.Place) {
             place.reviewSummary.text,
             //@ts-ignore
             place.reviewSummary.disclosureText
+        );
+    }
+    
+    // --- 3. Neighborhood Summary ---
+    //@ts-ignore
+    if (place.neighborhoodSummary?.overview?.content) {
+        createTab(
+            'Neighborhood',
+            //@ts-ignore
+            place.neighborhoodSummary.overview.content,
+            //@ts-ignore
+            place.neighborhoodSummary.disclosureText
         );
     }
 
