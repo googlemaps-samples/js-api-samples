@@ -1,242 +1,83 @@
-/*
+/**
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// [START maps_ai_powered_summaries]
-// Define DOM elements.
+// [START maps_ai_powered_summaries_basic]
 const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-const placeAutocomplete = document.querySelector(
-    'gmp-place-autocomplete'
-) as google.maps.places.PlaceAutocompleteElement;
-const summaryPanel = document.getElementById('summary-panel') as HTMLDivElement;
-const placeName = document.getElementById('place-name') as HTMLElement;
-const placeAddress = document.getElementById('place-address') as HTMLElement;
-const tabContainer = document.getElementById('tab-container') as HTMLDivElement;
-const summaryContent = document.getElementById(
-    'summary-content'
-) as HTMLDivElement;
-const aiDisclosure = document.getElementById('ai-disclosure') as HTMLDivElement;
-
 let innerMap;
-let marker: google.maps.marker.AdvancedMarkerElement;
+let infoWindow;
 
-async function initMap(): Promise<void> {
-    // Request needed libraries.
-    const [] = await Promise.all([
-        google.maps.importLibrary('marker'),
-        google.maps.importLibrary('places'),
-    ]);
+async function initMap() {
+    const { Map, InfoWindow } = (await google.maps.importLibrary(
+        'maps'
+    )) as google.maps.MapsLibrary;
 
     innerMap = mapElement.innerMap;
-    innerMap.setOptions({
-        mapTypeControl: false,
-        streetViewControl: false,
-        fullscreenControl: false,
-    });
-
-    // Bind autocomplete bounds to map bounds.
-    google.maps.event.addListener(innerMap, 'bounds_changed', async () => {
-        placeAutocomplete.locationRestriction = innerMap.getBounds();
-    });
-
-    // Create the marker.
-    marker = new google.maps.marker.AdvancedMarkerElement({
-        map: innerMap,
-    });
-
-    // Handle selection of an autocomplete result.
-    // prettier-ignore
-    // @ts-ignore
-    placeAutocomplete.addEventListener('gmp-select', async ({ placePrediction }) => {
-            const place = placePrediction.toPlace();
-
-            // Fetch all summary fields.
-            // [START maps_ai_powered_summaries_fetchfields]
-            await place.fetchFields({
-                fields: [
-                    'displayName',
-                    'formattedAddress',
-                    'location',
-                    'generativeSummary',
-                    'neighborhoodSummary',
-                    'reviewSummary',
-                    'evChargeAmenitySummary',
-                ],
-            });
-            // [END maps_ai_powered_summaries_fetchfields]
-
-            // Update the map viewport and position the marker.
-            if (place.viewport) {
-                innerMap.fitBounds(place.viewport);
-            } else {
-                innerMap.setCenter(place.location);
-                innerMap.setZoom(17);
-            }
-            marker.position = place.location;
-
-            // Update the panel UI.
-            updateSummaryPanel(place);
-        }
-    );
+    infoWindow = new InfoWindow();
+    getPlaceDetails();
 }
 
-function updateSummaryPanel(place: google.maps.places.Place) {
-    // Reset UI
-    summaryPanel.classList.remove('hidden');
-    tabContainer.innerHTML = ''; // innerHTML is OK here since we're clearing known child elements.
-    summaryContent.textContent = '';
-    aiDisclosure.textContent = '';
+async function getPlaceDetails() {
+    // Request needed libraries.
+    const [ {AdvancedMarkerElement}, { Place } ] = await Promise.all([
+        google.maps.importLibrary('marker') as Promise<google.maps.MarkerLibrary>,
+        google.maps.importLibrary('places') as Promise<google.maps.PlacesLibrary>,
+    ]);
 
-    placeName.textContent = place.displayName || '';
-    placeAddress.textContent = place.formattedAddress || '';
+    // [START maps_ai_powered_summaries_basic_placeid]
+    // Use place ID to create a new Place instance.
+    const place = new Place({
+        id: 'ChIJzzc-aWUM3IARPOQr9sA6vfY', // San Diego Botanic Garden
+    });
+    // [END maps_ai_powered_summaries_basic_placeid]
 
-    let firstTabActivated = false;
+    // Call fetchFields, passing the needed data fields.
+    // [START maps_ai_powered_summaries_basic_fetchfields]
+    await place.fetchFields({
+        fields: [
+            'displayName',
+            'formattedAddress',
+            'location',
+            'generativeSummary',
+        ],
+    });
+    // [END maps_ai_powered_summaries_basic_fetchfields]
 
-    /**
-     * Safe Helper: Accepts either a text string or a DOM Node (like a div or DocumentFragment).
-     */
-    const createTab = (
-        label: string,
-        content: string | Node,
-        disclosure: string
-    ) => {
-        const btn = document.createElement('button');
-        btn.className = 'tab-button';
-        btn.textContent = label;
+    // Add an Advanced Marker
+    const marker = new AdvancedMarkerElement({
+        map: innerMap,
+        position: place.location,
+        title: place.displayName,
+    });
 
-        btn.onclick = () => {
-            // Do nothing if the tab is already active.
-            if (btn.classList.contains('active')) {
-                return;
-            }
+    // Create a content container.
+    const content = document.createElement('div');
+    // Populate the container with data.
+    const address = document.createElement('div');
+    const summary = document.createElement('div');
+    const lineBreak = document.createElement('br');
 
-            // Manage the active class state.
-            document
-                .querySelectorAll('.tab-button')
-                .forEach((b) => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            if (typeof content === 'string') {
-                summaryContent.textContent = content;
-            } else {
-                summaryContent.replaceChildren(content.cloneNode(true));
-            }
-
-            // Set the disclosure text.
-            aiDisclosure.textContent = disclosure || 'AI-generated content.';
-        };
-
-        tabContainer.appendChild(btn);
-
-        // Auto-select the first available summary.
-        if (!firstTabActivated) {
-            btn.click();
-            firstTabActivated = true;
-        }
-    };
-
-    // --- 1. Generative Summary (Place) ---
+    // Retrieve the summary text and disclosure text.
     //@ts-ignore
-    if (place.generativeSummary?.overview) {
-        createTab(
-            'Overview',
-            //@ts-ignore
-            place.generativeSummary.overview,
-            //@ts-ignore
-            place.generativeSummary.disclosureText
-        );
-    }
-
-    // --- 2. Review Summary ---
+    let overviewText = place.generativeSummary.overview ?? 'No summary is available.';
     //@ts-ignore
-    if (place.reviewSummary?.text) {
-        createTab(
-            'Reviews',
-            //@ts-ignore
-            place.reviewSummary.text,
-            //@ts-ignore
-            place.reviewSummary.disclosureText
-        );
-    }
+    let disclosureText = place.generativeSummary.disclosureText ?? '';
 
-    // --- 3. Neighborhood Summary ---
-    //@ts-ignore
-    if (place.neighborhoodSummary?.overview?.content) {
-        createTab(
-            'Neighborhood',
-            //@ts-ignore
-            place.neighborhoodSummary.overview.content,
-            //@ts-ignore
-            place.neighborhoodSummary.disclosureText
-        );
-    }
+    address.textContent = place.formattedAddress ?? '';
+    summary.textContent = `${overviewText} [${disclosureText}]`;
+    content.append(address, lineBreak, summary);;
 
-    // --- 4. EV Amenity Summary (uses content blocks)) ---
-    //@ts-ignore
-    if (place.evChargeAmenitySummary) {
-        //@ts-ignore
-        const evSummary = place.evChargeAmenitySummary;
-        const evContainer = document.createDocumentFragment();
+    innerMap.setCenter(place.location);
 
-        // Helper to build a safe DOM section for EV categories.
-        const createSection = (title: string, text: string) => {
-            const wrapper = document.createElement('div');
-            wrapper.style.marginBottom = '15px'; // Or use a CSS class
-
-            const titleEl = document.createElement('strong');
-            titleEl.textContent = title;
-
-            const textEl = document.createElement('div');
-            textEl.textContent = text;
-
-            wrapper.appendChild(titleEl);
-            wrapper.appendChild(textEl);
-            return wrapper;
-        };
-
-        // Check and append each potential section
-        if (evSummary.overview?.content) {
-            evContainer.appendChild(
-                createSection('Overview', evSummary.overview.content)
-            );
-        }
-        if (evSummary.coffee?.content) {
-            evContainer.appendChild(
-                createSection('Coffee', evSummary.coffee.content)
-            );
-        }
-        if (evSummary.restaurant?.content) {
-            evContainer.appendChild(
-                createSection('Food', evSummary.restaurant.content)
-            );
-        }
-        if (evSummary.store?.content) {
-            evContainer.appendChild(
-                createSection('Shopping', evSummary.store.content)
-            );
-        }
-
-        // Only add the tab if the container has children
-        if (evContainer.hasChildNodes()) {
-            createTab(
-                'EV Amenities',
-                evContainer, // Passing a Node instead of string
-                evSummary.disclosureText
-            );
-        }
-    }
-
-    // Safely handle the empty state.
-    if (!firstTabActivated) {
-        const msg = document.createElement('em');
-        msg.textContent =
-            'No AI summaries are available for this specific location.';
-        summaryContent.replaceChildren(msg);
-        aiDisclosure.textContent = '';
-    }
+    // Display an info window.
+    infoWindow.setHeaderContent(place.displayName);
+    infoWindow.setContent(content);
+    infoWindow.open({
+        anchor: marker,
+    });
 }
 
 initMap();
-// [END maps_ai_powered_summaries]
+// [END maps_ai_powered_summaries_basic]
