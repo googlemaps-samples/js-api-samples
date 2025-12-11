@@ -15,6 +15,10 @@ async function initMap() {
     )) as google.maps.MapsLibrary;
 
     innerMap = mapElement.innerMap;
+    innerMap.setOptions({
+        mapTypeControl: false
+    });
+
     infoWindow = new InfoWindow();
     getPlaceDetails();
 }
@@ -58,19 +62,42 @@ async function getPlaceDetails() {
     const address = document.createElement('div');
     const summary = document.createElement('div');
     const lineBreak = document.createElement('br');
+    const attribution = document.createElement('div');
 
-    // Retrieve the summary text and disclosure text.
+    // Retrieve the textual data (summary, disclosure, flag URI).
     //@ts-ignore
     let overviewText = place.generativeSummary.overview ?? 'No summary is available.';
     //@ts-ignore
-    let disclosureText = place.generativeSummary.disclosureText ?? '';
+    let disclosureText = place.generativeSummary.disclosureText;
+    //@ts-ignore
+    let reportingUri = place.generativeSummary.flagContentURI;
 
+    // Create HTML for reporting link.
+    const reportingLink = document.createElement('a');
+    reportingLink.href = reportingUri;
+    reportingLink.target = '_blank';
+    reportingLink.textContent = "Report a problem."
+
+    // Add text to layout.
     address.textContent = place.formattedAddress ?? '';
-    summary.textContent = `${overviewText} [${disclosureText}]`;
-    content.append(address, lineBreak, summary);;
+    summary.textContent = overviewText;
+    attribution.textContent = `${disclosureText}  `;
+    attribution.appendChild(reportingLink);
+
+    content.append(address, lineBreak, summary, lineBreak, attribution);
 
     innerMap.setCenter(place.location);
 
+    // Handle marker click.
+    marker.addListener('gmp-click', () => {
+        showInfoWindow(marker, place, content);
+    });
+
+    // Display the info window at load time.
+    showInfoWindow(marker, place, content);
+}
+
+function showInfoWindow(marker, place, content) {
     // Display an info window.
     infoWindow.setHeaderContent(place.displayName);
     infoWindow.setContent(content);
