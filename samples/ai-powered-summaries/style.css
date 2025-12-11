@@ -90,8 +90,13 @@ gmp-place-autocomplete {
 }
 
 .tab-button.active {
-    color: #1a73e8;
-    border-bottom: 3px solid #1a73e8;
+    font-weight: bold;
+    border-bottom: 3px solid #000000;
+}
+
+.tab-button.active:hover {
+    background-color: #ffffff;
+    cursor: default;
 }
 
 /* Content Area */
