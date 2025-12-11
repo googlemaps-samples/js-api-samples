@@ -18,6 +18,7 @@ const summaryContent = document.getElementById(
     'summary-content'
 ) as HTMLDivElement;
 const aiDisclosure = document.getElementById('ai-disclosure') as HTMLDivElement;
+const flagContentLink = document.getElementById('flag-content-link') as HTMLAnchorElement;
 
 let innerMap;
 let marker: google.maps.marker.AdvancedMarkerElement;
@@ -100,7 +101,8 @@ function updateSummaryPanel(place: google.maps.places.Place) {
     const createTab = (
         label: string,
         content: string | Node,
-        disclosure: string
+        disclosure: string,
+        flagUrl: string
     ) => {
         const btn = document.createElement('button');
         btn.className = 'tab-button';
@@ -126,6 +128,12 @@ function updateSummaryPanel(place: google.maps.places.Place) {
 
             // Set the disclosure text.
             aiDisclosure.textContent = disclosure || 'AI-generated content.';
+
+            // Add the content flag URI.
+            if (flagUrl) {
+                flagContentLink.href = flagUrl;
+                flagContentLink.textContent = "Report an issue"
+            }
         };
 
         tabContainer.appendChild(btn);
@@ -145,7 +153,9 @@ function updateSummaryPanel(place: google.maps.places.Place) {
             //@ts-ignore
             place.generativeSummary.overview,
             //@ts-ignore
-            place.generativeSummary.disclosureText
+            place.generativeSummary.disclosureText,
+            //@ts-ignore
+            place.generativeSummary.flagContentURI
         );
     }
 
@@ -157,7 +167,9 @@ function updateSummaryPanel(place: google.maps.places.Place) {
             //@ts-ignore
             place.reviewSummary.text,
             //@ts-ignore
-            place.reviewSummary.disclosureText
+            place.reviewSummary.disclosureText,
+            //@ts-ignore
+            place.reviewSummary.flagContentURI
         );
     }
 
@@ -169,7 +181,9 @@ function updateSummaryPanel(place: google.maps.places.Place) {
             //@ts-ignore
             place.neighborhoodSummary.overview.content,
             //@ts-ignore
-            place.neighborhoodSummary.disclosureText
+            place.neighborhoodSummary.disclosureText,
+            //@ts-ignore
+            place.neighborhoodSummary.flagContentURI
         );
     }
 
@@ -223,7 +237,8 @@ function updateSummaryPanel(place: google.maps.places.Place) {
             createTab(
                 'EV Amenities',
                 evContainer, // Passing a Node instead of string
-                evSummary.disclosureText
+                evSummary.disclosureText,
+                evSummary.flagContentURI
             );
         }
     }
