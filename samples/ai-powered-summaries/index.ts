@@ -32,6 +32,8 @@ async function initMap(): Promise<void> {
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
         mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: false,
     });
 
     // Bind autocomplete bounds to map bounds.
@@ -158,7 +160,7 @@ function updateSummaryPanel(place: google.maps.places.Place) {
             place.reviewSummary.disclosureText
         );
     }
-    
+
     // --- 3. Neighborhood Summary ---
     //@ts-ignore
     if (place.neighborhoodSummary?.overview?.content) {
