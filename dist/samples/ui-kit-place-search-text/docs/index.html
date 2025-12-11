@@ -4,81 +4,76 @@
  SPDX-License-Identifier: Apache-2.0
 -->
 <!--[START maps_ui_kit_place_search_text] -->
-<!doctype html>
+<!DOCTYPE html>
 <html>
     <head>
-        <title>Place List Text Search with Google Maps</title>
+        <title>Place Text Search with Google Maps</title>
         <meta charset="utf-8" />
         <link rel="stylesheet" type="text/css" href="style.css" />
-        <script type="module" src="./index.js"></script>
+        <script type="module" src="./index.js" defer></script>
+        <!-- prettier-ignore -->
+        <script>
+      (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+              ({key: "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8", v: "weekly"});
+    </script>
     </head>
     <body>
         <!--[START maps_ui_kit_place_search_text_map] -->
-        <gmp-map center="37.395641,-122.077627" zoom="10" map-id="DEMO_MAP_ID">
-            <div class="overlay" slot="control-inline-start-block-start">
-                <div class="text-search-container">
+
+        <div class="container">
+            <div class="ui-panel">
+                <div class="controls">
                     <input
                         type="text"
-                        id="textSearchInput"
-                        placeholder="Enter text search..." />
-                    <button id="textSearchButton">Search</button>
+                        id="query-input"
+                        class="query-input"
+                        placeholder="Search for a place"
+                        value="cafe" />
+                    <button class="search-button">Search</button>
                 </div>
                 <div class="list-container">
-                    <gmp-place-list
-                        selectable
-                        style="display: none"></gmp-place-list>
+                    <gmp-place-search selectable>
+                        <gmp-place-all-content></gmp-place-all-content>
+                        <gmp-place-text-search-request
+                            max-result-count="5"></gmp-place-text-search-request>
+                    </gmp-place-search>
                 </div>
             </div>
-            <gmp-place-details style="display: none">
-                <gmp-place-details-place-request></gmp-place-details-place-request>
-                <gmp-place-all-content></gmp-place-all-content>
-            </gmp-place-details>
-        </gmp-map>
+            <!-- map-id is required to use advanced markers. See https://developers.google.com/maps/documentation/javascript/map-ids/mapid-over. -->
+            <gmp-map center="-37.813,144.963" zoom="16" map-id="DEMO_MAP_ID">
+            </gmp-map>
+        </div>
+
+        <!--
+        The gmp-place-details-compact element is styled inline because it is
+        conditionally rendered and moved into the info window, which is
+        part of the map's shadow DOM.
+        -->
+        <gmp-place-details-compact
+            orientation="horizontal"
+            truncation-preferred
+            style="
+                width: 400px;
+                padding: 0;
+                margin: 0;
+                border: none;
+                background-color: transparent;
+                color-scheme: light;
+            ">
+            <gmp-place-details-place-request></gmp-place-details-place-request>
+            <gmp-place-content-config>
+                <gmp-place-media></gmp-place-media>
+                <gmp-place-rating></gmp-place-rating>
+                <gmp-place-price></gmp-place-price>
+                <gmp-place-accessible-entrance-icon></gmp-place-accessible-entrance-icon>
+                <gmp-place-open-now-status></gmp-place-open-now-status>
+                <gmp-place-attribution
+                    light-scheme-color="gray"
+                    dark-scheme-color="white"></gmp-place-attribution>
+            </gmp-place-content-config>
+        </gmp-place-details-compact>
+
         <!--[END maps_ui_kit_place_search_text_map] -->
-        <script>
-            ((g) => {
-                var h,
-                    a,
-                    k,
-                    p = 'The Google Maps JavaScript API',
-                    c = 'google',
-                    l = 'importLibrary',
-                    q = '__ib__',
-                    m = document,
-                    b = window;
-                b = b[c] || (b[c] = {});
-                var d = b.maps || (b.maps = {}),
-                    r = new Set(),
-                    e = new URLSearchParams(),
-                    u = () =>
-                        h ||
-                        (h = new Promise(async (f, n) => {
-                            await (a = m.createElement('script'));
-                            e.set('libraries', [...r] + '');
-                            for (k in g)
-                                e.set(
-                                    k.replace(
-                                        /[A-Z]/g,
-                                        (t) => '_' + t[0].toLowerCase()
-                                    ),
-                                    g[k]
-                                );
-                            e.set('callback', c + '.maps.' + q);
-                            a.src =
-                                `https://maps.${c}apis.com/maps/api/js?` + e;
-                            d[q] = f;
-                            a.onerror = () =>
-                                (h = n(Error(p + ' could not load.')));
-                            a.nonce =
-                                m.querySelector('script[nonce]')?.nonce || '';
-                            m.head.append(a);
-                        }));
-                d[l]
-                    ? console.warn(p + ' only loads once. Ignoring:', g)
-                    : (d[l] = (f, ...n) =>
-                          r.add(f) && u().then(() => d[l](f, ...n)));
-            })({ key: 'AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8', v: 'alpha' });
-        </script>
     </body>
 </html>
 <!--[END maps_ui_kit_place_search_text] -->
