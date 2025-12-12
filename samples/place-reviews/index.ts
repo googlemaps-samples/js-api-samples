@@ -39,10 +39,10 @@ async function initMap() {
 
     // Create an HTML container.
     const content = document.createElement('div');
-    const titleDiv = document.createElement('div');
-    const ratingDiv = document.createElement('div');
-    const addressDiv = document.createElement('div');
-    const reviewDiv = document.createElement('div');
+    const title = document.createElement('div');
+    const rating = document.createElement('div');
+    const address = document.createElement('div');
+    const review = document.createElement('div');
     const authorLink = document.createElement('a');
 
     // If there are any reviews display the first one.
@@ -54,22 +54,22 @@ async function initMap() {
         const authorUri = place.reviews[0].authorAttribution!.uri;
 
         // Safely populate the HTML.
-        titleDiv.textContent = place.displayName || '';
-        addressDiv.textContent = place.formattedAddress || '';
-        ratingDiv.textContent = `Rating: ${reviewRating} stars`;
-        reviewDiv.textContent = reviewText || '';
+        title.textContent = place.displayName || '';
+        address.textContent = place.formattedAddress || '';
+        rating.textContent = `Rating: ${reviewRating} stars`;
+        review.textContent = reviewText || '';
         authorLink.textContent = authorName;
         authorLink.href = authorUri || '';
         authorLink.target = '_blank';
 
-        content.appendChild(titleDiv);
-        content.appendChild(addressDiv);
-        content.appendChild(ratingDiv);
-        content.appendChild(reviewDiv);
+        content.appendChild(title);
+        content.appendChild(address);
+        content.appendChild(rating);
+        content.appendChild(review);
         content.appendChild(authorLink);
     } else {
         content.textContent =
-            'No reviews were found for ' + place.displayName + '.';
+            `No reviews were found for ${place.displayName}.`;
     }
 
     // Create an infowindow to display the review.
