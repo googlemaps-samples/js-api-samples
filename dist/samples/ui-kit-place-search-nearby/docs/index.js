@@ -65,9 +65,6 @@ async function searchPlaces() {
             center,
             radius: 50000, // 50km radius
         };
-        placeSearchQuery.locationBias = {
-            center,
-        };
         placeSearchQuery.includedTypes = [typeSelect.value];
     }
 }
