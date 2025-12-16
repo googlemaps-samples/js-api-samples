@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/ai-powered-summaries",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh ai-powered-summaries && bash ../app.sh ai-powered-summaries && bash ../docs.sh ai-powered-summaries && npm run build:vite --workspace=. && bash ../dist.sh ai-powered-summaries",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
