@@ -20,7 +20,6 @@ async function initMap(): Promise<void> {
         google.maps.importLibrary('places'),
     ]);
 
-    // [START maps_place_autocomplete_map_add]
     // Get the inner map.
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
@@ -31,7 +30,6 @@ async function initMap(): Promise<void> {
     google.maps.event.addListener(innerMap, 'bounds_changed', async () => {
         placeAutocomplete.locationRestriction = innerMap.getBounds();
     });
-    // [END maps_place_autocomplete_map_add]
 
     // Create the marker and infowindow.
     marker = new google.maps.marker.AdvancedMarkerElement({
