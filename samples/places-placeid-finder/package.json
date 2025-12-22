@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/places-placeid-finder",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh places-placeid-finder && bash ../app.sh places-placeid-finder && bash ../docs.sh places-placeid-finder && npm run build:vite --workspace=. && bash ../dist.sh places-placeid-finder",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
