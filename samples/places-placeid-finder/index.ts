@@ -113,4 +113,3 @@ async function initMap(): Promise<void> {
 
 initMap();
 // [END maps_places_placeid_finder]
-export {};
