@@ -10,10 +10,6 @@
 // the place ID and other information about the place that the user has
 // selected.
 
-// This example requires the Places library. Include the libraries=places
-// parameter when you first load the API. For example:
-// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
 async function initMap(): Promise<void> {
     // Request needed libraries.
     const [{ InfoWindow }, { AdvancedMarkerElement }] = await Promise.all([
