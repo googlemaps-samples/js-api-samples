@@ -1,13 +1,13 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
  @license
- Copyright 2025 Google LLC. All Rights Reserved.
+ Copyright 2019 Google LLC. All Rights Reserved.
  SPDX-License-Identifier: Apache-2.0
 -->
 
 <html>
     <head>
-        <title>Place Autocomplete map</title>
+        <title>Place ID Finder</title>
 
         <link rel="stylesheet" type="text/css" href="./style.css" />
         <script type="module" src="./index.js"></script>
@@ -16,16 +16,13 @@
         ({key: "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8", v: "weekly"});</script>
     </head>
     <body>
-       
-        <gmp-map center="40.749933,-73.98633" zoom="13" map-id="DEMO_MAP_ID">
-            <div
-                class="place-autocomplete-card"
-                slot="control-inline-start-block-start">
-                <p>Search for a place here:</p>
-                <gmp-place-autocomplete></gmp-place-autocomplete>
-            </div>
+        <gmp-map center="-33.8688, 151.2195" zoom="13" map-id="DEMO_MAP_ID">
+            <gmp-place-autocomplete slot="control-inline-start-block-start"></gmp-place-autocomplete>
         </gmp-map>
-        
-    </body>
+        <div id="infowindow-content">
+            <span id="place-name" class="title"></span><br />
+            <strong>Place ID:</strong> <span id="place-id"></span><br />
+            <span id="place-address"></span>
+        </div>
 </html>
 
