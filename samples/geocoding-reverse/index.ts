@@ -1,10 +1,9 @@
 /**
  * @license
- * Copyright 2025 Google LLC. All Rights Reserved.
+ * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 // [START maps_geocoding_reverse]
-//let innerMap;
 let marker;
 
 async function initMap() {
@@ -28,7 +27,7 @@ async function initMap() {
     ) as google.maps.MapElement;
 
     // Get the inner map.
-    let innerMap = mapElement.innerMap;
+    const innerMap = mapElement.innerMap;
 
     // Get the latlng input box.
     const latLngQuery = document.getElementById('latlng') as HTMLInputElement;
