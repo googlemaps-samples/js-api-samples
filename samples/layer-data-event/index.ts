@@ -1,45 +1,40 @@
 /**
  * @license
- * Copyright 2019 Google LLC. All Rights Reserved.
+ * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
 // [START maps_layer_data_event]
 let map: google.maps.Map;
 
-function initMap(): void {
-  map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-    zoom: 4,
-    center: { lat: -28, lng: 137 },
-  });
+async function initMap() {
+    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
 
-  // Load GeoJSON.
-  map.data.loadGeoJson(
-    "https://storage.googleapis.com/maps-devrel/google.json"
-  );
+    const mapElement = document.querySelector(
+        'gmp-map'
+    ) as google.maps.MapElement;
 
-  // Add some style.
-  map.data.setStyle((feature) => {
-    return /** @type {google.maps.Data.StyleOptions} */ {
-      fillColor: feature.getProperty("color") as string,
-      strokeWeight: 1,
-    };
-  });
+    const innerMap = mapElement.innerMap;
 
-  // [START maps_layer_data_event_snippet]
-  // Set mouseover event for each feature.
-  map.data.addListener("mouseover", (event) => {
-    (document.getElementById("info-box") as HTMLElement).textContent =
-      event.feature.getProperty("letter");
-  });
-  // [END maps_layer_data_event_snippet]
+    // Load GeoJSON.
+    innerMap.data.loadGeoJson('google.json');
+
+    // Add some style.
+    innerMap.data.setStyle((feature) => {
+        return /** @type {google.maps.Data.StyleOptions} */ {
+            fillColor: feature.getProperty('color') as string,
+            strokeWeight: 1,
+        };
+    });
+
+    // [START maps_layer_data_event_snippet]
+    // Set mouseover event for each feature.
+    innerMap.data.addListener('mouseover', (event) => {
+        (document.getElementById('info-box') as HTMLElement).textContent =
+            event.feature.getProperty('letter');
+    });
+    // [END maps_layer_data_event_snippet]
 }
 
-declare global {
-  interface Window {
-    initMap: () => void;
-  }
-}
-window.initMap = initMap;
+initMap();
 // [END maps_layer_data_event]
-export {};
