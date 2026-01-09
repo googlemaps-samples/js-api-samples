@@ -22,6 +22,8 @@ async function initMap() {
     innerMap.setOptions({
         mapTypeControl: false,
     });
+    //@ts-ignore
+    placeAutocomplete.placeholder = 'Search for a place...';
     // Use the bounds_changed event to restrict results to the current map bounds.
     google.maps.event.addListener(innerMap, 'bounds_changed', async () => {
         placeAutocomplete.locationRestriction = innerMap.getBounds();
