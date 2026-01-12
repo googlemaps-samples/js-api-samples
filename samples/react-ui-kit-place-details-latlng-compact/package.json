@@ -11,13 +11,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@vis.gl/react-google-maps": "latest",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.3"
+    "@vis.gl/react-google-maps": "1.7.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
   },
   "devDependencies": {
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.3",
+    "@types/react": "19.2.3",
+    "@types/react-dom": "19.2.3",
     "typescript": "^5.9.3",
     "vite": "^7.3.0"
   }
