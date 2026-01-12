@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2019 Google LLC. All Rights Reserved.
+ * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 /* [START maps_streetview_overlays] */
@@ -34,10 +34,6 @@ body {
   font-family: "Roboto", "sans-serif";
   line-height: 30px;
   padding-left: 10px;
-}
-
-#floating-panel {
-  margin-left: -100px;
 }
 
 /* [END maps_streetview_overlays] */
