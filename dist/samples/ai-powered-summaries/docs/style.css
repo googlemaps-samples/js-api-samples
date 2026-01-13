@@ -22,13 +22,13 @@ body {
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     margin: 10px;
-    padding: 15px;
+    padding: 2px;
     font-family: Roboto, sans-serif;
     font-size: 1rem;
 }
 
 gmp-place-autocomplete {
-    width: 300px;
+    width: 330px;
 }
 
 /* New: Summary Panel Styles */
