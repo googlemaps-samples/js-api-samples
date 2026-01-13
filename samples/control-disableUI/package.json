@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/control-disableUI",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh control-disableUI && bash ../app.sh control-disableUI && bash ../docs.sh control-disableUI && npm run build:vite --workspace=. && bash ../dist.sh control-disableUI",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}

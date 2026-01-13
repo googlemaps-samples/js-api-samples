@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/control-simple",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh control-simple && bash ../app.sh control-simple && bash ../docs.sh control-simple && npm run build:vite --workspace=. && bash ../dist.sh control-simple",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
