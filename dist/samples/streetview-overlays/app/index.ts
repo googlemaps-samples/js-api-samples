@@ -22,14 +22,9 @@ async function initMap() {
     ) as google.maps.MapElement;
 
     innerMap = mapElement.innerMap;
-    innerMap.setOptions({
-        mapTypeControl: false,
-        streetViewControl: false,
-        fullscreenControl: false,
-    });
 
     document
-        .getElementById('toggle')!
+        .getElementById('streetview-toggle-button')!
         .addEventListener('click', toggleStreetView);
 
     const cafeIcon = document.createElement('img');
