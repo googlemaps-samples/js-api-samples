@@ -13,13 +13,8 @@ async function initMap() {
     const astorPlace = { lat: 40.729884, lng: -73.990988 };
     const mapElement = document.querySelector('gmp-map');
     innerMap = mapElement.innerMap;
-    innerMap.setOptions({
-        mapTypeControl: false,
-        streetViewControl: false,
-        fullscreenControl: false,
-    });
     document
-        .getElementById('toggle')
+        .getElementById('streetview-toggle-button')
         .addEventListener('click', toggleStreetView);
     const cafeIcon = document.createElement('img');
     cafeIcon.src = new URL('./public/cafe_icon.svg', import.meta.url).href;
