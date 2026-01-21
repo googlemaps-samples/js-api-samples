@@ -4,12 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/*
-TODO:
-  * Figure out why there's spaces before the result JSON.
-*/
-
-
 // [START maps_geocoding_simple]
 let geocoder: google.maps.Geocoder;
 let mapElement;
