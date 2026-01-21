@@ -43,65 +43,29 @@ async function initMap() {
 
     const innerMap = mapElement.innerMap;
 
-    const controlText: [string, google.maps.ControlPosition][] = [
-        [
-            'BLOCK_START_INLINE_START',
-            google.maps.ControlPosition.BLOCK_START_INLINE_START,
-        ],
-        [
-            'INLINE_START_BLOCK_START',
-            google.maps.ControlPosition.INLINE_START_BLOCK_START,
-        ],
-        [
-            'BLOCK_START_INLINE_CENTER',
-            google.maps.ControlPosition.BLOCK_START_INLINE_CENTER,
-        ],
-        [
-            'BLOCK_START_INLINE_END',
-            google.maps.ControlPosition.BLOCK_START_INLINE_END,
-        ],
-        [
-            'INLINE_END_BLOCK_START',
-            google.maps.ControlPosition.INLINE_END_BLOCK_START,
-        ],
-        [
-            'INLINE_START_BLOCK_CENTER',
-            google.maps.ControlPosition.INLINE_START_BLOCK_CENTER,
-        ],
-        [
-            'INLINE_END_BLOCK_CENTER',
-            google.maps.ControlPosition.INLINE_END_BLOCK_CENTER,
-        ],
-        [
-            'BLOCK_END_INLINE_START',
-            google.maps.ControlPosition.BLOCK_END_INLINE_START,
-        ],
-        [
-            'INLINE_START_BLOCK_END',
-            google.maps.ControlPosition.INLINE_START_BLOCK_END,
-        ],
-        [
-            'BLOCK_END_INLINE_CENTER',
-            google.maps.ControlPosition.BLOCK_END_INLINE_CENTER,
-        ],
-        [
-            'BLOCK_END_INLINE_END',
-            google.maps.ControlPosition.BLOCK_END_INLINE_END,
-        ],
-        [
-            'INLINE_END_BLOCK_END',
-            google.maps.ControlPosition.INLINE_END_BLOCK_END,
-        ],
+    const positions: (keyof typeof google.maps.ControlPosition)[] = [
+        'BLOCK_START_INLINE_START',
+        'INLINE_START_BLOCK_START',
+        'BLOCK_START_INLINE_CENTER',
+        'BLOCK_START_INLINE_END',
+        'INLINE_END_BLOCK_START',
+        'INLINE_START_BLOCK_CENTER',
+        'INLINE_END_BLOCK_CENTER',
+        'BLOCK_END_INLINE_START',
+        'INLINE_START_BLOCK_END',
+        'BLOCK_END_INLINE_CENTER',
+        'BLOCK_END_INLINE_END',
+        'INLINE_END_BLOCK_END',
     ];
 
-    for (let i = 0; i < controlText.length; i++) {
-        const divLabel = controlText[i][0] as string;
+    positions.forEach((position) => {
         const divName = document.createElement('div');
+        const controlPosition = google.maps.ControlPosition[position];
 
-        MakeControl(divName, divLabel);
-        innerMap.controls[controlText[i][1]].push(divName);
+        MakeControl(divName, position);
         divName.addEventListener('click', toggleRTL);
-    }
+        innerMap.controls[controlPosition].push(divName);
+    });
 }
 
 /**
