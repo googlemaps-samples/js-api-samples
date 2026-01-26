@@ -19,7 +19,7 @@
     "@types/google.maps": "^3.58.1",
     "@types/node": "^25.0.10",
     "eslint": "^9.39.2",
-    "globals": "^17.0.0",
+    "globals": "^17.1.0",
     "rimraf": "^6.1.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.53.1",
