@@ -18,11 +18,15 @@ const marker = document.querySelector(
 
 async function initMap(): Promise<void> {
     // Request needed libraries.
-    await Promise.all([
-        google.maps.importLibrary('maps'),
+    const { InfoWindow } = (await google.maps.importLibrary(
+        'maps'
+    )) as google.maps.MapsLibrary;
+    Promise.all([
         google.maps.importLibrary('marker'),
         google.maps.importLibrary('places'),
     ]);
+
+    await window.customElements.whenDefined('gmp-map');
 
     // Set the map options.
     map.innerMap.setOptions({
@@ -31,21 +35,20 @@ async function initMap(): Promise<void> {
     });
 
     // Set up the info window.
-    const infoWindow = new google.maps.InfoWindow({});
+    const infoWindow = new InfoWindow({});
 
     // Function to update map and marker based on place details
     const updateMapAndMarker = () => {
-        if (placeDetails.place && placeDetails.place.location) {
-            const placeViewport = placeDetails.place.viewport;
-            map.innerMap.fitBounds(placeViewport, 0);
-            marker.position = placeDetails.place.location;
-            marker.collisionBehavior =
-                google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
-            marker.style.display = 'block';
-            infoWindow.close();
-            infoWindow.setContent(placeDetails);
-            infoWindow.open({ map: map.innerMap, anchor: marker });
-        }
+        if (!placeDetails.place?.location) return;
+        const placeViewport = placeDetails.place.viewport;
+        map.innerMap.fitBounds(placeViewport, 0);
+        marker.position = placeDetails.place.location;
+        marker.collisionBehavior =
+            google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
+        // marker.style.display = 'block';
+        infoWindow.close();
+        infoWindow.setContent(placeDetails);
+        infoWindow.open({ map: map.innerMap, anchor: marker });
     };
 
     // Set up map once widget is loaded.
@@ -59,14 +62,14 @@ async function initMap(): Promise<void> {
         marker.position = null;
         event.stop();
         if (event.placeId) {
-            // Fire when the user clicks a POI.
+            // When the user clicks a POI.
             placeDetailsRequest.place = event.placeId;
             updateMapAndMarker();
         } else {
-            // Fire when the user clicks the map (not on a POI).
+            // When the user clicks the map (not on a POI).
             console.log('No place was selected.');
-            marker.style.display = 'none';
-            infoWindow.close();
+            // marker.style.display = 'none';
+            // infoWindow.close();
         }
     });
 }
