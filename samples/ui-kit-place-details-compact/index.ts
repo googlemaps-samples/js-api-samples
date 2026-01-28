@@ -45,7 +45,6 @@ async function initMap(): Promise<void> {
         marker.position = placeDetails.place.location;
         marker.collisionBehavior =
             google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
-        // marker.style.display = 'block';
         infoWindow.close();
         infoWindow.setContent(placeDetails);
         infoWindow.open({ map: map.innerMap, anchor: marker });
@@ -68,8 +67,6 @@ async function initMap(): Promise<void> {
         } else {
             // When the user clicks the map (not on a POI).
             console.log('No place was selected.');
-            // marker.style.display = 'none';
-            // infoWindow.close();
         }
     });
 }
