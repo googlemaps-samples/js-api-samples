@@ -63,7 +63,6 @@ async function initMap(): Promise<void> {
         if (event.placeId) {
             // When the user clicks a POI.
             placeDetailsRequest.place = event.placeId;
-            updateMapAndMarker();
         } else {
             // When the user clicks the map (not on a POI).
             console.log('No place was selected.');
