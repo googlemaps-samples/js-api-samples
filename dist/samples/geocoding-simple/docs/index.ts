@@ -35,7 +35,7 @@ async function initMap() {
     // Get the inner map.
     innerMap = mapElement.innerMap;
 
-    // Set the cursor to crosshair.
+    // Set map options.
     innerMap.setOptions({
         mapTypeControl: false,
         fullscreenControl: false,
@@ -45,7 +45,6 @@ async function initMap() {
         draggableCursor: 'crosshair',
     });
 
-    
     geocoder = new google.maps.Geocoder();
 
     const inputText = document.getElementById('address') as HTMLInputElement;
@@ -76,6 +75,7 @@ async function clear() {
     responseDiv.style.display = 'none';
 }
 
+// [START maps_geocoding_simple_request]
 async function geocode(request: google.maps.GeocoderRequest) {
     clear();
 
@@ -94,6 +94,7 @@ async function geocode(request: google.maps.GeocoderRequest) {
             alert('Geocode was not successful for the following reason: ' + e);
         });
 }
+// [END maps_geocoding_simple_request]
 
 initMap();
 // [END maps_geocoding_simple]

@@ -22,7 +22,7 @@ async function initMap() {
     mapElement = document.querySelector('gmp-map');
     // Get the inner map.
     innerMap = mapElement.innerMap;
-    // Set the cursor to crosshair.
+    // Set map options.
     innerMap.setOptions({
         mapTypeControl: false,
         fullscreenControl: false,
@@ -51,6 +51,7 @@ async function clear() {
     marker.setMap(null);
     responseDiv.style.display = 'none';
 }
+
 async function geocode(request) {
     clear();
     geocoder
@@ -68,5 +69,6 @@ async function geocode(request) {
         alert('Geocode was not successful for the following reason: ' + e);
     });
 }
+
 initMap();
 
