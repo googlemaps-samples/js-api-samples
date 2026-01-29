@@ -25,11 +25,13 @@ async function initMap() {
     innerMap.setOptions({
         draggableCursor: 'crosshair',
         zoom: 13,
+        mapTypeControl: false,
     });
     // Create a marker for re-use.
     marker = new AdvancedMarkerElement({
         map: innerMap,
     });
+    marker.anchorTop = "40px";
     const geocoder = new Geocoder();
     const infowindow = new InfoWindow();
     // Add a click event listener to the submit button.

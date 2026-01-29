@@ -1,0 +1,62 @@
+/**
+ * @license
+ * Copyright 2026 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/* [START maps_streetview_overlays] */
+/* 
+ * Always set the map height explicitly to define the size of the div element
+ * that contains the map. 
+ */
+#map {
+  height: 100%;
+}
+
+/* 
+ * Optional: Makes the sample page fill the window. 
+ */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#floating-panel {
+  position: absolute;
+  top: 10px;
+  left: 25%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: "Roboto", "sans-serif";
+  line-height: 30px;
+  padding-left: 10px;
+}
+
+#streetview-toggle-button {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 17px;
+  border: none;
+  background: white;
+  cursor: pointer;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+  margin: 10px 0px 10px -2px;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: rgb(86, 86, 86);
+}
+
+#streetview-toggle-button:hover {
+  background: #f4f4f4;
+  color: #000;
+}
+
+/* [END maps_streetview_overlays] */

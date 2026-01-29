@@ -9,6 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    
+    "@js-api-samples/ai-powered-summaries": "file:"
   }
 }
