@@ -54,9 +54,7 @@ async function initMap() {
     responseDiv = document.getElementById('response-container') as HTMLDivElement;
     response = document.getElementById('response') as HTMLPreElement;
 
-    marker = new google.maps.marker.AdvancedMarkerElement({
-        map: innerMap,
-    });
+    marker = new google.maps.marker.AdvancedMarkerElement({});
 
     innerMap.addListener('click', (e: google.maps.MapMouseEvent) => {
         geocode({ location: e.latLng });
