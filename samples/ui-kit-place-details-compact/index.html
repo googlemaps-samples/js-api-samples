@@ -20,7 +20,7 @@
     <body>
         <div class="container">
             <!-- map-id is required to use Advanced Markers. See https://developers.google.com/maps/documentation/javascript/map-ids/mapid-over. -->
-            <gmp-map map-id="DEMO_MAP_ID">
+            <gmp-map zoom="17" map-id="DEMO_MAP_ID">
                 <gmp-advanced-marker></gmp-advanced-marker>
             </gmp-map>
         </div>
@@ -29,7 +29,7 @@
         conditionally rendered and moved into the info window, which is
         part of the map's shadow DOM.
         -->
-        <!--[START maps_ui_kit_place_details_compact_setup] -->
+        <!--[START maps_ui_kit_place_details_compact_map_setup] -->
         <gmp-place-details-compact
             orientation="horizontal"
             truncation-preferred
@@ -43,7 +43,7 @@
             ">
             <gmp-place-details-place-request
                 place="ChIJC8HakaIRkFQRiOgkgdHmqkk"></gmp-place-details-place-request>
-            <!--[END maps_ui_kit_place_details_compact_setup] -->
+            <!--[END maps_ui_kit_place_details_compact_map_setup] -->
             <!--[START maps_ui_kit_place_details_compact_config] -->
             <gmp-place-content-config>
                 <gmp-place-media lightbox-preferred></gmp-place-media>
