@@ -35,7 +35,7 @@ async function initMap(): Promise<void> {
     });
 
     // Set up the info window.
-    const infoWindow = new InfoWindow({});
+    const infoWindow = new InfoWindow();
 
     // Function to update map and marker based on place details
     const updateMapAndMarker = () => {
@@ -45,9 +45,8 @@ async function initMap(): Promise<void> {
         marker.position = placeDetails.place.location;
         marker.collisionBehavior =
             google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
-        infoWindow.close();
         infoWindow.setContent(placeDetails);
-        infoWindow.open({ map: map.innerMap, anchor: marker });
+        infoWindow.open({ anchor: marker });
     };
 
     // Set up map once widget is loaded.
