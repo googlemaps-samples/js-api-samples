@@ -56,10 +56,6 @@ async function initMap() {
     // Get the inner map.
     innerMap = mapElement.innerMap;
 
-    innerMap.setOptions({
-        mapId: "5cd2c9ca1cf05670",
-    });
-
     await google.maps.event.addListenerOnce(innerMap, 'idle', () => {
         // Add the data legend.
         makeLegend(innerMap);
