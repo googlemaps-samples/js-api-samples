@@ -6,60 +6,64 @@
  */
 /* [START maps_ui_kit_place_details_compact] */
 // Use querySelector to select elements for interaction.
-const mapContainer = document.getElementById('map-container');
+/* [START maps_ui_kit_place_details_compact_query_selector] */
+const map = document.querySelector('gmp-map');
 const placeDetails = document.querySelector('gmp-place-details-compact');
 const placeDetailsRequest = document.querySelector('gmp-place-details-place-request');
-let gMap;
-let marker;
+const marker = document.querySelector('gmp-advanced-marker');
+/* [END maps_ui_kit_place_details_compact_query_selector] */
 async function initMap() {
-    const { PlaceDetailsCompactElement, PlaceDetailsPlaceRequestElement } = (await google.maps.importLibrary('places'));
-    const { Map } = (await google.maps.importLibrary('maps'));
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
-    gMap = new Map(mapContainer, { mapId: 'DEMO_MAP_ID' });
-    marker = new AdvancedMarkerElement({ map: gMap });
-    // Hide the map type control.
-    gMap.setOptions({ mapTypeControl: false });
-    // Set up map, marker, and infowindow once widget is loaded.
-    placeDetails.style.visibility = 'visible';
-    placeDetails.addEventListener('gmp-load', (event) => {
-        console.log('placeDetails initialized!');
-        updateMapAndMarker();
+    // Request needed libraries.
+    Promise.all([
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('places'),
+    ]);
+    const { InfoWindow } = (await google.maps.importLibrary('maps'));
+    await window.customElements.whenDefined('gmp-map');
+    // Set the inner map options.
+    map.innerMap.setOptions({
+        mapTypeControl: false,
+        streetViewControl: false,
     });
+    await window.customElements.whenDefined('gmp-advanced-marker');
+    marker.collisionBehavior =
+        google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
+    const infoWindow = new InfoWindow();
+    infoWindow.addListener('close', () => {
+        marker.position = null;
+    });
+    const showInfoWindow = () => {
+        if (infoWindow.isOpen)
+            return;
+        infoWindow.setContent(placeDetails);
+        infoWindow.open({ anchor: marker });
+    };
+    placeDetails.addEventListener('gmp-load', (event) => {
+        // For the initial load case, with no user click, we fall back to the place's location, and ensure the map has a center set and the InfoWindow is show.
+        // (The clicked POI LatLng will be a more natural marker position, when available.)
+        if (!map.center) {
+            map.center = marker.position = placeDetails.place.location;
+            showInfoWindow();
+        }
+    });
+    /* [START maps_ui_kit_place_details_compact_event] */
     // Add an event listener to handle clicks.
-    gMap.addListener('click', async (event) => {
+    map.innerMap.addListener('click', async (event) => {
         event.stop();
-        // Fire when the user clicks on a POI.
         if (event.placeId) {
-            console.log('clicked on POI');
-            console.log(event.placeId);
+            // When the user clicks a POI.
+            marker.position = event.latLng;
             placeDetailsRequest.place = event.placeId;
-            updateMapAndMarker();
+            showInfoWindow();
         }
         else {
-            // Fire when the user clicks the map (not on a POI).
+            // When the user clicks the map (not on a POI).
+            marker.position = null;
+            placeDetailsRequest.place = null;
             console.log('No place was selected.');
         }
     });
-    // Function to update map, marker, and infowindow based on place details
-    const updateMapAndMarker = () => {
-        console.log('function called');
-        if (placeDetails.place && placeDetails.place.location) {
-            marker.gMap = null;
-            let adjustedCenter = offsetLatLngRight(placeDetails.place.location, 0.002);
-            gMap.panTo(adjustedCenter);
-            gMap.setZoom(16); // Set zoom after panning if needed
-            marker.content = placeDetails;
-            marker.position = placeDetails.place.location;
-        }
-        else {
-            console.log('else');
-        }
-    };
 }
-// Helper function to offset marker placement for better visual appearance.
-function offsetLatLngRight(latLng, latitudeOffset) {
-    const newLat = latLng.lat() + latitudeOffset;
-    return new google.maps.LatLng(newLat, latLng.lng());
-}
+/* [END maps_ui_kit_place_details_compact_event] */
 initMap();
 /* [END maps_ui_kit_place_details_compact] */
