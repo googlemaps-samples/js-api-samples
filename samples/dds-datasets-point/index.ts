@@ -7,47 +7,6 @@
 // [START maps_dds_datasets_point]
 const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
 let innerMap;
-// [START maps_dds_datasets_point_style_function]
-function setStyle(/* FeatureStyleFunctionOptions */ params) {
-    // [START maps_dds_datasets_point_style_get_features]
-    // Get the dataset feature, so we can work with all of its attributes.
-    const datasetFeature = params.feature;
-    // Get all of the needed dataset attributes.
-    const furColors = datasetFeature.datasetAttributes['CombinationofPrimaryandHighlightColor'];
-    // [END maps_dds_datasets_point_style_get_features]
-
-    // Apply styles. Fill is primary fur color, stroke is secondary fur color.
-    switch (furColors) {
-        case 'Black+':
-            return /* FeatureStyleOptions */ { fillColor: 'black', pointRadius: 8 };
-            break;
-        case 'Cinnamon+':
-            return /* FeatureStyleOptions */ { fillColor: '#8b0000', pointRadius: 8 };
-            break;
-        case 'Cinnamon+Gray':
-            return /* FeatureStyleOptions */ { fillColor: '#8b0000', strokeColor: 'gray', pointRadius: 6 };
-            break;
-        case 'Cinnamon+White':
-            return /* FeatureStyleOptions */ { fillColor: '#8b0000', strokeColor: 'white', pointRadius: 6 };
-            break;
-        case 'Gray+':
-            return /* FeatureStyleOptions */ { fillColor: 'gray', pointRadius: 8 };
-            break;
-        case 'Gray+Cinnamon':
-            return /* FeatureStyleOptions */ { fillColor: 'gray', strokeColor: '#8b0000', pointRadius: 6 };
-            break;
-        case 'Gray+Cinnamon, White':
-            return /* FeatureStyleOptions */ { fillColor: 'silver', strokeColor: '#8b0000', pointRadius: 6 };
-            break;
-        case 'Gray+White':
-            return /* FeatureStyleOptions */ { fillColor: 'gray', strokeColor: 'white', pointRadius: 6 };
-            break;
-        default: // Color not defined.
-            return /* FeatureStyleOptions */ { fillColor: 'yellow', pointRadius: 8 };
-            break; 
-    }
-}
-// [END maps_dds_datasets_point_style_function]
 
 async function initMap() {
     // Request needed libraries.
