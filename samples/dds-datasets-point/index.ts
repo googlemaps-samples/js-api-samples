@@ -51,7 +51,7 @@ function setStyle(/* FeatureStyleFunctionOptions */ params) {
 
 async function initMap() {
     // Request needed libraries.
-    const { Map } = await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
 
     // Get the inner map.
     innerMap = mapElement.innerMap;
@@ -61,11 +61,12 @@ async function initMap() {
 
     // Dataset ID for squirrel dataset.
     const datasetId = 'a99635b0-5e73-4b2a-8ae3-cb40f4b7f47e';
-    const datasetLayer = innerMap.getDatasetFeatureLayer(datasetId);
+    //const datasetLayer = innerMap.getDatasetFeatureLayer(datasetId);
     //datasetLayer.style = setStyle;
 }
 
 // Creates a legend for the map.
+/**
 async function makeLegend(innerMap) {
     let colors = {
         'black': ['black'],
@@ -104,7 +105,7 @@ async function makeLegend(innerMap) {
         wrapper.appendChild(txt);
         legend!.appendChild(wrapper);
     }
-}
+}*/
 
 initMap();
 // [END maps_dds_datasets_point]
