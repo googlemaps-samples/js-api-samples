@@ -56,10 +56,8 @@ async function initMap() {
     // Get the inner map.
     innerMap = mapElement.innerMap;
 
-    await google.maps.event.addListenerOnce(innerMap, 'idle', () => {
-        // Add the data legend.
-        makeLegend(innerMap);
-    });
+    // Add the data legend.
+    //makeLegend(innerMap);
 
     // Dataset ID for squirrel dataset.
     const datasetId = 'a99635b0-5e73-4b2a-8ae3-cb40f4b7f47e';
