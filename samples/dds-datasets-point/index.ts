@@ -62,7 +62,7 @@ async function initMap() {
     });
 
     // Dataset ID for squirrel dataset.
-    const datasetId = 'a99635b0-5e73-4b2a-8ae3-cb40f4b7f47e';
+    const datasetId = '02fa1552-37dd-4a95-844f-f99e1c22541f';
     const datasetLayer = innerMap.getDatasetFeatureLayer(datasetId);
     datasetLayer.style = setStyle;
 }
