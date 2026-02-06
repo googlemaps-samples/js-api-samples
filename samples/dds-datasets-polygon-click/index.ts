@@ -49,6 +49,7 @@ async function initMap() {
     datasetLayer.addListener('mousemove', handleMouseMove);
 
     // Map event listener.
+    /** TEMPORARILY COMMENTING OUT FOR TESTING...
     innerMap.addListener('mousemove', () => {
         // If the map gets a mousemove, that means there are no feature layers
         // with listeners registered under the mouse, so we clear the last
@@ -57,7 +58,7 @@ async function initMap() {
             lastInteractedFeatureIds = [];
             datasetLayer.style = applyStyle;
         }
-    });
+    });*/
     // [END maps_dds_datasets_polygon_click_addlistener]
 }
 
