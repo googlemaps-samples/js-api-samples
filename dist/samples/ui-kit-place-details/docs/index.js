@@ -12,19 +12,19 @@ const placeDetails = document.querySelector('gmp-place-details');
 const placeDetailsRequest = document.querySelector('gmp-place-details-place-request');
 const marker = document.querySelector('gmp-advanced-marker');
 /* [END maps_ui_kit_place_details_query_selector] */
-let center = { lat: 47.759737, lng: -122.250632 };
 async function initMap() {
     // Request needed libraries.
-    (await google.maps.importLibrary('maps'));
-    (await google.maps.importLibrary('marker'));
-    (await google.maps.importLibrary('places'));
+    await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('places'),
+    ]);
     // Hide the map type control.
     map.innerMap.setOptions({ mapTypeControl: false });
     // Function to update map and marker based on place details
     const updateMapAndMarker = () => {
         if (placeDetails.place && placeDetails.place.location) {
-            let adjustedCenter = offsetLatLngRight(placeDetails.place.location, -0.005);
-            map.innerMap.panTo(adjustedCenter);
+            map.innerMap.panTo(placeDetails.place.location);
             map.innerMap.setZoom(16); // Set zoom after panning if needed
             marker.position = placeDetails.place.location;
             marker.collisionBehavior =
@@ -54,10 +54,5 @@ async function initMap() {
     });
 }
 /* [END maps_ui_kit_place_details_event] */
-// Helper function to offset marker placement for better visual appearance.
-function offsetLatLngRight(latLng, longitudeOffset) {
-    const newLng = latLng.lng() + longitudeOffset;
-    return new google.maps.LatLng(latLng.lat(), newLng);
-}
 initMap();
 /* [END maps_ui_kit_place_details] */
