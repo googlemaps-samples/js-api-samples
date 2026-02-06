@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
@@ -66,3 +66,4 @@ async function initMap() {
 }
 /* [END maps_ui_kit_place_details_compact_event] */
 initMap();
+/* [END maps_ui_kit_place_details_compact] */
