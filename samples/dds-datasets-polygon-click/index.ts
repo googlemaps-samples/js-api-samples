@@ -88,7 +88,7 @@ function applyStyle(/* FeatureStyleFunctionOptions */ params) {
     // Note, 'globalid' is an attribute in this dataset.
     if (
         lastClickedFeatureIds.includes(
-            datasetFeature.datasetAttributes['typecategory'] // Temporarily changed from globalid for testing. CHANGE BACK
+            datasetFeature.datasetAttributes['globalid']
         )
     ) {
         return styleClicked;
@@ -96,7 +96,7 @@ function applyStyle(/* FeatureStyleFunctionOptions */ params) {
 
     if (
         lastInteractedFeatureIds.includes(
-            datasetFeature.datasetAttributes['typecategory'] // Temporarily changed from globalid for testing. CHANGE BACK
+            datasetFeature.datasetAttributes['globalid']
         )
     ) {
         return styleMouseMove;
