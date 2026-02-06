@@ -84,10 +84,7 @@ const styleMouseMove = {
 
 function applyStyle(/* FeatureStyleFunctionOptions */ params) {
     const datasetFeature = params.feature;
-    if (!datasetFeature.datasetAttributes || !datasetFeature.datasetAttributes['globalid']) {
-        return styleDefault;
-    }
-    
+
     // Note, 'globalid' is an attribute in this dataset.
     if (
         lastClickedFeatureIds.includes(
