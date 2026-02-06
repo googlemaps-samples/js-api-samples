@@ -45,8 +45,8 @@ async function initMap() {
     datasetLayer = innerMap.getDatasetFeatureLayer(datasetId);
     datasetLayer.style = applyStyle;
 
-    datasetLayer.addListener('click', handleClick);
-    datasetLayer.addListener('mousemove', handleMouseMove);
+    await datasetLayer.addListener('click', handleClick);
+    await datasetLayer.addListener('mousemove', handleMouseMove);
 
     // Map event listener.
     innerMap.addListener('mousemove', () => {
