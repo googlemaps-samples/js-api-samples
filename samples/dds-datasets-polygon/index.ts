@@ -26,7 +26,7 @@ async function initMap() {
 
     // [START maps_dds_datasets_polygon_featurelayer]
     // Dataset ID for NYC park data.
-    const datasetId = 'a75dd002-ad20-4fe6-af60-27cd2ed636b4';
+    const datasetId = '02fa1552-37dd-4a95-844f-f99e1c22541f';
 
     const datasetLayer = innerMap.getDatasetFeatureLayer(datasetId);
     datasetLayer.style = styleOptions;
