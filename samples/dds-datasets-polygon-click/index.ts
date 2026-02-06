@@ -45,8 +45,8 @@ async function initMap() {
     datasetLayer = innerMap.getDatasetFeatureLayer(datasetId);
     datasetLayer.style = applyStyle;
 
-    await datasetLayer.addListener('click', handleClick);
-    await datasetLayer.addListener('mousemove', handleMouseMove);
+    datasetLayer.addListener('click', handleClick);
+    datasetLayer.addListener('mousemove', handleMouseMove);
 
     // Map event listener.
     innerMap.addListener('mousemove', () => {
@@ -84,6 +84,10 @@ const styleMouseMove = {
 
 function applyStyle(/* FeatureStyleFunctionOptions */ params) {
     const datasetFeature = params.feature;
+    if (!datasetFeature.datasetAttributes || !datasetFeature.datasetAttributes['globalid']) {
+        return styleDefault;
+    }
+    
     // Note, 'globalid' is an attribute in this dataset.
     if (
         lastClickedFeatureIds.includes(
