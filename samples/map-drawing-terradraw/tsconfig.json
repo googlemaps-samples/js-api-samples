@@ -13,6 +13,9 @@
     ],
     "moduleResolution": "Bundler",
     "jsx": "preserve",
-    "types": ["@types/google.maps"]
+    "types": [
+      "@types/google.maps",
+      "geojson"
+    ]
   }
 }
