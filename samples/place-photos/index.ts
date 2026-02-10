@@ -33,55 +33,54 @@ async function init() {
     summary.textContent = place.editorialSummary as string;
 
     // Add photos to the gallery.
-    if (place.photos) {
-        place.photos?.forEach((photo) => {
-            const altText = 'Photo of ' + place.displayName;
-            const img = document.createElement('img');
-            const imgButton = document.createElement('button');
-            const expandedImage = document.createElement('img');
-            img.src = photo?.getURI({ maxHeight: 380 });
-            img.alt = altText;
-            imgButton.addEventListener('click', (event) => {
-                centerSelectedThumbnail(imgButton);
-                event.preventDefault();
-                expandedImage.src = img.src;
-                expandedImage.alt = altText;
-                expandedImageDiv.innerHTML = '';
-                expandedImageDiv.appendChild(expandedImage);
-                const attributionLabel = createAttribution(photo.authorAttributions)!;
-                expandedImageDiv.appendChild(attributionLabel);
-            });
-
-            imgButton.addEventListener('focus', ()=> {
-                centerSelectedThumbnail(imgButton);
-            });
-
-            imgButton.appendChild(img);
-            gallery.appendChild(imgButton);
+    place.photos?.forEach((photo) => {
+        const altText = 'Photo of ' + place.displayName;
+        const img = document.createElement('img');
+        const imgButton = document.createElement('button');
+        const expandedImage = document.createElement('img');
+        img.src = photo?.getURI({ maxHeight: 380 });
+        img.alt = altText;
+        imgButton.addEventListener('click', (event) => {
+            centerSelectedThumbnail(imgButton);
+            event.preventDefault();
+            expandedImage.src = img.src;
+            expandedImage.alt = altText;
+            expandedImageDiv.innerHTML = '';
+            expandedImageDiv.appendChild(expandedImage);
+            const attributionLabel = createAttribution(photo.authorAttributions)!;
+            expandedImageDiv.appendChild(attributionLabel);
         });
-    }
+
+        imgButton.addEventListener('focus', ()=> {
+            centerSelectedThumbnail(imgButton);
+        });
+
+        imgButton.appendChild(img);
+        gallery.appendChild(imgButton);
+    });
 
     // Display the first photo.
     if (place.photos && place.photos.length > 0) {
+        const photo = place.photos[0];
         const img = document.createElement('img');
         img.alt = 'Photo of ' + place.displayName;
-        img.src = place.photos![0].getURI();
+        img.src = photo.getURI();
         expandedImageDiv.appendChild(img);
-        const attributionLabel = createAttribution(place.photos![0].authorAttributions)!;
-        expandedImageDiv.appendChild(attributionLabel);
+        
+        if (photo.authorAttributions && photo.authorAttributions.length > 0) {
+            expandedImageDiv.appendChild(createAttribution(photo.authorAttributions)!);
+        }
     }
 
     // Helper function to create attribution DIV.
     function createAttribution(attributions: google.maps.places.AuthorAttribution[]) {
         const attributionLabel = document.createElement('a');
         attributionLabel.classList.add('attribution-label');
-        if (attributions && attributions[0]) {
-            attributionLabel.textContent = attributions[0].displayName;
-            attributionLabel.href = attributions[0].uri!;
-            attributionLabel.target = '_blank';
-            attributionLabel.rel = 'noopener noreferrer';
-            return attributionLabel;
-        }
+        attributionLabel.textContent = attributions[0].displayName;
+        attributionLabel.href = attributions[0].uri!;
+        attributionLabel.target = '_blank';
+        attributionLabel.rel = 'noopener noreferrer';
+        return attributionLabel;
     }
 
     // Helper function to center the selected thumbnail in the gallery.
