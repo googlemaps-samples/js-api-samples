@@ -47,11 +47,13 @@ async function init() {
             expandedImage.alt = altText;
             expandedImageDiv.innerHTML = '';
             expandedImageDiv.appendChild(expandedImage);
-            const attributionLabel = createAttribution(photo.authorAttributions)!;
+            const attributionLabel = createAttribution(
+                photo.authorAttributions[0]
+            )!;
             expandedImageDiv.appendChild(attributionLabel);
         });
 
-        imgButton.addEventListener('focus', ()=> {
+        imgButton.addEventListener('focus', () => {
             centerSelectedThumbnail(imgButton);
         });
 
@@ -66,18 +68,22 @@ async function init() {
         img.alt = 'Photo of ' + place.displayName;
         img.src = photo.getURI();
         expandedImageDiv.appendChild(img);
-        
+
         if (photo.authorAttributions && photo.authorAttributions.length > 0) {
-            expandedImageDiv.appendChild(createAttribution(photo.authorAttributions)!);
+            expandedImageDiv.appendChild(
+                createAttribution(photo.authorAttributions[0])
+            );
         }
     }
 
     // Helper function to create attribution DIV.
-    function createAttribution(attributions: google.maps.places.AuthorAttribution[]) {
+    function createAttribution(
+        attribution: google.maps.places.AuthorAttribution
+    ) {
         const attributionLabel = document.createElement('a');
         attributionLabel.classList.add('attribution-label');
-        attributionLabel.textContent = attributions[0].displayName;
-        attributionLabel.href = attributions[0].uri!;
+        attributionLabel.textContent = attribution.displayName;
+        attributionLabel.href = attribution.uri!;
         attributionLabel.target = '_blank';
         attributionLabel.rel = 'noopener noreferrer';
         return attributionLabel;
@@ -85,7 +91,11 @@ async function init() {
 
     // Helper function to center the selected thumbnail in the gallery.
     function centerSelectedThumbnail(element: HTMLElement) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+        element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'center',
+        });
     }
 }
 
