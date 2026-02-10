@@ -21,13 +21,12 @@ async function init() {
     });
 
     // Get the various HTML elements.
-    let heading = document.getElementById('heading') as HTMLElement;
-    let summary = document.getElementById('summary') as HTMLElement;
-    let gallery = document.getElementById('gallery') as HTMLElement;
-    let expandedImageDiv = document.getElementById(
+    const heading = document.getElementById('heading') as HTMLElement;
+    const summary = document.getElementById('summary') as HTMLElement;
+    const gallery = document.getElementById('gallery') as HTMLElement;
+    const expandedImageDiv = document.getElementById(
         'expanded-image'
     ) as HTMLElement;
-    let attributionLabel;
 
     // Show the display name and summary for the place.
     heading.textContent = place.displayName as string;
@@ -49,7 +48,7 @@ async function init() {
                 expandedImage.alt = altText;
                 expandedImageDiv.innerHTML = '';
                 expandedImageDiv.appendChild(expandedImage);
-                attributionLabel = createAttribution(photo.authorAttributions);
+                const attributionLabel = createAttribution(photo.authorAttributions)!;
                 expandedImageDiv.appendChild(attributionLabel);
             });
 
@@ -68,17 +67,17 @@ async function init() {
         img.alt = 'Photo of ' + place.displayName;
         img.src = place.photos![0].getURI();
         expandedImageDiv.appendChild(img);
-        attributionLabel = createAttribution(place.photos![0].authorAttributions);
+        const attributionLabel = createAttribution(place.photos![0].authorAttributions)!;
         expandedImageDiv.appendChild(attributionLabel);
     }
 
     // Helper function to create attribution DIV.
-    function createAttribution(attribution) {
+    function createAttribution(attributions: google.maps.places.AuthorAttribution[]) {
         const attributionLabel = document.createElement('a');
         attributionLabel.classList.add('attribution-label');
-        if (attribution && attribution[0]) {
-            attributionLabel.textContent = attribution[0].displayName;
-            attributionLabel.href = attribution[0].uri;
+        if (attributions && attributions[0]) {
+            attributionLabel.textContent = attributions[0].displayName;
+            attributionLabel.href = attributions[0].uri!;
             attributionLabel.target = '_blank';
             attributionLabel.rel = 'noopener noreferrer';
             return attributionLabel;
