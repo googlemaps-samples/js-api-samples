@@ -27,7 +27,7 @@ body {
 #counter {
   background-color: #e5e5e5;
   width: 15em;
-  margin-top: 2em;
+
   margin-left: 1em;
   border-radius: 8px;
   font-family: Roboto;
@@ -62,20 +62,20 @@ body {
 }
 
 #legend #container {
-  margin: 0.5em 1em;
+  margin: 0.5em;
   display: flex;
 }
 
 #legend div .box {
   display: flex;
-  width: 2em;
-  height: 2em;
+  width: 1em;
+  height: 1em;
   border-radius: 50%;
-  border: 3px solid;
+  border: 2px solid;
 }
 
 #legend div .legend {
   display: flex;
-  padding: 0.5em;
+  padding: 0.3em;
 }
 
