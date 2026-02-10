@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/dds-datasets-polyline",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh dds-datasets-polyline && bash ../app.sh dds-datasets-polyline && bash ../docs.sh dds-datasets-polyline && npm run build:vite --workspace=. && bash ../dist.sh dds-datasets-polyline",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}

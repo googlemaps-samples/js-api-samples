@@ -7,70 +7,46 @@
 <!doctype html>
 <html>
     <head>
-        <title>Click on the map to view place details</title>
+        <title>Place Details with Google Maps</title>
         <meta charset="utf-8" />
-        <link rel="stylesheet" href="style.css" />
-        <script type="module" src="./index.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script type="module" src="./index.js" defer></script>
+        <!-- prettier-ignore -->
+        <script>
+      (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+              ({key: "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8", v: "weekly"});
+    </script>
     </head>
     <body>
         <!--[START maps_ui_kit_place_details_map] -->
-        <gmp-map center="47.759737, -122.250632" zoom="16" map-id="DEMO_MAP_ID">
-            <gmp-advanced-marker></gmp-advanced-marker>
-        </gmp-map>
-        <!--[END maps_ui_kit_place_details_map] -->
-        <!--[START maps_ui_kit_place_details_container] -->
-        <div class="widget-container" slot="control-inline-start-block-start">
-            <gmp-place-details>
-                <gmp-place-details-place-request
-                    place="ChIJC8HakaIRkFQRiOgkgdHmqkk"></gmp-place-details-place-request>
-                <gmp-place-all-content></gmp-place-all-content>
-            </gmp-place-details>
+        <div class="container">
+            <!-- map-id is required to use advanced markers. See https://developers.google.com/maps/documentation/javascript/map-ids/mapid-over. -->
+            <gmp-map zoom="17" map-id="DEMO_MAP_ID">
+                <gmp-advanced-marker></gmp-advanced-marker>
+            </gmp-map>
+            <div class="ui-panel">
+                <gmp-place-details>
+                    <gmp-place-details-place-request
+                        place="ChIJC8HakaIRkFQRiOgkgdHmqkk"></gmp-place-details-place-request>
+                    <gmp-place-content-config>
+                        <gmp-place-address></gmp-place-address>
+                        <gmp-place-rating></gmp-place-rating>
+                        <gmp-place-type></gmp-place-type>
+                        <gmp-place-price></gmp-place-price>
+                        <gmp-place-accessible-entrance-icon></gmp-place-accessible-entrance-icon>
+                        <gmp-place-opening-hours></gmp-place-opening-hours>
+                        <gmp-place-website></gmp-place-website>
+                        <gmp-place-phone-number></gmp-place-phone-number>
+                        <gmp-place-summary></gmp-place-summary>
+                        <gmp-place-type-specific-highlights></gmp-place-type-specific-highlights>
+                        <gmp-place-review-summary></gmp-place-review-summary>
+                        <gmp-place-reviews></gmp-place-reviews>
+                        <gmp-place-feature-list></gmp-place-feature-list>
+                    </gmp-place-content-config>
+                </gmp-place-details>
+            </div>
         </div>
-        <!--[END maps_ui_kit_place_details_container] -->
-        <script>
-            ((g) => {
-                var h,
-                    a,
-                    k,
-                    p = 'The Google Maps JavaScript API',
-                    c = 'google',
-                    l = 'importLibrary',
-                    q = '__ib__',
-                    m = document,
-                    b = window;
-                b = b[c] || (b[c] = {});
-                var d = b.maps || (b.maps = {}),
-                    r = new Set(),
-                    e = new URLSearchParams(),
-                    u = () =>
-                        h ||
-                        (h = new Promise(async (f, n) => {
-                            await (a = m.createElement('script'));
-                            e.set('libraries', [...r] + '');
-                            for (k in g)
-                                e.set(
-                                    k.replace(
-                                        /[A-Z]/g,
-                                        (t) => '_' + t[0].toLowerCase()
-                                    ),
-                                    g[k]
-                                );
-                            e.set('callback', c + '.maps.' + q);
-                            a.src =
-                                `https://maps.${c}apis.com/maps/api/js?` + e;
-                            d[q] = f;
-                            a.onerror = () =>
-                                (h = n(Error(p + ' could not load.')));
-                            a.nonce =
-                                m.querySelector('script[nonce]')?.nonce || '';
-                            m.head.append(a);
-                        }));
-                d[l]
-                    ? console.warn(p + ' only loads once. Ignoring:', g)
-                    : (d[l] = (f, ...n) =>
-                          r.add(f) && u().then(() => d[l](f, ...n)));
-            })({ key: 'AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8', v: 'weekly' });
-        </script>
+        <!--[END maps_ui_kit_place_details_map] -->
     </body>
 </html>
 <!--[END maps_ui_kit_place_details] -->

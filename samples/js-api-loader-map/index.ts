@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2025 Google LLC. All Rights Reserved.
+ * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -22,7 +22,7 @@ async function initMap(): Promise<void> {
     // [END maps_js_api_loader_map_options]
 
     // Load the Maps library.
-    const { Map } = (await importLibrary('maps')) as google.maps.MapsLibrary;
+    const { Map } = (await importLibrary('maps'));
 
     // Set map options.
     const mapOptions = {
