@@ -1,0 +1,11 @@
+{
+  "name": "@js-api-samples/place-photos",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh place-photos && bash ../app.sh place-photos && bash ../docs.sh place-photos && npm run build:vite --workspace=. && bash ../dist.sh place-photos",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  }
+}
