@@ -1,0 +1,43 @@
+<!doctype html>
+<!--
+ @license
+ Copyright 2026 Google LLC. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+-->
+<!-- [START maps_circle_simple] -->
+<html>
+    <head>
+        <title>Circles</title>
+
+        <!-- prettier-ignore -->
+        <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+        ({key: "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8", v: "weekly"});</script>
+      <script type="module" crossorigin src="./assets/index-CquPn207.js"></script>
+      <link rel="stylesheet" crossorigin href="./assets/index-C1AdY-ta.css">
+    </head>
+    <body>
+        <gmp-map
+            center="34.98956821576194, 135.74239981260283"
+            zoom="15"
+            map-id="DEMO_MAP_ID">
+            <div id="control-panel" slot="control-inline-start-block-start">
+                <input
+                    id="short-walk"
+                    type="radio"
+                    name="radius"
+                    value="400"
+                    checked />
+                <label for="short-walk">Short Walk (~5 minutes)</label><br />
+                <input
+                    id="medium-walk"
+                    type="radio"
+                    name="radius"
+                    value="800" />
+                <label for="medium-walk">Medium Walk (~15 minutes)</label><br />
+                <input id="long-walk" type="radio" name="radius" value="1600" />
+                <label for="long-walk">Long Walk (~30 minutes) </label>
+            </div>
+        </gmp-map>
+    </body>
+</html>
+<!-- [END maps_circle_simple] -->
