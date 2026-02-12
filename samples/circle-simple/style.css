@@ -15,7 +15,7 @@ body {
 }
 
 #control-panel {
-  display: none;
+  display: none; /* Set to 'display: block' after the map loads. */
   background-color: #fff;
   border: 2px solid #fff;
   border-radius: 3px;
