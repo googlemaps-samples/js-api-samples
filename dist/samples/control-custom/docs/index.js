@@ -48,3 +48,4 @@ function initMap() {
 }
 window.initMap = initMap;
 export {};
+// [END maps_control_custom
