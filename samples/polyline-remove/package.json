@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/polyline-remove",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh polyline-remove && bash ../app.sh polyline-remove && bash ../docs.sh polyline-remove && npm run build:vite --workspace=. && bash ../dist.sh polyline-remove",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
