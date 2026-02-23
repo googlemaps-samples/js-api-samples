@@ -1,0 +1,111 @@
+html,
+body,
+#canvas-container {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+gmp-marker-interactive {
+  outline: none;
+}
+
+:root {
+  --booking-blue: #003580;
+  --booking-white: #ffffff;
+}
+
+/* 
+  Stable layout that ensures growth happens from the bottom.
+  The wrapper size is fixed to avoid the map engine "jittering" the marker's 
+  position when its children resize (the animation bump fix).
+*/
+.marker-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  /* Arrow tip at the bottom */
+  width: 200px;
+  height: 250px;
+  pointer-events: none;
+}
+
+.booking-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  background-color: var(--booking-white);
+  color: var(--booking-blue);
+  border: 2px solid var(--booking-blue);
+  border-radius: 4px;
+  font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  pointer-events: auto;
+  user-select: none;
+  outline: none;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--booking-blue);
+  margin-top: -2px;
+  /* Precision link with box */
+  flex-shrink: 0;
+  transition: border-top-color 0.3s ease;
+}
+
+/* Expanded state: swap colors and add padding */
+.booking-marker.expanded {
+  background-color: var(--booking-blue);
+  color: var(--booking-white);
+  border-color: var(--booking-white);
+  padding: 12px 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.booking-marker.expanded+.arrow {
+  border-top-color: var(--booking-white);
+}
+
+.booking-marker .extra-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  width: 0;
+  transition: all 0.3s ease;
+}
+
+.content-inner {
+  width: 152px;
+  /* Absolute width prevents reflow jitter during scale */
+  white-space: normal;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.booking-marker.expanded .extra-content {
+  max-height: 200px;
+  width: 152px;
+  margin-top: 10px;
+  opacity: 1;
+}
