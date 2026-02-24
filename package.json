@@ -28,8 +28,5 @@
   },
   "dependencies": {
     "dotenv": "^17.2.3"
-  },
-  "overrides": {
-    "typescript": "5.8.3"
   }
 }
