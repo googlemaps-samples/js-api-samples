@@ -1,7 +1,0 @@
-name: advanced-markers-simple
-authors:
-  - Geo Developer IX Documentation Team
-tags:
-  - google maps
-load_type: h
-description: Sample code supporting Google Maps Platform JavaScript API documentation.
