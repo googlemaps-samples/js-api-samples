@@ -17,11 +17,7 @@ body {
     font-weight: bold;
 }
 
-#infowindow-content {
-    display: none;
-}
-
-#map #infowindow-content {
+#map {
     display: inline;
 }
 
