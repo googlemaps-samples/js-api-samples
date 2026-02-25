@@ -1,0 +1,138 @@
+/**
+ * @license
+ * Copyright 2026 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/* [START maps_control_replacement] */
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.controls {
+    font-size: 28px; /* this adjusts the size of all the controls */
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    font-weight: 300;
+    height: 1em;
+    text-align: center;
+    user-select: none;
+    padding: 2px;
+    width: 1em;
+}
+
+.controls button {
+    border: 0;
+    background-color: white;
+    color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+}
+
+.controls button:hover {
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.controls.zoom-control {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+.controls.zoom-control button {
+    font: 0.85em Arial;
+    margin: 1px;
+    padding: 0;
+}
+
+.controls.maptype-control {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    cursor: pointer;
+}
+
+.controls.maptype-control button {
+    display: inline-block;
+    font-size: 0.5em;
+    margin: 0 1px;
+    padding: 0 6px;
+}
+
+.controls.maptype-control.maptype-control-is-map .maptype-control-map {
+    font-weight: 700;
+}
+
+.controls.maptype-control.maptype-control-is-satellite
+    .maptype-control-satellite {
+    font-weight: 700;
+}
+
+.controls.fullscreen-control button {
+    display: block;
+    font-size: 1em;
+    height: 100%;
+    width: 100%;
+}
+
+.controls.fullscreen-control .fullscreen-control-icon {
+    border-style: solid;
+    height: 0.25em;
+    position: absolute;
+    width: 0.25em;
+}
+
+.controls.fullscreen-control
+    .fullscreen-control-icon.fullscreen-control-top-left {
+    border-width: 2px 0 0 2px;
+    left: 0.1em;
+    top: 0.1em;
+}
+
+.controls.fullscreen-control.is-fullscreen
+    .fullscreen-control-icon.fullscreen-control-top-left {
+    border-width: 0 2px 2px 0;
+}
+
+.controls.fullscreen-control
+    .fullscreen-control-icon.fullscreen-control-top-right {
+    border-width: 2px 2px 0 0;
+    right: 0.1em;
+    top: 0.1em;
+}
+
+.controls.fullscreen-control.is-fullscreen
+    .fullscreen-control-icon.fullscreen-control-top-right {
+    border-width: 0 0 2px 2px;
+}
+
+.controls.fullscreen-control
+    .fullscreen-control-icon.fullscreen-control-bottom-left {
+    border-width: 0 0 2px 2px;
+    left: 0.1em;
+    bottom: 0.1em;
+}
+
+.controls.fullscreen-control.is-fullscreen
+    .fullscreen-control-icon.fullscreen-control-bottom-left {
+    border-width: 2px 2px 0 0;
+}
+
+.controls.fullscreen-control
+    .fullscreen-control-icon.fullscreen-control-bottom-right {
+    border-width: 0 2px 2px 0;
+    right: 0.1em;
+    bottom: 0.1em;
+}
+
+.controls.fullscreen-control.is-fullscreen
+    .fullscreen-control-icon.fullscreen-control-bottom-right {
+    border-width: 2px 0 0 2px;
+}
+
+/* [END maps_control_replacement] */
