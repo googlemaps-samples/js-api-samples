@@ -5,18 +5,20 @@
  */
 
 // [START maps_event_poi]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
 let innerMap;
-let infowindow: google.maps.InfoWindow;
 
 async function initMap() {
     //  Request the needed libraries.
     await google.maps.importLibrary('maps');
 
-    innerMap = await mapElement.innerMap;
+    const mapElement = document.querySelector(
+        'gmp-map'
+    ) as google.maps.MapElement;
+
+    innerMap = mapElement.innerMap;
 
     // Create the initial InfoWindow.
-    infowindow = new google.maps.InfoWindow({});
+    let infowindow = new google.maps.InfoWindow({});
 
     innerMap.addListener('click', (event) => {
         // Prevent the default POI info window from showing.
@@ -24,7 +26,7 @@ async function initMap() {
 
         // If the event has a placeId, show the info window.
         if (isIconMouseEvent(event) && event.placeId) {
-            showInfoWindow(event);
+            showInfoWindow(event, infowindow);
         } else {
             // Otherwise, close the info window.
             infowindow.close();
@@ -33,7 +35,7 @@ async function initMap() {
 }
 
 // Helper function to show the info window.
-async function showInfoWindow(event: google.maps.IconMouseEvent) {
+async function showInfoWindow(event: google.maps.IconMouseEvent, infowindow: google.maps.InfoWindow) {
     // Retrieve the place details for the selected POI.
     const place = await getPlaceDetails(event.placeId);
 
