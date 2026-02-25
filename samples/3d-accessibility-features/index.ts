@@ -77,6 +77,7 @@ async function initMap() {
     });
 
     document.body.append(map);
+    console.log("Added a comment for testing purposes.");
 }
 
 initMap();
