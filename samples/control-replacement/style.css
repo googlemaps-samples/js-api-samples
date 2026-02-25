@@ -14,17 +14,14 @@ body {
 }
 
 .controls {
-    font-size: 28px; /* this adjusts the size of all the controls */
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
     box-sizing: border-box;
     border-radius: 2px;
-    font-weight: 300;
-    height: 1em;
-    text-align: center;
+    display: flex;
     user-select: none;
-    padding: 2px;
-    width: 1em;
+    background-clip: padding-box;
+    overflow: hidden; /* Keeps button backgrounds inside the rounded corners */
 }
 
 .controls button {
@@ -32,6 +29,11 @@ body {
     background-color: white;
     color: rgba(0, 0, 0, 0.6);
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: color 0.2s ease;
 }
 
 .controls button:hover {
@@ -39,29 +41,27 @@ body {
 }
 
 .controls.zoom-control {
-    display: flex;
     flex-direction: column;
-    height: auto;
+    width: 40px;
 }
 
 .controls.zoom-control button {
-    font: 0.85em Arial;
-    margin: 1px;
-    padding: 0;
+    height: 40px;
+    width: 40px;
+    font-size: 24px;
 }
 
 .controls.maptype-control {
-    display: flex;
     flex-direction: row;
-    width: auto;
-    cursor: pointer;
+    height: 40px;
 }
 
 .controls.maptype-control button {
-    display: inline-block;
-    font-size: 0.5em;
-    margin: 0 1px;
-    padding: 0 6px;
+    padding: 0 12px;
+    font-size: 14px;
+    font-family: Roboto, Arial, sans-serif;
+    text-transform: uppercase;
+    height: 100%;
 }
 
 .controls.maptype-control.maptype-control-is-map .maptype-control-map {
@@ -73,66 +73,30 @@ body {
     font-weight: 700;
 }
 
+.controls.fullscreen-control {
+    width: 40px;
+    height: 40px;
+}
+
 .controls.fullscreen-control button {
-    display: block;
-    font-size: 1em;
-    height: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     width: 100%;
+    height: 100%;
 }
 
-.controls.fullscreen-control .fullscreen-control-icon {
-    border-style: solid;
-    height: 0.25em;
-    position: absolute;
-    width: 0.25em;
+.controls.fullscreen-control {
+    width: 40px;
+    height: 40px;
 }
 
-.controls.fullscreen-control
-    .fullscreen-control-icon.fullscreen-control-top-left {
-    border-width: 2px 0 0 2px;
-    left: 0.1em;
-    top: 0.1em;
-}
-
-.controls.fullscreen-control.is-fullscreen
-    .fullscreen-control-icon.fullscreen-control-top-left {
-    border-width: 0 2px 2px 0;
-}
-
-.controls.fullscreen-control
-    .fullscreen-control-icon.fullscreen-control-top-right {
-    border-width: 2px 2px 0 0;
-    right: 0.1em;
-    top: 0.1em;
-}
-
-.controls.fullscreen-control.is-fullscreen
-    .fullscreen-control-icon.fullscreen-control-top-right {
-    border-width: 0 0 2px 2px;
-}
-
-.controls.fullscreen-control
-    .fullscreen-control-icon.fullscreen-control-bottom-left {
-    border-width: 0 0 2px 2px;
-    left: 0.1em;
-    bottom: 0.1em;
-}
-
-.controls.fullscreen-control.is-fullscreen
-    .fullscreen-control-icon.fullscreen-control-bottom-left {
-    border-width: 2px 2px 0 0;
-}
-
-.controls.fullscreen-control
-    .fullscreen-control-icon.fullscreen-control-bottom-right {
-    border-width: 0 2px 2px 0;
-    right: 0.1em;
-    bottom: 0.1em;
-}
-
-.controls.fullscreen-control.is-fullscreen
-    .fullscreen-control-icon.fullscreen-control-bottom-right {
-    border-width: 2px 0 0 2px;
+#fullscreen-button .material-icons {
+    font-size: 28px;
 }
 
 /* [END maps_control_replacement] */

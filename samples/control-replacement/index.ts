@@ -4,36 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// GLOBAL TYPE EXTENSIONS
-// These allow TypeScript to recognize vendor-prefixed fullscreen methods.
-declare global {
-    interface Document {
-        mozCancelFullScreen?: () => Promise<void>;
-        msExitFullscreen?: () => Promise<void>;
-        webkitExitFullscreen?: () => Promise<void>;
-        mozFullScreenElement?: Element;
-        msFullscreenElement?: Element;
-        webkitFullscreenElement?: Element;
-        onwebkitfullscreenchange?: any;
-        onmsfullscreenchange?: any;
-        onmozfullscreenchange?: any;
-    }
-
-    interface HTMLElement {
-        msRequestFullScreen?: () => Promise<void>;
-        mozRequestFullScreen?: () => Promise<void>;
-        webkitRequestFullScreen?: () => Promise<void>;
-    }
-}
-
 // [START maps_control_replacement]
+const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
 let innerMap: google.maps.Map;
 
 async function initMap() {
     // Load the needed libraries.
     await google.maps.importLibrary('maps');
-
-    const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
 
     innerMap = mapElement.innerMap;
 
@@ -42,11 +19,9 @@ async function initMap() {
         disableDefaultUI: true,
     });
 
-    google.maps.event.addListenerOnce(innerMap, 'tilesloaded', () => {
-        initZoomControl(innerMap);
-        initMapTypeControl(innerMap);
-        initFullscreenControl(innerMap);
-    });
+    initZoomControl(innerMap);
+    initMapTypeControl(innerMap);
+    initFullscreenControl(innerMap);
 }
 
 function initZoomControl(map: google.maps.Map) {
@@ -91,73 +66,33 @@ async function initMapTypeControl(innerMap: google.maps.Map) {
 }
 
 async function initFullscreenControl(innerMap: google.maps.Map) {
-    // Get the gmp-map element to send fullscreen requests to.
-    const elementToSendFullscreen = document.querySelector('gmp-map') as google.maps.MapElement;
+    // Get the UI elements for the fullscreen control.
     const btnFullscreen = document.querySelector(
         '#fullscreen-button'
     ) as HTMLButtonElement;
-    const fullscreenControl = document.querySelector(
-        '.fullscreen-control'
+
+    btnFullscreen.addEventListener('click', () => {
+        toggleFullScreen(mapElement);
+    });
+}
+
+async function toggleFullScreen(element: google.maps.MapElement) {
+    const fullScreenIcon = document.querySelector(
+        '#fullscreen-button .material-icons'
     ) as HTMLElement;
 
-    btnFullscreen?.addEventListener('click', async () => {
-        if (isFullscreen(elementToSendFullscreen)) {
-            exitFullscreen();
+    try {
+        if (!document.fullscreenElement) {
+            element.requestFullscreen();
+            fullScreenIcon.innerText = 'fullscreen_exit';
         } else {
-            requestFullscreen(elementToSendFullscreen);
+            document.exitFullscreen();
+            fullScreenIcon.innerText = 'fullscreen';
         }
-    });
-
-    // Handle UI updates when fullscreen state changes (ESC key or button)
-    const handleFullscreenChange = () => {
-        if (isFullscreen(elementToSendFullscreen)) {
-            fullscreenControl.classList.add('is-fullscreen');
-        } else {
-            fullscreenControl.classList.remove('is-fullscreen');
-        }
-    };
-
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
-    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
-}
-
-// HELPER FUNCTIONS
-function isFullscreen(element: google.maps.MapElement): boolean {
-    const fsElement =
-        document.fullscreenElement ||
-        document.webkitFullscreenElement ||
-        document.mozFullScreenElement ||
-        document.msFullscreenElement;
-    return fsElement === element;
-}
-
-function requestFullscreen(element: HTMLElement) {
-    if (element.requestFullscreen) {
-        element.requestFullscreen();
-    } else if (element.webkitRequestFullScreen) {
-        element.webkitRequestFullScreen();
-    } else if (element.mozRequestFullScreen) {
-        element.mozRequestFullScreen();
-    } else if (element.msRequestFullScreen) {
-        element.msRequestFullScreen();
-    }
-}
-
-function exitFullscreen() {
-    if (document.exitFullscreen) {
-        document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-    } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
+    } catch (error) {
+        console.error('Error toggling fullscreen:', error);
     }
 }
 
 initMap();
-
-export {}; // Ensures this file is treated as a module
 // [END maps_control_replacement]
