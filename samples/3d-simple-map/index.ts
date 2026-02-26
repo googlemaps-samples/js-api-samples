@@ -17,10 +17,15 @@ async function initMap() {
     // Get the inner map.
     const innerMap = mapElement.innerMap;
 
-    // Set map options.
-    innerMap.setOptions({
-        mapTypeControl: false,
-    });
+    if (!innerMap) {
+        console.error('Inner map not found.');
+        return;
+    } else {
+        // Set map options.
+        innerMap.setOptions({
+            mapTypeControl: false,
+        });
+    }
 }
 
 initMap();
