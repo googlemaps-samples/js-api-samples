@@ -11,6 +11,7 @@ async function initMap() {
     //  Request the needed libraries.
     await google.maps.importLibrary('maps');
 
+    // Retrieve the map element.
     const mapElement = document.querySelector(
         'gmp-map'
     ) as google.maps.MapElement;
