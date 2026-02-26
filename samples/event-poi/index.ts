@@ -21,6 +21,7 @@ async function initMap() {
     // Create the initial info window.
     let infowindow = new google.maps.InfoWindow({});
 
+    // Add a listener for click events on the map.
     innerMap.addListener('click', (event) => {
         // Prevent the default POI info window from showing.
         event.stop();
