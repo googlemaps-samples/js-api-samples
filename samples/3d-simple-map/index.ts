@@ -14,18 +14,16 @@ async function initMap() {
         //@ts-ignore
     ) as Map3DElement;
 
-    // Get the inner map.
-    const innerMap = mapElement.innerMap;
+    // Wait for the map to finish loading.
+    google.maps.event.addListenerOnce(mapElement, 'tilesloaded', () => {
+        // Get the inner map.
+        const innerMap = mapElement.innerMap;
 
-    if (!innerMap) {
-        console.error('Inner map not found.');
-        return;
-    } else {
         // Set map options.
         innerMap.setOptions({
             mapTypeControl: false,
         });
-    }
+    });
 }
 
 initMap();
