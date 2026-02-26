@@ -1,0 +1,62 @@
+/*
+ * @license
+ * Copyright 2025 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* [START maps_3d_camera_position_simple] */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #f0f0f0;
+  font-family: Roboto, Arial, sans-serif;
+}
+
+.map-wrapper {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  gap: 1px;
+}
+
+.map-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: white;
+}
+
+.map-header {
+  padding: 12px;
+  background: #1a73e8;
+  color: white;
+  font-weight: 500;
+  text-align: center;
+  font-size: 14px;
+}
+
+.map {
+  flex: 1;
+}
+
+.settings {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 12px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 11px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  min-width: 250px;
+}
+
+/* [END maps_3d_camera_position_simple] */

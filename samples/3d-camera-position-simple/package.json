@@ -1,0 +1,17 @@
+{
+  "name": "@js-api-samples/3d-camera-position-simple",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "npx tsc && bash ../jsfiddle.sh 3d-camera-position-simple && bash ../app.sh 3d-camera-position-simple && bash ../docs.sh 3d-camera-position-simple && npm run build:vite --workspace=. && bash ../dist.sh 3d-camera-position-simple",
+    "test": "npx tsc && npm run build:vite --workspace=.",
+    "start": "npx tsc && npx vite build --base './' && npx vite",
+    "build:vite": "npx vite build --base './'",
+    "preview": "npx vite preview"
+  },
+  "dependencies": {
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "vite": "^4.0.0"
+  }
+}
