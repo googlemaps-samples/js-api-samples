@@ -31,7 +31,7 @@ async function initMap() {
         if (isIconMouseEvent(event) && event.placeId) {
             showInfoWindow(event, infowindow);
         } else {
-            // Otherwise, close the info window.
+            // Close the info window if there is no placeId.
             infowindow.close();
         }
     });
