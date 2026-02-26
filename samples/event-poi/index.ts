@@ -16,6 +16,7 @@ async function initMap() {
         'gmp-map'
     ) as google.maps.MapElement;
 
+    // Get the inner map from the map element.
     innerMap = mapElement.innerMap;
 
     // Create the initial info window.
