@@ -8,7 +8,7 @@
 let innerMap;
 
 async function initMap() {
-    //  Request the needed libraries
+    //  Request the needed libraries.
     await google.maps.importLibrary('maps');
 
     // Retrieve the map element.
