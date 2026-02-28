@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/control-custom",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh control-custom && bash ../app.sh control-custom && bash ../docs.sh control-custom && npm run build:vite --workspace=. && bash ../dist.sh control-custom",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
