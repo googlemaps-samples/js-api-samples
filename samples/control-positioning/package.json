@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/control-positioning",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh control-positioning && bash ../app.sh control-positioning && bash ../docs.sh control-positioning && npm run build:vite --workspace=. && bash ../dist.sh control-positioning",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
