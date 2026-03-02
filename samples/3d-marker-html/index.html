@@ -1,0 +1,25 @@
+<!doctype html>
+<!--
+ @license
+ Copyright 2026 Google LLC. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+-->
+<!-- [START maps_3d_marker_html] -->
+<html>
+    <head>
+        <title>3D Marker HTML</title>
+        <link rel="stylesheet" type="text/css" href="./style.css" />
+    </head>
+    <body>
+        <gmp-map-3d center="40.7489,-73.9680,0" heading="315" tilt="65" range="800" mode="SATELLITE">
+            <gmp-marker position="40.7489,-73.9680" altitude-mode="clamp-to-ground" title="UN Headquarters">
+                <div class="custom-marker">United Nations Secretariat Building</div>
+            </gmp-marker>
+        </gmp-map-3d>
+
+        <script
+            async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8&v=beta&libraries=maps3d"></script>
+    </body>
+</html>
+<!-- [END maps_3d_marker_html] -->
