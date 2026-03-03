@@ -2,7 +2,7 @@
 
 ## 3d-camera-center
 
-Sample generated from 3d-camera-center
+This sample demonstrates how to set the camera center, heading, tilt, and range on a 3D map declaratively.
 
 ## Setup
 
