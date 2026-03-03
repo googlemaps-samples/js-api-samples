@@ -2,7 +2,7 @@
 
 ## 3d-mesh-flatten
 
-Sample generated from 3d-mesh-flatten
+This sample demonstrates how to flatten the 3D mesh on and off in a 3D map.
 
 ## Setup
 
