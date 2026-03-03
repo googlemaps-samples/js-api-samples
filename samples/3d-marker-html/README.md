@@ -2,7 +2,7 @@
 
 ## 3d-marker-html
 
-Sample generated from 3d-marker-html
+This sample demonstrates adding a custom HTML marker to a 3d map.
 
 ## Setup
 
