@@ -31,7 +31,7 @@ jobs:
       GOOGLE_MAPS_JS_SAMPLES_KEY: "${{ secrets.GOOGLE_MAPS_JS_SAMPLES_KEY }}"
     steps:
       - name: Checkout main
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
           token: ${{ secrets.GH_MERGE_TOKEN }}
