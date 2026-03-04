@@ -1,0 +1,31 @@
+<!doctype html>
+<!--
+ @license
+ Copyright 2025 Google LLC. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+-->
+<!-- [START maps_3d_mesh_flatten] -->
+<html>
+    <head>
+        <title>3D Mesh Flatten</title>
+
+      <script type="module" crossorigin src="./assets/index-BAkT-dmA.js"></script>
+      <link rel="stylesheet" crossorigin href="./assets/index-CAw6WHRm.css">
+    </head>
+    <body>
+        <gmp-map-3d
+            center="40.70304023274898,-73.99453903360259,397.3687221767566"
+            heading="-54.63577922139952"
+            tilt="65.59195953953744"
+            mode="SATELLITE">
+        </gmp-map-3d>
+        <gmp-flattener path="40.707680607935245,-74.00310353377735,500 40.70829665151717,-74.00193595590612,500 40.7073748659931,-74.00122787224885,500 40.706738652153156,-74.00232125268805,500 40.70738164589913,-74.0028721484274,500"></gmp-flattener>
+
+        <button class="toggleButton" id="toggleButton" type="button">Disable Flattener</button>
+
+        <script
+            async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8&v=beta&libraries=maps3d"></script>
+    </body>
+</html>
+<!-- [END maps_3d_mesh_flatten] -->
