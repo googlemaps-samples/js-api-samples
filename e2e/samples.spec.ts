@@ -169,7 +169,7 @@ foldersToTest.forEach((sampleFolder) => {
       await page.waitForFunction(() => window.google && window.google.maps, { timeout: 500 });
       
       // Insert a delay in ms to let the map load.
-      await page.waitForTimeout(500);
+      await page.waitForTimeout(1000);
 
       // Assertions. These must be met or the test will fail.
       // The sample must load the Google Maps API.
