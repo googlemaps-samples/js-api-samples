@@ -7,11 +7,6 @@
 async function initMap() {
     google.maps.importLibrary('maps3d');
 
-    // Get the gmp-map element.
-    const mapElement = document.querySelector(
-        'gmp-map-3d'
-        //@ts-ignore
-    ) as google.maps.Map3DElement;
 }
 
 initMap();
