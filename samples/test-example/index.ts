@@ -20,7 +20,7 @@ const advancedMarkerElement = document.querySelector(
 ) as google.maps.marker.AdvancedMarkerElement;
 let center;
 
-async function initMap(): Promise<void> {
+async function initMap() {
     // [START maps_test_example_instantiate_map]
     //  Request the needed libraries.
     const { Map } = (await google.maps.importLibrary(
@@ -48,6 +48,10 @@ async function initMap(): Promise<void> {
         title: 'Uluru',
     });
     // [END maps_test_example_instantiate_marker]
+
+    // [START maps_test_example_why_me]
+    console.log("Say there Mac, why'd you choose me to test this change?");
+    // [END maps_test_example_why_me]
 }
 initMap();
 // [END maps_test_example]
