@@ -5,25 +5,28 @@
  */
 // [START maps_3d_simple_map]
 async function initMap() {
-    //@ts-ignore
-    const { Map3DElement } = await google.maps.importLibrary('maps3d');
+    await google.maps.importLibrary('maps3d');
 
     // Get the gmp-map element.
     const mapElement = document.querySelector(
         'gmp-map-3d'
         //@ts-ignore
-    ) as Map3DElement;
+    ) as google.maps.Map3DElement;
 
-    // Wait for the map to finish loading.
-    customElements.whenDefined('gmp-map-3d').then(() => {
-        // Get the inner map.
-        const innerMap = mapElement.innerMap;
+    mapElement.addEventListener(
+        'gmp-ready',
+        () => {
+            console.log('The component signaled it is ready!');
+            // Get the inner map.
+            const innerMap = mapElement.innerMap;
 
-        // Set map options.
-        innerMap.setOptions({
-            mapTypeControl: false,
-        });
-    });
+            // Set map options.
+            innerMap.setOptions({
+                mapTypeControl: false,
+            });
+        },
+        { once: true }
+    );
 }
 
 initMap();
