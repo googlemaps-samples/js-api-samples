@@ -12,11 +12,6 @@ async function initMap() {
         'gmp-map-3d'
         //@ts-ignore
     ) as google.maps.Map3DElement;
-
-    // Set map options.
-    mapElement.setOptions({
-        mapTypeControl: false,
-    });
 }
 
 initMap();
