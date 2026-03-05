@@ -13,20 +13,10 @@ async function initMap() {
         //@ts-ignore
     ) as google.maps.Map3DElement;
 
-    mapElement.addEventListener(
-        'gmp-ready',
-        () => {
-            console.log('The component signaled it is ready!');
-            // Get the inner map.
-            const innerMap = mapElement.innerMap;
-
-            // Set map options.
-            innerMap.setOptions({
-                mapTypeControl: false,
-            });
-        },
-        { once: true }
-    );
+    // Set map options.
+    mapElement.setOptions({
+        mapTypeControl: false,
+    });
 }
 
 initMap();
