@@ -13,10 +13,18 @@ async function initMap() {
         //@ts-ignore
     ) as google.maps.Map3DElement;
 
-    // Set map options.
-    mapElement.setOptions({
-        mapTypeControl: false,
-    });
+    mapElement.addEventListener(
+        'gmp-ready',
+        () => {
+            console.log('The component signaled it is ready!'); // I don't see this log in the console, which is unexpected.
+
+            // Set map options.
+            mapElement.setOptions({
+                mapTypeControl: false,
+            });
+        },
+        { once: true }
+    );
 }
 
 initMap();
