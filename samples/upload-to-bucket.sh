@@ -30,26 +30,27 @@ if [! -d "$DIST_FOLDER" ]; then
 fi
 
 # Create archive folder if it doesn't exist
-gsutil ls "$ARCHIVE_FOLDER" || gsutil mkdir "$ARCHIVE_FOLDER"
+# Note: The gsutil mkdir command does not have a direct gcloud storage equivalent. It has been translated to a gcloud storage cp command that creates a zero-byte object, which is the behavior of 'gsutil mkdir'.
+gcloud storage ls "$ARCHIVE_FOLDER/" || echo "" | gcloud storage cp - "$ARCHIVE_FOLDER/"
 
 # Move current 'latest' to a dated archive folder
-if gsutil ls "$LATEST_FOLDER"; then  # Check if 'latest' folder exists
+if gcloud storage ls "$LATEST_FOLDER"; then  # Check if 'latest' folder exists
   DATE=$(date +%Y%m%d%H%M%S)  # Get current timestamp
   ARCHIVE_DESTINATION="$ARCHIVE_FOLDER/$DATE"
-  gsutil -m cp -r "$LATEST_FOLDER" "$ARCHIVE_DESTINATION"
+  gcloud storage cp --recursive "$LATEST_FOLDER" "$ARCHIVE_DESTINATION"
 fi
 
 # Upload to 'latest'
-gsutil -m cp -r "$DIST_FOLDER"/* "$LATEST_FOLDER/"
+gcloud storage cp --recursive "$DIST_FOLDER"/* "$LATEST_FOLDER/"
 
 echo "Uploaded to $LATEST_FOLDER"
 
 # Cleanup old archives (keep MAX_ARCHIVES)
-ARCHIVES=($(gsutil ls "$ARCHIVE_FOLDER" | grep -v / | sort -r)) # Get list of archives
+ARCHIVES=($(gcloud storage ls "$ARCHIVE_FOLDER" | grep -v / | sort -r)) # Get list of archives
 ARCHIVE_COUNT=${#ARCHIVES[@]}
 
 if (( ARCHIVE_COUNT > MAX_ARCHIVES )); then
   OLDEST_ARCHIVE="${ARCHIVES[((MAX_ARCHIVES))]}" # Get the oldest archive
-  gsutil rm -r "$OLDEST_ARCHIVE"
+  gcloud storage rm --recursive "$OLDEST_ARCHIVE"
   echo "Deleted oldest archive: $OLDEST_ARCHIVE"
 fi
