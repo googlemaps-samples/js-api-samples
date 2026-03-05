@@ -15,7 +15,7 @@ async function initMap() {
     ) as Map3DElement;
 
     // Wait for the map to finish loading.
-    google.maps.event.addListenerOnce(mapElement, 'tilesloaded', () => {
+    customElements.whenDefined('gmp-map-3d').then(() => {
         // Get the inner map.
         const innerMap = mapElement.innerMap;
 
