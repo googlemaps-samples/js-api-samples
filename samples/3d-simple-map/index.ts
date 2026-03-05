@@ -6,7 +6,6 @@
 // [START maps_3d_simple_map]
 async function initMap() {
     google.maps.importLibrary('maps3d');
-
 }
 
 initMap();
