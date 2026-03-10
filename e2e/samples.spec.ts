@@ -96,7 +96,7 @@ const getChangedSampleFolders = (): string[] => {
     }
 
     console.log("Running tests only for changed samples: ", validChangedFolders);
-    return validChangedFolders.filter(sampleFolder => !isExcluded(sampleFolder)); //Filtering for excluded project folders.
+    return validChangedFolders.filter(sampleFolder => !isExcluded(sampleFolder)); // Filter excluded samples.
 
   } catch (error) {
     console.error("Error running find-changes.sh. Skipping tests:", error);
