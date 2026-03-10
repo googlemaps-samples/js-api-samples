@@ -21,6 +21,15 @@ import childProcess, { execSync } from 'child_process';
 
 const samplesDir = path.join(__dirname, '..', 'samples');
 
+// Samples to exclude from build and e2e runs.
+const excludedSamples = new Set<string>([
+  'react-ui-kit-place-details',
+  'react-ui-kit-search-nearby',
+  'react-ui-kit-search-text',
+]);
+
+const isExcluded = (sampleFolder: string) => excludedSamples.has(sampleFolder);
+
 // Function to return all sample folders.
 const getAllSampleFolders = () => {
   return fs.readdirSync(samplesDir).filter((file) => {
@@ -79,15 +88,18 @@ const getChangedSampleFolders = (): string[] => {
       return fs.existsSync(folderPath) && fs.statSync(folderPath).isDirectory();
     });
 
-    if (validChangedFolders.length === 0) {
+    // Apply the global exclusion filter to the valid changed folders.
+    const fullyFilteredFolders = validChangedFolders.filter(f => !isExcluded(f));
+    
+    if (fullyFilteredFolders.length === 0) {
       console.warn("Folders were found, but none were valid sample directories. Skipping tests.");
       console.log("Extracted folder names that were considered invalid:", changedFolders);
       console.log("Full output from find-changes.sh for debugging:\n", output);
       return []; // Fallback to do nothing
     }
 
-    console.log("Running tests only for changed samples: ", validChangedFolders);
-    return validChangedFolders;
+    console.log("Running tests only for changed samples: ", fullyFilteredFolders);
+    return fullyFilteredFolders;
 
   } catch (error) {
     console.error("Error running find-changes.sh. Skipping tests:", error);
@@ -96,7 +108,8 @@ const getChangedSampleFolders = (): string[] => {
 };
 
 // Get changed folders, filtering out excluded ones.
-const foldersToTest = getChangedSampleFolders();
+//const foldersToTest = getChangedSampleFolders();
+const foldersToTest = getChangedSampleFolders().filter(f => !isExcluded(f));
 
 if (foldersToTest.length === 0) {
   console.log("No sample folders found.");
