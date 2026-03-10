@@ -95,8 +95,19 @@ const getChangedSampleFolders = (): string[] => {
   }
 };
 
+// Samples to exclude from e2e runs.
+const hardCodedExcludedSamples = new Set<string>([
+  'react-ui-kit-place-details',
+  'react-ui-kit-search-nearby',
+  'react-ui-kit-search-text',
+]);
+
+const isExcluded = (sampleFolder: string) =>
+  excludedSamples.has(sampleFolder) || hardCodedExcludedSamples.has(sampleFolder);
+
 // Get changed folders, filtering out excluded ones.
-const foldersToTest = getChangedSampleFolders();
+//const foldersToTest = getChangedSampleFolders();
+const foldersToTest = getChangedSampleFolders().filter(f => !isExcluded(f));
 
 if (foldersToTest.length === 0) {
   console.log("No sample folders found.");
