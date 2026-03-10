@@ -36,7 +36,7 @@ const getAllSampleFolders = () => {
     // Ensure we are only looking at directories within samplesDir, excluding find-changes.sh itself if it's a file
     const filePath = path.join(samplesDir, file);
     return fs.statSync(filePath).isDirectory();
-  }).filter(sampleFolder => !isExcluded(sampleFolder));
+  });
 };
 
 // Function to return only changed sample folders.
@@ -96,7 +96,7 @@ const getChangedSampleFolders = (): string[] => {
     }
 
     console.log("Running tests only for changed samples: ", validChangedFolders);
-    return validChangedFolders;
+    return validChangedFolders.filter(sampleFolder => !isExcluded(sampleFolder)); //Filtering for excluded project folders.
 
   } catch (error) {
     console.error("Error running find-changes.sh. Skipping tests:", error);
