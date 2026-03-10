@@ -36,7 +36,7 @@ const getAllSampleFolders = () => {
     // Ensure we are only looking at directories within samplesDir, excluding find-changes.sh itself if it's a file
     const filePath = path.join(samplesDir, file);
     return fs.statSync(filePath).isDirectory();
-  });
+  }).filter(sampleFolder => !isExcluded(sampleFolder));
 };
 
 // Function to return only changed sample folders.
@@ -87,19 +87,16 @@ const getChangedSampleFolders = (): string[] => {
       const folderPath = path.join(samplesDir, folderName);
       return fs.existsSync(folderPath) && fs.statSync(folderPath).isDirectory();
     });
-
-    // Apply the global exclusion filter to the valid changed folders.
-    const fullyFilteredFolders = validChangedFolders.filter(f => !isExcluded(f));
     
-    if (fullyFilteredFolders.length === 0) {
+    if (validChangedFolders.length === 0) {
       console.warn("Folders were found, but none were valid sample directories. Skipping tests.");
       console.log("Extracted folder names that were considered invalid:", changedFolders);
       console.log("Full output from find-changes.sh for debugging:\n", output);
       return []; // Fallback to do nothing
     }
 
-    console.log("Running tests only for changed samples: ", fullyFilteredFolders);
-    return fullyFilteredFolders;
+    console.log("Running tests only for changed samples: ", validChangedFolders);
+    return validChangedFolders;
 
   } catch (error) {
     console.error("Error running find-changes.sh. Skipping tests:", error);
