@@ -18,6 +18,7 @@ async function initMap(): Promise<void> {
     setOptions({
         key: API_KEY,
         v: 'weekly',
+        //@ts-ignore
         internalUsageAttributionIds: 'gmp_git_jsapisamples_v1_core-maps'
     });
     // [END maps_js_api_loader_map_options]
