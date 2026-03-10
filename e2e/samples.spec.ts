@@ -21,15 +21,6 @@ import childProcess, { execSync } from 'child_process';
 
 const samplesDir = path.join(__dirname, '..', 'samples');
 
-// Samples to exclude from build and e2e runs.
-const excludedSamples = new Set<string>([
-  'react-ui-kit-place-details',
-  'react-ui-kit-search-nearby',
-  'react-ui-kit-search-text',
-]);
-
-const isExcluded = (sampleFolder: string) => excludedSamples.has(sampleFolder);
-
 // Function to return all sample folders.
 const getAllSampleFolders = () => {
   return fs.readdirSync(samplesDir).filter((file) => {
@@ -96,7 +87,7 @@ const getChangedSampleFolders = (): string[] => {
     }
 
     console.log("Running tests only for changed samples: ", validChangedFolders);
-    return validChangedFolders.filter(sampleFolder => !isExcluded(sampleFolder)); // Filter excluded samples.
+    return validChangedFolders; // Filter excluded samples.
 
   } catch (error) {
     console.error("Error running find-changes.sh. Skipping tests:", error);
@@ -106,7 +97,7 @@ const getChangedSampleFolders = (): string[] => {
 
 // Get changed folders, filtering out excluded ones.
 //const foldersToTest = getChangedSampleFolders();
-const foldersToTest = getChangedSampleFolders().filter(f => !isExcluded(f));
+const foldersToTest = getChangedSampleFolders();
 
 if (foldersToTest.length === 0) {
   console.log("No sample folders found.");
