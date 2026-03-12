@@ -1,10 +1,3 @@
-/*
-- TODO: Refactor to use gmp-map and dynamic library loading.
-- NOTE: Do NOT move data locally for this one; it's meant to be dynamic as USGS updates the data monthly.
-        Generally I'd say only shift the data source if it's hosted on a CDN.
-- TODO: Not sure if progress bar is something we want to document. Maybe if there were way more data?
-*/
-
 /**
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
@@ -12,15 +5,33 @@
  */
 
 // [START maps_deckgl_points]
-import type * as GeoJSON from 'geojson';
+//import type * as GeoJSON from 'geojson';
+import { Feature } from 'geojson';
 import { GoogleMapsOverlay } from '@deck.gl/google-maps';
 import { GeoJsonLayer } from '@deck.gl/layers';
 
 type Properties = { mag: number };
-type Feature = GeoJSON.Feature<GeoJSON.Point, Properties>;
+//type Feature = GeoJSON.Feature<GeoJSON.Point, Properties>;
 
 const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
 let innerMap: google.maps.Map;
+
+interface EarthquakeProperties {
+    mag: number;
+    place: string;
+    time: number;
+}
+
+/**
+ * Validates that a feature has the properties we need for rendering.
+ */
+function isEarthquake(f: Feature): f is Feature & { properties: EarthquakeProperties } {
+  return (
+    f.properties !== null &&
+    typeof f.properties === 'object' &&
+    typeof (f.properties as any).mag === 'number'
+  );
+}
 
 // Initialize and add the map
 async function initMap() {
@@ -39,8 +50,15 @@ async function initMap() {
                 pointRadiusMaxPixels: 200,
                 opacity: 0.4,
                 pointRadiusScale: 0.3,
-                getPointRadius: (f: Feature) => Math.pow(10, f.properties.mag),
-                getFillColor: [255, 70, 30, 180],
+                getPointRadius: (f: Feature): number => {
+                    if (isEarthquake(f)) {
+                        return Math.pow(10, f.properties.mag);
+                    }
+                    return 0; // Fallback for invalid data.
+                },
+                getFillColor: (f: Feature): [number, number, number, number] => {
+                    return [255, 70, 30, 180]; // Default color for other earthquakes.
+                },
                 autoHighlight: true,
                 transitions: {
                     getPointRadius: {
