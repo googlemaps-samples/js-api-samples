@@ -1,0 +1,102 @@
+/**
+ * @license
+ * Copyright 2026 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/* [START maps_control_replacement] */
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.controls {
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    display: flex;
+    user-select: none;
+    background-clip: padding-box;
+    overflow: hidden; /* Keeps button backgrounds inside the rounded corners */
+}
+
+.controls button {
+    border: 0;
+    background-color: white;
+    color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: color 0.2s ease;
+}
+
+.controls button:hover {
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.controls.zoom-control {
+    flex-direction: column;
+    width: 40px;
+}
+
+.controls.zoom-control button {
+    height: 40px;
+    width: 40px;
+    font-size: 24px;
+}
+
+.controls.maptype-control {
+    flex-direction: row;
+    height: 40px;
+}
+
+.controls.maptype-control button {
+    padding: 0 12px;
+    font-size: 14px;
+    font-family: Roboto, Arial, sans-serif;
+    text-transform: uppercase;
+    height: 100%;
+}
+
+.controls.maptype-control.maptype-control-is-map .maptype-control-map {
+    font-weight: 700;
+}
+
+.controls.maptype-control.maptype-control-is-satellite
+    .maptype-control-satellite {
+    font-weight: 700;
+}
+
+.controls.fullscreen-control {
+    width: 40px;
+    height: 40px;
+}
+
+.controls.fullscreen-control button {
+    background: none;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+
+.controls.fullscreen-control {
+    width: 40px;
+    height: 40px;
+}
+
+#fullscreen-button .material-icons {
+    font-size: 28px;
+}
+
+/* [END maps_control_replacement] */
