@@ -1,73 +1,65 @@
+/*
+- TODO: Refactor to use gmp-map and dynamic library loading.
+- NOTE: Do NOT move data locally for this one; it's meant to be dynamic as USGS updates the data monthly.
+        Generally I'd say only shift the data source if it's hosted on a CDN.
+- TODO: Not sure if progress bar is something we want to document. Maybe if there were way more data?
+*/
+
 /**
  * @license
- * Copyright 2019 Google LLC. All Rights Reserved.
+ * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
 // [START maps_deckgl_points]
-// TODO Use imports when Deck.gl works in more bundlers
-// https://github.com/visgl/deck.gl/issues/6351#issuecomment-1079424167
-
-import type * as GeoJSON from "geojson";
-// import { GeoJsonLayer } from "deck.gl";
-// import { GoogleMapsOverlay } from "@deck.gl/google-maps";
-
-const GeoJsonLayer = deck.GeoJsonLayer;
-const GoogleMapsOverlay = deck.GoogleMapsOverlay;
+import type * as GeoJSON from 'geojson';
+import { GoogleMapsOverlay } from '@deck.gl/google-maps';
+import { GeoJsonLayer } from '@deck.gl/layers';
 
 type Properties = { mag: number };
 type Feature = GeoJSON.Feature<GeoJSON.Point, Properties>;
 
+const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+let innerMap: google.maps.Map;
+
 // Initialize and add the map
-function initMap(): void {
-  const map = new google.maps.Map(
-    document.getElementById("map") as HTMLElement,
-    {
-      center: { lat: 40, lng: -110 },
-      zoom: 4,
-    }
-  );
+async function initMap() {
+    //  Request the needed libraries.
+    await google.maps.importLibrary('maps');
 
-  const deckOverlay = new GoogleMapsOverlay({
-    layers: [
-      new GeoJsonLayer({
-        id: "earthquakes",
-        data: "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson",
-        filled: true,
-        pointRadiusMinPixels: 2,
-        pointRadiusMaxPixels: 200,
-        opacity: 0.4,
-        pointRadiusScale: 0.3,
-        getRadius: (f: Feature) => Math.pow(10, f.properties.mag),
-        getFillColor: [255, 70, 30, 180],
-        autoHighlight: true,
-        transitions: {
-          getRadius: {
-            type: "spring",
-            stiffness: 0.1,
-            damping: 0.15,
-            enter: () => [0], // grow from size 0,
-            duration: 10000,
-          },
-        },
-        onDataLoad: () => {
-          /* eslint-disable no-undef */
-          // @ts-ignore defined in include
-          progress.done(); // hides progress bar
-          /* eslint-enable no-undef */
-        },
-      }),
-    ],
-  });
+    innerMap = await mapElement.innerMap;
 
-  deckOverlay.setMap(map);
+    const deckOverlay = new GoogleMapsOverlay({
+        layers: [
+            new GeoJsonLayer({
+                id: 'earthquakes',
+                data: 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson',
+                filled: true,
+                pointRadiusMinPixels: 2,
+                pointRadiusMaxPixels: 200,
+                opacity: 0.4,
+                pointRadiusScale: 0.3,
+                getPointRadius: (f: Feature) => Math.pow(10, f.properties.mag),
+                getFillColor: [255, 70, 30, 180],
+                autoHighlight: true,
+                transitions: {
+                    getPointRadius: {
+                        type: 'spring',
+                        stiffness: 0.1,
+                        damping: 0.15,
+                        enter: () => [0], // grow from size 0,
+                        duration: 10000,
+                    },
+                },
+                onDataLoad: () => {
+                    console.log('Data is loaded.');
+                },
+            }),
+        ],
+    });
+
+    deckOverlay.setMap(innerMap);
 }
 
-declare global {
-  interface Window {
-    initMap: () => void;
-  }
-}
-window.initMap = initMap;
+initMap();
 // [END maps_deckgl_points]
-export {};
