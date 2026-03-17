@@ -32,11 +32,11 @@ function initZoomControl(map: google.maps.Map) {
         '.zoom-control-out'
     ) as HTMLButtonElement;
 
-    zoomInButton?.addEventListener('click', () => {
+    zoomInButton.addEventListener('click', () => {
         map.setZoom((map.getZoom() || 0) + 1);
     });
 
-    zoomOutButton?.addEventListener('click', () => {
+    zoomOutButton.addEventListener('click', () => {
         map.setZoom((map.getZoom() || 0) - 1);
     });
 }
@@ -52,13 +52,13 @@ async function initMapTypeControl(innerMap: google.maps.Map) {
         '.maptype-control-satellite'
     ) as HTMLButtonElement;
 
-    btnMap?.addEventListener('click', () => {
+    btnMap.addEventListener('click', () => {
         mapTypeControlDiv.classList.add('maptype-control-is-map');
         mapTypeControlDiv.classList.remove('maptype-control-is-satellite');
         innerMap.setMapTypeId('roadmap');
     });
 
-    btnSatellite?.addEventListener('click', () => {
+    btnSatellite.addEventListener('click', () => {
         mapTypeControlDiv.classList.add('maptype-control-is-satellite');
         mapTypeControlDiv.classList.remove('maptype-control-is-map');
         innerMap.setMapTypeId('hybrid');
