@@ -13,8 +13,6 @@ type Properties = { scalerank: number };
 type Feature = GeoJSON.Feature<GeoJSON.Point, Properties>;
 type Data = GeoJSON.FeatureCollection<GeoJSON.Point, Properties>;
 
-//let map;
-
 async function initMap() {
     // Request needed libraries.
     (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
