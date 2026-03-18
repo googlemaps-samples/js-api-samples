@@ -1,0 +1,17 @@
+{
+  "name": "@js-api-samples/deckgl-arclayer",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh deckgl-arclayer && bash ../app.sh deckgl-arclayer && bash ../docs.sh deckgl-arclayer && npm run build:vite --workspace=. && bash ../dist.sh deckgl-arclayer",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@deck.gl/core": "^9.2.10",
+    "@deck.gl/google-maps": "^9.2.10",
+    "@deck.gl/layers": "^9.2.10",
+    "deck.gl": "^9.2.10"
+  }
+}
