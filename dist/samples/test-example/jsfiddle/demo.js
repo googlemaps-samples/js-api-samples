@@ -8,8 +8,9 @@
  * This is a special sample! Having a dedicated test sample makes it easier to
  * test changes in a world where sometimes changes must be merged in order to
  * test them. This way we can avoid making changes to published content.
+ * And deliver us from evil.
  */
-// TEST COMMENT 007
+// TEST COMMENT 008
 
 // Declare the gmp-map element.
 const mapElement = document.querySelector('gmp-map');
@@ -36,6 +37,9 @@ async function initMap() {
         position: center,
         title: 'Uluru',
     });
+    
+    
+    console.log("Say there Mac, why'd you choose me to test this change?");
     
 }
 initMap();

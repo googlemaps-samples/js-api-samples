@@ -78,7 +78,7 @@ const getChangedSampleFolders = (): string[] => {
       const folderPath = path.join(samplesDir, folderName);
       return fs.existsSync(folderPath) && fs.statSync(folderPath).isDirectory();
     });
-
+    
     if (validChangedFolders.length === 0) {
       console.warn("Folders were found, but none were valid sample directories. Skipping tests.");
       console.log("Extracted folder names that were considered invalid:", changedFolders);
@@ -87,7 +87,7 @@ const getChangedSampleFolders = (): string[] => {
     }
 
     console.log("Running tests only for changed samples: ", validChangedFolders);
-    return validChangedFolders;
+    return validChangedFolders; // Filter excluded samples.
 
   } catch (error) {
     console.error("Error running find-changes.sh. Skipping tests:", error);
@@ -96,6 +96,7 @@ const getChangedSampleFolders = (): string[] => {
 };
 
 // Get changed folders, filtering out excluded ones.
+//const foldersToTest = getChangedSampleFolders();
 const foldersToTest = getChangedSampleFolders();
 
 if (foldersToTest.length === 0) {
@@ -169,7 +170,7 @@ foldersToTest.forEach((sampleFolder) => {
       await page.waitForFunction(() => window.google && window.google.maps, { timeout: 500 });
       
       // Insert a delay in ms to let the map load.
-      await page.waitForTimeout(500);
+      await page.waitForTimeout(1000);
 
       // Assertions. These must be met or the test will fail.
       // The sample must load the Google Maps API.
