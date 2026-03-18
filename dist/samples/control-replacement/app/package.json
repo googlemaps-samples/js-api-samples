@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/control-replacement",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh control-replacement && bash ../app.sh control-replacement && bash ../docs.sh control-replacement && npm run build:vite --workspace=. && bash ../dist.sh control-replacement",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
