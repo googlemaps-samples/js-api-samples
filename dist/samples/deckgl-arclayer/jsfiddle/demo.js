@@ -14,9 +14,11 @@ async function initMap() {
     // Get the inner map.
     const innerMap = mapElement.innerMap;
     innerMap.setTilt(30); // Set tilt after map initialization.
+    // Set the path to the GeoJSON data file.
+    const dataUrl = new URL('./public/ne_10m_airports.geojson', import.meta.url).toString();
     const flightsLayer = new ArcLayer({
         id: 'flights',
-        data: '/ne_10m_airports.geojson', // See public/ne_10m_airports.geojson
+        data: dataUrl,
         dataTransform: (data) => data.features.filter((f) => f.properties.scalerank < 4),
         getSourcePosition: () => [14.42076, 50.08804], // Prague
         getTargetPosition: (f) => f.geometry.coordinates,
