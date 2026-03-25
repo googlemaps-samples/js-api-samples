@@ -11,7 +11,6 @@ import { GoogleMapsOverlay } from '@deck.gl/google-maps';
 import { GeoJsonLayer } from '@deck.gl/layers';
 
 type Properties = { mag: number };
-//type Feature = GeoJSON.Feature<GeoJSON.Point, Properties>;
 
 const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
 let innerMap: google.maps.Map;
