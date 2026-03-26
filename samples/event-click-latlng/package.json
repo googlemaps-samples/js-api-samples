@@ -1,0 +1,11 @@
+{
+  "name": "@js-api-samples/event-click-latlng",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh event-click-latlng && bash ../app.sh event-click-latlng && bash ../docs.sh event-click-latlng && npm run build:vite --workspace=. && bash ../dist.sh event-click-latlng",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  }
+}
