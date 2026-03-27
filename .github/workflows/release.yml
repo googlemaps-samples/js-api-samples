@@ -49,9 +49,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
+          node-version: '24.x'
 
       - run: npm i
 
