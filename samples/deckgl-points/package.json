@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@babel/runtime": "^7.24.0",
     "@deck.gl/core": "^8.9.0",
     "@deck.gl/google-maps": "^8.9.0",
     "@deck.gl/layers": "^8.9.0",
