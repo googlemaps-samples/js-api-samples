@@ -10,7 +10,7 @@
  * test them. This way we can avoid making changes to published content.
  * And deliver us from evil.
  */
-// TEST COMMENT 008
+// TEST COMMENT 222
 // [START maps_test_example]
 // Declare the gmp-map element.
 const mapElement = document.querySelector('gmp-map');
