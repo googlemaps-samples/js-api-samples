@@ -33,6 +33,10 @@ on:
   schedule:
     - cron: "0 12 * * *"
 
+#NEW
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -60,7 +64,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24' # Updated to Node.js 24
 
       - name: Cache npm dependencies
         uses: actions/cache@v4
@@ -83,7 +87,7 @@ jobs:
           PLAYWRIGHT_BROWSERS_PATH: ~/.cache/ms-playwright
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci # Changed from 'install' to 'ci' for better caching and performance in CI environments
 
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
@@ -137,7 +141,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24' # Updated to Node.js 24
 
       - name: Cache npm dependencies
         uses: actions/cache@v4
