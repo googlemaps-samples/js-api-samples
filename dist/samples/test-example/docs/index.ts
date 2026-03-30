@@ -10,7 +10,7 @@
  * And deliver us from evil.
  */
 
-// TEST COMMENT 222
+// TEST COMMENT 222.2
 // [START maps_test_example]
 // Declare the gmp-map element.
 const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;

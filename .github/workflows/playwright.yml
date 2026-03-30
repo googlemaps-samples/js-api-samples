@@ -64,7 +64,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '24' # Updated to Node.js 24
+          node-version: '24.x'
 
       - name: Cache npm dependencies
         uses: actions/cache@v4
@@ -87,7 +87,7 @@ jobs:
           PLAYWRIGHT_BROWSERS_PATH: ~/.cache/ms-playwright
 
       - name: Install dependencies
-        run: npm ci # Changed from 'install' to 'ci' for better caching and performance in CI environments
+        run: npm install
 
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
@@ -141,7 +141,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '24' # Updated to Node.js 24
+          node-version: '24.x'
 
       - name: Cache npm dependencies
         uses: actions/cache@v4
