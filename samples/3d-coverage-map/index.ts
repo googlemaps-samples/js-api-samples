@@ -35,6 +35,9 @@ async function initMap() {
     );
     dataLayer.style = layerStyle;
 
+    //@ts-ignore
+    placeAutocomplete.includedPrimaryTypes = ['(regions)'];
+
     //prettier-ignore
     //@ts-ignore
     placeAutocomplete.addEventListener("gmp-select", async ({ placePrediction }) => {
