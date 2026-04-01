@@ -3,8 +3,8 @@
  * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 // [START maps_deckgl_points]
+
 import { Feature } from 'geojson';
 import { GoogleMapsOverlay } from '@deck.gl/google-maps';
 import { GeoJsonLayer } from '@deck.gl/layers';
