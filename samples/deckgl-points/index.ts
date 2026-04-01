@@ -5,7 +5,6 @@
  */
 
 // [START maps_deckgl_points]
-//import type * as GeoJSON from 'geojson';
 import { Feature } from 'geojson';
 import { GoogleMapsOverlay } from '@deck.gl/google-maps';
 import { GeoJsonLayer } from '@deck.gl/layers';
