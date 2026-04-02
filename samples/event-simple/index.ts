@@ -24,6 +24,7 @@ async function initMap() {
         position: center,
         map: innerMap,
         title: 'Click to zoom',
+        gmpClickable: true,
     });
 
     innerMap.addListener('center_changed', () => {
