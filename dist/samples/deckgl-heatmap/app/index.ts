@@ -155,7 +155,7 @@ async function initMap(): Promise<void> {
             });
 
             // Add click listener to the marker
-            marker.addListener('click', () => {
+            marker.addEventListener('gmp-click', () => {
                 infoWindow.close();
                 const content = `
             <div>Location: ${latLng.lat().toFixed(3)}, ${latLng.lng().toFixed(3)}</div>

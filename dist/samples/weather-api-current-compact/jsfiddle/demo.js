@@ -95,13 +95,14 @@ async function createAndAddMarker(location, markerType) {
         position: { lat: location.lat, lng: location.lng },
         content: weatherWidget,
         title: location.name, // Add a title for accessibility
+        gmpClickable: true,
     });
     // Store the marker type
     marker.markerType = markerType;
     // Fetch and update weather data for this location
     updateWeatherDisplayForMarker(marker, weatherWidget, new google.maps.LatLng(location.lat, location.lng));
     // Add click listener to the marker
-    marker.addListener('click', () => {
+    marker.addEventListener('gmp-click', () => {
         const widgetContainer = weatherWidget.shadowRoot.querySelector('.widget-container');
         // If a widget is currently active and it's not the clicked one, remove its highlight class and reset zIndex
         if (activeWeatherWidget && activeWeatherWidget !== weatherWidget) {
