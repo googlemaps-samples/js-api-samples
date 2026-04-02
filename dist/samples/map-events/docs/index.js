@@ -4,7 +4,7 @@
  * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-// [START maps_map_event]
+// [START maps_map_events]
 const events = [
     'bounds_changed',
     'center_changed',
@@ -62,4 +62,4 @@ function populateTable() {
     }
 }
 initMap();
-// [END maps_map_event]
+// [END maps_map_events]
