@@ -59,7 +59,7 @@ async function initMap(): Promise<void> {
             google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL,
     });
 
-    marker.addListener('click', () => {
+    marker.addEventListener('gmp-click', () => {
         infowindow.open(map, marker);
     });
 
