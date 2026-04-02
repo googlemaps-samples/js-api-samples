@@ -38,8 +38,9 @@ async function initMap() {
     const marker = new AdvancedMarkerElement({
         map: map,
         collisionBehavior: google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL,
+        gmpClickable: true,
     });
-    marker.addListener('click', () => {
+    marker.addEventListener('gmp-click', () => {
         infowindow.open(map, marker);
     });
     placeAutocomplete.addEventListener('gmp-select', async ({ placePrediction }) => {

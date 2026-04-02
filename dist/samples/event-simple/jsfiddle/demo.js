@@ -18,6 +18,7 @@ async function initMap() {
         position: center,
         map: innerMap,
         title: 'Click to zoom',
+        gmpClickable: true,
     });
     innerMap.addListener('center_changed', () => {
         // 3 seconds after the center of the map has changed,
@@ -27,7 +28,7 @@ async function initMap() {
         }, 3000);
     });
     // Zoom in when the marker is clicked.
-    marker.addListener('click', () => {
+    marker.addListener('gmp-click', () => {
         innerMap.setZoom(8);
         innerMap.setCenter(marker.position);
     });
