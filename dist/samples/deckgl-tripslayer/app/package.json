@@ -9,9 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@deck.gl/core": "^8.9.0",
-    "@deck.gl/google-maps": "^8.9.0",
-    "@deck.gl/layers": "^8.9.0",
+    "@deck.gl/core": "^9.2.11",
+    "@deck.gl/google-maps": "^9.2.11",
+    "@deck.gl/layers": "^9.2.11",
     "deck.gl": "^8.9.0"
   }
 }
