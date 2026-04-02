@@ -139,6 +139,7 @@ async function createAndAddMarker(
         position: { lat: location.lat, lng: location.lng },
         content: weatherWidget,
         title: location.name, // Add a title for accessibility
+        gmpClickable: true,
     });
 
     // Store the marker type
