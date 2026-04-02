@@ -1,1 +1,0 @@
-.container{display:flex;flex-direction:row;height:100%;width:100%}.directions-container,.map-container{height:100%;width:50%;font-family:monospace}.directions-container{overflow-y:auto}#map{height:100%}.direction{display:flex;flex-direction:row;gap:1em}.maneuver,.distance{width:25%}.instruction{width:50%}html,body{height:100%;margin:0;padding:0}
