@@ -16,9 +16,9 @@ async function initMap() {
     //@ts-ignore
     const [{ Map }, { Route }] = await Promise.all([
         google.maps.importLibrary('maps'),
-        google.maps.importLibrary('routes')
+        google.maps.importLibrary('routes'),
     ]);
-    map = new Map(document.getElementById("map"), {
+    map = new Map(document.getElementById('map'), {
         zoom: 12,
         center,
         mapTypeControl: false,
@@ -45,56 +45,56 @@ async function initMap() {
     const markers = await routes[0].createWaypointAdvancedMarkers({ map });
     
     // Render navigation instructions
-    const directionsPanel = document.getElementById("directions");
+    const directionsPanel = document.getElementById('directions');
     if (!routes || routes.length === 0) {
         if (directionsPanel) {
-            directionsPanel.textContent = "No routes available.";
+            directionsPanel.textContent = 'No routes available.';
         }
         return;
     }
     const route = routes[0];
     if (!route.legs || route.legs.length === 0) {
         if (directionsPanel) {
-            directionsPanel.textContent = "The route has no legs.";
+            directionsPanel.textContent = 'The route has no legs.';
         }
         return;
     }
     const fragment = document.createDocumentFragment();
     route.legs.forEach((leg, index) => {
-        const legContainer = document.createElement("div");
-        legContainer.className = "directions-leg";
+        const legContainer = document.createElement('div');
+        legContainer.className = 'directions-leg';
         // Leg Title
-        const legTitleElement = document.createElement("h3");
+        const legTitleElement = document.createElement('h3');
         legTitleElement.textContent = `Leg ${index + 1} of ${route.legs.length}`;
         legContainer.appendChild(legTitleElement);
         if (leg.steps && leg.steps.length > 0) {
             // Add steps to an ordered list
-            const stepsList = document.createElement("ol");
-            stepsList.className = "directions-steps";
+            const stepsList = document.createElement('ol');
+            stepsList.className = 'directions-steps';
             leg.steps.forEach((step, stepIndex) => {
-                const stepItem = document.createElement("li");
-                stepItem.className = "direction-step";
-                const directionWrapper = document.createElement("div");
-                directionWrapper.className = "direction";
+                const stepItem = document.createElement('li');
+                stepItem.className = 'direction-step';
+                const directionWrapper = document.createElement('div');
+                directionWrapper.className = 'direction';
                 // Maneuver
                 if (step.maneuver) {
-                    const maneuverNode = document.createElement("p");
+                    const maneuverNode = document.createElement('p');
                     maneuverNode.textContent = step.maneuver;
-                    maneuverNode.className = "maneuver";
+                    maneuverNode.className = 'maneuver';
                     directionWrapper.appendChild(maneuverNode);
                 }
                 // Distance and Duration
                 if (step.localizedValues) {
-                    const distanceNode = document.createElement("p");
+                    const distanceNode = document.createElement('p');
                     distanceNode.textContent = `${step.localizedValues.distance} (${step.localizedValues.staticDuration})`;
-                    distanceNode.className = "distance";
+                    distanceNode.className = 'distance';
                     directionWrapper.appendChild(distanceNode);
                 }
                 // Instructions
                 if (step.instructions) {
-                    const instructionsNode = document.createElement("p");
+                    const instructionsNode = document.createElement('p');
                     instructionsNode.textContent = step.instructions;
-                    instructionsNode.className = "instruction";
+                    instructionsNode.className = 'instruction';
                     directionWrapper.appendChild(instructionsNode);
                 }
                 stepItem.appendChild(directionWrapper);
@@ -109,7 +109,7 @@ async function initMap() {
 
 // Helper function to fit the map to the path.
 async function fitMapToPath(path) {
-    const { LatLngBounds } = await google.maps.importLibrary('core');
+    const { LatLngBounds } = (await google.maps.importLibrary('core'));
     const bounds = new LatLngBounds();
     path.forEach((point) => {
         bounds.extend(point);

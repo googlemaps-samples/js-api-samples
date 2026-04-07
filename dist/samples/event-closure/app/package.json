@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/event-closure",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh event-closure && bash ../app.sh event-closure && bash ../docs.sh event-closure && npm run build:vite --workspace=. && bash ../dist.sh event-closure",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}

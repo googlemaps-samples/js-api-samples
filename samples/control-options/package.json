@@ -1,0 +1,11 @@
+{
+  "name": "@js-api-samples/control-options",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh control-options && bash ../app.sh control-options && bash ../docs.sh control-options && npm run build:vite --workspace=. && bash ../dist.sh control-options",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  }
+}

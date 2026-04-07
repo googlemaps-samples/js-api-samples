@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## weather-api-current-compact
+
+The weather-api-current-compact sample demonstrates how to use the Weather API to get the current weather in a compact layout.
+
+Follow these instructions to set up and run weather-api-current-compact sample on your local computer.
 
 ## Setup
 
@@ -19,7 +22,7 @@ First `cd` to the folder for the sample to run, then:
 
 From `samples/`:
 
-`$npm run build --workspace=sample-name/`
+`$npm run build --workspace=weather-api-current-compact/`
 
 ### Build all of the examples.
 

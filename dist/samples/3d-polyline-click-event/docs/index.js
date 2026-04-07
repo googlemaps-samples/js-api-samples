@@ -1,18 +1,21 @@
 "use strict";
 /*
-* @license
-* Copyright 2025 Google LLC. All Rights Reserved.
-* SPDX-License-Identifier: Apache-2.0
-*/
+ * @license
+ * Copyright 2025 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
 // @ts-nocheck
 // [START maps_3d_polyline_click_event]
 let map;
 async function init() {
-    const { Map3DElement, MapMode, AltitudeMode, Polyline3DInteractiveElement } = await google.maps.importLibrary("maps3d");
+    const { Map3DElement, MapMode, AltitudeMode, Polyline3DInteractiveElement, } = await google.maps.importLibrary('maps3d');
     map = new Map3DElement({
-        center: { lat: 37.7927, lng: -122.4020, altitude: 65.93 }, range: 3362.87, tilt: 64.01, heading: 25.00,
+        center: { lat: 37.7927, lng: -122.402, altitude: 65.93 },
+        range: 3362.87,
+        tilt: 64.01,
+        heading: 25.0,
         mode: MapMode.SATELLITE,
-        gestureHandling: "COOPERATIVE"
+        gestureHandling: 'COOPERATIVE',
     });
     document.body.append(map);
     const polyline = new Polyline3DInteractiveElement({
@@ -27,7 +30,7 @@ async function init() {
             { lat: 37.78861484290265, lng: -122.4019489189814 },
             { lat: 37.78618687561075, lng: -122.398969592545 },
             { lat: 37.7892310309145, lng: -122.3951458683092 },
-            { lat: 37.7916358762409, lng: -122.3981969390652 }
+            { lat: 37.7916358762409, lng: -122.3981969390652 },
         ],
         strokeColor: 'blue',
         outerColor: 'white',
@@ -38,7 +41,8 @@ async function init() {
     });
     polyline.addEventListener('gmp-click', (event) => {
         // Toggle whether the line draws occluded segments.
-        event.target.drawsOccludedSegments = !event.target.drawsOccludedSegments;
+        event.target.drawsOccludedSegments =
+            !event.target.drawsOccludedSegments;
     });
     map.append(polyline);
 }

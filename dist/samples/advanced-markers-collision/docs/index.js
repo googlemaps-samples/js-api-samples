@@ -6,17 +6,17 @@
  */
 // eslint-disable no-undef
 // [START maps_advanced_markers_collision]
-const mapElement = document.querySelector("gmp-map");
+const mapElement = document.querySelector('gmp-map');
 // Initialize and add the map
 async function initMap() {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary("maps"));
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary("marker"));
+    const { Map } = (await google.maps.importLibrary('maps'));
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
     let markers = [];
     let collisionBehavior = google.maps.CollisionBehavior.REQUIRED;
     // @ts-ignore
-    const select = new mdc.select.MDCSelect(document.querySelector(".mdc-select"));
-    select.listen("MDCSelect:change", () => {
+    const select = new mdc.select.MDCSelect(document.querySelector('.mdc-select'));
+    select.listen('MDCSelect:change', () => {
         collisionBehavior = select.value;
         markers.forEach((marker) => {
             marker.collisionBehavior = collisionBehavior;

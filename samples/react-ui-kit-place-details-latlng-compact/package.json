@@ -2,7 +2,6 @@
   "name": "@js-api-samples/react-ui-kit-place-details-latlng-compact",
   "version": "1.0.0",
   "type": "module",
-
   "scripts": {
     "build": "tsc && bash ../react-docs.sh react-ui-kit-place-details-latlng-compact && npm run build:vite --workspace=. && bash ../dist.sh react-ui-kit-place-details-latlng-compact",
     "test": "tsc && npm run build:vite --workspace=.",
@@ -11,14 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@vis.gl/react-google-maps": "latest",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "@vis.gl/react-google-maps": "^1.8.2",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.4"
   },
   "devDependencies": {
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
-    "typescript": "^5.9.3",
-    "vite": "^7.2.2"
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.5"
   }
 }

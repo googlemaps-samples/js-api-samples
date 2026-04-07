@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## boundaries-choropleth
+
+The boundaries-choropleth sample demonstrates how to create a choropleth map using data-driven styling for boundaries.
+
+Follow these instructions to set up and run boundaries-choropleth sample on your local computer.
 
 ## Setup
 
@@ -32,7 +35,7 @@ From 'samples':
 ### Run lint to check for problems
 
 `cd samples/boundaries-choropleth`
-`npx eslint index.ts` 
+`npx eslint index.ts`
 
 ## Feedback
 

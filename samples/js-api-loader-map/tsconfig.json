@@ -1,13 +1,17 @@
 {
-  "compilerOptions": {
-    "target": "es2020",
-    "module": "es2020",
-    "lib": ["dom", "es2020"],
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node"
-  },
-  "include": ["index.ts"]
-}
+    "compilerOptions": {
+      "module": "esnext",
+      "target": "esnext",
+      "strict": true,
+      "noImplicitAny": false,
+      "lib": [
+        "es2015",
+        "esnext",
+        "es6",
+        "dom",
+        "dom.iterable"
+      ],
+      "moduleResolution": "Node",
+      "jsx": "preserve"
+    }
+  }

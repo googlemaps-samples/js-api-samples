@@ -9,7 +9,7 @@
  * that contains the map. 
  */
 #map {
-  height: 100%;
+    height: 100%;
 }
 
 /* 
@@ -17,9 +17,9 @@
  */
 html,
 body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 /* Styles for the weather widget */
@@ -29,7 +29,8 @@ body {
     padding: 4px 8px; /* Adjust padding */
     border-radius: 50px; /* Adjusted border-radius for round shape */
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); /* Light mode box shadow */
-    font-family: 'Google Sans', Roboto, sans-serif; /* Using the requested font stack */
+    font-family:
+        'Google Sans', Roboto, sans-serif; /* Using the requested font stack */
     width: auto; /* Allow width to adjust to content */
     text-align: center;
     position: relative; /* Needed to position arrow relative to this container */
@@ -40,7 +41,10 @@ body {
     justify-content: flex-start; /* Align content to the top initially */
     align-items: center; /* Horizontally center content */
     user-select: none; /* Prevent text selection */
-    transition: max-height 0.3s ease-out, padding 0.3s ease-out, border-radius 0.3s ease-out; /* Add transition for max-height and padding */
+    transition:
+        max-height 0.3s ease-out,
+        padding 0.3s ease-out,
+        border-radius 0.3s ease-out; /* Add transition for max-height and padding */
     overflow: hidden; /* Hide overflowing content during transition */
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
     max-height: 50px; /* Set max-height for default state */
@@ -96,7 +100,7 @@ body {
 .error-message {
     font-size: 1.2em; /* Font size for error messages as requested */
     font-weight: normal; /* Not bold for error messages */
-    width:80px;
+    width: 80px;
 }
 .rain-details {
     font-size: 0.9em; /* Match detail line font size */
@@ -108,17 +112,16 @@ body {
     margin-top: 5px; /* Add space above rain details */
     width: 100%; /* Take full width */
 }
- .rain-details img {
+.rain-details img {
     width: 18px; /* Adjust icon size */
     height: 18px;
     margin-right: 5px;
- }
+}
 
 /* Dark mode rain icon filter */
 .dark-mode .rain-details img {
     filter: none; /* Remove filter in dark mode */
 }
-
 
 /* Highlighted state styles (on click) */
 .widget-container.highlight {
@@ -171,7 +174,7 @@ body {
 
 /* Common styles for the buttons */
 .button-container-wrapper button {
-    background-color: #4285F4; /* Google Blue */
+    background-color: #4285f4; /* Google Blue */
     color: white; /* White text for contrast */
     border: none;
     padding: 8px 15px;
@@ -180,12 +183,12 @@ body {
     font-family: 'Google Sans', Roboto, sans-serif;
     font-size: 1em;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    width:170px;
+    width: 170px;
 }
 
 /* Hover style for the buttons */
 .button-container-wrapper button:hover {
-    background-color: #3367D6; /* Darker shade on hover */
+    background-color: #3367d6; /* Darker shade on hover */
 }
 
 /* Media query for mobile devices */

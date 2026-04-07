@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## advanced-markers-accessibility
+
+The advanced-markers-accessibility sample demonstrates how to make advanced markers accessible.
+
+Follow these instructions to set up and run advanced-markers-accessibility sample on your local computer.
 
 ## Setup
 
@@ -19,7 +22,7 @@ First `cd` to the folder for the sample to run, then:
 
 From `samples/`:
 
-`npm run build --workspace=sample-name/`
+`npm run build --workspace=advanced-markers-accessibility/`
 
 ### Build all of the examples.
 

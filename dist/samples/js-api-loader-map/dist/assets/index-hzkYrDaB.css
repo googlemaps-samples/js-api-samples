@@ -1,0 +1,1 @@
+html,body{height:calc(100vh - 100px);padding:0;font-family:Arial,Helvetica,sans-serif}#map{height:calc(100vh - 100px)}h1{height:30px}@media screen and (max-width:600px){h1{font-size:1.2em}}

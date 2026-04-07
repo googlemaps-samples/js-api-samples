@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## boundaries-text-search
+
+The boundaries-text-search sample demonstrates how to search for administrative boundaries by name or place ID.
+
+Follow these instructions to set up and run boundaries-text-search sample on your local computer.
 
 ## Setup
 
@@ -32,7 +35,7 @@ From 'samples':
 ### Run lint to check for problems
 
 `cd samples/boundaries-text-search`
-`npx eslint index.ts` 
+`npx eslint index.ts`
 
 ## Feedback
 

@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## place-class
+
+The place-class sample demonstrates how to use the Place class.
+
+Follow these instructions to set up and run place-class sample on your local computer.
 
 ## Setup
 
@@ -19,7 +22,7 @@ First `cd` to the folder for the sample to run, then:
 
 From `samples/`:
 
-`npm run build --workspace=sample-name/`
+`npm run build --workspace=place-class/`
 
 ### Build all of the examples.
 

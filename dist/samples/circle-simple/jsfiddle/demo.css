@@ -1,0 +1,28 @@
+/**
+ * @license
+ * Copyright 2026 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* 
+ * Optional: Makes the sample page fill the window. 
+ */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#control-panel {
+  display: none; /* Set to 'display: block' after the map loads. */
+  background-color: #fff;
+  border: 2px solid #fff;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  font-family: "Roboto", "sans-serif";
+  font-size: medium;
+  margin: 10px;
+  padding: 10px;
+}
+

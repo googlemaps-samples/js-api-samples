@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## add-map
+
+The add-map sample demonstrates how to add a Google Map to a web page.
+
+Follow these instructions to set up and run add-map sample on your local computer.
 
 ## Setup
 
@@ -19,7 +22,7 @@ First `cd` to the folder for the sample to run, then:
 
 From `samples/`:
 
-`$npm run build --workspace=sample-name/`
+`$npm run build --workspace=add-map/`
 
 ### Build all of the examples.
 
@@ -30,4 +33,3 @@ From `samples/`:
 
 For feedback related to this sample, please open a new issue on
 [GitHub](https://github.com/googlemaps-samples/js-api-samples/issues).
-

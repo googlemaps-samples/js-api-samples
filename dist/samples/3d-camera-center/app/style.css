@@ -1,0 +1,18 @@
+/*
+ * @license
+ * Copyright 2026 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* [START maps_3d_camera_center] */
+gmp-map-3d {
+  height: 100%;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+/* [END maps_3d_camera_center] */

@@ -16,9 +16,9 @@ async function initMap() {
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('places'),
         //@ts-ignore
-        google.maps.importLibrary('routes')
+        google.maps.importLibrary('routes'),
     ]);
-    map = new Map(document.getElementById("map"), {
+    map = new Map(document.getElementById('map'), {
         zoom: 12,
         center: center,
         mapTypeControl: false,
@@ -49,7 +49,7 @@ async function initMap() {
     // [START maps_routes_get_directions_request_latlng]
     // Use lat/lng in a directions request.
     // Mountain View, CA
-    const originLatLng = { lat: 37.422000, lng: -122.084058 };
+    const originLatLng = { lat: 37.422, lng: -122.084058 };
     // San Francisco, CA
     const destinationLatLng = { lat: 37.774929, lng: -122.419415 };
     // Define a computeRoutes request.
@@ -99,7 +99,7 @@ async function initMap() {
 }
 // Helper function to fit the map to the path.
 async function fitMapToPath(path) {
-    const { LatLngBounds } = await google.maps.importLibrary('core');
+    const { LatLngBounds } = (await google.maps.importLibrary('core'));
     const bounds = new LatLngBounds();
     path.forEach((point) => {
         bounds.extend(point);

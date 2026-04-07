@@ -15,9 +15,9 @@ coverage data from CSV files using the Python scripts located in `/scripts`.
 The conversion scripts have specific sorting requirements for the input CSV files:
 
 - `csv_to_html.py` requires the CSV to be sorted by the "Country Code" column. Used
-to generate the HTML table for the documentation page.
+  to generate the HTML table for the documentation page.
 - `csv_to_json.py` requires the CSV to be sorted by the "Country Name En" column.
-Used to generate JSON data for menu logic.
+  Used to generate JSON data for menu logic.
 
 To update coverage data:
 
@@ -28,7 +28,7 @@ To update coverage data:
     python3 scripts/csv_to_html.py
     python3 scripts/csv_to_json.py
     ```
-    
+
 ## Setup
 
 ### Before starting run:
@@ -58,7 +58,7 @@ From 'samples':
 ### Run lint to check for problems
 
 `cd samples/dds-region-viewer`
-`npx eslint index.ts` 
+`npx eslint index.ts`
 
 ## Feedback
 

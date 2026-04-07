@@ -11,6 +11,7 @@ let markers = [];
 let center = { lat: 51.55, lng: -1.8 };
 async function initMap() {
     //  Request the needed libraries.
+    //prettier-ignore
     //@ts-ignore
     const [{ Map }, { Place }, { AdvancedMarkerElement, PinElement }, { RouteMatrix }] = await Promise.all([
         google.maps.importLibrary('maps'),
@@ -26,16 +27,16 @@ async function initMap() {
     });
     // Build the request using Place instances.
     const origin1 = new Place({
-        id: "ChIJ83WZp86p2EcRbMrkYqGncBQ", // Greenwich, London, UK
+        id: 'ChIJ83WZp86p2EcRbMrkYqGncBQ', // Greenwich, London, UK
     });
     const origin2 = new Place({
-        id: "ChIJCSkVvleJc0gR8HHaTGpajKc", // Southampton, UK
+        id: 'ChIJCSkVvleJc0gR8HHaTGpajKc', // Southampton, UK
     });
     const destinationA = new Place({
-        id: "ChIJYdizgWaDcUgRH9eaSy6y5I4", // Bristol, UK
+        id: 'ChIJYdizgWaDcUgRH9eaSy6y5I4', // Bristol, UK
     });
     const destinationB = new Place({
-        id: "ChIJ9VPsNNQCbkgRDmeGZdsGNBQ", // Cardiff, UK
+        id: 'ChIJ9VPsNNQCbkgRDmeGZdsGNBQ', // Cardiff, UK
     });
     await Promise.all([
         origin1.fetchFields({ fields: ['location', 'displayName'] }),
@@ -53,22 +54,22 @@ async function initMap() {
     };
     
     // Show the request.
-    document.getElementById("request").innerText =
+    document.getElementById('request').innerText =
         JSON.stringify(request, null, 2);
     // Get the RouteMatrix response.
     const response = await RouteMatrix.computeRouteMatrix(request);
     // Show the response.
-    document.getElementById("response").innerText =
+    document.getElementById('response').innerText =
         JSON.stringify(response, null, 2);
     // Add markers for the origins.
     for (const origin of request.origins) {
         if (origin.location) {
             const pin = new PinElement({
                 //@ts-ignore
-                glyphText: "O",
-                glyphColor: "white",
-                background: "#137333",
-                borderColor: "white",
+                glyphText: 'O',
+                glyphColor: 'white',
+                background: '#137333',
+                borderColor: 'white',
             });
             const marker = new AdvancedMarkerElement({
                 map,
@@ -86,10 +87,10 @@ async function initMap() {
         if (destination.location) {
             const pin = new PinElement({
                 //@ts-ignore
-                glyphText: "D",
-                glyphColor: "white",
-                background: "#C5221F",
-                borderColor: "white",
+                glyphText: 'D',
+                glyphColor: 'white',
+                background: '#C5221F',
+                borderColor: 'white',
             });
             const marker = new AdvancedMarkerElement({
                 map,

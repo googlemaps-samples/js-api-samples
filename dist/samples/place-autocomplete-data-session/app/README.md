@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## place-autocomplete-data-session
+
+The place-autocomplete-data-session sample demonstrates how to use Place Autocomplete with data sessions.
+
+Follow these instructions to set up and run place-autocomplete-data-session sample on your local computer.
 
 ## Setup
 
@@ -19,7 +22,7 @@ First `cd` to the folder for the sample to run, then:
 
 From `samples/`:
 
-`npm run build --workspace=sample-name/`
+`npm run build --workspace=place-autocomplete-data-session/`
 
 ### Build all of the examples.
 

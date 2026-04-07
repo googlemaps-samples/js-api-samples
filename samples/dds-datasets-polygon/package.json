@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/dds-datasets-polygon",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh dds-datasets-polygon && bash ../app.sh dds-datasets-polygon && bash ../docs.sh dds-datasets-polygon && npm run build:vite --workspace=. && bash ../dist.sh dds-datasets-polygon",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}

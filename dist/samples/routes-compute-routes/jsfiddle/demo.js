@@ -18,8 +18,10 @@ const destinationAutocompleteSelection = {
 };
 async function init() {
     const [{ InfoWindow }, { AdvancedMarkerElement }, 
+    //prettier-ignore
     //@ts-ignore
     { PlaceAutocompleteElement }, 
+    //prettier-ignore
     //@ts-ignore
     { ComputeRoutesExtraComputation, ReferenceRoute, Route, RouteLabel },] = await Promise.all([
         google.maps.importLibrary('maps'),
@@ -60,14 +62,20 @@ async function init() {
             setErrorMessage(error.message || 'Unknown error.');
         }
     }
-    function buildComputeRoutesJsRequest(formData) {
+    function buildComputeRoutesJsRequest(formData
+    //prettier-ignore
+    //@ts-ignore
+    ) {
         const travelMode = formData.get('travel_mode') === ''
             ? undefined
             : formData.get('travel_mode');
+        //prettier-ignore
         //@ts-ignore
         const extraComputations = [];
+        //prettier-ignore
         //@ts-ignore
         const requestedReferenceRoutes = [];
+        //prettier-ignore
         //@ts-ignore
         const transitPreference = {};
         const request = {
@@ -85,10 +93,16 @@ async function init() {
             travelMode: travelMode,
             routingPreference: formData.get('routing_preference') === ''
                 ? undefined
-                : formData.get('routing_preference'),
+                : formData.get('routing_preference'
+                //prettier-ignore
+                //@ts-ignore
+                ),
             polylineQuality: formData.get('polyline_quality') === ''
                 ? undefined
-                : formData.get('polyline_quality'),
+                : formData.get('polyline_quality'
+                //prettier-ignore
+                //@ts-ignore
+                ),
             computeAlternativeRoutes: formData.get('compute_alternative_routes') === 'on',
             routeModifiers: {
                 avoidTolls: formData.get('avoid_tolls') === 'on',
@@ -112,10 +126,15 @@ async function init() {
         if (formData.get('eco_routes') === 'on') {
             requestedReferenceRoutes.push(ReferenceRoute.FUEL_EFFICIENT);
             extraComputations.push(ComputeRoutesExtraComputation.FUEL_CONSUMPTION);
+            //prettier-ignore
             //@ts-ignore
-            request.routeModifiers.vehicleInfo = {
-                emissionType: formData.get('emission_type'),
-            };
+            request.routeModifiers.vehicleInfo =
+                {
+                    emissionType: formData.get('emission_type'
+                    //prettier-ignore
+                    //@ts-ignore
+                    ),
+                };
         }
         if (travelMode === google.maps.TravelMode.TRANSIT) {
             const selectedTransitModes = document.querySelectorAll('ul#transitModes li input[type="checkbox"]:checked');
@@ -127,7 +146,10 @@ async function init() {
         }
         return request;
     }
-    function buildComputeRoutesLocation(autocompleteSelection, locationInput, headingInput, travelModeInput) {
+    function buildComputeRoutesLocation(autocompleteSelection, locationInput, headingInput, travelModeInput
+    //prettier-ignore
+    //@ts-ignore
+    ) {
         if (!locationInput) {
             throw new Error('Location is required.');
         }
@@ -166,6 +188,7 @@ async function init() {
         alertBox.style.display = 'flex';
     }
     async function drawRoute(
+    //prettier-ignore
     //@ts-ignore
     route, isPrimaryRoute) {
         polylines = polylines.concat(route.createPolylines({
@@ -190,6 +213,7 @@ async function init() {
         }
         addRouteLabel(route, Math.floor(route.path.length / 2));
     }
+    //prettier-ignore
     //@ts-ignore
     function addRouteLabel(route, index) {
         const routeTag = document.createElement('div');
@@ -298,7 +322,8 @@ async function init() {
             }
             else {
                 routingPreference.disabled = false;
-                routingPreference.value = routingPreference.value || 'TRAFFIC_UNAWARE';
+                routingPreference.value =
+                    routingPreference.value || 'TRAFFIC_UNAWARE';
             }
             toggleTrafficAwarePolyline();
             // Toggle transit options for Transit mode
@@ -347,6 +372,7 @@ async function init() {
             [destinationAutocomplete, destinationAutocompleteSelection],
         ].forEach(([autocomplete, autocompleteData]) => {
             autocomplete.addEventListener('gmp-select', 
+            //prettier-ignore
             //@ts-ignore
             async (event) => {
                 autocompleteData.predictionText = event.placePrediction.text.text;
@@ -357,7 +383,9 @@ async function init() {
                 autocompleteData.location = place.location;
             });
         });
-        document.getElementById('origin-input')?.appendChild(originAutocomplete);
+        document
+            .getElementById('origin-input')
+            ?.appendChild(originAutocomplete);
         document
             .getElementById('destination-input')
             ?.appendChild(destinationAutocomplete);

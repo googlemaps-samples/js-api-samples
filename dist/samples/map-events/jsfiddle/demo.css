@@ -1,0 +1,38 @@
+/**
+ * @license
+ * Copyright 2026 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#container {
+    height: 100%;
+}
+
+#sidebar {
+    width: 280px;
+    padding: 2px;
+    margin-left: 10px;
+    margin-top: 10px;
+    overflow: hidden;
+    font-size: 15px;
+    font-family: 'Droid Sans Mono', monospace;
+    max-width: 300px;
+    background-color: white;
+}
+
+.active {
+    background-color: #99ccff;
+}
+
+.inactive {
+    background-color: white;
+}
+

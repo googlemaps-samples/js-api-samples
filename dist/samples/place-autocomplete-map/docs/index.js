@@ -17,7 +17,6 @@ async function initMap() {
         google.maps.importLibrary('marker'),
         google.maps.importLibrary('places'),
     ]);
-    // [START maps_place_autocomplete_map_add]
     // Get the inner map.
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
@@ -27,7 +26,6 @@ async function initMap() {
     google.maps.event.addListener(innerMap, 'bounds_changed', async () => {
         placeAutocomplete.locationRestriction = innerMap.getBounds();
     });
-    // [END maps_place_autocomplete_map_add]
     // Create the marker and infowindow.
     marker = new google.maps.marker.AdvancedMarkerElement({
         map: innerMap,
@@ -35,6 +33,7 @@ async function initMap() {
     infoWindow = new google.maps.InfoWindow({});
     // [START maps_place_autocomplete_map_listener]
     // Add the gmp-placeselect listener, and display the results on the map.
+    //prettier-ignore
     //@ts-ignore
     placeAutocomplete.addEventListener('gmp-select', async ({ placePrediction }) => {
         const place = placePrediction.toPlace();

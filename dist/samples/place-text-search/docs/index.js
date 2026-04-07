@@ -9,7 +9,7 @@ let map;
 let markers = {};
 let infoWindow;
 async function initMap() {
-    const { Map, InfoWindow } = await google.maps.importLibrary("maps");
+    const { Map, InfoWindow } = (await google.maps.importLibrary('maps'));
     const center = { lat: 37.4161493, lng: -122.0812166 };
     map = new Map(document.getElementById('map'), {
         center: center,
@@ -32,8 +32,8 @@ async function initMap() {
     infoWindow = new google.maps.InfoWindow();
 }
 async function findPlaces(query) {
-    const { Place } = await google.maps.importLibrary("places");
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+    const { Place } = (await google.maps.importLibrary('places'));
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
     // [START maps_place_text_search_request]
     const request = {
         textQuery: query,
@@ -50,16 +50,15 @@ async function findPlaces(query) {
     const { places } = await Place.searchByText(request);
     // [END maps_place_text_search_request]
     if (places.length) {
-        const { LatLngBounds } = await google.maps.importLibrary("core");
+        const { LatLngBounds } = (await google.maps.importLibrary('core'));
         const bounds = new LatLngBounds();
         // First remove all existing markers.
         for (const id in markers) {
             markers[id].map = null;
         }
-        ;
         markers = {};
         // Loop through and get all the results.
-        places.forEach(place => {
+        places.forEach((place) => {
             const marker = new AdvancedMarkerElement({
                 map,
                 position: place.location,

@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## routes-route-matrix
+
+The routes-route-matrix sample demonstrates how to use the RouteMatrix class in the Routes API.
+
+Follow these instructions to set up and run routes-route-matrix sample on your local computer.
 
 ## Setup
 
@@ -19,7 +22,7 @@ First `cd` to the folder for the sample to run, then:
 
 From `samples/`:
 
-`$npm run build --workspace=sample-name/`
+`$npm run build --workspace=routes-route-matrix/`
 
 ### Build all of the examples.
 
@@ -30,4 +33,3 @@ From `samples/`:
 
 For feedback related to this sample, please open a new issue on
 [GitHub](https://github.com/googlemaps-samples/js-api-samples/issues).
-

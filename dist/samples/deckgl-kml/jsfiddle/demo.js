@@ -12,7 +12,7 @@ let geojsonLayer;
 let googleMapsOverlay;
 async function initMap() {
     // Progress bar logic moved from index.html
-    var progress, progressDiv = document.querySelector(".mdc-linear-progress");
+    var progress, progressDiv = document.querySelector('.mdc-linear-progress');
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
@@ -28,7 +28,7 @@ async function initMap() {
     // The location for the map center (adjust as needed for the KML data)
     const position = { lat: 41.8692576, lng: -87.689769 };
     //  Request needed libraries.
-    const { Map } = await google.maps.importLibrary('maps');
+    const { Map } = (await google.maps.importLibrary('maps'));
     const mapDiv = document.getElementById('map');
     if (!mapDiv) {
         console.error('Map element not found!');
@@ -55,6 +55,7 @@ async function initMap() {
         lineWidthScale: 14, // Adjust line width scale
         lineWidthMinPixels: 4,
         getLineColor: (d) => {
+            // Function to get color from properties
             const color = d.properties.color || d.properties.stroke; // Try 'color' or 'stroke' property
             if (color) {
                 // Convert hex or AABBGGRR string to RGBA array
@@ -67,7 +68,8 @@ async function initMap() {
         },
         getLineWidth: 2, // Adjust line width
         onDataLoad: () => {
-            if (progress) { // Check if progress is defined
+            if (progress) {
+                // Check if progress is defined
                 // Add a small delay to ensure the progress bar is removed
                 setTimeout(() => {
                     // @ts-ignore
@@ -81,9 +83,17 @@ async function initMap() {
             if (tooltip && object) {
                 let tooltipContent = `<h4>${object.properties.name || 'GeoJSON Feature'}</h4>`;
                 // Define a list of common KML properties to display
-                const kmlProperties = ['description', 'styleUrl', 'color', 'stroke', 'stroke-width', 'fill'];
+                const kmlProperties = [
+                    'description',
+                    'styleUrl',
+                    'color',
+                    'stroke',
+                    'stroke-width',
+                    'fill',
+                ];
                 for (const key of kmlProperties) {
-                    if (object.properties.hasOwnProperty(key) && object.properties[key] !== undefined) {
+                    if (object.properties.hasOwnProperty(key) &&
+                        object.properties[key] !== undefined) {
                         tooltipContent += `<p><strong>${key}:</strong> ${object.properties[key]}</p>`;
                     }
                 }
@@ -95,7 +105,7 @@ async function initMap() {
             else if (tooltip) {
                 tooltip.style.display = 'none';
             }
-        }
+        },
     });
     const textLayer = new deck.TextLayer({
         id: 'text-layer',
@@ -106,7 +116,9 @@ async function initMap() {
             if (d.properties.centroid) {
                 position = d.properties.centroid;
             }
-            else if (d.geometry && d.geometry.coordinates && d.geometry.coordinates.length > 0) {
+            else if (d.geometry &&
+                d.geometry.coordinates &&
+                d.geometry.coordinates.length > 0) {
                 // Assuming Polygon or MultiPolygon
                 const coordinates = d.geometry.coordinates[0][0];
                 if (coordinates && coordinates.length >= 2) {
@@ -123,23 +135,23 @@ async function initMap() {
         getAlignmentBaseline: 'middle',
         // Disable depth testing for text layer as well
         parameters: {
-            depthTest: false
-        }
+            depthTest: false,
+        },
     });
     googleMapsOverlay = new deck.GoogleMapsOverlay({
         layers: [geojsonLayer, textLayer],
         // Disable depth testing to avoid rendering issues with the base map
         parameters: {
-            depthTest: false
-        }
+            depthTest: false,
+        },
     });
     googleMapsOverlay.setMap(map);
 }
 /**
-* Converts a hex color string (#RRGGBB or #AABBGGRR) or an AABBGGRR string to an RGBA array.
-* @param color The color string.
-* @returns An RGBA array [R, G, B, A] or null if the format is invalid.
-*/
+ * Converts a hex color string (#RRGGBB or #AABBGGRR) or an AABBGGRR string to an RGBA array.
+ * @param color The color string.
+ * @returns An RGBA array [R, G, B, A] or null if the format is invalid.
+ */
 function hexOrAabbggrrToRgba(color) {
     if (color.startsWith('#')) {
         color = color.slice(1);
@@ -162,4 +174,4 @@ function hexOrAabbggrrToRgba(color) {
     return null; // Invalid format
 }
 initMap();
-/* [END maps_deckgl_kml] */ 
+/* [END maps_deckgl_kml] */

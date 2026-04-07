@@ -1,7 +1,10 @@
 # Google Maps JavaScript Sample
 
-This sample is generated from @googlemaps/js-samples located at
-https://github.com/googlemaps-samples/js-api-samples.
+## place-autocomplete-element
+
+The place-autocomplete-element sample demonstrates how to use the Place Autocomplete element.
+
+Follow these instructions to set up and run place-autocomplete-element sample on your local computer.
 
 ## Setup
 
@@ -19,7 +22,7 @@ First `cd` to the folder for the sample to run, then:
 
 From `samples/`:
 
-`npm run build --workspace=sample-name/`
+`npm run build --workspace=place-autocomplete-element/`
 
 ### Build all of the examples.
 

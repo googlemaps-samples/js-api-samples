@@ -12,13 +12,13 @@ let center;
 let typeSelect;
 let infoWindow;
 async function initMap() {
-    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
-    const { LatLng } = await google.maps.importLibrary("core");
+    const { Map, InfoWindow } = (await google.maps.importLibrary('maps'));
+    const { LatLng } = (await google.maps.importLibrary('core'));
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
         mapTypeControl: false,
     });
-    typeSelect = document.querySelector(".type-select");
+    typeSelect = document.querySelector('.type-select');
     typeSelect.addEventListener('change', () => {
         nearbySearch();
     });
@@ -29,9 +29,9 @@ async function initMap() {
     });
 }
 async function nearbySearch() {
-    const { Place, SearchNearbyRankPreference } = await google.maps.importLibrary('places');
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-    const { spherical } = await google.maps.importLibrary('geometry');
+    const { Place, SearchNearbyRankPreference } = (await google.maps.importLibrary('places'));
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
+    const { spherical } = (await google.maps.importLibrary('geometry'));
     // [START maps_place_nearby_search_request]
     // Get bounds and radius to constrain search.
     center = mapElement.center;
@@ -39,10 +39,15 @@ async function nearbySearch() {
     const ne = bounds.getNorthEast();
     const sw = bounds.getSouthWest();
     const diameter = spherical.computeDistanceBetween(ne, sw);
-    const radius = Math.min((diameter / 2), 50000); // Radius cannot be more than 50000.
+    const radius = Math.min(diameter / 2, 50000); // Radius cannot be more than 50000.
     const request = {
         // required parameters
-        fields: ['displayName', 'location', 'formattedAddress', 'googleMapsURI'],
+        fields: [
+            'displayName',
+            'location',
+            'formattedAddress',
+            'googleMapsURI',
+        ],
         locationRestriction: {
             center,
             radius,
@@ -55,13 +60,13 @@ async function nearbySearch() {
     const { places } = await Place.searchNearby(request);
     // [END maps_place_nearby_search_request]
     if (places.length) {
-        const { LatLngBounds } = await google.maps.importLibrary("core");
+        const { LatLngBounds } = (await google.maps.importLibrary('core'));
         const bounds = new LatLngBounds();
         // First remove all existing markers.
         for (const marker of mapElement.querySelectorAll('gmp-advanced-marker'))
             marker.remove();
         // Loop through and get all the results.
-        places.forEach(place => {
+        places.forEach((place) => {
             if (!place.location)
                 return;
             bounds.extend(place.location);

@@ -1,8 +1,8 @@
 /*
-  * @license
-  * Copyright 2025 Google LLC. All Rights Reserved.
-  * SPDX-License-Identifier: Apache-2.0
-  */
+ * @license
+ * Copyright 2025 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
 /* [START maps_deckgl_kml_updated] */
 // Import necessary loader
 import { KMLLoader } from '@loaders.gl/kml';
@@ -12,7 +12,7 @@ let geojsonLayer;
 let googleMapsOverlay;
 async function initMap() {
     // Progress bar logic moved from index.html
-    var progress, progressDiv = document.querySelector(".mdc-linear-progress");
+    var progress, progressDiv = document.querySelector('.mdc-linear-progress');
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
@@ -28,7 +28,7 @@ async function initMap() {
     // The location for the map center (adjust as needed for the KML data)
     const position = { lat: 19.223718899391237, lng: -148.62590882823457 };
     //  Request needed libraries.
-    const { Map } = await google.maps.importLibrary('maps');
+    const { Map } = (await google.maps.importLibrary('maps'));
     const mapDiv = document.getElementById('map');
     if (!mapDiv) {
         console.error('Map element not found!');
@@ -85,13 +85,18 @@ async function initMap() {
             const r = minColor[0] + normalizedMagnitude * (maxColor[0] - minColor[0]);
             const g = minColor[1] + normalizedMagnitude * (maxColor[1] - minColor[1]);
             const b = minColor[2] + normalizedMagnitude * (maxColor[2] - minColor[2]);
-            const interpolatedColor = [Math.round(r), Math.round(g), Math.round(b), 200];
+            const interpolatedColor = [
+                Math.round(r),
+                Math.round(g),
+                Math.round(b),
+                200,
+            ];
             return interpolatedColor; // Color scale based on magnitude, fixed alpha
         },
         autoHighlight: true,
         transitions: {
             getRadius: {
-                type: "spring",
+                type: 'spring',
                 stiffness: 0.1,
                 damping: 0.15,
                 enter: () => [0], // grow from size 0,
@@ -118,14 +123,14 @@ async function initMap() {
             if (progress && progress.done) {
                 progress.done();
             }
-        }
+        },
     });
     googleMapsOverlay = new deck.GoogleMapsOverlay({
         layers: [geojsonLayer],
         // Disable depth testing to avoid rendering issues with the base map
         parameters: {
-            depthTest: false
-        }
+            depthTest: false,
+        },
     });
     googleMapsOverlay.setMap(map);
     // Generate Legend
@@ -136,7 +141,7 @@ async function initMap() {
         const maxMag = 7;
         const minColor = [255, 255, 0]; // Yellow (should match getFillColor)
         const maxColor = [255, 0, 0]; // #FF0000 (should match getFillColor)
-        magnitudeValues.forEach(magnitude => {
+        magnitudeValues.forEach((magnitude) => {
             // Calculate color for the magnitude (using the same interpolation logic)
             const normalizedMagnitude = Math.max(0, Math.min(1, (magnitude - minMag) / (maxMag - minMag)));
             const r = minColor[0] + normalizedMagnitude * (maxColor[0] - minColor[0]);

@@ -8,14 +8,14 @@
 const mapElement = document.querySelector('gmp-map');
 async function initMap() {
     // Request needed libraries.
-    const { Map, InfoWindow } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+    const { Map, InfoWindow } = (await google.maps.importLibrary('maps'));
+    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
     const infoWindow = new InfoWindow();
     // [START maps_advanced_markers_draggable_marker]
     const draggableMarker = new AdvancedMarkerElement({
         position: { lat: 37.39094933041195, lng: -122.02503913145092 },
         gmpDraggable: true,
-        title: "This marker is draggable.",
+        title: 'This marker is draggable.',
     });
     mapElement.append(draggableMarker);
     // [END maps_advanced_markers_draggable_marker]

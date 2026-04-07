@@ -6,10 +6,10 @@
  */
 // [START maps_advanced_markers_animation]
 /**
-   * Returns a random lat lng position within the map bounds.
-   * @param {!google.maps.Map} map
-   * @return {!google.maps.LatLngLiteral}
-   */
+ * Returns a random lat lng position within the map bounds.
+ * @param {!google.maps.Map} map
+ * @return {!google.maps.LatLngLiteral}
+ */
 function getRandomPosition(map) {
     const bounds = map.getBounds();
     const minLat = bounds.getSouthWest().lat();
@@ -40,10 +40,10 @@ const intersectionObserver = new IntersectionObserver((entries) => {
 });
 async function initMap() {
     // Request needed libraries.
-    const { Map } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker");
+    const { Map } = (await google.maps.importLibrary('maps'));
+    const { AdvancedMarkerElement, PinElement } = (await google.maps.importLibrary('marker'));
     const position = { lat: 37.4242011827985, lng: -122.09242296450893 };
-    const map = new Map(document.getElementById("map"), {
+    const map = new Map(document.getElementById('map'), {
         zoom: 14,
         center: position,
         mapId: '4504f8b37365c3d0',
@@ -55,11 +55,11 @@ async function initMap() {
         }
     });
     // Add a button to reset the example.
-    const controlDiv = document.createElement("div");
-    const controlUI = document.createElement("button");
-    controlUI.classList.add("ui-button");
-    controlUI.innerText = "Reset the example";
-    controlUI.addEventListener("click", () => {
+    const controlDiv = document.createElement('div');
+    const controlUI = document.createElement('button');
+    controlUI.classList.add('ui-button');
+    controlUI.innerText = 'Reset the example';
+    controlUI.addEventListener('click', () => {
         // Reset the example by reloading the map iframe.
         refreshMap();
     });
@@ -75,7 +75,7 @@ function createMarker(map, AdvancedMarkerElement, PinElement) {
         content: content,
     });
     content.style.opacity = '0';
-    content.addListener('animationend', (event) => {
+    content.addEventListener('animationend', (event) => {
         content.classList.remove('drop');
         content.style.opacity = '1';
     });

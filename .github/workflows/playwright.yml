@@ -33,6 +33,10 @@ on:
   schedule:
     - cron: "0 12 * * *"
 
+#NEW
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -60,7 +64,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24.x'
 
       - name: Cache npm dependencies
         uses: actions/cache@v4
@@ -88,11 +92,11 @@ jobs:
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps
-
+      
       - name: Build Changed Workspaces
         run: |
           IFS=$'\n'
-          CHANGED_WORKSPACES_ARRAY=(${{ steps.get_workspaces.outputs.changed_workspaces }})
+          CHANGED_WORKSPACES_ARRAY=(${STEPS_GET_WORKSPACES_OUTPUTS_CHANGED_WORKSPACES})
           echo "Changed Workspaces Array: ${CHANGED_WORKSPACES_ARRAY[@]}"
           
           echo "Building changed workspaces:"
@@ -100,6 +104,8 @@ jobs:
             echo "  - samples/$workspace"
             npm run build --workspace=samples/$workspace
           done
+        env:
+          STEPS_GET_WORKSPACES_OUTPUTS_CHANGED_WORKSPACES: ${{ steps.get_workspaces.outputs.changed_workspaces }}
 
       - name: Generate Index (Run Once After Builds)
         run: bash samples/generate-index.sh
@@ -135,7 +141,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24.x'
 
       - name: Cache npm dependencies
         uses: actions/cache@v4

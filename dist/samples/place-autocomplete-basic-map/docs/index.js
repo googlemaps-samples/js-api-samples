@@ -52,7 +52,8 @@ async function initMap() {
     // [END maps_place_autocomplete_basic_map_listener]
     // Event listener for when the place details have finished loading.
     placeDetailsElement.addEventListener('gmp-load', () => {
-        const location = placeDetailsElement.place.location;
+        const location = placeDetailsElement.place
+            .location;
         // Position the marker and open the InfoWindow at the place's location.
         advancedMarkerElement.position = location;
         infoWindow.setContent(placeDetailsElement);

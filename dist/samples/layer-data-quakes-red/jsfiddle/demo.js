@@ -7,23 +7,23 @@
 
 let innerMap;
 async function initMap() {
-    (await google.maps.importLibrary("maps"));
-    const mapElement = document.querySelector("gmp-map");
+    (await google.maps.importLibrary('maps'));
+    const mapElement = document.querySelector('gmp-map');
     innerMap = mapElement.innerMap;
     // Get the earthquake data (JSONP format)
     // This feed is a copy from the USGS feed, you can find the originals here:
     //   http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
-    const script = document.createElement("script");
-    script.setAttribute("src", "quakes.geo.json");
-    document.getElementsByTagName("head")[0].appendChild(script);
+    const script = document.createElement('script');
+    script.setAttribute('src', 'quakes.geo.json');
+    document.getElementsByTagName('head')[0].appendChild(script);
     // Add a basic style.
     innerMap.data.setStyle((feature) => {
-        const mag = Math.exp(parseFloat(feature.getProperty("mag"))) * 0.1;
+        const mag = Math.exp(parseFloat(feature.getProperty('mag'))) * 0.1;
         return /** @type {google.maps.Data.StyleOptions} */ {
             icon: {
                 path: google.maps.SymbolPath.CIRCLE,
                 scale: mag,
-                fillColor: "#f00",
+                fillColor: '#f00',
                 fillOpacity: 0.35,
                 strokeWeight: 0,
             },
