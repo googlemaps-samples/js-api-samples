@@ -1,4 +1,5 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "skipLibCheck": true,
     "module": "esnext",
@@ -12,7 +13,7 @@
       "dom",
       "dom.iterable"
     ],
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "jsx": "preserve"
   }
 }

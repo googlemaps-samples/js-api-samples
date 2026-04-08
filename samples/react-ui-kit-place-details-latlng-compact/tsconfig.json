@@ -1,5 +1,6 @@
 {
-    "compilerOptions": {
+    "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
       "module": "esnext",
       "target": "esnext",
       "strict": true,

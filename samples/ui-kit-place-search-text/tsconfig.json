@@ -1,5 +1,6 @@
 {
-    "compilerOptions": {
+    "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
       "module": "esnext",
       "target": "esnext",
       "strict": true,
@@ -11,7 +12,7 @@
         "dom",
         "dom.iterable"
       ],
-      "moduleResolution": "Node",
+      "moduleResolution": "bundler",
       "jsx": "preserve",
     }
   }
