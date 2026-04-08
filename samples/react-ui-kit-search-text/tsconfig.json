@@ -12,7 +12,7 @@
         "dom",
         "dom.iterable"
       ],
-      "moduleResolution": "node",
+      "moduleResolution": "bundler",
       "jsx": "react-jsx",
       "skipLibCheck": true,
       "allowSyntheticDefaultImports": true,
