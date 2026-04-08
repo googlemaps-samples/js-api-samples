@@ -14,11 +14,11 @@
       ],
       "moduleResolution": "bundler",
       "jsx": "react-jsx",
+      "skipLibCheck": true,
       "allowSyntheticDefaultImports": true,
       "types": [
         "vite/client",
-        "node",
-        "google.maps"
+        "node"
       ]
     }
   }
