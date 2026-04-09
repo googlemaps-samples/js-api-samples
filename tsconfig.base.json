@@ -10,5 +10,7 @@
     "noImplicitAny": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "types": ["@types/google.maps", "node"],
+    "typeRoots": ["./node_modules/@types"]
   }
 }
