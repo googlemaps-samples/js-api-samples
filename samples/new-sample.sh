@@ -106,15 +106,14 @@ EOF
 # Create tsconfig.json
 cat > "$NAME/tsconfig.json" << 'EOF'
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "module": "esnext",
-    "target": "esnext",
-    "strict": true,
-    "noImplicitAny": false,
-    "lib": ["es2015", "esnext", "es6", "dom", "dom.iterable"],
-    "moduleResolution": "Node",
-    "jsx": "preserve"
-  }
+    "outDir": "./dist",
+    "rootDir": "."
+  },
+  "include": [
+    "./*.ts",
+  ]
 }
 EOF
 
