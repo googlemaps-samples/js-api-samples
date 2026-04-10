@@ -1,18 +1,9 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "skipLibCheck": true,
-    "module": "esnext",
-    "target": "esnext",
-    "strict": true,
-    "noImplicitAny": false,
-    "lib": [
-      "es2020",
-      "esnext",
-      "es6",
-      "dom",
-      "dom.iterable"
-    ],
-    "moduleResolution": "Node",
-    "jsx": "preserve"
-  }
+    "rootDir": "."
+  },
+  "include": [
+    "./*.ts",
+  ]
 }

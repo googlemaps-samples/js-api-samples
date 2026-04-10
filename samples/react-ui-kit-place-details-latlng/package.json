@@ -11,7 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@vis.gl/react-google-maps": "1.8.1",
+    "@vis.gl/react-google-maps": "1.8.2",
     "react": "^19.2.1",
     "react-dom": "^19.2.4"
   },
@@ -20,6 +20,6 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
     "typescript": "^6.0.2",
-    "vite": "^8.0.2"
+    "vite": "^8.0.5"
   }
 }
