@@ -28,7 +28,7 @@ async function initMap() {
         }, 3000);
     });
     // Zoom in when the marker is clicked.
-    marker.addListener('gmp-click', () => {
+    marker.addEventListener('gmp-click', () => {
         innerMap.setZoom(8);
         innerMap.setCenter(marker.position);
     });
