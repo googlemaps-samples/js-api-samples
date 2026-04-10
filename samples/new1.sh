@@ -64,7 +64,6 @@ cat > "${OUTPUT_DIR}/${NAME}/tsconfig.json" << EOF
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "./dist",
     "rootDir": "."
   },
   "include": [
