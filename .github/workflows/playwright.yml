@@ -33,9 +33,9 @@ on:
   schedule:
     - cron: "0 12 * * *"
 
-#NEW
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  SKIP_DIST: ${{ github.event_name == 'pull_request' || github.event_name == 'schedule' }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -152,6 +152,8 @@ jobs:
     name: Scheduled Full E2E Tests
     if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -209,3 +211,10 @@ jobs:
         with:
           name: Test Results
           path: test-results/
+
+      - name: Create Issue on Failure
+        if: failure()
+        run: |
+          gh issue create --title "Nightly Playwright Tests Failed" --body "The nightly E2E tests failed. Please check the logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        env:
+          GH_TOKEN: ${{ github.token }}
