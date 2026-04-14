@@ -27,6 +27,7 @@ async function initMap() {
         getWidth: 1,
     });
     const overlay = new GoogleMapsOverlay({
+        interleaved: false,
         layers: [flightsLayer],
     });
     overlay.setMap(innerMap);
