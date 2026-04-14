@@ -1,4 +1,4 @@
-# Copyright 2025 Google LLC
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -33,6 +33,10 @@ on:
   schedule:
     - cron: "0 12 * * *"
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  SKIP_DIST: ${{ github.event_name == 'pull_request' || github.event_name == 'schedule' }}
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -57,12 +61,23 @@ jobs:
         run: |
           bash samples/find-changes.sh ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
 
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if [ "${{ steps.get_workspaces.outputs.changed_workspaces }}" != "" ]; then
+            echo "HAS_CHANGES=true" >> $GITHUB_ENV
+          else
+            echo "HAS_CHANGES=false" >> $GITHUB_ENV
+          fi
+
       - name: Setup Node.js
+        if: env.HAS_CHANGES == 'true'
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24.x'
 
       - name: Cache npm dependencies
+        if: env.HAS_CHANGES == 'true'
         uses: actions/cache@v4
         with:
           path: ~/.npm
@@ -70,29 +85,38 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
+      - name: Get Playwright Version
+        id: playwright-version
+        if: env.HAS_CHANGES == 'true'
+        run: |
+          echo "version=$(node -p "require('./package.json').devDependencies['@playwright/test']")" >> $GITHUB_OUTPUT
+
       - name: Cache Playwright browsers
         id: playwright-cache
+        if: env.HAS_CHANGES == 'true'
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright # Default Playwright cache path
-          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}-${{ hashFiles('playwright.config.ts') }}
+          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}-${{ hashFiles('playwright.config.ts') }}
           restore-keys: |
-            ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}- # Fallback for lock file changes
+            ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}- # Fallback for lock file changes
             ${{ runner.os }}-playwright- # Broader fallback
         env:
           PLAYWRIGHT_BROWSERS_PATH: ~/.cache/ms-playwright
 
       - name: Install dependencies
+        if: env.HAS_CHANGES == 'true'
         run: npm install
 
       - name: Install Playwright Browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps
-
+        if: steps.playwright-cache.outputs.cache-hit != 'true' && env.HAS_CHANGES == 'true'
+        run: npx playwright install chromium --with-deps
+      
       - name: Build Changed Workspaces
+        if: env.HAS_CHANGES == 'true'
         run: |
           IFS=$'\n'
-          CHANGED_WORKSPACES_ARRAY=(${{ steps.get_workspaces.outputs.changed_workspaces }})
+          CHANGED_WORKSPACES_ARRAY=(${STEPS_GET_WORKSPACES_OUTPUTS_CHANGED_WORKSPACES})
           echo "Changed Workspaces Array: ${CHANGED_WORKSPACES_ARRAY[@]}"
           
           echo "Building changed workspaces:"
@@ -100,16 +124,17 @@ jobs:
             echo "  - samples/$workspace"
             npm run build --workspace=samples/$workspace
           done
+        env:
+          STEPS_GET_WORKSPACES_OUTPUTS_CHANGED_WORKSPACES: ${{ steps.get_workspaces.outputs.changed_workspaces }}
 
       - name: Generate Index (Run Once After Builds)
         run: bash samples/generate-index.sh
-        # Consider adding an 'if' condition if it only needs to run when 'samples/' changed at all.
-        # if: |
-        #   steps.get_workspaces.outputs.changed_workspaces != '' || # If any workspace built
-        #   contains(github.event.pull_request.paths.*, 'samples/generate-index.sh') # Or if the script itself changed
+        if: |
+          env.HAS_CHANGES == 'true' ||
+          contains(github.event.pull_request.paths.*, 'samples/generate-index.sh')
 
       - name: Run All Playwright Tests
-        if: steps.get_workspaces.outputs.changed_workspaces != ''
+        if: env.HAS_CHANGES == 'true'
         run: npx playwright test e2e/samples.spec.ts
         env:
           # Pass the correct base reference for find-changes.sh when called by samples.spec.ts
@@ -127,6 +152,8 @@ jobs:
     name: Scheduled Full E2E Tests
     if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -135,7 +162,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24.x'
 
       - name: Cache npm dependencies
         uses: actions/cache@v4
@@ -145,13 +172,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
+      - name: Get Playwright Version
+        id: playwright-version
+        run: |
+          echo "version=$(node -p "require('./package.json').devDependencies['@playwright/test']")" >> $GITHUB_OUTPUT
+
       - name: Cache Playwright browsers
+        id: playwright-cache
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright # Default Playwright cache path
-          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}-${{ hashFiles('playwright.config.ts') }}
+          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}-${{ hashFiles('playwright.config.ts') }}
           restore-keys: |
-            ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}- # Fallback for lock file changes
+            ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}- # Fallback for lock file changes
             ${{ runner.os }}-playwright- # Broader fallback
 
       - name: Install dependencies
@@ -164,7 +197,8 @@ jobs:
         run: bash samples/generate-index.sh
 
       - name: Install Playwright browsers with OS dependencies
-        run: npx playwright install --with-deps
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium --with-deps
 
       - name: Run Full E2E Tests (Scheduled)
         run: npx playwright test e2e/samples.spec.ts
@@ -177,3 +211,10 @@ jobs:
         with:
           name: Test Results
           path: test-results/
+
+      - name: Create Issue on Failure
+        if: failure()
+        run: |
+          gh issue create --title "Nightly Playwright Tests Failed" --body "The nightly E2E tests failed. Please check the logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        env:
+          GH_TOKEN: ${{ github.token }}

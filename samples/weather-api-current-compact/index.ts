@@ -139,6 +139,7 @@ async function createAndAddMarker(
         position: { lat: location.lat, lng: location.lng },
         content: weatherWidget,
         title: location.name, // Add a title for accessibility
+        gmpClickable: true,
     });
 
     // Store the marker type
@@ -152,7 +153,7 @@ async function createAndAddMarker(
     );
 
     // Add click listener to the marker
-    marker.addListener('click', () => {
+    marker.addEventListener('gmp-click', () => {
         const widgetContainer = weatherWidget.shadowRoot!.querySelector(
             '.widget-container'
         ) as HTMLDivElement;

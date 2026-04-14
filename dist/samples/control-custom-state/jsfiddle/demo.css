@@ -1,0 +1,38 @@
+/**
+ * @license
+ * Copyright 2026 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+
+/* 
+ * Optional: Makes the sample page fill the window. 
+ */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#btnCenterMap,
+#btnSetCenter {
+  background-color: #fff;
+  border: 2px solid #fff;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  float: left;
+  margin-bottom: 22px;
+  margin-top: 5px;
+  text-align: center;
+  color: rgb(25, 25, 25);
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 25px;
+}
+
+#btnSetCenter {
+  margin-left: 12px;
+}
+

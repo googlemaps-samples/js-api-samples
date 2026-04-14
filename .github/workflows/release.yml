@@ -31,7 +31,7 @@ jobs:
       GOOGLE_MAPS_JS_SAMPLES_KEY: "${{ secrets.GOOGLE_MAPS_JS_SAMPLES_KEY }}"
     steps:
       - name: Checkout main
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
           token: ${{ secrets.GH_MERGE_TOKEN }}
@@ -49,9 +49,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
+          node-version: '24.x'
 
       - run: npm i
 
@@ -63,13 +63,15 @@ jobs:
         if: steps.get_workspaces.outputs.changed_workspaces != ''
         run: |
           IFS=$'\n'
-          AFFECTED_WORKSPACES_ARRAY=(${{ steps.get_workspaces.outputs.changed_workspaces }})
+          AFFECTED_WORKSPACES_ARRAY=(${STEPS_GET_WORKSPACES_OUTPUTS_CHANGED_WORKSPACES})
           echo "Building affected workspaces:"
           for workspace in "${AFFECTED_WORKSPACES_ARRAY[@]}"; do
             echo "  - samples/$workspace"
             rm -rf dist/samples/$workspace
             (cd samples/ && npm run build --workspace=$workspace)
           done
+        env:
+          STEPS_GET_WORKSPACES_OUTPUTS_CHANGED_WORKSPACES: ${{ steps.get_workspaces.outputs.changed_workspaces }}
 
       - name: Copy Root Assets to Dist
         run: |

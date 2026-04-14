@@ -9,36 +9,30 @@
  */
 html,
 body {
-    display: flex; /* Use flexbox for layout */
-    justify-content: center; /* Center the content horizontally */
-    align-items: flex-start; /* Align items to the top */
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
     width: 100%;
 }
 
-h1 {
-    font-size: 16px;
-    text-align: center;
+gmp-map {
+    flex-grow: 1;
 }
 
-gmp-map {
-    height: 500px;
+.ui-panel {
+    width: 400px;
+    margin-left: 20px;
+    margin-top: 10px;
 }
 
 gmp-place-details {
-    border-radius: 0px;
-    margin: 20px;
-    width: 400px;
-    height: 500px;
-    margin-top: 0px;
-}
-
-gmp-advanced-marker {
-    display: none;
-}
-
-.widget-container {
-    min-width: 400px;
-    overflow-y: none;
-    overflow-x: none;
+    width: 100%;
+    margin: 0;
+    border: none;
 }
 

@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/hiding-features",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh hiding-features && bash ../app.sh hiding-features && bash ../docs.sh hiding-features && npm run build:vite --workspace=. && bash ../dist.sh hiding-features",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
