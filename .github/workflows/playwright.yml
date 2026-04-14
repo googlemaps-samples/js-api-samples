@@ -1,4 +1,4 @@
-# Copyright 2025 Google LLC
+# Copyright 2026 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -61,14 +61,23 @@ jobs:
         run: |
           bash samples/find-changes.sh ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
 
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if [ "${{ steps.get_workspaces.outputs.changed_workspaces }}" != "" ]; then
+            echo "HAS_CHANGES=true" >> $GITHUB_ENV
+          else
+            echo "HAS_CHANGES=false" >> $GITHUB_ENV
+          fi
+
       - name: Setup Node.js
-        if: steps.get_workspaces.outputs.changed_workspaces != ''
+        if: env.HAS_CHANGES == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '24.x'
 
       - name: Cache npm dependencies
-        if: steps.get_workspaces.outputs.changed_workspaces != ''
+        if: env.HAS_CHANGES == 'true'
         uses: actions/cache@v4
         with:
           path: ~/.npm
@@ -78,13 +87,13 @@ jobs:
 
       - name: Get Playwright Version
         id: playwright-version
-        if: steps.get_workspaces.outputs.changed_workspaces != ''
+        if: env.HAS_CHANGES == 'true'
         run: |
           echo "version=$(node -p "require('./package.json').devDependencies['@playwright/test']")" >> $GITHUB_OUTPUT
 
       - name: Cache Playwright browsers
         id: playwright-cache
-        if: steps.get_workspaces.outputs.changed_workspaces != ''
+        if: env.HAS_CHANGES == 'true'
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright # Default Playwright cache path
@@ -96,15 +105,15 @@ jobs:
           PLAYWRIGHT_BROWSERS_PATH: ~/.cache/ms-playwright
 
       - name: Install dependencies
-        if: steps.get_workspaces.outputs.changed_workspaces != ''
+        if: env.HAS_CHANGES == 'true'
         run: npm install
 
       - name: Install Playwright Browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true' && steps.get_workspaces.outputs.changed_workspaces != ''
+        if: steps.playwright-cache.outputs.cache-hit != 'true' && env.HAS_CHANGES == 'true'
         run: npx playwright install chromium --with-deps
       
       - name: Build Changed Workspaces
-        if: steps.get_workspaces.outputs.changed_workspaces != ''
+        if: env.HAS_CHANGES == 'true'
         run: |
           IFS=$'\n'
           CHANGED_WORKSPACES_ARRAY=(${STEPS_GET_WORKSPACES_OUTPUTS_CHANGED_WORKSPACES})
@@ -121,11 +130,11 @@ jobs:
       - name: Generate Index (Run Once After Builds)
         run: bash samples/generate-index.sh
         if: |
-          steps.get_workspaces.outputs.changed_workspaces != '' ||
+          env.HAS_CHANGES == 'true' ||
           contains(github.event.pull_request.paths.*, 'samples/generate-index.sh')
 
       - name: Run All Playwright Tests
-        if: steps.get_workspaces.outputs.changed_workspaces != ''
+        if: env.HAS_CHANGES == 'true'
         run: npx playwright test e2e/samples.spec.ts
         env:
           # Pass the correct base reference for find-changes.sh when called by samples.spec.ts
