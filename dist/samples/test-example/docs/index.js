@@ -1,7 +1,7 @@
 "use strict";
 /*
  * @license
- * Copyright 2025 Google LLC. All Rights Reserved.
+ * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 /*
@@ -10,7 +10,6 @@
  * test them. This way we can avoid making changes to published content.
  * And deliver us from evil.
  */
-// TEST COMMENT 222.2
 // [START maps_test_example]
 // Declare the gmp-map element.
 const mapElement = document.querySelector('gmp-map');
