@@ -44,6 +44,7 @@ async function initMap() {
     });
 
     const overlay = new GoogleMapsOverlay({
+        interleaved: false,
         layers: [flightsLayer],
     });
 
