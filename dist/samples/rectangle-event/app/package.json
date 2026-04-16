@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/rectangle-event",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh rectangle-event && bash ../app.sh rectangle-event && bash ../docs.sh rectangle-event && npm run build:vite --workspace=. && bash ../dist.sh rectangle-event",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
