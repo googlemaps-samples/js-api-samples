@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/event-properties",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh event-properties && bash ../app.sh event-properties && bash ../docs.sh event-properties && npm run build:vite --workspace=. && bash ../dist.sh event-properties",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
