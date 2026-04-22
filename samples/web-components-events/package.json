@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/web-components-events",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh web-components-events && bash ../app.sh web-components-events && bash ../docs.sh web-components-events && npm run build:vite --workspace=. && bash ../dist.sh web-components-events",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
