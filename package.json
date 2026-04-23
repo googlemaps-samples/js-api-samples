@@ -29,6 +29,6 @@
     "dotenv": "^17.4.2"
   },
   "overrides": {
-    "fast-xml-parser": "5.5.7"
+    "fast-xml-parser": "5.7.1"
   }
 }
