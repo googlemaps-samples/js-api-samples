@@ -22,7 +22,7 @@ async function initMap(): Promise<void> {
     map = new Map(document.getElementById('map') as HTMLElement, {
         center: { lat: -34.397, lng: 150.644 },
         zoom: 8,
-        renderingType: RenderingType.VECTOR,
+        renderingType: "VECTOR",
     });
 }
 
