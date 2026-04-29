@@ -5,7 +5,6 @@
  */
 
 // [START maps_3d_camera_center]
-
 async function initMap(): Promise<void> {
     // Import the needed libraries.
     await google.maps.importLibrary('maps3d');
@@ -23,15 +22,14 @@ async function initMap(): Promise<void> {
             // Place the camera at the marker's location, but 50m up in the air
             map3DElement.cameraPosition = { lat: initialCenter.lat, lng: initialCenter.lng, altitude: 50 };
             map3DElement.tilt = 80;
-            map3DElement.heading = -150;
             
             btn.textContent = 'Switch to Center Mode';
             isCenterMode = false;
         } else {
             // Revert back to Center Mode (looking AT the marker)
             map3DElement.center = initialCenter;
-            map3DElement.range = 1500;
             map3DElement.tilt = 70;
+            map3DElement.range = 1500; // Restore the original range value.
 
             btn.textContent = 'Switch to Camera Position';
             isCenterMode = true;
