@@ -211,10 +211,3 @@ jobs:
         with:
           name: Test Results
           path: test-results/
-
-      - name: Create Issue on Failure
-        if: failure()
-        run: |
-          gh issue create --title "Nightly Playwright Tests Failed" --body "The nightly E2E tests failed. Please check the logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-        env:
-          GH_TOKEN: ${{ github.token }}
