@@ -20,7 +20,7 @@ async function initMap(): Promise<void> {
         if (isCenterMode) {
             // Switch to Camera Position Mode.
             // Place the camera at the marker's location, but 50m up in the air
-            map3DElement.cameraPosition = { lat: initialCenter.lat, lng: initialCenter.lng, altitude: 50 };
+            map3DElement.cameraPosition = { ...initialCenter, altitude: 50 };
             map3DElement.tilt = 80;
             
             btn.textContent = 'Switch to Center Mode';
