@@ -2,7 +2,10 @@
 
 ## 3d-camera-center
 
-This sample demonstrates how to set the camera center, heading, tilt, and range on a 3D map declaratively.
+This sample demonstrates how camera positioning works in 3D.
+Click to toggle the camera position between:
+* center mode (looking at the marker - default)
+* camera position mode (camera positioned at the marker coordinates)
 
 ## Setup
 
