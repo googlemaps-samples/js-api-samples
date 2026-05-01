@@ -86,72 +86,54 @@ async function initMap(): Promise<void> {
         }, 2000);
     });
 
-    // Listen to slider changes.
-    const handleSliderInput = (e: Event, prop: string) => {
+    // Listen to slider changes using event delegation.
+    const panel = document.querySelector('.panel') as HTMLElement;
+
+    panel.addEventListener('input', (e) => {
+        const target = e.target as HTMLInputElement;
+        if (target.tagName !== 'INPUT') return;
+
         isUserInteracting = true;
-        const val = parseFloat((e.target as HTMLInputElement).value);
-        map3DElement[prop] = val;
-        updateUI();
-    };
+        const prop = target.name;
+        const val = parseFloat(target.value);
 
-    const resetInteraction = () => {
-        isUserInteracting = false;
-    };
-
-    headingSlider.addEventListener('input', (e) =>
-        handleSliderInput(e, 'heading')
-    );
-    headingSlider.addEventListener('change', resetInteraction);
-
-    tiltSlider.addEventListener('input', (e) => handleSliderInput(e, 'tilt'));
-    tiltSlider.addEventListener('change', resetInteraction);
-
-    rangeSlider.addEventListener('input', (e) => handleSliderInput(e, 'range'));
-    rangeSlider.addEventListener('change', resetInteraction);
-
-    fovSlider.addEventListener('input', (e) => handleSliderInput(e, 'fov'));
-    fovSlider.addEventListener('change', resetInteraction);
-
-    rollSlider.addEventListener('input', (e) => handleSliderInput(e, 'roll'));
-    rollSlider.addEventListener('change', resetInteraction);
-
-    latSlider.addEventListener('input', (e) => {
-        const val = parseFloat((e.target as HTMLInputElement).value);
-        const currentCenter = map3DElement.center;
-        map3DElement.center = {
-            lat: val,
-            lng: currentCenter.lng,
-            altitude: currentCenter.altitude,
-        };
+        if (prop === 'lat') {
+            const currentCenter = map3DElement.center;
+            map3DElement.center = {
+                lat: val,
+                lng: currentCenter.lng,
+                altitude: currentCenter.altitude,
+            };
+        } else if (prop === 'lng') {
+            const currentCenter = map3DElement.center;
+            map3DElement.center = {
+                lat: currentCenter.lat,
+                lng: val,
+                altitude: currentCenter.altitude,
+            };
+        } else if (prop === 'altitude') {
+            currentAltitude = val;
+            const currentCenter = map3DElement.center;
+            map3DElement.center = {
+                lat: currentCenter.lat,
+                lng: currentCenter.lng,
+                altitude: val,
+            };
+        } else {
+            // @ts-ignore
+            map3DElement[prop] = val;
+        }
         updateUI();
     });
 
-    lngSlider.addEventListener('input', (e) => {
-        const val = parseFloat((e.target as HTMLInputElement).value);
-        const currentCenter = map3DElement.center;
-        map3DElement.center = {
-            lat: currentCenter.lat,
-            lng: val,
-            altitude: currentCenter.altitude,
-        };
-        updateUI();
-    });
-
-    altitudeSlider.addEventListener('input', (e) => {
-        const val = parseFloat((e.target as HTMLInputElement).value);
-        currentAltitude = val;
-        const currentCenter = map3DElement.center;
-        map3DElement.center = {
-            lat: currentCenter.lat,
-            lng: currentCenter.lng,
-            altitude: val,
-        };
-        updateUI();
+    panel.addEventListener('change', (e) => {
+        const target = e.target as HTMLInputElement;
+        if (target.tagName === 'INPUT') {
+            isUserInteracting = false;
+        }
     });
 
     // Update UI on camera change events.
-    map3DElement.addEventListener('gmp-animationend', updateUI);
-    map3DElement.addEventListener('gmp-click', updateUI);
     map3DElement.addEventListener('gmp-centerchange', updateUI);
     map3DElement.addEventListener('gmp-headingchange', updateUI);
     map3DElement.addEventListener('gmp-tiltchange', updateUI);
