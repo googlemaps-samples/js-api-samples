@@ -26,12 +26,8 @@ async function initMap() {
 async function getPlaceDetails() {
     // Request needed libraries.
     const [{ AdvancedMarkerElement }, { Place }] = await Promise.all([
-        google.maps.importLibrary(
-            'marker'
-        ) as Promise<google.maps.MarkerLibrary>,
-        google.maps.importLibrary(
-            'places'
-        ) as Promise<google.maps.PlacesLibrary>,
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('places'),
     ]);
 
     // [START maps_ai_powered_summaries_basic_placeid]

@@ -13,13 +13,9 @@
 async function initMap(): Promise<void> {
     // Request needed libraries.
     const [{ InfoWindow }, { AdvancedMarkerElement }] = await Promise.all([
-        google.maps.importLibrary('maps') as Promise<google.maps.MapsLibrary>,
-        google.maps.importLibrary(
-            'marker'
-        ) as Promise<google.maps.MarkerLibrary>,
-        google.maps.importLibrary(
-            'places'
-        ) as Promise<google.maps.PlacesLibrary>,
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('places'),
     ]);
 
     const mapElement = document.querySelector(

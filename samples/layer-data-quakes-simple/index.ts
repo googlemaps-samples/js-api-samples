@@ -9,7 +9,7 @@ let innerMap;
 let earthquakeData;
 
 async function initMap() {
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
     const mapElement = document.querySelector(
         'gmp-map'

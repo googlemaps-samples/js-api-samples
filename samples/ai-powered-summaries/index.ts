@@ -50,9 +50,9 @@ async function initMap(): Promise<void> {
     });
 
     // Handle selection of an autocomplete result.
-    // prettier-ignore
-    // @ts-ignore
-    placeAutocomplete.addEventListener('gmp-select', async ({ placePrediction }) => {
+    placeAutocomplete.addEventListener(
+        'gmp-select',
+        async ({ placePrediction }) => {
             const place = placePrediction.toPlace();
 
             // Fetch all summary fields.

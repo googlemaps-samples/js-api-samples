@@ -12,7 +12,7 @@ const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
 let innerMap;
 
 async function initMap() {
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
     innerMap = mapElement.innerMap;
 
     const flightPlanCoordinates = [

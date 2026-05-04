@@ -11,14 +11,17 @@ let center = { lat: 51.55, lng: -1.8 };
 
 async function initMap(): Promise<void> {
     //  Request the needed libraries.
-    //prettier-ignore
-    //@ts-ignore
-    const [{Map}, {Place}, {AdvancedMarkerElement, PinElement}, {RouteMatrix}] = await Promise.all([
-    google.maps.importLibrary('maps') as Promise<google.maps.MapsLibrary>,
-    google.maps.importLibrary('places') as Promise<google.maps.PlacesLibrary>,
-    google.maps.importLibrary('marker') as Promise<google.maps.MarkerLibrary>,
-    google.maps.importLibrary('routes') as Promise<google.maps.RoutesLibrary>
-  ]);
+    const [
+        { Map },
+        { Place },
+        { AdvancedMarkerElement, PinElement },
+        { RouteMatrix },
+    ] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('places'),
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('routes'),
+    ]);
 
     const bounds = new google.maps.LatLngBounds();
 
@@ -74,7 +77,6 @@ async function initMap(): Promise<void> {
     for (const origin of request.origins) {
         if (origin.location) {
             const pin = new PinElement({
-                //@ts-ignore
                 glyphText: 'O',
                 glyphColor: 'white',
                 background: '#137333',
@@ -96,7 +98,6 @@ async function initMap(): Promise<void> {
         const destination = request.destinations[i];
         if (destination.location) {
             const pin = new PinElement({
-                //@ts-ignore
                 glyphText: 'D',
                 glyphColor: 'white',
                 background: '#C5221F',

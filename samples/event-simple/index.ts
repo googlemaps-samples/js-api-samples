@@ -7,8 +7,8 @@
 // [START maps_event_simple]
 async function initMap() {
     // Request needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
-    (await google.maps.importLibrary('marker')) as google.maps.MarkerLibrary;
+    await google.maps.importLibrary('maps');
+    await google.maps.importLibrary('marker');
 
     // Retrieve the map element.
     const mapElement = document.querySelector(

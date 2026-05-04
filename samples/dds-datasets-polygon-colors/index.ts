@@ -47,7 +47,7 @@ function setStyle(/* FeatureStyleFunctionOptions */ params) {
 
 async function initMap() {
     // Request needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
     // Get the inner map.
     innerMap = mapElement.innerMap;

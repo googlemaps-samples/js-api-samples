@@ -14,9 +14,7 @@
 let map: google.maps.Map;
 async function initMap(): Promise<void> {
     // Import the needed libraries
-    const { Map, RenderingType } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { Map, RenderingType } = await google.maps.importLibrary('maps');
 
     // Create a new map from the div with id="map".
     map = new Map(document.getElementById('map') as HTMLElement, {

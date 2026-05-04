@@ -17,8 +17,8 @@ let innerMap;
 
 async function initMap() {
     // Import the needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
-    (await google.maps.importLibrary('marker')) as google.maps.MarkerLibrary;
+    await google.maps.importLibrary('maps');
+    await google.maps.importLibrary('marker');
 
     innerMap = mapElement.innerMap;
 

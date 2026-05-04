@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <!--
  @license
  Copyright 2019 Google LLC. All Rights Reserved.
@@ -17,12 +17,14 @@
     </head>
     <body>
         <gmp-map center="-33.8688, 151.2195" zoom="13" map-id="DEMO_MAP_ID">
-            <gmp-place-autocomplete slot="control-inline-start-block-start"></gmp-place-autocomplete>
+            <gmp-place-autocomplete
+                slot="control-inline-start-block-start"></gmp-place-autocomplete>
         </gmp-map>
         <div id="infowindow-content">
             <span id="place-name" class="title"></span><br />
             <strong>Place ID:</strong> <span id="place-id"></span><br />
             <span id="place-address"></span>
         </div>
+    </body>
 </html>
 <!-- [END maps_places_placeid_finder] -->

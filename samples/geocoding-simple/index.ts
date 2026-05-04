@@ -16,15 +16,9 @@ async function initMap() {
     //  Request the needed libraries.
     const [{ Map, InfoWindow }, { Geocoder }, { AdvancedMarkerElement }] =
         await Promise.all([
-            google.maps.importLibrary(
-                'maps'
-            ) as Promise<google.maps.MapsLibrary>,
-            google.maps.importLibrary(
-                'geocoding'
-            ) as Promise<google.maps.GeocodingLibrary>,
-            google.maps.importLibrary(
-                'marker'
-            ) as Promise<google.maps.MarkerLibrary>,
+            google.maps.importLibrary('maps'),
+            google.maps.importLibrary('geocoding'),
+            google.maps.importLibrary('marker'),
         ]);
 
     // Get the gmp-map element.

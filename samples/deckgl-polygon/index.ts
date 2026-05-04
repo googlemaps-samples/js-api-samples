@@ -48,9 +48,7 @@ async function initMap(): Promise<void> {
     const position = { lat: 37.752954624496304, lng: -122.44754059928648 }; // Using the center from original deckgl-polygon.js
 
     //  Request needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { Map } = await google.maps.importLibrary('maps');
 
     const mapDiv = document.getElementById('map');
     if (!mapDiv) {

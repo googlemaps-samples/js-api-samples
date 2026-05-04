@@ -13,12 +13,9 @@ const center = { lat: 37.447646, lng: -122.113878 }; // Palo Alto, CA
 async function initMap(): Promise<void> {
     //  Request the needed libraries.
     const [{ Map }, { Place }, { Route }] = await Promise.all([
-        google.maps.importLibrary('maps') as Promise<google.maps.MapsLibrary>,
-        google.maps.importLibrary(
-            'places'
-        ) as Promise<google.maps.PlacesLibrary>,
-        //@ts-ignore
-        google.maps.importLibrary('routes') as Promise<google.maps.Routes>,
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('places'),
+        google.maps.importLibrary('routes'),
     ]);
 
     map = new Map(document.getElementById('map') as HTMLElement, {
@@ -117,9 +114,7 @@ async function initMap(): Promise<void> {
 
 // Helper function to fit the map to the path.
 async function fitMapToPath(path) {
-    const { LatLngBounds } = (await google.maps.importLibrary(
-        'core'
-    )) as google.maps.CoreLibrary;
+    const { LatLngBounds } = await google.maps.importLibrary('core');
     const bounds = new LatLngBounds();
     path.forEach((point) => {
         bounds.extend(point);

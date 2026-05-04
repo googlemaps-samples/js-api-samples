@@ -21,9 +21,7 @@ async function initMap(): Promise<void> {
         google.maps.importLibrary('marker'),
         google.maps.importLibrary('places'),
     ]);
-    const { InfoWindow } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { InfoWindow } = await google.maps.importLibrary('maps');
 
     await window.customElements.whenDefined('gmp-map');
     // Set the inner map options.

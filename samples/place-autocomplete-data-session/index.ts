@@ -47,9 +47,8 @@ async function makeAutocompleteRequest(inputEvent) {
     // To avoid race conditions, store the request ID and compare after the request.
     const requestId = ++newestRequestId;
 
-    const { AutocompleteSuggestion } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
+    const { AutocompleteSuggestion } =
+        await google.maps.importLibrary('places');
 
     if (!inputEvent.target?.value) {
         titleElement.textContent = '';
@@ -97,9 +96,7 @@ async function makeAutocompleteRequest(inputEvent) {
 
 // Event handler for clicking on a suggested place.
 async function onPlaceSelected(place: google.maps.places.Place) {
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
     await place.fetchFields({
         fields: ['displayName', 'formattedAddress', 'location'],
@@ -132,9 +129,8 @@ async function onPlaceSelected(place: google.maps.places.Place) {
 
 // Helper function to refresh the session token.
 async function refreshToken() {
-    const { AutocompleteSessionToken } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
+    const { AutocompleteSessionToken } =
+        await google.maps.importLibrary('places');
 
     // Increment the token counter.
     tokenCount++;
