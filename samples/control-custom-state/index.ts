@@ -16,8 +16,12 @@ async function initMap() {
     innerMap = mapElement.innerMap;
 
     // Get the button UI elements.
-    const setCenterButton = document.getElementById('btnCenterMap') as HTMLInputElement;
-    const resetCenterButton = document.getElementById('btnSetCenter') as HTMLInputElement;
+    const setCenterButton = document.getElementById(
+        'btnCenterMap'
+    ) as HTMLInputElement;
+    const resetCenterButton = document.getElementById(
+        'btnSetCenter'
+    ) as HTMLInputElement;
 
     // [START maps_control_custom_state_event_listeners]
     // Set up the click event listener for the 'Center Map' button. Set the map

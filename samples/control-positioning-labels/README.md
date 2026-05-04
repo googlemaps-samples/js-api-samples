@@ -33,7 +33,7 @@ From 'samples':
 ### Run lint to check for problems
 
 `cd samples/control-positioning-labels`
-`npx eslint index.ts` 
+`npx eslint index.ts`
 
 ## Feedback
 

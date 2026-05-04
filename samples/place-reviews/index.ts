@@ -68,8 +68,7 @@ async function initMap() {
         content.appendChild(review);
         content.appendChild(authorLink);
     } else {
-        content.textContent =
-            `No reviews were found for ${place.displayName}.`;
+        content.textContent = `No reviews were found for ${place.displayName}.`;
     }
 
     // Create an infowindow to display the review.

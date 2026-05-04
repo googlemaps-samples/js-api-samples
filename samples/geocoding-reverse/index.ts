@@ -47,7 +47,7 @@ async function initMap() {
         map: innerMap,
     });
 
-    marker.anchorTop = "40px";
+    marker.anchorTop = '40px';
 
     const geocoder = new Geocoder();
     const infowindow = new InfoWindow();

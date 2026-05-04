@@ -28,7 +28,10 @@ async function initMap() {
     innerMap.setTilt(30); // Set tilt after map initialization.
 
     // Set the path to the GeoJSON data file.
-    const dataUrl = new URL('./public/ne_10m_airports.geojson', import.meta.url).toString();
+    const dataUrl = new URL(
+        './public/ne_10m_airports.geojson',
+        import.meta.url
+    ).toString();
 
     const flightsLayer = new ArcLayer<Feature>({
         id: 'flights',

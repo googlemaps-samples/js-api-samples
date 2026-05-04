@@ -6,22 +6,26 @@
 
 // [START maps_event_properties]
 async function initMap() {
-  // Request needed libraries.
-  const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
+    // Request needed libraries.
+    const { Map } = (await google.maps.importLibrary(
+        'maps'
+    )) as google.maps.MapsLibrary;
 
-  const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-  const innerMap = mapElement.innerMap;
+    const mapElement = document.querySelector(
+        'gmp-map'
+    ) as google.maps.MapElement;
+    const innerMap = mapElement.innerMap;
 
-  const infowindow = new google.maps.InfoWindow({
-    content: "Change the zoom level",
-    position: mapElement.center,
-  });
+    const infowindow = new google.maps.InfoWindow({
+        content: 'Change the zoom level',
+        position: mapElement.center,
+    });
 
-  infowindow.open(innerMap);
+    infowindow.open(innerMap);
 
-  innerMap.addListener("zoom_changed", () => {
-    infowindow.setContent("Zoom: " + innerMap.getZoom()!);
-  });
+    innerMap.addListener('zoom_changed', () => {
+        infowindow.setContent('Zoom: ' + innerMap.getZoom()!);
+    });
 }
 
 initMap();

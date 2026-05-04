@@ -17,7 +17,6 @@ interface Data {
 // Set the path to the GeoJSON data file.
 const DATA_URL = new URL('./public/trips-v7.json', import.meta.url).toString();
 
-
 const LOOP_LENGTH = 1800;
 const VENDOR_COLORS: Color[] = [
     [255, 0, 0], // vendor #0
@@ -26,7 +25,7 @@ const VENDOR_COLORS: Color[] = [
 
 async function initMap() {
     // Request needed libraries.
-    await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
+    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
 
     // Get the gmp-map element.
     const mapElement = document.querySelector(
@@ -41,7 +40,7 @@ async function initMap() {
     let currentTime = 0;
     const props = {
         id: 'trips',
-        data: DATA_URL, 
+        data: DATA_URL,
         getPath: (d: Data) => d.path,
         getTimestamps: (d: Data) => d.timestamps,
         getColor: (d: Data) => VENDOR_COLORS[d.vendor],

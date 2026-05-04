@@ -38,7 +38,10 @@ async function initMap() {
 }
 
 // Helper function to show the info window.
-async function showInfoWindow(event: google.maps.IconMouseEvent, infowindow: google.maps.InfoWindow) {
+async function showInfoWindow(
+    event: google.maps.IconMouseEvent,
+    infowindow: google.maps.InfoWindow
+) {
     // Retrieve the place details for the selected POI.
     const place = await getPlaceDetails(event.placeId);
 

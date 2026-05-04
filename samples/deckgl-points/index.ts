@@ -23,12 +23,14 @@ interface EarthquakeProperties {
 /**
  * Validates that a feature has the properties we need for rendering.
  */
-function isEarthquake(f: Feature): f is Feature & { properties: EarthquakeProperties } {
-  return (
-    f.properties !== null &&
-    typeof f.properties === 'object' &&
-    typeof (f.properties as any).mag === 'number'
-  );
+function isEarthquake(
+    f: Feature
+): f is Feature & { properties: EarthquakeProperties } {
+    return (
+        f.properties !== null &&
+        typeof f.properties === 'object' &&
+        typeof (f.properties as any).mag === 'number'
+    );
 }
 
 // Initialize and add the map
@@ -54,7 +56,9 @@ async function initMap() {
                     }
                     return 0; // Fallback for invalid data.
                 },
-                getFillColor: (f: Feature): [number, number, number, number] => {
+                getFillColor: (
+                    f: Feature
+                ): [number, number, number, number] => {
                     return [255, 70, 30, 180]; // Default color for other earthquakes.
                 },
                 autoHighlight: true,

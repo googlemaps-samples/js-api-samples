@@ -13,45 +13,80 @@ function setStyle(/* FeatureStyleFunctionOptions */ params) {
     // Get the dataset feature, so we can work with all of its attributes.
     const datasetFeature = params.feature;
     // Get all of the needed dataset attributes.
-    const furColors = datasetFeature.datasetAttributes['CombinationofPrimaryandHighlightColor'];
+    const furColors =
+        datasetFeature.datasetAttributes[
+            'CombinationofPrimaryandHighlightColor'
+        ];
     // [END maps_dds_datasets_point_style_get_features]
 
     // Apply styles. Fill is primary fur color, stroke is secondary fur color.
     switch (furColors) {
         case 'Black+':
-            return /* FeatureStyleOptions */ { fillColor: 'black', pointRadius: 8 };
+            return /* FeatureStyleOptions */ {
+                fillColor: 'black',
+                pointRadius: 8,
+            };
             break;
         case 'Cinnamon+':
-            return /* FeatureStyleOptions */ { fillColor: '#8b0000', pointRadius: 8 };
+            return /* FeatureStyleOptions */ {
+                fillColor: '#8b0000',
+                pointRadius: 8,
+            };
             break;
         case 'Cinnamon+Gray':
-            return /* FeatureStyleOptions */ { fillColor: '#8b0000', strokeColor: 'gray', pointRadius: 6 };
+            return /* FeatureStyleOptions */ {
+                fillColor: '#8b0000',
+                strokeColor: 'gray',
+                pointRadius: 6,
+            };
             break;
         case 'Cinnamon+White':
-            return /* FeatureStyleOptions */ { fillColor: '#8b0000', strokeColor: 'white', pointRadius: 6 };
+            return /* FeatureStyleOptions */ {
+                fillColor: '#8b0000',
+                strokeColor: 'white',
+                pointRadius: 6,
+            };
             break;
         case 'Gray+':
-            return /* FeatureStyleOptions */ { fillColor: 'gray', pointRadius: 8 };
+            return /* FeatureStyleOptions */ {
+                fillColor: 'gray',
+                pointRadius: 8,
+            };
             break;
         case 'Gray+Cinnamon':
-            return /* FeatureStyleOptions */ { fillColor: 'gray', strokeColor: '#8b0000', pointRadius: 6 };
+            return /* FeatureStyleOptions */ {
+                fillColor: 'gray',
+                strokeColor: '#8b0000',
+                pointRadius: 6,
+            };
             break;
         case 'Gray+Cinnamon, White':
-            return /* FeatureStyleOptions */ { fillColor: 'silver', strokeColor: '#8b0000', pointRadius: 6 };
+            return /* FeatureStyleOptions */ {
+                fillColor: 'silver',
+                strokeColor: '#8b0000',
+                pointRadius: 6,
+            };
             break;
         case 'Gray+White':
-            return /* FeatureStyleOptions */ { fillColor: 'gray', strokeColor: 'white', pointRadius: 6 };
+            return /* FeatureStyleOptions */ {
+                fillColor: 'gray',
+                strokeColor: 'white',
+                pointRadius: 6,
+            };
             break;
         default: // Color not defined.
-            return /* FeatureStyleOptions */ { fillColor: 'yellow', pointRadius: 8 };
-            break; 
+            return /* FeatureStyleOptions */ {
+                fillColor: 'yellow',
+                pointRadius: 8,
+            };
+            break;
     }
 }
 // [END maps_dds_datasets_point_style_function]
 
 async function initMap() {
     // Request needed libraries.
-    await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
+    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
 
     // Get the inner map.
     innerMap = mapElement.innerMap;
@@ -70,11 +105,11 @@ async function initMap() {
 // Creates a legend for the map.
 async function makeLegend(innerMap) {
     let colors = {
-        'black': ['black'],
-        'cinnamon': ['#8b0000'],
-        'cinnamon + gray': ['#8b0000','gray'],
+        black: ['black'],
+        cinnamon: ['#8b0000'],
+        'cinnamon + gray': ['#8b0000', 'gray'],
         'cinnamon + white': ['#8b0000', 'white'],
-        'gray': ['gray'],
+        gray: ['gray'],
         'gray + cinnamon': ['gray', '#8b0000'],
         'gray + cinnamon + white': ['silver', '#8b0000'],
         'gray + white': ['gray', 'white'],

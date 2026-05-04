@@ -12,7 +12,9 @@ async function initMap(): Promise<void> {
     const flattener = document.querySelector('gmp-flattener') as Element;
     map.append(flattener);
 
-    const toggleButton = document.getElementById('toggleButton') as HTMLButtonElement;
+    const toggleButton = document.getElementById(
+        'toggleButton'
+    ) as HTMLButtonElement;
     toggleButton.addEventListener('click', () => {
         if (flattener.isConnected) {
             flattener.remove();
@@ -22,7 +24,6 @@ async function initMap(): Promise<void> {
             toggleButton.textContent = 'Disable Flattener';
         }
     });
-
 }
 
 initMap();

@@ -10,7 +10,9 @@ async function initMap(): Promise<void> {
     await google.maps.importLibrary('maps3d');
 
     // @ts-ignore
-    const map3DElement = document.querySelector('gmp-map-3d') as google.maps.Map3DElement;
+    const map3DElement = document.querySelector(
+        'gmp-map-3d'
+    ) as google.maps.Map3DElement;
     const btn = document.getElementById('switch-mode-btn') as HTMLButtonElement;
 
     const initialCenter = { lat: 40.7860524, lng: -73.9634983, altitude: 0 };
@@ -22,7 +24,7 @@ async function initMap(): Promise<void> {
             // Place the camera at the marker's location, but 50m up in the air
             map3DElement.cameraPosition = { ...initialCenter, altitude: 50 };
             map3DElement.tilt = 80;
-            
+
             btn.textContent = 'Switch to Center Mode';
             isCenterMode = false;
         } else {
