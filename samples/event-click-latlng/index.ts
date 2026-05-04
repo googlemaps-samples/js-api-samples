@@ -10,13 +10,11 @@ async function initMap() {
     await google.maps.importLibrary('maps');
 
     // Set up the map.
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
     const innerMap = mapElement.innerMap;
 
     // Get the initial center of the map.
-    const position = innerMap.getCenter() as google.maps.LatLng;
+    const position = innerMap.getCenter();
 
     // Create the initial InfoWindow.
     let infoWindow = new google.maps.InfoWindow({

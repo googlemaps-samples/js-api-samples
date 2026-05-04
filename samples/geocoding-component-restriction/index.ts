@@ -13,9 +13,7 @@ async function initMap(): Promise<void> {
     ]);
 
     const geocoder = new google.maps.Geocoder();
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
     const innerMap = mapElement.innerMap;
 
     (document.getElementById('submit') as HTMLElement).addEventListener(

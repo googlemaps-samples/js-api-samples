@@ -9,12 +9,8 @@ const mapElement = document.querySelector('gmp-map')!;
 
 async function initMap() {
     // Request needed libraries.
-    const { Map, InfoWindow } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
     const infoWindow = new InfoWindow();
 
@@ -28,7 +24,7 @@ async function initMap() {
     // [END maps_advanced_markers_draggable_marker]
 
     draggableMarker.addListener('dragend', (event) => {
-        const position = draggableMarker.position as google.maps.LatLng;
+        const position = draggableMarker.position;
         infoWindow.close();
         infoWindow.setContent(
             `Pin dropped at: ${position.lat}, ${position.lng}`

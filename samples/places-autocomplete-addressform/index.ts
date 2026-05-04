@@ -17,9 +17,7 @@ let address2Field: HTMLInputElement;
 let postalField: HTMLInputElement;
 
 async function initAutocomplete() {
-    const { Place, Autocomplete } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
+    const { Place, Autocomplete } = await google.maps.importLibrary('places');
 
     placeAutocomplete = document.querySelector('gmp-place-autocomplete')!;
     address1Field = document.querySelector('#address1')! as HTMLInputElement;
@@ -49,9 +47,7 @@ async function initAutocomplete() {
 async function fillInAddress(placePrediction) {
     // The placePrediction object does not have all the details needed
     // for the form, so we'll call fetchFields to get the place details.
-    const { Place } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
+    const { Place } = await google.maps.importLibrary('places');
     const place = placePrediction.toPlace();
     await place.fetchFields({ fields: ['addressComponents'] });
 

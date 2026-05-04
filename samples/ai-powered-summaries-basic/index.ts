@@ -10,9 +10,7 @@ let innerMap;
 let infoWindow;
 
 async function initMap() {
-    const { Map, InfoWindow } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
 
     innerMap = mapElement.innerMap;
     innerMap.setOptions({

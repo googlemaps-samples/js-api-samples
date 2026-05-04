@@ -95,6 +95,7 @@ async function addMarkers() {
     }
 
     for (const place of placeSearch.places) {
+        if (!place.location) continue;
         const marker = new AdvancedMarkerElement({
             map: map.innerMap,
             position: place.location,

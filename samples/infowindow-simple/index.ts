@@ -14,9 +14,7 @@ async function initMap(): Promise<void> {
     await google.maps.importLibrary('marker');
 
     // Get the map element and the inner map from it.
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
     const innerMap = mapElement.innerMap;
 
     // Get the center of the map.

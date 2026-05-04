@@ -49,7 +49,7 @@ let googleMapsOverlay: deck.GoogleMapsOverlay;
 async function initMap(): Promise<void> {
     // Progress bar logic moved from index.html
     var progress,
-        progressDiv = document.querySelector('.mdc-linear-progress');
+        progressDiv = document.querySelector('.mdc-linear-progress')!;
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
@@ -69,9 +69,7 @@ async function initMap(): Promise<void> {
     const position = { lat: 19.223718899391237, lng: -148.62590882823457 };
 
     //  Request needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { Map } = await google.maps.importLibrary('maps');
 
     const mapDiv = document.getElementById('map');
     if (!mapDiv) {

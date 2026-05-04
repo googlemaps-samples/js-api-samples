@@ -28,7 +28,7 @@ declare namespace deck {
 async function initMap(): Promise<void> {
     // Progress bar logic moved from index.html
     var progress,
-        progressDiv = document.querySelector('.mdc-linear-progress');
+        progressDiv = document.querySelector('.mdc-linear-progress')!;
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.

@@ -7,13 +7,9 @@
 // [START maps_event_properties]
 async function initMap() {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { Map } = await google.maps.importLibrary('maps');
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
     const innerMap = mapElement.innerMap;
 
     const infowindow = new google.maps.InfoWindow({

@@ -19,12 +19,8 @@ let allMarkers: google.maps.marker.AdvancedMarkerElement[] = []; // To store all
 let markersLoaded = false; // Flag to track if button markers are loaded
 
 async function initMap(): Promise<void> {
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    const { Map } = await google.maps.importLibrary('maps');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
     map = new Map(document.getElementById('map') as HTMLElement, {
         center: { lat: 48.8566, lng: 2.3522 }, // Set center to Paris initially, will change based on markers
@@ -120,9 +116,7 @@ async function createAndAddMarker(
     location: { name: string; lat: number; lng: number },
     markerType: 'initial' | 'button' | 'dynamic'
 ): Promise<void> {
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
     const weatherWidget = document.createElement(
         'simple-weather-widget'
@@ -216,9 +210,7 @@ async function toggleDarkMode() {
     });
 
     // Re-initialize the map to apply the new map ID
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { Map } = await google.maps.importLibrary('maps');
     const currentCenter = map.getCenter();
     const currentZoom = map.getZoom();
     const currentMapId = mapContainer.classList.contains('dark-mode')
@@ -325,9 +317,7 @@ const locations = [
 ];
 
 async function loadWeatherMarkers(): Promise<void> {
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
     for (const location of locations) {
         await createAndAddMarker(location, 'button'); // Create and add button markers

@@ -8,12 +8,8 @@
 // [START maps_advanced_markers_html_snippet]
 async function initMap() {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    const { Map } = await google.maps.importLibrary('maps');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
     const center = { lat: 37.43238031167444, lng: -122.16795397128632 };
     const map = new Map(document.getElementById('map') as HTMLElement, {

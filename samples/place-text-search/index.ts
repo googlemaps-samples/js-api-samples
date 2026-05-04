@@ -10,9 +10,7 @@ let markers = {};
 let infoWindow;
 
 async function initMap() {
-    const { Map, InfoWindow } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
 
     const center = { lat: 37.4161493, lng: -122.0812166 };
     map = new Map(document.getElementById('map') as HTMLElement, {
@@ -43,12 +41,8 @@ async function initMap() {
 }
 
 async function findPlaces(query) {
-    const { Place } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    const { Place } = await google.maps.importLibrary('places');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
     // [START maps_place_text_search_request]
     const request = {
         textQuery: query,
@@ -67,9 +61,7 @@ async function findPlaces(query) {
     // [END maps_place_text_search_request]
 
     if (places.length) {
-        const { LatLngBounds } = (await google.maps.importLibrary(
-            'core'
-        )) as google.maps.CoreLibrary;
+        const { LatLngBounds } = await google.maps.importLibrary('core');
         const bounds = new LatLngBounds();
 
         // First remove all existing markers.

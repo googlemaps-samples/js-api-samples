@@ -12,9 +12,7 @@ async function initMap() {
         await google.maps.importLibrary('marker');
     const { Place } = await google.maps.importLibrary('places');
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     // [START maps_advanced_markers_graphics_inline]
     const parser = new DOMParser();

@@ -10,9 +10,7 @@ let innerMap;
 async function initMap() {
     await google.maps.importLibrary('maps');
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     innerMap = mapElement.innerMap;
 

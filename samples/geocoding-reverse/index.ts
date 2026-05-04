@@ -16,9 +16,7 @@ async function initMap() {
         ]);
 
     // Get the gmp-map element.
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     // Get the inner map.
     const innerMap = mapElement.innerMap;

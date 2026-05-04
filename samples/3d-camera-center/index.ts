@@ -9,10 +9,7 @@ async function initMap(): Promise<void> {
     // Import the needed libraries.
     await google.maps.importLibrary('maps3d');
 
-    // @ts-ignore
-    const map3DElement = document.querySelector(
-        'gmp-map-3d'
-    ) as google.maps.Map3DElement;
+    const map3DElement = document.querySelector('gmp-map-3d')!;
     const btn = document.getElementById('switch-mode-btn') as HTMLButtonElement;
 
     const initialCenter = { lat: 40.7860524, lng: -73.9634983, altitude: 0 };

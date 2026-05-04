@@ -12,9 +12,7 @@ async function initMap() {
     await google.maps.importLibrary('maps');
 
     // Retrieve the map element.
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     // Get the inner map from the map element.
     innerMap = mapElement.innerMap;
@@ -74,9 +72,7 @@ async function showInfoWindow(
 // Helper function to get place details.
 async function getPlaceDetails(placeId) {
     // Import the Places library.
-    const { Place } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
+    const { Place } = await google.maps.importLibrary('places');
 
     // Create a Place instance with the place id and fetch the details.
     const place = new Place({ id: placeId });

@@ -7,24 +7,18 @@
 
 const placeAutocompleteElement = document.querySelector(
     'gmp-basic-place-autocomplete'
-) as google.maps.places.PlaceAutocompleteElement;
+)!;
 const placeDetailsElement = document.querySelector(
     'gmp-place-details-compact'
-) as any;
+)!;
 const placeDetailsParent = placeDetailsElement.parentElement as HTMLElement;
-const gmpMapElement = document.querySelector(
-    'gmp-map'
-) as google.maps.MapElement;
+const gmpMapElement = document.querySelector('gmp-map')!;
 
 async function initMap(): Promise<void> {
     // Asynchronously load required libraries from the Google Maps JS API.
     await google.maps.importLibrary('places');
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
-    const { InfoWindow } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+    const { InfoWindow } = await google.maps.importLibrary('maps');
 
     // Get the initial center directly from the gmp-map element's property.
     const center = gmpMapElement.center;
@@ -75,8 +69,7 @@ async function initMap(): Promise<void> {
 
     // Event listener for when the place details have finished loading.
     placeDetailsElement.addEventListener('gmp-load', () => {
-        const location = placeDetailsElement.place
-            .location as google.maps.LatLng;
+        const location = placeDetailsElement.place.location;
 
         // Position the marker and open the InfoWindow at the place's location.
         advancedMarkerElement.position = location;
@@ -96,7 +89,7 @@ async function initMap(): Promise<void> {
 
     // Event listener for when the map finishes moving (panning or zooming).
     map.addListener('idle', (): void => {
-        const newCenter = map.getCenter() as google.maps.LatLng;
+        const newCenter = map.getCenter();
 
         // Update the autocomplete's location bias to a 10km radius around the new map center.
         placeAutocompleteElement.locationBias = new google.maps.Circle({

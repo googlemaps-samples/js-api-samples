@@ -35,7 +35,7 @@ async function init() {
         google.maps.importLibrary('routes'),
     ]);
 
-    const map = document.getElementById('map') as google.maps.MapElement;
+    const map = document.getElementById('map');
 
     attachSubmitListener();
     initializeLocationInputs();
@@ -93,7 +93,7 @@ async function init() {
         const travelMode =
             (formData.get('travel_mode') as string) === ''
                 ? undefined
-                : (formData.get('travel_mode') as google.maps.TravelMode);
+                : formData.get('travel_mode');
         const extraComputations: google.maps.routes.ComputeRoutesExtraComputation[] =
             [];
         const requestedReferenceRoutes: google.maps.routes.ReferenceRoute[] =
@@ -127,19 +127,15 @@ async function init() {
                 ),
                 (input) => (input as HTMLInputElement).value
             ),
-            travelMode: travelMode as google.maps.TravelMode,
+            travelMode: travelMode,
             routingPreference:
                 formData.get('routing_preference') === ''
                     ? undefined
-                    : (formData.get(
-                          'routing_preference'
-                      ) as google.maps.routes.RoutingPreference),
+                    : formData.get('routing_preference'),
             polylineQuality:
                 formData.get('polyline_quality') === ''
                     ? undefined
-                    : (formData.get(
-                          'polyline_quality'
-                      ) as google.maps.routes.PolylineQuality),
+                    : formData.get('polyline_quality'),
             computeAlternativeRoutes:
                 formData.get('compute_alternative_routes') === 'on',
             routeModifiers: {
@@ -172,12 +168,8 @@ async function init() {
             extraComputations.push(
                 ComputeRoutesExtraComputation.FUEL_CONSUMPTION
             );
-            (
-                request.routeModifiers as google.maps.routes.RouteModifiers
-            ).vehicleInfo = {
-                emissionType: formData.get(
-                    'emission_type'
-                ) as google.maps.routes.VehicleEmissionType,
+            request.routeModifiers.vehicleInfo = {
+                emissionType: formData.get('emission_type'),
             };
         }
 
@@ -187,15 +179,12 @@ async function init() {
             );
             transitPreference.allowedTransitModes = Array.from(
                 selectedTransitModes,
-                (input) =>
-                    (input as HTMLInputElement).value as google.maps.TransitMode
+                (input) => (input as HTMLInputElement).value
             );
             transitPreference.routingPreference =
                 formData.get('transit_preference') === ''
                     ? undefined
-                    : (formData.get(
-                          'transit_preference'
-                      ) as google.maps.TransitRoutePreference);
+                    : formData.get('transit_preference');
         }
 
         return request;

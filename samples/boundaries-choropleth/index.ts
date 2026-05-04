@@ -10,9 +10,7 @@ async function initMap() {
     await google.maps.importLibrary('maps');
 
     // Get the gmp-map element.
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     // Get the inner map.
     const innerMap = mapElement.innerMap;
@@ -23,8 +21,7 @@ async function initMap() {
 
     // [START maps_boundaries_choropleth_style_function]
     featureLayer.style = (featureStyleFunctionOptions) => {
-        const placeFeature =
-            featureStyleFunctionOptions.feature as google.maps.PlaceFeature;
+        const placeFeature = featureStyleFunctionOptions.feature;
         const population = states[placeFeature.placeId];
 
         let fillColor;

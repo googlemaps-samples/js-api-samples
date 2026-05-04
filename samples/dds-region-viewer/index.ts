@@ -45,9 +45,7 @@ async function initMap() {
     });
 
     // Create the Place Autocomplete widget.
-    placeAutocomplete = document.querySelector(
-        'gmp-place-autocomplete'
-    ) as google.maps.places.PlaceAutocompleteElement;
+    placeAutocomplete = document.querySelector('gmp-place-autocomplete')!;
     placeAutocomplete.includedPrimaryTypes = ['(regions)'];
 
     contentDiv = document.getElementById('pac-content') as HTMLElement;
@@ -350,9 +348,7 @@ function handlePlaceClick(event) {
 
 // Get the place ID for the selected country, then call showSelectedPolygon().
 async function showSelectedCountry(countryName) {
-    const { Place } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
+    const { Place } = await google.maps.importLibrary('places');
 
     contentDiv.textContent = '';
 
@@ -372,9 +368,7 @@ async function showSelectedCountry(countryName) {
 // mode 0 = click, mode 1 = autocomplete.
 async function showSelectedPolygon(placeid, mode) {
     let isFeatureSupported;
-    const { Place } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
+    const { Place } = await google.maps.importLibrary('places');
     selectedPlaceId = placeid;
     contentDiv.textContent = ''; // Clear the info display.
 
@@ -405,7 +399,7 @@ async function showSelectedPolygon(placeid, mode) {
             featureMenu.value
         );
     }
-    var viewport = place.viewport as google.maps.LatLngBounds;
+    var viewport = place.viewport;
     innerMap.fitBounds(viewport, 155);
 
     // Build the HTML.

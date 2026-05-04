@@ -13,12 +13,8 @@ let typeSelect;
 let infoWindow;
 
 async function initMap() {
-    const { Map, InfoWindow } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { LatLng } = (await google.maps.importLibrary(
-        'core'
-    )) as google.maps.CoreLibrary;
+    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
+    const { LatLng } = await google.maps.importLibrary('core');
 
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
@@ -41,15 +37,9 @@ async function initMap() {
 
 async function nearbySearch() {
     const { Place, SearchNearbyRankPreference } =
-        (await google.maps.importLibrary(
-            'places'
-        )) as google.maps.PlacesLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
-    const { spherical } = (await google.maps.importLibrary(
-        'geometry'
-    )) as google.maps.GeometryLibrary;
+        await google.maps.importLibrary('places');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+    const { spherical } = await google.maps.importLibrary('geometry');
     // [START maps_place_nearby_search_request]
     // Get bounds and radius to constrain search.
     center = mapElement.center;
@@ -81,9 +71,7 @@ async function nearbySearch() {
     // [END maps_place_nearby_search_request]
 
     if (places.length) {
-        const { LatLngBounds } = (await google.maps.importLibrary(
-            'core'
-        )) as google.maps.CoreLibrary;
+        const { LatLngBounds } = await google.maps.importLibrary('core');
         const bounds = new LatLngBounds();
 
         // First remove all existing markers.

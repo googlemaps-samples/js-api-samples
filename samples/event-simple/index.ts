@@ -11,9 +11,7 @@ async function initMap() {
     await google.maps.importLibrary('marker');
 
     // Retrieve the map element.
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     // Get the inner map from the map element.
     const innerMap = mapElement.innerMap;
@@ -31,14 +29,14 @@ async function initMap() {
         // 3 seconds after the center of the map has changed,
         // pan back to the marker.
         window.setTimeout(() => {
-            innerMap.panTo(marker.position as google.maps.LatLng);
+            innerMap.panTo(marker.position);
         }, 3000);
     });
 
     // Zoom in when the marker is clicked.
     marker.addEventListener('gmp-click', () => {
         innerMap.setZoom(8);
-        innerMap.setCenter(marker.position as google.maps.LatLng);
+        innerMap.setCenter(marker.position);
     });
 }
 

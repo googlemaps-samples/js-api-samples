@@ -19,7 +19,7 @@ async function initMap(): Promise<void> {
     ]);
 
     const mapElement = document.querySelector('gmp-map')!;
-    const map = mapElement.innerMap as google.maps.Map;
+    const map = mapElement.innerMap;
 
     const placeAutocomplete = document.querySelector('gmp-place-autocomplete')!;
 

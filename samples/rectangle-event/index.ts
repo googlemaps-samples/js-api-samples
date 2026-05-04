@@ -17,9 +17,7 @@ let infoWindow: google.maps.InfoWindow;
 async function initMap(): Promise<void> {
     await google.maps.importLibrary('maps');
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
     innerMap = mapElement.innerMap;
 
     const bounds = {

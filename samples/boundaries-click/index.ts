@@ -27,14 +27,10 @@ function handleMouseMove(/* MouseEvent */ e) {
 
 async function initMap() {
     // Request needed libraries.
-    const { Map, InfoWindow } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
 
     // Get the gmp-map element.
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     // Get the inner map.
     innerMap = mapElement.innerMap;

@@ -15,9 +15,7 @@ async function initMap() {
     // Set the location of Astor Place.
     const astorPlace = { lat: 40.729884, lng: -73.990988 };
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     innerMap = mapElement.innerMap;
 

@@ -14,9 +14,7 @@ async function initMap(): Promise<void> {
         google.maps.importLibrary('marker'),
     ]);
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
     const innerMap = mapElement.innerMap;
     const geocoder = new google.maps.Geocoder();
 

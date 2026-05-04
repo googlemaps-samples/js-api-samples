@@ -14,12 +14,9 @@ async function initMap(): Promise<void> {
 
     const advancedMarkers = document.querySelectorAll(
         '#marker-click-event-example gmp-advanced-marker'
-    );
+    ) as Iterable<google.maps.marker.AdvancedMarkerElement>;
 
-    for (const markerElement of advancedMarkers) {
-        const advancedMarker =
-            markerElement as google.maps.marker.AdvancedMarkerElement;
-
+    for (const advancedMarker of advancedMarkers) {
         customElements.whenDefined(advancedMarker.localName).then(async () => {
             advancedMarker.addEventListener('gmp-click', () => {
                 const infoWindow = new google.maps.InfoWindow({
