@@ -15,7 +15,6 @@ async function initMap(): Promise<void> {
     const [{ Map }, { Place }, { Route }] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('places'),
-        //@ts-ignore
         google.maps.importLibrary('routes'),
     ]);
 

@@ -77,7 +77,6 @@ async function initMap(): Promise<void> {
     for (const origin of request.origins) {
         if (origin.location) {
             const pin = new PinElement({
-                //@ts-ignore
                 glyphText: 'O',
                 glyphColor: 'white',
                 background: '#137333',
@@ -99,7 +98,6 @@ async function initMap(): Promise<void> {
         const destination = request.destinations[i];
         if (destination.location) {
             const pin = new PinElement({
-                //@ts-ignore
                 glyphText: 'D',
                 glyphColor: 'white',
                 background: '#C5221F',
