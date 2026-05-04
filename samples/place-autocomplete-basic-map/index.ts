@@ -69,7 +69,11 @@ async function initMap(): Promise<void> {
 
     // Event listener for when the place details have finished loading.
     placeDetailsElement.addEventListener('gmp-load', () => {
-        const location = placeDetailsElement.place.location;
+        const location = placeDetailsElement.place?.location;
+        if (!location) {
+            advancedMarkerElement.position = null;
+            return;
+        }
 
         // Position the marker and open the InfoWindow at the place's location.
         advancedMarkerElement.position = location;
@@ -93,10 +97,7 @@ async function initMap(): Promise<void> {
 
         // Update the autocomplete's location bias to a 10km radius around the new map center.
         placeAutocompleteElement.locationBias = new google.maps.Circle({
-            center: {
-                lat: newCenter.lat(),
-                lng: newCenter.lng(),
-            },
+            center: newCenter,
             radius: 10000, // 10km in meters.
         });
     });

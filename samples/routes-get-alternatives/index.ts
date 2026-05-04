@@ -33,7 +33,7 @@ async function getDirections() {
     // [START maps_routes_get_alternatives_request_full]
     // [START maps_routes_get_alternatives_request]
     // Build a request.
-    const request = {
+    const request: google.maps.routes.ComputeRoutesRequest = {
         origin: 'San Francisco, CA',
         destination: 'Sunset Dr Pacific Grove, CA 93950',
         travelMode: 'DRIVING',

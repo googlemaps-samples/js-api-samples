@@ -53,9 +53,11 @@ async function initMap(): Promise<void> {
     ]);
 
     // [START maps_routes_route_matrix_request]
-    const request = {
-        origins: [origin1, origin2],
-        destinations: [destinationA, destinationB],
+    const destinations = [destinationA, destinationB];
+    const origins = [origin1, origin2];
+    const request: google.maps.routes.ComputeRouteMatrixRequest = {
+        origins,
+        destinations,
         travelMode: 'DRIVING',
         units: google.maps.UnitSystem.METRIC,
         fields: ['distanceMeters', 'durationMillis', 'condition'],
@@ -74,7 +76,7 @@ async function initMap(): Promise<void> {
         JSON.stringify(response, null, 2);
 
     // Add markers for the origins.
-    for (const origin of request.origins) {
+    for (const origin of origins) {
         if (origin.location) {
             const pin = new PinElement({
                 glyphText: 'O',
@@ -85,17 +87,17 @@ async function initMap(): Promise<void> {
             const marker = new AdvancedMarkerElement({
                 map,
                 position: origin.location,
-                content: pin.element,
                 title: `Origin: ${origin.displayName}`,
             });
+            marker.append(pin);
             markers.push(marker);
             bounds.extend(origin.location);
         }
     }
 
     // Add markers for the destinations.
-    for (let i = 0; i < request.destinations.length; i++) {
-        const destination = request.destinations[i];
+    for (let i = 0; i < destinations.length; i++) {
+        const destination = destinations[i];
         if (destination.location) {
             const pin = new PinElement({
                 glyphText: 'D',

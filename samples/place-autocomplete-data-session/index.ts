@@ -8,7 +8,7 @@
 const mapElement = document.querySelector('gmp-map')!;
 let innerMap: google.maps.Map;
 let marker: google.maps.marker.AdvancedMarkerElement;
-let titleElement = document.querySelector('.title')!;
+let titleElement = document.querySelector('.title') as HTMLElement;
 let resultsContainerElement = document.querySelector('.results')!;
 let inputElement = document.querySelector('input')!;
 let tokenStatusElement = document.querySelector('.token-status')!;

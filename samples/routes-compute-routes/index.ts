@@ -26,6 +26,7 @@ async function init() {
     const [
         { InfoWindow },
         { AdvancedMarkerElement },
+        // @ts-expect-error - currently missing. bug fix pending
         { PlaceAutocompleteElement },
         { ComputeRoutesExtraComputation, ReferenceRoute, Route, RouteLabel },
     ] = await Promise.all([
@@ -35,7 +36,7 @@ async function init() {
         google.maps.importLibrary('routes'),
     ]);
 
-    const map = document.getElementById('map');
+    const map = document.getElementById('map') as google.maps.MapElement;
 
     attachSubmitListener();
     initializeLocationInputs();
@@ -100,7 +101,7 @@ async function init() {
             [];
         const transitPreference: google.maps.routes.TransitPreference = {};
 
-        const request = {
+        const request: google.maps.routes.ComputeRoutesRequest = {
             origin: {
                 location: buildComputeRoutesLocation(
                     originAutocompleteSelection,
@@ -127,15 +128,19 @@ async function init() {
                 ),
                 (input) => (input as HTMLInputElement).value
             ),
-            travelMode: travelMode,
+            travelMode: travelMode as google.maps.TravelMode,
             routingPreference:
                 formData.get('routing_preference') === ''
                     ? undefined
-                    : formData.get('routing_preference'),
+                    : (formData.get(
+                          'routing_preference'
+                      ) as google.maps.routes.RoutingPreference),
             polylineQuality:
                 formData.get('polyline_quality') === ''
                     ? undefined
-                    : formData.get('polyline_quality'),
+                    : (formData.get(
+                          'polyline_quality'
+                      ) as google.maps.routes.PolylineQuality),
             computeAlternativeRoutes:
                 formData.get('compute_alternative_routes') === 'on',
             routeModifiers: {
@@ -168,8 +173,10 @@ async function init() {
             extraComputations.push(
                 ComputeRoutesExtraComputation.FUEL_CONSUMPTION
             );
-            request.routeModifiers.vehicleInfo = {
-                emissionType: formData.get('emission_type'),
+            request.routeModifiers!.vehicleInfo = {
+                emissionType: formData.get(
+                    'emission_type'
+                ) as google.maps.routes.VehicleEmissionType,
             };
         }
 
@@ -179,12 +186,15 @@ async function init() {
             );
             transitPreference.allowedTransitModes = Array.from(
                 selectedTransitModes,
-                (input) => (input as HTMLInputElement).value
+                (input) =>
+                    (input as HTMLInputElement).value as google.maps.TransitMode
             );
             transitPreference.routingPreference =
                 formData.get('transit_preference') === ''
                     ? undefined
-                    : formData.get('transit_preference');
+                    : (formData.get(
+                          'transit_preference'
+                      ) as google.maps.TransitRoutePreference);
         }
 
         return request;
@@ -459,7 +469,7 @@ async function init() {
 
     function attachAlertWindowListener() {
         const alertBox = document.getElementById('alert') as HTMLDivElement;
-        const closeBtn = alertBox.querySelector('.close');
+        const closeBtn = alertBox.querySelector('.close')!;
         closeBtn.addEventListener('click', () => {
             if (alertBox.style.display !== 'none') {
                 alertBox.style.display = 'none';

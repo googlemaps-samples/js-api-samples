@@ -21,7 +21,8 @@ async function initMap() {
 
     // [START maps_boundaries_choropleth_style_function]
     featureLayer.style = (featureStyleFunctionOptions) => {
-        const placeFeature = featureStyleFunctionOptions.feature;
+        const placeFeature =
+            featureStyleFunctionOptions.feature as google.maps.PlaceFeature;
         const population = states[placeFeature.placeId];
 
         let fillColor;

@@ -26,10 +26,13 @@ async function initMap(): Promise<void> {
     });
 
     // Define a simple directions request.
-    const request = {
+    const request: google.maps.routes.ComputeRoutesRequest = {
         origin: 'Mountain View, CA',
         destination: 'Sausalito, CA',
-        intermediates: ['Half Moon Bay, CA', 'Pacifica Esplanade Beach'],
+        intermediates: [
+            { location: 'Half Moon Bay, CA' },
+            { location: 'Pacifica Esplanade Beach' },
+        ],
         travelMode: 'DRIVING',
         fields: ['legs', 'path'],
     };
@@ -41,6 +44,10 @@ async function initMap(): Promise<void> {
     console.log(`Response:\n ${JSON.stringify(routes, null, 2)}`);
 
     // Use createPolylines to create polylines for the route.
+    if (!routes) {
+        console.warn('No routes found.');
+        return;
+    }
     mapPolylines = routes[0].createPolylines();
     // Add polylines to the map.
     mapPolylines.forEach((polyline) => polyline.setMap(map));
@@ -77,7 +84,7 @@ async function initMap(): Promise<void> {
 
         // Leg Title
         const legTitleElement = document.createElement('h3');
-        legTitleElement.textContent = `Leg ${index + 1} of ${route.legs.length}`;
+        legTitleElement.textContent = `Leg ${index + 1} of ${route.legs!.length}`;
         legContainer.appendChild(legTitleElement);
 
         if (leg.steps && leg.steps.length > 0) {

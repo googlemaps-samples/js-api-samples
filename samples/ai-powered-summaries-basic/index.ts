@@ -63,25 +63,21 @@ async function getPlaceDetails() {
     const attribution = document.createElement('div');
 
     // Retrieve the textual data (summary, disclosure, flag URI).
-    //@ts-ignore
-    let overviewText =
-        place.generativeSummary.overview ?? 'No summary is available.';
-    //@ts-ignore
-    let disclosureText = place.generativeSummary.disclosureText;
-    //@ts-ignore
-    let reportingUri = place.generativeSummary.flagContentURI;
+    let overviewText = place.generativeSummary?.overview;
+    let disclosureText = place.generativeSummary?.disclosureText;
+    let reportingURI = place.generativeSummary?.flagContentURI;
 
     // Create HTML for reporting link.
     const reportingLink = document.createElement('a');
-    reportingLink.href = reportingUri;
+    reportingLink.href = reportingURI ?? '';
     reportingLink.target = '_blank';
     reportingLink.textContent = 'Report a problem.';
 
     // Add text to layout.
     address.textContent = place.formattedAddress ?? '';
-    summary.textContent = overviewText;
-    attribution.textContent = `${disclosureText}  `;
-    attribution.appendChild(reportingLink);
+    summary.textContent = overviewText ?? 'No summary is available.';
+    attribution.textContent = overviewText ? `${disclosureText}  ` : '';
+    if (overviewText) attribution.appendChild(reportingLink);
 
     content.append(address, lineBreak, summary, lineBreak, attribution);
 

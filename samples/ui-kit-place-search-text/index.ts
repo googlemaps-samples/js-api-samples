@@ -14,7 +14,7 @@ const placeSearchQuery = document.querySelector(
 )!;
 const placeDetails = document.querySelector('gmp-place-details-compact')!;
 const placeRequest = document.querySelector('gmp-place-details-place-request')!;
-const queryInput = document.querySelector('.query-input')!;
+const queryInput = document.querySelector('.query-input') as HTMLInputElement;
 const searchButton = document.querySelector('.search-button')!;
 /* [END maps_ui_kit_place_search_text_query_selectors] */
 
@@ -102,6 +102,10 @@ async function addMarkers() {
     }
 
     for (const place of placeSearch.places) {
+        if (!place.location) {
+            continue;
+        }
+
         const marker = new AdvancedMarkerElement({
             map: map.innerMap,
             position: place.location,

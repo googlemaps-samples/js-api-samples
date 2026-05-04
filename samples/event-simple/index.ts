@@ -29,14 +29,14 @@ async function initMap() {
         // 3 seconds after the center of the map has changed,
         // pan back to the marker.
         window.setTimeout(() => {
-            innerMap.panTo(marker.position);
+            innerMap.panTo(marker.position!);
         }, 3000);
     });
 
     // Zoom in when the marker is clicked.
     marker.addEventListener('gmp-click', () => {
         innerMap.setZoom(8);
-        innerMap.setCenter(marker.position);
+        innerMap.setCenter(marker.position!);
     });
 }
 

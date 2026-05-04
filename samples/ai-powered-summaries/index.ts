@@ -101,8 +101,8 @@ function updateSummaryPanel(place: google.maps.places.Place) {
     const createTab = (
         label: string,
         content: string | Node,
-        disclosure: string,
-        flagUrl: string
+        disclosure: string | null,
+        flagUrl: string | null
     ) => {
         const btn = document.createElement('button');
         btn.className = 'tab-button';
@@ -188,9 +188,7 @@ function updateSummaryPanel(place: google.maps.places.Place) {
     }
 
     // --- 4. EV Amenity Summary (uses content blocks)) ---
-    //@ts-ignore
     if (place.evChargeAmenitySummary) {
-        //@ts-ignore
         const evSummary = place.evChargeAmenitySummary;
         const evContainer = document.createDocumentFragment();
 

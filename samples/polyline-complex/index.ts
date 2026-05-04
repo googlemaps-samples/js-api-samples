@@ -29,23 +29,23 @@ async function initMap() {
     });
     poly.setMap(innerMap);
 
-    // Add a listener for the click event
-    innerMap.addListener('click', addLatLng);
-}
+    // Handles click events on a map, and adds a new point to the Polyline.
+    innerMap.addListener('click', (event: google.maps.MapMouseEvent) => {
+        const latLng = event.latLng;
+        if (!latLng) return;
 
-// Handles click events on a map, and adds a new point to the Polyline.
-function addLatLng(event: google.maps.MapMouseEvent) {
-    const path = poly.getPath();
+        const path = poly.getPath();
 
-    // Because path is an MVCArray, we can simply append a new coordinate
-    // and it will automatically appear.
-    path.push(event.latLng);
+        // Because path is an MVCArray, we can simply append a new coordinate
+        // and it will automatically appear.
+        path.push(latLng);
 
-    // Add a new marker at the new plotted point on the polyline.
-    new google.maps.marker.AdvancedMarkerElement({
-        position: event.latLng,
-        title: '#' + path.getLength(),
-        map: innerMap,
+        // Add a new marker at the new plotted point on the polyline.
+        new google.maps.marker.AdvancedMarkerElement({
+            position: latLng,
+            title: '#' + path.getLength(),
+            map: innerMap,
+        });
     });
 }
 

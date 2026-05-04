@@ -56,11 +56,11 @@ async function initMap(): Promise<void> {
 
             let content = document.createElement('div');
             let nameText = document.createElement('span');
-            nameText.textContent = place.displayName;
+            nameText.textContent = place.displayName ?? 'No name';
             content.appendChild(nameText);
             content.appendChild(document.createElement('br'));
             let addressText = document.createElement('span');
-            addressText.textContent = place.formattedAddress;
+            addressText.textContent = place.formattedAddress ?? 'No address';
             content.appendChild(addressText);
 
             updateInfoWindow(content, place.location);

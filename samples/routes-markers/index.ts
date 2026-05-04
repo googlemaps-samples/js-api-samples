@@ -35,7 +35,7 @@ async function getDirections() {
     // [START maps_routes_markers_request_full]
     // [START maps_routes_markers_request]
     // Define routes request with an intermediate stop.
-    const request = {
+    const request: google.maps.routes.ComputeRoutesRequest = {
         origin: 'Parking lot, Christmas Tree Point Rd, San Francisco, CA 94131',
         destination: '100 Spinnaker Dr, Sausalito, CA 94965', // We're having a yummy lunch!
         intermediates: [{ location: '300 Finley Rd San Francisco, CA 94129' }], // But first, we golf!
