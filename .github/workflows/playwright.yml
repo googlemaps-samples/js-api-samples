@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Playwright Tests
+name: Tests
 
 on:
   pull_request:
@@ -139,6 +139,12 @@ jobs:
         env:
           # Pass the correct base reference for find-changes.sh when called by samples.spec.ts
           GIT_BASE_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
+          CI: true
+      
+      - name: Prettier Check
+        if: env.HAS_CHANGES == 'true'
+        run: npx prettier ./samples/ --check --log-level warn
+        env:
           CI: true
 
       - name: Upload Test Report Artifact
