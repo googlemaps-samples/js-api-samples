@@ -18,7 +18,9 @@ const summaryContent = document.getElementById(
     'summary-content'
 ) as HTMLDivElement;
 const aiDisclosure = document.getElementById('ai-disclosure') as HTMLDivElement;
-const flagContentLink = document.getElementById('flag-content-link') as HTMLAnchorElement;
+const flagContentLink = document.getElementById(
+    'flag-content-link'
+) as HTMLAnchorElement;
 
 let innerMap;
 let marker: google.maps.marker.AdvancedMarkerElement;
@@ -132,7 +134,7 @@ function updateSummaryPanel(place: google.maps.places.Place) {
             // Add the content flag URI.
             if (flagUrl) {
                 flagContentLink.href = flagUrl;
-                flagContentLink.textContent = "Report an issue"
+                flagContentLink.textContent = 'Report an issue';
             }
         };
 

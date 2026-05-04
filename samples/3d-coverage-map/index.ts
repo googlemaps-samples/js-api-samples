@@ -20,8 +20,8 @@ const placeAutocomplete = document.querySelector(
 
 async function initMap() {
     // Request needed libraries.
-    await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
-    await google.maps.importLibrary('places') as google.maps.PlacesLibrary;
+    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    (await google.maps.importLibrary('places')) as google.maps.PlacesLibrary;
 
     // Get the inner map from the map element.
     const innerMap = mapElement.innerMap;

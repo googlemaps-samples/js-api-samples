@@ -53,7 +53,7 @@ async function initMap() {
     innerMap.setOptions({
         mapTypeControl: false,
     });
-    
+
     for (let i = 0; i < events.length; i++) {
         setupListener(innerMap, events[i]);
     }

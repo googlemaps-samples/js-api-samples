@@ -25,10 +25,10 @@ async function initMap() {
     // [START maps_control_bounds_restriction_options]
     // Restrict the map to the provided bounds.
     innerMap.setOptions({
-      restriction: {
-        latLngBounds: NEW_ZEALAND_BOUNDS,
-        strictBounds: false,
-      }
+        restriction: {
+            latLngBounds: NEW_ZEALAND_BOUNDS,
+            strictBounds: false,
+        },
     });
     // [END maps_control_bounds_restriction_options]
 }

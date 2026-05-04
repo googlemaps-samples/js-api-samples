@@ -16,7 +16,7 @@ async function initMap() {
 
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
-        mapTypeControl: false
+        mapTypeControl: false,
     });
 
     infoWindow = new InfoWindow();
@@ -25,9 +25,13 @@ async function initMap() {
 
 async function getPlaceDetails() {
     // Request needed libraries.
-    const [ {AdvancedMarkerElement}, { Place } ] = await Promise.all([
-        google.maps.importLibrary('marker') as Promise<google.maps.MarkerLibrary>,
-        google.maps.importLibrary('places') as Promise<google.maps.PlacesLibrary>,
+    const [{ AdvancedMarkerElement }, { Place }] = await Promise.all([
+        google.maps.importLibrary(
+            'marker'
+        ) as Promise<google.maps.MarkerLibrary>,
+        google.maps.importLibrary(
+            'places'
+        ) as Promise<google.maps.PlacesLibrary>,
     ]);
 
     // [START maps_ai_powered_summaries_basic_placeid]
@@ -66,7 +70,8 @@ async function getPlaceDetails() {
 
     // Retrieve the textual data (summary, disclosure, flag URI).
     //@ts-ignore
-    let overviewText = place.generativeSummary.overview ?? 'No summary is available.';
+    let overviewText =
+        place.generativeSummary.overview ?? 'No summary is available.';
     //@ts-ignore
     let disclosureText = place.generativeSummary.disclosureText;
     //@ts-ignore
@@ -76,7 +81,7 @@ async function getPlaceDetails() {
     const reportingLink = document.createElement('a');
     reportingLink.href = reportingUri;
     reportingLink.target = '_blank';
-    reportingLink.textContent = "Report a problem."
+    reportingLink.textContent = 'Report a problem.';
 
     // Add text to layout.
     address.textContent = place.formattedAddress ?? '';

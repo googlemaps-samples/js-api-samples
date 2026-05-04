@@ -28,9 +28,7 @@ async function initMap() {
         ]);
 
     // Get the gmp-map element.
-    mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
 
     // Get the inner map.
     innerMap = mapElement.innerMap;
@@ -50,7 +48,9 @@ async function initMap() {
     const inputText = document.getElementById('address') as HTMLInputElement;
     const submitButton = document.getElementById('submit') as HTMLInputElement;
     const clearButton = document.getElementById('clear') as HTMLInputElement;
-    responseDiv = document.getElementById('response-container') as HTMLDivElement;
+    responseDiv = document.getElementById(
+        'response-container'
+    ) as HTMLDivElement;
     response = document.getElementById('response') as HTMLPreElement;
 
     marker = new google.maps.marker.AdvancedMarkerElement({});
@@ -84,7 +84,9 @@ async function geocode(request: google.maps.GeocoderRequest) {
         .then((result) => {
             const { results } = result;
             innerMap.setCenter(results[0].geometry.location);
-            marker.position = new google.maps.LatLng(results[0].geometry.location);
+            marker.position = new google.maps.LatLng(
+                results[0].geometry.location
+            );
             mapElement.append(marker);
             responseDiv.style.display = 'block';
             response.innerText = JSON.stringify(result, null, 2);
