@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_polyline_click_event]
 let map;
 async function init() {
@@ -48,10 +47,9 @@ async function init() {
         drawsOccludedSegments: true, // Show the line through the buildings or anything else that might get in the way.
     });
 
-    polyline.addEventListener('gmp-click', (event) => {
+    polyline.addEventListener('gmp-click', function () {
         // Toggle whether the line draws occluded segments.
-        event.target.drawsOccludedSegments =
-            !event.target.drawsOccludedSegments;
+        this.drawsOccludedSegments = !this.drawsOccludedSegments;
     });
 
     map.append(polyline);

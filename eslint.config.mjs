@@ -31,7 +31,6 @@ export default defineConfig([
             '@typescript-eslint/no-unused-vars': 'off',
             '@typescript-eslint/no-explicit-any': 'off',
             '@typescript-eslint/no-namespace': 'off',
-            '@typescript-eslint/ban-ts-comment': 'off',
             'no-prototype-builtins': 'off',
         },
     },

@@ -4,9 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_marker_collision_behavior]
-const markers = [];
+const markers: google.maps.maps3d.Marker3DElement[] = [];
 
 async function init() {
     // Request needed libraries.
@@ -52,13 +51,16 @@ const positions = [
 
 init();
 
-const dropdown = document.getElementById('selectElementId');
+const dropdown = document.getElementById(
+    'selectElementId'
+) as HTMLSelectElement;
 dropdown.addEventListener('change', drawMap);
 
 function drawMap(event) {
     for (const marker of markers) {
         marker.collisionBehavior =
-            dropdown.value || google.maps.CollisionBehavior.REQUIRED;
+            (dropdown.value as google.maps.CollisionBehavior) ||
+            google.maps.CollisionBehavior.REQUIRED;
     }
 }
 

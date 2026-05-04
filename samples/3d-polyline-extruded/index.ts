@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_polyline_extruded]
 let map;
 async function init() {

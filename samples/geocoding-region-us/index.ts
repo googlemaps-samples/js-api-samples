@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck TODO remove when fixed
-
 // [START maps_js_geocoding_region_us]
 async function initMap(): Promise<void> {
     await Promise.all([

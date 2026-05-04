@@ -191,9 +191,9 @@ class SimpleWeatherWidget extends HTMLElement {
             weatherData.daytimeForecast || weatherData.nighttimeForecast;
 
         let temperature: number | undefined;
-            let iconBaseUri: string | undefined;
-            let rainProbability: number | undefined;
-            let rainQpf: number | undefined;
+        let iconBaseUri: string | undefined;
+        let rainProbability: number | undefined;
+        let rainQpf: number | undefined;
 
         if (isForecastDay) {
             // Data is a forecast day object

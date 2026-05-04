@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_popover_location]
 async function init() {
     const { AltitudeMode, Map3DElement, MapMode, PopoverElement } =

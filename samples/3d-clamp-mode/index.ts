@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_clamp_mode]
 let polyline;
 
@@ -52,13 +51,13 @@ async function init() {
 init();
 
 // Dropdown event listener
-const dropdown = document.getElementById('selectElementId');
-dropdown.addEventListener('change', updateAltitudeMode);
-
-function updateAltitudeMode(event) {
+const dropdown = document.getElementById(
+    'selectElementId'
+) as HTMLSelectElement;
+dropdown.addEventListener('change', () => {
     if (polyline && dropdown.value) {
         polyline.altitudeMode = dropdown.value;
     }
-}
+});
 
 // [END maps_3d_clamp_mode]

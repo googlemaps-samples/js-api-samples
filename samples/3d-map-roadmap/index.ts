@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_map_roadmap]
 async function init() {
     const { Map3DElement } = await google.maps.importLibrary('maps3d');
@@ -44,8 +43,8 @@ async function init() {
         selector.appendChild(option);
     });
 
-    selector.addEventListener('change', (event) => {
-        map.mode = (event.target as HTMLSelectElement).value;
+    selector.addEventListener('change', function () {
+        map.mode = this.value as google.maps.maps3d.MapMode;
     });
 
     controls.appendChild(selector);

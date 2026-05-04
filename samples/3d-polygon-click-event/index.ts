@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_polygon_click_event]
 async function init() {
     const { Map3DElement, MapMode, Polygon3DInteractiveElement } =
@@ -38,10 +37,10 @@ async function init() {
         { lat: 40.7144, lng: -74.0208 },
     ];
 
-    examplePolygon.addEventListener('gmp-click', (event) => {
+    examplePolygon.addEventListener('gmp-click', function (event) {
         // change the color of the polygon stroke and fill colors to a random alternatives!
-        event.target.fillColor = randomizeHexColor(event.target.fillColor);
-        event.target.strokeColor = randomizeHexColor(event.target.fillColor);
+        this.fillColor = randomizeHexColor(this.fillColor);
+        this.strokeColor = randomizeHexColor(this.fillColor);
         console.log(event);
     });
 

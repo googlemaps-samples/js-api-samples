@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_label_toggle]
 let map;
 async function init() {
@@ -38,19 +37,17 @@ async function init() {
     };
 
     // Get the button element by its ID
-    const toggleButton = document.getElementById('toggleButton');
+    const toggleButton = document.getElementById('toggleButton')!;
     toggleButton.addEventListener('click', function () {
         // Toggle the labels.
         if (map.mode == MapMode.SATELLITE) {
             // Setting the map mode to HYBRID turns the labels on.
             map.mode = MapMode.HYBRID;
-            document.getElementById('toggleButton').innerText =
-                'Labels are on. (HYBRID)';
+            toggleButton.innerText = 'Labels are on. (HYBRID)';
         } else {
             // Setting the map mode to SATELLITE turns the labels on.
             map.mode = MapMode.SATELLITE;
-            document.getElementById('toggleButton').innerText =
-                'Labels are off. (SATELLITE)';
+            toggleButton.innerText = 'Labels are off. (SATELLITE)';
         }
     });
 }

@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_polygon]
 async function init() {
     const { Map3DElement, MapMode, Polygon3DElement } =

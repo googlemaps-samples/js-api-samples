@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_45_degree]
 async function init() {
     const { Map3DElement } = await google.maps.importLibrary('maps3d');
