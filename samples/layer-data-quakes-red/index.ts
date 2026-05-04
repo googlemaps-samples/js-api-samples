@@ -27,7 +27,7 @@ async function initMap() {
     innerMap.data.setStyle((feature) => {
         const mag =
             Math.exp(parseFloat(feature.getProperty('mag') as string)) * 0.1;
-        return /** @type {google.maps.Data.StyleOptions} */ {
+        return {
             icon: {
                 path: google.maps.SymbolPath.CIRCLE,
                 scale: mag,

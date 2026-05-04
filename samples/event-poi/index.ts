@@ -18,7 +18,7 @@ async function initMap() {
     innerMap = mapElement.innerMap;
 
     // Create the initial info window.
-    let infowindow = new google.maps.InfoWindow({});
+    const infowindow = new google.maps.InfoWindow({});
 
     // Add a listener for click events on the map.
     innerMap.addListener('click', (event) => {

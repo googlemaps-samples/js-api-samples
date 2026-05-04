@@ -43,7 +43,7 @@ async function nearbySearch() {
     // [START maps_place_nearby_search_request]
     // Get bounds and radius to constrain search.
     center = mapElement.center;
-    let bounds = innerMap.getBounds();
+    const bounds = innerMap.getBounds();
     const ne = bounds.getNorthEast();
     const sw = bounds.getSouthWest();
     const diameter = spherical.computeDistanceBetween(ne, sw);

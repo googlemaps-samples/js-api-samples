@@ -10,7 +10,7 @@ const placeAutocomplete = document.querySelector('gmp-place-autocomplete')!;
 let innerMap;
 let marker: google.maps.marker.AdvancedMarkerElement;
 let infoWindow: google.maps.InfoWindow;
-let center = { lat: 40.749933, lng: -73.98633 }; // New York City
+const center = { lat: 40.749933, lng: -73.98633 }; // New York City
 async function initMap(): Promise<void> {
     // Request needed libraries.
     const [] = await Promise.all([
@@ -54,12 +54,12 @@ async function initMap(): Promise<void> {
                 innerMap.setZoom(17);
             }
 
-            let content = document.createElement('div');
-            let nameText = document.createElement('span');
+            const content = document.createElement('div');
+            const nameText = document.createElement('span');
             nameText.textContent = place.displayName ?? 'No name';
             content.appendChild(nameText);
             content.appendChild(document.createElement('br'));
-            let addressText = document.createElement('span');
+            const addressText = document.createElement('span');
             addressText.textContent = place.formattedAddress ?? 'No address';
             content.appendChild(addressText);
 

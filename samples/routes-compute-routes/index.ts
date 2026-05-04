@@ -6,7 +6,7 @@
 // [START maps_routes_compute_routes]
 let markers: google.maps.marker.AdvancedMarkerElement[] = [];
 let polylines: google.maps.Polyline[] = [];
-let waypointInfoWindow: google.maps.InfoWindow | null = null;
+const waypointInfoWindow: google.maps.InfoWindow | null = null;
 
 interface PlaceAutocompleteSelection {
     predictionText: string | null;

@@ -63,9 +63,9 @@ async function getPlaceDetails() {
     const attribution = document.createElement('div');
 
     // Retrieve the textual data (summary, disclosure, flag URI).
-    let overviewText = place.generativeSummary?.overview;
-    let disclosureText = place.generativeSummary?.disclosureText;
-    let reportingURI = place.generativeSummary?.flagContentURI;
+    const overviewText = place.generativeSummary?.overview;
+    const disclosureText = place.generativeSummary?.disclosureText;
+    const reportingURI = place.generativeSummary?.flagContentURI;
 
     // Create HTML for reporting link.
     const reportingLink = document.createElement('a');

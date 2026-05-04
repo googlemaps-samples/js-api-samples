@@ -10,7 +10,7 @@ async function initMap() {
 
     const mapElement = document.querySelector('gmp-map')!;
 
-    let innerMap = mapElement.innerMap;
+    const innerMap = mapElement.innerMap;
 
     innerMap.data.loadGeoJson('google.json');
 }

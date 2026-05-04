@@ -190,10 +190,10 @@ class SimpleWeatherWidget extends HTMLElement {
         const isForecastDay =
             weatherData.daytimeForecast || weatherData.nighttimeForecast;
 
-        let temperature: number | undefined,
-            iconBaseUri: string | undefined,
-            rainProbability: number | undefined,
-            rainQpf: number | undefined;
+        let temperature: number | undefined;
+            let iconBaseUri: string | undefined;
+            let rainProbability: number | undefined;
+            let rainQpf: number | undefined;
 
         if (isForecastDay) {
             // Data is a forecast day object

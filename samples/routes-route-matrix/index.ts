@@ -6,8 +6,8 @@
 // [START maps_routes_route_matrix]
 // Initialize and add the map.
 let map;
-let markers: google.maps.marker.AdvancedMarkerElement[] = [];
-let center = { lat: 51.55, lng: -1.8 };
+const markers: google.maps.marker.AdvancedMarkerElement[] = [];
+const center = { lat: 51.55, lng: -1.8 };
 
 async function initMap(): Promise<void> {
     //  Request the needed libraries.

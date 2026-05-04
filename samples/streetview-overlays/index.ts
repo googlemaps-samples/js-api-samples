@@ -58,12 +58,10 @@ async function initMap() {
     // Note that we don't yet set it visible.
     panorama = innerMap.getStreetView()!; // TODO fix type
     panorama.setPosition(astorPlace);
-    panorama.setPov(
-        /** @type {google.maps.StreetViewPov} */ {
-            heading: 265,
-            pitch: 0,
-        }
-    );
+    panorama.setPov({
+        heading: 265,
+        pitch: 0,
+    });
 }
 
 function toggleStreetView(): void {

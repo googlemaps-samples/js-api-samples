@@ -12,7 +12,7 @@ async function init() {
     // [START maps_place_autocomplete_data_simple_request]
     // Add an initial request body.
     // [START maps_place_autocomplete_data_simple_request_body]
-    let request = {
+    const request = {
         input: 'Tadi',
         locationRestriction: {
             west: -122.44,
@@ -49,7 +49,7 @@ async function init() {
 
     const resultsElement = document.getElementById('results') as HTMLElement;
 
-    for (let suggestion of suggestions) {
+    for (const suggestion of suggestions) {
         const placePrediction = suggestion.placePrediction;
 
         // Create a new list element.
@@ -63,7 +63,7 @@ async function init() {
     // [END maps_place_autocomplete_data_simple_get_suggestions]
 
     // [START maps_place_autocomplete_data_simple_prediction]
-    let place = suggestions[0].placePrediction!.toPlace(); // Get first predicted place.
+    const place = suggestions[0].placePrediction!.toPlace(); // Get first predicted place.
     // [START maps_place_autocomplete_data_simple_fetch]
     await place.fetchFields({
         fields: ['displayName', 'formattedAddress'],

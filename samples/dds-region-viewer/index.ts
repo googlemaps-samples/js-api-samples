@@ -147,7 +147,7 @@ async function initMap() {
 // Restyle and make a request when the feature type is changed.
 function featureTypeChanged() {
     // Style for coloring the outline of the entire feature type.
-    let styleStrokeOnly = /** @type {!google.maps.FeatureStyleOptions} */ {
+    const styleStrokeOnly = {
         fillColor: 'white',
         fillOpacity: 0.01,
         strokeColor: strokeColorPicker.value,
@@ -212,7 +212,7 @@ function styleChanged() {
 // Apply styling to a polygon.
 function applyStyle(placeid?) {
     // Define styles.
-    let styleStrokeOnly = /** @type {!google.maps.FeatureStyleOptions} */ {
+    const styleStrokeOnly = {
         strokeColor: strokeColorPicker.value,
         strokeOpacity: 1.0,
         strokeWeight: 2.0,
@@ -220,7 +220,7 @@ function applyStyle(placeid?) {
         fillOpacity: 0.1,
     };
 
-    let styleStrokeFill = /** @type {!google.maps.FeatureStyleOptions} */ {
+    const styleStrokeFill = {
         strokeColor: strokeColorPicker.value,
         strokeOpacity: 1.0,
         strokeWeight: 2.0,
@@ -272,7 +272,7 @@ function applyStyle(placeid?) {
 // Populate the countries menu.
 function buildMenu() {
     for (const item of (countries as any).default) {
-        let countryOption = document.createElement('option');
+        const countryOption = document.createElement('option');
         countryOption.textContent = item.name;
         countryOption.value = item.code;
         // Set U.S. as the default.
@@ -314,7 +314,7 @@ function getFeatureAvailability(countryName) {
     });
 
     // Create a map for our values.
-    let featureAvailabilityMap = new Map([
+    const featureAvailabilityMap = new Map([
         ['country', selectedCountry?.feature.country],
         [
             'administrative_area_level_1',
@@ -341,7 +341,7 @@ function revertStyles() {
 
 // Apply styling to the clicked place.
 function handlePlaceClick(event) {
-    let clickedPlaceId = event.features[0].placeId;
+    const clickedPlaceId = event.features[0].placeId;
     if (!clickedPlaceId) return;
     showSelectedPolygon(clickedPlaceId, 0);
 }
@@ -399,7 +399,7 @@ async function showSelectedPolygon(placeid, mode) {
             featureMenu.value
         );
     }
-    var viewport = place.viewport;
+    const viewport = place.viewport;
     innerMap.fitBounds(viewport, 155);
 
     // Build the HTML.

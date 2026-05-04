@@ -47,7 +47,7 @@ async function initMap() {
     populateTable();
 
     // Get the inner map.
-    let innerMap = mapElement.innerMap;
+    const innerMap = mapElement.innerMap;
     innerMap.setOptions({
         mapTypeControl: false,
     });

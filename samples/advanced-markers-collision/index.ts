@@ -14,7 +14,7 @@ async function initMap(): Promise<void> {
     const { Map } = await google.maps.importLibrary('maps');
     const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
-    let markers: google.maps.marker.AdvancedMarkerElement[] = [];
+    const markers: google.maps.marker.AdvancedMarkerElement[] = [];
 
     let collisionBehavior = google.maps.CollisionBehavior.REQUIRED;
 
@@ -33,7 +33,7 @@ async function initMap(): Promise<void> {
     select.value = collisionBehavior;
 
     // Create some markers on the map
-    let locations = [
+    const locations = [
         [-122.3402, 47.6093],
         [-122.3402, 47.6094],
         [-122.3403, 47.6094],

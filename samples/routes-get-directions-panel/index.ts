@@ -7,8 +7,8 @@
 // Initialize and add the map.
 let map;
 let mapPolylines: google.maps.Polyline[] = [];
-let markers: google.maps.marker.AdvancedMarkerElement[] = [];
-let center = { lat: 37.447646, lng: -122.113878 }; // Palo Alto, CA
+const markers: google.maps.marker.AdvancedMarkerElement[] = [];
+const center = { lat: 37.447646, lng: -122.113878 }; // Palo Alto, CA
 
 // Initialize and add the map.
 async function initMap(): Promise<void> {

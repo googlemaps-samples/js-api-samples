@@ -104,7 +104,7 @@ async function initMap() {
 
 // Creates a legend for the map.
 async function makeLegend(innerMap) {
-    let colors = {
+    const colors = {
         black: ['black'],
         cinnamon: ['#8b0000'],
         'cinnamon + gray': ['#8b0000', 'gray'],
@@ -116,17 +116,17 @@ async function makeLegend(innerMap) {
         'no color data': ['yellow'],
     };
 
-    let legend = document.getElementById('legend');
+    const legend = document.getElementById('legend');
     legend!.id = 'legend';
-    let title = document.createElement('div');
+    const title = document.createElement('div');
     title.innerText = 'Fur Colors';
     title.classList.add('title');
     legend!.appendChild(title);
     let color;
     for (color in colors) {
-        let wrapper = document.createElement('div');
+        const wrapper = document.createElement('div');
         wrapper.id = 'container';
-        let box = document.createElement('div');
+        const box = document.createElement('div');
         box.style.backgroundColor = colors[color][0];
         if (colors[color][1]) {
             box.style.borderColor = colors[color][1];
@@ -134,7 +134,7 @@ async function makeLegend(innerMap) {
             box.style.borderColor = colors[color][0];
         }
         box.classList.add('box');
-        let txt = document.createElement('div');
+        const txt = document.createElement('div');
         txt.classList.add('legend');
         txt.innerText = color;
         wrapper.appendChild(box);

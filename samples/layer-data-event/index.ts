@@ -19,7 +19,7 @@ async function initMap() {
 
     // Add some style.
     innerMap.data.setStyle((feature) => {
-        return /** @type {google.maps.Data.StyleOptions} */ {
+        return {
             fillColor: feature.getProperty('color') as string,
             strokeWeight: 1,
         };

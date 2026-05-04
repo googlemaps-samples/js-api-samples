@@ -44,7 +44,7 @@ async function initMap() {
 
     // [START maps_advanced_markers_zoom_listener]
     mapElement.innerMap.addListener('zoom_changed', () => {
-        let zoom = mapElement.innerMap.getZoom();
+        const zoom = mapElement.innerMap.getZoom();
         for (let i = 0; i < markers.length; i++) {
             const { position, minZoom } = markerOptions[i];
             markers[i].position = zoom! > minZoom ? position : null;

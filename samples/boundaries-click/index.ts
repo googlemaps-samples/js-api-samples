@@ -70,7 +70,7 @@ async function initMap() {
 
 // Helper function for the infowindow.
 async function createInfoWindow(event) {
-    let feature = event.features[0];
+    const feature = event.features[0];
     if (!feature.placeId) return;
 
     // Update the info window.
@@ -78,14 +78,14 @@ async function createInfoWindow(event) {
     const place = await feature.fetchPlace();
 
     // Create a new div to hold the text content.
-    let content = document.createElement('div');
+    const content = document.createElement('div');
 
     // Get the text values.
-    let nameText = document.createElement('span');
+    const nameText = document.createElement('span');
     nameText.textContent = `Display name: ${place.displayName}`;
-    let placeIdText = document.createElement('span');
+    const placeIdText = document.createElement('span');
     placeIdText.textContent = `Place ID: ${feature.placeId}`;
-    let featureTypeText = document.createElement('span');
+    const featureTypeText = document.createElement('span');
     featureTypeText.textContent = `Feature type: ${feature.featureType}`;
 
     // Append the text to the div.
