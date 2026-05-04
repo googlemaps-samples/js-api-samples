@@ -5,6 +5,7 @@ import json from '@eslint/json';
 import markdown from '@eslint/markdown';
 import css from '@eslint/css';
 import { defineConfig, globalIgnores } from 'eslint/config';
+import stylistic from '@stylistic/eslint-plugin';
 
 export default defineConfig([
     globalIgnores(['**/dist/*', '**/package-lock.json']),
@@ -16,10 +17,15 @@ export default defineConfig([
     },
     tseslint.configs.recommended,
     {
+        plugins: {
+            '@stylistic': stylistic,
+        },
+
         rules: {
             'one-var': ['error', 'never'],
             'no-undef': 'off', // handled better by TS
             'prefer-const': 'error',
+            'spaced-comment': ['error', 'always'],
 
             // temporarily disabled for historic reasons:
             '@typescript-eslint/no-unused-vars': 'off',

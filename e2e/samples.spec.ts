@@ -49,7 +49,7 @@ const getChangedSampleFolders = (): string[] => {
 
         // Execute the script from the project root.
         const projectRoot = path.join(__dirname, '..');
-        //const output = execSync(`sh ${scriptPath}`, { cwd: projectRoot, encoding: 'utf-8' });
+        // const output = execSync(`sh ${scriptPath}`, { cwd: projectRoot, encoding: 'utf-8' });
         const baseRefForScript = process.env.GIT_BASE_REF;
         let commandToExecute = `bash ${scriptPath}`; // Use bash to ensure consistency with shebang
         if (baseRefForScript) {
@@ -120,7 +120,7 @@ const getChangedSampleFolders = (): string[] => {
 };
 
 // Get changed folders, filtering out excluded ones.
-//const foldersToTest = getChangedSampleFolders();
+// const foldersToTest = getChangedSampleFolders();
 const foldersToTest = getChangedSampleFolders();
 
 if (foldersToTest.length === 0) {
@@ -149,7 +149,7 @@ foldersToTest.forEach((sampleFolder) => {
             }
         );
 
-        //await new Promise((resolve) => setTimeout(resolve, 500)); // Set a timeout to let the web server start.
+        // await new Promise((resolve) => setTimeout(resolve, 500)); // Set a timeout to let the web server start.
         await page.waitForTimeout(500);
         // END run the preview
 
@@ -171,7 +171,7 @@ foldersToTest.forEach((sampleFolder) => {
             });
 
             // Navigate to the page.
-            //await page.goto(url, { waitUntil: 'networkidle', timeout: 500 });
+            // await page.goto(url, { waitUntil: 'networkidle', timeout: 500 });
             await page.goto(url);
 
             // Allow some time for async operations and errors to be caught
@@ -220,7 +220,7 @@ foldersToTest.forEach((sampleFolder) => {
             });
             await expect(hasGoogleMaps).toBeTruthy();
 
-            /**const mapElement = await page.locator('#map');
+            /** const mapElement = await page.locator('#map');
       if (await page.locator('#map').isVisible()) {
         console.log(`✅ Assertion passed: Map is visible.`);
       } else {
@@ -228,7 +228,7 @@ foldersToTest.forEach((sampleFolder) => {
         throw new Error('Assertion failed: Map is not visible.');
       }*/
         } finally {
-            //viteProcess.kill(); // We used to just kill the process. Curious to see about how the other stuff works.
+            // viteProcess.kill(); // We used to just kill the process. Curious to see about how the other stuff works.
             if (viteProcess.pid) {
                 try {
                     // Use process.kill for cross-platform compatibility, sending SIGINT

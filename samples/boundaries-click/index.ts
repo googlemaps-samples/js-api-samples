@@ -40,7 +40,7 @@ async function initMap() {
         mapTypeControl: false,
     });
 
-    //[START maps_boundaries_click_event_add_layer]
+    // [START maps_boundaries_click_event_add_layer]
     // Add the feature layer.
     featureLayer = innerMap.getFeatureLayer(
         google.maps.FeatureType.ADMINISTRATIVE_AREA_LEVEL_2
@@ -60,7 +60,7 @@ async function initMap() {
             featureLayer.style = applyStyle;
         }
     });
-    //[END maps_boundaries_click_event_add_layer]
+    // [END maps_boundaries_click_event_add_layer]
 
     // Create the infowindow.
     infoWindow = new InfoWindow({});

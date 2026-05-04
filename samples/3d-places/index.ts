@@ -3,7 +3,7 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-//@ts-nocheck
+// @ts-nocheck
 // [START maps_3d_places]
 let map3DElement = null;
 async function init() {
