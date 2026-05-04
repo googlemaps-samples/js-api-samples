@@ -20,7 +20,7 @@ async function initMap() {
     //   http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
     const script = document.createElement('script');
 
-    script.setAttribute('src', 'quakes.geo.json');
+    script.setAttribute('src', 'quakes.geo.js');
 
     document.getElementsByTagName('head')[0].appendChild(script);
 }

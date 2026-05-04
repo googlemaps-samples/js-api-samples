@@ -1,5 +1,4 @@
-# Ignore JSON
-*.json
-
-# Ignore dist output
+index.html
+package.json
+package-lock.json
 dist

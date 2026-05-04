@@ -18,18 +18,18 @@ on:
   pull_request:
     types: [opened, synchronize, edited]
     paths:
-      - 'samples/**'
-      - 'e2e/samples.spec.ts'
-      - 'playwright.config.ts'
-      - 'package.json'
+      - "samples/**"
+      - "e2e/samples.spec.ts"
+      - "playwright.config.ts"
+      - "package.json"
   push:
     branches:
       - main
     paths:
-      - 'samples/**'
-      - 'e2e/samples.spec.ts'
-      - 'playwright.config.ts'
-      - 'package.json'
+      - "samples/**"
+      - "e2e/samples.spec.ts"
+      - "playwright.config.ts"
+      - "package.json"
   schedule:
     - cron: "0 12 * * *"
 
@@ -74,7 +74,7 @@ jobs:
         if: env.HAS_CHANGES == 'true'
         uses: actions/setup-node@v4
         with:
-          node-version: '24.x'
+          node-version: "24.x"
 
       - name: Cache npm dependencies
         if: env.HAS_CHANGES == 'true'
@@ -111,14 +111,14 @@ jobs:
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true' && env.HAS_CHANGES == 'true'
         run: npx playwright install chromium --with-deps
-      
+
       - name: Build Changed Workspaces
         if: env.HAS_CHANGES == 'true'
         run: |
           IFS=$'\n'
           CHANGED_WORKSPACES_ARRAY=(${STEPS_GET_WORKSPACES_OUTPUTS_CHANGED_WORKSPACES})
           echo "Changed Workspaces Array: ${CHANGED_WORKSPACES_ARRAY[@]}"
-          
+
           echo "Building changed workspaces:"
           for workspace in "${CHANGED_WORKSPACES_ARRAY[@]}"; do
             echo "  - samples/$workspace"
@@ -140,7 +140,7 @@ jobs:
           # Pass the correct base reference for find-changes.sh when called by samples.spec.ts
           GIT_BASE_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
           CI: true
-      
+
       - name: Prettier Check
         if: env.HAS_CHANGES == 'true'
         run: npx prettier ./samples/ --check --log-level warn
@@ -168,7 +168,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '24.x'
+          node-version: "24.x"
 
       - name: Cache npm dependencies
         uses: actions/cache@v4
