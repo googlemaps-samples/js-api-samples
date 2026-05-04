@@ -11,7 +11,7 @@ let innerMap;
 // Initialize and add the map.
 async function initMap() {
     //  Request the needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
@@ -26,7 +26,6 @@ async function initMap() {
 }
 
 async function getDirections() {
-    //@ts-ignore
     // Request the needed libraries.
     const [{ Route, RouteLabel }] = await Promise.all([
         google.maps.importLibrary('routes'),

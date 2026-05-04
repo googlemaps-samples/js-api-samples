@@ -68,9 +68,7 @@ async function initMap(): Promise<void> {
     const position = { lat: 41.8692576, lng: -87.689769 };
 
     //  Request needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { Map } = await google.maps.importLibrary('maps');
 
     const mapDiv = document.getElementById('map');
     if (!mapDiv) {

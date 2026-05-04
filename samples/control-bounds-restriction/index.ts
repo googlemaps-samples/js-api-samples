@@ -19,7 +19,7 @@ const NEW_ZEALAND_BOUNDS = {
 
 async function initMap() {
     // Import the needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
     innerMap = mapElement.innerMap;
     // [START maps_control_bounds_restriction_options]

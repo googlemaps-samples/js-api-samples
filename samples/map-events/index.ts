@@ -40,7 +40,7 @@ function setupListener(map: google.maps.Map, name: string) {
 
 async function initMap() {
     // Request needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
     const mapElement = document.querySelector(
         'gmp-map'

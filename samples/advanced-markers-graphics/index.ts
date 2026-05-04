@@ -7,16 +7,10 @@
 // [START maps_advanced_markers_graphics]
 async function initMap() {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { Map } = await google.maps.importLibrary('maps');
     const { AdvancedMarkerElement, PinElement } =
-        (await google.maps.importLibrary(
-            'marker'
-        )) as google.maps.MarkerLibrary;
-    const { Place } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
+        await google.maps.importLibrary('marker');
+    const { Place } = await google.maps.importLibrary('places');
 
     const mapElement = document.querySelector(
         'gmp-map'

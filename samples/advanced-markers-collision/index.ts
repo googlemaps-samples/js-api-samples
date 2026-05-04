@@ -11,12 +11,8 @@ const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
 // Initialize and add the map
 async function initMap(): Promise<void> {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    const { Map } = await google.maps.importLibrary('maps');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
     let markers: google.maps.marker.AdvancedMarkerElement[] = [];
 

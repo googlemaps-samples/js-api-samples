@@ -8,7 +8,7 @@
 async function initMap(): Promise<void> {
     // [START maps_place_autocomplete_element_add]
     // Request needed libraries.
-    (await google.maps.importLibrary('places')) as google.maps.PlacesLibrary;
+    await google.maps.importLibrary('places');
     // Create the input HTML element, and append it.
     const placeAutocomplete = new google.maps.places.PlaceAutocompleteElement(
         {}

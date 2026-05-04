@@ -8,7 +8,7 @@
 let map: google.maps.Map;
 
 async function initMap() {
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
     const mapElement = document.querySelector(
         'gmp-map'

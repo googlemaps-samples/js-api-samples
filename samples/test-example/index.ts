@@ -22,12 +22,8 @@ let center;
 async function initMap() {
     // [START maps_test_example_instantiate_map]
     //  Request the needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    const { Map } = await google.maps.importLibrary('maps');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
     // Get the inner map from the gmp-map element.
     innerMap = mapElement.innerMap;

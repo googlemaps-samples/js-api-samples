@@ -11,7 +11,7 @@ let center;
 
 async function initMap() {
     // Load the needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
     center = { lat: 41.059, lng: -124.151 }; // Trinidad, CA
 

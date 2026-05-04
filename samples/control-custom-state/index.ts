@@ -11,7 +11,7 @@ const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
 let center: google.maps.LatLngLiteral = { lat: 41.85, lng: -87.65 };
 
 async function initMap() {
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
     innerMap = mapElement.innerMap;
 

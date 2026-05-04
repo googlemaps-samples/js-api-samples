@@ -34,9 +34,9 @@ let selectedPlaceId: string;
 import * as countries from './src/countries.json';
 
 async function initMap() {
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
-    (await google.maps.importLibrary('places')) as google.maps.PlacesLibrary;
-    (await google.maps.importLibrary('marker')) as google.maps.MarkerLibrary;
+    await google.maps.importLibrary('maps');
+    await google.maps.importLibrary('places');
+    await google.maps.importLibrary('marker');
 
     // Get the inner map.
     innerMap = mapElement.innerMap;

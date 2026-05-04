@@ -15,10 +15,8 @@ async function initMap(): Promise<void> {
     // Request the needed libraries.
     //@ts-ignore
     const [{ Map }, { Route }] = await Promise.all([
-        google.maps.importLibrary('maps') as Promise<google.maps.MapsLibrary>,
-        google.maps.importLibrary(
-            'routes'
-        ) as Promise<google.maps.RoutesLibrary>,
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('routes'),
     ]);
 
     map = new Map(document.getElementById('map') as HTMLElement, {
@@ -132,9 +130,7 @@ async function initMap(): Promise<void> {
 // [END maps_routes_get_directions_panel_steps]
 // Helper function to fit the map to the path.
 async function fitMapToPath(path) {
-    const { LatLngBounds } = (await google.maps.importLibrary(
-        'core'
-    )) as google.maps.CoreLibrary;
+    const { LatLngBounds } = await google.maps.importLibrary('core');
     const bounds = new LatLngBounds();
     path.forEach((point) => {
         bounds.extend(point);

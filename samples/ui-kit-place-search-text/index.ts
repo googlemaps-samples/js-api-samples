@@ -31,10 +31,8 @@ let infoWindow: google.maps.InfoWindow;
 async function init(): Promise<void> {
     // Import the necessary libraries from the Google Maps API.
     const [{ InfoWindow }, { Place }] = await Promise.all([
-        google.maps.importLibrary('maps') as Promise<google.maps.MapsLibrary>,
-        google.maps.importLibrary(
-            'places'
-        ) as Promise<google.maps.PlacesLibrary>,
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('places'),
     ]);
 
     // Create a new info window and set its content to the place details element.
@@ -98,10 +96,8 @@ async function searchPlaces() {
 async function addMarkers() {
     // Import the necessary libraries from the Google Maps API.
     const [{ AdvancedMarkerElement }, { LatLngBounds }] = await Promise.all([
-        google.maps.importLibrary(
-            'marker'
-        ) as Promise<google.maps.MarkerLibrary>,
-        google.maps.importLibrary('core') as Promise<google.maps.CoreLibrary>,
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('core'),
     ]);
     const bounds = new LatLngBounds();
 
