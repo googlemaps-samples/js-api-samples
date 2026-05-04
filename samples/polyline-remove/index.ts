@@ -9,7 +9,7 @@
 // from the map.
 
 let flightPath: google.maps.Polyline;
-const mapElement = document.querySelector('gmp-map');
+const mapElement = document.querySelector('gmp-map')!;
 let innerMap;
 
 async function initMap() {

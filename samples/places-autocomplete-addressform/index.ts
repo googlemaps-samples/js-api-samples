@@ -21,13 +21,13 @@ async function initAutocomplete() {
         'places'
     )) as google.maps.PlacesLibrary;
 
-    placeAutocomplete = document.querySelector('gmp-place-autocomplete');
-    address1Field = document.querySelector('#address1') as HTMLInputElement;
-    address2Field = document.querySelector('#address2') as HTMLInputElement;
-    postalField = document.querySelector('#postcode') as HTMLInputElement;
+    placeAutocomplete = document.querySelector('gmp-place-autocomplete')!;
+    address1Field = document.querySelector('#address1')! as HTMLInputElement;
+    address2Field = document.querySelector('#address2')! as HTMLInputElement;
+    postalField = document.querySelector('#postcode')! as HTMLInputElement;
     const saveButton = document.querySelector(
         '.my-button'
-    ) as HTMLButtonElement;
+    )! as HTMLButtonElement;
 
     placeAutocomplete.focus();
 
@@ -87,17 +87,17 @@ async function fillInAddress(placePrediction) {
         }
 
         if (component.types.includes('locality')) {
-            (document.querySelector('#locality') as HTMLInputElement).value =
+            (document.querySelector('#locality')! as HTMLInputElement).value =
                 component.longText!;
         }
 
         if (component.types.includes('administrative_area_level_1')) {
-            (document.querySelector('#state') as HTMLInputElement).value =
+            (document.querySelector('#state')! as HTMLInputElement).value =
                 component.shortText!;
         }
 
         if (component.types.includes('country')) {
-            (document.querySelector('#country') as HTMLInputElement).value =
+            (document.querySelector('#country')! as HTMLInputElement).value =
                 component.longText!;
         }
     }

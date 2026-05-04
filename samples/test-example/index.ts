@@ -12,9 +12,9 @@
 
 // [START maps_test_example]
 // Declare the gmp-map element.
-const mapElement = document.querySelector('gmp-map');
+const mapElement = document.querySelector('gmp-map')!;
 let innerMap;
-const advancedMarkerElement = document.querySelector('gmp-advanced-marker');
+const advancedMarkerElement = document.querySelector('gmp-advanced-marker')!;
 let center;
 
 async function initMap() {

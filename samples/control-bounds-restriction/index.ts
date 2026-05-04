@@ -6,7 +6,7 @@
 
 // [START maps_control_bounds_restriction]
 let innerMap;
-const mapElement = document.querySelector('gmp-map');
+const mapElement = document.querySelector('gmp-map')!;
 
 // [START maps_control_bounds_restriction_region]
 const NEW_ZEALAND_BOUNDS = {

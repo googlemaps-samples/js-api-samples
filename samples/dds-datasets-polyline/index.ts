@@ -5,7 +5,7 @@
  */
 
 // [START maps_dds_datasets_polyline]
-const mapElement = document.querySelector('gmp-map');
+const mapElement = document.querySelector('gmp-map')!;
 let innerMap;
 async function initMap() {
     // Request needed libraries.

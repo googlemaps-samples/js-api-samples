@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 // [START maps_dds_datasets_polygon_click]
-const mapElement = document.querySelector('gmp-map');
+const mapElement = document.querySelector('gmp-map')!;
 let innerMap;
 let lastInteractedFeatureIds: string[] = [];
 let lastClickedFeatureIds: string[] = [];

@@ -5,7 +5,7 @@
  */
 
 // [START maps_place_class]
-const mapElement = document.querySelector('gmp-map');
+const mapElement = document.querySelector('gmp-map')!;
 let innerMap;
 let infoWindow;
 

@@ -11,7 +11,7 @@
  */
 
 // [START maps_dds_region_viewer]
-const mapElement = document.querySelector('gmp-map');
+const mapElement = document.querySelector('gmp-map')!;
 let placeAutocomplete;
 let innerMap;
 let countryMenu: HTMLSelectElement;

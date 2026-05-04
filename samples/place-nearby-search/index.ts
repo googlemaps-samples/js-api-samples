@@ -5,9 +5,9 @@
  */
 
 // [START maps_place_nearby_search]
-const mapElement = document.querySelector('gmp-map');
+const mapElement = document.querySelector('gmp-map')!;
 let innerMap;
-const advancedMarkerElement = document.querySelector('gmp-advanced-marker');
+const advancedMarkerElement = document.querySelector('gmp-advanced-marker')!;
 let center;
 let typeSelect;
 let infoWindow;
@@ -25,7 +25,7 @@ async function initMap() {
         mapTypeControl: false,
     });
 
-    typeSelect = document.querySelector('.type-select');
+    typeSelect = document.querySelector('.type-select')!;
 
     typeSelect.addEventListener('change', () => {
         nearbySearch();

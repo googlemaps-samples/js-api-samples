@@ -5,8 +5,8 @@
  */
 
 // [START maps_place_autocomplete_map]
-const mapElement = document.querySelector('gmp-map');
-const placeAutocomplete = document.querySelector('gmp-place-autocomplete');
+const mapElement = document.querySelector('gmp-map')!;
+const placeAutocomplete = document.querySelector('gmp-place-autocomplete')!;
 let innerMap;
 let marker: google.maps.marker.AdvancedMarkerElement;
 let infoWindow: google.maps.InfoWindow;

@@ -6,7 +6,7 @@
 
 // [START maps_control_custom_state]
 let innerMap;
-const mapElement = document.querySelector('gmp-map');
+const mapElement = document.querySelector('gmp-map')!;
 
 let center: google.maps.LatLngLiteral = { lat: 41.85, lng: -87.65 };
 

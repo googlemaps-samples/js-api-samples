@@ -6,7 +6,7 @@
 
 // eslint-disable no-undef
 // [START maps_advanced_markers_collision]
-const mapElement = document.querySelector('gmp-map');
+const mapElement = document.querySelector('gmp-map')!;
 
 // Initialize and add the map
 async function initMap(): Promise<void> {
@@ -20,7 +20,7 @@ async function initMap(): Promise<void> {
 
     // @ts-ignore
     const select = new mdc.select.MDCSelect(
-        document.querySelector('.mdc-select')
+        document.querySelector('.mdc-select')!
     );
 
     select.listen('MDCSelect:change', () => {

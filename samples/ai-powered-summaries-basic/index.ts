@@ -5,7 +5,7 @@
  */
 
 // [START maps_ai_powered_summaries_basic]
-const mapElement = document.querySelector('gmp-map');
+const mapElement = document.querySelector('gmp-map')!;
 let innerMap;
 let infoWindow;
 

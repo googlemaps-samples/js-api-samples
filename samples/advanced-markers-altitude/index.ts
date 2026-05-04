@@ -5,7 +5,7 @@
  */
 
 // [START maps_advanced_markers_altitude]
-const mapElement = document.querySelector('gmp-map');
+const mapElement = document.querySelector('gmp-map')!;
 
 async function initMap() {
     // Request needed libraries.
