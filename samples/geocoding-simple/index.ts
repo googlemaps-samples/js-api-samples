@@ -22,7 +22,7 @@ async function initMap() {
         ]);
 
     // Get the gmp-map element.
-    mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+    mapElement = document.querySelector('gmp-map');
 
     // Get the inner map.
     innerMap = mapElement.innerMap;

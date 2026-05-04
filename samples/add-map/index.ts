@@ -16,9 +16,7 @@ async function initMap(): Promise<void> {
     // [END maps_add_map_libraries]
     // [START maps_add_map_innermap]
     // Get the gmp-map element.
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map');
 
     // Get the inner map.
     const innerMap = mapElement.innerMap;

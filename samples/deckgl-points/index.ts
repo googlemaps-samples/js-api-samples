@@ -11,7 +11,7 @@ import { GeoJsonLayer } from '@deck.gl/layers';
 
 type Properties = { mag: number };
 
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map');
 let innerMap: google.maps.Map;
 
 interface EarthquakeProperties {

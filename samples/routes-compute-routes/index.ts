@@ -470,7 +470,7 @@ async function init() {
 
     function attachAlertWindowListener() {
         const alertBox = document.getElementById('alert') as HTMLDivElement;
-        const closeBtn = alertBox.querySelector('.close') as HTMLButtonElement;
+        const closeBtn = alertBox.querySelector('.close');
         closeBtn.addEventListener('click', () => {
             if (alertBox.style.display !== 'none') {
                 alertBox.style.display = 'none';

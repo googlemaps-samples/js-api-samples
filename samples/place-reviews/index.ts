@@ -7,7 +7,7 @@
 // [START maps_place_reviews]
 let innerMap;
 let infoWindow;
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map');
 
 async function initMap() {
     // Import the needed libraries.

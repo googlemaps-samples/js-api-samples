@@ -18,14 +18,10 @@ async function initMap(): Promise<void> {
         google.maps.importLibrary('places'),
     ]);
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map');
     const map = mapElement.innerMap as google.maps.Map;
 
-    const placeAutocomplete = document.querySelector(
-        'gmp-place-autocomplete'
-    ) as google.maps.places.PlaceAutocompleteElement;
+    const placeAutocomplete = document.querySelector('gmp-place-autocomplete');
 
     // Set the map options.
     map.setOptions({

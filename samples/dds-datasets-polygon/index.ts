@@ -5,7 +5,7 @@
  */
 
 // [START maps_dds_datasets_polygon]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map');
 let innerMap;
 // [START maps_dds_datasets_polygon_featurestyleoptions]
 const styleOptions = {

@@ -5,7 +5,7 @@
  */
 
 // [START maps_control_replacement]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map');
 let innerMap: google.maps.Map;
 
 async function initMap() {

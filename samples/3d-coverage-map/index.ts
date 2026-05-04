@@ -13,10 +13,8 @@ const layerStyle = {
     fillOpacity: 0.3,
 };
 
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-const placeAutocomplete = document.querySelector(
-    'gmp-place-autocomplete'
-) as google.maps.places.PlaceAutocompleteElement;
+const mapElement = document.querySelector('gmp-map');
+const placeAutocomplete = document.querySelector('gmp-place-autocomplete');
 
 async function initMap() {
     // Request needed libraries.

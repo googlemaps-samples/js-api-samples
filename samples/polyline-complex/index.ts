@@ -12,7 +12,7 @@
  */
 
 let poly: google.maps.Polyline;
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map');
 let innerMap;
 
 async function initMap() {

@@ -6,14 +6,12 @@
 /* [START maps_ui_kit_place_details_compact] */
 // Use querySelector to select elements for interaction.
 /* [START maps_ui_kit_place_details_compact_query_selector] */
-const map = document.querySelector('gmp-map') as google.maps.MapElement;
-const placeDetails = document.querySelector('gmp-place-details-compact') as any;
+const map = document.querySelector('gmp-map');
+const placeDetails = document.querySelector('gmp-place-details-compact');
 const placeDetailsRequest = document.querySelector(
     'gmp-place-details-place-request'
-) as any;
-const marker = document.querySelector(
-    'gmp-advanced-marker'
-) as google.maps.marker.AdvancedMarkerElement;
+);
+const marker = document.querySelector('gmp-advanced-marker');
 /* [END maps_ui_kit_place_details_compact_query_selector] */
 async function initMap(): Promise<void> {
     // Request needed libraries.

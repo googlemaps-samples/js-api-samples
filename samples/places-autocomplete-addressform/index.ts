@@ -21,9 +21,7 @@ async function initAutocomplete() {
         'places'
     )) as google.maps.PlacesLibrary;
 
-    placeAutocomplete = document.querySelector(
-        'gmp-place-autocomplete'
-    ) as google.maps.places.PlaceAutocompleteElement;
+    placeAutocomplete = document.querySelector('gmp-place-autocomplete');
     address1Field = document.querySelector('#address1') as HTMLInputElement;
     address2Field = document.querySelector('#address2') as HTMLInputElement;
     postalField = document.querySelector('#postcode') as HTMLInputElement;

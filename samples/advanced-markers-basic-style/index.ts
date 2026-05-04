@@ -6,7 +6,7 @@
 
 // [START maps_advanced_markers_basic_style]
 const parser = new DOMParser();
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map');
 
 async function initMap() {
     // Request needed libraries.

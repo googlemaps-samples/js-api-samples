@@ -5,7 +5,7 @@
  */
 
 // [START maps_circle_simple]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map');
 let innerMap;
 
 async function initMap() {
@@ -13,9 +13,7 @@ async function initMap() {
     await google.maps.importLibrary('maps');
     await google.maps.importLibrary('marker');
     // Get the gmp-map element.
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map');
 
     // Set the initial map center point.
     const initialCenter = { lat: 34.98956821576194, lng: 135.74239981260283 }; // Hotel Emion, Kyoto, Japan

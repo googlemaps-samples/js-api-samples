@@ -5,7 +5,7 @@
  */
 // [START maps_routes_markers]
 let mapPolylines: google.maps.Polyline[] = [];
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map');
 let innerMap;
 
 // Initialize and add the map.
@@ -26,7 +26,6 @@ async function initMap() {
 }
 
 async function getDirections() {
-    //@ts-ignore
     // Request the needed libraries.
     const [{ Route }, { PinElement }] = await Promise.all([
         google.maps.importLibrary('routes'),
@@ -57,7 +56,6 @@ async function getDirections() {
     // Alter style based on marker index.
     function markerOptionsMaker(
         defaultOptions: google.maps.marker.AdvancedMarkerElementOptions,
-        //@ts-ignore
         waypointMarkerDetails: google.maps.routes.WaypointMarkerDetails
     ) {
         const { index, totalMarkers, leg } = waypointMarkerDetails;

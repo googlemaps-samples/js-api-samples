@@ -7,16 +7,14 @@
 
 /* [START maps_ui_kit_place_search_nearby_query_selectors] */
 // Query selectors for various elements in the HTML file.
-const map = document.querySelector('gmp-map') as google.maps.MapElement;
-const placeSearch = document.querySelector('gmp-place-search') as any;
+const map = document.querySelector('gmp-map');
+const placeSearch = document.querySelector('gmp-place-search');
 const placeSearchQuery = document.querySelector(
     'gmp-place-nearby-search-request'
-) as any;
-const placeDetails = document.querySelector('gmp-place-details-compact') as any;
-const placeRequest = document.querySelector(
-    'gmp-place-details-place-request'
-) as any;
-const typeSelect = document.querySelector('.type-select') as HTMLSelectElement;
+);
+const placeDetails = document.querySelector('gmp-place-details-compact');
+const placeRequest = document.querySelector('gmp-place-details-place-request');
+const typeSelect = document.querySelector('.type-select');
 /* [END maps_ui_kit_place_search_nearby_query_selectors] */
 
 // Global variables for the map, markers, and info window.

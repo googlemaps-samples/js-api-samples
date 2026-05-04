@@ -6,10 +6,8 @@
 
 // [START maps_ai_powered_summaries]
 // Define DOM elements.
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-const placeAutocomplete = document.querySelector(
-    'gmp-place-autocomplete'
-) as google.maps.places.PlaceAutocompleteElement;
+const mapElement = document.querySelector('gmp-map');
+const placeAutocomplete = document.querySelector('gmp-place-autocomplete');
 const summaryPanel = document.getElementById('summary-panel') as HTMLDivElement;
 const placeName = document.getElementById('place-name') as HTMLElement;
 const placeAddress = document.getElementById('place-address') as HTMLElement;

@@ -5,7 +5,7 @@
  */
 
 // [START maps_dds_datasets_point]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map');
 let innerMap;
 // [START maps_dds_datasets_point_style_function]
 function setStyle(/* FeatureStyleFunctionOptions */ params) {
