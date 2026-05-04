@@ -28,7 +28,6 @@ async function initMap() {
     const pinSvgMarker = new AdvancedMarkerElement({
         position: { lat: 37.42475, lng: -122.094 },
         title: 'A marker using a custom SVG image.',
-        //@ts-ignore
         anchorLeft: '-50%',
         anchorTop: '-50%',
     });
@@ -44,7 +43,6 @@ async function initMap() {
     const beachFlagMarker = new AdvancedMarkerElement({
         position: { lat: 37.434, lng: -122.082 },
         title: 'A marker using a custom PNG Image',
-        //@ts-ignore
         anchorLeft: '0px',
         anchorTop: '100%',
     });
@@ -57,7 +55,6 @@ async function initMap() {
     const glyphImgSrc = new URL('./public/google_logo_g.svg', import.meta.url);
 
     const glyphSvgPinElement = new PinElement({
-        //@ts-ignore
         glyphSrc: glyphImgSrc,
     });
 
@@ -87,7 +84,6 @@ async function initMap() {
 
     const pinElement = new PinElement({
         background: place.iconBackgroundColor,
-        //@ts-ignore
         glyphSrc: new URL(String(place.svgIconMaskURI)),
     });
 

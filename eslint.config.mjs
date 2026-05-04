@@ -13,12 +13,18 @@ export default defineConfig([
         plugins: { js },
         extends: ['js/recommended'],
         languageOptions: { globals: { ...globals.browser, ...globals.node } },
+    },
+    tseslint.configs.recommended,
+    {
         rules: {
             'one-var': ['error', 'never'],
             'no-undef': 'off', // handled better by TS
+
+            // temporarily disabled for historic reasons:
+            '@typescript-eslint/no-unused-vars': 'off',
+            '@typescript-eslint/no-explicit-any': 'off',
         },
     },
-    tseslint.configs.recommended,
     {
         files: ['**/*.json'],
         plugins: { json },

@@ -8,8 +8,8 @@
 let innerMap;
 let featureLayer;
 let infoWindow;
-let lastInteractedFeatureIds = [];
-let lastClickedFeatureIds = [];
+let lastInteractedFeatureIds: string[] = [];
+let lastClickedFeatureIds: string[] = [];
 
 // [START maps_boundaries_click_event_handler]
 function handleClick(/* MouseEvent */ e) {
@@ -121,13 +121,11 @@ const styleMouseMove = {
 };
 
 // Apply styles using a feature style function.
-function applyStyle(/* FeatureStyleFunctionOptions */ params) {
-    const placeId = params.feature.placeId;
-    //@ts-ignore
+function applyStyle(params: google.maps.FeatureStyleFunctionOptions) {
+    const placeId = (params.feature as google.maps.PlaceFeature).placeId;
     if (lastClickedFeatureIds.includes(placeId)) {
         return styleClicked;
     }
-    //@ts-ignore
     if (lastInteractedFeatureIds.includes(placeId)) {
         return styleMouseMove;
     }

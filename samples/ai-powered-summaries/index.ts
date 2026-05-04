@@ -25,7 +25,7 @@ let marker: google.maps.marker.AdvancedMarkerElement;
 
 async function initMap(): Promise<void> {
     // Request needed libraries.
-    const [] = await Promise.all([
+    await Promise.all([
         google.maps.importLibrary('marker'),
         google.maps.importLibrary('places'),
     ]);
@@ -146,43 +146,31 @@ function updateSummaryPanel(place: google.maps.places.Place) {
     };
 
     // --- 1. Generative Summary (Place) ---
-    //@ts-ignore
     if (place.generativeSummary?.overview) {
         createTab(
             'Overview',
-            //@ts-ignore
             place.generativeSummary.overview,
-            //@ts-ignore
             place.generativeSummary.disclosureText,
-            //@ts-ignore
             place.generativeSummary.flagContentURI
         );
     }
 
     // --- 2. Review Summary ---
-    //@ts-ignore
     if (place.reviewSummary?.text) {
         createTab(
             'Reviews',
-            //@ts-ignore
             place.reviewSummary.text,
-            //@ts-ignore
             place.reviewSummary.disclosureText,
-            //@ts-ignore
             place.reviewSummary.flagContentURI
         );
     }
 
     // --- 3. Neighborhood Summary ---
-    //@ts-ignore
     if (place.neighborhoodSummary?.overview?.content) {
         createTab(
             'Neighborhood',
-            //@ts-ignore
             place.neighborhoodSummary.overview.content,
-            //@ts-ignore
             place.neighborhoodSummary.disclosureText,
-            //@ts-ignore
             place.neighborhoodSummary.flagContentURI
         );
     }

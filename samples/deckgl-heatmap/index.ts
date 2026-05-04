@@ -32,11 +32,11 @@ declare namespace deck {
 async function initMap(): Promise<void> {
     // Progress bar logic moved from index.html
     let progress;
-        const progressDiv = document.querySelector('.mdc-linear-progress')!;
+    const progressDiv = document.querySelector('.mdc-linear-progress')!;
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-        // @ts-ignore
+        // @ts-expect-error: mdc not typed
         progress = new mdc.linearProgress.MDCLinearProgress(
             progressDiv as HTMLElement
         );
@@ -129,7 +129,6 @@ async function initMap(): Promise<void> {
         // Check if progress is defined
         // Add a small delay to ensure the progress bar is removed
         setTimeout(() => {
-            // @ts-ignore
             progress.done(); // hides progress bar
         }, 100); // 100ms delay
     }

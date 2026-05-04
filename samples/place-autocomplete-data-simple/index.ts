@@ -12,7 +12,7 @@ async function init() {
     // [START maps_place_autocomplete_data_simple_request]
     // Add an initial request body.
     // [START maps_place_autocomplete_data_simple_request_body]
-    const request = {
+    const request: google.maps.places.AutocompleteRequest = {
         input: 'Tadi',
         locationRestriction: {
             west: -122.44,
@@ -31,7 +31,6 @@ async function init() {
     // Create a session token.
     const token = new AutocompleteSessionToken();
     // Add the token to the request.
-    // @ts-ignore
     request.sessionToken = token;
     // [END maps_place_autocomplete_data_simple_token]
     // [END maps_place_autocomplete_data_simple_request]

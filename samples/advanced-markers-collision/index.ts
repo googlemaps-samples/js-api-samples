@@ -18,7 +18,7 @@ async function initMap(): Promise<void> {
 
     let collisionBehavior = google.maps.CollisionBehavior.REQUIRED;
 
-    // @ts-ignore
+    // @ts-expect-error: mdc not typed
     const select = new mdc.select.MDCSelect(
         document.querySelector('.mdc-select')!
     );
