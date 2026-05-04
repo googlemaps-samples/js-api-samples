@@ -22,7 +22,7 @@ body {
 }
 
 .pac-controls label {
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     font-size: 13px;
     font-weight: 300;
 }
@@ -38,8 +38,7 @@ body {
         400 18px Roboto,
         Arial,
         sans-serif;
-    /* overflow: hidden; */
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     padding: 0;
     position: absolute;
     left: 10px;
@@ -57,7 +56,7 @@ body {
 
 #pac-input {
     background-color: #fff;
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     font-size: 15px;
     font-weight: 300;
     margin-left: 12px;

@@ -50,8 +50,7 @@ async function init() {
 
 function randomizeHexColor(originalHexColor) {
     console.log(originalHexColor);
-    let alpha = '';
-    alpha = originalHexColor.substring(7);
+    const alpha = originalHexColor.substring(7);
 
     // Generate random values for Red, Green, Blue (0-255)
     const r = Math.floor(Math.random() * 256);

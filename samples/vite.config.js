@@ -25,7 +25,7 @@ export default defineConfig(({ command }) => {
     const projectRepoRoot = resolve(__dirname, '..'); // /Users/wfrench/git/js-api-samples/
 
     let effectiveOutDir;
-    let effectiveBuildInput = {}; // For rollupOptions.input
+    const effectiveBuildInput = {}; // For rollupOptions.input
 
     if (command === 'build') {
         // When `npm run build:vite --workspace=.` is run from a sample's directory,

@@ -7,7 +7,7 @@ import css from '@eslint/css';
 import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
-    globalIgnores(['**/dist/*']),
+    globalIgnores(['**/dist/*', '**/package-lock.json']),
     {
         files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
         plugins: { js },
@@ -19,10 +19,14 @@ export default defineConfig([
         rules: {
             'one-var': ['error', 'never'],
             'no-undef': 'off', // handled better by TS
+            'prefer-const': 'error',
 
             // temporarily disabled for historic reasons:
             '@typescript-eslint/no-unused-vars': 'off',
             '@typescript-eslint/no-explicit-any': 'off',
+            '@typescript-eslint/no-namespace': 'off',
+            '@typescript-eslint/ban-ts-comment': 'off',
+            'no-prototype-builtins': 'off',
         },
     },
     {
@@ -48,6 +52,11 @@ export default defineConfig([
         plugins: { markdown },
         language: 'markdown/gfm',
         extends: ['markdown/recommended'],
+        rules: {
+            // temporarily disabled for historic reasons:
+            'markdown/no-empty-links': 'off',
+            'markdown/no-missing-label-refs': 'off',
+        },
     },
     {
         files: ['**/*.css'],
