@@ -49,7 +49,7 @@ async function initMap() {
     // [END maps_test_example_instantiate_marker]
 
     // [START maps_test_example_why_me]
-    console.log("Say there Mac, why'd you choose me to test this change?");
+    console.log("I would love to find out why this issue is happening!");
     // [END maps_test_example_why_me]
 }
 initMap();
