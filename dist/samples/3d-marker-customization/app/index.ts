@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_marker_customization]
 async function init() {
     const { Map3DElement, Marker3DElement } =

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
@@ -7,20 +7,19 @@
 
 async function initMap() {
     // Request needed libraries.
-    await google.maps.importLibrary("maps");
-    await google.maps.importLibrary("marker");
+    await google.maps.importLibrary('maps');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+
     const mapElement = document.querySelector('gmp-map');
     const innerMap = mapElement.innerMap;
-    innerMap.addListener("click", (e) => {
-        placeMarkerAndPanTo(e.latLng, innerMap);
-    });
-}
-function placeMarkerAndPanTo(latLng, map) {
-    new google.maps.marker.AdvancedMarkerElement({
-        position: latLng,
-        map: map,
-    });
-    map.panTo(latLng);
-}
-initMap();
 
+    innerMap.addListener('click', (e) => {
+        new AdvancedMarkerElement({
+            position: e.latLng,
+            map: innerMap,
+        });
+        innerMap.panTo(e.latLng);
+    });
+}
+
+initMap();

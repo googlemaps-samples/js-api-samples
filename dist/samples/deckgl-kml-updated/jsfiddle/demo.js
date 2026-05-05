@@ -3,20 +3,23 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-/* [START maps_deckgl_kml_updated] */
+
 // Import necessary loader
 import { KMLLoader } from '@loaders.gl/kml';
+
 // Initialize and add the map
 let map;
 let geojsonLayer;
 let googleMapsOverlay;
+
 async function initMap() {
     // Progress bar logic moved from index.html
-    var progress, progressDiv = document.querySelector('.mdc-linear-progress');
+    let progress;
+    const progressDiv = document.querySelector('.mdc-linear-progress');
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-        // @ts-ignore
+        // @ts-expect-error: mdc not typed
         progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
@@ -25,15 +28,19 @@ async function initMap() {
             progressDiv?.remove(); // Use optional chaining in case progressDiv is null
         };
     }
+
     // The location for the map center (adjust as needed for the KML data)
     const position = { lat: 19.223718899391237, lng: -148.62590882823457 };
+
     //  Request needed libraries.
-    const { Map } = (await google.maps.importLibrary('maps'));
+    const { Map } = await google.maps.importLibrary('maps');
+
     const mapDiv = document.getElementById('map');
     if (!mapDiv) {
         console.error('Map element not found!');
         return;
     }
+
     // The map, centered at the specified position
     map = new Map(mapDiv, {
         zoom: 3, // Adjust zoom as needed
@@ -44,6 +51,7 @@ async function initMap() {
         zoomControl: true,
         clickableIcons: false, // Disable clicks on base map POIs
     });
+
     // Deck.gl Layer and Overlay
     geojsonLayer = new deck.GeoJsonLayer({
         id: 'geojson-layer',
@@ -68,29 +76,41 @@ async function initMap() {
             let parsedMagnitude = null;
             if (magnitudeMatch && magnitudeMatch[1]) {
                 parsedMagnitude = parseFloat(magnitudeMatch[1]);
-            }
-            else {
+            } else {
                 console.log('Magnitude not found');
             }
+
             // Define color range (Lighter Red to #FF0000) - Increased contrast
             const minColor = [255, 255, 0]; // Yellow
             const maxColor = [255, 0, 0]; // #FF0000
             const minMag = 1;
             const maxMag = 7;
+
             // Use parsed magnitude for color calculation
-            const magnitudeForColor = parsedMagnitude !== null ? parsedMagnitude : minMag;
+            const magnitudeForColor =
+                parsedMagnitude !== null ? parsedMagnitude : minMag;
+
             // Normalize magnitude
-            const normalizedMagnitude = Math.max(0, Math.min(1, (magnitudeForColor - minMag) / (maxMag - minMag)));
+            const normalizedMagnitude = Math.max(
+                0,
+                Math.min(1, (magnitudeForColor - minMag) / (maxMag - minMag))
+            );
+
             // Interpolate colors
-            const r = minColor[0] + normalizedMagnitude * (maxColor[0] - minColor[0]);
-            const g = minColor[1] + normalizedMagnitude * (maxColor[1] - minColor[1]);
-            const b = minColor[2] + normalizedMagnitude * (maxColor[2] - minColor[2]);
+            const r =
+                minColor[0] + normalizedMagnitude * (maxColor[0] - minColor[0]);
+            const g =
+                minColor[1] + normalizedMagnitude * (maxColor[1] - minColor[1]);
+            const b =
+                minColor[2] + normalizedMagnitude * (maxColor[2] - minColor[2]);
+
             const interpolatedColor = [
                 Math.round(r),
                 Math.round(g),
                 Math.round(b),
                 200,
             ];
+
             return interpolatedColor; // Color scale based on magnitude, fixed alpha
         },
         autoHighlight: true,
@@ -113,8 +133,7 @@ async function initMap() {
                 tooltip.style.left = x + 'px';
                 tooltip.style.top = y + 'px';
                 tooltip.style.display = 'block';
-            }
-            else if (tooltip) {
+            } else if (tooltip) {
                 tooltip.style.display = 'none';
             }
         },
@@ -125,6 +144,7 @@ async function initMap() {
             }
         },
     });
+
     googleMapsOverlay = new deck.GoogleMapsOverlay({
         layers: [geojsonLayer],
         // Disable depth testing to avoid rendering issues with the base map
@@ -132,7 +152,9 @@ async function initMap() {
             depthTest: false,
         },
     });
+
     googleMapsOverlay.setMap(map);
+
     // Generate Legend
     const legendContainer = document.getElementById('legend');
     if (legendContainer) {
@@ -141,30 +163,42 @@ async function initMap() {
         const maxMag = 7;
         const minColor = [255, 255, 0]; // Yellow (should match getFillColor)
         const maxColor = [255, 0, 0]; // #FF0000 (should match getFillColor)
+
         magnitudeValues.forEach((magnitude) => {
             // Calculate color for the magnitude (using the same interpolation logic)
-            const normalizedMagnitude = Math.max(0, Math.min(1, (magnitude - minMag) / (maxMag - minMag)));
-            const r = minColor[0] + normalizedMagnitude * (maxColor[0] - minColor[0]);
-            const g = minColor[1] + normalizedMagnitude * (maxColor[1] - minColor[1]);
-            const b = minColor[2] + normalizedMagnitude * (maxColor[2] - minColor[2]);
+            const normalizedMagnitude = Math.max(
+                0,
+                Math.min(1, (magnitude - minMag) / (maxMag - minMag))
+            );
+            const r =
+                minColor[0] + normalizedMagnitude * (maxColor[0] - minColor[0]);
+            const g =
+                minColor[1] + normalizedMagnitude * (maxColor[1] - minColor[1]);
+            const b =
+                minColor[2] + normalizedMagnitude * (maxColor[2] - minColor[2]);
             const color = `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
+
             // Create legend item element
             const legendItem = document.createElement('div');
             legendItem.classList.add('legend-item');
+
             // Create color swatch
             const colorSwatch = document.createElement('div');
             colorSwatch.classList.add('legend-color');
             colorSwatch.style.backgroundColor = color;
+
             // Create label
             const label = document.createElement('span');
             label.textContent = `${magnitude}`; // Adjust label format as needed
+
             // Append color swatch and label to legend item
             legendItem.appendChild(colorSwatch);
             legendItem.appendChild(label);
+
             // Append legend item to legend container
             legendContainer.appendChild(legendItem);
         });
     }
 }
+
 initMap();
-/* [END maps_deckgl_kml_updated] */

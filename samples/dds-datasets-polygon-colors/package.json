@@ -2,7 +2,7 @@
   "name": "@js-api-samples/dds-datasets-polygon-colors",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh dds-datasets-polygon-colors && bash ../app.sh dds-datasets-polygon-colors && bash ../docs.sh dds-datasets-polygon-colors && npm run build:vite --workspace=. && bash ../dist.sh dds-datasets-polygon-colors",
+    "build": "bash ../build-single.sh",
     "test": "tsc && npm run build:vite --workspace=.",
     "start": "tsc && vite build --base './' && vite",
     "build:vite": "vite build --base './'",

@@ -2,7 +2,7 @@
   "name": "@js-api-samples/boundaries-click",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh boundaries-click && bash ../app.sh boundaries-click && bash ../docs.sh boundaries-click && npm run build:vite --workspace=. && bash ../dist.sh boundaries-click",
+    "build": "bash ../build-single.sh",
     "test": "tsc && npm run build:vite --workspace=.",
     "start": "tsc && vite build --base './' && vite",
     "build:vite": "vite build --base './'",
