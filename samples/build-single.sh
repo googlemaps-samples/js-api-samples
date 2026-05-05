@@ -5,20 +5,37 @@ set -e
 
 NAME=$(basename $PWD)
 
-npx prettier --check --ignore-path ../../.prettierignore .
-npx eslint
-
 common_recursive_grep_options=( -r --exclude-dir=node_modules )
 all_type_recursive_grep_options=( "${common_recursive_grep_options[@]}" --include=*.{html,js,ts,css,jsx,tsx} --exclude-dir=dist )
 html_script_src_grep_options=( 'src="https://maps' "${common_recursive_grep_options[@]}"  --include=*.html )
 
+find . -type f \( -name "*.ts" -o -name "*.tsx" \) -not -path "./dist/*" -not -path "./node_modules/*" -print0 \
+ | while IFS= read -r -d '' file; do
+    range=999
+    while IFS= read -r line; do
+      # echo "$file $range $line"
+      if [[ "$line" == *"await google"* ]]; then
+        if [[ $range -lt 3 ]]; then
+          echo "Found 'await google' in close proximity. Consider Promise.all() instead. $file"
+          exit 1
+        fi
+
+        range=0
+      else
+        range=$(( $range + 1 ))
+      fi
+    done < "$file"
+done
+
 set +e
+
 grep weekly "${all_type_recursive_grep_options[@]}"
 if [[ $? -eq 0 ]]; then
   # sure, it could be other things, but so far it's not, so we'll keep it simple for now
   echo "Found 'weekly'. Please remove (it's the default channel)."
   exit 1
 fi
+
 # callback & importLibrary both show up the in the inline loader, that's okay. comments also okay
 grep callback "${all_type_recursive_grep_options[@]}" | grep -v -E '^[-_./a-z0-9]+:\s*//' | grep -v importLibrary 
 if [[ $? -eq 0 ]]; then
@@ -26,6 +43,7 @@ if [[ $? -eq 0 ]]; then
   echo "Found 'callback'. Please replace with a more modern pattern for loading Maps JS."
   exit 1
 fi
+
 grep "${html_script_src_grep_options[@]}"
 if [[ $? -eq 0 ]]; then
   grep "${html_script_src_grep_options[@]}" | grep "loading=async"
@@ -44,7 +62,11 @@ if [[ $? -eq 0 ]]; then
     exit 1
   fi
 fi
+
 set -e
+
+npx prettier --check --ignore-path ../../.prettierignore .
+npx eslint
 
 # clean comments for empty lines, and then clean up, to preserve newlines
 sed -i.sed-back 's#^$#// TMP EMPTY LINE#g' *.ts && rm *.sed-back
