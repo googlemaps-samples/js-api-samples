@@ -14,7 +14,6 @@
     color: var(--mdc-theme-primary);
 }
 
-
 /* 
  * Optional: Makes the sample page fill the window. 
  */
@@ -24,5 +23,3 @@ body {
     margin: 0;
     padding: 0;
 }
-
-

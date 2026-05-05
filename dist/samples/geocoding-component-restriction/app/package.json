@@ -2,7 +2,7 @@
   "name": "@js-api-samples/geocoding-component-restriction",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh geocoding-component-restriction && bash ../app.sh geocoding-component-restriction && bash ../docs.sh geocoding-component-restriction && npm run build:vite --workspace=. && bash ../dist.sh geocoding-component-restriction",
+    "build": "bash ../build-single.sh",
     "test": "tsc && npm run build:vite --workspace=.",
     "start": "tsc && vite build --base './' && vite",
     "build:vite": "vite build --base './'",

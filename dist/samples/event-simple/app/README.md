@@ -2,7 +2,7 @@
 
 ## event-simple
 
-This sample shows handling user events and state change events. 
+This sample shows handling user events and state change events.
 
 ## Setup
 
@@ -33,7 +33,7 @@ From 'samples':
 ### Run lint to check for problems
 
 `cd samples/event-simple`
-`npx eslint index.ts` 
+`npx eslint index.ts`
 
 ## Feedback
 

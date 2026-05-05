@@ -33,7 +33,7 @@ From 'samples':
 ### Run lint to check for problems
 
 `cd samples/dds-datasets-polygon-colors`
-`npx eslint index.ts` 
+`npx eslint index.ts`
 
 ## Feedback
 

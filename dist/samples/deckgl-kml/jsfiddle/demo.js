@@ -3,20 +3,23 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-/* [START maps_deckgl_kml] */
+
 // Import necessary loader
 import { KMLLoader } from '@loaders.gl/kml';
+
 // Initialize and add the map
 let map;
 let geojsonLayer;
 let googleMapsOverlay;
+
 async function initMap() {
     // Progress bar logic moved from index.html
-    var progress, progressDiv = document.querySelector('.mdc-linear-progress');
+    let progress;
+    const progressDiv = document.querySelector('.mdc-linear-progress');
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-        // @ts-ignore
+        // @ts-expect-error: mdc not typed
         progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
@@ -25,15 +28,19 @@ async function initMap() {
             progressDiv?.remove(); // Use optional chaining in case progressDiv is null
         };
     }
+
     // The location for the map center (adjust as needed for the KML data)
     const position = { lat: 41.8692576, lng: -87.689769 };
+
     //  Request needed libraries.
-    const { Map } = (await google.maps.importLibrary('maps'));
+    const { Map } = await google.maps.importLibrary('maps');
+
     const mapDiv = document.getElementById('map');
     if (!mapDiv) {
         console.error('Map element not found!');
         return;
     }
+
     // The map, centered at the specified position
     map = new Map(mapDiv, {
         zoom: 11, // Adjust zoom as needed
@@ -43,6 +50,7 @@ async function initMap() {
         zoomControl: true,
         clickableIcons: false, // Disable clicks on base map POIs
     });
+
     // Deck.gl Layer and Overlay
     geojsonLayer = new deck.GeoJsonLayer({
         id: 'geojson-layer',
@@ -72,7 +80,6 @@ async function initMap() {
                 // Check if progress is defined
                 // Add a small delay to ensure the progress bar is removed
                 setTimeout(() => {
-                    // @ts-ignore
                     progress.done(); // hides progress bar
                 }, 100); // 100ms delay
             }
@@ -92,8 +99,10 @@ async function initMap() {
                     'fill',
                 ];
                 for (const key of kmlProperties) {
-                    if (object.properties.hasOwnProperty(key) &&
-                        object.properties[key] !== undefined) {
+                    if (
+                        object.properties.hasOwnProperty(key) &&
+                        object.properties[key] !== undefined
+                    ) {
                         tooltipContent += `<p><strong>${key}:</strong> ${object.properties[key]}</p>`;
                     }
                 }
@@ -101,12 +110,12 @@ async function initMap() {
                 tooltip.style.left = x + 'px';
                 tooltip.style.top = y + 'px';
                 tooltip.style.display = 'block';
-            }
-            else if (tooltip) {
+            } else if (tooltip) {
                 tooltip.style.display = 'none';
             }
         },
     });
+
     const textLayer = new deck.TextLayer({
         id: 'text-layer',
         data: geojsonLayer.props.data, // Use the same data as the GeoJsonLayer
@@ -115,10 +124,11 @@ async function initMap() {
             let position = [0, 0]; // Default position
             if (d.properties.centroid) {
                 position = d.properties.centroid;
-            }
-            else if (d.geometry &&
+            } else if (
+                d.geometry &&
                 d.geometry.coordinates &&
-                d.geometry.coordinates.length > 0) {
+                d.geometry.coordinates.length > 0
+            ) {
                 // Assuming Polygon or MultiPolygon
                 const coordinates = d.geometry.coordinates[0][0];
                 if (coordinates && coordinates.length >= 2) {
@@ -138,6 +148,7 @@ async function initMap() {
             depthTest: false,
         },
     });
+
     googleMapsOverlay = new deck.GoogleMapsOverlay({
         layers: [geojsonLayer, textLayer],
         // Disable depth testing to avoid rendering issues with the base map
@@ -145,8 +156,10 @@ async function initMap() {
             depthTest: false,
         },
     });
+
     googleMapsOverlay.setMap(map);
 }
+
 /**
  * Converts a hex color string (#RRGGBB or #AABBGGRR) or an AABBGGRR string to an RGBA array.
  * @param color The color string.
@@ -156,14 +169,14 @@ function hexOrAabbggrrToRgba(color) {
     if (color.startsWith('#')) {
         color = color.slice(1);
     }
+
     if (color.length === 6) {
         // #RRGGBB format
         const r = parseInt(color.substring(0, 2), 16);
         const g = parseInt(color.substring(2, 4), 16);
         const b = parseInt(color.substring(4, 6), 16);
         return [r, g, b, 255]; // Assume full opacity
-    }
-    else if (color.length === 8) {
+    } else if (color.length === 8) {
         // #AABBGGRR or AABBGGRR format (KML uses AABBGGRR)
         const a = parseInt(color.substring(0, 2), 16);
         const b = parseInt(color.substring(2, 4), 16);
@@ -171,7 +184,8 @@ function hexOrAabbggrrToRgba(color) {
         const r = parseInt(color.substring(6, 8), 16);
         return [r, g, b, a];
     }
+
     return null; // Invalid format
 }
+
 initMap();
-/* [END maps_deckgl_kml] */

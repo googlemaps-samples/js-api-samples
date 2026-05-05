@@ -11,7 +11,7 @@
  */
 
 // [START maps_dds_region_viewer]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map')!;
 let placeAutocomplete;
 let innerMap;
 let countryMenu: HTMLSelectElement;
@@ -34,9 +34,9 @@ let selectedPlaceId: string;
 import * as countries from './src/countries.json';
 
 async function initMap() {
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
-    (await google.maps.importLibrary('places')) as google.maps.PlacesLibrary;
-    (await google.maps.importLibrary('marker')) as google.maps.MarkerLibrary;
+    await google.maps.importLibrary('maps');
+    await google.maps.importLibrary('places');
+    await google.maps.importLibrary('marker');
 
     // Get the inner map.
     innerMap = mapElement.innerMap;
@@ -45,9 +45,7 @@ async function initMap() {
     });
 
     // Create the Place Autocomplete widget.
-    placeAutocomplete = document.querySelector(
-        'gmp-place-autocomplete'
-    ) as google.maps.places.PlaceAutocompleteElement;
+    placeAutocomplete = document.querySelector('gmp-place-autocomplete')!;
     placeAutocomplete.includedPrimaryTypes = ['(regions)'];
 
     contentDiv = document.getElementById('pac-content') as HTMLElement;
@@ -149,7 +147,7 @@ async function initMap() {
 // Restyle and make a request when the feature type is changed.
 function featureTypeChanged() {
     // Style for coloring the outline of the entire feature type.
-    let styleStrokeOnly = /** @type {!google.maps.FeatureStyleOptions} */ {
+    const styleStrokeOnly = {
         fillColor: 'white',
         fillOpacity: 0.01,
         strokeColor: strokeColorPicker.value,
@@ -214,7 +212,7 @@ function styleChanged() {
 // Apply styling to a polygon.
 function applyStyle(placeid?) {
     // Define styles.
-    let styleStrokeOnly = /** @type {!google.maps.FeatureStyleOptions} */ {
+    const styleStrokeOnly = {
         strokeColor: strokeColorPicker.value,
         strokeOpacity: 1.0,
         strokeWeight: 2.0,
@@ -222,7 +220,7 @@ function applyStyle(placeid?) {
         fillOpacity: 0.1,
     };
 
-    let styleStrokeFill = /** @type {!google.maps.FeatureStyleOptions} */ {
+    const styleStrokeFill = {
         strokeColor: strokeColorPicker.value,
         strokeOpacity: 1.0,
         strokeWeight: 2.0,
@@ -274,7 +272,7 @@ function applyStyle(placeid?) {
 // Populate the countries menu.
 function buildMenu() {
     for (const item of (countries as any).default) {
-        let countryOption = document.createElement('option');
+        const countryOption = document.createElement('option');
         countryOption.textContent = item.name;
         countryOption.value = item.code;
         // Set U.S. as the default.
@@ -316,7 +314,7 @@ function getFeatureAvailability(countryName) {
     });
 
     // Create a map for our values.
-    let featureAvailabilityMap = new Map([
+    const featureAvailabilityMap = new Map([
         ['country', selectedCountry?.feature.country],
         [
             'administrative_area_level_1',
@@ -343,16 +341,14 @@ function revertStyles() {
 
 // Apply styling to the clicked place.
 function handlePlaceClick(event) {
-    let clickedPlaceId = event.features[0].placeId;
+    const clickedPlaceId = event.features[0].placeId;
     if (!clickedPlaceId) return;
     showSelectedPolygon(clickedPlaceId, 0);
 }
 
 // Get the place ID for the selected country, then call showSelectedPolygon().
 async function showSelectedCountry(countryName) {
-    const { Place } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
+    const { Place } = await google.maps.importLibrary('places');
 
     contentDiv.textContent = '';
 
@@ -372,9 +368,7 @@ async function showSelectedCountry(countryName) {
 // mode 0 = click, mode 1 = autocomplete.
 async function showSelectedPolygon(placeid, mode) {
     let isFeatureSupported;
-    const { Place } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
+    const { Place } = await google.maps.importLibrary('places');
     selectedPlaceId = placeid;
     contentDiv.textContent = ''; // Clear the info display.
 
@@ -405,7 +399,7 @@ async function showSelectedPolygon(placeid, mode) {
             featureMenu.value
         );
     }
-    var viewport = place.viewport as google.maps.LatLngBounds;
+    const viewport = place.viewport;
     innerMap.fitBounds(viewport, 155);
 
     // Build the HTML.

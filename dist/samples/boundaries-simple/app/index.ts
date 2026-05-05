@@ -17,16 +17,14 @@ async function initMap() {
     await google.maps.importLibrary('maps');
 
     // Get the gmp-map element.
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     // Get the inner map.
     const innerMap = mapElement.innerMap;
 
     // [START maps_boundaries_simple_get_layer]
     // Get the feature layer.
-    featureLayer = innerMap.getFeatureLayer(google.maps.FeatureType.LOCALITY);
+    featureLayer = innerMap.getFeatureLayer('LOCALITY');
     // [END maps_boundaries_simple_get_layer]
 
     // [START maps_boundaries_simple_style_single]

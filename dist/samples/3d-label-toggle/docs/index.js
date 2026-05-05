@@ -1,14 +1,15 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-// @ts-nocheck
+
 // [START maps_3d_label_toggle]
 let map;
 async function init() {
-    const { Map3DElement, MapMode } = await google.maps.importLibrary('maps3d');
+    const { Map3DElement } = await google.maps.importLibrary('maps3d');
+
     map = new Map3DElement({
         center: {
             lat: 37.79810773998413,
@@ -20,8 +21,11 @@ async function init() {
         heading: -56.047035719765596,
         gestureHandling: 'COOPERATIVE',
     });
-    map.mode = MapMode.SATELLITE;
+
+    map.mode = 'SATELLITE';
+
     document.body.append(map);
+
     const locationCamera = {
         center: {
             lat: 21.263523536467105,
@@ -32,23 +36,22 @@ async function init() {
         tilt: 76.9173260789542,
         heading: -44.59196007522445,
     };
+
     // Get the button element by its ID
     const toggleButton = document.getElementById('toggleButton');
     toggleButton.addEventListener('click', function () {
         // Toggle the labels.
-        if (map.mode == MapMode.SATELLITE) {
+        if (map.mode == 'SATELLITE') {
             // Setting the map mode to HYBRID turns the labels on.
-            map.mode = MapMode.HYBRID;
-            document.getElementById('toggleButton').innerText =
-                'Labels are on. (HYBRID)';
-        }
-        else {
+            map.mode = 'HYBRID';
+            toggleButton.innerText = 'Labels are on. (HYBRID)';
+        } else {
             // Setting the map mode to SATELLITE turns the labels on.
-            map.mode = MapMode.SATELLITE;
-            document.getElementById('toggleButton').innerText =
-                'Labels are off. (SATELLITE)';
+            map.mode = 'SATELLITE';
+            toggleButton.innerText = 'Labels are off. (SATELLITE)';
         }
     });
 }
+
 init();
 // [END maps_3d_label_toggle]
