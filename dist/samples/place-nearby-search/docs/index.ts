@@ -13,8 +13,10 @@ let typeSelect;
 let infoWindow;
 
 async function initMap() {
-    const { InfoWindow } = await google.maps.importLibrary('maps');
-    const { event } = await google.maps.importLibrary('core');
+    const [{ InfoWindow }, { event }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('core'),
+    ]);
 
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
@@ -36,10 +38,15 @@ async function initMap() {
 }
 
 async function nearbySearch() {
-    const { Place, SearchNearbyRankPreference } =
-        await google.maps.importLibrary('places');
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
-    const { spherical } = await google.maps.importLibrary('geometry');
+    const [
+        { Place, SearchNearbyRankPreference },
+        { AdvancedMarkerElement },
+        { spherical },
+    ] = await Promise.all([
+        google.maps.importLibrary('places'),
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('geometry'),
+    ]);
     // [START maps_place_nearby_search_request]
     // Get bounds and radius to constrain search.
     center = mapElement.center;

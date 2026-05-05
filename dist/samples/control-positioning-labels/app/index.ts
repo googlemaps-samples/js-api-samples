@@ -35,8 +35,10 @@ async function MakeControl(controlDiv: HTMLElement, label: string) {
 
 async function initMap() {
     //  Request the needed libraries.
-    await google.maps.importLibrary('maps');
-    const { ControlPosition } = await google.maps.importLibrary('core');
+    const [, { ControlPosition }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('core'),
+    ]);
 
     const mapElement = document.querySelector('gmp-map')!;
 

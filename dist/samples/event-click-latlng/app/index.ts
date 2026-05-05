@@ -7,7 +7,6 @@
 // [START maps_event_click_latlng]
 async function initMap() {
     // Request needed libraries.
-    await google.maps.importLibrary('maps');
     const { InfoWindow } = await google.maps.importLibrary('maps');
 
     // Set up the map.
