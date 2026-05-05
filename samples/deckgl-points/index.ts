@@ -4,10 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 // [START maps_deckgl_points]
-// Import the needed libraries.
+
+import { Feature } from 'geojson';
 import { GoogleMapsOverlay } from '@deck.gl/google-maps';
 import { GeoJsonLayer } from '@deck.gl/layers';
-import { Feature } from 'geojson';
 
 type Properties = { mag: number };
 
