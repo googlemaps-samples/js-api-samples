@@ -40,8 +40,8 @@ async function initMap(): Promise<void> {
 
     // Update values on UI when the map changes.
     const updateUI = () => {
-        const heading = map3DElement.heading != null ? map3DElement.heading.toFixed(0) : '0';
-        const tilt = map3DElement.tilt != null ? map3DElement.tilt.toFixed(0) : '0';
+        const heading = map3DElement.heading?.toFixed(0) ?? '0';
+        const tilt = map3DElement.tilt?.toFixed(0) ?? '0';
         const range = map3DElement.range != null ? map3DElement.range.toFixed(0) : '0';
         const rawFov = map3DElement.fov != null ? parseFloat(map3DElement.fov.toFixed(0)) : 45;
         const fovClamped = Math.min(80, Math.max(5, rawFov));
