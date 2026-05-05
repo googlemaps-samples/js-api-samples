@@ -6,14 +6,16 @@
 
 // [START maps_layer_transit]
 async function initMap(): Promise<void> {
-  await google.maps.importLibrary("maps");
+    await google.maps.importLibrary('maps');
 
-  const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-  const innerMap = mapElement.innerMap;
+    const mapElement = document.querySelector(
+        'gmp-map'
+    ) as google.maps.MapElement;
+    const innerMap = mapElement.innerMap;
 
-  const transitLayer = new google.maps.TransitLayer();
+    const transitLayer = new google.maps.TransitLayer();
 
-  transitLayer.setMap(innerMap);
+    transitLayer.setMap(innerMap);
 }
 
 initMap();

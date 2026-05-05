@@ -1,38 +1,44 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 // [START maps_boundaries_choropleth]
 async function initMap() {
     // Request needed libraries.
-    (await google.maps.importLibrary('maps'));
+    await google.maps.importLibrary('maps');
+
     // Get the gmp-map element.
     const mapElement = document.querySelector('gmp-map');
+
     // Get the inner map.
     const innerMap = mapElement.innerMap;
-    const featureLayer = innerMap.getFeatureLayer(google.maps.FeatureType.ADMINISTRATIVE_AREA_LEVEL_1);
+
+    const featureLayer = innerMap.getFeatureLayer(
+        'ADMINISTRATIVE_AREA_LEVEL_1'
+    );
+
     // [START maps_boundaries_choropleth_style_function]
     featureLayer.style = (featureStyleFunctionOptions) => {
         const placeFeature = featureStyleFunctionOptions.feature;
         const population = states[placeFeature.placeId];
+
         let fillColor;
         // Specify colors using any of the following:
         // * Named ('green')
         // * Hexadecimal ('#FF0000')
         // * RGB ('rgb(0, 0, 255)')
         // * HSL ('hsl(60, 100%, 50%)')
+
         if (population < 2000000) {
             fillColor = 'green';
-        }
-        else if (population < 5000000) {
+        } else if (population < 5000000) {
             fillColor = 'red';
-        }
-        else if (population < 10000000) {
+        } else if (population < 10000000) {
             fillColor = 'blue';
-        }
-        else if (population < 40000000) {
+        } else if (population < 40000000) {
             fillColor = 'yellow';
         }
         return {
@@ -95,5 +101,6 @@ async function initMap() {
         ChIJaS7hSDTiXocRLzh90nkisCY: 578803, // Wyoming
     };
 }
+
 initMap();
 // [END maps_boundaries_choropleth]

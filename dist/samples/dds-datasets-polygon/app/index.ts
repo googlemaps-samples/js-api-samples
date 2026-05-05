@@ -5,7 +5,7 @@
  */
 
 // [START maps_dds_datasets_polygon]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map')!;
 let innerMap;
 // [START maps_dds_datasets_polygon_featurestyleoptions]
 const styleOptions = {
@@ -19,7 +19,7 @@ const styleOptions = {
 
 async function initMap() {
     // Request needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
     // Get the inner map.
     innerMap = mapElement.innerMap;

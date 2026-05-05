@@ -1,14 +1,12 @@
 {
-  "name": "@js-api-samples/layer-transit",
-  "version": "1.0.0",
-  "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh layer-transit && bash ../app.sh layer-transit && bash ../docs.sh layer-transit && npm run build:vite --workspace=. && bash ../dist.sh layer-transit",
-    "test": "tsc && npm run build:vite --workspace=.",
-    "start": "tsc && vite build --base './' && vite",
-    "build:vite": "vite build --base './'",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    
-  }
+    "name": "@js-api-samples/layer-transit",
+    "version": "1.0.0",
+    "scripts": {
+        "build": "tsc && bash ../jsfiddle.sh layer-transit && bash ../app.sh layer-transit && bash ../docs.sh layer-transit && npm run build:vite --workspace=. && bash ../dist.sh layer-transit",
+        "test": "tsc && npm run build:vite --workspace=.",
+        "start": "tsc && vite build --base './' && vite",
+        "build:vite": "vite build --base './'",
+        "preview": "vite preview"
+    },
+    "dependencies": {}
 }

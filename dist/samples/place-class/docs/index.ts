@@ -5,14 +5,12 @@
  */
 
 // [START maps_place_class]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map')!;
 let innerMap;
 let infoWindow;
 
 async function initMap() {
-    const { Map, InfoWindow } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
 
     innerMap = mapElement.innerMap;
     infoWindow = new InfoWindow();
@@ -21,12 +19,8 @@ async function initMap() {
 
 // [START maps_place_class_fetchfields]
 async function getPlaceDetails() {
-    const { Place } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    const { Place } = await google.maps.importLibrary('places');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
     // Use place ID to create a new Place instance.
     const place = new Place({
         id: 'ChIJyYB_SZVU2YARR-I1Jjf08F0', // San Diego Zoo

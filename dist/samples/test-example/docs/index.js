@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
@@ -10,25 +10,30 @@
  * test them. This way we can avoid making changes to published content.
  * And deliver us from evil.
  */
+
 // [START maps_test_example]
 // Declare the gmp-map element.
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
 const advancedMarkerElement = document.querySelector('gmp-advanced-marker');
 let center;
+
 async function initMap() {
     // [START maps_test_example_instantiate_map]
     //  Request the needed libraries.
-    const { Map } = (await google.maps.importLibrary('maps'));
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
+    const { Map } = await google.maps.importLibrary('maps');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+
     // Get the inner map from the gmp-map element.
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
         mapTypeControl: false,
     });
     // [END maps_test_example_instantiate_map]
+
     // Get the lat/lng from the inner map.
     center = innerMap.getCenter();
+
     // [START maps_test_example_instantiate_marker]
     // Add a marker, positioned at Uluru.
     const marker = new AdvancedMarkerElement({
@@ -37,6 +42,7 @@ async function initMap() {
         title: 'Uluru',
     });
     // [END maps_test_example_instantiate_marker]
+
     // [START maps_test_example_why_me]
     console.log("Say there Mac, why'd you choose me to test this change?");
     // [END maps_test_example_why_me]

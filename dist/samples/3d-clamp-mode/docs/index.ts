@@ -4,12 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-//@ts-nocheck
 // [START maps_3d_clamp_mode]
 let polyline;
 
 async function init() {
-    const { Map3DElement, AltitudeMode, Polyline3DElement } =
+    const { Map3DElement, Polyline3DElement } =
         await google.maps.importLibrary('maps3d');
 
     const map = new Map3DElement({
@@ -41,7 +40,7 @@ async function init() {
         ],
         strokeColor: 'red',
         strokeWidth: 5,
-        altitudeMode: AltitudeMode.CLAMP_TO_GROUND,
+        altitudeMode: 'CLAMP_TO_GROUND',
         drawsOccludedSegments: true,
     });
 
@@ -52,13 +51,13 @@ async function init() {
 init();
 
 // Dropdown event listener
-const dropdown = document.getElementById('selectElementId');
-dropdown.addEventListener('change', updateAltitudeMode);
-
-function updateAltitudeMode(event) {
+const dropdown = document.getElementById(
+    'selectElementId'
+) as HTMLSelectElement;
+dropdown.addEventListener('change', () => {
     if (polyline && dropdown.value) {
         polyline.altitudeMode = dropdown.value;
     }
-}
+});
 
 // [END maps_3d_clamp_mode]

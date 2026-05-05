@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
@@ -8,14 +8,15 @@
 async function initMap() {
     //  Request the needed libraries.
     await google.maps.importLibrary('maps');
+
     const mapElement = document.querySelector('gmp-map');
+
     const innerMap = mapElement.innerMap;
-    
+
     innerMap.setOptions({
         // Disable the default UI.
         disableDefaultUI: true,
     });
-    
 }
-initMap();
 
+initMap();
