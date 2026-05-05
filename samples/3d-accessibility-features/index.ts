@@ -6,18 +6,14 @@
 
 // [START maps_3d_accessibility_features]
 async function initMap() {
+    // Import the needed libraries.    
     const { Map3DElement, Marker3DInteractiveElement, PopoverElement } =
         await google.maps.importLibrary('maps3d');
-    const { PinElement } = await google.maps.importLibrary('marker');
+    const { PinElement } = (await google.maps.importLibrary(
+        'marker'
+    ));
 
-    const map = new Map3DElement({
-        center: { lat: 34.8405, lng: -111.7909, altitude: 1322.7 },
-        range: 13279.5,
-        tilt: 67.44,
-        heading: 0.01,
-        mode: 'SATELLITE',
-        gestureHandling: 'COOPERATIVE',
-    });
+    const map3DElement = document.querySelector('gmp-map-3d')!;
 
     // Set LatLng and title text for the markers. The first marker (Boynton Pass)
     // receives the initial focus when tab is pressed. Use arrow keys to move
@@ -71,11 +67,11 @@ async function initMap() {
 
         interactiveMarker.append(pin);
 
-        map.append(interactiveMarker);
-        map.append(popover);
+        map3DElement.append(interactiveMarker);
+        map3DElement.append(popover);
     });
 
-    document.body.append(map);
+    document.body.append(map3DElement);
 }
 
 initMap();
