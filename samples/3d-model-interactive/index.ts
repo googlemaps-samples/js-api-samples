@@ -3,13 +3,13 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-// TMP EMPTY LINE
+
 // [START maps_3d_model_interactive]
 async function init() {
     // Import the needed libraries.
     const { Map3DElement, Model3DInteractiveElement } =
         await google.maps.importLibrary('maps3d');
-    // TMP EMPTY LINE
+
     const map = new Map3DElement({
         center: { lat: 39.1178, lng: -106.4452, altitude: 4395.4952 },
         range: 1500,
@@ -18,7 +18,7 @@ async function init() {
         mode: 'HYBRID',
         gestureHandling: 'COOPERATIVE',
     });
-    // TMP EMPTY LINE
+
     const model = new Model3DInteractiveElement({
         src: 'https://maps-docs-team.web.app/assets/windmill.glb',
         position: { lat: 39.1178, lng: -106.4452, altitude: 4495.4952 },
@@ -26,14 +26,14 @@ async function init() {
         scale: 0.15,
         altitudeMode: 'CLAMP_TO_GROUND',
     });
-    // TMP EMPTY LINE
+
     model.addEventListener('gmp-click', function (event) {
         this.scale = Math.random() * (0.5 - 0.1) + 0.1;
     });
-    // TMP EMPTY LINE
+
     document.body.append(map);
     map.append(model);
 }
-// TMP EMPTY LINE
+
 init();
 // [END maps_3d_model_interactive]

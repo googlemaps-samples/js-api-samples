@@ -18,7 +18,7 @@ async function initMap() {
     innerMap.setOptions({
         mapTypeControl: false,
         // A map's styles property can only be set on a raster map.
-        renderingType: google.maps.RenderingType.RASTER,
+        renderingType: 'RASTER',
     });
 
     // Apply new JSON when the user chooses to hide/show features.

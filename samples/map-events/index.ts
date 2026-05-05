@@ -30,9 +30,9 @@ const events = [
 
 function setupListener(map: google.maps.Map, name: string) {
     const eventRow = document.getElementById(name) as HTMLElement;
-    google.maps.event.addListener(map, name, () => {
+    map.addListener(name, () => {
         eventRow.className = 'event active';
-        const timeout = setTimeout(() => {
+        setTimeout(() => {
             eventRow.className = 'event inactive';
         }, 1000);
     });

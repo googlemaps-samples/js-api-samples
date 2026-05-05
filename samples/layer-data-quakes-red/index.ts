@@ -9,6 +9,7 @@ let innerMap;
 
 async function initMap() {
     await google.maps.importLibrary('maps');
+    const { SymbolPath } = await google.maps.importLibrary('core');
 
     const mapElement = document.querySelector('gmp-map')!;
 
@@ -29,7 +30,7 @@ async function initMap() {
             Math.exp(parseFloat(feature.getProperty('mag') as string)) * 0.1;
         return {
             icon: {
-                path: google.maps.SymbolPath.CIRCLE,
+                path: SymbolPath.CIRCLE,
                 scale: mag,
                 fillColor: '#f00',
                 fillOpacity: 0.35,

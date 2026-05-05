@@ -35,7 +35,7 @@ async function init() {
     });
 
     // Update request center and bounds when the map bounds change.
-    google.maps.event.addListener(innerMap, 'bounds_changed', async () => {
+    innerMap.addListener('bounds_changed', async () => {
         request.locationRestriction = innerMap.getBounds();
         request.origin = innerMap.getCenter();
     });
