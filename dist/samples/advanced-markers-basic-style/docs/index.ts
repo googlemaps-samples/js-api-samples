@@ -6,17 +6,13 @@
 
 // [START maps_advanced_markers_basic_style]
 const parser = new DOMParser();
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map')!;
 
 async function initMap() {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { Map } = await google.maps.importLibrary('maps');
     const { AdvancedMarkerElement, PinElement } =
-        (await google.maps.importLibrary(
-            'marker'
-        )) as google.maps.MarkerLibrary;
+        await google.maps.importLibrary('marker');
 
     // Each PinElement is paired with a marker to demonstrate setting each parameter.
 
@@ -79,7 +75,6 @@ async function initMap() {
 
     // [START maps_advanced_markers_basic_style_text_glyph]
     const pinTextGlyph = new PinElement({
-        //@ts-ignore
         glyphText: 'T',
         glyphColor: 'white',
     });
@@ -93,7 +88,6 @@ async function initMap() {
     // [START maps_advanced_markers_basic_style_hide_glyph]
     // Hide the glyph.
     const pinNoGlyph = new PinElement({
-        //@ts-ignore
         glyphText: '',
     });
     const markerNoGlyph = new AdvancedMarkerElement({

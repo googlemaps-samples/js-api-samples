@@ -7,12 +7,10 @@
 // [START maps_event_closure]
 async function initMap() {
     // Request needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
-    (await google.maps.importLibrary('marker')) as google.maps.MarkerLibrary;
+    await google.maps.importLibrary('maps');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
     const innerMap = mapElement.innerMap;
 
     const bounds: google.maps.LatLngBoundsLiteral = {
@@ -27,14 +25,14 @@ async function initMap() {
 
     // Add 5 markers to map at random locations.
     // For each of these markers, give them a title with their index, and when
-    // they are clicked they should open an infowindow with text from a secret
+    // they are clicked they should open an infoWindow with text from a secret
     // message.
     const secretMessages = ['This', 'is', 'the', 'secret', 'message'];
     const lngSpan = bounds.east - bounds.west;
     const latSpan = bounds.north - bounds.south;
 
     for (let i = 0; i < secretMessages.length; ++i) {
-        const marker = new google.maps.marker.AdvancedMarkerElement({
+        const marker = new AdvancedMarkerElement({
             position: {
                 lat: bounds.south + latSpan * Math.random(),
                 lng: bounds.west + lngSpan * Math.random(),
@@ -48,16 +46,18 @@ async function initMap() {
 
 // Attaches an info window to a marker with the provided message. When the
 // marker is clicked, the info window will open with the secret message.
-function attachSecretMessage(
+async function attachSecretMessage(
     marker: google.maps.marker.AdvancedMarkerElement,
     secretMessage: string
 ) {
-    const infowindow = new google.maps.InfoWindow({
+    const { InfoWindow } = await google.maps.importLibrary('maps');
+
+    const infoWindow = new InfoWindow({
         content: secretMessage,
     });
 
     marker.addListener('gmp-click', () => {
-        infowindow.open(marker.map, marker);
+        infoWindow.open(marker.map, marker);
     });
 }
 

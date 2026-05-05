@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
@@ -18,15 +18,16 @@ const styleOptions = {
 
 async function initMap() {
     // Request needed libraries.
-    (await google.maps.importLibrary('maps'));
+    await google.maps.importLibrary('maps');
+
     // Get the inner map.
     innerMap = mapElement.innerMap;
-    
+
     // Dataset ID for NYC park data.
     const datasetId = 'a75dd002-ad20-4fe6-af60-27cd2ed636b4';
+
     const datasetLayer = innerMap.getDatasetFeatureLayer(datasetId);
     datasetLayer.style = styleOptions;
-    
 }
-initMap();
 
+initMap();

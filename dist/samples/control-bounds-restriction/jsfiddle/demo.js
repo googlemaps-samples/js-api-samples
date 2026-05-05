@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
@@ -17,17 +17,17 @@ const NEW_ZEALAND_BOUNDS = {
 
 async function initMap() {
     // Import the needed libraries.
-    (await google.maps.importLibrary('maps'));
+    await google.maps.importLibrary('maps');
+
     innerMap = mapElement.innerMap;
-    
+
     // Restrict the map to the provided bounds.
     innerMap.setOptions({
         restriction: {
             latLngBounds: NEW_ZEALAND_BOUNDS,
             strictBounds: false,
-        }
+        },
     });
-    
 }
-initMap();
 
+initMap();
