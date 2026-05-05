@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/3d-map-45-degree-locked",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc && bash ../jsfiddle.sh 3d-map-45-degree-locked && bash ../app.sh 3d-map-45-degree-locked && bash ../docs.sh 3d-map-45-degree-locked &&  npm run build:vite --workspace=. && bash ../dist.sh 3d-map-45-degree-locked",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && node server.js",
+    "build:vite": "mkdir -p dist && cp index.html index.js style.css dist/",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}
