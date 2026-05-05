@@ -21,7 +21,7 @@ async function initMap() {
         { lat: -18.142, lng: 178.431 },
         { lat: -27.467, lng: 153.027 },
     ];
-    const flightPath = new google.maps.Polyline({
+    const flightPath = new Polyline({
         path: flightPlanCoordinates,
         geodesic: true,
         strokeColor: '#FF0000',

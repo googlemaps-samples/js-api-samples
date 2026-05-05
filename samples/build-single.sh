@@ -1,14 +1,20 @@
 #!/bin/bash
 
 set -e
-# set -x
+set -x
 
 NAME=$(basename $PWD)
 
 # clean comments for empty lines, and then clean up, to preserve newlines
-sed -i.sed-back 's#^$##g' *.ts && rm *.sed-back
-npx tsc 
-sed -i.sed-back 's###g' *.ts *.js && rm *.sed-back
+sed -i.sed-back 's#^$#// TMP EMPTY LINE#g' *.ts && rm *.sed-back
+set +e
+npx tsc
+status=$? 
+sed -i.sed-back 's#// TMP EMPTY LINE##g' *.ts *.js && rm *.sed-back
+if [[ $status -eq 0 ]]; then
+  echo "TS build failure!"
+  exit $status
+fi
 
 npx prettier -w index.js --ignore-path /dev/null
 

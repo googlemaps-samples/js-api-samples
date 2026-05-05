@@ -14,7 +14,7 @@ async function initMap(): Promise<void> {
 
     const mapElement = document.querySelector('gmp-map')!;
     const innerMap = mapElement.innerMap;
-    const geocoder = new google.maps.Geocoder();
+    const geocoder = new Geocoder();
 
     geocoder
         .geocode({ address: 'Toledo' })

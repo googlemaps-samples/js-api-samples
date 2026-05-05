@@ -12,7 +12,7 @@ async function initMap(): Promise<void> {
         google.maps.importLibrary('geocoding'),
     ]);
 
-    const geocoder = new google.maps.Geocoder();
+    const geocoder = new Geocoder();
     const mapElement = document.querySelector('gmp-map')!;
     const innerMap = mapElement.innerMap;
 

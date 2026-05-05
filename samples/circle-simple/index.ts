@@ -10,8 +10,9 @@ let innerMap;
 
 async function initMap() {
     // Request needed libraries.
-    await google.maps.importLibrary('maps');
-    await google.maps.importLibrary('marker');
+    const { Circle } = await google.maps.importLibrary('maps');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+
     // Get the gmp-map element.
     const mapElement = document.querySelector('gmp-map')!;
 
@@ -25,7 +26,7 @@ async function initMap() {
     const buttons = document.querySelectorAll('input[name="radius"]');
 
     // Create the circle.
-    const walkingCircle = new google.maps.Circle({
+    const walkingCircle = new Circle({
         strokeColor: '#ffdd00ff',
         strokeOpacity: 0.8,
         strokeWeight: 2,

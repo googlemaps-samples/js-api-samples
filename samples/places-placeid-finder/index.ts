@@ -38,12 +38,12 @@ async function initMap(): Promise<void> {
         }
     });
 
-    const infowindow = new InfoWindow();
-    const infowindowContent = document.getElementById(
+    const infoWindow = new InfoWindow();
+    const infoWindowContent = document.getElementById(
         'infowindow-content'
     ) as HTMLElement;
 
-    infowindow.setContent(infowindowContent);
+    infoWindow.setContent(infowindowContent);
 
     const marker = new AdvancedMarkerElement({
         map: map,
@@ -52,13 +52,13 @@ async function initMap(): Promise<void> {
     });
 
     marker.addEventListener('gmp-click', () => {
-        infowindow.open(map, marker);
+        infoWindow.open(map, marker);
     });
 
     placeAutocomplete.addEventListener(
         'gmp-select',
         async ({ placePrediction }: any) => {
-            infowindow.close();
+            infoWindow.close();
 
             const place = placePrediction.toPlace();
 
@@ -82,19 +82,19 @@ async function initMap(): Promise<void> {
             // marker.setVisible(true); // AdvancedMarkerElement is visible by default when map and position are set.
 
             (
-                infowindowContent.children.namedItem(
+                infoWindowContent.children.namedItem(
                     'place-name'
                 ) as HTMLElement
             ).textContent = place.displayName as string;
             (
-                infowindowContent.children.namedItem('place-id') as HTMLElement
+                infoWindowContent.children.namedItem('place-id') as HTMLElement
             ).textContent = place.id as string;
             (
-                infowindowContent.children.namedItem(
+                infoWindowContent.children.namedItem(
                     'place-address'
                 ) as HTMLElement
             ).textContent = place.formattedAddress as string;
-            infowindow.open(map, marker);
+            infoWindow.open(map, marker);
         }
     );
 }

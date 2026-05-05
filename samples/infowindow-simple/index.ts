@@ -45,7 +45,7 @@ async function initMap(): Promise<void> {
     content.appendChild(link);
 
     // Create the info window.
-    const infowindow = new google.maps.InfoWindow({
+    const infoWindow = new InfoWindow({
         headerContent: heading,
         content: content,
         ariaLabel: 'Uluru',
@@ -61,14 +61,14 @@ async function initMap(): Promise<void> {
     });
 
     // Open the info window when the map loads.
-    infowindow.open({
+    infoWindow.open({
         anchor: marker,
         map: innerMap,
     });
 
     // Open the info window when the marker is clicked.
     marker.addEventListener('gmp-click', () => {
-        infowindow.open({
+        infoWindow.open({
             anchor: marker,
             map: innerMap,
         });

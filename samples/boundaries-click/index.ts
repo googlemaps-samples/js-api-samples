@@ -42,9 +42,7 @@ async function initMap() {
 
     // [START maps_boundaries_click_event_add_layer]
     // Add the feature layer.
-    featureLayer = innerMap.getFeatureLayer(
-        google.maps.FeatureType.ADMINISTRATIVE_AREA_LEVEL_2
-    );
+    featureLayer = innerMap.getFeatureLayer('ADMINISTRATIVE_AREA_LEVEL_2');
 
     // Add the event listeners for the feature layer.
     featureLayer.addListener('click', handleClick);
@@ -62,13 +60,13 @@ async function initMap() {
     });
     // [END maps_boundaries_click_event_add_layer]
 
-    // Create the infowindow.
+    // Create the infoWindow.
     infoWindow = new InfoWindow({});
     // Apply style on load, to enable clicking.
     featureLayer.style = applyStyle;
 }
 
-// Helper function for the infowindow.
+// Helper function for the infoWindow.
 async function createInfoWindow(event) {
     const feature = event.features[0];
     if (!feature.placeId) return;

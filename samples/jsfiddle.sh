@@ -47,18 +47,20 @@ pushd "${DIST_DIR}/samples/${NAME}/jsfiddle"
 # Remove region tags from files by type, since they all have different comment conventions.
 # We use a conditional here since sed behaves differently on Linux.
 echo "Remove region tags from ${DIST_DIR}/samples/${NAME}/jsfiddle/demo.js"
-  sed -i.sed-back "s/\/\/ \[START .*]//g" "demo.js" && rm *.sed-back
-  sed -i.sed-back "s/\/\/ \[END .*]//g" "demo.js" && rm *.sed-back
+sed -i.sed-back "s#// \[START .*]##g" "demo.js" && rm *.sed-back
+sed -i.sed-back "s#// \[END .*]##g" "demo.js" && rm *.sed-back
+sed -i.sed-back "s#/\* \[START .*] \*/##g" "demo.js" && rm *.sed-back
+sed -i.sed-back "s#/\* \[END .*] \*/##g" "demo.js"  && rm *.sed-back
 
 
 echo "Remove region tags from ${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
-  sed -i.sed-back "s/<!--[[:space:]]*\[START .*\][[:space:]]*-->//g" "demo.html" && rm *.sed-back
-  sed -i.sed-back "s/<!--[[:space:]]*\[END .*\][[:space:]]*-->//g" "demo.html" && rm *.sed-back
+sed -i.sed-back "s/<!--[[:space:]]*\[START .*\][[:space:]]*-->//g" "demo.html" && rm *.sed-back
+sed -i.sed-back "s/<!--[[:space:]]*\[END .*\][[:space:]]*-->//g" "demo.html" && rm *.sed-back
 
 
 echo "Remove region tags from ${DIST_DIR}/samples/${NAME}/jsfiddle/demo.css"
-sed -i.sed-back "s/\/\* \[START maps_.*] \*\///g" "demo.css" && rm *.sed-back
-sed -i.sed-back "s/\/\* \[END maps_.*] \*\///g" "demo.css"  && rm *.sed-back
+sed -i.sed-back "s#/\* \[START maps_.*] \*/##g" "demo.css" && rm *.sed-back
+sed -i.sed-back "s#/\* \[END maps_.*] \*/##g" "demo.css"  && rm *.sed-back
 
 # after that other cleanup, re-run prettier to remove excess newlines
 npx prettier -w . --ignore-path /dev/null

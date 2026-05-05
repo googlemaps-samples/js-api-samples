@@ -46,7 +46,7 @@ async function initMap(): Promise<void> {
         minWidth: 360,
         disableAutoPan: true,
         headerDisabled: true,
-        pixelOffset: new google.maps.Size(0, -10),
+        pixelOffset: new Size(0, -10),
     });
 
     // [START maps_place_autocomplete_basic_map_listener]
@@ -95,7 +95,7 @@ async function initMap(): Promise<void> {
         const newCenter = map.getCenter();
 
         // Update the autocomplete's location bias to a 10km radius around the new map center.
-        placeAutocompleteElement.locationBias = new google.maps.Circle({
+        placeAutocompleteElement.locationBias = new Circle({
             center: newCenter,
             radius: 10000, // 10km in meters.
         });

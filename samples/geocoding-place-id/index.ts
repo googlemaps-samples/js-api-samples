@@ -14,13 +14,13 @@ async function initMap(): Promise<void> {
 
     const mapElement = document.querySelector('gmp-map')!;
     const innerMap = mapElement.innerMap;
-    const geocoder = new google.maps.Geocoder();
-    const infowindow = new google.maps.InfoWindow();
+    const geocoder = new Geocoder();
+    const infoWindow = new InfoWindow();
 
     (document.getElementById('submit') as HTMLElement).addEventListener(
         'click',
         () => {
-            geocodePlaceId(geocoder, innerMap, infowindow);
+            geocodePlaceId(geocoder, innerMap, infoWindow);
         }
     );
 }
@@ -29,7 +29,7 @@ async function initMap(): Promise<void> {
 function geocodePlaceId(
     geocoder: google.maps.Geocoder,
     map: google.maps.Map,
-    infowindow: google.maps.InfoWindow
+    infoWindow: google.maps.InfoWindow
 ) {
     const placeId = (document.getElementById('place-id') as HTMLInputElement)
         .value;
@@ -46,8 +46,8 @@ function geocodePlaceId(
                     position: results[0].geometry.location,
                 });
 
-                infowindow.setContent(results[0].formatted_address);
-                infowindow.open(map, marker);
+                infoWindow.setContent(results[0].formatted_address);
+                infoWindow.open(map, marker);
             } else {
                 window.alert('No results found');
             }

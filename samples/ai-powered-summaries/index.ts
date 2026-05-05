@@ -38,7 +38,7 @@ async function initMap(): Promise<void> {
     });
 
     // Bind autocomplete bounds to map bounds.
-    google.maps.event.addListener(innerMap, 'bounds_changed', async () => {
+    innerMap.addListener(innerMap, 'bounds_changed', async () => {
         placeAutocomplete.locationRestriction = innerMap.getBounds();
     });
 

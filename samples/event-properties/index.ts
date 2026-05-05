@@ -12,15 +12,15 @@ async function initMap() {
     const mapElement = document.querySelector('gmp-map')!;
     const innerMap = mapElement.innerMap;
 
-    const infowindow = new google.maps.InfoWindow({
+    const infoWindow = new InfoWindow({
         content: 'Change the zoom level',
         position: mapElement.center,
     });
 
-    infowindow.open(innerMap);
+    infoWindow.open(innerMap);
 
     innerMap.addListener('zoom_changed', () => {
-        infowindow.setContent('Zoom: ' + innerMap.getZoom()!);
+        infoWindow.setContent('Zoom: ' + innerMap.getZoom()!);
     });
 }
 

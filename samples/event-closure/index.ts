@@ -25,7 +25,7 @@ async function initMap() {
 
     // Add 5 markers to map at random locations.
     // For each of these markers, give them a title with their index, and when
-    // they are clicked they should open an infowindow with text from a secret
+    // they are clicked they should open an infoWindow with text from a secret
     // message.
     const secretMessages = ['This', 'is', 'the', 'secret', 'message'];
     const lngSpan = bounds.east - bounds.west;
@@ -50,12 +50,12 @@ function attachSecretMessage(
     marker: google.maps.marker.AdvancedMarkerElement,
     secretMessage: string
 ) {
-    const infowindow = new google.maps.InfoWindow({
+    const infoWindow = new InfoWindow({
         content: secretMessage,
     });
 
     marker.addListener('gmp-click', () => {
-        infowindow.open(marker.map, marker);
+        infoWindow.open(marker.map, marker);
     });
 }
 

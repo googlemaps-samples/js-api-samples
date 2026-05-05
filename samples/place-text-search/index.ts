@@ -38,7 +38,7 @@ async function initMap() {
         }
     });
 
-    infoWindow = new google.maps.InfoWindow();
+    infoWindow = new InfoWindow();
 }
 
 async function findPlaces(query) {

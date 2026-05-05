@@ -15,7 +15,7 @@ let response;
 async function initMap() {
     //  Request the needed libraries.
     const [
-        { Map, InfoWindow },
+        { Map },
         { Geocoder },
         { AdvancedMarkerElement },
         { ControlPosition },
@@ -42,7 +42,7 @@ async function initMap() {
         draggableCursor: 'crosshair',
     });
 
-    geocoder = new google.maps.Geocoder();
+    geocoder = new Geocoder();
 
     const inputText = document.getElementById('address') as HTMLInputElement;
     const submitButton = document.getElementById('submit') as HTMLInputElement;
@@ -77,15 +77,14 @@ async function clear() {
 // [START maps_geocoding_simple_request]
 async function geocode(request: google.maps.GeocoderRequest) {
     clear();
+    const { LatLng } = await google.maps.importLibrary('core');
 
     geocoder
         .geocode(request)
         .then((result) => {
             const { results } = result;
             innerMap.setCenter(results[0].geometry.location);
-            marker.position = new google.maps.LatLng(
-                results[0].geometry.location
-            );
+            marker.position = new LatLng(results[0].geometry.location);
             mapElement.append(marker);
             responseDiv.style.display = 'block';
             response.innerText = JSON.stringify(result, null, 2);

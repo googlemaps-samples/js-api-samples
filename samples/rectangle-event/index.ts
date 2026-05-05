@@ -28,7 +28,7 @@ async function initMap(): Promise<void> {
     };
 
     // Define the rectangle and set its editable property to true.
-    rectangle = new google.maps.Rectangle({
+    rectangle = new Rectangle({
         bounds: bounds,
         editable: true,
         draggable: true,
@@ -40,7 +40,7 @@ async function initMap(): Promise<void> {
     rectangle.addListener('bounds_changed', showNewRect);
 
     // Define an info window on the map.
-    infoWindow = new google.maps.InfoWindow();
+    infoWindow = new InfoWindow();
 }
 
 /** Show the new coordinates for the rectangle in an info window. */

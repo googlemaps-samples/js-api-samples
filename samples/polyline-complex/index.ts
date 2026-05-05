@@ -22,7 +22,7 @@ async function initMap() {
 
     innerMap = mapElement.innerMap;
 
-    poly = new google.maps.Polyline({
+    poly = new Polyline({
         strokeColor: '#000000',
         strokeOpacity: 1.0,
         strokeWeight: 3,

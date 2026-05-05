@@ -16,7 +16,7 @@ async function initMap() {
     const innerMap = mapElement.innerMap;
 
     const featureLayer = innerMap.getFeatureLayer(
-        google.maps.FeatureType.ADMINISTRATIVE_AREA_LEVEL_1
+        'ADMINISTRATIVE_AREA_LEVEL_1'
     );
 
     // [START maps_boundaries_choropleth_style_function]

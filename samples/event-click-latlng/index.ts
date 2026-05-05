@@ -8,6 +8,7 @@
 async function initMap() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
+    const { InfoWindow } = await google.maps.importLibrary('maps');
 
     // Set up the map.
     const mapElement = document.querySelector('gmp-map')!;
@@ -17,7 +18,7 @@ async function initMap() {
     const position = innerMap.getCenter();
 
     // Create the initial InfoWindow.
-    let infoWindow = new google.maps.InfoWindow({
+    let infoWindow = new InfoWindow({
         content: 'Click the map to get Lat/Lng!',
         position,
     });
@@ -31,7 +32,7 @@ async function initMap() {
         infoWindow.close();
 
         // Create a new InfoWindow.
-        infoWindow = new google.maps.InfoWindow({
+        infoWindow = new InfoWindow({
             position: mapsMouseEvent.latLng,
         });
         infoWindow.setContent(

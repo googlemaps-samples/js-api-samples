@@ -65,7 +65,7 @@ async function initMap() {
         content.textContent = `No reviews were found for ${place.displayName}.`;
     }
 
-    // Create an infowindow to display the review.
+    // Create an infoWindow to display the review.
     infoWindow = new InfoWindow({
         content,
         ariaLabel: place.displayName,

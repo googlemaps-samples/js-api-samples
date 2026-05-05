@@ -16,14 +16,16 @@ async function initMap(): Promise<void> {
         { Place },
         { AdvancedMarkerElement, PinElement },
         { RouteMatrix },
+        { LatLngBounds, UnitSystem },
     ] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('places'),
         google.maps.importLibrary('marker'),
         google.maps.importLibrary('routes'),
+        google.maps.importLibrary('core'),
     ]);
 
-    const bounds = new google.maps.LatLngBounds();
+    const bounds = new LatLngBounds();
 
     map = new Map(document.getElementById('map') as HTMLElement, {
         zoom: 8,
@@ -59,7 +61,7 @@ async function initMap(): Promise<void> {
         origins,
         destinations,
         travelMode: 'DRIVING',
-        units: google.maps.UnitSystem.METRIC,
+        units: UnitSystem.METRIC,
         fields: ['distanceMeters', 'durationMillis', 'condition'],
     };
     // [END maps_routes_route_matrix_request]

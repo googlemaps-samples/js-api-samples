@@ -22,7 +22,7 @@ async function initMap() {
     innerMap = mapElement.innerMap;
 
     // Get the LOCALITY feature layer.
-    featureLayer = innerMap.getFeatureLayer(google.maps.FeatureType.LOCALITY);
+    featureLayer = innerMap.getFeatureLayer('LOCALITY');
 
     findBoundary();
 }
