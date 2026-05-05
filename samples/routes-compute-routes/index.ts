@@ -180,7 +180,7 @@ async function init() {
             };
         }
 
-        if (travelMode === google.maps.TravelMode.TRANSIT) {
+        if (travelMode === 'TRANSIT') {
             const selectedTransitModes = document.querySelectorAll(
                 'ul#transitModes li input[type="checkbox"]:checked'
             );
@@ -214,7 +214,7 @@ async function init() {
         const location = locationInput as string;
         const heading =
             headingInput && travelModeInput !== 'TRANSIT'
-                ? Number(headingInput as string)
+                ? Number(headingInput)
                 : undefined;
 
         if (

@@ -18,7 +18,8 @@ async function initMap(): Promise<void> {
     // Asynchronously load required libraries from the Google Maps JS API.
     await google.maps.importLibrary('places');
     const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
-    const { InfoWindow } = await google.maps.importLibrary('maps');
+    const { InfoWindow, Circle } = await google.maps.importLibrary('maps');
+    const { Size } = await google.maps.importLibrary('core');
 
     // Get the initial center directly from the gmp-map element's property.
     const center = gmpMapElement.center;

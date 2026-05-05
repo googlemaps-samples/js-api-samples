@@ -9,7 +9,7 @@
 // projection.
 // https://en.wikipedia.org/wiki/Gall%E2%80%93Peters_projection
 const mapElement = document.querySelector('gmp-map')!;
-let innerMap;
+let innerMap: google.maps.Map;
 
 async function initMap() {
     // Request the needed libraries.
@@ -50,7 +50,10 @@ async function initMap() {
 
 let gallPetersMapType;
 
-function initGallPeters() {
+async function initGallPeters() {
+    const { ImageMapType } = await google.maps.importLibrary('maps');
+    const { Size, Point, LatLng } = await google.maps.importLibrary('core');
+
     const GALL_PETERS_RANGE_X = 800;
     const GALL_PETERS_RANGE_Y = 512;
 

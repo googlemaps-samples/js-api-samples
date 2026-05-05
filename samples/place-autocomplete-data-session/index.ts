@@ -8,7 +8,7 @@
 const mapElement = document.querySelector('gmp-map')!;
 let innerMap: google.maps.Map;
 let marker: google.maps.marker.AdvancedMarkerElement;
-const titleElement = document.querySelector('.title') as HTMLElement;
+const titleElement = document.querySelector<HTMLElement>('.title')!;
 const resultsContainerElement = document.querySelector('.results')!;
 const inputElement = document.querySelector('input')!;
 const tokenStatusElement = document.querySelector('.token-status')!;
@@ -84,6 +84,7 @@ async function makeAutocompleteRequest(inputEvent) {
         placeButton.addEventListener('click', () => {
             onPlaceSelected(placePrediction.toPlace());
         });
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         placeButton.textContent = placePrediction.text.toString();
         placeButton.classList.add('place-button');
 

@@ -6,45 +6,31 @@
 
 // [START maps_geocoding_component_restriction]
 async function initMap(): Promise<void> {
-    await Promise.all([
-        google.maps.importLibrary('maps'),
-        google.maps.importLibrary('marker'),
+    const [{ Geocoder }, { AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('geocoding'),
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
     ]);
 
     const geocoder = new Geocoder();
     const mapElement = document.querySelector('gmp-map')!;
     const innerMap = mapElement.innerMap;
 
-    (document.getElementById('submit') as HTMLElement).addEventListener(
-        'click',
-        () => {
-            geocodeAddress(geocoder, innerMap);
-        }
-    );
-}
-
-function geocodeAddress(geocoder: google.maps.Geocoder, map: google.maps.Map) {
-    geocoder
-        .geocode({
+    document.getElementById('submit')!.addEventListener('click', async () => {
+        const { results } = await geocoder.geocode({
             address: '483 George St.',
             componentRestrictions: {
                 country: 'AU',
                 postalCode: '2000',
             },
-        })
-        .then(({ results }) => {
-            map.setCenter(results[0].geometry.location);
-            new AdvancedMarkerElement({
-                map,
-                position: results[0].geometry.location,
-            });
-        })
-        .catch((e) =>
-            window.alert(
-                'Geocode was not successful for the following reason: ' + e
-            )
-        );
+        });
+
+        innerMap.setCenter(results[0].geometry.location);
+        new AdvancedMarkerElement({
+            map: innerMap,
+            position: results[0].geometry.location,
+        });
+    });
 }
 
 initMap();

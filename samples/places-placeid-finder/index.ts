@@ -43,7 +43,7 @@ async function initMap(): Promise<void> {
         'infowindow-content'
     ) as HTMLElement;
 
-    infoWindow.setContent(infowindowContent);
+    infoWindow.setContent(infoWindowContent);
 
     const marker = new AdvancedMarkerElement({
         map: map,

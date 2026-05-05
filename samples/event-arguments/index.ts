@@ -8,22 +8,18 @@
 async function initMap() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
-    await google.maps.importLibrary('marker');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
     const mapElement = document.querySelector('gmp-map')!;
     const innerMap = mapElement.innerMap;
 
     innerMap.addListener('click', (e) => {
-        placeMarkerAndPanTo(e.latLng, innerMap);
+        new AdvancedMarkerElement({
+            position: e.latLng,
+            map: innerMap,
+        });
+        innerMap.panTo(e.latLng);
     });
-}
-
-function placeMarkerAndPanTo(latLng: google.maps.LatLng, map: google.maps.Map) {
-    new AdvancedMarkerElement({
-        position: latLng,
-        map: map,
-    });
-    map.panTo(latLng);
 }
 
 initMap();

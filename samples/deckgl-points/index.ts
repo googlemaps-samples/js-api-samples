@@ -38,7 +38,7 @@ async function initMap() {
     //  Request the needed libraries.
     await google.maps.importLibrary('maps');
 
-    innerMap = await mapElement.innerMap;
+    innerMap = mapElement.innerMap;
 
     const deckOverlay = new GoogleMapsOverlay({
         layers: [

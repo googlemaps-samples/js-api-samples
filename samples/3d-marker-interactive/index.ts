@@ -3,13 +3,13 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
+// TMP EMPTY LINE
 // [START maps_3d_marker_interactive]
 async function init() {
     // Request needed libraries.
     const { Map3DElement, Marker3DInteractiveElement, PopoverElement } =
         await google.maps.importLibrary('maps3d');
-
+    // TMP EMPTY LINE
     const map = new Map3DElement({
         center: { lat: 37.469, lng: -122.1074, altitude: 0 },
         tilt: 67.5,
@@ -17,28 +17,28 @@ async function init() {
         mode: 'HYBRID',
         gestureHandling: 'COOPERATIVE',
     });
-
+    // TMP EMPTY LINE
     map.mode = 'SATELLITE';
-
+    // TMP EMPTY LINE
     for (const position of positions) {
         const popover = new PopoverElement({
             open: true,
         });
-
+        // TMP EMPTY LINE
         popover.append(position.name);
-
+        // TMP EMPTY LINE
         const interactiveMarker = new Marker3DInteractiveElement({
             position,
             gmpPopoverTargetElement: popover,
         });
-
+        // TMP EMPTY LINE
         map.append(interactiveMarker);
         map.append(popover);
     }
-
+    // TMP EMPTY LINE
     document.body.append(map);
 }
-
+// TMP EMPTY LINE
 const positions = [
     {
         lat: 37.50981071450543,
@@ -91,6 +91,6 @@ const positions = [
         name: 'Google San Francisco',
     },
 ];
-
+// TMP EMPTY LINE
 init();
 // [END maps_3d_marker_interactive]

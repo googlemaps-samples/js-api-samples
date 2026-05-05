@@ -10,8 +10,8 @@
 
 async function initMap(): Promise<void> {
     // Import the needed libraries.
-    await google.maps.importLibrary('maps');
-    await google.maps.importLibrary('marker');
+    const { InfoWindow } = await google.maps.importLibrary('maps');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
     // Get the map element and the inner map from it.
     const mapElement = document.querySelector('gmp-map')!;

@@ -218,7 +218,7 @@ foldersToTest.forEach((sampleFolder) => {
                     typeof window.google.maps !== 'undefined'
                 );
             });
-            await expect(hasGoogleMaps).toBeTruthy();
+            expect(hasGoogleMaps).toBeTruthy();
 
             /** const mapElement = await page.locator('#map');
       if (await page.locator('#map').isVisible()) {

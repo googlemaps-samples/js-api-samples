@@ -26,9 +26,7 @@ async function initMap() {
     draggableMarker.addListener('dragend', (event) => {
         const position = draggableMarker.position!;
         infoWindow.close();
-        infoWindow.setContent(
-            `Pin dropped at: ${position.lat}, ${position.lng}`
-        );
+        infoWindow.setContent(`Pin dropped at: ${JSON.stringify(position)}`);
         infoWindow.open(draggableMarker.map, draggableMarker);
     });
 }

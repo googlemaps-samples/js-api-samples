@@ -25,7 +25,7 @@ let marker: google.maps.marker.AdvancedMarkerElement;
 
 async function initMap(): Promise<void> {
     // Request needed libraries.
-    await Promise.all([
+    const [{ AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('marker'),
         google.maps.importLibrary('places'),
     ]);

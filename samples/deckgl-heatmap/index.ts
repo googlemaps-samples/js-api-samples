@@ -37,9 +37,7 @@ async function initMap(): Promise<void> {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
         // @ts-expect-error: mdc not typed
-        progress = new mdc.linearProgress.MDCLinearProgress(
-            progressDiv as HTMLElement
-        );
+        progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
         progress.done = function () {

@@ -12,15 +12,16 @@ let innerMap;
 async function initMap() {
     //  Request the needed libraries.
     await google.maps.importLibrary('maps');
+    const { event } = await google.maps.importLibrary('core');
 
-    innerMap = await mapElement.innerMap;
+    innerMap = mapElement.innerMap;
     innerMap.setOptions({
         mapTypeControl: false,
         mapId: 'DEMO_MAP_ID',
     });
 
     // Call the function after the map is loaded.
-    google.maps.event.addListenerOnce(innerMap, 'idle', () => {
+    event.addListenerOnce(innerMap, 'idle', () => {
         getDirections();
     });
 }

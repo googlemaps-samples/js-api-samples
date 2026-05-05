@@ -12,6 +12,7 @@ let innerMap;
 async function initMap() {
     //  Request the needed libraries.
     await google.maps.importLibrary('maps');
+    const { event } = await google.maps.importLibrary('core');
 
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
@@ -20,7 +21,7 @@ async function initMap() {
     });
 
     // Call the function after the map is loaded.
-    google.maps.event.addListenerOnce(innerMap, 'idle', () => {
+    event.addListenerOnce(innerMap, 'idle', () => {
         getDirections();
     });
 }

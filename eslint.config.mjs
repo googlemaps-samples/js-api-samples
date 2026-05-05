@@ -8,7 +8,7 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 import stylistic from '@stylistic/eslint-plugin';
 
 export default defineConfig([
-    globalIgnores(['**/dist/*', '**/package-lock.json']),
+    globalIgnores(['**/dist/*', 'samples/*/*.js', '**/package-lock.json']),
     {
         files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
         plugins: { js },
@@ -28,10 +28,31 @@ export default defineConfig([
             'spaced-comment': ['error', 'always'],
 
             // temporarily disabled for historic reasons:
-            '@typescript-eslint/no-unused-vars': 'off',
-            '@typescript-eslint/no-explicit-any': 'off',
-            '@typescript-eslint/no-namespace': 'off',
             'no-prototype-builtins': 'off',
+        },
+    },
+    {
+        files: ['**/*.ts', '**/*.tsx'],
+        extends: [...tseslint.configs.recommendedTypeChecked],
+        languageOptions: {
+            parserOptions: {
+                projectService: true,
+            },
+        },
+        rules: {
+            // temporarily downgraded to warn for historic reasons:
+            '@typescript-eslint/no-unsafe-member-access': 'warn',
+            '@typescript-eslint/no-unused-vars': 'warn',
+            '@typescript-eslint/no-unsafe-assignment': 'warn',
+            '@typescript-eslint/require-await': 'warn',
+            '@typescript-eslint/no-floating-promises': 'warn',
+            '@typescript-eslint/no-misused-promises': 'warn',
+            '@typescript-eslint/no-unsafe-call': 'warn',
+            '@typescript-eslint/no-explicit-any': 'warn',
+            '@typescript-eslint/no-namespace': 'warn',
+            '@typescript-eslint/no-unsafe-return': 'warn',
+            '@typescript-eslint/no-unsafe-argument': 'warn',
+            '@typescript-eslint/no-redundant-type-constituents': 'warn',
         },
     },
     {

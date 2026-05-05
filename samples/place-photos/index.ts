@@ -47,7 +47,7 @@ async function init() {
             expandedImageDiv.appendChild(expandedImage);
             const attributionLabel = createAttribution(
                 photo.authorAttributions[0]
-            )!;
+            );
             expandedImageDiv.appendChild(attributionLabel);
         });
 

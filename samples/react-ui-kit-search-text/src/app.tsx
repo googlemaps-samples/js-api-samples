@@ -207,7 +207,7 @@ const PlaceSearchController = ({
             return;
 
         if (selectedPlace && selectedPlace.location) {
-            (placeRequestRef.current as any).place = selectedPlace;
+            placeRequestRef.current.place = selectedPlace;
             if (placeDetailsRef.current)
                 placeDetailsRef.current.style.display = 'block';
 

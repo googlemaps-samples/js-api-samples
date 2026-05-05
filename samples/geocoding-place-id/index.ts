@@ -6,9 +6,9 @@
 // [START maps_geocoding_place_id]
 // Initialize the map.
 async function initMap(): Promise<void> {
-    await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ Geocoder }, { InfoWindow }] = await Promise.all([
         google.maps.importLibrary('geocoding'),
+        google.maps.importLibrary('maps'),
         google.maps.importLibrary('marker'),
     ]);
 
@@ -17,16 +17,13 @@ async function initMap(): Promise<void> {
     const geocoder = new Geocoder();
     const infoWindow = new InfoWindow();
 
-    (document.getElementById('submit') as HTMLElement).addEventListener(
-        'click',
-        () => {
-            geocodePlaceId(geocoder, innerMap, infoWindow);
-        }
-    );
+    document.getElementById('submit')!.addEventListener('click', () => {
+        geocodePlaceId(geocoder, innerMap, infoWindow);
+    });
 }
 
 // This function is called when the user clicks the UI button.
-function geocodePlaceId(
+async function geocodePlaceId(
     geocoder: google.maps.Geocoder,
     map: google.maps.Map,
     infoWindow: google.maps.InfoWindow
@@ -34,25 +31,23 @@ function geocodePlaceId(
     const placeId = (document.getElementById('place-id') as HTMLInputElement)
         .value;
 
-    geocoder
-        .geocode({ placeId: placeId })
-        .then(({ results }) => {
-            if (results[0]) {
-                map.setZoom(11);
-                map.setCenter(results[0].geometry.location);
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
-                const marker = new AdvancedMarkerElement({
-                    map,
-                    position: results[0].geometry.location,
-                });
+    const { results } = await geocoder.geocode({ placeId: placeId });
+    if (results[0]) {
+        map.setZoom(11);
+        map.setCenter(results[0].geometry.location);
 
-                infoWindow.setContent(results[0].formatted_address);
-                infoWindow.open(map, marker);
-            } else {
-                window.alert('No results found');
-            }
-        })
-        .catch((e) => window.alert('Geocoder failed due to: ' + e));
+        const marker = new AdvancedMarkerElement({
+            map,
+            position: results[0].geometry.location,
+        });
+
+        infoWindow.setContent(results[0].formatted_address);
+        infoWindow.open(map, marker);
+    } else {
+        window.alert('No results found');
+    }
 }
 
 initMap();

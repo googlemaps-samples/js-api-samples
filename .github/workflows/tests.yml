@@ -108,6 +108,18 @@ jobs:
         if: env.HAS_CHANGES == 'true'
         run: npm install
 
+      - name: Prettier Check
+        if: env.HAS_CHANGES == 'true'
+        run: npx prettier ./samples/ --check --log-level warn
+        env:
+          CI: true
+
+      - name: ESLint Check
+        if: env.HAS_CHANGES == 'true'
+        run: npx eslint
+        env:
+          CI: true
+
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true' && env.HAS_CHANGES == 'true'
         run: npx playwright install chromium --with-deps
@@ -132,18 +144,6 @@ jobs:
         if: |
           env.HAS_CHANGES == 'true' ||
           contains(github.event.pull_request.paths.*, 'samples/generate-index.sh')
-
-      - name: Prettier Check
-        if: env.HAS_CHANGES == 'true'
-        run: npx prettier ./samples/ --check --log-level warn
-        env:
-          CI: true
-
-      - name: ESLint Check
-        if: env.HAS_CHANGES == 'true'
-        run: npx eslint
-        env:
-          CI: true
 
       - name: Run All Playwright Tests
         if: env.HAS_CHANGES == 'true'

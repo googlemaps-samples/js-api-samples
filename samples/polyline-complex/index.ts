@@ -13,12 +13,12 @@
 
 let poly: google.maps.Polyline;
 const mapElement = document.querySelector('gmp-map')!;
-let innerMap;
+let innerMap: google.maps.Map;
 
 async function initMap() {
     // Import the needed libraries.
-    await google.maps.importLibrary('maps');
-    await google.maps.importLibrary('marker');
+    const { Polyline } = await google.maps.importLibrary('maps');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
     innerMap = mapElement.innerMap;
 
@@ -49,5 +49,5 @@ async function initMap() {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_polyline_complex]

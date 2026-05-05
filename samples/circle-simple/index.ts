@@ -12,6 +12,7 @@ async function initMap() {
     // Request needed libraries.
     const { Circle } = await google.maps.importLibrary('maps');
     const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+    const { event } = await google.maps.importLibrary('core');
 
     // Get the gmp-map element.
     const mapElement = document.querySelector('gmp-map')!;
@@ -58,7 +59,7 @@ async function initMap() {
     mapElement.append(centerMarker);
 
     // Wait for the map to finish drawing its tiles.
-    google.maps.event.addListenerOnce(innerMap, 'tilesloaded', function () {
+    event.addListenerOnce(innerMap, 'tilesloaded', function () {
         // Get the controls div
         const controls = document.getElementById('control-panel');
 

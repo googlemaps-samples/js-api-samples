@@ -16,17 +16,17 @@ async function initMap(): Promise<void> {
 
     const markers: google.maps.marker.AdvancedMarkerElement[] = [];
 
-    let collisionBehavior = 'REQUIRED';
+    const collisionBehavior: google.maps.CollisionBehaviorString = 'REQUIRED';
 
     // @ts-expect-error: mdc not typed
     const select = new mdc.select.MDCSelect(
-        document.querySelector('.mdc-select')!
+        document.querySelector('.mdc-select')
     );
 
     select.listen('MDCSelect:change', () => {
-        collisionBehavior = select.value;
         markers.forEach((marker) => {
-            marker.collisionBehavior = collisionBehavior;
+            marker.collisionBehavior =
+                select.value as google.maps.CollisionBehavior;
         });
     });
 

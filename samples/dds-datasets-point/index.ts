@@ -87,11 +87,12 @@ function setStyle(params) {
 async function initMap() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
+    const { event } = await google.maps.importLibrary('core');
 
     // Get the inner map.
     innerMap = mapElement.innerMap;
 
-    await google.maps.event.addListenerOnce(innerMap, 'idle', () => {
+    event.addListenerOnce(innerMap, 'idle', () => {
         // Add the data legend.
         makeLegend(innerMap);
     });

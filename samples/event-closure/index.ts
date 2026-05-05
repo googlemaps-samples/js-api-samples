@@ -8,7 +8,7 @@
 async function initMap() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
-    await google.maps.importLibrary('marker');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
     const mapElement = document.querySelector('gmp-map')!;
     const innerMap = mapElement.innerMap;
@@ -46,10 +46,12 @@ async function initMap() {
 
 // Attaches an info window to a marker with the provided message. When the
 // marker is clicked, the info window will open with the secret message.
-function attachSecretMessage(
+async function attachSecretMessage(
     marker: google.maps.marker.AdvancedMarkerElement,
     secretMessage: string
 ) {
+    const { InfoWindow } = await google.maps.importLibrary('maps');
+
     const infoWindow = new InfoWindow({
         content: secretMessage,
     });

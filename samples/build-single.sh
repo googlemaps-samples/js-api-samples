@@ -1,9 +1,12 @@
 #!/bin/bash
 
 set -e
-set -x
+# set -x
 
 NAME=$(basename $PWD)
+
+npx prettier --check --ignore-path ../../.prettierignore .
+npx eslint
 
 # clean comments for empty lines, and then clean up, to preserve newlines
 sed -i.sed-back 's#^$#// TMP EMPTY LINE#g' *.ts && rm *.sed-back
@@ -19,7 +22,7 @@ fi
 npx prettier -w index.js --ignore-path /dev/null
 
 set +e
-grep "google\.maps\." index.js | grep -v "google.maps.importLibrary"
+grep "google\.maps\." index.js | grep -v "google.maps.importLibrary" | grep -v -E "^\s+//"
 if [[ $? -eq 0 ]]; then
   echo "Using google.maps namespace for something other than google.maps.importLibrary()!"
   exit 1

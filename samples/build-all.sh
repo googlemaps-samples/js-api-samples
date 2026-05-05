@@ -4,6 +4,8 @@
 
 # set -e
 
+MAX_PROCESS=10
+
 log_dir=$(mktemp -d)
 
 cd samples
@@ -11,6 +13,7 @@ echo "Forking runs for..."
 pids=()
 names=()
 for d in */; do
+    while [[ "$(jobs -pr | wc -l)" -ge "$MAX_PROCESS" ]]; do sleep 0.1; done
     base=$(basename "$d")
     echo "$d..."
     cd "$d"
@@ -42,6 +45,8 @@ for i in "${!pids[@]}"; do
         fails=$((fails + 1))
     fi
 done
+
+rm -rf "$log_dir"
 
 echo
 echo "Done with $fails failure(s)."

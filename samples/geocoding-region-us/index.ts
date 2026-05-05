@@ -6,10 +6,10 @@
 
 // [START maps_js_geocoding_region_us]
 async function initMap(): Promise<void> {
-    await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ Geocoder }, { AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('geocoding'),
         google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
     ]);
 
     const mapElement = document.querySelector('gmp-map')!;

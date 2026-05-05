@@ -2,3 +2,4 @@ index.html
 package.json
 package-lock.json
 dist
+samples/*/*.js

@@ -7,6 +7,7 @@
 // [START maps_layer_data_style]
 async function initMap() {
     await google.maps.importLibrary('maps');
+    const { event } = await google.maps.importLibrary('core');
 
     const mapElement = document.querySelector('gmp-map')!;
 
@@ -14,7 +15,7 @@ async function initMap() {
 
     // [START maps_layer_data_style_script_snippet_load]
     // Load GeoJSON.
-    google.maps.event.addListenerOnce(innerMap, 'idle', () => {
+    event.addListenerOnce(innerMap, 'idle', () => {
         innerMap.data.loadGeoJson('google.json');
     });
     // [END maps_layer_data_style_script_snippet_load]

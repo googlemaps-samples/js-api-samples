@@ -13,8 +13,8 @@ let typeSelect;
 let infoWindow;
 
 async function initMap() {
-    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
-    const { LatLng } = await google.maps.importLibrary('core');
+    const { InfoWindow } = await google.maps.importLibrary('maps');
+    const { event } = await google.maps.importLibrary('core');
 
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
@@ -30,7 +30,7 @@ async function initMap() {
     infoWindow = new InfoWindow();
 
     // Kick off an initial search once map has loaded.
-    google.maps.event.addListenerOnce(innerMap, 'idle', () => {
+    event.addListenerOnce(innerMap, 'idle', () => {
         nearbySearch();
     });
 }
