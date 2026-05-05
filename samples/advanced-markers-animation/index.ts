@@ -43,10 +43,15 @@ const intersectionObserver = new IntersectionObserver((entries) => {
 
 async function initMap(): Promise<void> {
     // Request needed libraries.
-    const { Map } = await google.maps.importLibrary('maps');
-    const { event, ControlPosition } = await google.maps.importLibrary('core');
-    const { AdvancedMarkerElement, PinElement } =
-        await google.maps.importLibrary('marker');
+    const [
+        { Map },
+        { event, ControlPosition },
+        { AdvancedMarkerElement, PinElement },
+    ] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('core'),
+        google.maps.importLibrary('marker'),
+    ]);
 
     const position = { lat: 37.4242011827985, lng: -122.09242296450893 };
 

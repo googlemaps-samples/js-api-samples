@@ -116,8 +116,10 @@ async function createAndAddMarker(
     location: { name: string; lat: number; lng: number },
     markerType: 'initial' | 'button' | 'dynamic'
 ): Promise<void> {
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
-    const { LatLng } = await google.maps.importLibrary('core');
+    const [{ AdvancedMarkerElement }, { LatLng }] = await Promise.all([
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('core'),
+    ]);
     const weatherWidget = document.createElement(
         'simple-weather-widget'
     ) as SimpleWeatherWidget;
