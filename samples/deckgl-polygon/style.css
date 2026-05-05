@@ -44,7 +44,7 @@ body {
     border-radius: 4px;
     pointer-events: none; /* Allows interaction with elements behind the tooltip */
     display: none; /* Hidden by default */
-    font-size: 126x;
+    font-size: 12px;
 }
 
 h1 {

@@ -13,15 +13,13 @@ const layerStyle = {
     fillOpacity: 0.3,
 };
 
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-const placeAutocomplete = document.querySelector(
-    'gmp-place-autocomplete'
-) as google.maps.places.PlaceAutocompleteElement;
+const mapElement = document.querySelector('gmp-map')!;
+const placeAutocomplete = document.querySelector('gmp-place-autocomplete')!;
 
 async function initMap() {
     // Request needed libraries.
-    await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
-    await google.maps.importLibrary('places') as google.maps.PlacesLibrary;
+    await google.maps.importLibrary('maps');
+    await google.maps.importLibrary('places');
 
     // Get the inner map from the map element.
     const innerMap = mapElement.innerMap;
@@ -35,23 +33,23 @@ async function initMap() {
     );
     dataLayer.style = layerStyle;
 
-    //@ts-ignore
     placeAutocomplete.includedPrimaryTypes = ['(regions)'];
 
-    //prettier-ignore
-    //@ts-ignore
-    placeAutocomplete.addEventListener("gmp-select", async ({ placePrediction }) => {
-        if (!placePrediction) return;
-        const place = placePrediction.toPlace();
-        await place.fetchFields({
-            fields: ["location"]
-        });
-        if (!place.location) {
-            return;
+    placeAutocomplete.addEventListener(
+        'gmp-select',
+        async ({ placePrediction }) => {
+            if (!placePrediction) return;
+            const place = placePrediction.toPlace();
+            await place.fetchFields({
+                fields: ['location'],
+            });
+            if (!place.location) {
+                return;
+            }
+            innerMap.setCenter(place.location);
+            innerMap.setZoom(9);
         }
-        innerMap.setCenter(place.location);
-        innerMap.setZoom(9);
-    });
+    );
 }
 initMap();
 // [END maps_3d_coverage_map]

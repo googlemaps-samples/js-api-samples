@@ -36,7 +36,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }} # Checkout the PR's head commit
           token: ${{ secrets.GH_MERGE_TOKEN }}
-          
+
       - name: Approve PR
         run: gh pr review --approve "$PR_URL"
         env:

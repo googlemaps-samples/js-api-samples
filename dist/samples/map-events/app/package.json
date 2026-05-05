@@ -2,7 +2,7 @@
   "name": "@js-api-samples/map-events",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh map-events && bash ../app.sh map-events && bash ../docs.sh map-events && npm run build:vite --workspace=. && bash ../dist.sh map-events",
+    "build": "bash ../build-single.sh",
     "test": "tsc && npm run build:vite --workspace=.",
     "start": "tsc && vite build --base './' && vite",
     "build:vite": "vite build --base './'",

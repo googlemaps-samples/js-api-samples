@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
@@ -16,30 +16,28 @@ const mapElement = document.querySelector('gmp-map');
 let innerMap;
 const advancedMarkerElement = document.querySelector('gmp-advanced-marker');
 let center;
+
 async function initMap() {
-    
     //  Request the needed libraries.
-    const { Map } = (await google.maps.importLibrary('maps'));
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
+    const { Map } = await google.maps.importLibrary('maps');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+
     // Get the inner map from the gmp-map element.
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
         mapTypeControl: false,
     });
-    
+
     // Get the lat/lng from the inner map.
     center = innerMap.getCenter();
-    
+
     // Add a marker, positioned at Uluru.
     const marker = new AdvancedMarkerElement({
         map: innerMap,
         position: center,
         title: 'Uluru',
     });
-    
-    
+
     console.log("Say there Mac, why'd you choose me to test this change?");
-    
 }
 initMap();
-

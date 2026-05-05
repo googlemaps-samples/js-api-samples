@@ -4,10 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_popover_location]
 async function init() {
-    const { AltitudeMode, Map3DElement, MapMode, PopoverElement } =
+    const { Map3DElement, PopoverElement } =
         await google.maps.importLibrary('maps3d');
 
     const map = new Map3DElement({
@@ -15,12 +14,12 @@ async function init() {
         range: 4000,
         tilt: 74,
         heading: 38,
-        mode: MapMode.HYBRID,
+        mode: 'HYBRID',
         gestureHandling: 'COOPERATIVE',
     });
 
     const popover = new PopoverElement({
-        altitudeMode: AltitudeMode.ABSOLUTE,
+        altitudeMode: 'ABSOLUTE',
         open: true,
         positionAnchor: { lat: 37.819852, lng: -122.478549, altitude: 150 },
     });

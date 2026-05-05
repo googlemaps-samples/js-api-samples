@@ -13,12 +13,9 @@ const center = { lat: 37.447646, lng: -122.113878 }; // Palo Alto, CA
 async function initMap(): Promise<void> {
     //  Request the needed libraries.
     const [{ Map }, { Place }, { Route }] = await Promise.all([
-        google.maps.importLibrary('maps') as Promise<google.maps.MapsLibrary>,
-        google.maps.importLibrary(
-            'places'
-        ) as Promise<google.maps.PlacesLibrary>,
-        //@ts-ignore
-        google.maps.importLibrary('routes') as Promise<google.maps.Routes>,
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('places'),
+        google.maps.importLibrary('routes'),
     ]);
 
     map = new Map(document.getElementById('map') as HTMLElement, {
@@ -81,7 +78,7 @@ async function initMap(): Promise<void> {
     // [START maps_routes_get_directions_request_complete]
     // [START maps_routes_get_directions_request_simple]
     // Define a routes request.
-    const request = {
+    const request: google.maps.routes.ComputeRoutesRequest = {
         origin: 'Mountain View, CA',
         destination: 'San Francisco, CA',
         travelMode: 'DRIVING',
@@ -97,6 +94,10 @@ async function initMap(): Promise<void> {
 
     // [START maps_routes_get_directions_polyline]
     // Use createPolylines to create polylines for the route.
+    if (!routes) {
+        console.warn('No routes found.');
+        return;
+    }
     mapPolylines = routes[0].createPolylines();
     // Add polylines to the map.
     mapPolylines.forEach((polyline) => polyline.setMap(map));
@@ -104,7 +105,9 @@ async function initMap(): Promise<void> {
     // Create markers to start and end points.
     const markers = await routes[0].createWaypointAdvancedMarkers();
     // Add markers to the map
-    markers.forEach((marker) => marker.setMap(map));
+    markers.forEach((marker) => {
+        marker.map = map;
+    });
     // [END maps_routes_get_directions_polyline]
     // [END maps_routes_get_directions_request_complete]
 
@@ -117,9 +120,7 @@ async function initMap(): Promise<void> {
 
 // Helper function to fit the map to the path.
 async function fitMapToPath(path) {
-    const { LatLngBounds } = (await google.maps.importLibrary(
-        'core'
-    )) as google.maps.CoreLibrary;
+    const { LatLngBounds } = await google.maps.importLibrary('core');
     const bounds = new LatLngBounds();
     path.forEach((point) => {
         bounds.extend(point);

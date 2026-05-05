@@ -1,13 +1,14 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-//@ts-nocheck
+
 // [START maps_3d_localization]
 async function initMap() {
     const { Map3DElement } = await google.maps.importLibrary('maps3d');
+
     const map = new Map3DElement({
         center: {
             lat: 49.75371685807847,
@@ -22,7 +23,9 @@ async function initMap() {
         mode: 'HYBRID',
         gestureHandling: 'COOPERATIVE',
     });
+
     document.body.append(map);
 }
+
 initMap();
 // [END maps_3d_localization]
