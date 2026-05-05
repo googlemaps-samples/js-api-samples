@@ -6,8 +6,10 @@
 
 // [START maps_layer_data_style]
 async function initMap() {
-    await google.maps.importLibrary('maps');
-    const { event } = await google.maps.importLibrary('core');
+    const [, { event }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('core'),
+    ]);
 
     const mapElement = document.querySelector('gmp-map')!;
 

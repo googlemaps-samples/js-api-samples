@@ -6,10 +6,13 @@
 
 // [START maps_3d_accessibility_features]
 async function initMap() {
-    // Import the needed libraries.
-    const { Map3DElement, Marker3DInteractiveElement, PopoverElement } =
-        await google.maps.importLibrary('maps3d');
-    const { PinElement } = await google.maps.importLibrary('marker');
+    const [
+        { Map3DElement, Marker3DInteractiveElement, PopoverElement },
+        { PinElement },
+    ] = await Promise.all([
+        google.maps.importLibrary('maps3d'),
+        google.maps.importLibrary('marker'),
+    ]);
 
     const map3DElement = document.querySelector('gmp-map-3d')!;
 

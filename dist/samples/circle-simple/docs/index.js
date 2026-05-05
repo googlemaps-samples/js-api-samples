@@ -11,9 +11,12 @@ let innerMap;
 
 async function initMap() {
     // Request needed libraries.
-    const { Circle } = await google.maps.importLibrary('maps');
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
-    const { event } = await google.maps.importLibrary('core');
+    const [{ Circle }, { AdvancedMarkerElement }, { event }] =
+        await Promise.all([
+            google.maps.importLibrary('maps'),
+            google.maps.importLibrary('marker'),
+            google.maps.importLibrary('core'),
+        ]);
 
     // Get the gmp-map element.
     const mapElement = document.querySelector('gmp-map');

@@ -10,9 +10,11 @@
 
 async function initMap() {
     //  Request the needed libraries.
-    const { MapTypeControlStyle, MapTypeId } =
-        await google.maps.importLibrary('maps');
-    const { ControlPosition } = await google.maps.importLibrary('core');
+    const [{ MapTypeControlStyle, MapTypeId }, { ControlPosition }] =
+        await Promise.all([
+            google.maps.importLibrary('maps'),
+            google.maps.importLibrary('core'),
+        ]);
 
     const mapElement = document.querySelector('gmp-map')!;
 
