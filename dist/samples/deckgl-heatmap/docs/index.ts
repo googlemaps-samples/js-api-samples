@@ -31,15 +31,13 @@ declare namespace deck {
 
 async function initMap(): Promise<void> {
     // Progress bar logic moved from index.html
-    var progress,
-        progressDiv = document.querySelector('.mdc-linear-progress');
+    let progress;
+    const progressDiv = document.querySelector('.mdc-linear-progress')!;
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-        // @ts-ignore
-        progress = new mdc.linearProgress.MDCLinearProgress(
-            progressDiv as HTMLElement
-        );
+        // @ts-expect-error: mdc not typed
+        progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
         progress.done = function () {
@@ -52,12 +50,8 @@ async function initMap(): Promise<void> {
     const position = { lat: 37.77325660358167, lng: -122.41712341793448 }; // Using the center from original deckgl-polygon.js
 
     //  Request needed libraries.
-    const { Map, InfoWindow } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
     const mapDiv = document.getElementById('map');
     if (!mapDiv) {
@@ -133,7 +127,6 @@ async function initMap(): Promise<void> {
         // Check if progress is defined
         // Add a small delay to ensure the progress bar is removed
         setTimeout(() => {
-            // @ts-ignore
             progress.done(); // hides progress bar
         }, 100); // 100ms delay
     }

@@ -2,7 +2,7 @@
   "name": "@js-api-samples/map-simple-js",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh map-simple-js && bash ../app.sh map-simple-js && bash ../docs.sh map-simple-js &&  npm run build:vite --workspace=. && bash ../dist.sh map-simple-js",
+    "build": "bash ../build-single.sh",
     "test": "tsc && npm run build:vite --workspace=.",
     "start": "tsc && vite build --base './' && vite",
     "build:vite": "vite build --base './'",

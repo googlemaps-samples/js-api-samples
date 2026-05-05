@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 html,
 body {
     height: 100%;
@@ -29,4 +28,3 @@ gmp-map-3d {
 .myaside > p.active {
     background-color: #9cf;
 }
-

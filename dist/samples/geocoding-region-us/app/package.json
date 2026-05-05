@@ -2,7 +2,7 @@
   "name": "@js-api-samples/geocoding-region-us",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh geocoding-region-us && bash ../app.sh geocoding-region-us && bash ../docs.sh geocoding-region-us && npm run build:vite --workspace=. && bash ../dist.sh geocoding-region-us",
+    "build": "bash ../build-single.sh",
     "test": "tsc && npm run build:vite --workspace=.",
     "start": "tsc && vite build --base './' && vite",
     "build:vite": "vite build --base './'",

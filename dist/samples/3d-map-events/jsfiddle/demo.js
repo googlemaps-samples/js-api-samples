@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
@@ -6,10 +6,14 @@
  */
 
 const mapElement = document.querySelector('gmp-map-3d');
+
 async function init() {
     // Import the needed libraries.
     await google.maps.importLibrary('maps3d');
-    const events = [...document.querySelectorAll('div > p')].map((i) => i.textContent);
+
+    const events = [...document.querySelectorAll('div > p')].map(
+        (i) => i.textContent
+    );
     for (const event of events) {
         mapElement?.addEventListener(event, () => {
             const eventElement = document.querySelector(`#${event}`);
@@ -20,5 +24,5 @@ async function init() {
         });
     }
 }
-init();
 
+init();

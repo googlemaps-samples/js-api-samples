@@ -33,38 +33,37 @@ async function init() {
     // Load the Address Validation library.
     await google.maps.importLibrary('addressValidation');
     // Set event listeners
-    addressForm!.addEventListener('submit', handleValidationSubmit);
-    exampleSelect!.addEventListener('change', handleExampleSelectChange);
-    clearFormButton!.addEventListener('click', handleClearForm);
+    addressForm.addEventListener('submit', handleValidationSubmit);
+    exampleSelect.addEventListener('change', handleExampleSelectChange);
+    clearFormButton.addEventListener('click', handleClearForm);
 }
 
 // [START maps_address_validation_form_handler]
 // Validation Handler
 async function handleValidationSubmit(event) {
     event.preventDefault(); // Prevent default form submission
-    resultDisplay!.textContent = 'Validating...'; // Clear previous results
+    resultDisplay.textContent = 'Validating...'; // Clear previous results
+
+    const { AddressValidation } =
+        await google.maps.importLibrary('addressValidation');
 
     // Validate the address
     try {
-        //prettier-ignore
-        //@ts-ignore
-        const result = await google.maps.addressValidation.AddressValidation.fetchAddressValidation(
-                {
-                    address: {
-                        regionCode: regionSelect!.value.trim(),
-                        languageCode: 'en',
-                        addressLines: [
-                            streetAddress1Input!.value.trim(),
-                            streetAddress2Input!.value.trim(),
-                        ].filter((line) => line), // Filter out empty lines
-                        locality: cityInput!.value.trim(),
-                        administrativeArea: stateInput!.value.trim(),
-                        postalCode: zipCodeInput!.value.trim(),
-                    },
-                }
-            );
+        const result = await AddressValidation.fetchAddressValidation({
+            address: {
+                regionCode: regionSelect.value.trim(),
+                languageCode: 'en',
+                addressLines: [
+                    streetAddress1Input.value.trim(),
+                    streetAddress2Input.value.trim(),
+                ].filter(Boolean), // Filter out empty lines
+                locality: cityInput.value.trim(),
+                administrativeArea: stateInput.value.trim(),
+                postalCode: zipCodeInput.value.trim(),
+            },
+        });
 
-        resultDisplay!.textContent =
+        resultDisplay.textContent =
             'Verdict summary\n================\n' +
             `Formatted address: ${result.address.formattedAddress}\n` +
             `Entered: ${result.verdict.inputGranularity}\n` +
@@ -80,7 +79,7 @@ async function handleValidationSubmit(event) {
     } catch (error) {
         console.error('Validation failed:', error);
         if (error instanceof Error) {
-            resultDisplay!.textContent = `Error: ${error.message}`;
+            resultDisplay.textContent = `Error: ${error.message}`;
         }
     }
 }
@@ -129,14 +128,14 @@ function handleExampleSelectChange(event) {
 
 // Clear Form Handler
 function handleClearForm() {
-    streetAddress1Input!.value = '';
-    streetAddress2Input!.value = '';
-    cityInput!.value = '';
-    stateInput!.value = '';
-    zipCodeInput!.value = '';
-    regionSelect!.value = '';
-    exampleSelect!.value = '';
-    resultDisplay!.textContent = 'Result will appear here...';
+    streetAddress1Input.value = '';
+    streetAddress2Input.value = '';
+    cityInput.value = '';
+    stateInput.value = '';
+    zipCodeInput.value = '';
+    regionSelect.value = '';
+    exampleSelect.value = '';
+    resultDisplay.textContent = 'Result will appear here...';
     console.log('Cleared form');
 }
 
@@ -200,15 +199,15 @@ function populateAddressFields(exampleAddress) {
     }
 
     // Get values from example, providing empty string as default
-    streetAddress1Input!.value = exampleAddress.streetAddress1 || '';
-    streetAddress2Input!.value = exampleAddress.streetAddress2 || '';
-    cityInput!.value = exampleAddress.city || '';
-    stateInput!.value = exampleAddress.state || '';
-    zipCodeInput!.value = exampleAddress.zipCode || '';
-    regionSelect!.value = exampleAddress.region || '';
+    streetAddress1Input.value = exampleAddress.streetAddress1 || '';
+    streetAddress2Input.value = exampleAddress.streetAddress2 || '';
+    cityInput.value = exampleAddress.city || '';
+    stateInput.value = exampleAddress.state || '';
+    zipCodeInput.value = exampleAddress.zipCode || '';
+    regionSelect.value = exampleAddress.region || '';
 
     // Clear previous results and errors
-    resultDisplay!.textContent = 'Result will appear here...';
+    resultDisplay.textContent = 'Result will appear here...';
 
     console.log('Populated fields with example: ', exampleAddress);
 }

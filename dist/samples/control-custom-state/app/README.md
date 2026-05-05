@@ -2,7 +2,7 @@
 
 ## control-custom-state
 
-This example demonstrates adding controls that store state. 
+This example demonstrates adding controls that store state.
 
 ## Setup
 
@@ -33,7 +33,7 @@ From 'samples':
 ### Run lint to check for problems
 
 `cd samples/control-custom-state`
-`npx eslint index.ts` 
+`npx eslint index.ts`
 
 ## Feedback
 
