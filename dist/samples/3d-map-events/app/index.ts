@@ -5,7 +5,7 @@
  */
 
 // [START maps_3d_map_events]
-const mapElement = document.querySelector('gmp-map-3d');
+const mapElement = document.querySelector('gmp-map-3d')!;
 
 async function init() {
     // Import the needed libraries.

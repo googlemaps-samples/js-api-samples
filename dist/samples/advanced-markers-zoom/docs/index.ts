@@ -5,16 +5,12 @@
  */
 
 // [START maps_advanced_markers_zoom]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map')!;
 
 async function initMap() {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    const { Map } = await google.maps.importLibrary('maps');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
     const markerOptions = [
         {
@@ -48,7 +44,7 @@ async function initMap() {
 
     // [START maps_advanced_markers_zoom_listener]
     mapElement.innerMap.addListener('zoom_changed', () => {
-        let zoom = mapElement.innerMap.getZoom();
+        const zoom = mapElement.innerMap.getZoom();
         for (let i = 0; i < markers.length; i++) {
             const { position, minZoom } = markerOptions[i];
             markers[i].position = zoom! > minZoom ? position : null;

@@ -5,17 +5,17 @@
  */
 
 // [START maps_circle_simple]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map')!;
 let innerMap;
 
 async function initMap() {
     // Request needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
-    (await google.maps.importLibrary('marker')) as google.maps.MarkerLibrary;
+    const { Circle } = await google.maps.importLibrary('maps');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+    const { event } = await google.maps.importLibrary('core');
+
     // Get the gmp-map element.
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     // Set the initial map center point.
     const initialCenter = { lat: 34.98956821576194, lng: 135.74239981260283 }; // Hotel Emion, Kyoto, Japan
@@ -27,7 +27,7 @@ async function initMap() {
     const buttons = document.querySelectorAll('input[name="radius"]');
 
     // Create the circle.
-    const walkingCircle = new google.maps.Circle({
+    const walkingCircle = new Circle({
         strokeColor: '#ffdd00ff',
         strokeOpacity: 0.8,
         strokeWeight: 2,
@@ -49,10 +49,9 @@ async function initMap() {
         'image/svg+xml'
     ).documentElement;
 
-    const centerMarker = new google.maps.marker.AdvancedMarkerElement({
+    const centerMarker = new AdvancedMarkerElement({
         position: initialCenter,
         title: 'A marker using a custom SVG image.',
-        //@ts-ignore
         anchorLeft: '-50%',
         anchorTop: '-50%',
     });
@@ -60,7 +59,7 @@ async function initMap() {
     mapElement.append(centerMarker);
 
     // Wait for the map to finish drawing its tiles.
-    google.maps.event.addListenerOnce(innerMap, 'tilesloaded', function () {
+    event.addListenerOnce(innerMap, 'tilesloaded', function () {
         // Get the controls div
         const controls = document.getElementById('control-panel');
 

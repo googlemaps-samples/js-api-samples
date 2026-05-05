@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
@@ -7,6 +7,7 @@
 
 async function initMap() {
     const { Map3DElement } = await google.maps.importLibrary('maps3d');
+
     const map = new Map3DElement({
         center: {
             lat: 37.75183154601466,
@@ -20,7 +21,8 @@ async function initMap() {
         mode: 'HYBRID',
         gestureHandling: 'COOPERATIVE',
     });
+
     document.body.append(map);
 }
-initMap();
 
+initMap();
