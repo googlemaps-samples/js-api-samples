@@ -120,7 +120,6 @@ async function initMap(): Promise<void> {
                 altitude: val,
             };
         } else {
-            // @ts-ignore
             map3DElement[prop] = val;
         }
         updateUI();
@@ -134,7 +133,6 @@ async function initMap(): Promise<void> {
     });
 
     // Update UI on camera change events.
-    map3DElement.addEventListener('gmp-centerchange', updateUI);
     map3DElement.addEventListener('gmp-headingchange', updateUI);
     map3DElement.addEventListener('gmp-tiltchange', updateUI);
     map3DElement.addEventListener('gmp-rangechange', updateUI);
