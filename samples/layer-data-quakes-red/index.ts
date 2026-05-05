@@ -41,10 +41,10 @@ async function initMap() {
 }
 
 // Defines the callback function referenced in the jsonp file.
-function eqfeed_callback(data: any) {
+function earthquakeDataLoad(data: any) {
     innerMap.data.addGeoJson(data);
 }
 
-window.eqfeed_callback = eqfeed_callback;
+window.earthquakeDataLoad = earthquakeDataLoad;
 initMap();
 // [END maps_layer_data_quakes_red]

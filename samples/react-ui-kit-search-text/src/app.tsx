@@ -27,8 +27,7 @@ if (!API_KEY) {
 const App = () => (
     <APIProvider
         apiKey={API_KEY}
-        libraries={['maps', 'places', 'marker', 'geometry', 'core']}
-        version="weekly">
+        libraries={['maps', 'places', 'marker', 'geometry', 'core']}>
         <PlacesSearchLayout />
     </APIProvider>
 );

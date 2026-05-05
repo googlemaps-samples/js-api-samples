@@ -1,4 +1,4 @@
-eqfeed_callback({
+earthquakeDataLoad({
     type: 'FeatureCollection',
     metadata: {
         generated: 1395197681000,
