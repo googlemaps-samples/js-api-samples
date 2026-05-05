@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2019 Google LLC. All Rights Reserved.
@@ -7,20 +7,22 @@
 
 const parser = new DOMParser();
 const mapElement = document.querySelector('gmp-map');
+
 async function initMap() {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary('maps'));
-    const { AdvancedMarkerElement, PinElement } = (await google.maps.importLibrary('marker'));
+    const { Map } = await google.maps.importLibrary('maps');
+    const { AdvancedMarkerElement, PinElement } =
+        await google.maps.importLibrary('marker');
+
     // Each PinElement is paired with a marker to demonstrate setting each parameter.
-    
+
     // Default marker with title text (no PinElement).
     const markerWithText = new AdvancedMarkerElement({
         position: { lat: 37.419, lng: -122.03 },
         title: 'Title text for the marker at lat: 37.419, lng: -122.03',
     });
     mapElement.append(markerWithText);
-    
-    
+
     // Adjust the scale.
     const pinScaled = new PinElement({
         scale: 1.5,
@@ -30,8 +32,7 @@ async function initMap() {
     });
     markerScaled.append(pinScaled);
     mapElement.append(markerScaled);
-    
-    
+
     // Change the background color.
     const pinBackground = new PinElement({
         background: '#FBBC04',
@@ -41,8 +42,7 @@ async function initMap() {
     });
     markerBackground.append(pinBackground);
     mapElement.append(markerBackground);
-    
-    
+
     // Change the border color.
     const pinBorder = new PinElement({
         borderColor: '#137333',
@@ -52,8 +52,7 @@ async function initMap() {
     });
     markerBorder.append(pinBorder);
     mapElement.append(markerBorder);
-    
-    
+
     // Change the glyph color.
     const pinGlyph = new PinElement({
         glyphColor: 'white',
@@ -63,10 +62,8 @@ async function initMap() {
     });
     markerGlyph.append(pinGlyph);
     mapElement.append(markerGlyph);
-    
-    
+
     const pinTextGlyph = new PinElement({
-        //@ts-ignore
         glyphText: 'T',
         glyphColor: 'white',
     });
@@ -75,11 +72,9 @@ async function initMap() {
     });
     markerGlyphText.append(pinTextGlyph);
     mapElement.append(markerGlyphText);
-    
-    
+
     // Hide the glyph.
     const pinNoGlyph = new PinElement({
-        //@ts-ignore
         glyphText: '',
     });
     const markerNoGlyph = new AdvancedMarkerElement({
@@ -87,7 +82,6 @@ async function initMap() {
     });
     markerNoGlyph.append(pinNoGlyph);
     mapElement.append(markerNoGlyph);
-    
 }
-initMap();
 
+initMap();

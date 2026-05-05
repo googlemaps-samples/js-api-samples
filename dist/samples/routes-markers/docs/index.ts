@@ -5,28 +5,28 @@
  */
 // [START maps_routes_markers]
 let mapPolylines: google.maps.Polyline[] = [];
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map')!;
 let innerMap;
 
 // Initialize and add the map.
 async function initMap() {
     //  Request the needed libraries.
     await google.maps.importLibrary('maps');
+    const { event } = await google.maps.importLibrary('core');
 
-    innerMap = await mapElement.innerMap;
+    innerMap = mapElement.innerMap;
     innerMap.setOptions({
         mapTypeControl: false,
         mapId: 'DEMO_MAP_ID',
     });
 
     // Call the function after the map is loaded.
-    google.maps.event.addListenerOnce(innerMap, 'idle', () => {
+    event.addListenerOnce(innerMap, 'idle', () => {
         getDirections();
     });
 }
 
 async function getDirections() {
-    //@ts-ignore
     // Request the needed libraries.
     const [{ Route }, { PinElement }] = await Promise.all([
         google.maps.importLibrary('routes'),
@@ -36,7 +36,7 @@ async function getDirections() {
     // [START maps_routes_markers_request_full]
     // [START maps_routes_markers_request]
     // Define routes request with an intermediate stop.
-    const request = {
+    const request: google.maps.routes.ComputeRoutesRequest = {
         origin: 'Parking lot, Christmas Tree Point Rd, San Francisco, CA 94131',
         destination: '100 Spinnaker Dr, Sausalito, CA 94965', // We're having a yummy lunch!
         intermediates: [{ location: '300 Finley Rd San Francisco, CA 94129' }], // But first, we golf!
@@ -57,7 +57,6 @@ async function getDirections() {
     // Alter style based on marker index.
     function markerOptionsMaker(
         defaultOptions: google.maps.marker.AdvancedMarkerElementOptions,
-        //@ts-ignore
         waypointMarkerDetails: google.maps.routes.WaypointMarkerDetails
     ) {
         const { index, totalMarkers, leg } = waypointMarkerDetails;

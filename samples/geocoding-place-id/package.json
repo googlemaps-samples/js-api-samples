@@ -2,7 +2,7 @@
   "name": "@js-api-samples/geocoding-place-id",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh geocoding-place-id && bash ../app.sh geocoding-place-id && bash ../docs.sh geocoding-place-id && npm run build:vite --workspace=. && bash ../dist.sh geocoding-place-id",
+    "build": "bash ../build-single.sh",
     "test": "tsc && npm run build:vite --workspace=.",
     "start": "tsc && vite build --base './' && vite",
     "build:vite": "vite build --base './'",

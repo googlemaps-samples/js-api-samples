@@ -10,16 +10,15 @@ let innerMap: google.maps.Map;
 
 async function initMap() {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const [{ Map }, { Marker }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+    ]);
 
     // Set the location of Astor Place.
     const astorPlace = { lat: 40.729884, lng: -73.990988 };
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     innerMap = mapElement.innerMap;
 
@@ -37,21 +36,21 @@ async function initMap() {
     busIcon.src = new URL('./public/bus_icon.svg', import.meta.url).href;
 
     // Set up the markers on the map
-    const cafeMarker = new google.maps.Marker({
+    const cafeMarker = new Marker({
         position: { lat: 40.730031, lng: -73.991428 },
         map: innerMap,
         title: 'Cafe',
         icon: cafeIcon.src,
     });
 
-    const bankMarker = new google.maps.Marker({
+    const bankMarker = new Marker({
         position: { lat: 40.729681, lng: -73.991138 },
         map: innerMap,
         title: 'Bank',
         icon: dollarIcon.src,
     });
 
-    const busMarker = new google.maps.Marker({
+    const busMarker = new Marker({
         position: { lat: 40.729559, lng: -73.990741 },
         map: innerMap,
         title: 'Bus Stop',
@@ -62,12 +61,10 @@ async function initMap() {
     // Note that we don't yet set it visible.
     panorama = innerMap.getStreetView()!; // TODO fix type
     panorama.setPosition(astorPlace);
-    panorama.setPov(
-        /** @type {google.maps.StreetViewPov} */ {
-            heading: 265,
-            pitch: 0,
-        }
-    );
+    panorama.setPov({
+        heading: 265,
+        pitch: 0,
+    });
 }
 
 function toggleStreetView(): void {

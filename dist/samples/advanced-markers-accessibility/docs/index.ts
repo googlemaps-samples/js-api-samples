@@ -5,17 +5,13 @@
  */
 
 // [START maps_advanced_markers_accessibility]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map')!;
 
 async function initMap() {
     // Request needed libraries.
-    const { Map, InfoWindow } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
     const { AdvancedMarkerElement, PinElement } =
-        (await google.maps.importLibrary(
-            'marker'
-        )) as google.maps.MarkerLibrary;
+        await google.maps.importLibrary('marker');
 
     // Set LatLng and title text for the markers. The first marker (Boynton Pass)
     // receives the initial focus when tab is pressed. Use arrow keys to move
@@ -50,7 +46,6 @@ async function initMap() {
     tourStops.forEach(({ position, title }, i) => {
         // [START maps_advanced_markers_accessibility_marker]
         const pin = new PinElement({
-            //@ts-ignore
             glyphText: `${i + 1}`,
             scale: 1.5,
         });

@@ -1,15 +1,18 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2019 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 // [START maps_advanced_markers_zoom]
 const mapElement = document.querySelector('gmp-map');
+
 async function initMap() {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary('maps'));
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
+    const { Map } = await google.maps.importLibrary('maps');
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+
     const markerOptions = [
         {
             position: { lat: 37.4239163, lng: -122.094 },
@@ -32,15 +35,17 @@ async function initMap() {
             minZoom: 17,
         },
     ];
+
     const markers = [];
     for (const { position, title } of markerOptions) {
         const marker = new AdvancedMarkerElement({ position, title });
         mapElement.append(marker);
         markers.push(marker);
     }
+
     // [START maps_advanced_markers_zoom_listener]
     mapElement.innerMap.addListener('zoom_changed', () => {
-        let zoom = mapElement.innerMap.getZoom();
+        const zoom = mapElement.innerMap.getZoom();
         for (let i = 0; i < markers.length; i++) {
             const { position, minZoom } = markerOptions[i];
             markers[i].position = zoom > minZoom ? position : null;
@@ -48,5 +53,6 @@ async function initMap() {
     });
     // [END maps_advanced_markers_zoom_listener]
 }
+
 initMap();
 // [END maps_advanced_markers_zoom]

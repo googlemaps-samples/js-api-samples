@@ -10,25 +10,25 @@
  */
 html,
 body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 #floating-panel {
-  background-color: #fff;
-  padding: 5px;
-  border: 1px solid #999;
-  border-radius: 5px;
-  text-align: center;
-  font-family: "Roboto", "sans-serif";
-  line-height: 30px;
-  padding-left: 10px;
-  margin-top: 10px;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #999;
+    border-radius: 5px;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    line-height: 30px;
+    padding-left: 10px;
+    margin-top: 10px;
 }
 
 #place-id {
-  width: 250px;
+    width: 250px;
 }
 
 /* [END maps_geocoding_place_id] */

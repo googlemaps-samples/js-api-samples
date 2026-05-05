@@ -7,8 +7,6 @@
 // [START maps_advanced_markers_animation]
 /**
  * Returns a random lat lng position within the map bounds.
- * @param {!google.maps.Map} map
- * @return {!google.maps.LatLngLiteral}
  */
 function getRandomPosition(map) {
     const bounds = map.getBounds();
@@ -45,13 +43,10 @@ const intersectionObserver = new IntersectionObserver((entries) => {
 
 async function initMap(): Promise<void> {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { Map } = await google.maps.importLibrary('maps');
+    const { event, ControlPosition } = await google.maps.importLibrary('core');
     const { AdvancedMarkerElement, PinElement } =
-        (await google.maps.importLibrary(
-            'marker'
-        )) as google.maps.MarkerLibrary;
+        await google.maps.importLibrary('marker');
 
     const position = { lat: 37.4242011827985, lng: -122.09242296450893 };
 
@@ -62,7 +57,7 @@ async function initMap(): Promise<void> {
     });
 
     // Create 100 markers to animate.
-    google.maps.event.addListenerOnce(map, 'idle', () => {
+    event.addListenerOnce(map, 'idle', () => {
         for (let i = 0; i < 100; i++) {
             createMarker(map, AdvancedMarkerElement, PinElement);
         }
@@ -79,7 +74,7 @@ async function initMap(): Promise<void> {
         refreshMap();
     });
     controlDiv.appendChild(controlUI);
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(controlDiv);
+    map.controls[ControlPosition.TOP_CENTER].push(controlDiv);
 }
 
 function createMarker(map, AdvancedMarkerElement, PinElement) {

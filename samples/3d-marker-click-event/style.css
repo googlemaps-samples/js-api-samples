@@ -4,7 +4,8 @@
 * SPDX-License-Identifier: Apache-2.0
 */
 /* [START maps_3d_marker_click_event] */
-/* * Always set the map height explicitly to define the size of the div element
+/* 
+ * Always set the map height explicitly to define the size of the div element
  * that contains the map. 
  */
 html,

@@ -7,18 +7,15 @@
 // Initialize and add the map.
 let map;
 let mapPolylines: google.maps.Polyline[] = [];
-let markers: google.maps.marker.AdvancedMarkerElement[] = [];
-let center = { lat: 37.447646, lng: -122.113878 }; // Palo Alto, CA
+const markers: google.maps.marker.AdvancedMarkerElement[] = [];
+const center = { lat: 37.447646, lng: -122.113878 }; // Palo Alto, CA
 
 // Initialize and add the map.
 async function initMap(): Promise<void> {
     // Request the needed libraries.
-    //@ts-ignore
     const [{ Map }, { Route }] = await Promise.all([
-        google.maps.importLibrary('maps') as Promise<google.maps.MapsLibrary>,
-        google.maps.importLibrary(
-            'routes'
-        ) as Promise<google.maps.RoutesLibrary>,
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('routes'),
     ]);
 
     map = new Map(document.getElementById('map') as HTMLElement, {
@@ -29,10 +26,13 @@ async function initMap(): Promise<void> {
     });
 
     // Define a simple directions request.
-    const request = {
+    const request: google.maps.routes.ComputeRoutesRequest = {
         origin: 'Mountain View, CA',
         destination: 'Sausalito, CA',
-        intermediates: ['Half Moon Bay, CA', 'Pacifica Esplanade Beach'],
+        intermediates: [
+            { location: 'Half Moon Bay, CA' },
+            { location: 'Pacifica Esplanade Beach' },
+        ],
         travelMode: 'DRIVING',
         fields: ['legs', 'path'],
     };
@@ -44,6 +44,10 @@ async function initMap(): Promise<void> {
     console.log(`Response:\n ${JSON.stringify(routes, null, 2)}`);
 
     // Use createPolylines to create polylines for the route.
+    if (!routes) {
+        console.warn('No routes found.');
+        return;
+    }
     mapPolylines = routes[0].createPolylines();
     // Add polylines to the map.
     mapPolylines.forEach((polyline) => polyline.setMap(map));
@@ -80,7 +84,7 @@ async function initMap(): Promise<void> {
 
         // Leg Title
         const legTitleElement = document.createElement('h3');
-        legTitleElement.textContent = `Leg ${index + 1} of ${route.legs.length}`;
+        legTitleElement.textContent = `Leg ${index + 1} of ${route.legs!.length}`;
         legContainer.appendChild(legTitleElement);
 
         if (leg.steps && leg.steps.length > 0) {
@@ -132,9 +136,7 @@ async function initMap(): Promise<void> {
 // [END maps_routes_get_directions_panel_steps]
 // Helper function to fit the map to the path.
 async function fitMapToPath(path) {
-    const { LatLngBounds } = (await google.maps.importLibrary(
-        'core'
-    )) as google.maps.CoreLibrary;
+    const { LatLngBounds } = await google.maps.importLibrary('core');
     const bounds = new LatLngBounds();
     path.forEach((point) => {
         bounds.extend(point);

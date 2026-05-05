@@ -17,12 +17,11 @@ async function initMap(): Promise<void> {
     // Set loader options.
     setOptions({
         key: API_KEY,
-        v: 'weekly',
     });
     // [END maps_js_api_loader_map_options]
 
     // Load the Maps library.
-    const { Map } = (await importLibrary('maps'));
+    const { Map } = await importLibrary('maps');
 
     // Set map options.
     const mapOptions = {

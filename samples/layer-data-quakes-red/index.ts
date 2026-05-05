@@ -8,11 +8,12 @@
 let innerMap;
 
 async function initMap() {
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    const [, { SymbolPath }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('core'),
+    ]);
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     innerMap = mapElement.innerMap;
 
@@ -21,7 +22,7 @@ async function initMap() {
     //   http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
     const script = document.createElement('script');
 
-    script.setAttribute('src', 'quakes.geo.json');
+    script.setAttribute('src', 'quakes.geo.js');
 
     document.getElementsByTagName('head')[0].appendChild(script);
 
@@ -29,9 +30,9 @@ async function initMap() {
     innerMap.data.setStyle((feature) => {
         const mag =
             Math.exp(parseFloat(feature.getProperty('mag') as string)) * 0.1;
-        return /** @type {google.maps.Data.StyleOptions} */ {
+        return {
             icon: {
-                path: google.maps.SymbolPath.CIRCLE,
+                path: SymbolPath.CIRCLE,
                 scale: mag,
                 fillColor: '#f00',
                 fillOpacity: 0.35,
@@ -42,10 +43,10 @@ async function initMap() {
 }
 
 // Defines the callback function referenced in the jsonp file.
-function eqfeed_callback(data: any) {
+function earthquakeDataLoad(data: any) {
     innerMap.data.addGeoJson(data);
 }
 
-window.eqfeed_callback = eqfeed_callback;
+window.earthquakeDataLoad = earthquakeDataLoad;
 initMap();
 // [END maps_layer_data_quakes_red]

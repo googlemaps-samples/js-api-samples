@@ -2,7 +2,7 @@
   "name": "@js-api-samples/layer-data-quakes-red",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh layer-data-quakes-red && bash ../app.sh layer-data-quakes-red && bash ../docs.sh layer-data-quakes-red && npm run build:vite --workspace=. && bash ../dist.sh layer-data-quakes-red",
+    "build": "bash ../build-single.sh",
     "test": "tsc && npm run build:vite --workspace=.",
     "start": "tsc && vite build --base './' && vite",
     "build:vite": "vite build --base './'",
