@@ -26,7 +26,7 @@ if [[ $? -eq 0 ]]; then
   echo "Found 'callback'. Please replace with a more modern pattern for loading Maps JS."
   exit 1
 fi
-grep 
+grep "${html_script_src_grep_options[@]}"
 if [[ $? -eq 0 ]]; then
   grep "${html_script_src_grep_options[@]}" | grep "loading=async"
   if [[ $? -ne 0 ]]; then
