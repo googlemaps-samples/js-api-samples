@@ -11,9 +11,10 @@ const mapElement = document.querySelector('gmp-map');
 
 async function initMap() {
     // Request needed libraries.
-    const { Map } = await google.maps.importLibrary('maps');
-    const { AdvancedMarkerElement, PinElement } =
-        await google.maps.importLibrary('marker');
+    const [{ Map }, { AdvancedMarkerElement, PinElement }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+    ]);
 
     // Each PinElement is paired with a marker to demonstrate setting each parameter.
 

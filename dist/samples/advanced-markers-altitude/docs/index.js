@@ -10,9 +10,10 @@ const mapElement = document.querySelector('gmp-map');
 
 async function initMap() {
     // Request needed libraries.
-    const { Map } = await google.maps.importLibrary('maps');
-    const { AdvancedMarkerElement, PinElement } =
-        await google.maps.importLibrary('marker');
+    const [{ Map }, { AdvancedMarkerElement, PinElement }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+    ]);
 
     mapElement.innerMap.setOptions({
         tilt: 67.5,

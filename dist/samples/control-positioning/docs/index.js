@@ -11,8 +11,10 @@ let innerMap;
 
 async function initMap() {
     // Request needed libraries.
-    const { MapTypeControlStyle } = await google.maps.importLibrary('maps');
-    const { ControlPosition } = await google.maps.importLibrary('core');
+    const [{ MapTypeControlStyle }, { ControlPosition }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('core'),
+    ]);
 
     // Get the inner map.
     const innerMap = mapElement.innerMap;

@@ -112,8 +112,10 @@ async function initMap() {
  * @param markerType The type of marker ('initial', 'button', 'dynamic').
  */
 async function createAndAddMarker(location, markerType) {
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
-    const { LatLng } = await google.maps.importLibrary('core');
+    const [{ AdvancedMarkerElement }, { LatLng }] = await Promise.all([
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('core'),
+    ]);
     const weatherWidget = document.createElement('simple-weather-widget');
 
     // Apply dark mode if the map container is in dark mode

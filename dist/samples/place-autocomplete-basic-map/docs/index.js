@@ -15,10 +15,13 @@ const gmpMapElement = document.querySelector('gmp-map');
 
 async function initMap() {
     // Asynchronously load required libraries from the Google Maps JS API.
-    await google.maps.importLibrary('places');
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
-    const { InfoWindow, Circle } = await google.maps.importLibrary('maps');
-    const { Size } = await google.maps.importLibrary('core');
+    const [, { AdvancedMarkerElement }, { InfoWindow, Circle }, { Size }] =
+        await Promise.all([
+            google.maps.importLibrary('places'),
+            google.maps.importLibrary('marker'),
+            google.maps.importLibrary('maps'),
+            google.maps.importLibrary('core'),
+        ]);
 
     // Get the initial center directly from the gmp-map element's property.
     const center = gmpMapElement.center;
