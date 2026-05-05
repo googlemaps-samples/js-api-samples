@@ -8,38 +8,38 @@ NAME=$(basename $PWD)
 npx prettier --check --ignore-path ../../.prettierignore .
 npx eslint
 
-# set +e
-# grep weekly -r --include=*.{html,js,ts,css,jsx,tsx} --exclude-dir=dist
-# if [[ $? -eq 0 ]]; then
-#   # sure, it could be other things, but so far it's not, so we'll keep it simple for now
-#   echo "Found 'weekly'. Please remove (it's the default channel)."
-#   exit 1
-# fi
-# grep callback -r --include=*.{html,js,ts,css,jsx,tsx} --exclude-dir=dist --no-filename | grep -v -E "^\s*//" | grep -v importLibrary # callback & importLibrary both show up the in the inline loader
-# if [[ $? -eq 0 ]]; then
-#   # sure, it could be other things, but so far it's not, so we'll keep it simple for now
-#   echo "Found 'callback'. Please replace with a more modern pattern for loading Maps JS."
-#   exit 1
-# fi
-# grep 'src="https://maps' -r --include=*.html
-# if [[ $? -eq 0 ]]; then
-#   grep 'src="https://maps' -r --include=*.html | grep "loading=async"
-#   if [[ $? -ne 0 ]]; then
-#     echo "Missing loading=async in direct script loader."
-#     exit 1
-#   fi
-#   grep -B 1 'src="https://maps' -r --include=*.html | grep " async"
-#   if [[ $? -ne 0 ]]; then
-#     echo "Missing async attribute on direct script loader (expected on line before)."
-#     exit 1
-#   fi
-#   grep -B 2 -A 2 'src="https://maps' -r --include=*.html | grep " defer"
-#   if [[ $? -eq 0 ]]; then
-#     echo "Found defer attribute on direct script loader (use async instead)."
-#     exit 1
-#   fi
-# fi
-# set -e
+set +e
+grep weekly -r --include=*.{html,js,ts,css,jsx,tsx} --exclude-dir=dist --exclude-dir=node_modules
+if [[ $? -eq 0 ]]; then
+  # sure, it could be other things, but so far it's not, so we'll keep it simple for now
+  echo "Found 'weekly'. Please remove (it's the default channel)."
+  exit 1
+fi
+grep callback -r --include=*.{html,js,ts,css,jsx,tsx} --exclude-dir=dist --exclude-dir=node_modules --no-filename | grep -v -E "^\s*//" | grep -v importLibrary # callback & importLibrary both show up the in the inline loader
+if [[ $? -eq 0 ]]; then
+  # sure, it could be other things, but so far it's not, so we'll keep it simple for now
+  echo "Found 'callback'. Please replace with a more modern pattern for loading Maps JS."
+  exit 1
+fi
+grep 'src="https://maps' -r --include=*.html --exclude-dir=node_modules
+if [[ $? -eq 0 ]]; then
+  grep 'src="https://maps' -r --include=*.html --exclude-dir=node_modules | grep "loading=async"
+  if [[ $? -ne 0 ]]; then
+    echo "Missing loading=async in direct script loader."
+    exit 1
+  fi
+  grep -B 1 'src="https://maps' -r --include=*.html --exclude-dir=node_modules | grep " async"
+  if [[ $? -ne 0 ]]; then
+    echo "Missing async attribute on direct script loader (expected on line before)."
+    exit 1
+  fi
+  grep -B 2 -A 2 'src="https://maps' -r --include=*.html --exclude-dir=node_modules | grep " defer"
+  if [[ $? -eq 0 ]]; then
+    echo "Found defer attribute on direct script loader (use async instead)."
+    exit 1
+  fi
+fi
+set -e
 
 # clean comments for empty lines, and then clean up, to preserve newlines
 sed -i.sed-back 's#^$#// TMP EMPTY LINE#g' *.ts && rm *.sed-back
