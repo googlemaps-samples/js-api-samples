@@ -22,7 +22,7 @@ async function initMap(): Promise<void> {
             const position = response.results[0].geometry.location;
 
             innerMap.setCenter(position);
-            new google.maps.marker.AdvancedMarkerElement({
+            new AdvancedMarkerElement({
                 map: innerMap,
                 position,
             });

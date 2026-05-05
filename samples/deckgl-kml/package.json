@@ -2,7 +2,7 @@
   "name": "@js-api-samples/deckgl-kml",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh deckgl-kml && bash ../app.sh deckgl-kml && bash ../docs.sh deckgl-kml && npm run build:vite --workspace=. && bash ../dist.sh deckgl-kml",
+    "build": "bash ../build-single.sh",
     "test": "tsc && npm run build:vite",
     "start": "vite",
     "build:vite": "vite build --base './'",

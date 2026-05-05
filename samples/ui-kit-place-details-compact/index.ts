@@ -29,8 +29,7 @@ async function initMap(): Promise<void> {
     });
 
     await window.customElements.whenDefined('gmp-advanced-marker');
-    marker.collisionBehavior =
-        google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
+    marker.collisionBehavior = 'REQUIRED_AND_HIDES_OPTIONAL';
 
     const infoWindow = new InfoWindow();
     infoWindow.addListener('close', () => {

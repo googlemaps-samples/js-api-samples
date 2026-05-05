@@ -14,12 +14,17 @@ let response;
 
 async function initMap() {
     //  Request the needed libraries.
-    const [{ Map, InfoWindow }, { Geocoder }, { AdvancedMarkerElement }] =
-        await Promise.all([
-            google.maps.importLibrary('maps'),
-            google.maps.importLibrary('geocoding'),
-            google.maps.importLibrary('marker'),
-        ]);
+    const [
+        { Map, InfoWindow },
+        { Geocoder },
+        { AdvancedMarkerElement },
+        { ControlPosition },
+    ] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('geocoding'),
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('core'),
+    ]);
 
     // Get the gmp-map element.
     mapElement = document.querySelector('gmp-map')!;
@@ -32,7 +37,7 @@ async function initMap() {
         mapTypeControl: false,
         fullscreenControl: false,
         cameraControlOptions: {
-            position: google.maps.ControlPosition.INLINE_START_BLOCK_END,
+            position: ControlPosition.INLINE_START_BLOCK_END,
         },
         draggableCursor: 'crosshair',
     });
@@ -47,7 +52,7 @@ async function initMap() {
     ) as HTMLDivElement;
     response = document.getElementById('response') as HTMLPreElement;
 
-    marker = new google.maps.marker.AdvancedMarkerElement({});
+    marker = new AdvancedMarkerElement({});
 
     innerMap.addListener('click', (e: google.maps.MapMouseEvent) => {
         geocode({ location: e.latLng });

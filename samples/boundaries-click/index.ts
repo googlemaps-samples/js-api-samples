@@ -12,14 +12,14 @@ let lastInteractedFeatureIds: string[] = [];
 let lastClickedFeatureIds: string[] = [];
 
 // [START maps_boundaries_click_event_handler]
-function handleClick(/* MouseEvent */ e) {
+function handleClick(e) {
     lastClickedFeatureIds = e.features.map((f) => f.placeId);
     lastInteractedFeatureIds = [];
     featureLayer.style = applyStyle;
     createInfoWindow(e);
 }
 
-function handleMouseMove(/* MouseEvent */ e) {
+function handleMouseMove(e) {
     lastInteractedFeatureIds = e.features.map((f) => f.placeId);
     featureLayer.style = applyStyle;
 }

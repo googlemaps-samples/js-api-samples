@@ -8,7 +8,7 @@
 const mapElement = document.querySelector('gmp-map')!;
 let innerMap;
 // [START maps_dds_datasets_point_style_function]
-function setStyle(/* FeatureStyleFunctionOptions */ params) {
+function setStyle(params) {
     // [START maps_dds_datasets_point_style_get_features]
     // Get the dataset feature, so we can work with all of its attributes.
     const datasetFeature = params.feature;
@@ -22,60 +22,60 @@ function setStyle(/* FeatureStyleFunctionOptions */ params) {
     // Apply styles. Fill is primary fur color, stroke is secondary fur color.
     switch (furColors) {
         case 'Black+':
-            return /* FeatureStyleOptions */ {
+            return {
                 fillColor: 'black',
                 pointRadius: 8,
             };
             break;
         case 'Cinnamon+':
-            return /* FeatureStyleOptions */ {
+            return {
                 fillColor: '#8b0000',
                 pointRadius: 8,
             };
             break;
         case 'Cinnamon+Gray':
-            return /* FeatureStyleOptions */ {
+            return {
                 fillColor: '#8b0000',
                 strokeColor: 'gray',
                 pointRadius: 6,
             };
             break;
         case 'Cinnamon+White':
-            return /* FeatureStyleOptions */ {
+            return {
                 fillColor: '#8b0000',
                 strokeColor: 'white',
                 pointRadius: 6,
             };
             break;
         case 'Gray+':
-            return /* FeatureStyleOptions */ {
+            return {
                 fillColor: 'gray',
                 pointRadius: 8,
             };
             break;
         case 'Gray+Cinnamon':
-            return /* FeatureStyleOptions */ {
+            return {
                 fillColor: 'gray',
                 strokeColor: '#8b0000',
                 pointRadius: 6,
             };
             break;
         case 'Gray+Cinnamon, White':
-            return /* FeatureStyleOptions */ {
+            return {
                 fillColor: 'silver',
                 strokeColor: '#8b0000',
                 pointRadius: 6,
             };
             break;
         case 'Gray+White':
-            return /* FeatureStyleOptions */ {
+            return {
                 fillColor: 'gray',
                 strokeColor: 'white',
                 pointRadius: 6,
             };
             break;
         default: // Color not defined.
-            return /* FeatureStyleOptions */ {
+            return {
                 fillColor: 'yellow',
                 pointRadius: 8,
             };

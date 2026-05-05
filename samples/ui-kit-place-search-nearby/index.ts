@@ -99,8 +99,7 @@ async function addMarkers() {
         const marker = new AdvancedMarkerElement({
             map: map.innerMap,
             position: place.location,
-            collisionBehavior:
-                google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL,
+            collisionBehavior: 'REQUIRED_AND_HIDES_OPTIONAL',
         });
 
         markers.set(place.id, marker);

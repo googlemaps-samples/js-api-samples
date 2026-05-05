@@ -18,7 +18,7 @@ async function initMap() {
 
     const center = mapElement.center;
 
-    const marker = new google.maps.marker.AdvancedMarkerElement({
+    const marker = new AdvancedMarkerElement({
         position: center,
         map: innerMap,
         title: 'Click to zoom',

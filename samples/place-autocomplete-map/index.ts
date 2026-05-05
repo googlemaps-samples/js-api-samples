@@ -30,7 +30,7 @@ async function initMap(): Promise<void> {
     });
 
     // Create the marker and infowindow.
-    marker = new google.maps.marker.AdvancedMarkerElement({
+    marker = new AdvancedMarkerElement({
         map: innerMap,
     });
 

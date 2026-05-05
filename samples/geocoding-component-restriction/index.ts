@@ -35,7 +35,7 @@ function geocodeAddress(geocoder: google.maps.Geocoder, map: google.maps.Map) {
         })
         .then(({ results }) => {
             map.setCenter(results[0].geometry.location);
-            new google.maps.marker.AdvancedMarkerElement({
+            new AdvancedMarkerElement({
                 map,
                 position: results[0].geometry.location,
             });

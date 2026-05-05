@@ -6,14 +6,14 @@
 
 // [START maps_3d_polygon_click_event]
 async function init() {
-    const { Map3DElement, MapMode, Polygon3DInteractiveElement } =
+    const { Map3DElement, Polygon3DInteractiveElement } =
         await google.maps.importLibrary('maps3d');
 
     const map = new Map3DElement({
         center: { lat: 40.6842, lng: -74.0019, altitude: 1000 },
         heading: 340,
         tilt: 70,
-        mode: MapMode.HYBRID,
+        mode: 'HYBRID',
         gestureHandling: 'COOPERATIVE',
     });
 
@@ -26,9 +26,7 @@ async function init() {
         drawsOccludedSegments: false,
     };
 
-    const examplePolygon = new google.maps.maps3d.Polygon3DInteractiveElement(
-        polygonOptions
-    );
+    const examplePolygon = new Polygon3DInteractiveElement(polygonOptions);
 
     examplePolygon.path = [
         { lat: 40.7144, lng: -74.0208 },

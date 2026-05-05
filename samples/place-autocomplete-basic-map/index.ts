@@ -38,8 +38,7 @@ async function initMap(): Promise<void> {
     const advancedMarkerElement: google.maps.marker.AdvancedMarkerElement =
         new AdvancedMarkerElement({
             map: map,
-            collisionBehavior:
-                google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL,
+            collisionBehavior: 'REQUIRED_AND_HIDES_OPTIONAL',
         });
 
     // Create an InfoWindow to hold the place details component.

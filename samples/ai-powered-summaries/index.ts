@@ -43,7 +43,7 @@ async function initMap(): Promise<void> {
     });
 
     // Create the marker.
-    marker = new google.maps.marker.AdvancedMarkerElement({
+    marker = new AdvancedMarkerElement({
         map: innerMap,
     });
 

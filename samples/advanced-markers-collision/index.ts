@@ -16,7 +16,7 @@ async function initMap(): Promise<void> {
 
     const markers: google.maps.marker.AdvancedMarkerElement[] = [];
 
-    let collisionBehavior = google.maps.CollisionBehavior.REQUIRED;
+    let collisionBehavior = 'REQUIRED';
 
     // @ts-expect-error: mdc not typed
     const select = new mdc.select.MDCSelect(
@@ -52,8 +52,8 @@ async function initMap(): Promise<void> {
     locations.forEach(([lng, lat]: number[]) => {
         // [START maps_advanced_markers_collision_create_marker]
         const advancedMarker = new AdvancedMarkerElement({
-            position: new google.maps.LatLng({ lat, lng }),
-            collisionBehavior: collisionBehavior,
+            position: { lat, lng },
+            collisionBehavior,
         });
         mapElement.appendChild(advancedMarker);
         // [END maps_advanced_markers_collision_create_marker]

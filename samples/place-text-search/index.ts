@@ -11,6 +11,7 @@ let infoWindow;
 
 async function initMap() {
     const { Map, InfoWindow } = await google.maps.importLibrary('maps');
+    const { ControlPosition } = await google.maps.importLibrary('core');
 
     const center = { lat: 37.4161493, lng: -122.0812166 };
     map = new Map(document.getElementById('map') as HTMLElement, {
@@ -25,7 +26,7 @@ async function initMap() {
         'text-input-button'
     ) as HTMLButtonElement;
     const card = document.getElementById('text-input-card') as HTMLElement;
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
+    map.controls[ControlPosition.TOP_LEFT].push(card);
 
     textInputButton.addEventListener('click', () => {
         findPlaces(textInput.value);

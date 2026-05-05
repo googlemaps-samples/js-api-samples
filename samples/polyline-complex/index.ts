@@ -41,7 +41,7 @@ async function initMap() {
         path.push(latLng);
 
         // Add a new marker at the new plotted point on the polyline.
-        new google.maps.marker.AdvancedMarkerElement({
+        new AdvancedMarkerElement({
             position: latLng,
             title: '#' + path.getLength(),
             map: innerMap,

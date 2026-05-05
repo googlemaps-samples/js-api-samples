@@ -31,8 +31,7 @@ async function initMap(): Promise<void> {
             map.innerMap.panTo(placeDetails.place.location);
             map.innerMap.setZoom(16); // Set zoom after panning if needed
             marker.position = placeDetails.place.location;
-            marker.collisionBehavior =
-                google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL;
+            marker.collisionBehavior = 'REQUIRED_AND_HIDES_OPTIONAL';
             marker.style.display = 'block';
         }
     };

@@ -44,24 +44,24 @@ async function handleValidationSubmit(event) {
     event.preventDefault(); // Prevent default form submission
     resultDisplay!.textContent = 'Validating...'; // Clear previous results
 
+    const { AddressValidation } =
+        await google.maps.importLibrary('addressValidation');
+
     // Validate the address
     try {
-        const result =
-            await google.maps.addressValidation.AddressValidation.fetchAddressValidation(
-                {
-                    address: {
-                        regionCode: regionSelect!.value.trim(),
-                        languageCode: 'en',
-                        addressLines: [
-                            streetAddress1Input!.value.trim(),
-                            streetAddress2Input!.value.trim(),
-                        ].filter((line) => line), // Filter out empty lines
-                        locality: cityInput!.value.trim(),
-                        administrativeArea: stateInput!.value.trim(),
-                        postalCode: zipCodeInput!.value.trim(),
-                    },
-                }
-            );
+        const result = await AddressValidation.fetchAddressValidation({
+            address: {
+                regionCode: regionSelect!.value.trim(),
+                languageCode: 'en',
+                addressLines: [
+                    streetAddress1Input!.value.trim(),
+                    streetAddress2Input!.value.trim(),
+                ].filter(Boolean), // Filter out empty lines
+                locality: cityInput!.value.trim(),
+                administrativeArea: stateInput!.value.trim(),
+                postalCode: zipCodeInput!.value.trim(),
+            },
+        });
 
         resultDisplay!.textContent =
             'Verdict summary\n================\n' +

@@ -53,12 +53,8 @@ async function initAutocomplete() {
 }
 
 const flyToPlace = async (place) => {
-    const {
-        AltitudeMode,
-        Polyline3DElement,
-        Polygon3DElement,
-        Marker3DElement,
-    } = await google.maps.importLibrary('maps3d');
+    const { Polyline3DElement, Polygon3DElement, Marker3DElement } =
+        await google.maps.importLibrary('maps3d');
 
     const location = place.location;
 
@@ -71,7 +67,7 @@ const flyToPlace = async (place) => {
             lng: location.lng(),
             altitude: elevation + 50,
         },
-        altitudeMode: AltitudeMode.ABSOLUTE,
+        altitudeMode: 'ABSOLUTE',
         extruded: true,
         label: place.displayName,
     });

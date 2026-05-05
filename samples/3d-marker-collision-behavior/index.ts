@@ -9,13 +9,13 @@ const markers: google.maps.maps3d.Marker3DElement[] = [];
 
 async function init() {
     // Request needed libraries.
-    const { Map3DElement, MapMode, Marker3DElement } =
+    const { Map3DElement, Marker3DElement } =
         await google.maps.importLibrary('maps3d');
 
     const map = new Map3DElement({
         center: { lat: 47.6094, lng: -122.339, altitude: 0 },
         range: 1000,
-        mode: MapMode.HYBRID,
+        mode: 'HYBRID',
         gestureHandling: 'COOPERATIVE',
     });
 
@@ -23,7 +23,7 @@ async function init() {
         const marker = new Marker3DElement({
             position: { lat, lng },
             // Try setting a different collision behavior here.
-            collisionBehavior: google.maps.CollisionBehavior.REQUIRED,
+            collisionBehavior: 'REQUIRED',
         });
 
         markers.push(marker);
@@ -59,8 +59,7 @@ dropdown.addEventListener('change', drawMap);
 function drawMap(event) {
     for (const marker of markers) {
         marker.collisionBehavior =
-            (dropdown.value as google.maps.CollisionBehavior) ||
-            google.maps.CollisionBehavior.REQUIRED;
+            (dropdown.value as google.maps.CollisionBehavior) || 'REQUIRED';
     }
 }
 

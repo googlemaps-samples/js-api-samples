@@ -10,7 +10,8 @@ let innerMap;
 
 async function initMap() {
     // Request needed libraries.
-    await google.maps.importLibrary('maps');
+    const { MapTypeControlStyle } = await google.maps.importLibrary('maps');
+    const { ControlPosition } = await google.maps.importLibrary('core');
 
     // Get the inner map.
     const innerMap = mapElement.innerMap;
@@ -19,17 +20,17 @@ async function initMap() {
     innerMap.setOptions({
         mapTypeControl: true,
         mapTypeControlOptions: {
-            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-            position: google.maps.ControlPosition.BLOCK_START_INLINE_CENTER,
+            style: MapTypeControlStyle.HORIZONTAL_BAR,
+            position: ControlPosition.BLOCK_START_INLINE_CENTER,
         },
         zoomControl: true,
         zoomControlOptions: {
-            position: google.maps.ControlPosition.INLINE_START_BLOCK_CENTER,
+            position: ControlPosition.INLINE_START_BLOCK_CENTER,
         },
         scaleControl: true,
         streetViewControl: true,
         streetViewControlOptions: {
-            position: google.maps.ControlPosition.INLINE_START_BLOCK_START,
+            position: ControlPosition.INLINE_START_BLOCK_START,
         },
         fullscreenControl: true,
     });

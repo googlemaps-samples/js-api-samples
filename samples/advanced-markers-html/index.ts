@@ -19,13 +19,12 @@ async function initMap() {
     });
 
     for (const property of properties) {
-        const advancedMarkerElement =
-            new google.maps.marker.AdvancedMarkerElement({
-                map,
-                content: buildContent(property),
-                position: property.position,
-                title: property.description,
-            });
+        const advancedMarkerElement = new AdvancedMarkerElement({
+            map,
+            content: buildContent(property),
+            position: property.position,
+            title: property.description,
+        });
 
         advancedMarkerElement.addListener('click', () => {
             toggleHighlight(advancedMarkerElement, property);

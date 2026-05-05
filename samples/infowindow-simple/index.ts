@@ -53,7 +53,7 @@ async function initMap(): Promise<void> {
     });
 
     // Create the marker.
-    const marker = new google.maps.marker.AdvancedMarkerElement({
+    const marker = new AdvancedMarkerElement({
         position: center,
         map: innerMap,
         title: 'Uluru (Ayers Rock)',

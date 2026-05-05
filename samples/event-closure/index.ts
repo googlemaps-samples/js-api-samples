@@ -32,7 +32,7 @@ async function initMap() {
     const latSpan = bounds.north - bounds.south;
 
     for (let i = 0; i < secretMessages.length; ++i) {
-        const marker = new google.maps.marker.AdvancedMarkerElement({
+        const marker = new AdvancedMarkerElement({
             position: {
                 lat: bounds.south + latSpan * Math.random(),
                 lng: bounds.west + lngSpan * Math.random(),

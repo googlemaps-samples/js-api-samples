@@ -11,6 +11,7 @@
 async function initMap() {
     //  Request the needed libraries.
     await google.maps.importLibrary('maps');
+    const { ControlPosition } = await google.maps.importLibrary('core');
 
     const mapElement = document.querySelector('gmp-map')!;
 
@@ -25,7 +26,7 @@ async function initMap() {
                 google.maps.MapTypeId.ROADMAP,
                 google.maps.MapTypeId.TERRAIN,
             ],
-            position: google.maps.ControlPosition.TOP_CENTER,
+            position: ControlPosition.TOP_CENTER,
         },
     });
     // [END maps_control_options_change_default]

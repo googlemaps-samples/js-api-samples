@@ -19,7 +19,7 @@ async function initMap() {
 }
 
 function placeMarkerAndPanTo(latLng: google.maps.LatLng, map: google.maps.Map) {
-    new google.maps.marker.AdvancedMarkerElement({
+    new AdvancedMarkerElement({
         position: latLng,
         map: map,
     });

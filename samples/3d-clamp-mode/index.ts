@@ -8,7 +8,7 @@
 let polyline;
 
 async function init() {
-    const { Map3DElement, AltitudeMode, Polyline3DElement } =
+    const { Map3DElement, Polyline3DElement } =
         await google.maps.importLibrary('maps3d');
 
     const map = new Map3DElement({
@@ -40,7 +40,7 @@ async function init() {
         ],
         strokeColor: 'red',
         strokeWidth: 5,
-        altitudeMode: AltitudeMode.CLAMP_TO_GROUND,
+        altitudeMode: 'CLAMP_TO_GROUND',
         drawsOccludedSegments: true,
     });
 

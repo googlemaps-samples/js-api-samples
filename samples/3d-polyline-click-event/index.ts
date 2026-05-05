@@ -7,19 +7,15 @@
 // [START maps_3d_polyline_click_event]
 let map;
 async function init() {
-    const {
-        Map3DElement,
-        MapMode,
-        AltitudeMode,
-        Polyline3DInteractiveElement,
-    } = await google.maps.importLibrary('maps3d');
+    const { Map3DElement, Polyline3DInteractiveElement } =
+        await google.maps.importLibrary('maps3d');
 
     map = new Map3DElement({
         center: { lat: 37.7927, lng: -122.402, altitude: 65.93 },
         range: 3362.87,
         tilt: 64.01,
         heading: 25.0,
-        mode: MapMode.SATELLITE,
+        mode: 'SATELLITE',
         gestureHandling: 'COOPERATIVE',
     });
 
@@ -43,7 +39,7 @@ async function init() {
         outerColor: 'white',
         strokeWidth: 10,
         outerWidth: 0.4,
-        altitudeMode: AltitudeMode.RELATIVE_TO_GROUND, // Place it on the ground (as it has no altitude it will just be at ground height).
+        altitudeMode: 'RELATIVE_TO_GROUND', // Place it on the ground (as it has no altitude it will just be at ground height).
         drawsOccludedSegments: true, // Show the line through the buildings or anything else that might get in the way.
     });
 

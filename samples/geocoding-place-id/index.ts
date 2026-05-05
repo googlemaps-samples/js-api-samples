@@ -41,7 +41,7 @@ function geocodePlaceId(
                 map.setZoom(11);
                 map.setCenter(results[0].geometry.location);
 
-                const marker = new google.maps.marker.AdvancedMarkerElement({
+                const marker = new AdvancedMarkerElement({
                     map,
                     position: results[0].geometry.location,
                 });

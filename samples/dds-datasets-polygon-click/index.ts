@@ -12,7 +12,7 @@ let datasetLayer;
 
 // [START maps_dds_datasets_polygon_click_eventhandler]
 // Note, 'globalid' is an attribute in this Dataset.
-function handleClick(/* MouseEvent */ e) {
+function handleClick(e) {
     if (e.features) {
         lastClickedFeatureIds = e.features.map(
             (f) => f.datasetAttributes['globalid']
@@ -21,7 +21,7 @@ function handleClick(/* MouseEvent */ e) {
     datasetLayer.style = applyStyle;
 }
 
-function handleMouseMove(/* MouseEvent */ e) {
+function handleMouseMove(e) {
     if (e.features) {
         lastInteractedFeatureIds = e.features.map(
             (f) => f.datasetAttributes['globalid']
@@ -82,7 +82,7 @@ const styleMouseMove = {
     strokeWeight: 4.0,
 };
 
-function applyStyle(/* FeatureStyleFunctionOptions */ params) {
+function applyStyle(params) {
     const datasetFeature = params.feature;
 
     // Note, 'globalid' is an attribute in this dataset.

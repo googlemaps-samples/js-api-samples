@@ -47,8 +47,7 @@ async function initMap(): Promise<void> {
 
     const marker = new AdvancedMarkerElement({
         map: map,
-        collisionBehavior:
-            google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL,
+        collisionBehavior: 'REQUIRED_AND_HIDES_OPTIONAL',
         gmpClickable: true,
     });
 

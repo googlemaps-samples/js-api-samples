@@ -47,7 +47,7 @@ async function initMap() {
         'image/svg+xml'
     ).documentElement;
 
-    const centerMarker = new google.maps.marker.AdvancedMarkerElement({
+    const centerMarker = new AdvancedMarkerElement({
         position: initialCenter,
         title: 'A marker using a custom SVG image.',
         anchorLeft: '-50%',

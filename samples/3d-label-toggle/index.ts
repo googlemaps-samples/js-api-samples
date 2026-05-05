@@ -7,7 +7,7 @@
 // [START maps_3d_label_toggle]
 let map;
 async function init() {
-    const { Map3DElement, MapMode } = await google.maps.importLibrary('maps3d');
+    const { Map3DElement } = await google.maps.importLibrary('maps3d');
 
     map = new Map3DElement({
         center: {
@@ -21,7 +21,7 @@ async function init() {
         gestureHandling: 'COOPERATIVE',
     });
 
-    map.mode = MapMode.SATELLITE;
+    map.mode = 'SATELLITE';
 
     document.body.append(map);
 
@@ -40,13 +40,13 @@ async function init() {
     const toggleButton = document.getElementById('toggleButton')!;
     toggleButton.addEventListener('click', function () {
         // Toggle the labels.
-        if (map.mode == MapMode.SATELLITE) {
+        if (map.mode == 'SATELLITE') {
             // Setting the map mode to HYBRID turns the labels on.
-            map.mode = MapMode.HYBRID;
+            map.mode = 'HYBRID';
             toggleButton.innerText = 'Labels are on. (HYBRID)';
         } else {
             // Setting the map mode to SATELLITE turns the labels on.
-            map.mode = MapMode.SATELLITE;
+            map.mode = 'SATELLITE';
             toggleButton.innerText = 'Labels are off. (SATELLITE)';
         }
     });
