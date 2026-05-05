@@ -1,19 +1,8 @@
 /*
-<<<<<<< HEAD
 * @license
-* Copyright 2025 Google LLC. All Rights Reserved.
+* Copyright 2026 Google LLC. All Rights Reserved.
 * SPDX-License-Identifier: Apache-2.0
 */
-/* [START maps_3d_camera_boundary] */
-/* 
- * Always set the map height explicitly to define the size of the div element
- * that contains the map. 
-=======
- * @license
- * Copyright 2026 Google LLC. All Rights Reserved.
- * SPDX-License-Identifier: Apache-2.0
->>>>>>> 4d242830 (feat: Refactors the 3d-camera-boundary sample to be TypeScript-first.)
- */
 /* [START maps_3d_camera_boundary] */
 html,
 body {
