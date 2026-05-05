@@ -11,7 +11,7 @@ set +e
 npx tsc
 status=$? 
 sed -i.sed-back 's#// TMP EMPTY LINE##g' *.ts *.js && rm *.sed-back
-if [[ $status -eq 0 ]]; then
+if [[ $status -ne 0 ]]; then
   echo "TS build failure!"
   exit $status
 fi
