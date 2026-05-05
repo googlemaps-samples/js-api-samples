@@ -8,11 +8,9 @@
 let map: google.maps.Map;
 
 async function initMap() {
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     const innerMap = mapElement.innerMap;
 
@@ -21,7 +19,7 @@ async function initMap() {
 
     // Add some style.
     innerMap.data.setStyle((feature) => {
-        return /** @type {google.maps.Data.StyleOptions} */ {
+        return {
             fillColor: feature.getProperty('color') as string,
             strokeWeight: 1,
         };

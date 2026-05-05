@@ -4,8 +4,9 @@
 
 This sample demonstrates how camera positioning works in 3D.
 Click to toggle the camera position between:
-* center mode (looking at the marker - default)
-* camera position mode (camera positioned at the marker coordinates)
+
+- center mode (looking at the marker - default)
+- camera position mode (camera positioned at the marker coordinates)
 
 ## Setup
 

@@ -5,27 +5,27 @@
  */
 /* [START maps_react_ui_kit_place_details_by_latlng] */
 #map {
-  height: 100%;
+    height: 100%;
 }
 
 gmp-map {
-  height: 100%;
+    height: 100%;
 }
 
 .widget-container {
-  background-color: black;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  max-height: calc(100% - 2rem);
-  overflow: auto;
+    background-color: black;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    max-height: calc(100% - 2rem);
+    overflow: auto;
 }
 
 .place-details-container {
-  position: relative;
-  width: 360px;
-  margin: auto;
-  margin-top:20px;
-  max-height: 760px;
-  overflow: auto;
+    position: relative;
+    width: 360px;
+    margin: auto;
+    margin-top: 20px;
+    max-height: 760px;
+    overflow: auto;
 }
 /* [END maps_react_ui_kit_place_details_by_latlng] */

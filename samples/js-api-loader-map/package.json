@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Demonstrates loading the Google Maps JavaScript API dynamically using @googlemaps/js-api-loader.",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh js-api-loader-map && bash ../docs.sh js-api-loader-map && npm run build:vite --workspace=. && bash ../dist.sh js-api-loader-map",
+    "build": "bash ../build-single.sh",
     "test": "tsc",
     "start": "tsc && vite build --base './' && vite",
     "build:vite": "vite build --base './'",

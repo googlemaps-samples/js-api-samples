@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_accessibility_features]
 async function initMap() {
     const { Map3DElement, Marker3DInteractiveElement, PopoverElement } =
