@@ -71,8 +71,8 @@ async function init() {
 
     // Add event listener to update the radius based on user selection.
     buttons.forEach((button) => {
-        button.addEventListener('change', (event) => {
-            const target = event.target as HTMLInputElement;
+        button.addEventListener('change', (changeEvent) => {
+            const target = changeEvent.target as HTMLInputElement;
             walkingCircle.setRadius(Number(target.value));
         });
     });

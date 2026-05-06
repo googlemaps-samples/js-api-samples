@@ -26,6 +26,7 @@ export default defineConfig([
             'no-undef': 'off', // handled better by TS
             'prefer-const': 'error',
             'spaced-comment': ['error', 'always'],
+            'no-shadow': 'error',
 
             // temporarily downgraded to warn for historic reasons:
             'no-prototype-builtins': 'warn',
@@ -40,6 +41,8 @@ export default defineConfig([
             },
         },
         rules: {
+            'no-shadow': 'off',
+            '@typescript-eslint/no-shadow': 'error',
             '@typescript-eslint/no-misused-promises': [
                 'error',
                 {

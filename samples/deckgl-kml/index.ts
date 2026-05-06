@@ -66,7 +66,7 @@ async function init(): Promise<void> {
     }
 
     // The location for the map center (adjust as needed for the KML data)
-    const position = { lat: 41.8692576, lng: -87.689769 };
+    const center = { lat: 41.8692576, lng: -87.689769 };
 
     //  Request needed libraries.
     const { Map } = await google.maps.importLibrary('maps');
@@ -80,7 +80,7 @@ async function init(): Promise<void> {
     // The map, centered at the specified position
     map = new Map(mapDiv, {
         zoom: 11, // Adjust zoom as needed
-        center: position,
+        center,
         // mapId: '6a17c323f461e521', // Replace with your Map ID
         mapId: '6a17c323f461e521',
         zoomControl: true,

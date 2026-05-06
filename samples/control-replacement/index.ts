@@ -37,7 +37,7 @@ function initZoomControl(map: google.maps.Map) {
     });
 }
 
-function initMapTypeControl(innerMap: google.maps.Map) {
+function initMapTypeControl(map: google.maps.Map) {
     const mapTypeControlDiv = document.querySelector('.maptype-control')!;
     const btnMap = document.querySelector('.maptype-control-map')!;
     const btnSatellite = document.querySelector('.maptype-control-satellite')!;
@@ -45,13 +45,13 @@ function initMapTypeControl(innerMap: google.maps.Map) {
     btnMap.addEventListener('click', () => {
         mapTypeControlDiv.classList.add('maptype-control-is-map');
         mapTypeControlDiv.classList.remove('maptype-control-is-satellite');
-        innerMap.setMapTypeId('roadmap');
+        map.setMapTypeId('roadmap');
     });
 
     btnSatellite.addEventListener('click', () => {
         mapTypeControlDiv.classList.add('maptype-control-is-satellite');
         mapTypeControlDiv.classList.remove('maptype-control-is-map');
-        innerMap.setMapTypeId('hybrid');
+        map.setMapTypeId('hybrid');
     });
 }
 

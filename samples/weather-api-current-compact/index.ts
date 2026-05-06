@@ -165,7 +165,7 @@ async function createAndAddMarker(
             activeWidgetContainer.classList.remove('highlight');
             // Find the marker associated with the active widget and reset its zIndex
             const activeMarker = allMarkers.find(
-                (marker) => marker.content === activeWeatherWidget
+                (e) => e.content === activeWeatherWidget
             );
             if (activeMarker) {
                 activeMarker.zIndex = null;
@@ -237,7 +237,6 @@ async function toggleDarkMode() {
     for (const marker of markersToReAdd) {
         marker.map = map; // Add marker to the new map
         const weatherWidget = marker.content as SimpleWeatherWidget;
-        const mapContainer = document.getElementById('map') as HTMLElement; // Re-get map container
         if (mapContainer.classList.contains('dark-mode')) {
             weatherWidget.setMode('dark');
         } else {
