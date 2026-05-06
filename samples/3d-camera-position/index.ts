@@ -18,9 +18,6 @@ async function initMap(): Promise<void> {
     const rangeSlider = document.getElementById('range') as HTMLInputElement;
     const latSlider = document.getElementById('lat') as HTMLInputElement;
     const lngSlider = document.getElementById('lng') as HTMLInputElement;
-    const altitudeSlider = document.getElementById(
-        'altitude'
-    ) as HTMLInputElement;
     const fovSlider = document.getElementById('fov') as HTMLInputElement;
     const rollSlider = document.getElementById('roll') as HTMLInputElement;
 
