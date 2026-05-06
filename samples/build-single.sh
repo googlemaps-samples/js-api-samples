@@ -138,9 +138,14 @@ if [[ $status -ne 0 ]]; then
   exit $status
 fi
 
-if [[ -f index.js ]]; then # DNE for react builds
+
+if ls *.js; then # Note: DNE for react builds
   # ensure final output is still pretty...
-  npx prettier -w index.js --ignore-path /dev/null
+  echo "Making JS pretty..."
+  sed -i.sed-back 's#// @ts-expect-error.*##g' *.js && rm *.sed-back
+  sed -i.sed-back 's#// eslint-disable.*##g' *.js && rm *.sed-back
+  sed -i.sed-back 's#/\* eslint-disable.*\*/##g' *.js && rm *.sed-back
+  npx prettier -w *.js --ignore-path /dev/null # --ignore-path /dev/null forces enablement 
 fi
 
 # one more check (this one needs typings stripped to work)

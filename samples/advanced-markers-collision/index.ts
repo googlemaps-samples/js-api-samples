@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// eslint-disable no-undef
 // [START maps_advanced_markers_collision]
 const mapElement = document.querySelector('gmp-map')!;
 
