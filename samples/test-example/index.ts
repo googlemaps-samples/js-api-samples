@@ -19,9 +19,9 @@ let center;
 async function init() {
     // [START maps_test_example_instantiate_map]
     //  Request the needed libraries.
-    const [, { AdvancedMarkerElement }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
     ]);
 
     // Get the inner map from the gmp-map element.

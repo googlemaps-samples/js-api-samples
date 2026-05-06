@@ -11,9 +11,9 @@ let innerMap: google.maps.Map;
 // Initialize and add the map.
 async function init() {
     //  Request the needed libraries.
-    const [, { event }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ event }] = await Promise.all([
         google.maps.importLibrary('core'),
+        google.maps.importLibrary('maps'),
     ]);
 
     innerMap = mapElement.innerMap;

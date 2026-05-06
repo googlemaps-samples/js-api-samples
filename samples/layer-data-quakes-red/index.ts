@@ -8,9 +8,9 @@
 let innerMap: google.maps.Map;
 
 async function init() {
-    const [, { SymbolPath }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ SymbolPath }] = await Promise.all([
         google.maps.importLibrary('core'),
+        google.maps.importLibrary('maps'),
     ]);
 
     const mapElement = document.querySelector('gmp-map')!;

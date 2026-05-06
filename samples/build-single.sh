@@ -51,9 +51,15 @@ grep -i -E " init\(" "${common_recursive_grep_options[@]}" --include=*.{ts,tsx} 
 if [[ $? -ne 0 ]]; then
   grep -i -E " init[a-z]+\(" "${common_recursive_grep_options[@]}" --include=*.{ts,tsx}
   if [[ $? -eq 0 ]]; then
-    echo "found an init...() function but not an init() function. Must normalize root init() function name.";
+    echo "Found an init...() function but not an init() function. Must normalize root init() function name.";
     exit 1
   fi
+fi
+
+grep -E "\[," "${common_recursive_grep_options[@]}" --include=*.{ts,tsx}
+if [[ $? -eq 0 ]]; then
+  echo "Found '[,' in the code. Reorder the calls to avoid.";
+  exit 1
 fi
 
 grep "<!-- prettier-ignore -->" "${html_recursive_grep_options[@]}"

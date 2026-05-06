@@ -86,9 +86,9 @@ function setStyle(params) {
 
 async function init() {
     // Request needed libraries.
-    const [, { event }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ event }] = await Promise.all([
         google.maps.importLibrary('core'),
+        google.maps.importLibrary('maps'),
     ]);
 
     // Get the inner map.

@@ -10,9 +10,9 @@ let innerMap: google.maps.Map;
 
 async function init() {
     // Request needed libraries.
-    const [, { Marker }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ Marker }] = await Promise.all([
         google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
     ]);
 
     // Set the location of Astor Place.
