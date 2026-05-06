@@ -2,7 +2,7 @@
 
 ## geocoding-reverse
 
-The geocoding-reverse sample demonstrates reverse geocoding coordinates to addresses. 
+The geocoding-reverse sample demonstrates reverse geocoding coordinates to addresses.
 
 ## Setup
 
@@ -33,7 +33,7 @@ From 'samples':
 ### Run lint to check for problems
 
 `cd samples/geocoding-reverse`
-`npx eslint index.ts` 
+`npx eslint index.ts`
 
 ## Feedback
 

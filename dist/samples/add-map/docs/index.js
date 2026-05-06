@@ -1,14 +1,15 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 // [START maps_add_map]
 async function initMap() {
     // [START maps_add_map_instantiate_map]
     // [START maps_add_map_libraries]
-    //  Request the needed libraries.
+    // Request the needed libraries.
     const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('marker'),
@@ -17,14 +18,17 @@ async function initMap() {
     // [START maps_add_map_innermap]
     // Get the gmp-map element.
     const mapElement = document.querySelector('gmp-map');
+
     // Get the inner map.
     const innerMap = mapElement.innerMap;
+
     // Set map options.
     innerMap.setOptions({
         mapTypeControl: false,
     });
     // [END maps_add_map_innermap]
     // [END maps_add_map_instantiate_map]
+
     // [START maps_add_map_instantiate_marker]
     // Add a marker positioned at the map center (Uluru).
     const marker = new AdvancedMarkerElement({

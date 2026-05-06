@@ -14,19 +14,17 @@ let featureLayer;
 
 async function initMap() {
     // Request needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
     // Get the gmp-map element.
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     // Get the inner map.
     const innerMap = mapElement.innerMap;
 
     // [START maps_boundaries_simple_get_layer]
     // Get the feature layer.
-    featureLayer = innerMap.getFeatureLayer(google.maps.FeatureType.LOCALITY);
+    featureLayer = innerMap.getFeatureLayer('LOCALITY');
     // [END maps_boundaries_simple_get_layer]
 
     // [START maps_boundaries_simple_style_single]
@@ -49,5 +47,5 @@ async function initMap() {
     // [END maps_boundaries_simple_style_single]
 }
 
-initMap();
+void initMap();
 // [END maps_boundaries_simple]

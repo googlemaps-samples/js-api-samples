@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_camera_to_around]
 async function init() {
     const { Map3DElement } = await google.maps.importLibrary('maps3d');
@@ -62,10 +61,10 @@ async function init() {
     ); // Stop animation after flying around.
 
     // At any time stop the animation.
-    map.addEventListener('gmp-click', (event) => {
+    map.addEventListener('gmp-click', () => {
         map.stopCameraAnimation();
     });
 }
 
-init();
+void init();
 // [END maps_3d_camera_to_around]

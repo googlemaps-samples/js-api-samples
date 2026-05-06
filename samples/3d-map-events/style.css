@@ -1,0 +1,32 @@
+/*
+ * @license
+ * Copyright 2026 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* [START maps_3d_map_events] */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+body {
+    display: flex;
+    flex-direction: row;
+}
+gmp-map-3d {
+    flex-grow: 1;
+}
+.myaside {
+    flex-basis: 25%;
+    font-family:
+        Droid Sans Mono,
+        monospace;
+    font-size: 15px;
+    padding: 2px;
+}
+.myaside > p.active {
+    background-color: #9cf;
+}
+/* [END maps_3d_map_events] */

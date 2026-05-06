@@ -7,21 +7,15 @@
 // [START maps_place_reviews]
 let innerMap;
 let infoWindow;
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map')!;
 
 async function initMap() {
     // Import the needed libraries.
     const [{ InfoWindow }, { AdvancedMarkerElement }, { Place }] =
         await Promise.all([
-            google.maps.importLibrary(
-                'maps'
-            ) as Promise<google.maps.MapsLibrary>,
-            google.maps.importLibrary(
-                'marker'
-            ) as Promise<google.maps.MarkerLibrary>,
-            google.maps.importLibrary(
-                'places'
-            ) as Promise<google.maps.PlacesLibrary>,
+            google.maps.importLibrary('maps'),
+            google.maps.importLibrary('marker'),
+            google.maps.importLibrary('places'),
         ]);
 
     innerMap = mapElement.innerMap;
@@ -68,11 +62,10 @@ async function initMap() {
         content.appendChild(review);
         content.appendChild(authorLink);
     } else {
-        content.textContent =
-            `No reviews were found for ${place.displayName}.`;
+        content.textContent = `No reviews were found for ${place.displayName}.`;
     }
 
-    // Create an infowindow to display the review.
+    // Create an infoWindow to display the review.
     infoWindow = new InfoWindow({
         content,
         ariaLabel: place.displayName,
@@ -95,5 +88,5 @@ async function initMap() {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_place_reviews]

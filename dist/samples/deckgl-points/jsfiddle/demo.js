@@ -4,23 +4,31 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// Import the needed libraries.
 import { GoogleMapsOverlay } from '@deck.gl/google-maps';
 import { GeoJsonLayer } from '@deck.gl/layers';
+
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
+
 /**
  * Validates that a feature has the properties we need for rendering.
  */
 function isEarthquake(f) {
-    return (f.properties !== null &&
+    return (
+        f.properties !== null &&
         typeof f.properties === 'object' &&
-        typeof f.properties.mag === 'number');
+        typeof f.properties.mag === 'number'
+    );
 }
+
 // Initialize and add the map
 async function initMap() {
     //  Request the needed libraries.
     await google.maps.importLibrary('maps');
-    innerMap = await mapElement.innerMap;
+
+    innerMap = mapElement.innerMap;
+
     const deckOverlay = new GoogleMapsOverlay({
         layers: [
             new GeoJsonLayer({
@@ -56,7 +64,8 @@ async function initMap() {
             }),
         ],
     });
+
     deckOverlay.setMap(innerMap);
 }
-initMap();
 
+initMap();

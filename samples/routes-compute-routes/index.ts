@@ -6,7 +6,6 @@
 // [START maps_routes_compute_routes]
 let markers: google.maps.marker.AdvancedMarkerElement[] = [];
 let polylines: google.maps.Polyline[] = [];
-let waypointInfoWindow: google.maps.InfoWindow | null = null;
 
 interface PlaceAutocompleteSelection {
     predictionText: string | null;
@@ -26,23 +25,14 @@ async function init() {
     const [
         { InfoWindow },
         { AdvancedMarkerElement },
-        //prettier-ignore
-        //@ts-ignore
+        // @ts-expect-error - currently missing. bug fix pending
         { PlaceAutocompleteElement },
-        //prettier-ignore
-        //@ts-ignore
         { ComputeRoutesExtraComputation, ReferenceRoute, Route, RouteLabel },
     ] = await Promise.all([
-        google.maps.importLibrary('maps') as Promise<google.maps.MapsLibrary>,
-        google.maps.importLibrary(
-            'marker'
-        ) as Promise<google.maps.MarkerLibrary>,
-        google.maps.importLibrary(
-            'places'
-        ) as Promise<google.maps.PlacesLibrary>,
-        google.maps.importLibrary(
-            'routes'
-        ) as Promise<google.maps.RoutesLibrary>,
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('places'),
+        google.maps.importLibrary('routes'),
     ]);
 
     const map = document.getElementById('map') as google.maps.MapElement;
@@ -61,7 +51,7 @@ async function init() {
 
         computeRoutesForm.addEventListener('submit', (event) => {
             event.preventDefault();
-            sendRequest(new FormData(computeRoutesForm));
+            void sendRequest(new FormData(computeRoutesForm));
         });
     }
 
@@ -99,25 +89,18 @@ async function init() {
 
     function buildComputeRoutesJsRequest(
         formData: FormData
-        //prettier-ignore
-        //@ts-ignore
     ): google.maps.routes.ComputeRoutesRequest {
         const travelMode =
             (formData.get('travel_mode') as string) === ''
                 ? undefined
-                : (formData.get('travel_mode') as google.maps.TravelMode);
-        //prettier-ignore
-        //@ts-ignore
+                : formData.get('travel_mode');
         const extraComputations: google.maps.routes.ComputeRoutesExtraComputation[] =
-      [];
-        //prettier-ignore
-        //@ts-ignore
-        const requestedReferenceRoutes: google.maps.routes.ReferenceRoute[] = [];
-        //prettier-ignore
-        //@ts-ignore
+            [];
+        const requestedReferenceRoutes: google.maps.routes.ReferenceRoute[] =
+            [];
         const transitPreference: google.maps.routes.TransitPreference = {};
 
-        const request = {
+        const request: google.maps.routes.ComputeRoutesRequest = {
             origin: {
                 location: buildComputeRoutesLocation(
                     originAutocompleteSelection,
@@ -150,16 +133,12 @@ async function init() {
                     ? undefined
                     : (formData.get(
                           'routing_preference'
-                          //prettier-ignore
-                          //@ts-ignore
                       ) as google.maps.routes.RoutingPreference),
             polylineQuality:
                 formData.get('polyline_quality') === ''
                     ? undefined
                     : (formData.get(
                           'polyline_quality'
-                          //prettier-ignore
-                          //@ts-ignore
                       ) as google.maps.routes.PolylineQuality),
             computeAlternativeRoutes:
                 formData.get('compute_alternative_routes') === 'on',
@@ -193,19 +172,14 @@ async function init() {
             extraComputations.push(
                 ComputeRoutesExtraComputation.FUEL_CONSUMPTION
             );
-            //prettier-ignore
-            //@ts-ignore
-            (request.routeModifiers as google.maps.routes.RouteModifiers).vehicleInfo =
-                {
-                    emissionType: formData.get(
-                        'emission_type'
-                        //prettier-ignore
-                        //@ts-ignore
-                    ) as google.maps.routes.VehicleEmissionType,
-                };
+            request.routeModifiers!.vehicleInfo = {
+                emissionType: formData.get(
+                    'emission_type'
+                ) as google.maps.routes.VehicleEmissionType,
+            };
         }
 
-        if (travelMode === google.maps.TravelMode.TRANSIT) {
+        if (travelMode === 'TRANSIT') {
             const selectedTransitModes = document.querySelectorAll(
                 'ul#transitModes li input[type="checkbox"]:checked'
             );
@@ -230,8 +204,6 @@ async function init() {
         locationInput?: FormDataEntryValue | null,
         headingInput?: FormDataEntryValue | null,
         travelModeInput?: FormDataEntryValue | null
-        //prettier-ignore
-        //@ts-ignore
     ): string | google.maps.routes.DirectionalLocationLiteral {
         if (!locationInput) {
             throw new Error('Location is required.');
@@ -241,7 +213,7 @@ async function init() {
         const location = locationInput as string;
         const heading =
             headingInput && travelModeInput !== 'TRANSIT'
-                ? Number(headingInput as string)
+                ? Number(headingInput)
                 : undefined;
 
         if (
@@ -278,8 +250,6 @@ async function init() {
     }
 
     async function drawRoute(
-        //prettier-ignore
-        //@ts-ignore
         route: google.maps.routes.Route,
         isPrimaryRoute: boolean
     ) {
@@ -313,66 +283,65 @@ async function init() {
         addRouteLabel(route, Math.floor(route.path!.length / 2));
     }
 
-    //prettier-ignore
-    //@ts-ignore
     function addRouteLabel(route: google.maps.routes.Route, index: number) {
-    const routeTag = document.createElement('div');
-    routeTag.className = 'route-tag';
+        const routeTag = document.createElement('div');
+        routeTag.className = 'route-tag';
 
-    if (route.routeLabels && route.routeLabels.length > 0) {
-      const p = document.createElement('p');
-      route.routeLabels.forEach((label, i) => {
-        if (label.includes(RouteLabel.FUEL_EFFICIENT)) {
-          routeTag.classList.add('eco');
-        }
-        if (label.includes(RouteLabel.DEFAULT_ROUTE_ALTERNATE)) {
-          routeTag.classList.add('alternate');
-        }
-        if (label.includes(RouteLabel.SHORTER_DISTANCE)) {
-          routeTag.classList.add('shorter-distance');
+        if (route.routeLabels && route.routeLabels.length > 0) {
+            const p = document.createElement('p');
+            route.routeLabels.forEach((label, i) => {
+                if (label.includes(RouteLabel.FUEL_EFFICIENT)) {
+                    routeTag.classList.add('eco');
+                }
+                if (label.includes(RouteLabel.DEFAULT_ROUTE_ALTERNATE)) {
+                    routeTag.classList.add('alternate');
+                }
+                if (label.includes(RouteLabel.SHORTER_DISTANCE)) {
+                    routeTag.classList.add('shorter-distance');
+                }
+
+                p.appendChild(document.createTextNode(label));
+                if (i < route.routeLabels!.length - 1) {
+                    p.appendChild(document.createElement('br'));
+                }
+            });
+            routeTag.appendChild(p);
         }
 
-        p.appendChild(document.createTextNode(label));
-        if (i < route.routeLabels!.length - 1) {
-          p.appendChild(document.createElement('br'));
+        const detailsDiv = document.createElement('div');
+        detailsDiv.className = 'details';
+
+        if (route.localizedValues) {
+            const distanceP = document.createElement('p');
+            distanceP.textContent = `Distance: ${route.localizedValues.distance!}`;
+            detailsDiv.appendChild(distanceP);
+
+            const durationP = document.createElement('p');
+            durationP.textContent =
+                `Duration: ${route.localizedValues.duration}`!;
+            detailsDiv.appendChild(durationP);
         }
-      });
-      routeTag.appendChild(p);
+
+        if (route.travelAdvisory?.fuelConsumptionMicroliters) {
+            const fuelP = document.createElement('p');
+            fuelP.textContent = `Fuel consumption: ${(
+                route.travelAdvisory.fuelConsumptionMicroliters / 1e6
+            ).toFixed(2)} L`;
+            detailsDiv.appendChild(fuelP);
+        }
+
+        routeTag.appendChild(detailsDiv);
+
+        const marker = new AdvancedMarkerElement({
+            map: map.innerMap,
+            position: route.path![index],
+            content: routeTag,
+            zIndex: route.routeLabels?.includes(RouteLabel.DEFAULT_ROUTE)
+                ? 1
+                : undefined,
+        });
+        markers.push(marker);
     }
-
-    const detailsDiv = document.createElement('div');
-    detailsDiv.className = 'details';
-
-    if (route.localizedValues) {
-      const distanceP = document.createElement('p');
-      distanceP.textContent = `Distance: ${route.localizedValues.distance!}`;
-      detailsDiv.appendChild(distanceP);
-
-      const durationP = document.createElement('p');
-      durationP.textContent = `Duration: ${route.localizedValues.duration}`!;
-      detailsDiv.appendChild(durationP);
-    }
-
-    if (route.travelAdvisory?.fuelConsumptionMicroliters) {
-      const fuelP = document.createElement('p');
-      fuelP.textContent = `Fuel consumption: ${(
-        route.travelAdvisory.fuelConsumptionMicroliters / 1e6
-      ).toFixed(2)} L`;
-      detailsDiv.appendChild(fuelP);
-    }
-
-    routeTag.appendChild(detailsDiv);
-
-    const marker = new AdvancedMarkerElement({
-      map: map.innerMap,
-      position: route.path![index],
-      content: routeTag,
-      zIndex: route.routeLabels?.includes(RouteLabel.DEFAULT_ROUTE)
-        ? 1
-        : undefined,
-    });
-    markers.push(marker);
-  }
 
     function clearMap() {
         markers.forEach((marker) => {
@@ -499,7 +468,7 @@ async function init() {
 
     function attachAlertWindowListener() {
         const alertBox = document.getElementById('alert') as HTMLDivElement;
-        const closeBtn = alertBox.querySelector('.close') as HTMLButtonElement;
+        const closeBtn = alertBox.querySelector('.close')!;
         closeBtn.addEventListener('click', () => {
             if (alertBox.style.display !== 'none') {
                 alertBox.style.display = 'none';
@@ -521,17 +490,18 @@ async function init() {
         ].forEach(([autocomplete, autocompleteData]) => {
             autocomplete.addEventListener(
                 'gmp-select',
-                //prettier-ignore
-                //@ts-ignore
-                async (event: google.maps.places.PlacePredictionSelectEvent) => {
-          autocompleteData.predictionText = event.placePrediction.text.text;
+                async (
+                    event: google.maps.places.PlacePredictionSelectEvent
+                ) => {
+                    autocompleteData.predictionText =
+                        event.placePrediction.text.text;
 
-          const place = event.placePrediction.toPlace();
-          await place.fetchFields({
-            fields: ['location'],
-          });
-          autocompleteData.location = place.location;
-        }
+                    const place = event.placePrediction.toPlace();
+                    await place.fetchFields({
+                        fields: ['location'],
+                    });
+                    autocompleteData.location = place.location;
+                }
             );
         });
 
@@ -558,5 +528,5 @@ async function init() {
     }
 }
 
-window.addEventListener('load', init);
+void init();
 // [END maps_routes_compute_routes]

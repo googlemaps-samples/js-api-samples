@@ -9,18 +9,17 @@ let innerMap;
 
 async function initMap() {
     //  Request the needed libraries.
-    await google.maps.importLibrary('maps');
+    void google.maps.importLibrary('core'); // preload
+    const { InfoWindow } = await google.maps.importLibrary('maps');
 
     // Retrieve the map element.
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     // Get the inner map from the map element.
     innerMap = mapElement.innerMap;
 
     // Create the initial info window.
-    let infowindow = new google.maps.InfoWindow({});
+    const infoWindow = new InfoWindow({});
 
     // Add a listener for click events on the map.
     innerMap.addListener('click', (event) => {
@@ -29,16 +28,21 @@ async function initMap() {
 
         // If the event has a placeId, show the info window.
         if (isIconMouseEvent(event) && event.placeId) {
-            showInfoWindow(event, infowindow);
+            void showInfoWindow(event, infoWindow);
         } else {
             // Close the info window if there is no placeId.
-            infowindow.close();
+            infoWindow.close();
         }
     });
 }
 
 // Helper function to show the info window.
-async function showInfoWindow(event: google.maps.IconMouseEvent, infowindow: google.maps.InfoWindow) {
+async function showInfoWindow(
+    event: google.maps.IconMouseEvent,
+    infoWindow: google.maps.InfoWindow
+) {
+    const { Size } = await google.maps.importLibrary('core');
+
     // Retrieve the place details for the selected POI.
     const place = await getPlaceDetails(event.placeId);
 
@@ -57,23 +61,21 @@ async function showInfoWindow(event: google.maps.IconMouseEvent, infowindow: goo
     name.textContent = place.displayName || '';
 
     // Update info window options.
-    infowindow.setOptions({
+    infoWindow.setOptions({
         position: event.latLng,
-        pixelOffset: new google.maps.Size(0, -30),
+        pixelOffset: new Size(0, -30),
         headerContent: name,
         content: content,
     });
 
     innerMap.panTo(event.latLng);
-    infowindow.open(innerMap);
+    infoWindow.open(innerMap);
 }
 
 // Helper function to get place details.
 async function getPlaceDetails(placeId) {
     // Import the Places library.
-    const { Place } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
+    const { Place } = await google.maps.importLibrary('places');
 
     // Create a Place instance with the place id and fetch the details.
     const place = new Place({ id: placeId });
@@ -92,5 +94,5 @@ function isIconMouseEvent(
     return 'placeId' in e;
 }
 
-initMap();
+void initMap();
 // [END maps_event_poi]

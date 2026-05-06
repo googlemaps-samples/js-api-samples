@@ -11,16 +11,13 @@ import type * as GeoJSON from 'geojson';
 
 type Properties = { scalerank: number };
 type Feature = GeoJSON.Feature<GeoJSON.Point, Properties>;
-type Data = GeoJSON.FeatureCollection<GeoJSON.Point, Properties>;
 
 async function initMap() {
     // Request needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
     // Get the gmp-map element.
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     // Get the inner map.
     const innerMap = mapElement.innerMap;
@@ -28,7 +25,10 @@ async function initMap() {
     innerMap.setTilt(30); // Set tilt after map initialization.
 
     // Set the path to the GeoJSON data file.
-    const dataUrl = new URL('./public/ne_10m_airports.geojson', import.meta.url).toString();
+    const dataUrl = new URL(
+        './public/ne_10m_airports.geojson',
+        import.meta.url
+    ).toString();
 
     const flightsLayer = new ArcLayer<Feature>({
         id: 'flights',
@@ -51,5 +51,5 @@ async function initMap() {
     overlay.setMap(innerMap);
 }
 
-initMap();
+void initMap();
 // [END maps_deckgl_arclayer]

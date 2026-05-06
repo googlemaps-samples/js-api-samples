@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Samples for the Google Maps JavaScript API.",
   "scripts": {
-    "build-all": "npm run clean && npm run build --workspaces && npm run generate-index",
+    "build-all": "npm run clean && npm run build-all-parallel && npm run generate-index",
+    "build-all-parallel": "bash samples/build-all.sh",
     "clean": "bash samples/clean.sh",
     "generate-index": "bash samples/generate-index.sh"
   },
@@ -16,19 +17,21 @@
     "@eslint/json": "^1.2.0",
     "@eslint/markdown": "^8.0.1",
     "@playwright/test": "^1.59.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
     "@types/google.maps": "^3.64.0",
     "@types/node": "^25.6.0",
-    "eslint": "^10.2.0",
-    "globals": "^17.5.0",
+    "eslint": "^10.3.0",
+    "globals": "^17.6.0",
+    "prettier": "^3.8.3",
     "rimraf": "^6.1.3",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.59.0",
-    "vite": "^8.0.5"
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.2",
+    "vite": "^8.0.10"
   },
   "dependencies": {
     "dotenv": "^17.4.2"
   },
   "overrides": {
-    "fast-xml-parser": "5.5.7"
+    "fast-xml-parser": "5.7.1"
   }
 }

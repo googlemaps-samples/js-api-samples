@@ -7,12 +7,10 @@
 // [START maps_hiding_features]
 async function initMap() {
     // Request needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
     // Get the gmp-map element.
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     // Get the inner map.
     const innerMap = mapElement.innerMap;
@@ -20,7 +18,7 @@ async function initMap() {
     innerMap.setOptions({
         mapTypeControl: false,
         // A map's styles property can only be set on a raster map.
-        renderingType: google.maps.RenderingType.RASTER,
+        renderingType: 'RASTER',
     });
 
     // Apply new JSON when the user chooses to hide/show features.
@@ -53,5 +51,5 @@ const styles: Record<string, google.maps.MapTypeStyle[]> = {
     ],
 };
 
-initMap();
+void initMap();
 // [END maps_hiding_features]

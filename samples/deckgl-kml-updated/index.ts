@@ -48,15 +48,13 @@ let googleMapsOverlay: deck.GoogleMapsOverlay;
 
 async function initMap(): Promise<void> {
     // Progress bar logic moved from index.html
-    var progress,
-        progressDiv = document.querySelector('.mdc-linear-progress');
+    let progress;
+    const progressDiv = document.querySelector('.mdc-linear-progress')!;
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-        // @ts-ignore
-        progress = new mdc.linearProgress.MDCLinearProgress(
-            progressDiv as HTMLElement
-        );
+        // @ts-expect-error: mdc not typed
+        progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
         progress.done = function () {
@@ -69,9 +67,7 @@ async function initMap(): Promise<void> {
     const position = { lat: 19.223718899391237, lng: -148.62590882823457 };
 
     //  Request needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { Map } = await google.maps.importLibrary('maps');
 
     const mapDiv = document.getElementById('map');
     if (!mapDiv) {
@@ -106,8 +102,8 @@ async function initMap(): Promise<void> {
         // lineWidthMinPixels: 4, // Not needed for points
         pointRadiusMinPixels: 2,
         pointRadiusMaxPixels: 200,
-        getRadius: (f) => 8000,
-        getFillColor: (f, { index }) => {
+        getRadius: () => 8000,
+        getFillColor: (f) => {
             // Extract magnitude from the description string
             const description = f.properties.description;
             const magnitudeMatch = description.match(/M (\d+\.?\d*)/);
@@ -239,5 +235,5 @@ async function initMap(): Promise<void> {
     }
 }
 
-initMap();
+void initMap();
 /* [END maps_deckgl_kml_updated] */

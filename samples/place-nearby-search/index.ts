@@ -5,57 +5,51 @@
  */
 
 // [START maps_place_nearby_search]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map')!;
 let innerMap;
-const advancedMarkerElement = document.querySelector(
-    'gmp-advanced-marker'
-) as google.maps.marker.AdvancedMarkerElement;
 let center;
 let typeSelect;
 let infoWindow;
 
 async function initMap() {
-    const { Map, InfoWindow } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { LatLng } = (await google.maps.importLibrary(
-        'core'
-    )) as google.maps.CoreLibrary;
+    const [{ InfoWindow }, { event }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('core'),
+    ]);
 
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
         mapTypeControl: false,
     });
 
-    typeSelect = document.querySelector('.type-select');
+    typeSelect = document.querySelector('.type-select')!;
 
     typeSelect.addEventListener('change', () => {
-        nearbySearch();
+        void nearbySearch();
     });
 
     infoWindow = new InfoWindow();
 
     // Kick off an initial search once map has loaded.
-    google.maps.event.addListenerOnce(innerMap, 'idle', () => {
-        nearbySearch();
+    event.addListenerOnce(innerMap, 'idle', () => {
+        void nearbySearch();
     });
 }
 
 async function nearbySearch() {
-    const { Place, SearchNearbyRankPreference } =
-        (await google.maps.importLibrary(
-            'places'
-        )) as google.maps.PlacesLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
-    const { spherical } = (await google.maps.importLibrary(
-        'geometry'
-    )) as google.maps.GeometryLibrary;
+    const [
+        { Place, SearchNearbyRankPreference },
+        { AdvancedMarkerElement },
+        { spherical },
+    ] = await Promise.all([
+        google.maps.importLibrary('places'),
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('geometry'),
+    ]);
     // [START maps_place_nearby_search_request]
     // Get bounds and radius to constrain search.
     center = mapElement.center;
-    let bounds = innerMap.getBounds();
+    const bounds = innerMap.getBounds();
     const ne = bounds.getNorthEast();
     const sw = bounds.getSouthWest();
     const diameter = spherical.computeDistanceBetween(ne, sw);
@@ -83,9 +77,7 @@ async function nearbySearch() {
     // [END maps_place_nearby_search_request]
 
     if (places.length) {
-        const { LatLngBounds } = (await google.maps.importLibrary(
-            'core'
-        )) as google.maps.CoreLibrary;
+        const { LatLngBounds } = await google.maps.importLibrary('core');
         const bounds = new LatLngBounds();
 
         // First remove all existing markers.
@@ -139,5 +131,5 @@ function updateInfoWindow(title, content, anchor) {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_place_nearby_search]

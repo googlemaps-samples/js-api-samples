@@ -1,0 +1,29 @@
+/*
+ * @license
+ * Copyright 2026 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/*
+ * Note: This sample demonstrates the standard JavaScript pattern for creating a map. 
+ * While this approach remains fully supported and is preferred by some developers, 
+ * we recommend considering the declarative <gmp-map> web component for new projects 
+ * and modern integrations.
+ */
+
+/* 
+ * Always set the map height explicitly to define the size of the div element
+ * that contains the map. 
+ */
+#map {
+    height: 100%;
+}
+
+/* 
+ * Optional: Makes the sample page fill the window. 
+ */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}

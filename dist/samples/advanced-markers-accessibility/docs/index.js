@@ -1,15 +1,21 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2019 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 // [START maps_advanced_markers_accessibility]
 const mapElement = document.querySelector('gmp-map');
+
 async function initMap() {
     // Request needed libraries.
-    const { Map, InfoWindow } = (await google.maps.importLibrary('maps'));
-    const { AdvancedMarkerElement, PinElement } = (await google.maps.importLibrary('marker'));
+    const [{ Map, InfoWindow }, { AdvancedMarkerElement, PinElement }] =
+        await Promise.all([
+            google.maps.importLibrary('maps'),
+            google.maps.importLibrary('marker'),
+        ]);
+
     // Set LatLng and title text for the markers. The first marker (Boynton Pass)
     // receives the initial focus when tab is pressed. Use arrow keys to move
     // between markers; press tab again to cycle through the map controls.
@@ -35,13 +41,14 @@ async function initMap() {
             title: 'Bell Rock',
         },
     ];
+
     // Create an info window to share between markers.
     const infoWindow = new InfoWindow();
+
     // Create the markers.
     tourStops.forEach(({ position, title }, i) => {
         // [START maps_advanced_markers_accessibility_marker]
         const pin = new PinElement({
-            //@ts-ignore
             glyphText: `${i + 1}`,
             scale: 1.5,
         });
@@ -64,5 +71,6 @@ async function initMap() {
         // [END maps_advanced_markers_accessibility_event_listener]
     });
 }
+
 initMap();
 // [END maps_advanced_markers_accessibility]

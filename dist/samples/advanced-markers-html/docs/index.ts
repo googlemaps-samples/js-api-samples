@@ -8,12 +8,10 @@
 // [START maps_advanced_markers_html_snippet]
 async function initMap() {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+    ]);
 
     const center = { lat: 37.43238031167444, lng: -122.16795397128632 };
     const map = new Map(document.getElementById('map') as HTMLElement, {
@@ -23,13 +21,12 @@ async function initMap() {
     });
 
     for (const property of properties) {
-        const advancedMarkerElement =
-            new google.maps.marker.AdvancedMarkerElement({
-                map,
-                content: buildContent(property),
-                position: property.position,
-                title: property.description,
-            });
+        const advancedMarkerElement = new AdvancedMarkerElement({
+            map,
+            content: buildContent(property),
+            position: property.position,
+            title: property.description,
+        });
 
         advancedMarkerElement.addListener('click', () => {
             toggleHighlight(advancedMarkerElement, property);

@@ -8,8 +8,8 @@
 // This example defines an image map type using the Gall-Peters
 // projection.
 // https://en.wikipedia.org/wiki/Gall%E2%80%93Peters_projection
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-let innerMap;
+const mapElement = document.querySelector('gmp-map')!;
+let innerMap: google.maps.Map;
 
 async function initMap() {
     // Request the needed libraries.
@@ -50,12 +50,17 @@ async function initMap() {
 
 let gallPetersMapType;
 
-function initGallPeters() {
+async function initGallPeters() {
+    const [{ ImageMapType }, { Size, Point, LatLng }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('core'),
+    ]);
+
     const GALL_PETERS_RANGE_X = 800;
     const GALL_PETERS_RANGE_Y = 512;
 
     // Fetch Gall-Peters tiles stored locally on our server.
-    gallPetersMapType = new google.maps.ImageMapType({
+    gallPetersMapType = new ImageMapType({
         getTileUrl: function (coord, zoom) {
             const scale = 1 << zoom;
 
@@ -69,10 +74,7 @@ function initGallPeters() {
 
             return 'gall-peters_' + zoom + '_' + x + '_' + y + '.png';
         },
-        tileSize: new google.maps.Size(
-            GALL_PETERS_RANGE_X,
-            GALL_PETERS_RANGE_Y
-        ),
+        tileSize: new Size(GALL_PETERS_RANGE_X, GALL_PETERS_RANGE_Y),
         minZoom: 0,
         maxZoom: 1,
         name: 'Gall-Peters',
@@ -82,7 +84,7 @@ function initGallPeters() {
     gallPetersMapType.projection = {
         fromLatLngToPoint: function (latLng) {
             const latRadians = (latLng.lat() * Math.PI) / 180;
-            return new google.maps.Point(
+            return new Point(
                 GALL_PETERS_RANGE_X * (0.5 + latLng.lng() / 360),
                 GALL_PETERS_RANGE_Y * (0.5 - 0.5 * Math.sin(latRadians))
             );
@@ -91,7 +93,7 @@ function initGallPeters() {
             const x = point.x / GALL_PETERS_RANGE_X;
             const y = Math.max(0, Math.min(1, point.y / GALL_PETERS_RANGE_Y));
 
-            return new google.maps.LatLng(
+            return new LatLng(
                 (Math.asin(1 - 2 * y) * 180) / Math.PI,
                 -180 + 360 * x,
                 noWrap

@@ -30,9 +30,9 @@ const events = [
 
 function setupListener(map: google.maps.Map, name: string) {
     const eventRow = document.getElementById(name) as HTMLElement;
-    google.maps.event.addListener(map, name, () => {
+    map.addListener(name, () => {
         eventRow.className = 'event active';
-        const timeout = setTimeout(() => {
+        setTimeout(() => {
             eventRow.className = 'event inactive';
         }, 1000);
     });
@@ -40,20 +40,18 @@ function setupListener(map: google.maps.Map, name: string) {
 
 async function initMap() {
     // Request needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     populateTable();
 
     // Get the inner map.
-    let innerMap = mapElement.innerMap;
+    const innerMap = mapElement.innerMap;
     innerMap.setOptions({
         mapTypeControl: false,
     });
-    
+
     for (let i = 0; i < events.length; i++) {
         setupListener(innerMap, events[i]);
     }
@@ -72,5 +70,5 @@ function populateTable() {
     }
 }
 
-initMap();
+void initMap();
 // [END maps_map_events]

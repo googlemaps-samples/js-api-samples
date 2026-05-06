@@ -11,22 +11,20 @@ let center;
 
 async function initMap() {
     // Load the needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
     center = { lat: 41.059, lng: -124.151 }; // Trinidad, CA
 
     // Get the gmp-map element.
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     // Get the inner map.
     innerMap = mapElement.innerMap;
 
     // Get the LOCALITY feature layer.
-    featureLayer = innerMap.getFeatureLayer(google.maps.FeatureType.LOCALITY);
+    featureLayer = innerMap.getFeatureLayer('LOCALITY');
 
-    findBoundary();
+    void findBoundary();
 }
 // [START maps_boundaries_text_search_find_region]
 async function findBoundary() {
@@ -37,9 +35,7 @@ async function findBoundary() {
         locationBias: center,
     };
 
-    const { Place } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
+    const { Place } = await google.maps.importLibrary('places');
     const { places } = await Place.searchByText(request);
 
     if (places.length) {
@@ -69,5 +65,5 @@ function styleBoundary(placeid) {
     };
 }
 // [END maps_boundaries_text_search_find_region]
-initMap();
+void initMap();
 // [END maps_boundaries_text_search]

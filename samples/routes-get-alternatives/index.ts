@@ -5,13 +5,16 @@
  */
 // [START maps_routes_get_alternatives]
 let mapPolylines: google.maps.Polyline[] = [];
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map')!;
 let innerMap;
 
 // Initialize and add the map.
 async function initMap() {
     //  Request the needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    const [, { event }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('core'),
+    ]);
 
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
@@ -20,13 +23,12 @@ async function initMap() {
     });
 
     // Call the function after the map is loaded.
-    google.maps.event.addListenerOnce(innerMap, 'idle', () => {
-        getDirections();
+    event.addListenerOnce(innerMap, 'idle', () => {
+        void getDirections();
     });
 }
 
 async function getDirections() {
-    //@ts-ignore
     // Request the needed libraries.
     const [{ Route, RouteLabel }] = await Promise.all([
         google.maps.importLibrary('routes'),
@@ -34,7 +36,7 @@ async function getDirections() {
     // [START maps_routes_get_alternatives_request_full]
     // [START maps_routes_get_alternatives_request]
     // Build a request.
-    const request = {
+    const request: google.maps.routes.ComputeRoutesRequest = {
         origin: 'San Francisco, CA',
         destination: 'Sunset Dr Pacific Grove, CA 93950',
         travelMode: 'DRIVING',
@@ -97,5 +99,5 @@ function drawRoute(route, isPrimaryRoute) {
     );
 }
 
-initMap();
+void initMap();
 // [END maps_routes_get_alternatives]

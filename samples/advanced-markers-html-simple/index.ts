@@ -6,16 +6,14 @@
 
 // [START maps_advanced_markers_html_simple]
 // [START maps_advanced_markers_html_simple_snippet]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map')!;
 
 async function initMap() {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    const [, { AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+    ]);
 
     const priceTag = document.createElement('div');
     priceTag.className = 'price-tag';
@@ -28,5 +26,5 @@ async function initMap() {
     mapElement.append(marker);
 }
 // [END maps_advanced_markers_html_simple_snippet]
-initMap();
+void initMap();
 // [END maps_advanced_markers_html_simple]

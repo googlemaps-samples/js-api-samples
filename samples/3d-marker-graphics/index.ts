@@ -4,13 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_marker_graphics]
 async function init() {
-    const { Map3DElement, Marker3DElement } =
-        await google.maps.importLibrary('maps3d');
-    const { PinElement } = await google.maps.importLibrary('marker');
-    const { Place } = await google.maps.importLibrary('places');
+    const [{ Map3DElement, Marker3DElement }, { PinElement }, { Place }] =
+        await Promise.all([
+            google.maps.importLibrary('maps3d'),
+            google.maps.importLibrary('marker'),
+            google.maps.importLibrary('places'),
+        ]);
 
     const map = new Map3DElement({
         center: { lat: 37.426, lng: -122.082, altitude: 18 },
@@ -22,7 +23,7 @@ async function init() {
 
     // A marker with a with a URL pointing to a PNG.
     const beachFlagImg = document.createElement('img');
-    beachFlagImg.src = new URL('images/beachflag.png', import.meta.url);
+    beachFlagImg.src = String(new URL('images/beachflag.png', import.meta.url));
 
     const beachFlagMarker = new Marker3DElement({
         position: { lat: 37.434, lng: -122.082 },
@@ -72,7 +73,7 @@ async function init() {
         glyphSrc: new URL(String(place.svgIconMaskURI)),
     });
     const placeIconMarker = new Marker3DElement({
-        position: place.location,
+        position: place.location?.toJSON(),
     });
     placeIconMarker.append(pinElement);
 
@@ -103,5 +104,5 @@ async function init() {
     document.body.append(map);
 }
 
-init();
+void init();
 // [END maps_3d_marker_graphics]

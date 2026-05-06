@@ -4,17 +4,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_polygon_click_event]
 async function init() {
-    const { Map3DElement, MapMode, Polygon3DInteractiveElement } =
+    const { Map3DElement, Polygon3DInteractiveElement } =
         await google.maps.importLibrary('maps3d');
 
     const map = new Map3DElement({
         center: { lat: 40.6842, lng: -74.0019, altitude: 1000 },
         heading: 340,
         tilt: 70,
-        mode: MapMode.HYBRID,
+        mode: 'HYBRID',
         gestureHandling: 'COOPERATIVE',
     });
 
@@ -27,9 +26,7 @@ async function init() {
         drawsOccludedSegments: false,
     };
 
-    const examplePolygon = new google.maps.maps3d.Polygon3DInteractiveElement(
-        polygonOptions
-    );
+    const examplePolygon = new Polygon3DInteractiveElement(polygonOptions);
 
     examplePolygon.path = [
         { lat: 40.7144, lng: -74.0208 },
@@ -38,10 +35,10 @@ async function init() {
         { lat: 40.7144, lng: -74.0208 },
     ];
 
-    examplePolygon.addEventListener('gmp-click', (event) => {
+    examplePolygon.addEventListener('gmp-click', function (event) {
         // change the color of the polygon stroke and fill colors to a random alternatives!
-        event.target.fillColor = randomizeHexColor(event.target.fillColor);
-        event.target.strokeColor = randomizeHexColor(event.target.fillColor);
+        this.fillColor = randomizeHexColor(this.fillColor);
+        this.strokeColor = randomizeHexColor(this.fillColor);
         console.log(event);
     });
 
@@ -50,8 +47,7 @@ async function init() {
 
 function randomizeHexColor(originalHexColor) {
     console.log(originalHexColor);
-    let alpha = '';
-    alpha = originalHexColor.substring(7);
+    const alpha = originalHexColor.substring(7);
 
     // Generate random values for Red, Green, Blue (0-255)
     const r = Math.floor(Math.random() * 256);
@@ -69,5 +65,5 @@ function randomizeHexColor(originalHexColor) {
     return `#${rHex}${gHex}${bHex}${alpha}`;
 }
 
-init();
+void init();
 // [END maps_3d_polygon_click_event]

@@ -5,16 +5,14 @@
  */
 
 // [START maps_advanced_markers_draggable]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map')!;
 
 async function initMap() {
     // Request needed libraries.
-    const { Map, InfoWindow } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    const [{ InfoWindow }, { AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+    ]);
 
     const infoWindow = new InfoWindow();
 
@@ -27,15 +25,13 @@ async function initMap() {
     mapElement.append(draggableMarker);
     // [END maps_advanced_markers_draggable_marker]
 
-    draggableMarker.addListener('dragend', (event) => {
-        const position = draggableMarker.position as google.maps.LatLng;
+    draggableMarker.addListener('dragend', () => {
+        const position = draggableMarker.position!;
         infoWindow.close();
-        infoWindow.setContent(
-            `Pin dropped at: ${position.lat}, ${position.lng}`
-        );
+        infoWindow.setContent(`Pin dropped at: ${JSON.stringify(position)}`);
         infoWindow.open(draggableMarker.map, draggableMarker);
     });
 }
 
-initMap();
+void initMap();
 // [END maps_advanced_markers_draggable]

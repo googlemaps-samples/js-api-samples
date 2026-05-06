@@ -6,9 +6,7 @@
 
 // [START maps_place_photos]
 async function init() {
-    const { Place } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
+    const { Place } = await google.maps.importLibrary('places');
 
     // Use a place ID to create a new Place instance.
     const place = new Place({
@@ -49,7 +47,7 @@ async function init() {
             expandedImageDiv.appendChild(expandedImage);
             const attributionLabel = createAttribution(
                 photo.authorAttributions[0]
-            )!;
+            );
             expandedImageDiv.appendChild(attributionLabel);
         });
 
@@ -99,5 +97,5 @@ async function init() {
     }
 }
 
-init();
+void init();
 // [END maps_place_photos]

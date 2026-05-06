@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_marker_interactive]
 async function init() {
     // Request needed libraries.
@@ -93,5 +92,5 @@ const positions = [
     },
 ];
 
-init();
+void init();
 // [END maps_3d_marker_interactive]

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
@@ -6,26 +6,30 @@
  */
 
 let map;
+
 async function initMap() {
-    (await google.maps.importLibrary('maps'));
+    await google.maps.importLibrary('maps');
+
     const mapElement = document.querySelector('gmp-map');
+
     const innerMap = mapElement.innerMap;
+
     // Load GeoJSON.
     innerMap.data.loadGeoJson('google.json');
+
     // Add some style.
     innerMap.data.setStyle((feature) => {
-        return /** @type {google.maps.Data.StyleOptions} */ {
+        return {
             fillColor: feature.getProperty('color'),
             strokeWeight: 1,
         };
     });
-    
+
     // Set mouseover event for each feature.
     innerMap.data.addListener('mouseover', (event) => {
         document.getElementById('info-box').textContent =
             event.feature.getProperty('letter');
     });
-    
 }
-initMap();
 
+initMap();

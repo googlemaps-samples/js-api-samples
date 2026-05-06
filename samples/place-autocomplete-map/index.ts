@@ -5,18 +5,16 @@
  */
 
 // [START maps_place_autocomplete_map]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-const placeAutocomplete = document.querySelector(
-    'gmp-place-autocomplete'
-) as google.maps.places.PlaceAutocompleteElement;
+const mapElement = document.querySelector('gmp-map')!;
+const placeAutocomplete = document.querySelector('gmp-place-autocomplete')!;
 let innerMap;
 let marker: google.maps.marker.AdvancedMarkerElement;
 let infoWindow: google.maps.InfoWindow;
-let center = { lat: 40.749933, lng: -73.98633 }; // New York City
 async function initMap(): Promise<void> {
     // Request needed libraries.
-    const [] = await Promise.all([
+    const [{ AdvancedMarkerElement }, { InfoWindow }] = await Promise.all([
         google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
         google.maps.importLibrary('places'),
     ]);
 
@@ -27,48 +25,48 @@ async function initMap(): Promise<void> {
     });
 
     // Use the bounds_changed event to restrict results to the current map bounds.
-    google.maps.event.addListener(innerMap, 'bounds_changed', async () => {
+    innerMap.addListener('bounds_changed', () => {
         placeAutocomplete.locationRestriction = innerMap.getBounds();
     });
 
-    // Create the marker and infowindow.
-    marker = new google.maps.marker.AdvancedMarkerElement({
+    // Create the marker and infoWindow.
+    marker = new AdvancedMarkerElement({
         map: innerMap,
     });
 
-    infoWindow = new google.maps.InfoWindow({});
+    infoWindow = new InfoWindow({});
 
     // [START maps_place_autocomplete_map_listener]
     // Add the gmp-placeselect listener, and display the results on the map.
-    //prettier-ignore
-    //@ts-ignore
-    placeAutocomplete.addEventListener('gmp-select', async ({ placePrediction }) => {
-      const place = placePrediction.toPlace();
-      await place.fetchFields({
-        fields: ['displayName', 'formattedAddress', 'location'],
-      });
+    placeAutocomplete.addEventListener(
+        'gmp-select',
+        async ({ placePrediction }) => {
+            const place = placePrediction.toPlace();
+            await place.fetchFields({
+                fields: ['displayName', 'formattedAddress', 'location'],
+            });
 
-      // If the place has a geometry, then present it on a map.
-      if (place.viewport) {
-        innerMap.fitBounds(place.viewport);
-      } else {
-        innerMap.setCenter(place.location);
-        innerMap.setZoom(17);
-      }
+            // If the place has a geometry, then present it on a map.
+            if (place.viewport) {
+                innerMap.fitBounds(place.viewport);
+            } else {
+                innerMap.setCenter(place.location);
+                innerMap.setZoom(17);
+            }
 
-      let content = document.createElement('div');
-      let nameText = document.createElement('span');
-      nameText.textContent = place.displayName;
-      content.appendChild(nameText);
-      content.appendChild(document.createElement('br'));
-      let addressText = document.createElement('span');
-      addressText.textContent = place.formattedAddress;
-      content.appendChild(addressText);
+            const content = document.createElement('div');
+            const nameText = document.createElement('span');
+            nameText.textContent = place.displayName ?? 'No name';
+            content.appendChild(nameText);
+            content.appendChild(document.createElement('br'));
+            const addressText = document.createElement('span');
+            addressText.textContent = place.formattedAddress ?? 'No address';
+            content.appendChild(addressText);
 
-      updateInfoWindow(content, place.location);
-      marker.position = place.location;
-    }
-  );
+            updateInfoWindow(content, place.location);
+            marker.position = place.location;
+        }
+    );
     // [END maps_place_autocomplete_map_listener]
 }
 
@@ -83,5 +81,5 @@ function updateInfoWindow(content, center) {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_place_autocomplete_map]

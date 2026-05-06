@@ -19,12 +19,8 @@ let allMarkers: google.maps.marker.AdvancedMarkerElement[] = []; // To store all
 let markersLoaded = false; // Flag to track if button markers are loaded
 
 async function initMap(): Promise<void> {
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    void google.maps.importLibrary('marker'); // preload
+    const { Map } = await google.maps.importLibrary('maps');
 
     map = new Map(document.getElementById('map') as HTMLElement, {
         center: { lat: 48.8566, lng: 2.3522 }, // Set center to Paris initially, will change based on markers
@@ -120,10 +116,10 @@ async function createAndAddMarker(
     location: { name: string; lat: number; lng: number },
     markerType: 'initial' | 'button' | 'dynamic'
 ): Promise<void> {
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
-
+    const [{ AdvancedMarkerElement }, { LatLng }] = await Promise.all([
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('core'),
+    ]);
     const weatherWidget = document.createElement(
         'simple-weather-widget'
     ) as SimpleWeatherWidget;
@@ -146,10 +142,10 @@ async function createAndAddMarker(
     (marker as any).markerType = markerType;
 
     // Fetch and update weather data for this location
-    updateWeatherDisplayForMarker(
+    void updateWeatherDisplayForMarker(
         marker,
         weatherWidget,
-        new google.maps.LatLng(location.lat, location.lng)
+        new LatLng(location.lat, location.lng)
     );
 
     // Add click listener to the marker
@@ -216,9 +212,7 @@ async function toggleDarkMode() {
     });
 
     // Re-initialize the map to apply the new map ID
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { Map } = await google.maps.importLibrary('maps');
     const currentCenter = map.getCenter();
     const currentZoom = map.getZoom();
     const currentMapId = mapContainer.classList.contains('dark-mode')
@@ -325,10 +319,6 @@ const locations = [
 ];
 
 async function loadWeatherMarkers(): Promise<void> {
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
-
     for (const location of locations) {
         await createAndAddMarker(location, 'button'); // Create and add button markers
     }
@@ -407,14 +397,14 @@ async function updateWeatherDisplayForMarker(
     }
 }
 
-initMap();
+void initMap();
 
 // Wait for the custom element to be defined before adding the event listener
-customElements.whenDefined('simple-weather-widget').then(() => {
+void customElements.whenDefined('simple-weather-widget').then(() => {
     const modeToggleButton = document.getElementById('mode-toggle');
     if (modeToggleButton) {
         modeToggleButton.addEventListener('click', () => {
-            toggleDarkMode();
+            void toggleDarkMode();
         });
     }
 
@@ -422,7 +412,7 @@ customElements.whenDefined('simple-weather-widget').then(() => {
     if (loadMarkersButton) {
         loadMarkersButton.addEventListener('click', () => {
             if (!markersLoaded) {
-                loadWeatherMarkers();
+                void loadWeatherMarkers();
                 markersLoaded = true;
                 loadMarkersButton.textContent = 'Remove Markers';
             } else {

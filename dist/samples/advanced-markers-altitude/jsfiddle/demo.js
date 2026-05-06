@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
@@ -6,21 +6,26 @@
  */
 
 const mapElement = document.querySelector('gmp-map');
+
 async function initMap() {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary('maps'));
-    const { AdvancedMarkerElement, PinElement } = (await google.maps.importLibrary('marker'));
+    const [{ Map }, { AdvancedMarkerElement, PinElement }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+    ]);
+
     mapElement.innerMap.setOptions({
         tilt: 67.5,
         heading: 45,
     });
-    
+
     const pin = new PinElement({
         background: '#4b2e83',
         borderColor: '#b7a57a',
         glyphColor: '#b7a57a',
         scale: 2.0,
     });
+
     const marker = new AdvancedMarkerElement({
         // Set altitude to 20 meters above the ground.
         position: {
@@ -30,8 +35,8 @@ async function initMap() {
         },
     });
     marker.append(pin);
-    mapElement.append(marker);
-    
-}
-initMap();
 
+    mapElement.append(marker);
+}
+
+initMap();

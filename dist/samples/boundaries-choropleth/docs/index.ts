@@ -7,18 +7,16 @@
 // [START maps_boundaries_choropleth]
 async function initMap() {
     // Request needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
     // Get the gmp-map element.
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     // Get the inner map.
     const innerMap = mapElement.innerMap;
 
     const featureLayer = innerMap.getFeatureLayer(
-        google.maps.FeatureType.ADMINISTRATIVE_AREA_LEVEL_1
+        'ADMINISTRATIVE_AREA_LEVEL_1'
     );
 
     // [START maps_boundaries_choropleth_style_function]

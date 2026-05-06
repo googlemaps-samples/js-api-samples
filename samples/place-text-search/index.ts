@@ -10,9 +10,10 @@ let markers = {};
 let infoWindow;
 
 async function initMap() {
-    const { Map, InfoWindow } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const [{ Map, InfoWindow }, { ControlPosition }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('core'),
+    ]);
 
     const center = { lat: 37.4161493, lng: -122.0812166 };
     map = new Map(document.getElementById('map') as HTMLElement, {
@@ -27,28 +28,26 @@ async function initMap() {
         'text-input-button'
     ) as HTMLButtonElement;
     const card = document.getElementById('text-input-card') as HTMLElement;
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
+    map.controls[ControlPosition.TOP_LEFT].push(card);
 
     textInputButton.addEventListener('click', () => {
-        findPlaces(textInput.value);
+        void findPlaces(textInput.value);
     });
 
     textInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
-            findPlaces(textInput.value);
+            void findPlaces(textInput.value);
         }
     });
 
-    infoWindow = new google.maps.InfoWindow();
+    infoWindow = new InfoWindow();
 }
 
 async function findPlaces(query) {
-    const { Place } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    const [{ Place }, { AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('places'),
+        google.maps.importLibrary('marker'),
+    ]);
     // [START maps_place_text_search_request]
     const request = {
         textQuery: query,
@@ -67,9 +66,7 @@ async function findPlaces(query) {
     // [END maps_place_text_search_request]
 
     if (places.length) {
-        const { LatLngBounds } = (await google.maps.importLibrary(
-            'core'
-        )) as google.maps.CoreLibrary;
+        const { LatLngBounds } = await google.maps.importLibrary('core');
         const bounds = new LatLngBounds();
 
         // First remove all existing markers.
@@ -89,7 +86,7 @@ async function findPlaces(query) {
 
             marker.addListener('gmp-click', () => {
                 map.panTo(place.location);
-                updateInfoWindow(place.displayName, place.id, marker);
+                void updateInfoWindow(place.displayName, place.id, marker);
             });
 
             if (place.location != null) {
@@ -104,7 +101,7 @@ async function findPlaces(query) {
 }
 
 // Helper function to create an info window.
-async function updateInfoWindow(title, content, anchor) {
+function updateInfoWindow(title, content, anchor) {
     infoWindow.setContent(content);
     infoWindow.setHeaderContent(title);
     infoWindow.open({
@@ -114,5 +111,5 @@ async function updateInfoWindow(title, content, anchor) {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_place_text_search]

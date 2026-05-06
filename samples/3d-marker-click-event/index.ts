@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_marker_click_event]
 async function initMap() {
     // Include the interactive marker class
@@ -34,7 +33,7 @@ async function initMap() {
     });
 
     // Specify the action to take on click.
-    interactiveMarker.addEventListener('gmp-click', (event) => {
+    interactiveMarker.addEventListener('gmp-click', () => {
         map.flyCameraAround({
             camera: originalCamera,
             durationMillis: 50000,
@@ -47,5 +46,5 @@ async function initMap() {
     document.body.append(map);
 }
 
-initMap();
+void initMap();
 // [END maps_3d_marker_click_event]
