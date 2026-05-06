@@ -16,7 +16,7 @@ async function initMap() {
     ]);
 
     // Get the inner map.
-    const innerMap = mapElement.innerMap;
+    innerMap = mapElement.innerMap;
 
     // Set the map's controls options.
     innerMap.setOptions({
@@ -38,5 +38,5 @@ async function initMap() {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_control_positioning]

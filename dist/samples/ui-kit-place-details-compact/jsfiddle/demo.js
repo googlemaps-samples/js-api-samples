@@ -16,7 +16,7 @@ const marker = document.querySelector('gmp-advanced-marker');
 
 async function initMap() {
     // Request needed libraries.
-    Promise.all([
+    void Promise.all([
         google.maps.importLibrary('marker'),
         google.maps.importLibrary('places'),
     ]);
@@ -43,7 +43,7 @@ async function initMap() {
         infoWindow.open({ anchor: marker });
     };
 
-    placeDetails.addEventListener('gmp-load', (event) => {
+    placeDetails.addEventListener('gmp-load', () => {
         // For the initial load case, with no user click, we fall back to the place's location, and ensure the map has a center set and the InfoWindow is show.
         // (The clicked POI LatLng will be a more natural marker position, when available.)
         if (!map.center && placeDetails.place?.location) {
@@ -53,7 +53,7 @@ async function initMap() {
     });
 
     // Add an event listener to handle clicks.
-    map.innerMap.addListener('click', async (event) => {
+    map.innerMap.addListener('click', (event) => {
         event.stop();
 
         if (event.placeId) {
@@ -70,4 +70,4 @@ async function initMap() {
     });
 }
 
-initMap();
+void initMap();

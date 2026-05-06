@@ -51,4 +51,4 @@ async function init() {
     document.body.appendChild(controls);
 }
 
-init();
+void init();

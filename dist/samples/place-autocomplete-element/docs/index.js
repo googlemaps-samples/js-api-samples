@@ -46,5 +46,5 @@ async function initMap() {
     // [END maps_place_autocomplete_element_listener]
 }
 
-initMap();
+void initMap();
 // [END maps_place_autocomplete_element]

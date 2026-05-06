@@ -6,8 +6,6 @@
  */
 
 // [START maps_layer_data_event]
-let map;
-
 async function initMap() {
     await google.maps.importLibrary('maps');
 
@@ -35,5 +33,5 @@ async function initMap() {
     // [END maps_layer_data_event_snippet]
 }
 
-initMap();
+void initMap();
 // [END maps_layer_data_event]

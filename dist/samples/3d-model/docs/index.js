@@ -32,5 +32,5 @@ async function init() {
     map.append(model);
 }
 
-init();
+void init();
 // [END maps_3d_model]

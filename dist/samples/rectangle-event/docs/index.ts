@@ -67,5 +67,5 @@ function showNewRect() {
     infoWindow.open(innerMap);
 }
 
-initMap();
+void initMap();
 // [END maps_rectangle_event]

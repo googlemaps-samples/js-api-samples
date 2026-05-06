@@ -22,5 +22,5 @@ async function initMap() {
     // [END maps_control_disableUI_options]
 }
 
-initMap();
+void initMap();
 // [END maps_control_disableUI]

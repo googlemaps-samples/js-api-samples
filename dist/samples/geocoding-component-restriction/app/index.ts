@@ -33,5 +33,5 @@ async function initMap(): Promise<void> {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_geocoding_component_restriction]

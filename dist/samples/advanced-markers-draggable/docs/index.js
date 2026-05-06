@@ -10,7 +10,7 @@ const mapElement = document.querySelector('gmp-map');
 
 async function initMap() {
     // Request needed libraries.
-    const [{ Map, InfoWindow }, { AdvancedMarkerElement }] = await Promise.all([
+    const [{ InfoWindow }, { AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('marker'),
     ]);
@@ -26,7 +26,7 @@ async function initMap() {
     mapElement.append(draggableMarker);
     // [END maps_advanced_markers_draggable_marker]
 
-    draggableMarker.addListener('dragend', (event) => {
+    draggableMarker.addListener('dragend', () => {
         const position = draggableMarker.position;
         infoWindow.close();
         infoWindow.setContent(`Pin dropped at: ${JSON.stringify(position)}`);
@@ -34,5 +34,5 @@ async function initMap() {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_advanced_markers_draggable]

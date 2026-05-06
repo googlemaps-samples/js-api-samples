@@ -66,5 +66,5 @@ function randomizeHexColor(originalHexColor) {
     return `#${rHex}${gHex}${bHex}${alpha}`;
 }
 
-init();
+void init();
 // [END maps_3d_polygon_click_event]

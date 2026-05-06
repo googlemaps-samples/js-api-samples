@@ -6,7 +6,6 @@
  */
 
 let innerMap;
-let earthquakeData;
 
 async function initMap() {
     await google.maps.importLibrary('maps');
@@ -31,4 +30,4 @@ function earthquakeDataLoad(data) {
 }
 
 window.earthquakeDataLoad = earthquakeDataLoad;
-initMap();
+void initMap();

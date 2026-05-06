@@ -34,5 +34,5 @@ async function initMap() {
     // [END maps_dds_datasets_polygon_featurelayer]
 }
 
-initMap();
+void initMap();
 // [END maps_dds_datasets_polygon]

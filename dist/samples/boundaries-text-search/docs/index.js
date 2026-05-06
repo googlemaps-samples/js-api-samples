@@ -25,7 +25,7 @@ async function initMap() {
     // Get the LOCALITY feature layer.
     featureLayer = innerMap.getFeatureLayer('LOCALITY');
 
-    findBoundary();
+    void findBoundary();
 }
 // [START maps_boundaries_text_search_find_region]
 async function findBoundary() {
@@ -66,5 +66,5 @@ function styleBoundary(placeid) {
     };
 }
 // [END maps_boundaries_text_search_find_region]
-initMap();
+void initMap();
 // [END maps_boundaries_text_search]

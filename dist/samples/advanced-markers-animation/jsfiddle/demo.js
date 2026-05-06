@@ -31,7 +31,6 @@ function getRandomPosition(map) {
     };
 }
 
-const total = 100;
 const intersectionObserver = new IntersectionObserver((entries) => {
     for (const entry of entries) {
         if (entry.isIntersecting) {
@@ -75,7 +74,7 @@ async function initMap() {
     controlUI.classList.add('ui-button');
     controlUI.innerText = 'Reset the example';
     controlUI.addEventListener('click', () => {
-        // Reset the example by reloading the map iframe.
+        // Reset the example by recreating the map.
         refreshMap();
     });
     controlDiv.appendChild(controlUI);
@@ -85,14 +84,14 @@ async function initMap() {
 function createMarker(map, AdvancedMarkerElement, PinElement) {
     const pinElement = new PinElement();
     const content = pinElement.element;
-    const advancedMarker = new AdvancedMarkerElement({
+    new AdvancedMarkerElement({
         position: getRandomPosition(map),
         map: map,
         content: content,
     });
 
     content.style.opacity = '0';
-    content.addEventListener('animationend', (event) => {
+    content.addEventListener('animationend', () => {
         content.classList.remove('drop');
         content.style.opacity = '1';
     });
@@ -109,7 +108,7 @@ function refreshMap() {
     const mapDiv = document.createElement('div');
     mapDiv.id = 'map';
     mapContainer.appendChild(mapDiv);
-    initMap();
+    void initMap();
 }
 
-initMap();
+void initMap();

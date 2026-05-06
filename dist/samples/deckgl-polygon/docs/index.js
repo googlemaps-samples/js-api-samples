@@ -135,5 +135,5 @@ async function initMap() {
     }
 }
 
-initMap();
+void initMap();
 /* [END maps_deckgl_polygon] */

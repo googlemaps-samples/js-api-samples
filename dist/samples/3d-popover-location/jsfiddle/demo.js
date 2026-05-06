@@ -31,4 +31,4 @@ async function init() {
     document.body.append(map);
 }
 
-init();
+void init();

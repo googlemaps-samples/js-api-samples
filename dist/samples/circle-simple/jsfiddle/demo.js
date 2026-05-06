@@ -17,14 +17,11 @@ async function initMap() {
             google.maps.importLibrary('core'),
         ]);
 
-    // Get the gmp-map element.
-    const mapElement = document.querySelector('gmp-map');
-
     // Set the initial map center point.
     const initialCenter = { lat: 34.98956821576194, lng: 135.74239981260283 }; // Hotel Emion, Kyoto, Japan
 
     // Get the inner map.
-    const innerMap = mapElement.innerMap;
+    innerMap = mapElement.innerMap;
 
     // Get the buttons.
     const buttons = document.querySelectorAll('input[name="radius"]');
@@ -94,4 +91,4 @@ async function initMap() {
     });
 }
 
-initMap();
+void initMap();

@@ -6,7 +6,7 @@
  */
 
 async function init() {
-    const { Place, AutocompleteSessionToken, AutocompleteSuggestion } =
+    const { AutocompleteSessionToken, AutocompleteSuggestion } =
         await google.maps.importLibrary('places');
 
     // Add an initial request body.
@@ -66,4 +66,4 @@ async function init() {
     placeInfo.textContent = `First predicted place: ${place.displayName}: ${place.formattedAddress}`;
 }
 
-init();
+void init();

@@ -16,5 +16,5 @@ async function initMap() {
     innerMap.data.loadGeoJson('google.json');
 }
 
-initMap();
+void initMap();
 // [END maps_layer_data_simple]

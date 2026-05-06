@@ -52,5 +52,5 @@ async function init() {
     map.append(polyline);
 }
 
-init();
+void init();
 // [END maps_3d_polyline_click_event]

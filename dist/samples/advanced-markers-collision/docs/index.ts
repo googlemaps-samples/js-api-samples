@@ -11,7 +11,7 @@ const mapElement = document.querySelector('gmp-map')!;
 // Initialize and add the map
 async function initMap(): Promise<void> {
     // Request needed libraries.
-    const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
+    const [, { AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('marker'),
     ]);
@@ -63,5 +63,5 @@ async function initMap(): Promise<void> {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_advanced_markers_collision]
