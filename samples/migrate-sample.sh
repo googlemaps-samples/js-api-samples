@@ -53,9 +53,6 @@ cat > "${OUTPUT_DIR}/${NAME}/package.json" << EOF
     "start": "tsc && vite build --base './' && vite",
     "build:vite": "vite build --base './'",
     "preview": "vite preview"
-  },
-  "dependencies": {
-    
   }
 }
 EOF
@@ -69,7 +66,7 @@ cat > "${OUTPUT_DIR}/${NAME}/tsconfig.json" << EOF
     "rootDir": "."
   },
   "include": [
-    "./*.ts",
+    "./*.ts"
   ]
 }
 EOF
