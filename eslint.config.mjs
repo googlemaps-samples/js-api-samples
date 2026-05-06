@@ -41,8 +41,9 @@ export default defineConfig([
             },
         },
         rules: {
-            'no-shadow': 'off',
+            'no-shadow': 'off', // required to enable @typescript-eslint/no-shadow
             '@typescript-eslint/no-shadow': 'error',
+            '@typescript-eslint/no-deprecated': 'error',
             '@typescript-eslint/no-misused-promises': [
                 'error',
                 {

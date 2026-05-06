@@ -73,7 +73,7 @@ async function getDirections() {
                     glyphColor: 'white',
                     background: 'green',
                     borderColor: 'green',
-                }).element,
+                }),
             };
         }
 
@@ -87,7 +87,7 @@ async function getDirections() {
                     glyphColor: 'white',
                     background: 'blue',
                     borderColor: 'blue',
-                }).element,
+                }),
             };
         }
 
@@ -101,7 +101,7 @@ async function getDirections() {
                     glyphColor: 'white',
                     background: 'red',
                     borderColor: 'red',
-                }).element,
+                }),
             };
         }
 

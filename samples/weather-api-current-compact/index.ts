@@ -77,7 +77,7 @@ async function init(): Promise<void> {
                 activeWidgetContainer.classList.remove('highlight');
                 // Find the marker associated with the active widget and reset its zIndex
                 const activeMarker = allMarkers.find(
-                    (marker) => marker.content === activeWeatherWidget
+                    (marker) => marker.firstElementChild === activeWeatherWidget
                 );
                 if (activeMarker) {
                     activeMarker.zIndex = null;
@@ -134,10 +134,10 @@ async function createAndAddMarker(
     const marker = new AdvancedMarkerElement({
         map: map,
         position: { lat: location.lat, lng: location.lng },
-        content: weatherWidget,
         title: location.name, // Add a title for accessibility
         gmpClickable: true,
     });
+    marker.append(weatherWidget);
 
     // Store the marker type
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -165,7 +165,7 @@ async function createAndAddMarker(
             activeWidgetContainer.classList.remove('highlight');
             // Find the marker associated with the active widget and reset its zIndex
             const activeMarker = allMarkers.find(
-                (e) => e.content === activeWeatherWidget
+                (e) => e.firstElementChild === activeWeatherWidget
             );
             if (activeMarker) {
                 activeMarker.zIndex = null;
@@ -236,7 +236,7 @@ async function toggleDarkMode() {
 
     for (const marker of markersToReAdd) {
         marker.map = map; // Add marker to the new map
-        const weatherWidget = marker.content as SimpleWeatherWidget;
+        const weatherWidget = marker.firstElementChild as SimpleWeatherWidget;
         if (mapContainer.classList.contains('dark-mode')) {
             weatherWidget.setMode('dark');
         } else {
@@ -277,7 +277,7 @@ async function toggleDarkMode() {
                 activeWidgetContainer.classList.remove('highlight');
                 // Find the marker associated with the active widget and reset its zIndex
                 const activeMarker = allMarkers.find(
-                    (marker) => marker.content === activeWeatherWidget
+                    (marker) => marker.firstElementChild === activeWeatherWidget
                 );
                 if (activeMarker) {
                     activeMarker.zIndex = null;
@@ -331,7 +331,7 @@ function removeButtonMarkers(): void {
     if (activeWeatherWidget) {
         const buttonMarker = allMarkers.find(
             (marker) =>
-                marker.content === activeWeatherWidget &&
+                marker.firstElementChild === activeWeatherWidget &&
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (marker as any).markerType === 'button'
         );

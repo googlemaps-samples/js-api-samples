@@ -111,7 +111,7 @@ async function init(): Promise<void> {
             const marker = new AdvancedMarkerElement({
                 map,
                 position: destination.location,
-                content: pin.element,
+                content: pin,
                 title: `Destination: ${destination.displayName}`,
             });
 
