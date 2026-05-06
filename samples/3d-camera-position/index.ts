@@ -79,7 +79,7 @@ async function initMap(): Promise<void> {
 
     // Copy generated HTML to clipboard.
     copyBtn.addEventListener('click', () => {
-        navigator.clipboard.writeText(codeElem.textContent || '');
+        void navigator.clipboard.writeText(codeElem.textContent || '');
         copyBtn.textContent = 'Copied!';
         setTimeout(() => {
             copyBtn.textContent = 'Copy HTML';
