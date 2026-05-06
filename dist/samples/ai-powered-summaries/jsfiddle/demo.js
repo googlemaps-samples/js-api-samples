@@ -34,7 +34,7 @@ async function initMap() {
     });
 
     // Bind autocomplete bounds to map bounds.
-    innerMap.addListener('bounds_changed', async () => {
+    innerMap.addListener('bounds_changed', () => {
         placeAutocomplete.locationRestriction = innerMap.getBounds();
     });
 
@@ -229,4 +229,4 @@ function updateSummaryPanel(place) {
     }
 }
 
-initMap();
+void initMap();

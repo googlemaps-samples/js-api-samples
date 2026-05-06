@@ -45,7 +45,7 @@ async function initMap() {
                     }
                     return 0; // Fallback for invalid data.
                 },
-                getFillColor: (f) => {
+                getFillColor: () => {
                     return [255, 70, 30, 180]; // Default color for other earthquakes.
                 },
                 autoHighlight: true,
@@ -68,5 +68,5 @@ async function initMap() {
     deckOverlay.setMap(innerMap);
 }
 
-initMap();
+void initMap();
 // [END maps_deckgl_points]

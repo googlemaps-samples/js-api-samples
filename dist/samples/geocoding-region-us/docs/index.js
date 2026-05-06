@@ -35,5 +35,5 @@ async function initMap() {
         );
 }
 
-initMap();
+void initMap();
 // [END maps_js_geocoding_region_us]

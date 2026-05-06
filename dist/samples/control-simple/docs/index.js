@@ -21,5 +21,5 @@ async function initMap() {
     });
     // [END maps_control_simple_options]
 }
-initMap();
+void initMap();
 // [END maps_control_simple]

@@ -30,8 +30,8 @@ async function initMap() {
     };
 
     // Declare the map.
-    const map = new Map(document.getElementById('map'), mapOptions);
+    new Map(document.getElementById('map'), mapOptions);
 }
 
-initMap();
+void initMap();
 // [END maps_js_api_loader_map]

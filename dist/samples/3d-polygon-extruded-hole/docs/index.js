@@ -48,5 +48,5 @@ async function init() {
     document.body.append(map3DElement);
 }
 
-init();
+void init();
 // [END maps_3d_polygon_extruded_hole]

@@ -42,5 +42,5 @@ async function init() {
         document.getElementById('details')!.style.display = 'block';
     });
 }
-init();
+void init();
 // [END maps_3d_places]

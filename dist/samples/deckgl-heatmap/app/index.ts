@@ -137,7 +137,7 @@ async function initMap(): Promise<void> {
     infoWindow = new InfoWindow();
 
     // Add click listener to the map
-    map.addListener('click', async (event: google.maps.MapMouseEvent) => {
+    map.addListener('click', (event: google.maps.MapMouseEvent) => {
         const latLng = event.latLng;
         if (!latLng) return; // Ensure latLng is not null
 
@@ -200,5 +200,5 @@ async function initMap(): Promise<void> {
     }
 }
 
-initMap();
+void initMap();
 /* [END maps_deckgl_heatmap] */

@@ -24,7 +24,7 @@ async function initMap() {
 
     // Call the function after the map is loaded.
     event.addListenerOnce(innerMap, 'idle', () => {
-        getDirections();
+        void getDirections();
     });
 }
 
@@ -99,5 +99,5 @@ function drawRoute(route, isPrimaryRoute) {
     );
 }
 
-initMap();
+void initMap();
 // [END maps_routes_get_alternatives]

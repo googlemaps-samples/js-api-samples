@@ -22,7 +22,7 @@ async function initMap() {
     });
 
     // Set the Gall-Peters map type.
-    initGallPeters();
+    void initGallPeters();
     innerMap.mapTypes.set('gallPeters', gallPetersMapType);
     innerMap.setMapTypeId('gallPeters');
 
@@ -149,4 +149,4 @@ const cities = {
     ],
 };
 
-initMap();
+void initMap();

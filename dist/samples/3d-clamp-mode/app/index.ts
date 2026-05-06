@@ -48,7 +48,7 @@ async function init() {
     document.body.append(map);
 }
 
-init();
+void init();
 
 // Dropdown event listener
 const dropdown = document.getElementById(

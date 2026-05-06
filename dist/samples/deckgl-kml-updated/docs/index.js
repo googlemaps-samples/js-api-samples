@@ -68,8 +68,8 @@ async function initMap() {
         // lineWidthMinPixels: 4, // Not needed for points
         pointRadiusMinPixels: 2,
         pointRadiusMaxPixels: 200,
-        getRadius: (f) => 8000,
-        getFillColor: (f, { index }) => {
+        getRadius: () => 8000,
+        getFillColor: (f) => {
             // Extract magnitude from the description string
             const description = f.properties.description;
             const magnitudeMatch = description.match(/M (\d+\.?\d*)/);
@@ -201,5 +201,5 @@ async function initMap() {
     }
 }
 
-initMap();
+void initMap();
 /* [END maps_deckgl_kml_updated] */

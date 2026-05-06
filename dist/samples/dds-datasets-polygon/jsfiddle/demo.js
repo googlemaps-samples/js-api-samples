@@ -30,4 +30,4 @@ async function initMap() {
     datasetLayer.style = styleOptions;
 }
 
-initMap();
+void initMap();

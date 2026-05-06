@@ -22,4 +22,4 @@ async function initMap() {
     datasetLayer.style = { strokeColor: 'green', strokeWeight: 4 };
 }
 
-initMap();
+void initMap();

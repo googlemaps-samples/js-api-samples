@@ -8,7 +8,7 @@
 // [START maps_web_components_events]
 // This example adds a map using web components.
 async function initMap() {
-    google.maps.importLibrary('marker'); // preload
+    void google.maps.importLibrary('marker'); // preload
     const { InfoWindow } = await google.maps.importLibrary('maps');
 
     console.log('Maps JavaScript API loaded.');
@@ -18,7 +18,7 @@ async function initMap() {
     );
 
     for (const advancedMarker of advancedMarkers) {
-        customElements.whenDefined(advancedMarker.localName).then(async () => {
+        void customElements.whenDefined(advancedMarker.localName).then(() => {
             advancedMarker.addEventListener('gmp-click', () => {
                 const infoWindow = new InfoWindow({
                     content: advancedMarker.title,
@@ -32,5 +32,5 @@ async function initMap() {
     }
 }
 
-initMap();
+void initMap();
 // [END maps_web_components_events]

@@ -99,5 +99,5 @@ async function initMap(): Promise<void> {
     );
 }
 
-initMap();
+void initMap();
 // [END maps_places_placeid_finder]

@@ -37,12 +37,12 @@ async function initMap() {
     };
 
     // Set up map once widget is loaded.
-    placeDetails.addEventListener('gmp-load', (event) => {
+    placeDetails.addEventListener('gmp-load', () => {
         updateMapAndMarker();
     });
 
     // Add an event listener to handle clicks.
-    map.innerMap.addListener('click', async (event) => {
+    map.innerMap.addListener('click', (event) => {
         marker.position = null;
         event.stop();
         if (event.placeId) {
@@ -57,4 +57,4 @@ async function initMap() {
     });
 }
 
-initMap();
+void initMap();

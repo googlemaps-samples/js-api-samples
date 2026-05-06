@@ -65,4 +65,4 @@ function randomizeHexColor(originalHexColor) {
     return `#${rHex}${gHex}${bHex}${alpha}`;
 }
 
-init();
+void init();

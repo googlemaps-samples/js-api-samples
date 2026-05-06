@@ -104,5 +104,5 @@ async function initMap() {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_place_autocomplete_basic_map]

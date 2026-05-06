@@ -48,5 +48,5 @@ function earthquakeDataLoad(data: any) {
 }
 
 window.earthquakeDataLoad = earthquakeDataLoad;
-initMap();
+void initMap();
 // [END maps_layer_data_quakes_red]

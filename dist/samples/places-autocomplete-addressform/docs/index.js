@@ -18,7 +18,7 @@ let address2Field;
 let postalField;
 
 async function initAutocomplete() {
-    const { Place, Autocomplete } = await google.maps.importLibrary('places');
+    await google.maps.importLibrary('places');
 
     placeAutocomplete = document.querySelector('gmp-place-autocomplete');
     address1Field = document.querySelector('#address1');
@@ -29,12 +29,9 @@ async function initAutocomplete() {
     placeAutocomplete.focus();
 
     // Handle user selection on the autocomplete widget.
-    placeAutocomplete.addEventListener(
-        'gmp-select',
-        async ({ placePrediction }) => {
-            fillInAddress(placePrediction);
-        }
-    );
+    placeAutocomplete.addEventListener('gmp-select', ({ placePrediction }) => {
+        void fillInAddress(placePrediction);
+    });
 
     saveButton.addEventListener('click', () => {
         // Display a message when the Save button is clicked.
@@ -46,7 +43,6 @@ async function initAutocomplete() {
 async function fillInAddress(placePrediction) {
     // The placePrediction object does not have all the details needed
     // for the form, so we'll call fetchFields to get the place details.
-    const { Place } = await google.maps.importLibrary('places');
     const place = placePrediction.toPlace();
     await place.fetchFields({ fields: ['addressComponents'] });
 
@@ -104,5 +100,5 @@ async function fillInAddress(placePrediction) {
 }
 // [END maps_places_autocomplete_addressform_fillform]
 
-initAutocomplete();
+void initAutocomplete();
 // [END maps_places_autocomplete_addressform]

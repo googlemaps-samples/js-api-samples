@@ -8,10 +8,8 @@
 // [START maps_address_validation]
 // DOM Refs
 const addressForm = document.getElementById('address-form');
-const validateButton = document.getElementById('validate-button');
 const clearFormButton = document.getElementById('clear-form-button');
 const resultDisplay = document.getElementById('result-display');
-const loadingText = document.getElementById('loading-text');
 // Input field refs
 const streetAddress1Input = document.getElementById('street-address-1');
 const streetAddress2Input = document.getElementById('street-address-2');
@@ -205,5 +203,5 @@ function populateAddressFields(exampleAddress) {
     console.log('Populated fields with example: ', exampleAddress);
 }
 
-init();
+void init();
 // [END maps_address_validation]

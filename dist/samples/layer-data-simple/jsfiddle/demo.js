@@ -15,4 +15,4 @@ async function initMap() {
     innerMap.data.loadGeoJson('google.json');
 }
 
-initMap();
+void initMap();

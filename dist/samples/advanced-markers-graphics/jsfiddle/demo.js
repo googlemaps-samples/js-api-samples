@@ -6,7 +6,7 @@
 
 async function initMap() {
     // Request needed libraries.
-    const [{ Map }, { AdvancedMarkerElement, PinElement }, { Place }] =
+    const [, { AdvancedMarkerElement, PinElement }, { Place }] =
         await Promise.all([
             google.maps.importLibrary('maps'),
             google.maps.importLibrary('marker'),
@@ -89,5 +89,5 @@ async function initMap() {
     mapElement.append(placeIconMarker);
 }
 
-initMap();
+void initMap();
 export {};

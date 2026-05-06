@@ -32,5 +32,5 @@ async function initMap() {
     // [END maps_control_options_change_default]
 }
 
-initMap();
+void initMap();
 // [END maps_control_options]

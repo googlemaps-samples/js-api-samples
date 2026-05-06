@@ -42,7 +42,7 @@ async function initMap() {
             map: innerMap,
         });
 
-        attachSecretMessage(marker, secretMessages[i]);
+        void attachSecretMessage(marker, secretMessages[i]);
     }
 }
 
@@ -60,4 +60,4 @@ async function attachSecretMessage(marker, secretMessage) {
     });
 }
 
-initMap();
+void initMap();

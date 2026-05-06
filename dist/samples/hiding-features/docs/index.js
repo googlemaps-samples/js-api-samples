@@ -46,5 +46,5 @@ const styles = {
     ],
 };
 
-initMap();
+void initMap();
 // [END maps_hiding_features]

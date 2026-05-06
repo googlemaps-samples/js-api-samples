@@ -34,5 +34,5 @@ async function initMap() {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_geocoding_component_restriction]

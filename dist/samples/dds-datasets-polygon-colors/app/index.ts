@@ -58,5 +58,5 @@ async function initMap() {
     datasetLayer.style = setStyle;
 }
 
-initMap();
+void initMap();
 // [END maps_dds_datasets_polygon_colors]
