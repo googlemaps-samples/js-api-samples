@@ -38,7 +38,7 @@ async function initMap(): Promise<void> {
         const heading = map3DElement.heading?.toFixed(0) ?? '0';
         const tilt = map3DElement.tilt?.toFixed(0) ?? '0';
         const range = map3DElement.range?.toFixed(0) ?? '0';
-        const rawFov = map3DElement.fov?.toFixed(0) ?? 45;
+        const rawFov = parseFloat(map3DElement.fov?.toFixed(0) ?? '45');
         const fovClamped = Math.min(80, Math.max(5, rawFov));
         const fov = fovClamped.toString();
         const roll = map3DElement.roll?.toFixed(0) ?? '0';
@@ -94,26 +94,32 @@ async function initMap(): Promise<void> {
 
         if (prop === 'lat') {
             const currentCenter = map3DElement.center;
-            map3DElement.center = {
-                lat: val,
-                lng: currentCenter.lng,
-                altitude: currentCenter.altitude,
-            };
+            if (currentCenter) {
+                map3DElement.center = {
+                    lat: val,
+                    lng: currentCenter.lng,
+                    altitude: currentCenter.altitude,
+                };
+            }
         } else if (prop === 'lng') {
             const currentCenter = map3DElement.center;
-            map3DElement.center = {
-                lat: currentCenter.lat,
-                lng: val,
-                altitude: currentCenter.altitude,
-            };
+            if (currentCenter) {
+                map3DElement.center = {
+                    lat: currentCenter.lat,
+                    lng: val,
+                    altitude: currentCenter.altitude,
+                };
+            }
         } else if (prop === 'altitude') {
             currentAltitude = val;
             const currentCenter = map3DElement.center;
-            map3DElement.center = {
-                lat: currentCenter.lat,
-                lng: currentCenter.lng,
-                altitude: val,
-            };
+            if (currentCenter) {
+                map3DElement.center = {
+                    lat: currentCenter.lat,
+                    lng: currentCenter.lng,
+                    altitude: val,
+                };
+            }
         } else {
             map3DElement[prop] = val;
         }
