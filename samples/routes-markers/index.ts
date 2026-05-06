@@ -112,7 +112,7 @@ async function getDirections() {
     // [END maps_routes_markers_style_maker]
 
     // Fit the map to the route.
-    innerMap.fitBounds(result.routes[0].viewport);
+    innerMap.fitBounds(result.routes[0].viewport!);
     innerMap.setHeading(270);
 
     // Create polylines and add them to the map.

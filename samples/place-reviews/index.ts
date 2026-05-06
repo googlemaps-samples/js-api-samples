@@ -79,7 +79,7 @@ async function init() {
         title: place.displayName,
     });
 
-    innerMap.setCenter(place.location);
+    innerMap.setCenter(place.location!);
 
     // Show the info window.
     infoWindow.open({
