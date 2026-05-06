@@ -6,7 +6,7 @@
 
 // [START maps_ai_powered_summaries_basic]
 const mapElement = document.querySelector('gmp-map')!;
-let innerMap;
+let innerMap: google.maps.Map;
 let infoWindow;
 
 async function init() {

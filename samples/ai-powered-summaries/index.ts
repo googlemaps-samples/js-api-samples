@@ -20,7 +20,7 @@ const flagContentLink = document.getElementById(
     'flag-content-link'
 ) as HTMLAnchorElement;
 
-let innerMap;
+let innerMap: google.maps.Map;
 let marker: google.maps.marker.AdvancedMarkerElement;
 
 async function init(): Promise<void> {

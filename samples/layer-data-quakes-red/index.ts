@@ -5,7 +5,7 @@
  */
 
 // [START maps_layer_data_quakes_red]
-let innerMap;
+let innerMap: google.maps.Map;
 
 async function init() {
     const [, { SymbolPath }] = await Promise.all([

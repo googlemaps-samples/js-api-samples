@@ -6,7 +6,7 @@
 
 // [START maps_dds_datasets_polygon_colors]
 const mapElement = document.querySelector('gmp-map')!;
-let innerMap;
+let innerMap: google.maps.Map;
 // [START maps_dds_datasets_polygon_colors_style_function]
 function setStyle(params) {
     const datasetFeature = params.feature;

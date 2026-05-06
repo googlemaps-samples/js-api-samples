@@ -6,7 +6,7 @@
 // [START maps_routes_markers]
 let mapPolylines: google.maps.Polyline[] = [];
 const mapElement = document.querySelector('gmp-map')!;
-let innerMap;
+let innerMap: google.maps.Map;
 
 // Initialize and add the map.
 async function init() {

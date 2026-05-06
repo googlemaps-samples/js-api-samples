@@ -13,7 +13,7 @@
 // [START maps_test_example]
 // Declare the gmp-map element.
 const mapElement = document.querySelector('gmp-map')!;
-let innerMap;
+let innerMap: google.maps.Map;
 let center;
 
 async function init() {

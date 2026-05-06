@@ -6,7 +6,7 @@
 
 // [START maps_dds_datasets_point]
 const mapElement = document.querySelector('gmp-map')!;
-let innerMap;
+let innerMap: google.maps.Map;
 // [START maps_dds_datasets_point_style_function]
 function setStyle(params) {
     // [START maps_dds_datasets_point_style_get_features]

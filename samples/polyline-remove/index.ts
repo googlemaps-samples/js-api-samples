@@ -10,7 +10,7 @@
 
 let flightPath: google.maps.Polyline;
 const mapElement = document.querySelector('gmp-map')!;
-let innerMap;
+let innerMap: google.maps.Map;
 
 async function init() {
     const { Polyline } = await google.maps.importLibrary('maps');

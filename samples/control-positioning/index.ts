@@ -6,7 +6,7 @@
 
 // [START maps_control_positioning]
 const mapElement = document.querySelector('gmp-map')!;
-let innerMap;
+let innerMap: google.maps.Map;
 
 async function init() {
     // Request needed libraries.

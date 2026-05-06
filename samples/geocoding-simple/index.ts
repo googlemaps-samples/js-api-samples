@@ -7,7 +7,7 @@
 // [START maps_geocoding_simple]
 let geocoder: google.maps.Geocoder;
 let mapElement;
-let innerMap;
+let innerMap: google.maps.Map;
 let marker;
 let responseDiv;
 let responsePre;

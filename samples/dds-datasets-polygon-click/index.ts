@@ -5,7 +5,7 @@
  */
 // [START maps_dds_datasets_polygon_click]
 const mapElement = document.querySelector('gmp-map')!;
-let innerMap;
+let innerMap: google.maps.Map;
 let lastInteractedFeatureIds: string[] = [];
 let lastClickedFeatureIds: string[] = [];
 let datasetLayer;

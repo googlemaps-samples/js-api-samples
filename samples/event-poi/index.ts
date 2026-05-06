@@ -5,7 +5,7 @@
  */
 
 // [START maps_event_poi]
-let innerMap;
+let innerMap: google.maps.Map;
 
 async function init() {
     //  Request the needed libraries.

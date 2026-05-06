@@ -5,7 +5,7 @@
  */
 
 // [START maps_boundaries_text_search]
-let innerMap;
+let innerMap: google.maps.Map;
 let featureLayer;
 let center;
 

@@ -5,7 +5,7 @@
  */
 
 // [START maps_boundaries_click_event]
-let innerMap;
+let innerMap: google.maps.Map;
 let featureLayer;
 let infoWindow;
 let lastInteractedFeatureIds: string[] = [];

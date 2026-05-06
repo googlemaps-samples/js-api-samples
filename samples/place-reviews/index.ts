@@ -5,7 +5,7 @@
  */
 
 // [START maps_place_reviews]
-let innerMap;
+let innerMap: google.maps.Map;
 let infoWindow;
 const mapElement = document.querySelector('gmp-map')!;
 

@@ -5,7 +5,7 @@
  */
 
 // [START maps_control_bounds_restriction]
-let innerMap;
+let innerMap: google.maps.Map;
 const mapElement = document.querySelector('gmp-map')!;
 
 // [START maps_control_bounds_restriction_region]
