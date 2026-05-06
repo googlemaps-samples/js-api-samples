@@ -5,6 +5,7 @@
 An interactive playground designed to help developers understand and experiment with camera positioning in Google Maps 3D.
 
 ## Features
+
 - **Live Camera Controls**: Real-time sliders for adjusting `heading`, `tilt`, `range`, and `fov` properties.
 - **Coordinate Mapping**: Direct controls to set the camera's focal point via `Latitude`, `Longitude`, and `Altitude`.
 - **Code Generator**: Dynamically generates the resulting `<gmp-map-3d>` HTML tag with mapped properties for easy copying and pasting.

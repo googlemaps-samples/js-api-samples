@@ -42,11 +42,16 @@ async function initMap(): Promise<void> {
     const updateUI = () => {
         const heading = map3DElement.heading?.toFixed(0) ?? '0';
         const tilt = map3DElement.tilt?.toFixed(0) ?? '0';
-        const range = map3DElement.range != null ? map3DElement.range.toFixed(0) : '0';
-        const rawFov = map3DElement.fov != null ? parseFloat(map3DElement.fov.toFixed(0)) : 45;
+        const range =
+            map3DElement.range != null ? map3DElement.range.toFixed(0) : '0';
+        const rawFov =
+            map3DElement.fov != null
+                ? parseFloat(map3DElement.fov.toFixed(0))
+                : 45;
         const fovClamped = Math.min(80, Math.max(5, rawFov));
         const fov = fovClamped.toString();
-        const roll = map3DElement.roll != null ? map3DElement.roll.toFixed(0) : '0';
+        const roll =
+            map3DElement.roll != null ? map3DElement.roll.toFixed(0) : '0';
         const center = map3DElement.center;
         const mode = map3DElement.mode;
 
