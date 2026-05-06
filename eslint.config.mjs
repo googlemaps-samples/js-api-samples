@@ -49,13 +49,16 @@ export default defineConfig([
                     },
                 },
             ],
+            '@typescript-eslint/no-namespace': [
+                'error',
+                { allowDeclarations: true, allowDefinitionFiles: true },
+            ],
 
             // temporarily downgraded to warn for historic reasons:
             '@typescript-eslint/no-unsafe-member-access': 'warn',
             '@typescript-eslint/no-unsafe-assignment': 'warn',
             '@typescript-eslint/no-unsafe-call': 'warn',
             '@typescript-eslint/no-explicit-any': 'warn',
-            '@typescript-eslint/no-namespace': 'warn',
             '@typescript-eslint/no-unsafe-return': 'warn',
             '@typescript-eslint/no-unsafe-argument': 'warn',
         },
