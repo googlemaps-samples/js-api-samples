@@ -8,9 +8,7 @@ async function initMap(): Promise<void> {
     // Declare the needed libraries.
     await google.maps.importLibrary('maps3d');
 
-    // prettier-ignore
-    // @ts-ignore
-    const map3DElement = document.querySelector('gmp-map-3d') as google.maps.Map3DElement;
+    const map3DElement = document.querySelector('gmp-map-3d')!;
 
     // Elements from HTML
     const headingSlider = document.getElementById(
