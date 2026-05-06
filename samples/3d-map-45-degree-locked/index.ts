@@ -10,7 +10,6 @@ async function initMap(): Promise<void> {
     await google.maps.importLibrary('maps3d');
 
     const map3DElement = document.querySelector('gmp-map-3d')!;
-    
 }
 
 void initMap();
