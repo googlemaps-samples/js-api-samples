@@ -100,4 +100,4 @@ function applyStyle(params) {
     return styleDefault;
 }
 
-initMap();
+void initMap();

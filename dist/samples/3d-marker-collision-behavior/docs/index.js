@@ -50,12 +50,12 @@ const positions = [
     [-122.3378, 47.6095],
 ];
 
-init();
+void init();
 
 const dropdown = document.getElementById('selectElementId');
 dropdown.addEventListener('change', drawMap);
 
-function drawMap(event) {
+function drawMap() {
     for (const marker of markers) {
         marker.collisionBehavior = dropdown.value || 'REQUIRED';
     }

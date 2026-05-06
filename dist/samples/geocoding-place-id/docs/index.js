@@ -19,7 +19,7 @@ async function initMap() {
     const infoWindow = new InfoWindow();
 
     document.getElementById('submit').addEventListener('click', () => {
-        geocodePlaceId(geocoder, innerMap, infoWindow);
+        void geocodePlaceId(geocoder, innerMap, infoWindow);
     });
 }
 
@@ -46,5 +46,5 @@ async function geocodePlaceId(geocoder, map, infoWindow) {
     }
 }
 
-initMap();
+void initMap();
 // [END maps_geocoding_place_id]

@@ -131,5 +131,5 @@ async function initMap() {
     map.fitBounds(bounds);
 }
 
-initMap();
+void initMap();
 // [END maps_routes_route_matrix]

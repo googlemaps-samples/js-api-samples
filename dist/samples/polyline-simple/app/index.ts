@@ -32,5 +32,5 @@ async function initMap() {
     flightPath.setMap(innerMap);
 }
 
-initMap();
+void initMap();
 // [END maps_polyline_simple]

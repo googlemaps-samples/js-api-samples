@@ -129,4 +129,4 @@ async function initMap() {
     map.fitBounds(bounds);
 }
 
-initMap();
+void initMap();

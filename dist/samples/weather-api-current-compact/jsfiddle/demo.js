@@ -18,7 +18,7 @@ let allMarkers = []; // To store all active markers
 let markersLoaded = false; // Flag to track if button markers are loaded
 
 async function initMap() {
-    google.maps.importLibrary('marker'); // preload
+    void google.maps.importLibrary('marker'); // preload
     const { Map } = await google.maps.importLibrary('maps');
 
     map = new Map(document.getElementById('map'), {
@@ -136,7 +136,7 @@ async function createAndAddMarker(location, markerType) {
     marker.markerType = markerType;
 
     // Fetch and update weather data for this location
-    updateWeatherDisplayForMarker(
+    void updateWeatherDisplayForMarker(
         marker,
         weatherWidget,
         new LatLng(location.lat, location.lng)
@@ -312,8 +312,6 @@ const locations = [
 ];
 
 async function loadWeatherMarkers() {
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
-
     for (const location of locations) {
         await createAndAddMarker(location, 'button'); // Create and add button markers
     }
@@ -386,14 +384,14 @@ async function updateWeatherDisplayForMarker(marker, widget, location) {
     }
 }
 
-initMap();
+void initMap();
 
 // Wait for the custom element to be defined before adding the event listener
-customElements.whenDefined('simple-weather-widget').then(() => {
+void customElements.whenDefined('simple-weather-widget').then(() => {
     const modeToggleButton = document.getElementById('mode-toggle');
     if (modeToggleButton) {
         modeToggleButton.addEventListener('click', () => {
-            toggleDarkMode();
+            void toggleDarkMode();
         });
     }
 
@@ -401,7 +399,7 @@ customElements.whenDefined('simple-weather-widget').then(() => {
     if (loadMarkersButton) {
         loadMarkersButton.addEventListener('click', () => {
             if (!markersLoaded) {
-                loadWeatherMarkers();
+                void loadWeatherMarkers();
                 markersLoaded = true;
                 loadMarkersButton.textContent = 'Remove Markers';
             } else {

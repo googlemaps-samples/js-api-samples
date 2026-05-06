@@ -64,5 +64,5 @@ async function initMap() {
     overlay.setMap(innerMap);
 }
 
-initMap();
+void initMap();
 // [END maps_deckgl_tripslayer]

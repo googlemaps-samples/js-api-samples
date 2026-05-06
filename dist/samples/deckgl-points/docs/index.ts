@@ -9,8 +9,6 @@ import { GoogleMapsOverlay } from '@deck.gl/google-maps';
 import { GeoJsonLayer } from '@deck.gl/layers';
 import { Feature } from 'geojson';
 
-type Properties = { mag: number };
-
 const mapElement = document.querySelector('gmp-map')!;
 let innerMap: google.maps.Map;
 
@@ -56,9 +54,7 @@ async function initMap() {
                     }
                     return 0; // Fallback for invalid data.
                 },
-                getFillColor: (
-                    f: Feature
-                ): [number, number, number, number] => {
+                getFillColor: (): [number, number, number, number] => {
                     return [255, 70, 30, 180]; // Default color for other earthquakes.
                 },
                 autoHighlight: true,
@@ -81,5 +77,5 @@ async function initMap() {
     deckOverlay.setMap(innerMap);
 }
 
-initMap();
+void initMap();
 // [END maps_deckgl_points]

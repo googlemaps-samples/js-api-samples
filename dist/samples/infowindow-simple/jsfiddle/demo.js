@@ -77,4 +77,4 @@ async function initMap() {
     });
 }
 
-initMap();
+void initMap();

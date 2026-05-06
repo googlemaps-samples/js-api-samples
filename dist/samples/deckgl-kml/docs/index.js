@@ -188,5 +188,5 @@ function hexOrAabbggrrToRgba(color) {
     return null; // Invalid format
 }
 
-initMap();
+void initMap();
 /* [END maps_deckgl_kml] */

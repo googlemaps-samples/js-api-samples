@@ -105,5 +105,5 @@ function applyStyle(params) {
 }
 // [END maps_dds_datasets_polygon_click_stylefunction]
 
-initMap();
+void initMap();
 // [END maps_dds_datasets_polygon_click]

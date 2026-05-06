@@ -25,5 +25,5 @@ async function initMap() {
     // [END maps_dds_datasets_polyline_style_function]
 }
 
-initMap();
+void initMap();
 // [END maps_dds_datasets_polyline]

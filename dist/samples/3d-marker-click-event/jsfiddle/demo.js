@@ -33,7 +33,7 @@ async function initMap() {
     });
 
     // Specify the action to take on click.
-    interactiveMarker.addEventListener('gmp-click', (event) => {
+    interactiveMarker.addEventListener('gmp-click', () => {
         map.flyCameraAround({
             camera: originalCamera,
             durationMillis: 50000,
@@ -46,4 +46,4 @@ async function initMap() {
     document.body.append(map);
 }
 
-initMap();
+void initMap();

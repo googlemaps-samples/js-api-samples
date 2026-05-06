@@ -13,7 +13,7 @@
  * MakeControl adds a control to the map.
  * This constructor takes the controlDIV name and label text as arguments.
  */
-async function MakeControl(controlDiv: HTMLElement, label: string) {
+function MakeControl(controlDiv: HTMLElement, label: string) {
     // Set up the control border.
     const controlUI = document.createElement('div');
 
@@ -72,7 +72,7 @@ async function initMap() {
 /**
  * Toggles the 'dir' attribute on the html element between 'ltr' and 'rtl'.
  */
-async function toggleRTL() {
+function toggleRTL() {
     const html = document.documentElement;
     if (html.dir === 'rtl') {
         html.dir = 'ltr';
@@ -81,5 +81,5 @@ async function toggleRTL() {
     }
 }
 
-initMap();
+void initMap();
 // [END maps_control_positioning_labels]

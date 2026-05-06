@@ -10,11 +10,13 @@ async function initMap() {
     // Import the needed libraries.
     await google.maps.importLibrary('maps');
 
-    // Create the map.
+    // Access the map.
     const mapElement = document.querySelector('gmp-map');
     // Access the underlying map object.
     const innerMap = mapElement.innerMap;
+
+    console.log({ mapElement, innerMap });
 }
 
-initMap();
+void initMap();
 // [END maps_map_simple]

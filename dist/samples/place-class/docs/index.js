@@ -11,11 +11,11 @@ let innerMap;
 let infoWindow;
 
 async function initMap() {
-    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
+    const { InfoWindow } = await google.maps.importLibrary('maps');
 
     innerMap = mapElement.innerMap;
     infoWindow = new InfoWindow();
-    getPlaceDetails();
+    void getPlaceDetails();
 }
 
 // [START maps_place_class_fetchfields]
@@ -72,5 +72,5 @@ async function getPlaceDetails() {
 }
 // [END maps_place_class_fetchfields]
 
-initMap();
+void initMap();
 // [END maps_place_class]

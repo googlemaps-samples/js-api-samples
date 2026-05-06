@@ -31,4 +31,4 @@ async function init() {
     map.append(model);
 }
 
-init();
+void init();

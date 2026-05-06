@@ -25,17 +25,6 @@ async function init() {
 
     document.body.append(map);
 
-    const locationCamera = {
-        center: {
-            lat: 21.263523536467105,
-            lng: -157.80663691939296,
-            altitude: 80.28936069489404,
-        },
-        range: 1500.8202963253427,
-        tilt: 76.9173260789542,
-        heading: -44.59196007522445,
-    };
-
     // Get the button element by its ID
     const toggleButton = document.getElementById('toggleButton')!;
     toggleButton.addEventListener('click', function () {
@@ -52,5 +41,5 @@ async function init() {
     });
 }
 
-init();
+void init();
 // [END maps_3d_label_toggle]

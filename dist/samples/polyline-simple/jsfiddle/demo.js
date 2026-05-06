@@ -32,4 +32,4 @@ async function initMap() {
     flightPath.setMap(innerMap);
 }
 
-initMap();
+void initMap();

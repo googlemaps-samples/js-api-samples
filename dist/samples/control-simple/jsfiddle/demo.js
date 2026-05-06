@@ -18,4 +18,4 @@ async function initMap() {
         scaleControl: true,
     });
 }
-initMap();
+void initMap();

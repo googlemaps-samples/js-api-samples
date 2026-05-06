@@ -49,5 +49,5 @@ function removeLine() {
     flightPath.setMap(null);
 }
 
-initMap();
+void initMap();
 // [END maps_polyline_remove]

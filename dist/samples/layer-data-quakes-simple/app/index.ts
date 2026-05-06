@@ -6,7 +6,6 @@
 
 // [START maps_layer_data_quakes_simple]
 let innerMap;
-let earthquakeData;
 
 async function initMap() {
     await google.maps.importLibrary('maps');
@@ -31,5 +30,5 @@ function earthquakeDataLoad(data: any) {
 }
 
 window.earthquakeDataLoad = earthquakeDataLoad;
-initMap();
+void initMap();
 // [END maps_layer_data_quakes_simple]

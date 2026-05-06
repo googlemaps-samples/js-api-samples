@@ -71,5 +71,5 @@ function populateTable() {
     }
 }
 
-initMap();
+void initMap();
 // [END maps_map_events]

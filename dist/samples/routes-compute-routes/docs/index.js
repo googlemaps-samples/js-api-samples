@@ -7,7 +7,6 @@
 // [START maps_routes_compute_routes]
 let markers = [];
 let polylines = [];
-const waypointInfoWindow = null;
 
 const originAutocompleteSelection = {
     predictionText: null,
@@ -48,7 +47,7 @@ async function init() {
 
         computeRoutesForm.addEventListener('submit', (event) => {
             event.preventDefault();
-            sendRequest(new FormData(computeRoutesForm));
+            void sendRequest(new FormData(computeRoutesForm));
         });
     }
 
@@ -483,5 +482,5 @@ async function init() {
     }
 }
 
-window.addEventListener('load', init);
+void init();
 // [END maps_routes_compute_routes]

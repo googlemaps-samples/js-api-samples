@@ -21,7 +21,7 @@ async function initMap() {
 
     initZoomControl(innerMap);
     initMapTypeControl(innerMap);
-    initFullscreenControl(innerMap);
+    initFullscreenControl();
 }
 
 function initZoomControl(map: google.maps.Map) {
@@ -37,7 +37,7 @@ function initZoomControl(map: google.maps.Map) {
     });
 }
 
-async function initMapTypeControl(innerMap: google.maps.Map) {
+function initMapTypeControl(innerMap: google.maps.Map) {
     const mapTypeControlDiv = document.querySelector('.maptype-control')!;
     const btnMap = document.querySelector('.maptype-control-map')!;
     const btnSatellite = document.querySelector('.maptype-control-satellite')!;
@@ -55,7 +55,7 @@ async function initMapTypeControl(innerMap: google.maps.Map) {
     });
 }
 
-async function initFullscreenControl(innerMap: google.maps.Map) {
+function initFullscreenControl() {
     // Get the UI elements for the fullscreen control.
     const btnFullscreen = document.querySelector('#fullscreen-button')!;
 
@@ -64,17 +64,17 @@ async function initFullscreenControl(innerMap: google.maps.Map) {
     });
 }
 
-async function toggleFullScreen(element: google.maps.MapElement) {
+function toggleFullScreen(element: google.maps.MapElement) {
     const fullScreenIcon = document.querySelector<HTMLElement>(
         '#fullscreen-button .material-icons'
     )!;
 
     try {
         if (!document.fullscreenElement) {
-            element.requestFullscreen();
+            void element.requestFullscreen();
             fullScreenIcon.innerText = 'fullscreen_exit';
         } else {
-            document.exitFullscreen();
+            void document.exitFullscreen();
             fullScreenIcon.innerText = 'fullscreen';
         }
     } catch (error) {
@@ -82,5 +82,5 @@ async function toggleFullScreen(element: google.maps.MapElement) {
     }
 }
 
-initMap();
+void initMap();
 // [END maps_control_replacement]

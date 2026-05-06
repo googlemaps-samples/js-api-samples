@@ -28,7 +28,7 @@ async function init() {
         altitudeMode: 'CLAMP_TO_GROUND',
     });
 
-    model.addEventListener('gmp-click', function (event) {
+    model.addEventListener('gmp-click', function () {
         this.scale = Math.random() * (0.5 - 0.1) + 0.1;
     });
 
@@ -36,5 +36,5 @@ async function init() {
     map.append(model);
 }
 
-init();
+void init();
 // [END maps_3d_model_interactive]

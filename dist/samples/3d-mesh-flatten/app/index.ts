@@ -26,5 +26,5 @@ async function initMap(): Promise<void> {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_3d_mesh_flatten]

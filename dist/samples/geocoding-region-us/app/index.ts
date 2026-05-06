@@ -34,5 +34,5 @@ async function initMap(): Promise<void> {
         );
 }
 
-initMap();
+void initMap();
 // [END maps_js_geocoding_region_us]

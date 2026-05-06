@@ -48,4 +48,4 @@ function removeLine() {
     flightPath.setMap(null);
 }
 
-initMap();
+void initMap();

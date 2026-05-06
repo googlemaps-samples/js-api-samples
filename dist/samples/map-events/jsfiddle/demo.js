@@ -70,4 +70,4 @@ function populateTable() {
     }
 }
 
-initMap();
+void initMap();

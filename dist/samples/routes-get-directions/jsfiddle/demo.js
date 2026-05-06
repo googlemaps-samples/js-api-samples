@@ -33,6 +33,8 @@ async function initMap() {
         fields: ['path'],
     };
 
+    console.log({ requestWithAddressStrings });
+
     // Use Place IDs in a directions request.
     const originPlaceInstance = new Place({
         id: 'ChIJiQHsW0m3j4ARm69rRkrUF3w', // Mountain View, CA
@@ -48,6 +50,8 @@ async function initMap() {
         fields: ['path'], // Request fields needed to draw polylines.
     };
 
+    console.log({ requestWithPlaceIds });
+
     // Use lat/lng in a directions request.
     // Mountain View, CA
     const originLatLng = { lat: 37.422, lng: -122.084058 };
@@ -61,12 +65,16 @@ async function initMap() {
         fields: ['path'],
     };
 
+    console.log({ requestWithLatLngs });
+
     // Use Plus Codes in a directions request.
     const requestWithPlusCodes = {
         origin: '849VCWC8+R9', // Mountain View, CA
         destination: 'CRHJ+C3 Stanford, CA 94305, USA', // Stanford, CA
         fields: ['path'],
     };
+
+    console.log({ requestWithPlusCodes });
 
     // Define a routes request.
     const request = {
@@ -78,8 +86,7 @@ async function initMap() {
 
     // Call computeRoutes to get the directions.
 
-    const { routes, fallbackInfo, geocodingResults } =
-        await Route.computeRoutes(request);
+    const { routes } = await Route.computeRoutes(request);
 
     // Use createPolylines to create polylines for the route.
     if (!routes) {
@@ -101,7 +108,7 @@ async function initMap() {
     console.log(`Response:\n ${JSON.stringify(routes, null, 2)}`);
 
     // Fit the map to the path.
-    fitMapToPath(routes[0].path);
+    void fitMapToPath(routes[0].path);
 }
 
 // Helper function to fit the map to the path.
@@ -114,4 +121,4 @@ async function fitMapToPath(path) {
     map.fitBounds(bounds);
 }
 
-initMap();
+void initMap();
