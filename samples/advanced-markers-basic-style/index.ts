@@ -5,12 +5,11 @@
  */
 
 // [START maps_advanced_markers_basic_style]
-const parser = new DOMParser();
 const mapElement = document.querySelector('gmp-map')!;
 
 async function initMap() {
     // Request needed libraries.
-    const [{ Map }, { AdvancedMarkerElement, PinElement }] = await Promise.all([
+    const [, { AdvancedMarkerElement, PinElement }] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('marker'),
     ]);

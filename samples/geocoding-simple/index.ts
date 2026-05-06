@@ -14,17 +14,13 @@ let response;
 
 async function initMap() {
     //  Request the needed libraries.
-    const [
-        { Map },
-        { Geocoder },
-        { AdvancedMarkerElement },
-        { ControlPosition },
-    ] = await Promise.all([
-        google.maps.importLibrary('maps'),
-        google.maps.importLibrary('geocoding'),
-        google.maps.importLibrary('marker'),
-        google.maps.importLibrary('core'),
-    ]);
+    const [, { Geocoder }, { AdvancedMarkerElement }, { ControlPosition }] =
+        await Promise.all([
+            google.maps.importLibrary('maps'),
+            google.maps.importLibrary('geocoding'),
+            google.maps.importLibrary('marker'),
+            google.maps.importLibrary('core'),
+        ]);
 
     // Get the gmp-map element.
     mapElement = document.querySelector('gmp-map')!;

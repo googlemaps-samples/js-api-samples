@@ -5,8 +5,6 @@
  */
 
 // [START maps_layer_data_event]
-let map: google.maps.Map;
-
 async function initMap() {
     await google.maps.importLibrary('maps');
 

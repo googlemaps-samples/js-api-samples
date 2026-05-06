@@ -7,7 +7,6 @@
 // [START maps_place_nearby_search]
 const mapElement = document.querySelector('gmp-map')!;
 let innerMap;
-const advancedMarkerElement = document.querySelector('gmp-advanced-marker')!;
 let center;
 let typeSelect;
 let infoWindow;

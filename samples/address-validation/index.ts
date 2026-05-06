@@ -7,10 +7,8 @@
 // [START maps_address_validation]
 // DOM Refs
 const addressForm = document.getElementById('address-form');
-const validateButton = document.getElementById('validate-button');
 const clearFormButton = document.getElementById('clear-form-button');
 const resultDisplay = document.getElementById('result-display');
-const loadingText = document.getElementById('loading-text');
 // Input field refs
 const streetAddress1Input = document.getElementById(
     'street-address-1'

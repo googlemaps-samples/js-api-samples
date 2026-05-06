@@ -26,7 +26,7 @@ let infoWindow: google.maps.InfoWindow;
 // The init function is called when the page loads.
 async function init(): Promise<void> {
     // Import the necessary libraries from the Google Maps API.
-    const [{ InfoWindow }, { Place }] = await Promise.all([
+    const [{ InfoWindow }] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('places'),
     ]);

@@ -319,8 +319,6 @@ const locations = [
 ];
 
 async function loadWeatherMarkers(): Promise<void> {
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
-
     for (const location of locations) {
         await createAndAddMarker(location, 'button'); // Create and add button markers
     }

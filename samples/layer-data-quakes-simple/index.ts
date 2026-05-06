@@ -6,7 +6,6 @@
 
 // [START maps_layer_data_quakes_simple]
 let innerMap;
-let earthquakeData;
 
 async function initMap() {
     await google.maps.importLibrary('maps');

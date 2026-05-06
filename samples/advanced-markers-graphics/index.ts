@@ -7,7 +7,7 @@
 // [START maps_advanced_markers_graphics]
 async function initMap() {
     // Request needed libraries.
-    const [{ Map }, { AdvancedMarkerElement, PinElement }, { Place }] =
+    const [, { AdvancedMarkerElement, PinElement }, { Place }] =
         await Promise.all([
             google.maps.importLibrary('maps'),
             google.maps.importLibrary('marker'),

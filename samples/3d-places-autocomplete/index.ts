@@ -53,8 +53,7 @@ async function initAutocomplete() {
 }
 
 const flyToPlace = async (place) => {
-    const { Polyline3DElement, Polygon3DElement, Marker3DElement } =
-        await google.maps.importLibrary('maps3d');
+    const { Marker3DElement } = await google.maps.importLibrary('maps3d');
 
     const location = place.location;
 

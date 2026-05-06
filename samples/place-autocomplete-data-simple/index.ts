@@ -6,7 +6,7 @@
 
 // [START maps_place_autocomplete_data_simple]
 async function init() {
-    const { Place, AutocompleteSessionToken, AutocompleteSuggestion } =
+    const { AutocompleteSessionToken, AutocompleteSuggestion } =
         await google.maps.importLibrary('places');
 
     // [START maps_place_autocomplete_data_simple_request]

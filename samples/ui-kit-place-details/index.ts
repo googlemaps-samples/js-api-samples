@@ -37,7 +37,7 @@ async function initMap(): Promise<void> {
     };
 
     // Set up map once widget is loaded.
-    placeDetails.addEventListener('gmp-load', (event) => {
+    placeDetails.addEventListener('gmp-load', () => {
         updateMapAndMarker();
     });
 

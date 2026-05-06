@@ -31,7 +31,6 @@ function getRandomPosition(map) {
     };
 }
 
-const total = 100;
 const intersectionObserver = new IntersectionObserver((entries) => {
     for (const entry of entries) {
         if (entry.isIntersecting) {
@@ -44,7 +43,7 @@ const intersectionObserver = new IntersectionObserver((entries) => {
 async function initMap(): Promise<void> {
     // Request needed libraries.
     const [
-        { Map },
+        ,
         { event, ControlPosition },
         { AdvancedMarkerElement, PinElement },
     ] = await Promise.all([
@@ -85,14 +84,14 @@ async function initMap(): Promise<void> {
 function createMarker(map, AdvancedMarkerElement, PinElement) {
     const pinElement = new PinElement();
     const content = pinElement.element;
-    const advancedMarker = new AdvancedMarkerElement({
+    new AdvancedMarkerElement({
         position: getRandomPosition(map),
         map: map,
         content: content,
     });
 
     content.style.opacity = '0';
-    content.addEventListener('animationend', (event) => {
+    content.addEventListener('animationend', () => {
         content.classList.remove('drop');
         content.style.opacity = '1';
     });

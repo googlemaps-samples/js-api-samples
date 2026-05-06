@@ -12,7 +12,7 @@ const center = { lat: 37.447646, lng: -122.113878 }; // Palo Alto, CA
 // Initialize and add the map.
 async function initMap(): Promise<void> {
     //  Request the needed libraries.
-    const [{ Map }, { Place }, { Route }] = await Promise.all([
+    const [{ Map }, , { Route }] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('places'),
         google.maps.importLibrary('routes'),
@@ -33,6 +33,7 @@ async function initMap(): Promise<void> {
         fields: ['path'],
     };
     // [END maps_routes_get_directions_request_string]
+    console.log({ requestWithAddressStrings });
 
     // [START maps_routes_get_directions_request_placeid]
     // Use Place IDs in a directions request.
@@ -44,12 +45,13 @@ async function initMap(): Promise<void> {
         id: 'ChIJIQBpAG2ahYAR_6128GcTUEo', // San Francisco, CA
     });
 
-    const requestWithPlaceIds = {
+    const requestWithPlaceIds: google.maps.routes.ComputeRoutesRequest = {
         origin: originPlaceInstance,
         destination: destinationPlaceInstance,
         fields: ['path'], // Request fields needed to draw polylines.
     };
     // [END maps_routes_get_directions_request_placeid]
+    console.log({ requestWithPlaceIds });
 
     // [START maps_routes_get_directions_request_latlng]
     // Use lat/lng in a directions request.
@@ -59,21 +61,23 @@ async function initMap(): Promise<void> {
     const destinationLatLng = { lat: 37.774929, lng: -122.419415 };
 
     // Define a computeRoutes request.
-    const requestWithLatLngs = {
+    const requestWithLatLngs: google.maps.routes.ComputeRoutesRequest = {
         origin: originLatLng,
         destination: destinationLatLng,
         fields: ['path'],
     };
     // [END maps_routes_get_directions_request_latlng]
+    console.log({ requestWithLatLngs });
 
     // [START maps_routes_get_directions_request_pluscode]
     // Use Plus Codes in a directions request.
-    const requestWithPlusCodes = {
+    const requestWithPlusCodes: google.maps.routes.ComputeRoutesRequest = {
         origin: '849VCWC8+R9', // Mountain View, CA
         destination: 'CRHJ+C3 Stanford, CA 94305, USA', // Stanford, CA
         fields: ['path'],
     };
     // [END maps_routes_get_directions_request_pluscode]
+    console.log({ requestWithPlusCodes });
 
     // [START maps_routes_get_directions_request_complete]
     // [START maps_routes_get_directions_request_simple]
@@ -88,8 +92,7 @@ async function initMap(): Promise<void> {
 
     // Call computeRoutes to get the directions.
     // [START maps_routes_get_directions_compute]
-    const { routes, fallbackInfo, geocodingResults } =
-        await Route.computeRoutes(request);
+    const { routes } = await Route.computeRoutes(request);
     // [END maps_routes_get_directions_compute]
 
     // [START maps_routes_get_directions_polyline]

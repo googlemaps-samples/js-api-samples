@@ -61,7 +61,7 @@ async function getDirections() {
         defaultOptions: google.maps.marker.AdvancedMarkerElementOptions,
         waypointMarkerDetails: google.maps.routes.WaypointMarkerDetails
     ) {
-        const { index, totalMarkers, leg } = waypointMarkerDetails;
+        const { index, totalMarkers } = waypointMarkerDetails;
 
         // Style the origin waypoint.
         if (index === 0) {
@@ -108,10 +108,7 @@ async function getDirections() {
         return { ...defaultOptions, map: innerMap };
     }
 
-    const markers =
-        await result.routes[0].createWaypointAdvancedMarkers(
-            markerOptionsMaker
-        );
+    await result.routes[0].createWaypointAdvancedMarkers(markerOptionsMaker);
     // [END maps_routes_markers_style_maker]
 
     // Fit the map to the route.

@@ -21,7 +21,7 @@ async function initMap() {
 
     initZoomControl(innerMap);
     initMapTypeControl(innerMap);
-    initFullscreenControl(innerMap);
+    initFullscreenControl();
 }
 
 function initZoomControl(map: google.maps.Map) {
@@ -55,7 +55,7 @@ async function initMapTypeControl(innerMap: google.maps.Map) {
     });
 }
 
-async function initFullscreenControl(innerMap: google.maps.Map) {
+async function initFullscreenControl() {
     // Get the UI elements for the fullscreen control.
     const btnFullscreen = document.querySelector('#fullscreen-button')!;
 

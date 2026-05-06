@@ -42,7 +42,7 @@ async function initMap(): Promise<void> {
         infoWindow.open({ anchor: marker });
     };
 
-    placeDetails.addEventListener('gmp-load', (event) => {
+    placeDetails.addEventListener('gmp-load', () => {
         // For the initial load case, with no user click, we fall back to the place's location, and ensure the map has a center set and the InfoWindow is show.
         // (The clicked POI LatLng will be a more natural marker position, when available.)
         if (!map.center && placeDetails.place?.location) {

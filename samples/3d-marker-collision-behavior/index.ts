@@ -56,7 +56,7 @@ const dropdown = document.getElementById(
 ) as HTMLSelectElement;
 dropdown.addEventListener('change', drawMap);
 
-function drawMap(event) {
+function drawMap() {
     for (const marker of markers) {
         marker.collisionBehavior =
             (dropdown.value as google.maps.CollisionBehavior) || 'REQUIRED';

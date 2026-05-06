@@ -8,7 +8,7 @@ let marker;
 
 async function initMap() {
     //  Request the needed libraries.
-    const [{ Map, InfoWindow }, { Geocoder }, { AdvancedMarkerElement }] =
+    const [{ InfoWindow }, { Geocoder }, { AdvancedMarkerElement }] =
         await Promise.all([
             google.maps.importLibrary('maps'),
             google.maps.importLibrary('geocoding'),
