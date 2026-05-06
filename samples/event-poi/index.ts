@@ -68,7 +68,7 @@ async function showInfoWindow(
         content: content,
     });
 
-    innerMap.panTo(event.latLng);
+    innerMap.panTo(event.latLng!);
     infoWindow.open(innerMap);
 }
 

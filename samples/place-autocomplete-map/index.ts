@@ -26,7 +26,7 @@ async function init(): Promise<void> {
 
     // Use the bounds_changed event to restrict results to the current map bounds.
     innerMap.addListener('bounds_changed', () => {
-        placeAutocomplete.locationRestriction = innerMap.getBounds();
+        placeAutocomplete.locationRestriction = innerMap.getBounds()!;
     });
 
     // Create the marker and infoWindow.
@@ -50,7 +50,7 @@ async function init(): Promise<void> {
             if (place.viewport) {
                 innerMap.fitBounds(place.viewport);
             } else {
-                innerMap.setCenter(place.location);
+                innerMap.setCenter(place.location!);
                 innerMap.setZoom(17);
             }
 

@@ -41,7 +41,7 @@ async function findBoundary() {
     if (places.length) {
         const place = places[0];
         styleBoundary(place.id);
-        innerMap.setCenter(place.location);
+        innerMap.setCenter(place.location!);
     } else {
         console.log('No results');
     }

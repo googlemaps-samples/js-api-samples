@@ -8,7 +8,10 @@
 let innerMap: google.maps.Map;
 const mapElement = document.querySelector('gmp-map')!;
 
-let center: google.maps.LatLngLiteral = { lat: 41.85, lng: -87.65 };
+let center: google.maps.LatLngLiteral | google.maps.LatLng = {
+    lat: 41.85,
+    lng: -87.65,
+};
 
 async function init() {
     await google.maps.importLibrary('maps');

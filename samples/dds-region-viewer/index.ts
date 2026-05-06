@@ -402,7 +402,7 @@ async function showSelectedPolygon(placeid, mode) {
             featureMenu.value
         );
     }
-    const viewport = place.viewport;
+    const viewport = place.viewport!;
     innerMap.fitBounds(viewport, 155);
 
     // Build the HTML.

@@ -49,8 +49,8 @@ async function nearbySearch() {
     // [START maps_place_nearby_search_request]
     // Get bounds and radius to constrain search.
     center = mapElement.center;
-    const ne = innerMap.getBounds().getNorthEast();
-    const sw = innerMap.getBounds().getSouthWest();
+    const ne = innerMap.getBounds()!.getNorthEast();
+    const sw = innerMap.getBounds()!.getSouthWest();
     const diameter = spherical.computeDistanceBetween(ne, sw);
     const radius = Math.min(diameter / 2, 50000); // Radius cannot be more than 50000.
 
@@ -111,7 +111,7 @@ async function nearbySearch() {
             }
 
             marker.addListener('gmp-click', () => {
-                innerMap.panTo(place.location);
+                innerMap.panTo(place.location!);
                 updateInfoWindow(place.displayName, content, marker);
             });
         });
