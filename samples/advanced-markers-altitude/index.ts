@@ -7,7 +7,7 @@
 // [START maps_advanced_markers_altitude]
 const mapElement = document.querySelector('gmp-map')!;
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const [, { AdvancedMarkerElement, PinElement }] = await Promise.all([
         google.maps.importLibrary('maps'),
@@ -41,5 +41,5 @@ async function initMap() {
     // [END maps_advanced_markers_altitude_marker]
 }
 
-void initMap();
+void init();
 // [END maps_advanced_markers_altitude]

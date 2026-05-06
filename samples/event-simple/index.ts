@@ -5,7 +5,7 @@
  */
 
 // [START maps_event_simple]
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const [, { AdvancedMarkerElement }, { LatLng }] = await Promise.all([
         google.maps.importLibrary('maps'),
@@ -43,5 +43,5 @@ async function initMap() {
     });
 }
 
-void initMap();
+void init();
 // [END maps_event_simple]

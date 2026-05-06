@@ -17,7 +17,7 @@ const NEW_ZEALAND_BOUNDS = {
 };
 // [END maps_control_bounds_restriction_region]
 
-async function initMap() {
+async function init() {
     // Import the needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -33,5 +33,5 @@ async function initMap() {
     // [END maps_control_bounds_restriction_options]
 }
 
-void initMap();
+void init();
 // [END maps_control_bounds_restriction]

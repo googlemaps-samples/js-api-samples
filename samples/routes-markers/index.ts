@@ -9,7 +9,7 @@ const mapElement = document.querySelector('gmp-map')!;
 let innerMap;
 
 // Initialize and add the map.
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     const [, { event }] = await Promise.all([
         google.maps.importLibrary('maps'),
@@ -120,5 +120,5 @@ async function getDirections() {
     mapPolylines.forEach((polyline) => polyline.setMap(innerMap));
 }
 
-void initMap();
+void init();
 // [END maps_routes_markers]

@@ -84,7 +84,7 @@ function setStyle(params) {
 }
 // [END maps_dds_datasets_point_style_function]
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const [, { event }] = await Promise.all([
         google.maps.importLibrary('maps'),
@@ -146,5 +146,5 @@ function makeLegend() {
     }
 }
 
-void initMap();
+void init();
 // [END maps_dds_datasets_point]

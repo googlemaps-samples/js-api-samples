@@ -23,7 +23,7 @@ const flagContentLink = document.getElementById(
 let innerMap;
 let marker: google.maps.marker.AdvancedMarkerElement;
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Request needed libraries.
     const [{ AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('marker'),
@@ -239,5 +239,5 @@ function updateSummaryPanel(place: google.maps.places.Place) {
     }
 }
 
-void initMap();
+void init();
 // [END maps_ai_powered_summaries]

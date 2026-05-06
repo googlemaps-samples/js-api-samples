@@ -16,7 +16,7 @@ const mapElement = document.querySelector('gmp-map')!;
 let innerMap;
 let center;
 
-async function initMap() {
+async function init() {
     // [START maps_test_example_instantiate_map]
     //  Request the needed libraries.
     const [, { AdvancedMarkerElement }] = await Promise.all([
@@ -47,5 +47,5 @@ async function initMap() {
     console.log("Say there Mac, why'd you choose me to test this change?");
     // [END maps_test_example_why_me]
 }
-void initMap();
+void init();
 // [END maps_test_example]

@@ -48,7 +48,7 @@ let map: google.maps.Map;
 let geojsonLayer: deck.GeoJsonLayer;
 let googleMapsOverlay: deck.GoogleMapsOverlay;
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Progress bar logic moved from index.html
     let progress;
     const progressDiv = document.querySelector('.mdc-linear-progress')!;
@@ -224,5 +224,5 @@ function hexOrAabbggrrToRgba(color: string): number[] | null {
     return null; // Invalid format
 }
 
-void initMap();
+void init();
 /* [END maps_deckgl_kml] */

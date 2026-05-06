@@ -5,7 +5,7 @@
  */
 
 // [START maps_add_map]
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // [START maps_add_map_instantiate_map]
     // [START maps_add_map_libraries]
     // Request the needed libraries.
@@ -37,5 +37,5 @@ async function initMap(): Promise<void> {
     });
     // [END maps_add_map_instantiate_marker]
 }
-void initMap();
+void init();
 // [END maps_add_map]

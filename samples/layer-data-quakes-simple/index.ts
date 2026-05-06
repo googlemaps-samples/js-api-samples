@@ -7,7 +7,7 @@
 // [START maps_layer_data_quakes_simple]
 let innerMap;
 
-async function initMap() {
+async function init() {
     await google.maps.importLibrary('maps');
 
     const mapElement = document.querySelector('gmp-map')!;
@@ -31,5 +31,5 @@ function earthquakeDataLoad(data: any) {
 }
 
 window.earthquakeDataLoad = earthquakeDataLoad;
-void initMap();
+void init();
 // [END maps_layer_data_quakes_simple]

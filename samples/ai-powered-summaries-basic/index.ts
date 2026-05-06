@@ -9,7 +9,7 @@ const mapElement = document.querySelector('gmp-map')!;
 let innerMap;
 let infoWindow;
 
-async function initMap() {
+async function init() {
     const { InfoWindow } = await google.maps.importLibrary('maps');
 
     innerMap = mapElement.innerMap;
@@ -101,5 +101,5 @@ function showInfoWindow(marker, place, content) {
     });
 }
 
-void initMap();
+void init();
 // [END maps_ai_powered_summaries_basic]

@@ -18,7 +18,7 @@ let activeWeatherWidget: SimpleWeatherWidget | null = null; // To keep track of 
 let allMarkers: google.maps.marker.AdvancedMarkerElement[] = []; // To store all active markers
 let markersLoaded = false; // Flag to track if button markers are loaded
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     void google.maps.importLibrary('marker'); // preload
     const { Map } = await google.maps.importLibrary('maps');
 
@@ -402,7 +402,7 @@ async function updateWeatherDisplayForMarker(
     }
 }
 
-void initMap();
+void init();
 
 // Wait for the custom element to be defined before adding the event listener
 void customElements.whenDefined('simple-weather-widget').then(() => {

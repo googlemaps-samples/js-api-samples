@@ -33,7 +33,7 @@ function isEarthquake(
 }
 
 // Initialize and add the map
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -78,5 +78,5 @@ async function initMap() {
     deckOverlay.setMap(innerMap);
 }
 
-void initMap();
+void init();
 // [END maps_deckgl_points]

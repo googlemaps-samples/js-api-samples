@@ -47,6 +47,15 @@ done
 
 set +e
 
+grep -i -E " init\(" "${common_recursive_grep_options[@]}" --include=*.{ts,tsx} > /dev/null
+if [[ $? -ne 0 ]]; then
+  grep -i -E " init[a-z]+\(" "${common_recursive_grep_options[@]}" --include=*.{ts,tsx}
+  if [[ $? -eq 0 ]]; then
+    echo "found an init...() function but not an init() function. Must normalize root init() function name.";
+    exit 1
+  fi
+fi
+
 grep "<!-- prettier-ignore -->" "${html_recursive_grep_options[@]}"
 if [[ $? -eq 0 ]]; then
   echo "Don't use '<!-- prettier-ignore -->' in HTML files. For the inline loader, use a '// prettier-ignore' comment inside the <script> tag."

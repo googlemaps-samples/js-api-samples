@@ -33,7 +33,7 @@ let selectedPlaceId: string;
 
 import * as countries from './src/countries.json';
 
-async function initMap() {
+async function init() {
     await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('places'),
@@ -448,5 +448,5 @@ async function showSelectedPolygon(placeid, mode) {
     applyStyle(placeid);
 }
 
-void initMap();
+void init();
 // [END maps_dds_region_viewer]

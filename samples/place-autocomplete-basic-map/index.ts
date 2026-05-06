@@ -14,7 +14,7 @@ const placeDetailsElement = document.querySelector(
 const placeDetailsParent = placeDetailsElement.parentElement as HTMLElement;
 const gmpMapElement = document.querySelector('gmp-map')!;
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Asynchronously load required libraries from the Google Maps JS API.
     const [, { AdvancedMarkerElement }, { InfoWindow, Circle }, { Size }] =
         await Promise.all([
@@ -106,5 +106,5 @@ async function initMap(): Promise<void> {
     });
 }
 
-void initMap();
+void init();
 // [END maps_place_autocomplete_basic_map]

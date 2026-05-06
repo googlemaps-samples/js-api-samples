@@ -28,7 +28,7 @@ declare namespace deck {
     // Add other Deck.gl types used globally if needed
 }
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Progress bar logic moved from index.html
     let progress;
     const progressDiv = document.querySelector('.mdc-linear-progress')!;
@@ -153,5 +153,5 @@ async function initMap(): Promise<void> {
     }
 }
 
-void initMap();
+void init();
 /* [END maps_deckgl_polygon] */

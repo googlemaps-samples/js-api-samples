@@ -5,7 +5,7 @@
  */
 
 // [START maps_advanced_markers_graphics]
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const [, { AdvancedMarkerElement, PinElement }, { Place }] =
         await Promise.all([
@@ -98,5 +98,5 @@ async function initMap() {
     // [END maps_advanced_markers_graphics_place_icon]
 }
 
-void initMap();
+void init();
 // [END maps_advanced_markers_graphics]

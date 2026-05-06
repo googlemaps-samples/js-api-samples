@@ -8,7 +8,7 @@
 const mapElement = document.querySelector('gmp-map')!;
 let innerMap: google.maps.Map;
 
-async function initMap() {
+async function init() {
     // Load the needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -82,5 +82,5 @@ function toggleFullScreen(element: google.maps.MapElement) {
     }
 }
 
-void initMap();
+void init();
 // [END maps_control_replacement]

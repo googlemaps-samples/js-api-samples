@@ -12,7 +12,7 @@ import type * as GeoJSON from 'geojson';
 type Properties = { scalerank: number };
 type Feature = GeoJSON.Feature<GeoJSON.Point, Properties>;
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -53,5 +53,5 @@ async function initMap() {
     overlay.setMap(innerMap);
 }
 
-void initMap();
+void init();
 // [END maps_deckgl_arclayer]

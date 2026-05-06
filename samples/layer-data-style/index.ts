@@ -5,7 +5,7 @@
  */
 
 // [START maps_layer_data_style]
-async function initMap() {
+async function init() {
     const [, { event }] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('core'),
@@ -31,5 +31,5 @@ async function initMap() {
     // [END maps_layer_data_style_script_snippet_style]
 }
 
-void initMap();
+void init();
 // [END maps_layer_data_style]

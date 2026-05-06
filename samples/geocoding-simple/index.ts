@@ -12,7 +12,7 @@ let marker;
 let responseDiv;
 let responsePre;
 
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     const [, { Geocoder }, { AdvancedMarkerElement }, { ControlPosition }] =
         await Promise.all([
@@ -93,5 +93,5 @@ async function geocode(request: google.maps.GeocoderRequest) {
 }
 // [END maps_geocoding_simple_request]
 
-void initMap();
+void init();
 // [END maps_geocoding_simple]

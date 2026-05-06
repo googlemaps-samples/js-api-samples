@@ -7,7 +7,7 @@
 // [START maps_layer_data_quakes_red]
 let innerMap;
 
-async function initMap() {
+async function init() {
     const [, { SymbolPath }] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('core'),
@@ -49,5 +49,5 @@ function earthquakeDataLoad(data: any) {
 }
 
 window.earthquakeDataLoad = earthquakeDataLoad;
-void initMap();
+void init();
 // [END maps_layer_data_quakes_red]

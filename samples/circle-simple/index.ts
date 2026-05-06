@@ -8,7 +8,7 @@
 const mapElement = document.querySelector('gmp-map')!;
 let innerMap;
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const [{ Circle }, { AdvancedMarkerElement }, { event }] =
         await Promise.all([
@@ -91,5 +91,5 @@ async function initMap() {
     });
 }
 
-void initMap();
+void init();
 // [END maps_circle_simple]
