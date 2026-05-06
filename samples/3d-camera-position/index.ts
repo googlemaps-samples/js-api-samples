@@ -142,5 +142,5 @@ async function initMap(): Promise<void> {
     setTimeout(updateUI, 500);
 }
 
-initMap();
+void initMap();
 // [END maps_3d_camera_position]
