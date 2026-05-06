@@ -35,7 +35,7 @@ const App = () => (
 const PlacesSearchLayout = () => {
     const [query, setQuery] = useState('');
     const [places, setPlaces] = useState<any[]>([]);
-    const [selectedPlace, setSelectedPlace] = useState<any | null>(null);
+    const [selectedPlace, setSelectedPlace] = useState<any>(null);
 
     const placeSearchRef = useRef<HTMLDivElement>(null);
     const queryInputRef = useRef<HTMLInputElement>(null);
@@ -95,8 +95,8 @@ interface PlaceSearchControllerProps {
     placeSearchRef: RefObject<HTMLDivElement | null>;
     query: string;
     setPlaces: (places: any[]) => void;
-    setSelectedPlace: (place: any | null) => void;
-    selectedPlace: any | null;
+    setSelectedPlace: (place: any) => void;
+    selectedPlace: any;
 }
 
 const PlaceSearchController = ({
