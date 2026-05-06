@@ -25,14 +25,14 @@ async function initMap() {
     typeSelect = document.querySelector('.type-select')!;
 
     typeSelect.addEventListener('change', () => {
-        nearbySearch();
+        void nearbySearch();
     });
 
     infoWindow = new InfoWindow();
 
     // Kick off an initial search once map has loaded.
     event.addListenerOnce(innerMap, 'idle', () => {
-        nearbySearch();
+        void nearbySearch();
     });
 }
 
@@ -131,5 +131,5 @@ function updateInfoWindow(title, content, anchor) {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_place_nearby_search]

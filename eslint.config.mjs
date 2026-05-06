@@ -27,8 +27,8 @@ export default defineConfig([
             'prefer-const': 'error',
             'spaced-comment': ['error', 'always'],
 
-            // temporarily disabled for historic reasons:
-            'no-prototype-builtins': 'off',
+            // temporarily downgraded to warn for historic reasons:
+            'no-prototype-builtins': 'warn',
         },
     },
     {
@@ -40,12 +40,19 @@ export default defineConfig([
             },
         },
         rules: {
+            '@typescript-eslint/no-misused-promises': [
+                'error',
+                {
+                    checksVoidReturn: {
+                        arguments: false,
+                        attributes: false,
+                    },
+                },
+            ],
+
             // temporarily downgraded to warn for historic reasons:
             '@typescript-eslint/no-unsafe-member-access': 'warn',
             '@typescript-eslint/no-unsafe-assignment': 'warn',
-            '@typescript-eslint/require-await': 'warn',
-            '@typescript-eslint/no-floating-promises': 'warn',
-            '@typescript-eslint/no-misused-promises': 'warn',
             '@typescript-eslint/no-unsafe-call': 'warn',
             '@typescript-eslint/no-explicit-any': 'warn',
             '@typescript-eslint/no-namespace': 'warn',

@@ -91,5 +91,5 @@ async function initMap() {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_circle_simple]

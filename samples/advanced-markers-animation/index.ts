@@ -43,7 +43,7 @@ const intersectionObserver = new IntersectionObserver((entries) => {
 async function initMap(): Promise<void> {
     // Request needed libraries.
     const [
-        ,
+        { Map },
         { event, ControlPosition },
         { AdvancedMarkerElement, PinElement },
     ] = await Promise.all([
@@ -74,7 +74,7 @@ async function initMap(): Promise<void> {
     controlUI.classList.add('ui-button');
     controlUI.innerText = 'Reset the example';
     controlUI.addEventListener('click', () => {
-        // Reset the example by reloading the map iframe.
+        // Reset the example by recreating the map.
         refreshMap();
     });
     controlDiv.appendChild(controlUI);
@@ -108,8 +108,8 @@ function refreshMap() {
     const mapDiv = document.createElement('div');
     mapDiv.id = 'map';
     mapContainer!.appendChild(mapDiv);
-    initMap();
+    void initMap();
 }
 
-initMap();
+void initMap();
 // [END maps_advanced_markers_animation]

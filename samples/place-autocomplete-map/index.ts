@@ -25,7 +25,7 @@ async function initMap(): Promise<void> {
     });
 
     // Use the bounds_changed event to restrict results to the current map bounds.
-    innerMap.addListener('bounds_changed', async () => {
+    innerMap.addListener('bounds_changed', () => {
         placeAutocomplete.locationRestriction = innerMap.getBounds();
     });
 
@@ -81,5 +81,5 @@ function updateInfoWindow(content, center) {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_place_autocomplete_map]

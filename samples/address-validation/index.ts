@@ -210,5 +210,5 @@ function populateAddressFields(exampleAddress) {
     console.log('Populated fields with example: ', exampleAddress);
 }
 
-init();
+void init();
 // [END maps_address_validation]

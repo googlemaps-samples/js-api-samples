@@ -55,5 +55,5 @@ async function initMap() {
     // [END maps_advanced_markers_zoom_listener]
 }
 
-initMap();
+void initMap();
 // [END maps_advanced_markers_zoom]

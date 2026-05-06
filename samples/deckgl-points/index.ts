@@ -77,5 +77,5 @@ async function initMap() {
     deckOverlay.setMap(innerMap);
 }
 
-initMap();
+void initMap();
 // [END maps_deckgl_points]

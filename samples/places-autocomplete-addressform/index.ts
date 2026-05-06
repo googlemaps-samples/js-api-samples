@@ -28,12 +28,9 @@ async function initAutocomplete() {
     placeAutocomplete.focus();
 
     // Handle user selection on the autocomplete widget.
-    placeAutocomplete.addEventListener(
-        'gmp-select',
-        async ({ placePrediction }) => {
-            fillInAddress(placePrediction);
-        }
-    );
+    placeAutocomplete.addEventListener('gmp-select', ({ placePrediction }) => {
+        void fillInAddress(placePrediction);
+    });
 
     saveButton.addEventListener('click', () => {
         // Display a message when the Save button is clicked.
@@ -105,5 +102,5 @@ async function fillInAddress(placePrediction) {
 }
 // [END maps_places_autocomplete_addressform_fillform]
 
-initAutocomplete();
+void initAutocomplete();
 // [END maps_places_autocomplete_addressform]

@@ -41,5 +41,5 @@ async function initMap() {
     // [END maps_advanced_markers_altitude_marker]
 }
 
-initMap();
+void initMap();
 // [END maps_advanced_markers_altitude]

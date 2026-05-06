@@ -49,7 +49,7 @@ const positions = [
     [-122.3378, 47.6095],
 ];
 
-init();
+void init();
 
 const dropdown = document.getElementById(
     'selectElementId'

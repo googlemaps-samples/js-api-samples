@@ -21,5 +21,5 @@ async function initMap() {
     mapElement.append(marker);
 }
 // [END maps_advanced_markers_simple_snippet]
-initMap();
+void initMap();
 // [END maps_advanced_markers_simple]

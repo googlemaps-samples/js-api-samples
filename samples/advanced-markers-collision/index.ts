@@ -63,5 +63,5 @@ async function initMap(): Promise<void> {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_advanced_markers_collision]

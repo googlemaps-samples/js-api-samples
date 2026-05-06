@@ -41,5 +41,5 @@ async function init() {
     });
 }
 
-init();
+void init();
 // [END maps_3d_label_toggle]

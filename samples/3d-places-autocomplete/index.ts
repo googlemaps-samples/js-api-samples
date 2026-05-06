@@ -22,7 +22,7 @@ async function init() {
 
     document.body.append(map);
 
-    initAutocomplete();
+    void initAutocomplete();
 }
 
 async function initAutocomplete() {
@@ -47,7 +47,7 @@ async function initAutocomplete() {
                 window.alert('No viewport for input: ' + place.displayName);
                 return;
             }
-            flyToPlace(place);
+            void flyToPlace(place);
         }
     );
 }
@@ -109,6 +109,6 @@ async function getElevationforPoint(location, place) {
     return elevation;
 }
 
-init();
+void init();
 
 // [END maps_3d_places_autocomplete]

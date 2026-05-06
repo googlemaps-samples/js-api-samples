@@ -12,7 +12,7 @@ const center = { lat: 37.447646, lng: -122.113878 }; // Palo Alto, CA
 // Initialize and add the map.
 async function initMap(): Promise<void> {
     //  Request the needed libraries.
-    const [{ Map }, , { Route }] = await Promise.all([
+    const [{ Map }, { Place }, { Route }] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('places'),
         google.maps.importLibrary('routes'),
@@ -118,7 +118,7 @@ async function initMap(): Promise<void> {
     console.log(`Response:\n ${JSON.stringify(routes, null, 2)}`);
 
     // Fit the map to the path.
-    fitMapToPath(routes[0].path!);
+    void fitMapToPath(routes[0].path!);
 }
 
 // Helper function to fit the map to the path.
@@ -131,5 +131,5 @@ async function fitMapToPath(path) {
     map.fitBounds(bounds);
 }
 
-initMap();
+void initMap();
 // [END maps_routes_get_directions]

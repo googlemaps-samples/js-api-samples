@@ -98,5 +98,5 @@ async function initMap() {
     // [END maps_advanced_markers_graphics_place_icon]
 }
 
-initMap();
+void initMap();
 // [END maps_advanced_markers_graphics]

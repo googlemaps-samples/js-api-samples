@@ -51,7 +51,7 @@ async function initMap(): Promise<void> {
     // Add polylines to the map.
     mapPolylines.forEach((polyline) => polyline.setMap(map));
 
-    fitMapToPath(routes[0].path!);
+    void fitMapToPath(routes[0].path!);
 
     // Add markers to all the points.
     await routes[0].createWaypointAdvancedMarkers({ map });
@@ -143,5 +143,5 @@ async function fitMapToPath(path) {
     map.fitBounds(bounds);
 }
 
-initMap();
+void initMap();
 // [END maps_routes_get_directions_panel]

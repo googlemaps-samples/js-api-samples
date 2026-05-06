@@ -77,5 +77,5 @@ function toggleStreetView(): void {
     }
 }
 
-initMap();
+void initMap();
 // [END maps_streetview_overlays]

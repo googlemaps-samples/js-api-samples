@@ -106,7 +106,7 @@ async function initMap() {
 }
 
 // Creates a legend for the map.
-async function makeLegend() {
+function makeLegend() {
     const colors = {
         black: ['black'],
         cinnamon: ['#8b0000'],
@@ -146,5 +146,5 @@ async function makeLegend() {
     }
 }
 
-initMap();
+void initMap();
 // [END maps_dds_datasets_point]

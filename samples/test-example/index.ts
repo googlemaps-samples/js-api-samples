@@ -47,5 +47,5 @@ async function initMap() {
     console.log("Say there Mac, why'd you choose me to test this change?");
     // [END maps_test_example_why_me]
 }
-initMap();
+void initMap();
 // [END maps_test_example]

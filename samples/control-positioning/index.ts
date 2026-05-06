@@ -38,5 +38,5 @@ async function initMap() {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_control_positioning]

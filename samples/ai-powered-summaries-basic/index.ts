@@ -18,7 +18,7 @@ async function initMap() {
     });
 
     infoWindow = new InfoWindow();
-    getPlaceDetails();
+    void getPlaceDetails();
 }
 
 async function getPlaceDetails() {
@@ -101,5 +101,5 @@ function showInfoWindow(marker, place, content) {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_ai_powered_summaries_basic]

@@ -33,5 +33,5 @@ async function initMap() {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_advanced_markers_draggable]

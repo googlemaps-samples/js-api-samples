@@ -37,5 +37,5 @@ async function initMap(): Promise<void> {
     });
     // [END maps_add_map_instantiate_marker]
 }
-initMap();
+void initMap();
 // [END maps_add_map]

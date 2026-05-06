@@ -46,5 +46,5 @@ async function initMap() {
     document.body.append(map);
 }
 
-initMap();
+void initMap();
 // [END maps_3d_marker_click_event]

@@ -17,5 +17,5 @@ async function initMap(): Promise<void> {
     console.log({ mapElement, innerMap });
 }
 
-initMap();
+void initMap();
 // [END maps_map_simple]

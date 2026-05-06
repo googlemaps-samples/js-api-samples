@@ -24,7 +24,7 @@ async function initMap() {
 
     // Call the function after the map is loaded.
     event.addListenerOnce(innerMap, 'idle', () => {
-        getDirections();
+        void getDirections();
     });
 }
 
@@ -120,5 +120,5 @@ async function getDirections() {
     mapPolylines.forEach((polyline) => polyline.setMap(innerMap));
 }
 
-initMap();
+void initMap();
 // [END maps_routes_markers]

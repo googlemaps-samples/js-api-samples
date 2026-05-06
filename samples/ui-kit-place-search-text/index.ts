@@ -59,7 +59,7 @@ async function init(): Promise<void> {
         markers.get(place.id)?.click();
     });
     placeSearch.addEventListener('gmp-load', () => {
-        addMarkers();
+        void addMarkers();
     });
 
     searchPlaces();
@@ -67,7 +67,7 @@ async function init(): Promise<void> {
 /* [END maps_ui_kit_place_search_text_event] */
 /* [START maps_ui_kit_place_search_text_function] */
 // The searchPlaces function is called when the user changes the query input or when the page loads.
-async function searchPlaces() {
+function searchPlaces() {
     // Close the info window and clear the markers.
     infoWindow.close();
     for (const marker of markers.values()) {
@@ -124,5 +124,5 @@ async function addMarkers() {
     map.innerMap.fitBounds(bounds);
 }
 
-init();
+void init();
 /* [END maps_ui_kit_place_search_text] */

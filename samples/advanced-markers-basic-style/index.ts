@@ -98,5 +98,5 @@ async function initMap() {
     // [END maps_advanced_markers_basic_style_hide_glyph]
 }
 
-initMap();
+void initMap();
 // [END maps_advanced_markers_basic_style]

@@ -10,7 +10,7 @@ let mapElement;
 let innerMap;
 let marker;
 let responseDiv;
-let response;
+let responsePre;
 
 async function initMap() {
     //  Request the needed libraries.
@@ -46,17 +46,17 @@ async function initMap() {
     responseDiv = document.getElementById(
         'response-container'
     ) as HTMLDivElement;
-    response = document.getElementById('response') as HTMLPreElement;
+    responsePre = document.getElementById('response') as HTMLPreElement;
 
     marker = new AdvancedMarkerElement({});
 
     innerMap.addListener('click', (e: google.maps.MapMouseEvent) => {
-        geocode({ location: e.latLng });
+        void geocode({ location: e.latLng });
     });
 
-    submitButton.addEventListener('click', () =>
-        geocode({ address: inputText.value })
-    );
+    submitButton.addEventListener('click', () => {
+        void geocode({ address: inputText.value });
+    });
 
     clearButton.addEventListener('click', () => {
         clear();
@@ -65,7 +65,7 @@ async function initMap() {
     clear();
 }
 
-async function clear() {
+function clear() {
     marker.setMap(null);
     responseDiv.style.display = 'none';
 }
@@ -75,22 +75,23 @@ async function geocode(request: google.maps.GeocoderRequest) {
     clear();
     const { LatLng } = await google.maps.importLibrary('core');
 
-    geocoder
-        .geocode(request)
-        .then((result) => {
-            const { results } = result;
-            innerMap.setCenter(results[0].geometry.location);
-            marker.position = new LatLng(results[0].geometry.location);
-            mapElement.append(marker);
-            responseDiv.style.display = 'block';
-            response.innerText = JSON.stringify(result, null, 2);
-            return results;
-        })
-        .catch((e) => {
-            alert('Geocode was not successful for the following reason: ' + e);
-        });
+    try {
+        const response = await geocoder.geocode(request);
+        const { results } = response;
+
+        innerMap.setCenter(results[0].geometry.location);
+        marker.position = new LatLng(results[0].geometry.location);
+        mapElement.append(marker);
+        responseDiv.style.display = 'block';
+        responsePre.innerText = JSON.stringify(response, null, 2);
+        return results;
+    } catch (e) {
+        alert(
+            'Geocode was not successful for the following reason: ' + String(e)
+        );
+    }
 }
 // [END maps_geocoding_simple_request]
 
-initMap();
+void initMap();
 // [END maps_geocoding_simple]

@@ -75,5 +75,5 @@ async function init() {
     // [END maps_place_autocomplete_data_simple_prediction]
 }
 
-init();
+void init();
 // [END maps_place_autocomplete_data_simple]

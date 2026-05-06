@@ -16,7 +16,7 @@ function handleClick(e) {
     lastClickedFeatureIds = e.features.map((f) => f.placeId);
     lastInteractedFeatureIds = [];
     featureLayer.style = applyStyle;
-    createInfoWindow(e);
+    void createInfoWindow(e);
 }
 
 function handleMouseMove(e) {
@@ -141,5 +141,5 @@ function updateInfoWindow(content, center) {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_boundaries_click_event]

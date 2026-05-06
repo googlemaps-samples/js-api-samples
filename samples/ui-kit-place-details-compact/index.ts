@@ -15,7 +15,7 @@ const marker = document.querySelector('gmp-advanced-marker')!;
 /* [END maps_ui_kit_place_details_compact_query_selector] */
 async function initMap(): Promise<void> {
     // Request needed libraries.
-    Promise.all([
+    void Promise.all([
         google.maps.importLibrary('marker'),
         google.maps.importLibrary('places'),
     ]);
@@ -53,7 +53,7 @@ async function initMap(): Promise<void> {
 
     /* [START maps_ui_kit_place_details_compact_event] */
     // Add an event listener to handle clicks.
-    map.innerMap.addListener('click', async (event) => {
+    map.innerMap.addListener('click', (event) => {
         event.stop();
 
         if (event.placeId) {
@@ -70,5 +70,5 @@ async function initMap(): Promise<void> {
     });
 }
 /* [END maps_ui_kit_place_details_compact_event] */
-initMap();
+void initMap();
 /* [END maps_ui_kit_place_details_compact] */
