@@ -124,5 +124,5 @@ async function initMap(): Promise<void> {
     map.fitBounds(bounds);
 }
 
-initMap();
+void initMap();
 // [END maps_routes_route_matrix]

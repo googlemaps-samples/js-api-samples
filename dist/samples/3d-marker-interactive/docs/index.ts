@@ -92,5 +92,5 @@ const positions = [
     },
 ];
 
-init();
+void init();
 // [END maps_3d_marker_interactive]

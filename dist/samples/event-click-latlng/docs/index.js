@@ -43,5 +43,5 @@ async function initMap() {
     // [END maps_event_click_latlng_listener]
 }
 
-initMap();
+void initMap();
 // [END maps_event_click_latlng]

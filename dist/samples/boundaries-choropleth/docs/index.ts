@@ -102,5 +102,5 @@ async function initMap() {
     };
 }
 
-initMap();
+void initMap();
 // [END maps_boundaries_choropleth]

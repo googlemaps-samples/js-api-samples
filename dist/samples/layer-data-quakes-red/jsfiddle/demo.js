@@ -47,4 +47,4 @@ function earthquakeDataLoad(data) {
 }
 
 window.earthquakeDataLoad = earthquakeDataLoad;
-initMap();
+void initMap();

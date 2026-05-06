@@ -51,5 +51,5 @@ const styles: Record<string, google.maps.MapTypeStyle[]> = {
     ],
 };
 
-initMap();
+void initMap();
 // [END maps_hiding_features]

@@ -10,7 +10,7 @@ let innerMap;
 let infoWindow;
 
 async function initMap() {
-    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
+    const { InfoWindow } = await google.maps.importLibrary('maps');
 
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
@@ -18,7 +18,7 @@ async function initMap() {
     });
 
     infoWindow = new InfoWindow();
-    getPlaceDetails();
+    void getPlaceDetails();
 }
 
 async function getPlaceDetails() {
@@ -98,4 +98,4 @@ function showInfoWindow(marker, place, content) {
     });
 }
 
-initMap();
+void initMap();

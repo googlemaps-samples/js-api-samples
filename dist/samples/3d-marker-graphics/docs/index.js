@@ -104,6 +104,6 @@ async function init() {
     document.body.append(map);
 }
 
-init();
+void init();
 export {};
 // [END maps_3d_marker_graphics]

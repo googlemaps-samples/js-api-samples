@@ -18,4 +18,4 @@ async function initMap() {
     document.body.append(map);
 }
 
-initMap();
+void initMap();

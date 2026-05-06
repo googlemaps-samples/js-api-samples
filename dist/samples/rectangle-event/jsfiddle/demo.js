@@ -67,4 +67,4 @@ function showNewRect() {
     infoWindow.open(innerMap);
 }
 
-initMap();
+void initMap();

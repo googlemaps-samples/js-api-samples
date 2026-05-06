@@ -32,5 +32,5 @@ async function initMap() {
     // [END maps_layer_data_style_script_snippet_style]
 }
 
-initMap();
+void initMap();
 // [END maps_layer_data_style]

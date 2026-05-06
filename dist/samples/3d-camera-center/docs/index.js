@@ -37,5 +37,5 @@ async function initMap() {
     });
 }
 
-initMap();
+void initMap();
 // [END maps_3d_camera_center]

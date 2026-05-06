@@ -38,7 +38,7 @@ async function initMap(): Promise<void> {
     });
 
     // Bind autocomplete bounds to map bounds.
-    innerMap.addListener('bounds_changed', async () => {
+    innerMap.addListener('bounds_changed', () => {
         placeAutocomplete.locationRestriction = innerMap.getBounds();
     });
 
@@ -239,5 +239,5 @@ function updateSummaryPanel(place: google.maps.places.Place) {
     }
 }
 
-initMap();
+void initMap();
 // [END maps_ai_powered_summaries]

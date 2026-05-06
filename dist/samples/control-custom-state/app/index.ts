@@ -43,5 +43,5 @@ async function initMap() {
     // [END maps_control_custom_state_event_listeners]
 }
 
-initMap();
+void initMap();
 // [END maps_control_custom_state]

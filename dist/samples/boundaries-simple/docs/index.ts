@@ -47,5 +47,5 @@ async function initMap() {
     // [END maps_boundaries_simple_style_single]
 }
 
-initMap();
+void initMap();
 // [END maps_boundaries_simple]

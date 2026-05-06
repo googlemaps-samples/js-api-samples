@@ -99,5 +99,5 @@ async function init() {
     document.body.append(map);
 }
 
-init();
+void init();
 // [END maps_3d_marker_customization]

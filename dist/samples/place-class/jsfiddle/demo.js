@@ -10,11 +10,11 @@ let innerMap;
 let infoWindow;
 
 async function initMap() {
-    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
+    const { InfoWindow } = await google.maps.importLibrary('maps');
 
     innerMap = mapElement.innerMap;
     infoWindow = new InfoWindow();
-    getPlaceDetails();
+    void getPlaceDetails();
 }
 
 async function getPlaceDetails() {
@@ -69,4 +69,4 @@ async function getPlaceDetails() {
     });
 }
 
-initMap();
+void initMap();

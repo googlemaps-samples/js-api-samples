@@ -121,7 +121,7 @@ async function initMap() {
     infoWindow = new InfoWindow();
 
     // Add click listener to the map
-    map.addListener('click', async (event) => {
+    map.addListener('click', (event) => {
         const latLng = event.latLng;
         if (!latLng) return; // Ensure latLng is not null
 
@@ -184,4 +184,4 @@ async function initMap() {
     }
 }
 
-initMap();
+void initMap();

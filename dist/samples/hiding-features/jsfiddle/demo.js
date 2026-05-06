@@ -45,4 +45,4 @@ const styles = {
     ],
 };
 
-initMap();
+void initMap();
