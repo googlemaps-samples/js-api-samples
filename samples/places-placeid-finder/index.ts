@@ -57,7 +57,7 @@ async function initMap(): Promise<void> {
 
     placeAutocomplete.addEventListener(
         'gmp-select',
-        async ({ placePrediction }: any) => {
+        async ({ placePrediction }) => {
             infoWindow.close();
 
             const place = placePrediction.toPlace();
@@ -85,15 +85,15 @@ async function initMap(): Promise<void> {
                 infoWindowContent.children.namedItem(
                     'place-name'
                 ) as HTMLElement
-            ).textContent = place.displayName as string;
+            ).textContent = place.displayName!;
             (
                 infoWindowContent.children.namedItem('place-id') as HTMLElement
-            ).textContent = place.id as string;
+            ).textContent = place.id;
             (
                 infoWindowContent.children.namedItem(
                     'place-address'
                 ) as HTMLElement
-            ).textContent = place.formattedAddress as string;
+            ).textContent = place.formattedAddress!;
             infoWindow.open(map, marker);
         }
     );

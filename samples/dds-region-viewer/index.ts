@@ -270,6 +270,7 @@ function applyStyle(placeid?) {
 
 // Populate the countries menu.
 function buildMenu() {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     for (const item of (countries as any).default) {
         const countryOption = document.createElement('option');
         countryOption.textContent = item.name;
@@ -310,6 +311,7 @@ function updateFeatureMenuAvailability(countryCode: string) {
 // Return a map of feature availability for a country.
 function getFeatureAvailability(countryName) {
     // Return the data for the selected country.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const selectedCountry = (countries as any).default.find((country) => {
         return country.code === countryName;
     });

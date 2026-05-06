@@ -3,6 +3,9 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 /* [START maps_deckgl_polygon] */
 // Initialize and add the map
 let map: google.maps.Map;

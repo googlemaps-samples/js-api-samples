@@ -33,7 +33,9 @@ async function initMap() {
     const flightsLayer = new ArcLayer<Feature>({
         id: 'flights',
         data: dataUrl,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         dataTransform: (data: any) =>
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             data.features.filter((f: any) => f.properties.scalerank < 4),
         getSourcePosition: () => [14.42076, 50.08804], // Prague
         getTargetPosition: (f: Feature) =>

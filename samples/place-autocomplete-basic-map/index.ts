@@ -55,7 +55,7 @@ async function initMap(): Promise<void> {
 
     // [START maps_place_autocomplete_basic_map_listener]
     // Event listener for when a place is selected from the autocomplete list.
-    placeAutocompleteElement.addEventListener('gmp-select', (event: any) => {
+    placeAutocompleteElement.addEventListener('gmp-select', (event) => {
         // Reset marker and InfoWindow, and prepare the details element.
         placeDetailsParent.appendChild(placeDetailsElement);
         placeDetailsElement.style.display = 'block';
@@ -65,7 +65,7 @@ async function initMap(): Promise<void> {
         // Request details for the selected place.
         const placeDetailsRequest = placeDetailsElement.querySelector(
             'gmp-place-details-place-request'
-        ) as any;
+        )!;
         placeDetailsRequest.place = event.place.id;
     });
     // [END maps_place_autocomplete_basic_map_listener]

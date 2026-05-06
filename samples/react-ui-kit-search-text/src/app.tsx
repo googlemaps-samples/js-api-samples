@@ -34,7 +34,9 @@ const App = () => (
 
 const PlacesSearchLayout = () => {
     const [query, setQuery] = useState('');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [places, setPlaces] = useState<any[]>([]);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [selectedPlace, setSelectedPlace] = useState<any>(null);
 
     const placeSearchRef = useRef<HTMLDivElement>(null);
@@ -94,8 +96,11 @@ const PlacesSearchLayout = () => {
 interface PlaceSearchControllerProps {
     placeSearchRef: RefObject<HTMLDivElement | null>;
     query: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setPlaces: (places: any[]) => void;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setSelectedPlace: (place: any) => void;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     selectedPlace: any;
 }
 
@@ -110,6 +115,7 @@ const PlaceSearchController = ({
     const coreLib = useMapsLibrary('core');
     const markerLib = useMapsLibrary('marker');
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const placeRequestRef = useRef<any>(null);
     const popupMarkerRef =
         useRef<google.maps.marker.AdvancedMarkerElement | null>(null);
@@ -163,7 +169,9 @@ const PlaceSearchController = ({
         const textRequest = document.createElement(
             'gmp-place-text-search-request'
         );
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (textRequest as any).textQuery = query;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (textRequest as any).locationBias = bounds;
         placeSearch.appendChild(textRequest);
 
@@ -174,16 +182,19 @@ const PlaceSearchController = ({
         placeSearchRef.current.appendChild(placeSearch);
 
         const handleLoad = () => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const newPlaces = (placeSearch as any).places || [];
             setPlaces(newPlaces);
             if (newPlaces.length > 0) {
                 const newBounds = new coreLib.LatLngBounds();
                 newPlaces.forEach(
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     (p: any) => p.location && newBounds.extend(p.location)
                 );
                 if (!newBounds.isEmpty()) map.fitBounds(newBounds);
             }
         };
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const handleSelect = (event: any) => setSelectedPlace(event.place);
 
         placeSearch.addEventListener('gmp-load', handleLoad);

@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 /* [START maps_deckgl_heatmap] */
 // Initialize and add the map
 let map: google.maps.Map;
