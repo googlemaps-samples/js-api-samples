@@ -43,7 +43,6 @@ cat > "$NAME/index.html" << EOF
 
         <link rel="stylesheet" type="text/css" href="./style.css" />
         <script type="module" src="./index.js"></script>
-        <!-- prettier-ignore -->
 EOF
 
 # Use 'EOF' to prevent expansion of the loader script
@@ -93,8 +92,7 @@ cat > "$NAME/package.json" << EOF
     "start": "tsc && vite build --base './' && vite",
     "build:vite": "vite build --base './'",
     "preview": "vite preview"
-  },
-  "dependencies": {}
+  }
 }
 EOF
 
@@ -106,7 +104,7 @@ cat > "$NAME/tsconfig.json" << 'EOF'
     "rootDir": "."
   },
   "include": [
-    "./*.ts",
+    "./*.ts"
   ]
 }
 EOF
