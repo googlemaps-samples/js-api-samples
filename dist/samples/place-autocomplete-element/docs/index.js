@@ -6,10 +6,10 @@
  */
 
 // [START maps_place_autocomplete_element]
-async function initMap() {
+async function init() {
     // [START maps_place_autocomplete_element_add]
     // Request needed libraries.
-    // @ts-expect-error - currently missing. bug fix pending
+
     const { PlaceAutocompleteElement } =
         await google.maps.importLibrary('places');
     // Create the input HTML element, and append it.
@@ -46,5 +46,5 @@ async function initMap() {
     // [END maps_place_autocomplete_element_listener]
 }
 
-void initMap();
+void init();
 // [END maps_place_autocomplete_element]

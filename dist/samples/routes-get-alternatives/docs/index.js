@@ -10,11 +10,11 @@ const mapElement = document.querySelector('gmp-map');
 let innerMap;
 
 // Initialize and add the map.
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
-    const [, { event }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ event }] = await Promise.all([
         google.maps.importLibrary('core'),
+        google.maps.importLibrary('maps'),
     ]);
 
     innerMap = mapElement.innerMap;
@@ -100,5 +100,5 @@ function drawRoute(route, isPrimaryRoute) {
     );
 }
 
-void initMap();
+void init();
 // [END maps_routes_get_alternatives]

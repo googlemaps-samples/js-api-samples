@@ -14,7 +14,7 @@ let innerMap;
 
 let infoWindow;
 
-async function initMap() {
+async function init() {
     const { Rectangle, InfoWindow } = await google.maps.importLibrary('maps');
 
     const mapElement = document.querySelector('gmp-map');
@@ -67,4 +67,4 @@ function showNewRect() {
     infoWindow.open(innerMap);
 }
 
-void initMap();
+void init();

@@ -32,7 +32,7 @@ let selectedPlaceId;
 
 import * as countries from './src/countries.json';
 
-async function initMap() {
+async function init() {
     await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('places'),
@@ -299,6 +299,7 @@ function updateFeatureMenuAvailability(countryCode) {
 // Return a map of feature availability for a country.
 function getFeatureAvailability(countryName) {
     // Return the data for the selected country.
+
     const selectedCountry = countries.default.find((country) => {
         return country.code === countryName;
     });
@@ -435,4 +436,4 @@ async function showSelectedPolygon(placeid, mode) {
     applyStyle(placeid);
 }
 
-void initMap();
+void init();

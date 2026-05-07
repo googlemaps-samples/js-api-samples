@@ -4,20 +4,21 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 /* [START maps_deckgl_polygon] */
 // Initialize and add the map
 let map;
 let polygonLayer; // Declare polygonLayer outside for button access
 let googleMapsOverlay; // Declare googleMapsOverlay outside for button access
 
-async function initMap() {
+async function init() {
     // Progress bar logic moved from index.html
     let progress;
     const progressDiv = document.querySelector('.mdc-linear-progress');
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-        // @ts-expect-error: mdc not typed
+
         progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
@@ -56,11 +57,8 @@ async function initMap() {
         id: 'PolygonLayer',
         data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/sf-zipcodes.json',
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         getPolygon: (d) => d.contour, // Use 'any' for simplicity
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         getElevation: (d) => d.population / d.area / 10, // Use 'any' for simplicity
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         getFillColor: (d) => [d.population / d.area / 60, 140, 0], // Use 'any' for simplicity
         getLineColor: [255, 255, 255],
         getLineWidth: 20,
@@ -77,7 +75,6 @@ async function initMap() {
                 }, 100); // 100ms delay
             }
         },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onHover: ({ object, x, y }) => {
             // Use 'any' for object for simplicity
             const tooltip = document.getElementById('tooltip');
@@ -139,5 +136,5 @@ async function initMap() {
     }
 }
 
-void initMap();
+void init();
 /* [END maps_deckgl_polygon] */

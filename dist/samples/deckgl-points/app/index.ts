@@ -27,12 +27,13 @@ function isEarthquake(
     return (
         f.properties !== null &&
         typeof f.properties === 'object' &&
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         typeof (f.properties as any).mag === 'number'
     );
 }
 
 // Initialize and add the map
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -77,5 +78,5 @@ async function initMap() {
     deckOverlay.setMap(innerMap);
 }
 
-void initMap();
+void init();
 // [END maps_deckgl_points]

@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-async function initMap() {
+async function init() {
     await google.maps.importLibrary('maps');
 
     const mapElement = document.querySelector('gmp-map');
@@ -15,4 +15,4 @@ async function initMap() {
     innerMap.data.loadGeoJson('google.json');
 }
 
-void initMap();
+void init();

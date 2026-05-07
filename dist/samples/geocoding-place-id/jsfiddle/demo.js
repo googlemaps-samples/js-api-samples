@@ -6,7 +6,7 @@
  */
 
 // Initialize the map.
-async function initMap() {
+async function init() {
     const [{ Geocoder }, { InfoWindow }] = await Promise.all([
         google.maps.importLibrary('geocoding'),
         google.maps.importLibrary('maps'),
@@ -46,4 +46,4 @@ async function geocodePlaceId(geocoder, map, infoWindow) {
     }
 }
 
-void initMap();
+void init();

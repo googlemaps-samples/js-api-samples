@@ -8,7 +8,7 @@
 // You can set control options to change the default position or style of many
 // of the map controls.
 
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     const [{ MapTypeControlStyle, MapTypeId }, { ControlPosition }] =
         await Promise.all([
@@ -30,4 +30,4 @@ async function initMap() {
     });
 }
 
-void initMap();
+void init();
