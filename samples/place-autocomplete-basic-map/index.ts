@@ -41,7 +41,7 @@ async function init(): Promise<void> {
     // Create an advanced marker to show the location of a selected place.
     const advancedMarkerElement: google.maps.marker.AdvancedMarkerElement =
         new AdvancedMarkerElement({
-            map: map,
+            map,
             collisionBehavior: 'REQUIRED_AND_HIDES_OPTIONAL',
         });
 

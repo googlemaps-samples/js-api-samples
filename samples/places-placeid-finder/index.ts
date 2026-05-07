@@ -46,7 +46,7 @@ async function init(): Promise<void> {
     infoWindow.setContent(infoWindowContent);
 
     const marker = new AdvancedMarkerElement({
-        map: map,
+        map,
         collisionBehavior: 'REQUIRED_AND_HIDES_OPTIONAL',
         gmpClickable: true,
     });

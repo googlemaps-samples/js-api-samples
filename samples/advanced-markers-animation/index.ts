@@ -8,8 +8,8 @@
 /**
  * Returns a random lat lng position within the map bounds.
  */
-function getRandomPosition(map) {
-    const bounds = map.getBounds();
+function getRandomPosition(map: google.maps.Map): google.maps.LatLngLiteral {
+    const bounds = map.getBounds()!;
     const minLat = bounds.getSouthWest().lat();
     const minLng = bounds.getSouthWest().lng();
     const maxLat = bounds.getNorthEast().lat();
@@ -81,13 +81,16 @@ async function init(): Promise<void> {
     map.controls[ControlPosition.TOP_CENTER].push(controlDiv);
 }
 
-function createMarker(map, AdvancedMarkerElement, PinElement) {
-    const pinElement = new PinElement();
-    const content = pinElement.element;
+function createMarker(
+    map: google.maps.Map,
+    AdvancedMarkerElement: typeof google.maps.marker.AdvancedMarkerElement,
+    PinElement: typeof google.maps.marker.PinElement
+) {
+    const content = new PinElement();
     new AdvancedMarkerElement({
         position: getRandomPosition(map),
-        map: map,
-        content: content,
+        map,
+        content,
     });
 
     content.style.opacity = '0';

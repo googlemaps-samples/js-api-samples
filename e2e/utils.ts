@@ -16,6 +16,8 @@
 
 // IMPORTANT: Keep this file, it contains things you may need. This file is not
 
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 import { Page } from '@playwright/test';
 
 // from https://github.com/lit/lit.dev/blob/5d79d1e0989e68f8b5905e5271229ffe4c55265c/packages/lit-dev-tests/src/playwright/util.ts

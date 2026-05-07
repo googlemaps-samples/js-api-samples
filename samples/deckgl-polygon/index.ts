@@ -3,8 +3,10 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 
 /* [START maps_deckgl_polygon] */
 // Initialize and add the map

@@ -4,15 +4,21 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// Remove these disables once the PlacesLibrary typing is fixed:
+
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
 // [START maps_place_autocomplete_element]
 async function init(): Promise<void> {
     // [START maps_place_autocomplete_element_add]
     // Request needed libraries.
-    // @ts-expect-error - currently missing. bug fix pending
+    // @ts-expect-error - when this gets addressed also remove the global eslint-disables above
     const { PlaceAutocompleteElement } =
         await google.maps.importLibrary('places');
     // Create the input HTML element, and append it.
-    const placeAutocomplete = new PlaceAutocompleteElement({});
+    const placeAutocomplete = new PlaceAutocompleteElement();
     document.body.appendChild(placeAutocomplete);
     // [END maps_place_autocomplete_element_add]
 

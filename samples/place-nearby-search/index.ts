@@ -7,9 +7,9 @@
 // [START maps_place_nearby_search]
 const mapElement = document.querySelector('gmp-map')!;
 let innerMap: google.maps.Map;
-let center;
-let typeSelect;
-let infoWindow;
+let center: google.maps.LatLngLiteral;
+let typeSelect: HTMLSelectElement;
+let infoWindow: google.maps.InfoWindow;
 
 async function init() {
     const [{ InfoWindow }, { event }] = await Promise.all([
@@ -22,7 +22,7 @@ async function init() {
         mapTypeControl: false,
     });
 
-    typeSelect = document.querySelector('.type-select')!;
+    typeSelect = document.querySelector('.type-select') as HTMLSelectElement;
 
     typeSelect.addEventListener('change', () => {
         void nearbySearch();
@@ -122,7 +122,11 @@ async function nearbySearch() {
     }
 }
 
-function updateInfoWindow(title, content, anchor) {
+function updateInfoWindow(
+    title: string | Node | null,
+    content: string | Node | null,
+    anchor: google.maps.marker.AdvancedMarkerElement
+) {
     infoWindow.setContent(content);
     infoWindow.setHeaderContent(title);
     infoWindow.open({

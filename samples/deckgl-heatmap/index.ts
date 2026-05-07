@@ -5,6 +5,9 @@
  */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 
 /* [START maps_deckgl_heatmap] */
 // Initialize and add the map
@@ -146,7 +149,7 @@ async function init(): Promise<void> {
         if (!marker) {
             // Create the marker on the first click
             marker = new AdvancedMarkerElement({
-                map: map,
+                map,
                 position: latLng,
                 gmpClickable: true,
             });

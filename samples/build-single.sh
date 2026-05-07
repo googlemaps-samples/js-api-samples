@@ -56,6 +56,12 @@ if [[ $? -ne 0 ]]; then
   fi
 fi
 
+grep -E "\(\{\}\)" "${common_recursive_grep_options[@]}" --include=*.{ts,tsx}
+if [[ $? -eq 0 ]]; then
+  echo "Found '({})' in the code. That should probably be just '()'.";
+  exit 1
+fi
+
 grep -E "\[," "${common_recursive_grep_options[@]}" --include=*.{ts,tsx}
 if [[ $? -eq 0 ]]; then
   echo "Found '[,' in the code. Reorder the calls to avoid.";

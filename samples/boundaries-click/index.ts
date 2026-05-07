@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+
 // [START maps_boundaries_click_event]
 let innerMap: google.maps.Map;
 let featureLayer;
@@ -61,7 +65,7 @@ async function init() {
     // [END maps_boundaries_click_event_add_layer]
 
     // Create the infoWindow.
-    infoWindow = new InfoWindow({});
+    infoWindow = new InfoWindow();
     // Apply style on load, to enable clicking.
     featureLayer.style = applyStyle;
 }

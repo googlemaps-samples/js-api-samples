@@ -78,12 +78,20 @@ async function init() {
     });
 
     // Handle user click, reset the map center and position the circle.
-    innerMap.addListener('click', (mapsMouseEvent) => {
-        const newCenter = mapsMouseEvent.latLng;
-        walkingCircle.setCenter(newCenter);
-        centerMarker.position = newCenter;
-        innerMap.panTo(newCenter);
-    });
+    innerMap.addListener(
+        'click',
+        (
+            mapsMouseEvent:
+                | google.maps.MapMouseEvent
+                | google.maps.IconMouseEvent
+        ) => {
+            const newCenter = mapsMouseEvent.latLng;
+            if (!newCenter) return;
+            walkingCircle.setCenter(newCenter);
+            centerMarker.position = newCenter;
+            innerMap.panTo(newCenter);
+        }
+    );
 
     // Handle user dragging the circle, update the center marker position.
     walkingCircle.addListener('center_changed', () => {

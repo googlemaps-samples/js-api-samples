@@ -14,6 +14,9 @@ export default defineConfig([
         plugins: { js },
         extends: ['js/recommended'],
         languageOptions: { globals: { ...globals.browser, ...globals.node } },
+        linterOptions: {
+            reportUnusedDisableDirectives: 'error',
+        },
     },
     tseslint.configs.recommended,
     {

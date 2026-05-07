@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 // [START maps_geocoding_reverse]
-let marker;
+let marker: google.maps.marker.AdvancedMarkerElement;
 
 async function init() {
     //  Request the needed libraries.
@@ -50,9 +50,11 @@ async function init() {
     });
 
     // Add a click event listener to the map.
-    innerMap.addListener('click', (event) => {
-        latLngQuery.value = `${event.latLng.lat()}, ${event.latLng.lng()}`;
-        void geocodeLatLng(geocoder, innerMap, infoWindow);
+    innerMap.addListener('click', (event: google.maps.MapMouseEvent) => {
+        if (event.latLng) {
+            latLngQuery.value = `${event.latLng.lat()}, ${event.latLng.lng()}`;
+            void geocodeLatLng(geocoder, innerMap, infoWindow);
+        }
     });
 
     // Make an initial request upon loading.

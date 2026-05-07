@@ -34,17 +34,30 @@ async function init() {
     }
 }
 
-function toggleHighlight(markerView) {
-    if (markerView.content.classList.contains('highlight')) {
-        markerView.content.classList.remove('highlight');
+interface Property {
+    address: string;
+    description: string;
+    price: string;
+    type: string;
+    bed: number;
+    bath: number;
+    size: number;
+    position: google.maps.LatLngLiteral;
+}
+
+function toggleHighlight(markerView: google.maps.marker.AdvancedMarkerElement) {
+    const content = markerView.children[0] as HTMLElement;
+
+    if (content.classList.contains('highlight')) {
+        content.classList.remove('highlight');
         markerView.zIndex = null;
     } else {
-        markerView.content.classList.add('highlight');
+        content.classList.add('highlight');
         markerView.zIndex = 1;
     }
 }
 
-function buildContent(property) {
+function buildContent(property: Property) {
     const content = document.createElement('div');
     content.classList.add('property');
     content.innerHTML = `
@@ -77,7 +90,7 @@ function buildContent(property) {
     return content;
 }
 
-const properties = [
+const properties: Property[] = [
     {
         address: '215 Emily St, MountainView, CA',
         description: 'Single family house with modern design',

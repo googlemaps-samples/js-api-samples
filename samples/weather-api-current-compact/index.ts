@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 // [START maps_weather_api_compact]
 import './simple-weather-widget'; // Import the custom element
 
@@ -68,12 +70,12 @@ async function init(): Promise<void> {
                 const rainDetailsElement =
                     activeWeatherWidget.shadowRoot!.getElementById(
                         'rain-details'
-                    ) as HTMLDivElement;
+                    )!;
                 rainDetailsElement.style.display = 'none';
                 const activeWidgetContainer =
                     activeWeatherWidget.shadowRoot!.querySelector(
                         '.widget-container'
-                    ) as HTMLDivElement;
+                    )!;
                 activeWidgetContainer.classList.remove('highlight');
                 // Find the marker associated with the active widget and reset its zIndex
                 const activeMarker = allMarkers.find(
@@ -131,7 +133,7 @@ async function createAndAddMarker(
     }
 
     const marker = new AdvancedMarkerElement({
-        map: map,
+        map,
         position: { lat: location.lat, lng: location.lng },
         title: location.name, // Add a title for accessibility
         gmpClickable: true,
@@ -150,16 +152,15 @@ async function createAndAddMarker(
 
     // Add click listener to the marker
     marker.addEventListener('gmp-click', () => {
-        const widgetContainer = weatherWidget.shadowRoot!.querySelector(
-            '.widget-container'
-        ) as HTMLDivElement;
+        const widgetContainer =
+            weatherWidget.shadowRoot!.querySelector('.widget-container')!;
 
         // If a widget is currently active and it's not the clicked one, remove its highlight class and reset zIndex
         if (activeWeatherWidget && activeWeatherWidget !== weatherWidget) {
             const activeWidgetContainer =
                 activeWeatherWidget.shadowRoot!.querySelector(
                     '.widget-container'
-                ) as HTMLDivElement;
+                )!;
             activeWidgetContainer.classList.remove('highlight');
             // Find the marker associated with the active widget and reset its zIndex
             const activeMarker = allMarkers.find(
@@ -266,12 +267,12 @@ async function toggleDarkMode() {
                 const rainDetailsElement =
                     activeWeatherWidget.shadowRoot!.getElementById(
                         'rain-details'
-                    ) as HTMLDivElement;
+                    )!;
                 rainDetailsElement.style.display = 'none';
                 const activeWidgetContainer =
                     activeWeatherWidget.shadowRoot!.querySelector(
                         '.widget-container'
-                    ) as HTMLDivElement;
+                    )!;
                 activeWidgetContainer.classList.remove('highlight');
                 // Find the marker associated with the active widget and reset its zIndex
                 const activeMarker = allMarkers.find(
@@ -333,14 +334,12 @@ function removeButtonMarkers(): void {
         );
         if (buttonMarker) {
             const rainDetailsElement =
-                activeWeatherWidget.shadowRoot!.getElementById(
-                    'rain-details'
-                ) as HTMLDivElement;
+                activeWeatherWidget.shadowRoot!.getElementById('rain-details')!;
             rainDetailsElement.style.display = 'none';
             const activeWidgetContainer =
                 activeWeatherWidget.shadowRoot!.querySelector(
                     '.widget-container'
-                ) as HTMLDivElement;
+                )!;
             activeWidgetContainer.classList.remove('highlight');
             buttonMarker.zIndex = null;
             activeWeatherWidget = null; // Clear the active widget

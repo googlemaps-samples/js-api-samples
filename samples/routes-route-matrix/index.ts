@@ -5,7 +5,7 @@
  */
 // [START maps_routes_route_matrix]
 // Initialize and add the map.
-let map;
+let map: google.maps.Map;
 const markers: google.maps.marker.AdvancedMarkerElement[] = [];
 const center = { lat: 51.55, lng: -1.8 };
 
@@ -29,7 +29,7 @@ async function init(): Promise<void> {
 
     map = new Map(document.getElementById('map') as HTMLElement, {
         zoom: 8,
-        center: center,
+        center,
         mapId: 'DEMO_MAP_ID',
     });
 
@@ -67,15 +67,21 @@ async function init(): Promise<void> {
     // [END maps_routes_route_matrix_request]
 
     // Show the request.
-    (document.getElementById('request') as HTMLDivElement).innerText =
-        JSON.stringify(request, null, 2);
+    document.getElementById('request')!.innerText = JSON.stringify(
+        request,
+        null,
+        2
+    );
 
     // Get the RouteMatrix response.
     const response = await RouteMatrix.computeRouteMatrix(request);
 
     // Show the response.
-    (document.getElementById('response') as HTMLDivElement).innerText =
-        JSON.stringify(response, null, 2);
+    document.getElementById('response')!.innerText = JSON.stringify(
+        response,
+        null,
+        2
+    );
 
     // Add markers for the origins.
     for (const origin of origins) {

@@ -3,6 +3,12 @@
  * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+
 // [START maps_dds_datasets_polygon_click]
 const mapElement = document.querySelector('gmp-map')!;
 let innerMap: google.maps.Map;

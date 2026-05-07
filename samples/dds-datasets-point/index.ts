@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 // [START maps_dds_datasets_point]
 const mapElement = document.querySelector('gmp-map')!;
 let innerMap: google.maps.Map;

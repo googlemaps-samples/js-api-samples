@@ -7,7 +7,7 @@
 // [START maps_place_class]
 const mapElement = document.querySelector('gmp-map')!;
 let innerMap: google.maps.Map;
-let infoWindow;
+let infoWindow: google.maps.InfoWindow;
 
 async function init() {
     const { InfoWindow } = await google.maps.importLibrary('maps');

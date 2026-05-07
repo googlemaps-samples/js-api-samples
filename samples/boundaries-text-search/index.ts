@@ -7,7 +7,7 @@
 // [START maps_boundaries_text_search]
 let innerMap: google.maps.Map;
 let featureLayer;
-let center;
+let center: google.maps.LatLngLiteral;
 
 async function init() {
     // Load the needed libraries.

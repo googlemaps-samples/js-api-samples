@@ -34,7 +34,7 @@ async function init(): Promise<void> {
         map: innerMap,
     });
 
-    infoWindow = new InfoWindow({});
+    infoWindow = new InfoWindow();
 
     // [START maps_place_autocomplete_map_listener]
     // Add the gmp-placeselect listener, and display the results on the map.
@@ -71,7 +71,10 @@ async function init(): Promise<void> {
 }
 
 // Helper function to create an info window.
-function updateInfoWindow(content, center) {
+function updateInfoWindow(
+    content: string | Element | Text | null | undefined,
+    center: google.maps.LatLng | google.maps.LatLngLiteral | null | undefined
+) {
     infoWindow.setContent(content);
     infoWindow.setPosition(center);
     infoWindow.open({

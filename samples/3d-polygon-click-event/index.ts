@@ -45,7 +45,7 @@ async function init() {
     map.append(examplePolygon);
 }
 
-function randomizeHexColor(originalHexColor) {
+function randomizeHexColor(originalHexColor: string) {
     console.log(originalHexColor);
     const alpha = originalHexColor.substring(7);
 
