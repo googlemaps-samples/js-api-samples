@@ -27,9 +27,7 @@ export default defineConfig([
             'prefer-const': 'error',
             'spaced-comment': ['error', 'always'],
             'no-shadow': 'error',
-
-            // temporarily downgraded to warn for historic reasons:
-            'no-prototype-builtins': 'warn',
+            'no-prototype-builtins': 'off', // samples show more vanilla patterns
         },
     },
     {

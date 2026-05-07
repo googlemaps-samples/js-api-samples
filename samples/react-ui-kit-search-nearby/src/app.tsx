@@ -3,6 +3,7 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 {
     /* [START maps_react_places_ui_kit_search_nearby] */
 }
@@ -30,9 +31,7 @@ const App = () => (
 
 const PlacesSearchLayout = () => {
     const [selectedType, setSelectedType] = useState('');
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [places, setPlaces] = useState<any[]>([]);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [selectedPlace, setSelectedPlace] = useState<any>(null);
 
     const placeSearchRef = useRef<HTMLDivElement>(null);
@@ -90,11 +89,8 @@ const PlacesSearchLayout = () => {
 interface PlaceSearchControllerProps {
     placeSearchRef: RefObject<HTMLDivElement | null>;
     selectedType: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setPlaces: (places: any[]) => void;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setSelectedPlace: (place: any) => void;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     selectedPlace: any;
 }
 
@@ -110,7 +106,6 @@ const PlaceSearchController = ({
     const markerLib = useMapsLibrary('marker');
     const geometryLib = useMapsLibrary('geometry');
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const placeRequestRef = useRef<any>(null);
     const popupMarkerRef =
         useRef<google.maps.marker.AdvancedMarkerElement | null>(null);
@@ -172,28 +167,22 @@ const PlaceSearchController = ({
         const diameter = geometryLib.spherical.computeDistanceBetween(ne, sw);
         const radius = Math.min(diameter / 2, 50000);
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (nearbyRequest as any).maxResultCount = 10;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (nearbyRequest as any).locationRestriction = { center, radius };
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (nearbyRequest as any).includedTypes = [selectedType];
 
         const handleLoad = () => {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const newPlaces = (placeSearch as any).places || [];
             setPlaces(newPlaces);
             if (newPlaces.length > 0) {
                 const newBounds = new coreLib.LatLngBounds();
                 newPlaces.forEach(
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     (p: any) => p.location && newBounds.extend(p.location)
                 );
                 if (!newBounds.isEmpty()) map.fitBounds(newBounds);
             }
         };
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const handleSelect = (event: any) => setSelectedPlace(event.place);
 
         placeSearch.addEventListener('gmp-load', handleLoad);

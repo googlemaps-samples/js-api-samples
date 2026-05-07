@@ -3,7 +3,7 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // [START maps_weather_api_compact]
 import './simple-weather-widget'; // Import the custom element
 
@@ -87,7 +87,6 @@ async function init(): Promise<void> {
 
             // Remove the previous dynamic marker if it exists
             const currentDynamicMarkerIndex = allMarkers.findIndex(
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (marker) => (marker as any).markerType === 'dynamic'
             );
             if (currentDynamicMarkerIndex !== -1) {
@@ -140,7 +139,6 @@ async function createAndAddMarker(
     marker.append(weatherWidget);
 
     // Store the marker type
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (marker as any).markerType = markerType;
 
     // Fetch and update weather data for this location
@@ -287,7 +285,6 @@ async function toggleDarkMode() {
 
             // Remove the previous dynamic marker if it exists
             const currentDynamicMarkerIndex = allMarkers.findIndex(
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (marker) => (marker as any).markerType === 'dynamic'
             );
             if (currentDynamicMarkerIndex !== -1) {
@@ -332,7 +329,6 @@ function removeButtonMarkers(): void {
         const buttonMarker = allMarkers.find(
             (marker) =>
                 marker.firstElementChild === activeWeatherWidget &&
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (marker as any).markerType === 'button'
         );
         if (buttonMarker) {
@@ -353,7 +349,6 @@ function removeButtonMarkers(): void {
 
     // Remove button markers from the map and the allMarkers array
     const markersToRemove = allMarkers.filter(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (marker) => (marker as any).markerType === 'button'
     );
     markersToRemove.forEach((marker) => {
