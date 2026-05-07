@@ -66,7 +66,7 @@ cat > "${OUTPUT_DIR}/${NAME}/tsconfig.json" << EOF
     "rootDir": "."
   },
   "include": [
-    "./*.ts",
+    "./*.ts"
   ]
 }
 EOF

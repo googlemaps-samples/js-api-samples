@@ -43,7 +43,6 @@ cat > "$NAME/index.html" << EOF
 
         <link rel="stylesheet" type="text/css" href="./style.css" />
         <script type="module" src="./index.js"></script>
-        <!-- prettier-ignore -->
 EOF
 
 # Use 'EOF' to prevent expansion of the loader script
@@ -104,7 +103,9 @@ cat > "$NAME/tsconfig.json" << 'EOF'
   "compilerOptions": {
     "rootDir": "."
   },
-  "include": ["./*.ts"]
+  "include": [
+    "./*.ts"
+  ]
 }
 EOF
 

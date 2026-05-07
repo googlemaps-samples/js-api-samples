@@ -10,11 +10,11 @@ const mapElement = document.querySelector('gmp-map');
 let innerMap;
 
 // Initialize and add the map.
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
-    const [, { event }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ event }] = await Promise.all([
         google.maps.importLibrary('core'),
+        google.maps.importLibrary('maps'),
     ]);
 
     innerMap = mapElement.innerMap;
@@ -66,7 +66,7 @@ async function getDirections() {
                     glyphColor: 'white',
                     background: 'green',
                     borderColor: 'green',
-                }).element,
+                }),
             };
         }
 
@@ -80,7 +80,7 @@ async function getDirections() {
                     glyphColor: 'white',
                     background: 'blue',
                     borderColor: 'blue',
-                }).element,
+                }),
             };
         }
 
@@ -94,7 +94,7 @@ async function getDirections() {
                     glyphColor: 'white',
                     background: 'red',
                     borderColor: 'red',
-                }).element,
+                }),
             };
         }
 
@@ -112,4 +112,4 @@ async function getDirections() {
     mapPolylines.forEach((polyline) => polyline.setMap(innerMap));
 }
 
-void initMap();
+void init();

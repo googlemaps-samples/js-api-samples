@@ -8,11 +8,11 @@
 let panorama;
 let innerMap;
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const [, { Marker }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ Marker }] = await Promise.all([
         google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
     ]);
 
     // Set the location of Astor Place.
@@ -77,6 +77,6 @@ function toggleStreetView() {
     }
 }
 
-void initMap();
+void init();
 export {};
 // [END maps_streetview_overlays]

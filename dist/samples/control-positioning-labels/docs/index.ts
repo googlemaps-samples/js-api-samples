@@ -33,11 +33,11 @@ function MakeControl(controlDiv: HTMLElement, label: string) {
     controlUI.appendChild(controlText);
 }
 
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
-    const [, { ControlPosition }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ ControlPosition }] = await Promise.all([
         google.maps.importLibrary('core'),
+        google.maps.importLibrary('maps'),
     ]);
 
     const mapElement = document.querySelector('gmp-map')!;
@@ -81,5 +81,5 @@ function toggleRTL() {
     }
 }
 
-void initMap();
+void init();
 // [END maps_control_positioning_labels]

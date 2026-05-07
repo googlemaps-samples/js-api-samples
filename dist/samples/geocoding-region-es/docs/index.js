@@ -6,7 +6,7 @@
  */
 
 // [START maps_js_geocoding_region_es]
-async function initMap() {
+async function init() {
     const [{ Geocoder }, { AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('geocoding'),
         google.maps.importLibrary('marker'),
@@ -35,5 +35,5 @@ async function initMap() {
         );
 }
 
-void initMap();
+void init();
 // [END maps_js_geocoding_region_es]

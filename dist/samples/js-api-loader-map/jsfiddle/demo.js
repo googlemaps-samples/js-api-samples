@@ -9,7 +9,7 @@ import { setOptions, importLibrary } from '@googlemaps/js-api-loader';
 
 const API_KEY = 'AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8';
 
-async function initMap() {
+async function init() {
     // Set loader options.
     setOptions({
         key: API_KEY,
@@ -28,4 +28,4 @@ async function initMap() {
     new Map(document.getElementById('map'), mapOptions);
 }
 
-void initMap();
+void init();

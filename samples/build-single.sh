@@ -47,6 +47,21 @@ done
 
 set +e
 
+grep -i -E " init\(" "${common_recursive_grep_options[@]}" --include=*.{ts,tsx} > /dev/null
+if [[ $? -ne 0 ]]; then
+  grep -i -E " init[a-z]+\(" "${common_recursive_grep_options[@]}" --include=*.{ts,tsx}
+  if [[ $? -eq 0 ]]; then
+    echo "Found an init...() function but not an init() function. Must normalize root init() function name.";
+    exit 1
+  fi
+fi
+
+grep -E "\[," "${common_recursive_grep_options[@]}" --include=*.{ts,tsx}
+if [[ $? -eq 0 ]]; then
+  echo "Found '[,' in the code. Reorder the calls to avoid.";
+  exit 1
+fi
+
 grep "<!-- prettier-ignore -->" "${html_recursive_grep_options[@]}"
 if [[ $? -eq 0 ]]; then
   echo "Don't use '<!-- prettier-ignore -->' in HTML files. For the inline loader, use a '// prettier-ignore' comment inside the <script> tag."
@@ -138,9 +153,14 @@ if [[ $status -ne 0 ]]; then
   exit $status
 fi
 
-if [[ -f index.js ]]; then # DNE for react builds
+
+if ls *.js; then # Note: DNE for react builds
   # ensure final output is still pretty...
-  npx prettier -w index.js --ignore-path /dev/null
+  echo "Making JS pretty..."
+  sed -i.sed-back 's#// @ts-expect-error.*##g' *.js && rm *.sed-back
+  sed -i.sed-back 's#// eslint-disable.*##g' *.js && rm *.sed-back
+  sed -i.sed-back 's#/\* eslint-disable.*\*/##g' *.js && rm *.sed-back
+  npx prettier -w *.js --ignore-path /dev/null # --ignore-path /dev/null forces enablement 
 fi
 
 # one more check (this one needs typings stripped to work)

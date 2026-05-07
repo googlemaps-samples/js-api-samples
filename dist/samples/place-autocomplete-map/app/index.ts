@@ -7,10 +7,10 @@
 // [START maps_place_autocomplete_map]
 const mapElement = document.querySelector('gmp-map')!;
 const placeAutocomplete = document.querySelector('gmp-place-autocomplete')!;
-let innerMap;
+let innerMap: google.maps.Map;
 let marker: google.maps.marker.AdvancedMarkerElement;
 let infoWindow: google.maps.InfoWindow;
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Request needed libraries.
     const [{ AdvancedMarkerElement }, { InfoWindow }] = await Promise.all([
         google.maps.importLibrary('marker'),
@@ -26,7 +26,7 @@ async function initMap(): Promise<void> {
 
     // Use the bounds_changed event to restrict results to the current map bounds.
     innerMap.addListener('bounds_changed', () => {
-        placeAutocomplete.locationRestriction = innerMap.getBounds();
+        placeAutocomplete.locationRestriction = innerMap.getBounds()!;
     });
 
     // Create the marker and infoWindow.
@@ -50,7 +50,7 @@ async function initMap(): Promise<void> {
             if (place.viewport) {
                 innerMap.fitBounds(place.viewport);
             } else {
-                innerMap.setCenter(place.location);
+                innerMap.setCenter(place.location!);
                 innerMap.setZoom(17);
             }
 
@@ -81,5 +81,5 @@ function updateInfoWindow(content, center) {
     });
 }
 
-void initMap();
+void init();
 // [END maps_place_autocomplete_map]

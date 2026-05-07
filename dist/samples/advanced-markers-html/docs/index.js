@@ -7,7 +7,7 @@
 
 // [START maps_advanced_markers_html]
 // [START maps_advanced_markers_html_snippet]
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('maps'),
@@ -212,5 +212,5 @@ const properties = [
     },
 ];
 
-void initMap();
+void init();
 // [END maps_advanced_markers_html]

@@ -5,13 +5,13 @@
  */
 
 // [START maps_advanced_markers_graphics]
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const [, { AdvancedMarkerElement, PinElement }, { Place }] =
+    const [{ AdvancedMarkerElement, PinElement }, { Place }] =
         await Promise.all([
-            google.maps.importLibrary('maps'),
             google.maps.importLibrary('marker'),
             google.maps.importLibrary('places'),
+            google.maps.importLibrary('maps'),
         ]);
 
     const mapElement = document.querySelector('gmp-map');
@@ -98,6 +98,6 @@ async function initMap() {
     // [END maps_advanced_markers_graphics_place_icon]
 }
 
-void initMap();
+void init();
 export {};
 // [END maps_advanced_markers_graphics]

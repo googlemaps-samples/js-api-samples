@@ -9,7 +9,7 @@
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
 
-async function initMap() {
+async function init() {
     // Load the needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -38,7 +38,7 @@ function initZoomControl(map) {
     });
 }
 
-function initMapTypeControl(innerMap) {
+function initMapTypeControl(map) {
     const mapTypeControlDiv = document.querySelector('.maptype-control');
     const btnMap = document.querySelector('.maptype-control-map');
     const btnSatellite = document.querySelector('.maptype-control-satellite');
@@ -46,13 +46,13 @@ function initMapTypeControl(innerMap) {
     btnMap.addEventListener('click', () => {
         mapTypeControlDiv.classList.add('maptype-control-is-map');
         mapTypeControlDiv.classList.remove('maptype-control-is-satellite');
-        innerMap.setMapTypeId('roadmap');
+        map.setMapTypeId('roadmap');
     });
 
     btnSatellite.addEventListener('click', () => {
         mapTypeControlDiv.classList.add('maptype-control-is-satellite');
         mapTypeControlDiv.classList.remove('maptype-control-is-map');
-        innerMap.setMapTypeId('hybrid');
+        map.setMapTypeId('hybrid');
     });
 }
 
@@ -83,5 +83,5 @@ function toggleFullScreen(element) {
     }
 }
 
-void initMap();
+void init();
 // [END maps_control_replacement]

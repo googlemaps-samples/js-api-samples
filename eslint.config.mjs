@@ -26,6 +26,7 @@ export default defineConfig([
             'no-undef': 'off', // handled better by TS
             'prefer-const': 'error',
             'spaced-comment': ['error', 'always'],
+            'no-shadow': 'error',
 
             // temporarily downgraded to warn for historic reasons:
             'no-prototype-builtins': 'warn',
@@ -40,6 +41,9 @@ export default defineConfig([
             },
         },
         rules: {
+            'no-shadow': 'off', // required to enable @typescript-eslint/no-shadow
+            '@typescript-eslint/no-shadow': 'error',
+            '@typescript-eslint/no-deprecated': 'error',
             '@typescript-eslint/no-misused-promises': [
                 'error',
                 {
@@ -49,16 +53,17 @@ export default defineConfig([
                     },
                 },
             ],
+            '@typescript-eslint/no-namespace': [
+                'error',
+                { allowDeclarations: true, allowDefinitionFiles: true },
+            ],
 
             // temporarily downgraded to warn for historic reasons:
             '@typescript-eslint/no-unsafe-member-access': 'warn',
             '@typescript-eslint/no-unsafe-assignment': 'warn',
             '@typescript-eslint/no-unsafe-call': 'warn',
-            '@typescript-eslint/no-explicit-any': 'warn',
-            '@typescript-eslint/no-namespace': 'warn',
             '@typescript-eslint/no-unsafe-return': 'warn',
             '@typescript-eslint/no-unsafe-argument': 'warn',
-            '@typescript-eslint/no-redundant-type-constituents': 'warn',
         },
     },
     {

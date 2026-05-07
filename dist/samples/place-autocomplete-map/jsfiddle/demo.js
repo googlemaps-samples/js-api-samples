@@ -10,7 +10,7 @@ const placeAutocomplete = document.querySelector('gmp-place-autocomplete');
 let innerMap;
 let marker;
 let infoWindow;
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const [{ AdvancedMarkerElement }, { InfoWindow }] = await Promise.all([
         google.maps.importLibrary('marker'),
@@ -79,4 +79,4 @@ function updateInfoWindow(content, center) {
     });
 }
 
-void initMap();
+void init();

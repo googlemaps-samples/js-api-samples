@@ -5,11 +5,11 @@
  */
 
 // [START maps_place_reviews]
-let innerMap;
+let innerMap: google.maps.Map;
 let infoWindow;
 const mapElement = document.querySelector('gmp-map')!;
 
-async function initMap() {
+async function init() {
     // Import the needed libraries.
     const [{ InfoWindow }, { AdvancedMarkerElement }, { Place }] =
         await Promise.all([
@@ -79,7 +79,7 @@ async function initMap() {
         title: place.displayName,
     });
 
-    innerMap.setCenter(place.location);
+    innerMap.setCenter(place.location!);
 
     // Show the info window.
     infoWindow.open({
@@ -88,5 +88,5 @@ async function initMap() {
     });
 }
 
-void initMap();
+void init();
 // [END maps_place_reviews]

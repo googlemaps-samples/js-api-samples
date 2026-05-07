@@ -11,7 +11,7 @@ let mapPolylines = [];
 const center = { lat: 37.447646, lng: -122.113878 }; // Palo Alto, CA
 
 // Initialize and add the map.
-async function initMap() {
+async function init() {
     // Request the needed libraries.
     const [{ Map }, { Route }] = await Promise.all([
         google.maps.importLibrary('maps'),
@@ -143,4 +143,4 @@ async function fitMapToPath(path) {
     map.fitBounds(bounds);
 }
 
-void initMap();
+void init();

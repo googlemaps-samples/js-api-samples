@@ -18,7 +18,7 @@ let activeWeatherWidget: SimpleWeatherWidget | null = null; // To keep track of 
 let allMarkers: google.maps.marker.AdvancedMarkerElement[] = []; // To store all active markers
 let markersLoaded = false; // Flag to track if button markers are loaded
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     void google.maps.importLibrary('marker'); // preload
     const { Map } = await google.maps.importLibrary('maps');
 
@@ -77,7 +77,7 @@ async function initMap(): Promise<void> {
                 activeWidgetContainer.classList.remove('highlight');
                 // Find the marker associated with the active widget and reset its zIndex
                 const activeMarker = allMarkers.find(
-                    (marker) => marker.content === activeWeatherWidget
+                    (marker) => marker.firstElementChild === activeWeatherWidget
                 );
                 if (activeMarker) {
                     activeMarker.zIndex = null;
@@ -87,6 +87,7 @@ async function initMap(): Promise<void> {
 
             // Remove the previous dynamic marker if it exists
             const currentDynamicMarkerIndex = allMarkers.findIndex(
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (marker) => (marker as any).markerType === 'dynamic'
             );
             if (currentDynamicMarkerIndex !== -1) {
@@ -133,12 +134,13 @@ async function createAndAddMarker(
     const marker = new AdvancedMarkerElement({
         map: map,
         position: { lat: location.lat, lng: location.lng },
-        content: weatherWidget,
         title: location.name, // Add a title for accessibility
         gmpClickable: true,
     });
+    marker.append(weatherWidget);
 
     // Store the marker type
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (marker as any).markerType = markerType;
 
     // Fetch and update weather data for this location
@@ -163,7 +165,7 @@ async function createAndAddMarker(
             activeWidgetContainer.classList.remove('highlight');
             // Find the marker associated with the active widget and reset its zIndex
             const activeMarker = allMarkers.find(
-                (marker) => marker.content === activeWeatherWidget
+                (e) => e.firstElementChild === activeWeatherWidget
             );
             if (activeMarker) {
                 activeMarker.zIndex = null;
@@ -234,8 +236,7 @@ async function toggleDarkMode() {
 
     for (const marker of markersToReAdd) {
         marker.map = map; // Add marker to the new map
-        const weatherWidget = marker.content as SimpleWeatherWidget;
-        const mapContainer = document.getElementById('map') as HTMLElement; // Re-get map container
+        const weatherWidget = marker.firstElementChild as SimpleWeatherWidget;
         if (mapContainer.classList.contains('dark-mode')) {
             weatherWidget.setMode('dark');
         } else {
@@ -276,7 +277,7 @@ async function toggleDarkMode() {
                 activeWidgetContainer.classList.remove('highlight');
                 // Find the marker associated with the active widget and reset its zIndex
                 const activeMarker = allMarkers.find(
-                    (marker) => marker.content === activeWeatherWidget
+                    (marker) => marker.firstElementChild === activeWeatherWidget
                 );
                 if (activeMarker) {
                     activeMarker.zIndex = null;
@@ -286,6 +287,7 @@ async function toggleDarkMode() {
 
             // Remove the previous dynamic marker if it exists
             const currentDynamicMarkerIndex = allMarkers.findIndex(
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (marker) => (marker as any).markerType === 'dynamic'
             );
             if (currentDynamicMarkerIndex !== -1) {
@@ -329,7 +331,8 @@ function removeButtonMarkers(): void {
     if (activeWeatherWidget) {
         const buttonMarker = allMarkers.find(
             (marker) =>
-                marker.content === activeWeatherWidget &&
+                marker.firstElementChild === activeWeatherWidget &&
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (marker as any).markerType === 'button'
         );
         if (buttonMarker) {
@@ -350,6 +353,7 @@ function removeButtonMarkers(): void {
 
     // Remove button markers from the map and the allMarkers array
     const markersToRemove = allMarkers.filter(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (marker) => (marker as any).markerType === 'button'
     );
     markersToRemove.forEach((marker) => {
@@ -397,7 +401,7 @@ async function updateWeatherDisplayForMarker(
     }
 }
 
-void initMap();
+void init();
 
 // Wait for the custom element to be defined before adding the event listener
 void customElements.whenDefined('simple-weather-widget').then(() => {
