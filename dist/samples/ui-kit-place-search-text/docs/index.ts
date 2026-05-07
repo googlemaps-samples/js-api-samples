@@ -54,8 +54,8 @@ async function init(): Promise<void> {
         }
     });
 
-    placeSearch.addEventListener('gmp-select', (event: Event) => {
-        const { place } = event as any;
+    placeSearch.addEventListener('gmp-select', (event) => {
+        const { place } = event;
         markers.get(place.id)?.click();
     });
     placeSearch.addEventListener('gmp-load', () => {

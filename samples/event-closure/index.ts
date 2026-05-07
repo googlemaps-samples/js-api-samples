@@ -5,11 +5,11 @@
  */
 
 // [START maps_event_closure]
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const [, { AdvancedMarkerElement }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
     ]);
 
     const mapElement = document.querySelector('gmp-map')!;
@@ -63,5 +63,5 @@ async function attachSecretMessage(
     });
 }
 
-void initMap();
+void init();
 // [END maps_event_closure]

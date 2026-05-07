@@ -16,11 +16,11 @@ const mapElement = document.querySelector('gmp-map');
 let innerMap;
 let center;
 
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
-    const [, { AdvancedMarkerElement }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
     ]);
 
     // Get the inner map from the gmp-map element.
@@ -41,4 +41,4 @@ async function initMap() {
 
     console.log("Say there Mac, why'd you choose me to test this change?");
 }
-void initMap();
+void init();

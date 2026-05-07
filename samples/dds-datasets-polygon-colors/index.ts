@@ -6,7 +6,7 @@
 
 // [START maps_dds_datasets_polygon_colors]
 const mapElement = document.querySelector('gmp-map')!;
-let innerMap;
+let innerMap: google.maps.Map;
 // [START maps_dds_datasets_polygon_colors_style_function]
 function setStyle(params) {
     const datasetFeature = params.feature;
@@ -45,7 +45,7 @@ function setStyle(params) {
 }
 // [END maps_dds_datasets_polygon_colors_style_function]
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -58,5 +58,5 @@ async function initMap() {
     datasetLayer.style = setStyle;
 }
 
-void initMap();
+void init();
 // [END maps_dds_datasets_polygon_colors]

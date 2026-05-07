@@ -12,7 +12,7 @@
  */
 // [START maps_map_simple_js]
 let map: google.maps.Map;
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Import the needed libraries
     const { Map } = await google.maps.importLibrary('maps');
 
@@ -26,5 +26,5 @@ async function initMap(): Promise<void> {
     console.log(map);
 }
 
-void initMap();
+void init();
 // [END maps_map_simple_js]

@@ -5,7 +5,7 @@
  */
 
 // [START maps_map_simple]
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Import the needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -17,5 +17,5 @@ async function initMap(): Promise<void> {
     console.log({ mapElement, innerMap });
 }
 
-void initMap();
+void init();
 // [END maps_map_simple]

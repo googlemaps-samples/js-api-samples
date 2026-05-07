@@ -10,7 +10,7 @@ let map;
 let markers = {};
 let infoWindow;
 
-async function initMap() {
+async function init() {
     const [{ Map, InfoWindow }, { ControlPosition }] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('core'),
@@ -110,5 +110,5 @@ function updateInfoWindow(title, content, anchor) {
     });
 }
 
-void initMap();
+void init();
 // [END maps_place_text_search]

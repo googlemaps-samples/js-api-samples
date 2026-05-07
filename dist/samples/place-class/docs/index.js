@@ -10,7 +10,7 @@ const mapElement = document.querySelector('gmp-map');
 let innerMap;
 let infoWindow;
 
-async function initMap() {
+async function init() {
     const { InfoWindow } = await google.maps.importLibrary('maps');
 
     innerMap = mapElement.innerMap;
@@ -72,5 +72,5 @@ async function getPlaceDetails() {
 }
 // [END maps_place_class_fetchfields]
 
-void initMap();
+void init();
 // [END maps_place_class]

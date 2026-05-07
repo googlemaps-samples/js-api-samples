@@ -14,7 +14,7 @@ const placeDetailsRequest = document.querySelector(
 );
 const marker = document.querySelector('gmp-advanced-marker');
 /* [END maps_ui_kit_place_details_compact_query_selector] */
-async function initMap() {
+async function init() {
     // Request needed libraries.
     void Promise.all([
         google.maps.importLibrary('marker'),
@@ -71,5 +71,5 @@ async function initMap() {
     });
 }
 /* [END maps_ui_kit_place_details_compact_event] */
-void initMap();
+void init();
 /* [END maps_ui_kit_place_details_compact] */

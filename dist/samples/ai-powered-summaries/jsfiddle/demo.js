@@ -19,7 +19,7 @@ const flagContentLink = document.getElementById('flag-content-link');
 let innerMap;
 let marker;
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const [{ AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('marker'),
@@ -229,4 +229,4 @@ function updateSummaryPanel(place) {
     }
 }
 
-void initMap();
+void init();

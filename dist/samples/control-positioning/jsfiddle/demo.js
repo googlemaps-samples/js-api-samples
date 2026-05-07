@@ -8,7 +8,7 @@
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const [{ MapTypeControlStyle }, { ControlPosition }] = await Promise.all([
         google.maps.importLibrary('maps'),
@@ -38,4 +38,4 @@ async function initMap() {
     });
 }
 
-void initMap();
+void init();

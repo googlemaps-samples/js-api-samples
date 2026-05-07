@@ -10,7 +10,7 @@ let innerMap;
 let featureLayer;
 let center;
 
-async function initMap() {
+async function init() {
     // Load the needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -66,5 +66,5 @@ function styleBoundary(placeid) {
     };
 }
 // [END maps_boundaries_text_search_find_region]
-void initMap();
+void init();
 // [END maps_boundaries_text_search]

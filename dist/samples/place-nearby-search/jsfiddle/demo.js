@@ -11,7 +11,7 @@ let center;
 let typeSelect;
 let infoWindow;
 
-async function initMap() {
+async function init() {
     const [{ InfoWindow }, { event }] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('core'),
@@ -49,9 +49,8 @@ async function nearbySearch() {
 
     // Get bounds and radius to constrain search.
     center = mapElement.center;
-    const bounds = innerMap.getBounds();
-    const ne = bounds.getNorthEast();
-    const sw = bounds.getSouthWest();
+    const ne = innerMap.getBounds().getNorthEast();
+    const sw = innerMap.getBounds().getSouthWest();
     const diameter = spherical.computeDistanceBetween(ne, sw);
     const radius = Math.min(diameter / 2, 50000); // Radius cannot be more than 50000.
 
@@ -130,4 +129,4 @@ function updateInfoWindow(title, content, anchor) {
     });
 }
 
-void initMap();
+void init();

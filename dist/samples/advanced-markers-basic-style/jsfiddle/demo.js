@@ -7,11 +7,11 @@
 
 const mapElement = document.querySelector('gmp-map');
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const [, { AdvancedMarkerElement, PinElement }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ AdvancedMarkerElement, PinElement }] = await Promise.all([
         google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
     ]);
 
     // Each PinElement is paired with a marker to demonstrate setting each parameter.
@@ -84,4 +84,4 @@ async function initMap() {
     mapElement.append(markerNoGlyph);
 }
 
-void initMap();
+void init();
