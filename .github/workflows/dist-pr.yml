@@ -40,13 +40,23 @@ jobs:
           git config --global user.name 'googlemaps-bot'
           git config --global user.email 'googlemaps-bot@google.com'
 
-      - name: Create Pull Request
+      - name: Create Pull Request, Approve, and Enable Auto-Merge
         run: |
-          gh pr create \
+          PR_URL=$(gh pr create \
             --base main \
             --head temp-build-branch \
             --title "chore: automated output update (dist)" \
             --body "This PR contains updated build output from the dist branch." \
-            --label "automated pr,dist-update"
+            --label "automated pr,dist-update")
+          
+          echo "PR created at $PR_URL"
+          
+          # Approve the PR using the Approver Token
+          GH_TOKEN=${{ secrets.GH_APPROVER_TOKEN }} gh pr review --approve "$PR_URL"
+          echo "PR approved."
+          
+          # Enable auto-merge using the Merge Token
+          gh pr merge --auto --merge "$PR_URL"
+          echo "Auto-merge enabled."
         env:
           GH_TOKEN: ${{ secrets.GH_MERGE_TOKEN }}
