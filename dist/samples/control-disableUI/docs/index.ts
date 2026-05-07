@@ -5,7 +5,7 @@
  */
 
 // [START maps_control_disableUI]
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -21,5 +21,5 @@ async function initMap() {
     // [END maps_control_disableUI_options]
 }
 
-void initMap();
+void init();
 // [END maps_control_disableUI]

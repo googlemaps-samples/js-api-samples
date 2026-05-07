@@ -14,7 +14,7 @@ let innerMap: google.maps.Map;
 
 let infoWindow: google.maps.InfoWindow;
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     const { Rectangle, InfoWindow } = await google.maps.importLibrary('maps');
 
     const mapElement = document.querySelector('gmp-map')!;
@@ -67,5 +67,5 @@ function showNewRect() {
     infoWindow.open(innerMap);
 }
 
-void initMap();
+void init();
 // [END maps_rectangle_event]

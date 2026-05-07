@@ -18,7 +18,7 @@ const styleOptions = {
 };
 // [END maps_dds_datasets_polygon_featurestyleoptions]
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -34,5 +34,5 @@ async function initMap() {
     // [END maps_dds_datasets_polygon_featurelayer]
 }
 
-void initMap();
+void init();
 // [END maps_dds_datasets_polygon]

@@ -7,10 +7,10 @@
 
 let innerMap;
 
-async function initMap() {
-    const [, { SymbolPath }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+async function init() {
+    const [{ SymbolPath }] = await Promise.all([
         google.maps.importLibrary('core'),
+        google.maps.importLibrary('maps'),
     ]);
 
     const mapElement = document.querySelector('gmp-map');
@@ -42,9 +42,10 @@ async function initMap() {
 }
 
 // Defines the callback function referenced in the jsonp file.
+
 function earthquakeDataLoad(data) {
     innerMap.data.addGeoJson(data);
 }
 
 window.earthquakeDataLoad = earthquakeDataLoad;
-void initMap();
+void init();

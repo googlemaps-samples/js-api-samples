@@ -13,7 +13,7 @@
  */
 
 let map;
-async function initMap() {
+async function init() {
     // Import the needed libraries
     const { Map } = await google.maps.importLibrary('maps');
 
@@ -27,4 +27,4 @@ async function initMap() {
     console.log(map);
 }
 
-void initMap();
+void init();

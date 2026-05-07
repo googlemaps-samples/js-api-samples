@@ -16,7 +16,7 @@ const styleOptions = {
     fillOpacity: 0.3,
 };
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -30,4 +30,4 @@ async function initMap() {
     datasetLayer.style = styleOptions;
 }
 
-void initMap();
+void init();

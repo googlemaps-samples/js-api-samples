@@ -16,7 +16,7 @@ let address1Field;
 let address2Field;
 let postalField;
 
-async function initAutocomplete() {
+async function init() {
     await google.maps.importLibrary('places');
 
     placeAutocomplete = document.querySelector('gmp-place-autocomplete');
@@ -97,4 +97,4 @@ async function fillInAddress(placePrediction) {
     address2Field.focus();
 }
 
-void initAutocomplete();
+void init();

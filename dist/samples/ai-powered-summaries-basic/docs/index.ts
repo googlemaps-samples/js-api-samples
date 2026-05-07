@@ -6,10 +6,10 @@
 
 // [START maps_ai_powered_summaries_basic]
 const mapElement = document.querySelector('gmp-map')!;
-let innerMap;
+let innerMap: google.maps.Map;
 let infoWindow;
 
-async function initMap() {
+async function init() {
     const { InfoWindow } = await google.maps.importLibrary('maps');
 
     innerMap = mapElement.innerMap;
@@ -81,7 +81,7 @@ async function getPlaceDetails() {
 
     content.append(address, lineBreak, summary, lineBreak, attribution);
 
-    innerMap.setCenter(place.location);
+    innerMap.setCenter(place.location!);
 
     // Handle marker click.
     marker.addListener('gmp-click', () => {
@@ -101,5 +101,5 @@ function showInfoWindow(marker, place, content) {
     });
 }
 
-void initMap();
+void init();
 // [END maps_ai_powered_summaries_basic]

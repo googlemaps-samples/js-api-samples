@@ -12,7 +12,7 @@ let flightPath;
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
 
-async function initMap() {
+async function init() {
     const { Polyline } = await google.maps.importLibrary('maps');
     innerMap = mapElement.innerMap;
 
@@ -48,4 +48,4 @@ function removeLine() {
     flightPath.setMap(null);
 }
 
-void initMap();
+void init();
