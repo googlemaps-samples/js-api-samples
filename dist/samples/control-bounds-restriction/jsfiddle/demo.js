@@ -15,7 +15,7 @@ const NEW_ZEALAND_BOUNDS = {
     east: -175.81,
 };
 
-async function initMap() {
+async function init() {
     // Import the needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -30,4 +30,4 @@ async function initMap() {
     });
 }
 
-void initMap();
+void init();

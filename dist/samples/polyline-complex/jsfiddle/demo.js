@@ -15,7 +15,7 @@ let poly;
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
 
-async function initMap() {
+async function init() {
     // Import the needed libraries.
     const [{ Polyline }, { AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('maps'),
@@ -51,4 +51,4 @@ async function initMap() {
     });
 }
 
-void initMap();
+void init();

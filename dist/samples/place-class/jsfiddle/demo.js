@@ -9,7 +9,7 @@ const mapElement = document.querySelector('gmp-map');
 let innerMap;
 let infoWindow;
 
-async function initMap() {
+async function init() {
     const { InfoWindow } = await google.maps.importLibrary('maps');
 
     innerMap = mapElement.innerMap;
@@ -69,4 +69,4 @@ async function getPlaceDetails() {
     });
 }
 
-void initMap();
+void init();

@@ -7,7 +7,7 @@
 
 let innerMap;
 
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     void google.maps.importLibrary('core'); // preload
     const { InfoWindow } = await google.maps.importLibrary('maps');
@@ -89,4 +89,4 @@ function isIconMouseEvent(e) {
     return 'placeId' in e;
 }
 
-void initMap();
+void init();

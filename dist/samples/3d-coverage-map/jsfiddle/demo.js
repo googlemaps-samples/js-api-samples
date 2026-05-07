@@ -16,7 +16,7 @@ const layerStyle = {
 const mapElement = document.querySelector('gmp-map');
 const placeAutocomplete = document.querySelector('gmp-place-autocomplete');
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await Promise.all([
         google.maps.importLibrary('maps'),
@@ -53,4 +53,4 @@ async function initMap() {
         }
     );
 }
-void initMap();
+void init();

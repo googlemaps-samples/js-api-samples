@@ -38,7 +38,7 @@ function setupListener(map, name) {
     });
 }
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -70,4 +70,4 @@ function populateTable() {
     }
 }
 
-void initMap();
+void init();

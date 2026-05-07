@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-async function initMap() {
+async function init() {
     // Include the interactive marker class
     const { Map3DElement, Marker3DInteractiveElement } =
         await google.maps.importLibrary('maps3d');
@@ -46,4 +46,4 @@ async function initMap() {
     document.body.append(map);
 }
 
-void initMap();
+void init();
