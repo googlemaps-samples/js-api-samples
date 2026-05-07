@@ -7,7 +7,7 @@
 // [START maps_advanced_markers_accessibility]
 const mapElement = document.querySelector('gmp-map')!;
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const [{ InfoWindow }, { AdvancedMarkerElement, PinElement }] =
         await Promise.all([
@@ -70,5 +70,5 @@ async function initMap() {
     });
 }
 
-void initMap();
+void init();
 // [END maps_advanced_markers_accessibility]

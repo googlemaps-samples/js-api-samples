@@ -12,14 +12,19 @@ let googleMapsOverlay: deck.GoogleMapsOverlay; // Declare googleMapsOverlay outs
 // Declare global namespace for Deck.gl to satisfy TypeScript compiler
 declare namespace deck {
     class PolygonLayer {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         constructor(props: any);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         props: any;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         clone(props: any): PolygonLayer;
         pickable: boolean; // Added pickable property
     }
     class GoogleMapsOverlay {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         constructor(props: any);
         setMap(map: google.maps.Map | null): void;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setProps(props: any): void;
     }
     // Add other Deck.gl types used globally if needed
@@ -71,8 +76,11 @@ async function initMap(): Promise<void> {
         id: 'PolygonLayer',
         data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/sf-zipcodes.json',
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         getPolygon: (d: any) => d.contour, // Use 'any' for simplicity
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         getElevation: (d: any) => d.population / d.area / 10, // Use 'any' for simplicity
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         getFillColor: (d: any) => [d.population / d.area / 60, 140, 0], // Use 'any' for simplicity
         getLineColor: [255, 255, 255],
         getLineWidth: 20,
@@ -89,6 +97,7 @@ async function initMap(): Promise<void> {
                 }, 100); // 100ms delay
             }
         },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onHover: ({ object, x, y }: { object: any; x: number; y: number }) => {
             // Use 'any' for object for simplicity
             const tooltip = document.getElementById('tooltip');

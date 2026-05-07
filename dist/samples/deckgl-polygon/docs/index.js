@@ -56,8 +56,11 @@ async function initMap() {
         id: 'PolygonLayer',
         data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/sf-zipcodes.json',
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         getPolygon: (d) => d.contour, // Use 'any' for simplicity
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         getElevation: (d) => d.population / d.area / 10, // Use 'any' for simplicity
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         getFillColor: (d) => [d.population / d.area / 60, 140, 0], // Use 'any' for simplicity
         getLineColor: [255, 255, 255],
         getLineWidth: 20,
@@ -74,6 +77,7 @@ async function initMap() {
                 }, 100); // 100ms delay
             }
         },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onHover: ({ object, x, y }) => {
             // Use 'any' for object for simplicity
             const tooltip = document.getElementById('tooltip');

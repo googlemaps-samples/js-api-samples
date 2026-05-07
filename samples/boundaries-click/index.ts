@@ -5,7 +5,7 @@
  */
 
 // [START maps_boundaries_click_event]
-let innerMap;
+let innerMap: google.maps.Map;
 let featureLayer;
 let infoWindow;
 let lastInteractedFeatureIds: string[] = [];
@@ -25,7 +25,7 @@ function handleMouseMove(e) {
 }
 // [END maps_boundaries_click_event_handler]
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const { InfoWindow } = await google.maps.importLibrary('maps');
 
@@ -141,5 +141,5 @@ function updateInfoWindow(content, center) {
     });
 }
 
-void initMap();
+void init();
 // [END maps_boundaries_click_event]

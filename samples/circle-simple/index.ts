@@ -6,9 +6,9 @@
 
 // [START maps_circle_simple]
 const mapElement = document.querySelector('gmp-map')!;
-let innerMap;
+let innerMap: google.maps.Map;
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const [{ Circle }, { AdvancedMarkerElement }, { event }] =
         await Promise.all([
@@ -71,8 +71,8 @@ async function initMap() {
 
     // Add event listener to update the radius based on user selection.
     buttons.forEach((button) => {
-        button.addEventListener('change', (event) => {
-            const target = event.target as HTMLInputElement;
+        button.addEventListener('change', (changeEvent) => {
+            const target = changeEvent.target as HTMLInputElement;
             walkingCircle.setRadius(Number(target.value));
         });
     });
@@ -91,5 +91,5 @@ async function initMap() {
     });
 }
 
-void initMap();
+void init();
 // [END maps_circle_simple]
