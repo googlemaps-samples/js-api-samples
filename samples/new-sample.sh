@@ -84,17 +84,17 @@ EOF
 # Create package.json
 cat > "$NAME/package.json" << EOF
 {
-  "name": "@js-api-samples/$NAME",
-  "version": "1.0.0",
-  "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh $NAME && bash ../app.sh $NAME && bash ../docs.sh $NAME && npm run build:vite --workspace=. && bash ../dist.sh $NAME",
-    "test": "tsc && npm run build:vite --workspace=.",
-    "start": "tsc && vite build --base './' && vite",
-    "build:vite": "vite build --base './'",
-    "preview": "vite preview"
-  }
+    "name": "@js-api-samples/$NAME",
+    "version": "1.0.0",
+    "scripts": {
+      "build": "bash ../build-single.sh",
+      "test": "tsc && npm run build:vite --workspace=.",
+      "start": "tsc && vite build --base './' && vite",
+      "build:vite": "vite build --base './'",
+      "preview": "vite preview"
+    }
 }
-EOF
+EOF  
 
 # Create tsconfig.json
 cat > "$NAME/tsconfig.json" << 'EOF'
@@ -115,7 +115,7 @@ cat > "$NAME/README.md" << EOF
 
 ## $NAME
 
-Sample generated from $NAME
+Add a meaningful description for $NAME here...
 
 ## Setup
 
