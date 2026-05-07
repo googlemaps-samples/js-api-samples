@@ -5,9 +5,9 @@
  */
 
 // [START maps_event_poi]
-let innerMap;
+let innerMap: google.maps.Map;
 
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     void google.maps.importLibrary('core'); // preload
     const { InfoWindow } = await google.maps.importLibrary('maps');
@@ -68,7 +68,7 @@ async function showInfoWindow(
         content: content,
     });
 
-    innerMap.panTo(event.latLng);
+    innerMap.panTo(event.latLng!);
     infoWindow.open(innerMap);
 }
 
@@ -94,5 +94,5 @@ function isIconMouseEvent(
     return 'placeId' in e;
 }
 
-void initMap();
+void init();
 // [END maps_event_poi]

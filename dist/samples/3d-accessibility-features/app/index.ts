@@ -5,7 +5,7 @@
  */
 
 // [START maps_3d_accessibility_features]
-async function initMap() {
+async function init() {
     const [
         { Map3DElement, Marker3DInteractiveElement, PopoverElement },
         { PinElement },
@@ -82,5 +82,5 @@ async function initMap() {
     document.body.append(map);
 }
 
-void initMap();
+void init();
 // [END maps_3d_accessibility_features]

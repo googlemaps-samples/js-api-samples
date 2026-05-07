@@ -156,6 +156,7 @@ class SimpleWeatherWidget extends HTMLElement {
         `;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     set data(weatherData: any) {
         const iconElement = this.shadowRoot!.getElementById(
             'condition-icon'

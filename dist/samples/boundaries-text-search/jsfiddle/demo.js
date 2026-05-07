@@ -9,7 +9,7 @@ let innerMap;
 let featureLayer;
 let center;
 
-async function initMap() {
+async function init() {
     // Load the needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -65,4 +65,4 @@ function styleBoundary(placeid) {
     };
 }
 
-void initMap();
+void init();

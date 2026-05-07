@@ -6,7 +6,7 @@
 
 // [START maps_web_components_events]
 // This example adds a map using web components.
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     void google.maps.importLibrary('marker'); // preload
     const { InfoWindow } = await google.maps.importLibrary('maps');
 
@@ -31,5 +31,5 @@ async function initMap(): Promise<void> {
     }
 }
 
-void initMap();
+void init();
 // [END maps_web_components_events]

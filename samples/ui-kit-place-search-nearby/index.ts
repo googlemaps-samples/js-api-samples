@@ -48,8 +48,8 @@ async function init(): Promise<void> {
     // Add event listeners to the type select and place search elements.
     typeSelect.addEventListener('change', () => searchPlaces());
 
-    placeSearch.addEventListener('gmp-select', (event: Event) => {
-        const { place } = event as any;
+    placeSearch.addEventListener('gmp-select', (event) => {
+        const { place } = event;
         markers.get(place.id)?.click();
     });
     placeSearch.addEventListener('gmp-load', () => {

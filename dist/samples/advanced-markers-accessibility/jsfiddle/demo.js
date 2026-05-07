@@ -7,7 +7,7 @@
 
 const mapElement = document.querySelector('gmp-map');
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const [{ InfoWindow }, { AdvancedMarkerElement, PinElement }] =
         await Promise.all([
@@ -67,4 +67,4 @@ async function initMap() {
     });
 }
 
-void initMap();
+void init();

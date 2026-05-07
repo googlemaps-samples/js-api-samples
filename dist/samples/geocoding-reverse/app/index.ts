@@ -6,7 +6,7 @@
 // [START maps_geocoding_reverse]
 let marker;
 
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     const [{ InfoWindow }, { Geocoder }, { AdvancedMarkerElement }] =
         await Promise.all([
@@ -87,5 +87,5 @@ async function geocodeLatLng(
     }
 }
 
-void initMap();
+void init();
 // [END maps_geocoding_reverse]

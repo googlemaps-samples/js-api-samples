@@ -13,14 +13,14 @@ let marker;
 let responseDiv;
 let responsePre;
 
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
-    const [, { Geocoder }, { AdvancedMarkerElement }, { ControlPosition }] =
+    const [{ Geocoder }, { AdvancedMarkerElement }, { ControlPosition }] =
         await Promise.all([
-            google.maps.importLibrary('maps'),
             google.maps.importLibrary('geocoding'),
             google.maps.importLibrary('marker'),
             google.maps.importLibrary('core'),
+            google.maps.importLibrary('maps'),
         ]);
 
     // Get the gmp-map element.
@@ -92,5 +92,5 @@ async function geocode(request) {
 }
 // [END maps_geocoding_simple_request]
 
-void initMap();
+void init();
 // [END maps_geocoding_simple]

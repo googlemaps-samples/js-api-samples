@@ -14,7 +14,7 @@ const placeDetailsRequest = document.querySelector(
 );
 const marker = document.querySelector('gmp-advanced-marker');
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     void Promise.all([
         google.maps.importLibrary('marker'),
@@ -70,4 +70,4 @@ async function initMap() {
     });
 }
 
-void initMap();
+void init();

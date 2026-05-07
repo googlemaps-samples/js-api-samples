@@ -13,7 +13,7 @@
 // [START maps_dds_region_viewer]
 const mapElement = document.querySelector('gmp-map')!;
 let placeAutocomplete;
-let innerMap;
+let innerMap: google.maps.Map;
 let countryMenu: HTMLSelectElement;
 let featureMenu: HTMLSelectElement;
 let searchInputOption: HTMLInputElement;
@@ -33,7 +33,7 @@ let selectedPlaceId: string;
 
 import * as countries from './src/countries.json';
 
-async function initMap() {
+async function init() {
     await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('places'),
@@ -270,6 +270,7 @@ function applyStyle(placeid?) {
 
 // Populate the countries menu.
 function buildMenu() {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     for (const item of (countries as any).default) {
         const countryOption = document.createElement('option');
         countryOption.textContent = item.name;
@@ -310,6 +311,7 @@ function updateFeatureMenuAvailability(countryCode: string) {
 // Return a map of feature availability for a country.
 function getFeatureAvailability(countryName) {
     // Return the data for the selected country.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const selectedCountry = (countries as any).default.find((country) => {
         return country.code === countryName;
     });
@@ -400,7 +402,7 @@ async function showSelectedPolygon(placeid, mode) {
             featureMenu.value
         );
     }
-    const viewport = place.viewport;
+    const viewport = place.viewport!;
     innerMap.fitBounds(viewport, 155);
 
     // Build the HTML.
@@ -446,5 +448,5 @@ async function showSelectedPolygon(placeid, mode) {
     applyStyle(placeid);
 }
 
-void initMap();
+void init();
 // [END maps_dds_region_viewer]

@@ -40,7 +40,7 @@ const intersectionObserver = new IntersectionObserver((entries) => {
     }
 });
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Request needed libraries.
     const [
         { Map },
@@ -108,8 +108,8 @@ function refreshMap() {
     const mapDiv = document.createElement('div');
     mapDiv.id = 'map';
     mapContainer!.appendChild(mapDiv);
-    void initMap();
+    void init();
 }
 
-void initMap();
+void init();
 // [END maps_advanced_markers_animation]

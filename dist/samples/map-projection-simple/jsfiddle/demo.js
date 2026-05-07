@@ -11,7 +11,7 @@
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
 
-async function initMap() {
+async function init() {
     // Request the needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -149,4 +149,4 @@ const cities = {
     ],
 };
 
-void initMap();
+void init();

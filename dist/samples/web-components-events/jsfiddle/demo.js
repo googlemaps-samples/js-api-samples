@@ -6,7 +6,7 @@
  */
 
 // This example adds a map using web components.
-async function initMap() {
+async function init() {
     void google.maps.importLibrary('marker'); // preload
     const { InfoWindow } = await google.maps.importLibrary('maps');
 
@@ -31,4 +31,4 @@ async function initMap() {
     }
 }
 
-void initMap();
+void init();
