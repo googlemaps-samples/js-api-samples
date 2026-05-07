@@ -3,6 +3,7 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 /* [START maps_deckgl_kml_updated] */
 // Import necessary loader
 import { KMLLoader } from '@loaders.gl/kml';
@@ -12,14 +13,14 @@ let map;
 let geojsonLayer;
 let googleMapsOverlay;
 
-async function initMap() {
+async function init() {
     // Progress bar logic moved from index.html
     let progress;
     const progressDiv = document.querySelector('.mdc-linear-progress');
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-        // @ts-expect-error: mdc not typed
+
         progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
@@ -68,8 +69,8 @@ async function initMap() {
         // lineWidthMinPixels: 4, // Not needed for points
         pointRadiusMinPixels: 2,
         pointRadiusMaxPixels: 200,
-        getRadius: (f) => 8000,
-        getFillColor: (f, { index }) => {
+        getRadius: () => 8000,
+        getFillColor: (f) => {
             // Extract magnitude from the description string
             const description = f.properties.description;
             const magnitudeMatch = description.match(/M (\d+\.?\d*)/);
@@ -201,5 +202,5 @@ async function initMap() {
     }
 }
 
-initMap();
+void init();
 /* [END maps_deckgl_kml_updated] */

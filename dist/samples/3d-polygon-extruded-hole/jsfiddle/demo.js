@@ -47,4 +47,4 @@ async function init() {
     document.body.append(map3DElement);
 }
 
-init();
+void init();

@@ -13,7 +13,7 @@
  * MakeControl adds a control to the map.
  * This constructor takes the controlDIV name and label text as arguments.
  */
-async function MakeControl(controlDiv: HTMLElement, label: string) {
+function MakeControl(controlDiv: HTMLElement, label: string) {
     // Set up the control border.
     const controlUI = document.createElement('div');
 
@@ -33,11 +33,11 @@ async function MakeControl(controlDiv: HTMLElement, label: string) {
     controlUI.appendChild(controlText);
 }
 
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
-    const [, { ControlPosition }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ ControlPosition }] = await Promise.all([
         google.maps.importLibrary('core'),
+        google.maps.importLibrary('maps'),
     ]);
 
     const mapElement = document.querySelector('gmp-map')!;
@@ -72,7 +72,7 @@ async function initMap() {
 /**
  * Toggles the 'dir' attribute on the html element between 'ltr' and 'rtl'.
  */
-async function toggleRTL() {
+function toggleRTL() {
     const html = document.documentElement;
     if (html.dir === 'rtl') {
         html.dir = 'ltr';
@@ -81,5 +81,5 @@ async function toggleRTL() {
     }
 }
 
-initMap();
+void init();
 // [END maps_control_positioning_labels]

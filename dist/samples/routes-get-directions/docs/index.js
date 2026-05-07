@@ -11,7 +11,7 @@ let mapPolylines = [];
 const center = { lat: 37.447646, lng: -122.113878 }; // Palo Alto, CA
 
 // Initialize and add the map.
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     const [{ Map }, { Place }, { Route }] = await Promise.all([
         google.maps.importLibrary('maps'),
@@ -34,6 +34,7 @@ async function initMap() {
         fields: ['path'],
     };
     // [END maps_routes_get_directions_request_string]
+    console.log({ requestWithAddressStrings });
 
     // [START maps_routes_get_directions_request_placeid]
     // Use Place IDs in a directions request.
@@ -51,6 +52,7 @@ async function initMap() {
         fields: ['path'], // Request fields needed to draw polylines.
     };
     // [END maps_routes_get_directions_request_placeid]
+    console.log({ requestWithPlaceIds });
 
     // [START maps_routes_get_directions_request_latlng]
     // Use lat/lng in a directions request.
@@ -66,6 +68,7 @@ async function initMap() {
         fields: ['path'],
     };
     // [END maps_routes_get_directions_request_latlng]
+    console.log({ requestWithLatLngs });
 
     // [START maps_routes_get_directions_request_pluscode]
     // Use Plus Codes in a directions request.
@@ -75,6 +78,7 @@ async function initMap() {
         fields: ['path'],
     };
     // [END maps_routes_get_directions_request_pluscode]
+    console.log({ requestWithPlusCodes });
 
     // [START maps_routes_get_directions_request_complete]
     // [START maps_routes_get_directions_request_simple]
@@ -89,8 +93,7 @@ async function initMap() {
 
     // Call computeRoutes to get the directions.
     // [START maps_routes_get_directions_compute]
-    const { routes, fallbackInfo, geocodingResults } =
-        await Route.computeRoutes(request);
+    const { routes } = await Route.computeRoutes(request);
     // [END maps_routes_get_directions_compute]
 
     // [START maps_routes_get_directions_polyline]
@@ -116,7 +119,7 @@ async function initMap() {
     console.log(`Response:\n ${JSON.stringify(routes, null, 2)}`);
 
     // Fit the map to the path.
-    fitMapToPath(routes[0].path);
+    void fitMapToPath(routes[0].path);
 }
 
 // Helper function to fit the map to the path.
@@ -129,5 +132,5 @@ async function fitMapToPath(path) {
     map.fitBounds(bounds);
 }
 
-initMap();
+void init();
 // [END maps_routes_get_directions]

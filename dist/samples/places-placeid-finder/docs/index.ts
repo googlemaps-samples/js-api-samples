@@ -10,7 +10,7 @@
 // the place ID and other information about the place that the user has
 // selected.
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Request needed libraries.
     const [{ InfoWindow }, { AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('maps'),
@@ -57,7 +57,7 @@ async function initMap(): Promise<void> {
 
     placeAutocomplete.addEventListener(
         'gmp-select',
-        async ({ placePrediction }: any) => {
+        async ({ placePrediction }) => {
             infoWindow.close();
 
             const place = placePrediction.toPlace();
@@ -85,19 +85,19 @@ async function initMap(): Promise<void> {
                 infoWindowContent.children.namedItem(
                     'place-name'
                 ) as HTMLElement
-            ).textContent = place.displayName as string;
+            ).textContent = place.displayName!;
             (
                 infoWindowContent.children.namedItem('place-id') as HTMLElement
-            ).textContent = place.id as string;
+            ).textContent = place.id;
             (
                 infoWindowContent.children.namedItem(
                     'place-address'
                 ) as HTMLElement
-            ).textContent = place.formattedAddress as string;
+            ).textContent = place.formattedAddress!;
             infoWindow.open(map, marker);
         }
     );
 }
 
-initMap();
+void init();
 // [END maps_places_placeid_finder]

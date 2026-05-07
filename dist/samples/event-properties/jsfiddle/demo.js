@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const { InfoWindow } = await google.maps.importLibrary('maps');
 
@@ -24,4 +24,4 @@ async function initMap() {
     });
 }
 
-initMap();
+void init();

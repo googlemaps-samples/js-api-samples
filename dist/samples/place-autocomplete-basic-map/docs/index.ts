@@ -14,14 +14,14 @@ const placeDetailsElement = document.querySelector(
 const placeDetailsParent = placeDetailsElement.parentElement as HTMLElement;
 const gmpMapElement = document.querySelector('gmp-map')!;
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Asynchronously load required libraries from the Google Maps JS API.
-    const [, { AdvancedMarkerElement }, { InfoWindow, Circle }, { Size }] =
+    const [{ AdvancedMarkerElement }, { InfoWindow, Circle }, { Size }] =
         await Promise.all([
-            google.maps.importLibrary('places'),
             google.maps.importLibrary('marker'),
             google.maps.importLibrary('maps'),
             google.maps.importLibrary('core'),
+            google.maps.importLibrary('places'),
         ]);
 
     // Get the initial center directly from the gmp-map element's property.
@@ -55,7 +55,7 @@ async function initMap(): Promise<void> {
 
     // [START maps_place_autocomplete_basic_map_listener]
     // Event listener for when a place is selected from the autocomplete list.
-    placeAutocompleteElement.addEventListener('gmp-select', (event: any) => {
+    placeAutocompleteElement.addEventListener('gmp-select', (event) => {
         // Reset marker and InfoWindow, and prepare the details element.
         placeDetailsParent.appendChild(placeDetailsElement);
         placeDetailsElement.style.display = 'block';
@@ -65,7 +65,7 @@ async function initMap(): Promise<void> {
         // Request details for the selected place.
         const placeDetailsRequest = placeDetailsElement.querySelector(
             'gmp-place-details-place-request'
-        ) as any;
+        )!;
         placeDetailsRequest.place = event.place.id;
     });
     // [END maps_place_autocomplete_basic_map_listener]
@@ -106,5 +106,5 @@ async function initMap(): Promise<void> {
     });
 }
 
-initMap();
+void init();
 // [END maps_place_autocomplete_basic_map]

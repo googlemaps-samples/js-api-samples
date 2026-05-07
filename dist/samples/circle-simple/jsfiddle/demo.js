@@ -8,7 +8,7 @@
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const [{ Circle }, { AdvancedMarkerElement }, { event }] =
         await Promise.all([
@@ -17,14 +17,11 @@ async function initMap() {
             google.maps.importLibrary('core'),
         ]);
 
-    // Get the gmp-map element.
-    const mapElement = document.querySelector('gmp-map');
-
     // Set the initial map center point.
     const initialCenter = { lat: 34.98956821576194, lng: 135.74239981260283 }; // Hotel Emion, Kyoto, Japan
 
     // Get the inner map.
-    const innerMap = mapElement.innerMap;
+    innerMap = mapElement.innerMap;
 
     // Get the buttons.
     const buttons = document.querySelectorAll('input[name="radius"]');
@@ -74,8 +71,8 @@ async function initMap() {
 
     // Add event listener to update the radius based on user selection.
     buttons.forEach((button) => {
-        button.addEventListener('change', (event) => {
-            const target = event.target;
+        button.addEventListener('change', (changeEvent) => {
+            const target = changeEvent.target;
             walkingCircle.setRadius(Number(target.value));
         });
     });
@@ -94,4 +91,4 @@ async function initMap() {
     });
 }
 
-initMap();
+void init();

@@ -42,4 +42,4 @@ async function init() {
         document.getElementById('details').style.display = 'block';
     });
 }
-init();
+void init();

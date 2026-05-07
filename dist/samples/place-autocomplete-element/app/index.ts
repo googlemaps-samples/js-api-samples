@@ -5,7 +5,7 @@
  */
 
 // [START maps_place_autocomplete_element]
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // [START maps_place_autocomplete_element_add]
     // Request needed libraries.
     // @ts-expect-error - currently missing. bug fix pending
@@ -45,5 +45,5 @@ async function initMap(): Promise<void> {
     // [END maps_place_autocomplete_element_listener]
 }
 
-initMap();
+void init();
 // [END maps_place_autocomplete_element]

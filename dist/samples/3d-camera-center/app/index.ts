@@ -5,7 +5,7 @@
  */
 
 // [START maps_3d_camera_center]
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Import the needed libraries.
     await google.maps.importLibrary('maps3d');
 
@@ -36,5 +36,5 @@ async function initMap(): Promise<void> {
     });
 }
 
-initMap();
+void init();
 // [END maps_3d_camera_center]

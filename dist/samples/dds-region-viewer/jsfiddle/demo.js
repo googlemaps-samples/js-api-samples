@@ -32,7 +32,7 @@ let selectedPlaceId;
 
 import * as countries from './src/countries.json';
 
-async function initMap() {
+async function init() {
     await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('places'),
@@ -75,30 +75,27 @@ async function initMap() {
     });
 
     // Handle autocomplete widget selection.
-    placeAutocomplete.addEventListener(
-        'gmp-select',
-        async ({ placePrediction }) => {
-            const types = placePrediction.types;
+    placeAutocomplete.addEventListener('gmp-select', ({ placePrediction }) => {
+        const types = placePrediction.types;
 
-            // Find the first type that matches a feature menu option.
-            const validFeatureTypes = [
-                'country',
-                'administrative_area_level_1',
-                'administrative_area_level_2',
-                'locality',
-                'postal_code',
-                'school_district',
-            ];
-            for (const type of types) {
-                if (validFeatureTypes.includes(type)) {
-                    featureMenu.value = type; // Set the menu value directly
-                    break; // Use the first matching type found
-                }
+        // Find the first type that matches a feature menu option.
+        const validFeatureTypes = [
+            'country',
+            'administrative_area_level_1',
+            'administrative_area_level_2',
+            'locality',
+            'postal_code',
+            'school_district',
+        ];
+        for (const type of types) {
+            if (validFeatureTypes.includes(type)) {
+                featureMenu.value = type; // Set the menu value directly
+                break; // Use the first matching type found
             }
-            setFeatureType(); // Update autocomplete filtering based on new menu selection
-            showSelectedPolygon(placePrediction.placeId, 1);
         }
-    );
+        setFeatureType(); // Update autocomplete filtering based on new menu selection
+        void showSelectedPolygon(placePrediction.placeId, 1);
+    });
 
     // Add all the feature layers.
     countryLayer = innerMap.getFeatureLayer('COUNTRY');
@@ -283,7 +280,9 @@ function onCountrySelected() {
     // Set the feature list selection to 'country'.
     featureMenu.namedItem('country').selected = true;
 
-    showSelectedCountry(countryMenu.options[countryMenu.selectedIndex].text);
+    void showSelectedCountry(
+        countryMenu.options[countryMenu.selectedIndex].text
+    );
 }
 
 // Enables or disables items in the feature menu based on country support.
@@ -300,6 +299,7 @@ function updateFeatureMenuAvailability(countryCode) {
 // Return a map of feature availability for a country.
 function getFeatureAvailability(countryName) {
     // Return the data for the selected country.
+
     const selectedCountry = countries.default.find((country) => {
         return country.code === countryName;
     });
@@ -334,7 +334,7 @@ function revertStyles() {
 function handlePlaceClick(event) {
     const clickedPlaceId = event.features[0].placeId;
     if (!clickedPlaceId) return;
-    showSelectedPolygon(clickedPlaceId, 0);
+    void showSelectedPolygon(clickedPlaceId, 0);
 }
 
 // Get the place ID for the selected country, then call showSelectedPolygon().
@@ -351,7 +351,7 @@ async function showSelectedCountry(countryName) {
     const { places } = await Place.searchByText(request);
 
     if (places.length > 0) {
-        showSelectedPolygon(places[0].id, 0);
+        await showSelectedPolygon(places[0].id, 0);
     }
 }
 
@@ -436,4 +436,4 @@ async function showSelectedPolygon(placeid, mode) {
     applyStyle(placeid);
 }
 
-initMap();
+void init();

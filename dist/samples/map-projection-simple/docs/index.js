@@ -12,7 +12,7 @@
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
 
-async function initMap() {
+async function init() {
     // Request the needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -23,7 +23,7 @@ async function initMap() {
     });
 
     // Set the Gall-Peters map type.
-    initGallPeters();
+    void initGallPeters();
     innerMap.mapTypes.set('gallPeters', gallPetersMapType);
     innerMap.setMapTypeId('gallPeters');
 
@@ -150,5 +150,5 @@ const cities = {
     ],
 };
 
-initMap();
+void init();
 // [END maps_map_projection_simple]

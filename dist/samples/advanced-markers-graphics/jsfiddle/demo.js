@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const [{ Map }, { AdvancedMarkerElement, PinElement }, { Place }] =
+    const [{ AdvancedMarkerElement, PinElement }, { Place }] =
         await Promise.all([
-            google.maps.importLibrary('maps'),
             google.maps.importLibrary('marker'),
             google.maps.importLibrary('places'),
+            google.maps.importLibrary('maps'),
         ]);
 
     const mapElement = document.querySelector('gmp-map');
@@ -89,5 +89,5 @@ async function initMap() {
     mapElement.append(placeIconMarker);
 }
 
-initMap();
+void init();
 export {};

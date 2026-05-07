@@ -5,11 +5,11 @@
  */
 
 // [START maps_boundaries_text_search]
-let innerMap;
+let innerMap: google.maps.Map;
 let featureLayer;
 let center;
 
-async function initMap() {
+async function init() {
     // Load the needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -24,7 +24,7 @@ async function initMap() {
     // Get the LOCALITY feature layer.
     featureLayer = innerMap.getFeatureLayer('LOCALITY');
 
-    findBoundary();
+    void findBoundary();
 }
 // [START maps_boundaries_text_search_find_region]
 async function findBoundary() {
@@ -41,7 +41,7 @@ async function findBoundary() {
     if (places.length) {
         const place = places[0];
         styleBoundary(place.id);
-        innerMap.setCenter(place.location);
+        innerMap.setCenter(place.location!);
     } else {
         console.log('No results');
     }
@@ -65,5 +65,5 @@ function styleBoundary(placeid) {
     };
 }
 // [END maps_boundaries_text_search_find_region]
-initMap();
+void init();
 // [END maps_boundaries_text_search]

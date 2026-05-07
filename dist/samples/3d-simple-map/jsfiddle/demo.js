@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-async function initMap() {
+async function init() {
     const { Map3DElement } = await google.maps.importLibrary('maps3d');
 
     const map = new Map3DElement({
@@ -18,4 +18,4 @@ async function initMap() {
     document.body.append(map);
 }
 
-initMap();
+void init();

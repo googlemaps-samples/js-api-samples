@@ -10,7 +10,7 @@ let map;
 const markers = [];
 const center = { lat: 51.55, lng: -1.8 };
 
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     const [
         { Map },
@@ -118,7 +118,7 @@ async function initMap() {
             const marker = new AdvancedMarkerElement({
                 map,
                 position: destination.location,
-                content: pin.element,
+                content: pin,
                 title: `Destination: ${destination.displayName}`,
             });
 
@@ -131,5 +131,5 @@ async function initMap() {
     map.fitBounds(bounds);
 }
 
-initMap();
+void init();
 // [END maps_routes_route_matrix]

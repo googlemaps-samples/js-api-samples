@@ -6,13 +6,12 @@
 
 // [START maps_place_nearby_search]
 const mapElement = document.querySelector('gmp-map')!;
-let innerMap;
-const advancedMarkerElement = document.querySelector('gmp-advanced-marker')!;
+let innerMap: google.maps.Map;
 let center;
 let typeSelect;
 let infoWindow;
 
-async function initMap() {
+async function init() {
     const [{ InfoWindow }, { event }] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('core'),
@@ -26,14 +25,14 @@ async function initMap() {
     typeSelect = document.querySelector('.type-select')!;
 
     typeSelect.addEventListener('change', () => {
-        nearbySearch();
+        void nearbySearch();
     });
 
     infoWindow = new InfoWindow();
 
     // Kick off an initial search once map has loaded.
     event.addListenerOnce(innerMap, 'idle', () => {
-        nearbySearch();
+        void nearbySearch();
     });
 }
 
@@ -50,9 +49,8 @@ async function nearbySearch() {
     // [START maps_place_nearby_search_request]
     // Get bounds and radius to constrain search.
     center = mapElement.center;
-    const bounds = innerMap.getBounds();
-    const ne = bounds.getNorthEast();
-    const sw = bounds.getSouthWest();
+    const ne = innerMap.getBounds()!.getNorthEast();
+    const sw = innerMap.getBounds()!.getSouthWest();
     const diameter = spherical.computeDistanceBetween(ne, sw);
     const radius = Math.min(diameter / 2, 50000); // Radius cannot be more than 50000.
 
@@ -113,7 +111,7 @@ async function nearbySearch() {
             }
 
             marker.addListener('gmp-click', () => {
-                innerMap.panTo(place.location);
+                innerMap.panTo(place.location!);
                 updateInfoWindow(place.displayName, content, marker);
             });
         });
@@ -132,5 +130,5 @@ function updateInfoWindow(title, content, anchor) {
     });
 }
 
-initMap();
+void init();
 // [END maps_place_nearby_search]

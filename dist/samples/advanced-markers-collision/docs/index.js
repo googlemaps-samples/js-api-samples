@@ -5,23 +5,21 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// eslint-disable no-undef
 // [START maps_advanced_markers_collision]
 const mapElement = document.querySelector('gmp-map');
 
 // Initialize and add the map
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
     ]);
 
     const markers = [];
 
     const collisionBehavior = 'REQUIRED';
 
-    // @ts-expect-error: mdc not typed
     const select = new mdc.select.MDCSelect(
         document.querySelector('.mdc-select')
     );
@@ -63,5 +61,5 @@ async function initMap() {
     });
 }
 
-initMap();
+void init();
 // [END maps_advanced_markers_collision]

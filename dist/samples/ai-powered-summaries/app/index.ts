@@ -20,10 +20,10 @@ const flagContentLink = document.getElementById(
     'flag-content-link'
 ) as HTMLAnchorElement;
 
-let innerMap;
+let innerMap: google.maps.Map;
 let marker: google.maps.marker.AdvancedMarkerElement;
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Request needed libraries.
     const [{ AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('marker'),
@@ -38,8 +38,8 @@ async function initMap(): Promise<void> {
     });
 
     // Bind autocomplete bounds to map bounds.
-    innerMap.addListener('bounds_changed', async () => {
-        placeAutocomplete.locationRestriction = innerMap.getBounds();
+    innerMap.addListener('bounds_changed', () => {
+        placeAutocomplete.locationRestriction = innerMap.getBounds()!;
     });
 
     // Create the marker.
@@ -72,7 +72,7 @@ async function initMap(): Promise<void> {
             if (place.viewport) {
                 innerMap.fitBounds(place.viewport);
             } else {
-                innerMap.setCenter(place.location);
+                innerMap.setCenter(place.location!);
                 innerMap.setZoom(17);
             }
             marker.position = place.location;
@@ -239,5 +239,5 @@ function updateSummaryPanel(place: google.maps.places.Place) {
     }
 }
 
-initMap();
+void init();
 // [END maps_ai_powered_summaries]

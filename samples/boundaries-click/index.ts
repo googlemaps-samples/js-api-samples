@@ -5,7 +5,7 @@
  */
 
 // [START maps_boundaries_click_event]
-let innerMap;
+let innerMap: google.maps.Map;
 let featureLayer;
 let infoWindow;
 let lastInteractedFeatureIds: string[] = [];
@@ -16,7 +16,7 @@ function handleClick(e) {
     lastClickedFeatureIds = e.features.map((f) => f.placeId);
     lastInteractedFeatureIds = [];
     featureLayer.style = applyStyle;
-    createInfoWindow(e);
+    void createInfoWindow(e);
 }
 
 function handleMouseMove(e) {
@@ -25,9 +25,9 @@ function handleMouseMove(e) {
 }
 // [END maps_boundaries_click_event_handler]
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
+    const { InfoWindow } = await google.maps.importLibrary('maps');
 
     // Get the gmp-map element.
     const mapElement = document.querySelector('gmp-map')!;
@@ -141,5 +141,5 @@ function updateInfoWindow(content, center) {
     });
 }
 
-initMap();
+void init();
 // [END maps_boundaries_click_event]

@@ -17,8 +17,8 @@ let activeWeatherWidget = null; // To keep track of the currently active widget
 let allMarkers = []; // To store all active markers
 let markersLoaded = false; // Flag to track if button markers are loaded
 
-async function initMap() {
-    google.maps.importLibrary('marker'); // preload
+async function init() {
+    void google.maps.importLibrary('marker'); // preload
     const { Map } = await google.maps.importLibrary('maps');
 
     map = new Map(document.getElementById('map'), {
@@ -76,7 +76,7 @@ async function initMap() {
                 activeWidgetContainer.classList.remove('highlight');
                 // Find the marker associated with the active widget and reset its zIndex
                 const activeMarker = allMarkers.find(
-                    (marker) => marker.content === activeWeatherWidget
+                    (marker) => marker.firstElementChild === activeWeatherWidget
                 );
                 if (activeMarker) {
                     activeMarker.zIndex = null;
@@ -127,16 +127,17 @@ async function createAndAddMarker(location, markerType) {
     const marker = new AdvancedMarkerElement({
         map: map,
         position: { lat: location.lat, lng: location.lng },
-        content: weatherWidget,
         title: location.name, // Add a title for accessibility
         gmpClickable: true,
     });
+    marker.append(weatherWidget);
 
     // Store the marker type
+
     marker.markerType = markerType;
 
     // Fetch and update weather data for this location
-    updateWeatherDisplayForMarker(
+    void updateWeatherDisplayForMarker(
         marker,
         weatherWidget,
         new LatLng(location.lat, location.lng)
@@ -156,7 +157,7 @@ async function createAndAddMarker(location, markerType) {
             activeWidgetContainer.classList.remove('highlight');
             // Find the marker associated with the active widget and reset its zIndex
             const activeMarker = allMarkers.find(
-                (marker) => marker.content === activeWeatherWidget
+                (e) => e.firstElementChild === activeWeatherWidget
             );
             if (activeMarker) {
                 activeMarker.zIndex = null;
@@ -227,8 +228,7 @@ async function toggleDarkMode() {
 
     for (const marker of markersToReAdd) {
         marker.map = map; // Add marker to the new map
-        const weatherWidget = marker.content;
-        const mapContainer = document.getElementById('map'); // Re-get map container
+        const weatherWidget = marker.firstElementChild;
         if (mapContainer.classList.contains('dark-mode')) {
             weatherWidget.setMode('dark');
         } else {
@@ -269,7 +269,7 @@ async function toggleDarkMode() {
                 activeWidgetContainer.classList.remove('highlight');
                 // Find the marker associated with the active widget and reset its zIndex
                 const activeMarker = allMarkers.find(
-                    (marker) => marker.content === activeWeatherWidget
+                    (marker) => marker.firstElementChild === activeWeatherWidget
                 );
                 if (activeMarker) {
                     activeMarker.zIndex = null;
@@ -312,8 +312,6 @@ const locations = [
 ];
 
 async function loadWeatherMarkers() {
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
-
     for (const location of locations) {
         await createAndAddMarker(location, 'button'); // Create and add button markers
     }
@@ -324,7 +322,7 @@ function removeButtonMarkers() {
     if (activeWeatherWidget) {
         const buttonMarker = allMarkers.find(
             (marker) =>
-                marker.content === activeWeatherWidget &&
+                marker.firstElementChild === activeWeatherWidget &&
                 marker.markerType === 'button'
         );
         if (buttonMarker) {
@@ -386,14 +384,14 @@ async function updateWeatherDisplayForMarker(marker, widget, location) {
     }
 }
 
-initMap();
+void init();
 
 // Wait for the custom element to be defined before adding the event listener
-customElements.whenDefined('simple-weather-widget').then(() => {
+void customElements.whenDefined('simple-weather-widget').then(() => {
     const modeToggleButton = document.getElementById('mode-toggle');
     if (modeToggleButton) {
         modeToggleButton.addEventListener('click', () => {
-            toggleDarkMode();
+            void toggleDarkMode();
         });
     }
 
@@ -401,7 +399,7 @@ customElements.whenDefined('simple-weather-widget').then(() => {
     if (loadMarkersButton) {
         loadMarkersButton.addEventListener('click', () => {
             if (!markersLoaded) {
-                loadWeatherMarkers();
+                void loadWeatherMarkers();
                 markersLoaded = true;
                 loadMarkersButton.textContent = 'Remove Markers';
             } else {

@@ -8,9 +8,9 @@
 // [START maps_event_poi]
 let innerMap;
 
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
-    google.maps.importLibrary('core'); // preload
+    void google.maps.importLibrary('core'); // preload
     const { InfoWindow } = await google.maps.importLibrary('maps');
 
     // Retrieve the map element.
@@ -29,7 +29,7 @@ async function initMap() {
 
         // If the event has a placeId, show the info window.
         if (isIconMouseEvent(event) && event.placeId) {
-            showInfoWindow(event, infoWindow);
+            void showInfoWindow(event, infoWindow);
         } else {
             // Close the info window if there is no placeId.
             infoWindow.close();
@@ -90,5 +90,5 @@ function isIconMouseEvent(e) {
     return 'placeId' in e;
 }
 
-initMap();
+void init();
 // [END maps_event_poi]

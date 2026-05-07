@@ -9,7 +9,7 @@
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
 
-async function initMap() {
+async function init() {
     // Load the needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -22,7 +22,7 @@ async function initMap() {
 
     initZoomControl(innerMap);
     initMapTypeControl(innerMap);
-    initFullscreenControl(innerMap);
+    initFullscreenControl();
 }
 
 function initZoomControl(map) {
@@ -38,7 +38,7 @@ function initZoomControl(map) {
     });
 }
 
-async function initMapTypeControl(innerMap) {
+function initMapTypeControl(map) {
     const mapTypeControlDiv = document.querySelector('.maptype-control');
     const btnMap = document.querySelector('.maptype-control-map');
     const btnSatellite = document.querySelector('.maptype-control-satellite');
@@ -46,17 +46,17 @@ async function initMapTypeControl(innerMap) {
     btnMap.addEventListener('click', () => {
         mapTypeControlDiv.classList.add('maptype-control-is-map');
         mapTypeControlDiv.classList.remove('maptype-control-is-satellite');
-        innerMap.setMapTypeId('roadmap');
+        map.setMapTypeId('roadmap');
     });
 
     btnSatellite.addEventListener('click', () => {
         mapTypeControlDiv.classList.add('maptype-control-is-satellite');
         mapTypeControlDiv.classList.remove('maptype-control-is-map');
-        innerMap.setMapTypeId('hybrid');
+        map.setMapTypeId('hybrid');
     });
 }
 
-async function initFullscreenControl(innerMap) {
+function initFullscreenControl() {
     // Get the UI elements for the fullscreen control.
     const btnFullscreen = document.querySelector('#fullscreen-button');
 
@@ -65,17 +65,17 @@ async function initFullscreenControl(innerMap) {
     });
 }
 
-async function toggleFullScreen(element) {
+function toggleFullScreen(element) {
     const fullScreenIcon = document.querySelector(
         '#fullscreen-button .material-icons'
     );
 
     try {
         if (!document.fullscreenElement) {
-            element.requestFullscreen();
+            void element.requestFullscreen();
             fullScreenIcon.innerText = 'fullscreen_exit';
         } else {
-            document.exitFullscreen();
+            void document.exitFullscreen();
             fullScreenIcon.innerText = 'fullscreen';
         }
     } catch (error) {
@@ -83,5 +83,5 @@ async function toggleFullScreen(element) {
     }
 }
 
-initMap();
+void init();
 // [END maps_control_replacement]

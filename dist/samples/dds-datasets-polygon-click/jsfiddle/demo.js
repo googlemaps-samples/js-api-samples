@@ -30,7 +30,7 @@ function handleMouseMove(e) {
     datasetLayer.style = applyStyle;
 }
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -100,4 +100,4 @@ function applyStyle(params) {
     return styleDefault;
 }
 
-initMap();
+void init();

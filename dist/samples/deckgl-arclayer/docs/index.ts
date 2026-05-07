@@ -11,9 +11,8 @@ import type * as GeoJSON from 'geojson';
 
 type Properties = { scalerank: number };
 type Feature = GeoJSON.Feature<GeoJSON.Point, Properties>;
-type Data = GeoJSON.FeatureCollection<GeoJSON.Point, Properties>;
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -34,7 +33,9 @@ async function initMap() {
     const flightsLayer = new ArcLayer<Feature>({
         id: 'flights',
         data: dataUrl,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         dataTransform: (data: any) =>
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             data.features.filter((f: any) => f.properties.scalerank < 4),
         getSourcePosition: () => [14.42076, 50.08804], // Prague
         getTargetPosition: (f: Feature) =>
@@ -52,5 +53,5 @@ async function initMap() {
     overlay.setMap(innerMap);
 }
 
-initMap();
+void init();
 // [END maps_deckgl_arclayer]

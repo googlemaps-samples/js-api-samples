@@ -9,7 +9,7 @@ let map;
 let markers = {};
 let infoWindow;
 
-async function initMap() {
+async function init() {
     const [{ Map, InfoWindow }, { ControlPosition }] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('core'),
@@ -31,12 +31,12 @@ async function initMap() {
     map.controls[ControlPosition.TOP_LEFT].push(card);
 
     textInputButton.addEventListener('click', () => {
-        findPlaces(textInput.value);
+        void findPlaces(textInput.value);
     });
 
     textInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
-            findPlaces(textInput.value);
+            void findPlaces(textInput.value);
         }
     });
 
@@ -86,7 +86,7 @@ async function findPlaces(query) {
 
             marker.addListener('gmp-click', () => {
                 map.panTo(place.location);
-                updateInfoWindow(place.displayName, place.id, marker);
+                void updateInfoWindow(place.displayName, place.id, marker);
             });
 
             if (place.location != null) {
@@ -101,7 +101,7 @@ async function findPlaces(query) {
 }
 
 // Helper function to create an info window.
-async function updateInfoWindow(title, content, anchor) {
+function updateInfoWindow(title, content, anchor) {
     infoWindow.setContent(content);
     infoWindow.setHeaderContent(title);
     infoWindow.open({
@@ -111,5 +111,5 @@ async function updateInfoWindow(title, content, anchor) {
     });
 }
 
-initMap();
+void init();
 // [END maps_place_text_search]

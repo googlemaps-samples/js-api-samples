@@ -44,7 +44,7 @@ function setStyle(params) {
     }
 }
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -57,4 +57,4 @@ async function initMap() {
     datasetLayer.style = setStyle;
 }
 
-initMap();
+void init();

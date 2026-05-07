@@ -6,7 +6,7 @@
  */
 
 // [START maps_3d_camera_boundary]
-async function initMap() {
+async function init() {
     const { Map3DElement } = await google.maps.importLibrary('maps3d');
 
     const map = new Map3DElement({
@@ -20,5 +20,5 @@ async function initMap() {
     document.body.append(map);
 }
 
-initMap();
+void init();
 // [END maps_3d_camera_boundary]

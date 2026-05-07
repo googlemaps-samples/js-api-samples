@@ -13,14 +13,14 @@ let googleMapsOverlay;
 let marker;
 let infoWindow;
 
-async function initMap() {
+async function init() {
     // Progress bar logic moved from index.html
     let progress;
     const progressDiv = document.querySelector('.mdc-linear-progress');
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-        // @ts-expect-error: mdc not typed
+
         progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
@@ -121,7 +121,7 @@ async function initMap() {
     infoWindow = new InfoWindow();
 
     // Add click listener to the map
-    map.addListener('click', async (event) => {
+    map.addListener('click', (event) => {
         const latLng = event.latLng;
         if (!latLng) return; // Ensure latLng is not null
 
@@ -184,4 +184,4 @@ async function initMap() {
     }
 }
 
-initMap();
+void init();

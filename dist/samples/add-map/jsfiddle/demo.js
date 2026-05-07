@@ -5,11 +5,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-async function initMap() {
+async function init() {
     // Request the needed libraries.
-    const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
     ]);
 
     // Get the gmp-map element.
@@ -24,10 +24,10 @@ async function initMap() {
     });
 
     // Add a marker positioned at the map center (Uluru).
-    const marker = new AdvancedMarkerElement({
+    new AdvancedMarkerElement({
         map: innerMap,
         position: mapElement.center,
         title: 'Uluru/Ayers Rock',
     });
 }
-initMap();
+void init();

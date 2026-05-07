@@ -9,7 +9,7 @@
 // This example displays a marker at the center of Australia.
 // When the user clicks the marker, an info window opens.
 
-async function initMap() {
+async function init() {
     // Import the needed libraries.
     const [{ InfoWindow }, { AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('maps'),
@@ -78,5 +78,5 @@ async function initMap() {
     });
 }
 
-initMap();
+void init();
 // [END maps_infowindow_simple]

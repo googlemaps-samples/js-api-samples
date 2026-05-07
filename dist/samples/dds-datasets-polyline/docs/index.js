@@ -8,7 +8,7 @@
 // [START maps_dds_datasets_polyline]
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -25,5 +25,5 @@ async function initMap() {
     // [END maps_dds_datasets_polyline_style_function]
 }
 
-initMap();
+void init();
 // [END maps_dds_datasets_polyline]

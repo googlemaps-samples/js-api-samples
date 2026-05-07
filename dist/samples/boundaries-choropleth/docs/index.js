@@ -6,7 +6,7 @@
  */
 
 // [START maps_boundaries_choropleth]
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -102,5 +102,5 @@ async function initMap() {
     };
 }
 
-initMap();
+void init();
 // [END maps_boundaries_choropleth]

@@ -5,7 +5,7 @@
  */
 // [START maps_dds_datasets_polygon_click]
 const mapElement = document.querySelector('gmp-map')!;
-let innerMap;
+let innerMap: google.maps.Map;
 let lastInteractedFeatureIds: string[] = [];
 let lastClickedFeatureIds: string[] = [];
 let datasetLayer;
@@ -31,7 +31,7 @@ function handleMouseMove(e) {
 }
 // [END maps_dds_datasets_polygon_click_eventhandler]
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -105,5 +105,5 @@ function applyStyle(params) {
 }
 // [END maps_dds_datasets_polygon_click_stylefunction]
 
-initMap();
+void init();
 // [END maps_dds_datasets_polygon_click]

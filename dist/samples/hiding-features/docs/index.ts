@@ -5,7 +5,7 @@
  */
 
 // [START maps_hiding_features]
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -51,5 +51,5 @@ const styles: Record<string, google.maps.MapTypeStyle[]> = {
     ],
 };
 
-initMap();
+void init();
 // [END maps_hiding_features]

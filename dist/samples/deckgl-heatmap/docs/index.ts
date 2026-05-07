@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 /* [START maps_deckgl_heatmap] */
 // Initialize and add the map
 let map: google.maps.Map;
@@ -29,7 +31,7 @@ declare namespace deck {
     // Add other Deck.gl types used globally if needed
 }
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Progress bar logic moved from index.html
     let progress;
     const progressDiv = document.querySelector('.mdc-linear-progress')!;
@@ -137,7 +139,7 @@ async function initMap(): Promise<void> {
     infoWindow = new InfoWindow();
 
     // Add click listener to the map
-    map.addListener('click', async (event: google.maps.MapMouseEvent) => {
+    map.addListener('click', (event: google.maps.MapMouseEvent) => {
         const latLng = event.latLng;
         if (!latLng) return; // Ensure latLng is not null
 
@@ -200,5 +202,5 @@ async function initMap(): Promise<void> {
     }
 }
 
-initMap();
+void init();
 /* [END maps_deckgl_heatmap] */

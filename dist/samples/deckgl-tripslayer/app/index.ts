@@ -23,7 +23,7 @@ const VENDOR_COLORS: Color[] = [
     [0, 0, 255], // vendor #1
 ];
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -71,5 +71,5 @@ async function initMap() {
     overlay.setMap(innerMap);
 }
 
-initMap();
+void init();
 // [END maps_deckgl_tripslayer]

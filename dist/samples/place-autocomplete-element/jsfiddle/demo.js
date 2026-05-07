@@ -5,9 +5,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    // @ts-expect-error - currently missing. bug fix pending
+
     const { PlaceAutocompleteElement } =
         await google.maps.importLibrary('places');
     // Create the input HTML element, and append it.
@@ -41,4 +41,4 @@ async function initMap() {
     );
 }
 
-initMap();
+void init();

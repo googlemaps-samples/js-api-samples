@@ -3,6 +3,9 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 /* [START maps_deckgl_polygon] */
 // Initialize and add the map
 let map: google.maps.Map;
@@ -25,7 +28,7 @@ declare namespace deck {
     // Add other Deck.gl types used globally if needed
 }
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Progress bar logic moved from index.html
     let progress;
     const progressDiv = document.querySelector('.mdc-linear-progress')!;
@@ -150,5 +153,5 @@ async function initMap(): Promise<void> {
     }
 }
 
-initMap();
+void init();
 /* [END maps_deckgl_polygon] */

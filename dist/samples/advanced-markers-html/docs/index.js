@@ -7,7 +7,7 @@
 
 // [START maps_advanced_markers_html]
 // [START maps_advanced_markers_html_snippet]
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('maps'),
@@ -30,12 +30,12 @@ async function initMap() {
         });
 
         advancedMarkerElement.addListener('click', () => {
-            toggleHighlight(advancedMarkerElement, property);
+            toggleHighlight(advancedMarkerElement);
         });
     }
 }
 
-function toggleHighlight(markerView, property) {
+function toggleHighlight(markerView) {
     if (markerView.content.classList.contains('highlight')) {
         markerView.content.classList.remove('highlight');
         markerView.zIndex = null;
@@ -212,5 +212,5 @@ const properties = [
     },
 ];
 
-initMap();
+void init();
 // [END maps_advanced_markers_html]

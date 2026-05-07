@@ -6,9 +6,9 @@
 
 // [START maps_control_positioning]
 const mapElement = document.querySelector('gmp-map')!;
-let innerMap;
+let innerMap: google.maps.Map;
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const [{ MapTypeControlStyle }, { ControlPosition }] = await Promise.all([
         google.maps.importLibrary('maps'),
@@ -16,7 +16,7 @@ async function initMap() {
     ]);
 
     // Get the inner map.
-    const innerMap = mapElement.innerMap;
+    innerMap = mapElement.innerMap;
 
     // Set the map's controls options.
     innerMap.setOptions({
@@ -38,5 +38,5 @@ async function initMap() {
     });
 }
 
-initMap();
+void init();
 // [END maps_control_positioning]

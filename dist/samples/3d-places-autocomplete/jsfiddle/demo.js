@@ -22,7 +22,7 @@ async function init() {
 
     document.body.append(map);
 
-    initAutocomplete();
+    void initAutocomplete();
 }
 
 async function initAutocomplete() {
@@ -47,14 +47,13 @@ async function initAutocomplete() {
                 window.alert('No viewport for input: ' + place.displayName);
                 return;
             }
-            flyToPlace(place);
+            void flyToPlace(place);
         }
     );
 }
 
 const flyToPlace = async (place) => {
-    const { Polyline3DElement, Polygon3DElement, Marker3DElement } =
-        await google.maps.importLibrary('maps3d');
+    const { Marker3DElement } = await google.maps.importLibrary('maps3d');
 
     const location = place.location;
 
@@ -110,4 +109,4 @@ async function getElevationforPoint(location, place) {
     return elevation;
 }
 
-init();
+void init();

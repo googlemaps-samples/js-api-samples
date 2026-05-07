@@ -6,7 +6,7 @@
 
 // [START maps_dds_datasets_point]
 const mapElement = document.querySelector('gmp-map')!;
-let innerMap;
+let innerMap: google.maps.Map;
 // [START maps_dds_datasets_point_style_function]
 function setStyle(params) {
     // [START maps_dds_datasets_point_style_get_features]
@@ -84,11 +84,11 @@ function setStyle(params) {
 }
 // [END maps_dds_datasets_point_style_function]
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const [, { event }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ event }] = await Promise.all([
         google.maps.importLibrary('core'),
+        google.maps.importLibrary('maps'),
     ]);
 
     // Get the inner map.
@@ -96,7 +96,7 @@ async function initMap() {
 
     event.addListenerOnce(innerMap, 'idle', () => {
         // Add the data legend.
-        makeLegend(innerMap);
+        makeLegend();
     });
 
     // Dataset ID for squirrel dataset.
@@ -106,7 +106,7 @@ async function initMap() {
 }
 
 // Creates a legend for the map.
-async function makeLegend(innerMap) {
+function makeLegend() {
     const colors = {
         black: ['black'],
         cinnamon: ['#8b0000'],
@@ -146,5 +146,5 @@ async function makeLegend(innerMap) {
     }
 }
 
-initMap();
+void init();
 // [END maps_dds_datasets_point]

@@ -7,7 +7,7 @@
 
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -22,4 +22,4 @@ async function initMap() {
     datasetLayer.style = { strokeColor: 'green', strokeWeight: 4 };
 }
 
-initMap();
+void init();

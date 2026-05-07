@@ -11,7 +11,7 @@
 // the place ID and other information about the place that the user has
 // selected.
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const [{ InfoWindow }, { AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('maps'),
@@ -91,5 +91,5 @@ async function initMap() {
     );
 }
 
-initMap();
+void init();
 // [END maps_places_placeid_finder]

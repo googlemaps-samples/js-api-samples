@@ -9,7 +9,7 @@ let map;
 const markers: google.maps.marker.AdvancedMarkerElement[] = [];
 const center = { lat: 51.55, lng: -1.8 };
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     //  Request the needed libraries.
     const [
         { Map },
@@ -111,7 +111,7 @@ async function initMap(): Promise<void> {
             const marker = new AdvancedMarkerElement({
                 map,
                 position: destination.location,
-                content: pin.element,
+                content: pin,
                 title: `Destination: ${destination.displayName}`,
             });
 
@@ -124,5 +124,5 @@ async function initMap(): Promise<void> {
     map.fitBounds(bounds);
 }
 
-initMap();
+void init();
 // [END maps_routes_route_matrix]

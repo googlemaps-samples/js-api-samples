@@ -97,5 +97,5 @@ async function init() {
     }
 }
 
-init();
+void init();
 // [END maps_place_photos]
