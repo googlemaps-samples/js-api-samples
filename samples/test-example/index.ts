@@ -44,7 +44,7 @@ async function init() {
     // [END maps_test_example_instantiate_marker]
 
     // [START maps_test_example_why_me]
-    console.log("Good afternoon! Let's eat cookies!");
+    console.log("Happy Thursday! (TODO: verify whether it is actually Thursday.");
     // [END maps_test_example_why_me]
 }
 void init();
