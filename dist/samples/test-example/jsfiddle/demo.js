@@ -39,6 +39,6 @@ async function init() {
         title: 'Uluru',
     });
 
-    console.log("Say there Mac, why'd you choose me to test this change?");
+    console.log("Good afternoon! Let's eat cookies!");
 }
 void init();
