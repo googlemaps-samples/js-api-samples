@@ -52,8 +52,8 @@ async function init() {
         mapTypeControl: false,
     });
 
-    for (let i = 0; i < events.length; i++) {
-        setupListener(innerMap, events[i]);
+    for (const event of events) {
+        setupListener(innerMap, event);
     }
 }
 
@@ -61,11 +61,11 @@ async function init() {
 function populateTable() {
     const eventsTable = document.getElementById('sidebar');
 
-    for (let i = 0; i < events.length; i++) {
+    for (const event of events) {
         const eventDiv = document.createElement('div');
         eventDiv.className = 'event';
-        eventDiv.id = events[i];
-        eventDiv.innerText = events[i];
+        eventDiv.id = event;
+        eventDiv.innerText = event;
         eventsTable.appendChild(eventDiv);
     }
 }

@@ -43,7 +43,9 @@ async function init() {
     });
 
     // Add event listeners to the query input and place search elements.
-    searchButton.addEventListener('click', () => searchPlaces());
+    searchButton.addEventListener('click', () => {
+        searchPlaces();
+    });
     queryInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
             searchPlaces();

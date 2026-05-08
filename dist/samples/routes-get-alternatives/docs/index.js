@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 // [START maps_routes_get_alternatives]
-let mapPolylines = [];
+const mapPolylines = [];
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
 
@@ -34,6 +34,7 @@ async function getDirections() {
     const [{ Route, RouteLabel }] = await Promise.all([
         google.maps.importLibrary('routes'),
     ]);
+
     // [START maps_routes_get_alternatives_request_full]
     // [START maps_routes_get_alternatives_request]
     // Build a request.
@@ -82,8 +83,8 @@ async function getDirections() {
 }
 
 function drawRoute(route, isPrimaryRoute) {
-    mapPolylines = mapPolylines.concat(
-        route.createPolylines({
+    mapPolylines.push(
+        ...route.createPolylines({
             polylineOptions: isPrimaryRoute
                 ? {
                       map: innerMap,

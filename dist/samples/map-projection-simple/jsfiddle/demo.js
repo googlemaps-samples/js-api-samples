@@ -61,7 +61,7 @@ async function initGallPeters() {
 
     // Fetch Gall-Peters tiles stored locally on our server.
     gallPetersMapType = new ImageMapType({
-        getTileUrl: function (coord, zoom) {
+        getTileUrl(coord, zoom) {
             const scale = 1 << zoom;
 
             // Wrap tiles horizontally.
@@ -82,14 +82,14 @@ async function initGallPeters() {
 
     // Describe the Gall-Peters projection used by these tiles.
     gallPetersMapType.projection = {
-        fromLatLngToPoint: function (latLng) {
+        fromLatLngToPoint(latLng) {
             const latRadians = (latLng.lat() * Math.PI) / 180;
             return new Point(
                 GALL_PETERS_RANGE_X * (0.5 + latLng.lng() / 360),
                 GALL_PETERS_RANGE_Y * (0.5 - 0.5 * Math.sin(latRadians))
             );
         },
-        fromPointToLatLng: function (point, noWrap) {
+        fromPointToLatLng(point, noWrap) {
             const x = point.x / GALL_PETERS_RANGE_X;
             const y = Math.max(0, Math.min(1, point.y / GALL_PETERS_RANGE_Y));
 

@@ -19,8 +19,7 @@ const searchButton = document.querySelector('.search-button')!;
 /* [END maps_ui_kit_place_search_text_query_selectors] */
 
 // Global variables for the map, markers, and info window.
-const markers: Map<string, google.maps.marker.AdvancedMarkerElement> =
-    new Map();
+const markers = new Map<string, google.maps.marker.AdvancedMarkerElement>();
 let infoWindow: google.maps.InfoWindow;
 
 // The init function is called when the page loads.
@@ -47,7 +46,9 @@ async function init(): Promise<void> {
 
     /* [START maps_ui_kit_place_search_text_event] */
     // Add event listeners to the query input and place search elements.
-    searchButton.addEventListener('click', () => searchPlaces());
+    searchButton.addEventListener('click', () => {
+        searchPlaces();
+    });
     queryInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
             searchPlaces();

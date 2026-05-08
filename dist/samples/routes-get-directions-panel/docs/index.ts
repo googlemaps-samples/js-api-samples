@@ -5,7 +5,7 @@
  */
 // [START maps_routes_get_directions_panel]
 // Initialize and add the map.
-let map;
+let map: google.maps.Map;
 let mapPolylines: google.maps.Polyline[] = [];
 const center = { lat: 37.447646, lng: -122.113878 }; // Palo Alto, CA
 
@@ -17,7 +17,7 @@ async function init(): Promise<void> {
         google.maps.importLibrary('routes'),
     ]);
 
-    map = new Map(document.getElementById('map') as HTMLElement, {
+    map = new Map(document.getElementById('map')!, {
         zoom: 12,
         center,
         mapTypeControl: false,
@@ -49,7 +49,9 @@ async function init(): Promise<void> {
     }
     mapPolylines = routes[0].createPolylines();
     // Add polylines to the map.
-    mapPolylines.forEach((polyline) => polyline.setMap(map));
+    mapPolylines.forEach((polyline) => {
+        polyline.setMap(map);
+    });
 
     void fitMapToPath(routes[0].path!);
 
@@ -134,7 +136,7 @@ async function init(): Promise<void> {
 }
 // [END maps_routes_get_directions_panel_steps]
 // Helper function to fit the map to the path.
-async function fitMapToPath(path) {
+async function fitMapToPath(path: google.maps.LatLngLiteral[]) {
     const { LatLngBounds } = await google.maps.importLibrary('core');
     const bounds = new LatLngBounds();
     path.forEach((point) => {

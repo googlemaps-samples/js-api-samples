@@ -105,9 +105,9 @@ function updateSummaryPanel(place) {
             }
 
             // Manage the active class state.
-            document
-                .querySelectorAll('.tab-button')
-                .forEach((b) => b.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach((b) => {
+                b.classList.remove('active');
+            });
             btn.classList.add('active');
 
             if (typeof content === 'string') {

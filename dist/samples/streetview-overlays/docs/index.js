@@ -70,7 +70,7 @@ async function init() {
 function toggleStreetView() {
     const toggle = panorama.getVisible();
 
-    if (toggle == false) {
+    if (!toggle) {
         panorama.setVisible(true);
     } else {
         panorama.setVisible(false);

@@ -52,8 +52,10 @@ async function init() {
 
     // Add a click event listener to the map.
     innerMap.addListener('click', (event) => {
-        latLngQuery.value = `${event.latLng.lat()}, ${event.latLng.lng()}`;
-        void geocodeLatLng(geocoder, innerMap, infoWindow);
+        if (event.latLng) {
+            latLngQuery.value = `${event.latLng.lat()}, ${event.latLng.lng()}`;
+            void geocodeLatLng(geocoder, innerMap, infoWindow);
+        }
     });
 
     // Make an initial request upon loading.

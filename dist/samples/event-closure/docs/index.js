@@ -34,7 +34,7 @@ async function init() {
     const lngSpan = bounds.east - bounds.west;
     const latSpan = bounds.north - bounds.south;
 
-    for (let i = 0; i < secretMessages.length; ++i) {
+    for (const secretMessage of secretMessages) {
         const marker = new AdvancedMarkerElement({
             position: {
                 lat: bounds.south + latSpan * Math.random(),
@@ -43,7 +43,7 @@ async function init() {
             map: innerMap,
         });
 
-        void attachSecretMessage(marker, secretMessages[i]);
+        void attachSecretMessage(marker, secretMessage);
     }
 }
 

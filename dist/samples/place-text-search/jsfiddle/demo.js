@@ -17,7 +17,7 @@ async function init() {
 
     const center = { lat: 37.4161493, lng: -122.0812166 };
     map = new Map(document.getElementById('map'), {
-        center: center,
+        center,
         zoom: 11,
         mapTypeControl: false,
         mapId: 'DEMO_MAP_ID',
@@ -52,7 +52,7 @@ async function findPlaces(query) {
         fields: ['displayName', 'location', 'businessStatus'],
         includedType: '', // Restrict query to a specific type (leave blank for any).
         useStrictTypeFiltering: true,
-        locationBias: map.center,
+        locationBias: map.getCenter(),
         isOpenNow: true,
         language: 'en-US',
         maxResultCount: 8,
@@ -83,7 +83,7 @@ async function findPlaces(query) {
 
             marker.addListener('gmp-click', () => {
                 map.panTo(place.location);
-                void updateInfoWindow(place.displayName, place.id, marker);
+                updateInfoWindow(place.displayName, place.id, marker);
             });
 
             if (place.location != null) {

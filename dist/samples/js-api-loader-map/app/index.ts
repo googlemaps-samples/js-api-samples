@@ -30,7 +30,7 @@ async function init(): Promise<void> {
     };
 
     // Declare the map.
-    new Map(document.getElementById('map') as HTMLElement, mapOptions);
+    new Map(document.getElementById('map')!, mapOptions);
 }
 
 void init();

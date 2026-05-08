@@ -59,9 +59,11 @@ function styleBoundary(placeid) {
 
     // Define the feature style function.
     featureLayer.style = (params) => {
-        if (params.feature.placeId == placeid) {
+        const placeFeature = params.feature;
+        if (placeFeature.placeId === placeid) {
             return styleFill;
         }
+        return null;
     };
 }
 
