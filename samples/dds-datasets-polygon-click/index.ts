@@ -16,8 +16,7 @@ let datasetLayer: google.maps.FeatureLayer;
 function handleClick(event: google.maps.FeatureMouseEvent) {
     if (event.features) {
         lastClickedFeatureIds = event.features.map(
-            (f) =>
-                (f as google.maps.DatasetFeature).datasetAttributes.globalid
+            (f) => (f as google.maps.DatasetFeature).datasetAttributes.globalid
         );
     }
     datasetLayer.style = applyStyle;
@@ -26,8 +25,7 @@ function handleClick(event: google.maps.FeatureMouseEvent) {
 function handleMouseMove(event: google.maps.FeatureMouseEvent) {
     if (event.features) {
         lastInteractedFeatureIds = event.features.map(
-            (f) =>
-                (f as google.maps.DatasetFeature).datasetAttributes.globalid
+            (f) => (f as google.maps.DatasetFeature).datasetAttributes.globalid
         );
     }
     datasetLayer.style = applyStyle;
@@ -91,7 +89,8 @@ function applyStyle(params: google.maps.FeatureStyleFunctionOptions) {
     // Note, 'globalid' is an attribute in this dataset.
     if (
         lastClickedFeatureIds.includes(
-            (datasetFeature as google.maps.DatasetFeature).datasetAttributes.globalid
+            (datasetFeature as google.maps.DatasetFeature).datasetAttributes
+                .globalid
         )
     ) {
         return styleClicked;
@@ -99,7 +98,8 @@ function applyStyle(params: google.maps.FeatureStyleFunctionOptions) {
 
     if (
         lastInteractedFeatureIds.includes(
-            (datasetFeature as google.maps.DatasetFeature).datasetAttributes.globalid
+            (datasetFeature as google.maps.DatasetFeature).datasetAttributes
+                .globalid
         )
     ) {
         return styleMouseMove;

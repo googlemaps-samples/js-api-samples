@@ -18,8 +18,7 @@ const typeSelect = document.querySelector('.type-select') as HTMLSelectElement;
 /* [END maps_ui_kit_place_search_nearby_query_selectors] */
 
 // Global variables for the map, markers, and info window.
-const markers =
-    new Map<string, google.maps.marker.AdvancedMarkerElement>();
+const markers = new Map<string, google.maps.marker.AdvancedMarkerElement>();
 let infoWindow: google.maps.InfoWindow;
 
 // The init function is called when the page loads.
