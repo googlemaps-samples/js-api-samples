@@ -18,13 +18,12 @@ async function init() {
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-
         progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
         progress.done = function () {
             progress.close();
-            progressDiv?.remove(); // Use optional chaining in case progressDiv is null
+            progressDiv.remove();
         };
     }
 
@@ -71,7 +70,7 @@ async function init() {
                 // Check if progress is defined
                 // Add a small delay to ensure the progress bar is removed
                 setTimeout(() => {
-                    progress.done(); // hides progress bar
+                    progress?.done?.(); // hides progress bar
                 }, 100); // 100ms delay
             }
         },

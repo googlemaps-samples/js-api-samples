@@ -8,14 +8,12 @@
 // Define DOM elements.
 const mapElement = document.querySelector('gmp-map')!;
 const placeAutocomplete = document.querySelector('gmp-place-autocomplete')!;
-const summaryPanel = document.getElementById('summary-panel') as HTMLDivElement;
-const placeName = document.getElementById('place-name') as HTMLElement;
-const placeAddress = document.getElementById('place-address') as HTMLElement;
-const tabContainer = document.getElementById('tab-container') as HTMLDivElement;
-const summaryContent = document.getElementById(
-    'summary-content'
-) as HTMLDivElement;
-const aiDisclosure = document.getElementById('ai-disclosure') as HTMLDivElement;
+const summaryPanel = document.getElementById('summary-panel')!;
+const placeName = document.getElementById('place-name')!;
+const placeAddress = document.getElementById('place-address')!;
+const tabContainer = document.getElementById('tab-container')!;
+const summaryContent = document.getElementById('summary-content')!;
+const aiDisclosure = document.getElementById('ai-disclosure')!;
 const flagContentLink = document.getElementById(
     'flag-content-link'
 ) as HTMLAnchorElement;
@@ -115,9 +113,9 @@ function updateSummaryPanel(place: google.maps.places.Place) {
             }
 
             // Manage the active class state.
-            document
-                .querySelectorAll('.tab-button')
-                .forEach((b) => b.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach((b) => {
+                b.classList.remove('active');
+            });
             btn.classList.add('active');
 
             if (typeof content === 'string') {

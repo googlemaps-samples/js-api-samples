@@ -30,7 +30,7 @@ async function init() {
 
     map = new Map(document.getElementById('map'), {
         zoom: 8,
-        center: center,
+        center,
         mapId: 'DEMO_MAP_ID',
     });
 
@@ -105,8 +105,7 @@ async function init() {
     }
 
     // Add markers for the destinations.
-    for (let i = 0; i < destinations.length; i++) {
-        const destination = destinations[i];
+    for (const destination of destinations) {
         if (destination.location) {
             const pin = new PinElement({
                 glyphText: 'D',
@@ -119,7 +118,7 @@ async function init() {
                 map,
                 position: destination.location,
                 content: pin,
-                title: `Destination: ${destination.displayName}`,
+                title: `Destination: ${destination.displayName ?? 'Unknown'}`,
             });
 
             markers.push(marker);

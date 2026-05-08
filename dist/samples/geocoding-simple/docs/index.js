@@ -47,7 +47,7 @@ async function init() {
     responseDiv = document.getElementById('response-container');
     responsePre = document.getElementById('response');
 
-    marker = new AdvancedMarkerElement({});
+    marker = new AdvancedMarkerElement();
 
     innerMap.addListener('click', (e) => {
         void geocode({ location: e.latLng });
@@ -65,7 +65,7 @@ async function init() {
 }
 
 function clear() {
-    marker.setMap(null);
+    marker.map = null;
     responseDiv.style.display = 'none';
 }
 

@@ -20,7 +20,6 @@ async function init() {
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-
         progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
@@ -81,7 +80,7 @@ async function init() {
                 // Check if progress is defined
                 // Add a small delay to ensure the progress bar is removed
                 setTimeout(() => {
-                    progress.done(); // hides progress bar
+                    progress.done?.(); // hides progress bar
                 }, 100); // 100ms delay
             }
         },
@@ -126,8 +125,7 @@ async function init() {
             if (d.properties.centroid) {
                 position = d.properties.centroid;
             } else if (
-                d.geometry &&
-                d.geometry.coordinates &&
+                d.geometry?.coordinates &&
                 d.geometry.coordinates.length > 0
             ) {
                 // Assuming Polygon or MultiPolygon

@@ -34,11 +34,13 @@ async function init() {
 }
 
 function toggleHighlight(markerView) {
-    if (markerView.content.classList.contains('highlight')) {
-        markerView.content.classList.remove('highlight');
+    const content = markerView.children[0];
+
+    if (content.classList.contains('highlight')) {
+        content.classList.remove('highlight');
         markerView.zIndex = null;
     } else {
-        markerView.content.classList.add('highlight');
+        content.classList.add('highlight');
         markerView.zIndex = 1;
     }
 }

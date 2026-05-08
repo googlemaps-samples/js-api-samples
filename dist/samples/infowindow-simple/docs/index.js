@@ -50,7 +50,7 @@ async function init() {
     // Create the info window.
     const infoWindow = new InfoWindow({
         headerContent: heading,
-        content: content,
+        content,
         ariaLabel: 'Uluru',
         maxWidth: 500, // Set max width (optional).
     });

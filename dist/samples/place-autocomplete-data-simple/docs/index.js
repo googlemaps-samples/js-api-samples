@@ -56,7 +56,6 @@ async function init() {
         const listItem = document.createElement('li');
 
         listItem.appendChild(
-            // eslint-disable-next-line @typescript-eslint/no-base-to-string
             document.createTextNode(placePrediction.text.toString())
         );
         resultsElement.appendChild(listItem);

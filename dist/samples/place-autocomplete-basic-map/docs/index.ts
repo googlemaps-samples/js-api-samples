@@ -11,7 +11,7 @@ const placeAutocompleteElement = document.querySelector(
 const placeDetailsElement = document.querySelector(
     'gmp-place-details-compact'
 )!;
-const placeDetailsParent = placeDetailsElement.parentElement as HTMLElement;
+const placeDetailsParent = placeDetailsElement.parentElement!;
 const gmpMapElement = document.querySelector('gmp-map')!;
 
 async function init(): Promise<void> {
@@ -41,7 +41,7 @@ async function init(): Promise<void> {
     // Create an advanced marker to show the location of a selected place.
     const advancedMarkerElement: google.maps.marker.AdvancedMarkerElement =
         new AdvancedMarkerElement({
-            map: map,
+            map,
             collisionBehavior: 'REQUIRED_AND_HIDES_OPTIONAL',
         });
 

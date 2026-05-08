@@ -13,9 +13,7 @@ function setStyle(params) {
     const datasetFeature = params.feature;
     // Get all of the needed dataset attributes.
     const furColors =
-        datasetFeature.datasetAttributes[
-            'CombinationofPrimaryandHighlightColor'
-        ];
+        datasetFeature.datasetAttributes.CombinationofPrimaryandHighlightColor;
 
     // Apply styles. Fill is primary fur color, stroke is secondary fur color.
     switch (furColors) {
@@ -122,8 +120,8 @@ function makeLegend() {
     title.innerText = 'Fur Colors';
     title.classList.add('title');
     legend.appendChild(title);
-    let color;
-    for (color in colors) {
+
+    for (const color of Object.keys(colors)) {
         const wrapper = document.createElement('div');
         wrapper.id = 'container';
         const box = document.createElement('div');

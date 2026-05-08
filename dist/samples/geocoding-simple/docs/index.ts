@@ -6,11 +6,11 @@
 
 // [START maps_geocoding_simple]
 let geocoder: google.maps.Geocoder;
-let mapElement;
+let mapElement: google.maps.MapElement;
 let innerMap: google.maps.Map;
-let marker;
-let responseDiv;
-let responsePre;
+let marker: google.maps.marker.AdvancedMarkerElement;
+let responseDiv: HTMLElement;
+let responsePre: HTMLPreElement;
 
 async function init() {
     //  Request the needed libraries.
@@ -43,12 +43,10 @@ async function init() {
     const inputText = document.getElementById('address') as HTMLInputElement;
     const submitButton = document.getElementById('submit') as HTMLInputElement;
     const clearButton = document.getElementById('clear') as HTMLInputElement;
-    responseDiv = document.getElementById(
-        'response-container'
-    ) as HTMLDivElement;
+    responseDiv = document.getElementById('response-container')!;
     responsePre = document.getElementById('response') as HTMLPreElement;
 
-    marker = new AdvancedMarkerElement({});
+    marker = new AdvancedMarkerElement();
 
     innerMap.addListener('click', (e: google.maps.MapMouseEvent) => {
         void geocode({ location: e.latLng });
@@ -66,7 +64,7 @@ async function init() {
 }
 
 function clear() {
-    marker.setMap(null);
+    marker.map = null;
     responseDiv.style.display = 'none';
 }
 

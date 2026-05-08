@@ -8,10 +8,10 @@
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
 
-function setStyle(params) {
+const setStyle = (params) => {
     const datasetFeature = params.feature;
     // 'typecategory' is an attribute in this Dataset.
-    const typeCategory = datasetFeature.datasetAttributes['typecategory'];
+    const typeCategory = datasetFeature.datasetAttributes.typecategory;
 
     switch (typeCategory) {
         case 'Undeveloped': // Color undeveloped areas blue.
@@ -42,7 +42,7 @@ function setStyle(params) {
             };
             break;
     }
-}
+};
 
 async function init() {
     // Request needed libraries.
