@@ -104,8 +104,7 @@ async function init(): Promise<void> {
     }
 
     // Add markers for the destinations.
-    for (let i = 0; i < destinations.length; i++) {
-        const destination = destinations[i];
+    for (const destination of destinations) {
         if (destination.location) {
             const pin = new PinElement({
                 glyphText: 'D',
@@ -118,7 +117,7 @@ async function init(): Promise<void> {
                 map,
                 position: destination.location,
                 content: pin,
-                title: `Destination: ${destination.displayName}`,
+                title: `Destination: ${destination.displayName ?? 'Unknown'}`,
             });
 
             markers.push(marker);

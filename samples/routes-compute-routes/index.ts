@@ -352,7 +352,7 @@ async function init() {
     }
 
     function attachMapClickListener() {
-        if (!map || !map.innerMap) {
+        if (!map?.innerMap) {
             return;
         }
 

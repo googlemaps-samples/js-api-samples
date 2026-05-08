@@ -126,7 +126,7 @@ async function init(): Promise<void> {
             const description = f.properties.description;
             const magnitudeMatch = description.match(/M (\d+\.?\d*)/);
             let parsedMagnitude: number | null = null;
-            if (magnitudeMatch && magnitudeMatch[1]) {
+            if (magnitudeMatch?.[1]) {
                 parsedMagnitude = parseFloat(magnitudeMatch[1]);
             } else {
                 console.log('Magnitude not found');
@@ -191,7 +191,7 @@ async function init(): Promise<void> {
         },
         onDataLoad: () => {
             console.log('KML data loaded');
-            if (progress && progress.done) {
+            if (progress?.done) {
                 progress.done();
             }
         },

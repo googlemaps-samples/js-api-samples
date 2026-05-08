@@ -25,8 +25,8 @@ async function init() {
     const expandedImageDiv = document.getElementById('expanded-image')!;
 
     // Show the display name and summary for the place.
-    heading.textContent = place.displayName as string;
-    summary.textContent = place.editorialSummary as string;
+    heading.textContent = place.displayName!;
+    summary.textContent = place.editorialSummary!;
 
     // Add photos to the gallery.
     place.photos?.forEach((photo) => {

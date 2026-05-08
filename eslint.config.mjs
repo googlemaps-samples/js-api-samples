@@ -36,7 +36,10 @@ export default defineConfig([
     },
     {
         files: ['**/*.ts', '**/*.tsx'],
-        extends: [...tseslint.configs.strictTypeChecked],
+        extends: [
+            ...tseslint.configs.strictTypeChecked,
+            ...tseslint.configs.stylisticTypeChecked,
+        ],
         languageOptions: {
             parserOptions: {
                 projectService: true,
@@ -63,11 +66,15 @@ export default defineConfig([
             // If something is already "any", then allow member access
             '@typescript-eslint/no-unsafe-member-access': 'warn',
 
-            // disabled for historic reasons:
-            '@typescript-eslint/no-non-null-assertion': 'off',
-            '@typescript-eslint/restrict-template-expressions': 'off',
-            '@typescript-eslint/restrict-plus-operands': 'off',
-            '@typescript-eslint/no-unnecessary-condition': 'off',
+            // downgraded to warn for historic reasons:
+            '@typescript-eslint/no-non-null-assertion': 'warn',
+            '@typescript-eslint/restrict-template-expressions': 'warn',
+            '@typescript-eslint/restrict-plus-operands': 'warn',
+            '@typescript-eslint/prefer-nullish-coalescing': 'warn',
+
+            // buggy. breaks the code:
+            '@typescript-eslint/non-nullable-type-assertion-style': 'warn',
+            '@typescript-eslint/no-unnecessary-condition': 'warn',
         },
     },
     {

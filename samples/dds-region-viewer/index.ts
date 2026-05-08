@@ -307,7 +307,7 @@ function updateFeatureMenuAvailability(countryCode: string) {
 
     // Do a comparison on the map, and disable any false items.
     for (const [feature, isAvailable] of featureAvailabilityMap) {
-        const menuItem = featureMenu.namedItem(feature) as HTMLOptionElement;
+        const menuItem = featureMenu.namedItem(feature)!;
         if (menuItem) menuItem.disabled = !isAvailable;
     }
 }
@@ -412,7 +412,7 @@ async function showSelectedPolygon(placeid: string, mode: number) {
     // Build the HTML.
     contentDiv.appendChild(document.createElement('hr'));
 
-    const types = place.types as string[];
+    const types = place.types!;
 
     // Create HTML for place information.
     const placeInfo = document.createElement('div');

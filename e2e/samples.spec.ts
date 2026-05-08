@@ -206,7 +206,7 @@ foldersToTest.forEach((sampleFolder) => {
             // Wait for Google Maps to load.
             await page.waitForFunction(
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                () => (window as any).google && (window as any).google.maps,
+                () => (window as any).google?.maps,
                 { timeout: 500 }
             );
 

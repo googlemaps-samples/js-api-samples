@@ -14,9 +14,7 @@ function setStyle(params: { feature: google.maps.Feature }) {
     const datasetFeature = params.feature as google.maps.DatasetFeature;
     // Get all of the needed dataset attributes.
     const furColors =
-        datasetFeature.datasetAttributes[
-            'CombinationofPrimaryandHighlightColor'
-        ];
+        datasetFeature.datasetAttributes.CombinationofPrimaryandHighlightColor;
     // [END maps_dds_datasets_point_style_get_features]
 
     // Apply styles. Fill is primary fur color, stroke is secondary fur color.

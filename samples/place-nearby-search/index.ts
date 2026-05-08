@@ -22,7 +22,7 @@ async function init() {
         mapTypeControl: false,
     });
 
-    typeSelect = document.querySelector('.type-select') as HTMLSelectElement;
+    typeSelect = document.querySelector('.type-select')!;
 
     typeSelect.addEventListener('change', () => {
         void nearbySearch();

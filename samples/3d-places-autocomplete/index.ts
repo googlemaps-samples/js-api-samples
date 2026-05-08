@@ -107,7 +107,7 @@ async function getElevationforPoint(
         locations: [location],
     });
 
-    if (!(elevationResponse.results && elevationResponse.results.length)) {
+    if (!elevationResponse?.results.length) {
         window.alert(
             `Insufficient elevation data for place: ${place.displayName}`
         );

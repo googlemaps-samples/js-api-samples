@@ -174,7 +174,7 @@ class SimpleWeatherWidget extends HTMLElement {
         if (!weatherData || weatherData.error) {
             iconElement.style.display = 'none';
             rainDetailsElement.style.display = 'none';
-            if (weatherData && weatherData.error) {
+            if (weatherData?.error) {
                 temperatureElement.textContent = weatherData.error;
                 temperatureElement.classList.add('error-message'); // Add error class
             } else {

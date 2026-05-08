@@ -28,7 +28,7 @@ async function init(): Promise<void> {
 
     // Function to update map and marker based on place details
     const updateMapAndMarker = () => {
-        if (placeDetails.place && placeDetails.place.location) {
+        if (placeDetails.place?.location) {
             map.innerMap.panTo(placeDetails.place.location);
             map.innerMap.setZoom(16); // Set zoom after panning if needed
             marker.position = placeDetails.place.location;

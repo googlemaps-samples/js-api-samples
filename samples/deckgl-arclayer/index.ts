@@ -13,7 +13,7 @@ import { GoogleMapsOverlay } from '@deck.gl/google-maps';
 import { ArcLayer } from '@deck.gl/layers';
 import type * as GeoJSON from 'geojson';
 
-type Properties = { scalerank: number };
+interface Properties { scalerank: number }
 type Feature = GeoJSON.Feature<GeoJSON.Point, Properties>;
 
 async function init() {

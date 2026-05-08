@@ -11,7 +11,7 @@ let innerMap: google.maps.Map;
 const setStyle: google.maps.FeatureStyleFunction = (params) => {
     const datasetFeature = params.feature as google.maps.DatasetFeature;
     // 'typecategory' is an attribute in this Dataset.
-    const typeCategory = datasetFeature.datasetAttributes['typecategory'];
+    const typeCategory = datasetFeature.datasetAttributes.typecategory;
 
     switch (typeCategory) {
         case 'Undeveloped': // Color undeveloped areas blue.

@@ -216,7 +216,7 @@ const PlaceSearchController = ({
         )
             return;
 
-        if (selectedPlace && selectedPlace.location) {
+        if (selectedPlace?.location) {
             placeRequestRef.current.place = selectedPlace;
             if (placeDetailsRef.current)
                 placeDetailsRef.current.style.display = 'block';
@@ -250,7 +250,7 @@ const PlaceSearchController = ({
     return null;
 };
 
-const root = createRoot(document.getElementById('app') as HTMLElement);
+const root = createRoot(document.getElementById('app')!);
 root.render(
     <React.StrictMode>
         <App />

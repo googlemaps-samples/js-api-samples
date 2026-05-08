@@ -177,8 +177,7 @@ async function init(): Promise<void> {
             if (d.properties.centroid) {
                 position = d.properties.centroid;
             } else if (
-                d.geometry &&
-                d.geometry.coordinates &&
+                d.geometry?.coordinates &&
                 d.geometry.coordinates.length > 0
             ) {
                 // Assuming Polygon or MultiPolygon
