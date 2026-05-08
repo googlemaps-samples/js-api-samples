@@ -46,7 +46,7 @@ interface Property {
 }
 
 function toggleHighlight(markerView: google.maps.marker.AdvancedMarkerElement) {
-    const content = markerView.children[0]!;
+    const content = markerView.children[0];
 
     if (content.classList.contains('highlight')) {
         content.classList.remove('highlight');

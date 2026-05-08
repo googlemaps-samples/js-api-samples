@@ -44,6 +44,8 @@ async function showInfoWindow(
     event: google.maps.IconMouseEvent,
     infoWindow: google.maps.InfoWindow
 ) {
+    if (!event.placeId) return;
+
     const { Size } = await google.maps.importLibrary('core');
 
     // Retrieve the place details for the selected POI.

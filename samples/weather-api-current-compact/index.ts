@@ -50,7 +50,7 @@ async function init(): Promise<void> {
     map.addListener('click', async (event: google.maps.MapMouseEvent) => {
         // Check if the click was on a marker. If so, the marker's own click listener will handle it.
         // If not, create a new dynamic marker or hide the active widget.
-        let target = event.domEvent.target!;
+        let target = event.domEvent.target as Element;
         let isClickOnMarker = false;
         while (target) {
             if (
@@ -248,7 +248,7 @@ async function toggleDarkMode() {
     map.addListener('click', async (event: google.maps.MapMouseEvent) => {
         // Check if the click was on a marker. If so, the marker's own click listener will handle it.
         // If not, create a new dynamic marker or hide the active widget.
-        let target = event.domEvent.target!;
+        let target = event.domEvent.target as Element;
         let isClickOnMarker = false;
         while (target) {
             if (

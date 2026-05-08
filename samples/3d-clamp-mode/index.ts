@@ -56,7 +56,8 @@ const dropdown = document.getElementById(
 ) as HTMLSelectElement;
 dropdown.addEventListener('change', () => {
     if (polyline && dropdown.value) {
-        polyline.altitudeMode = dropdown.value;
+        polyline.altitudeMode =
+            dropdown.value as google.maps.maps3d.AltitudeModeString;
     }
 });
 

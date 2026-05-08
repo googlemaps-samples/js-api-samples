@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 
 import { test, expect } from '@playwright/test';
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import childProcess, { execSync } from 'child_process';
 
 const samplesDir = path.join(__dirname, '..', 'samples');
@@ -208,7 +205,7 @@ foldersToTest.forEach((sampleFolder) => {
 
             // Wait for Google Maps to load.
             await page.waitForFunction(
-                () => window.google && window.google.maps,
+                () => globalThis.google && globalThis.google.maps,
                 { timeout: 500 }
             );
 
@@ -219,8 +216,8 @@ foldersToTest.forEach((sampleFolder) => {
             // The sample must load the Google Maps API.
             const hasGoogleMaps = await page.evaluate(() => {
                 return (
-                    typeof window.google !== 'undefined' &&
-                    typeof window.google.maps !== 'undefined'
+                    typeof globalThis.google !== 'undefined' &&
+                    typeof globalThis.google.maps !== 'undefined'
                 );
             });
             expect(hasGoogleMaps).toBeTruthy();
@@ -238,10 +235,10 @@ foldersToTest.forEach((sampleFolder) => {
                 try {
                     // Use process.kill for cross-platform compatibility, sending SIGINT
                     process.kill(viteProcess.pid, 'SIGINT');
-                } catch (e) {
+                } catch (error) {
                     console.warn(
                         `Failed to kill Vite process for ${sampleFolder} (PID: ${viteProcess.pid}):`,
-                        e.message
+                        error
                     );
                 }
             }

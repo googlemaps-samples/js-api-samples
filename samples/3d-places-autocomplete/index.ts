@@ -59,7 +59,7 @@ async function initAutocomplete() {
 const flyToPlace = async (place: google.maps.places.Place) => {
     const { Marker3DElement } = await google.maps.importLibrary('maps3d');
 
-    const location = place.location;
+    const location = place.location!;
 
     // We need to find the elevation for the point so we place the marker at 50m above the elevation.
     const elevation = await getElevationforPoint(location, place);

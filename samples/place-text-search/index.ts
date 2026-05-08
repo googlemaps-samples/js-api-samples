@@ -63,7 +63,6 @@ async function findPlaces(query: string) {
         region: 'us',
     };
 
-    // @ts-expect-error - searchByText is missing in types but works at runtime
     const { places } = await Place.searchByText(request);
     // [END maps_place_text_search_request]
 
@@ -88,7 +87,7 @@ async function findPlaces(query: string) {
 
             marker.addListener('gmp-click', () => {
                 map.panTo(place.location!);
-                void updateInfoWindow(place.displayName, place.id, marker);
+                void updateInfoWindow(place.displayName!, place.id, marker);
             });
 
             if (place.location != null) {
@@ -104,8 +103,8 @@ async function findPlaces(query: string) {
 
 // Helper function to create an info window.
 function updateInfoWindow(
-    title: string | Node | null,
-    content: string | Node | null,
+    title: string | Element | null,
+    content: string | Element | null,
     anchor: google.maps.marker.AdvancedMarkerElement
 ) {
     infoWindow.setContent(content);

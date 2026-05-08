@@ -49,7 +49,8 @@ async function init() {
         shadowEnabled: false,
     };
 
-    const overlay = new GoogleMapsOverlay();
+    const googleMapsOverlayProps = {};
+    const overlay = new GoogleMapsOverlay(googleMapsOverlayProps);
 
     const animate = () => {
         currentTime = (currentTime + 1) % LOOP_LENGTH;

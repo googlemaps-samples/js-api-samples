@@ -9,7 +9,7 @@ let geocoder: google.maps.Geocoder;
 let mapElement: google.maps.MapElement;
 let innerMap: google.maps.Map;
 let marker: google.maps.marker.AdvancedMarkerElement;
-let responseDiv: HTMLDivElement;
+let responseDiv: HTMLElement;
 let responsePre: HTMLPreElement;
 
 async function init() {
@@ -43,7 +43,7 @@ async function init() {
     const inputText = document.getElementById('address') as HTMLInputElement;
     const submitButton = document.getElementById('submit') as HTMLInputElement;
     const clearButton = document.getElementById('clear') as HTMLInputElement;
-    responseDiv = document.getElementById('response-container');
+    responseDiv = document.getElementById('response-container')!;
     responsePre = document.getElementById('response') as HTMLPreElement;
 
     marker = new AdvancedMarkerElement();

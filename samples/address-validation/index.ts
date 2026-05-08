@@ -10,7 +10,7 @@ const addressForm = document.getElementById('address-form') as HTMLFormElement;
 const clearFormButton = document.getElementById(
     'clear-form-button'
 ) as HTMLButtonElement;
-const resultDisplay = document.getElementById('result-display');
+const resultDisplay = document.getElementById('result-display')!;
 // Input field refs
 const streetAddress1Input = document.getElementById(
     'street-address-1'
@@ -65,11 +65,11 @@ async function handleValidationSubmit(event: Event) {
 
         resultDisplay.textContent =
             'Verdict summary\n================\n' +
-            `Formatted address: ${result.address.formattedAddress}\n` +
-            `Entered: ${result.verdict.inputGranularity}\n` +
-            `Validated: ${result.verdict.validationGranularity}\n` +
-            `Geocoded: ${result.verdict.geocodeGranularity}\n` +
-            `Possible next action: ${result.verdict.possibleNextAction}\n\n` +
+            `Formatted address: ${result.address?.formattedAddress}\n` +
+            `Entered: ${result.verdict?.inputGranularity}\n` +
+            `Validated: ${result.verdict?.validationGranularity}\n` +
+            `Geocoded: ${result.verdict?.geocodeGranularity}\n` +
+            `Possible next action: ${result.verdict?.possibleNextAction}\n\n` +
             `${getVerdictMessage(result.verdict, 'addressComplete')}\n` +
             `${getVerdictMessage(result.verdict, 'hasUnconfirmedComponents')}\n` +
             `${getVerdictMessage(result.verdict, 'hasInferredComponents')}\n` +
@@ -113,7 +113,7 @@ const verdictMessages: Record<
 
 // Helper function to get the verdict message for a given verdict key
 function getVerdictMessage(
-    verdict: google.maps.addressValidation.Verdict,
+    verdict: google.maps.addressValidation.Verdict | null,
     key: string
 ): string {
     if (!verdict || !verdictMessages[key]) return 'Unknown';

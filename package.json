@@ -6,7 +6,8 @@
     "build-all": "npm run clean && npm run build-all-parallel && npm run generate-index",
     "build-all-parallel": "bash samples/build-all.sh",
     "clean": "bash samples/clean.sh",
-    "generate-index": "bash samples/generate-index.sh"
+    "generate-index": "bash samples/generate-index.sh",
+    "check-and-fix": "npx eslint --fix --quiet && npx prettier -w --log-level warn . && find ./ -name tsconfig.json -not -path '*/dist/*' -not -path '*/node_modules/*' -exec echo '{}' \\; -exec npx tsc --noEmit -p '{}' \\;"
   },
   "workspaces": [
     "samples/*"
@@ -19,7 +20,7 @@
     "@playwright/test": "^1.59.1",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/google.maps": "^3.64.0",
-    "@types/node": "^25.6.0",
+    "@types/node": "^25.6.2",
     "eslint": "^10.3.0",
     "globals": "^17.6.0",
     "prettier": "^3.8.3",
