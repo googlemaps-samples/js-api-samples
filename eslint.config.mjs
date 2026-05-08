@@ -68,8 +68,10 @@ export default defineConfig([
             // If something is already "any", then allow member access
             '@typescript-eslint/no-unsafe-member-access': 'warn',
 
+            // this codebase uses non-null assertions a lot for document.querySelector() and similar patterns:
+            '@typescript-eslint/no-non-null-assertion': 'off',
+
             // downgraded to warn for historic reasons:
-            '@typescript-eslint/no-non-null-assertion': 'warn',
             '@typescript-eslint/restrict-template-expressions': 'warn',
             '@typescript-eslint/restrict-plus-operands': 'warn',
             '@typescript-eslint/prefer-nullish-coalescing': 'warn',
