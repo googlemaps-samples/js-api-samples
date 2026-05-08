@@ -14,7 +14,7 @@
 // Declare the gmp-map element.
 const mapElement = document.querySelector('gmp-map')!;
 let innerMap: google.maps.Map;
-let center;
+let center: google.maps.LatLng | null | undefined;
 
 async function init() {
     // [START maps_test_example_instantiate_map]
@@ -44,7 +44,9 @@ async function init() {
     // [END maps_test_example_instantiate_marker]
 
     // [START maps_test_example_why_me]
-    console.log("Say there Mac, why'd you choose me to test this change?");
+    console.log(
+        'Happy Thursday! (TODO: verify whether it is actually Thursday.'
+    );
     // [END maps_test_example_why_me]
 }
 void init();

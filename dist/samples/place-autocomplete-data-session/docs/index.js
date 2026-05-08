@@ -85,7 +85,7 @@ async function makeAutocompleteRequest(inputEvent) {
         placeButton.addEventListener('click', () => {
             void onPlaceSelected(placePrediction.toPlace());
         });
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
+
         placeButton.textContent = placePrediction.text.toString();
         placeButton.classList.add('place-button');
 

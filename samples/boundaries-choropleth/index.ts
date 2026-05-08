@@ -20,12 +20,14 @@ async function init() {
     );
 
     // [START maps_boundaries_choropleth_style_function]
-    featureLayer.style = (featureStyleFunctionOptions) => {
+    featureLayer.style = (
+        featureStyleFunctionOptions: google.maps.FeatureStyleFunctionOptions
+    ) => {
         const placeFeature =
             featureStyleFunctionOptions.feature as google.maps.PlaceFeature;
         const population = states[placeFeature.placeId];
 
-        let fillColor;
+        let fillColor: string | undefined;
         // Specify colors using any of the following:
         // * Named ('green')
         // * Hexadecimal ('#FF0000')
@@ -47,8 +49,9 @@ async function init() {
         };
     };
     // [END maps_boundaries_choropleth_style_function]
+
     // Population data by state.
-    const states = {
+    const states: Record<string, number> = {
         ChIJdf5LHzR_hogR6czIUzU0VV4: 5039877, // Alabama
         ChIJG8CuwJzfAFQRNduKqSde27w: 732673, // Alaska
         'ChIJaxhMy-sIK4cRcc3Bf7EnOUI': 7276316, // Arizona

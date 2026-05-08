@@ -5,13 +5,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+// Remove these disables once the PlacesLibrary typing is fixed:
+
 async function init() {
     // Request needed libraries.
 
     const { PlaceAutocompleteElement } =
         await google.maps.importLibrary('places');
     // Create the input HTML element, and append it.
-    const placeAutocomplete = new PlaceAutocompleteElement({});
+    const placeAutocomplete = new PlaceAutocompleteElement();
     document.body.appendChild(placeAutocomplete);
 
     // Inject HTML UI.
@@ -23,7 +25,7 @@ async function init() {
     selectedPlaceInfo.textContent = '';
     document.body.appendChild(selectedPlaceInfo);
 
-    // Add the gmp-placeselect listener, and display the results.
+    // Add the gmp-select listener, and display the results.
     placeAutocomplete.addEventListener(
         'gmp-select',
         async ({ placePrediction }) => {

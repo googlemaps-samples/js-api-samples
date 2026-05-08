@@ -7,9 +7,9 @@
 // [START maps_place_nearby_search]
 const mapElement = document.querySelector('gmp-map')!;
 let innerMap: google.maps.Map;
-let center;
-let typeSelect;
-let infoWindow;
+let center: google.maps.LatLngLiteral | google.maps.LatLng;
+let typeSelect: HTMLSelectElement;
+let infoWindow: google.maps.InfoWindow;
 
 async function init() {
     const [{ InfoWindow }, { event }] = await Promise.all([
@@ -48,7 +48,7 @@ async function nearbySearch() {
     ]);
     // [START maps_place_nearby_search_request]
     // Get bounds and radius to constrain search.
-    center = mapElement.center;
+    center = mapElement.center!;
     const ne = innerMap.getBounds()!.getNorthEast();
     const sw = innerMap.getBounds()!.getSouthWest();
     const diameter = spherical.computeDistanceBetween(ne, sw);
@@ -112,7 +112,7 @@ async function nearbySearch() {
 
             marker.addListener('gmp-click', () => {
                 innerMap.panTo(place.location!);
-                updateInfoWindow(place.displayName, content, marker);
+                updateInfoWindow(place.displayName!, content, marker);
             });
         });
 
@@ -122,7 +122,11 @@ async function nearbySearch() {
     }
 }
 
-function updateInfoWindow(title, content, anchor) {
+function updateInfoWindow(
+    title: string | Element | null,
+    content: string | Element | null,
+    anchor: google.maps.marker.AdvancedMarkerElement
+) {
     infoWindow.setContent(content);
     infoWindow.setHeaderContent(title);
     infoWindow.open({

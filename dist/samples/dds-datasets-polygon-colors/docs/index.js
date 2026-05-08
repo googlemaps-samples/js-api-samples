@@ -9,10 +9,10 @@
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
 // [START maps_dds_datasets_polygon_colors_style_function]
-function setStyle(params) {
+const setStyle = (params) => {
     const datasetFeature = params.feature;
     // 'typecategory' is an attribute in this Dataset.
-    const typeCategory = datasetFeature.datasetAttributes['typecategory'];
+    const typeCategory = datasetFeature.datasetAttributes.typecategory;
 
     switch (typeCategory) {
         case 'Undeveloped': // Color undeveloped areas blue.
@@ -43,7 +43,7 @@ function setStyle(params) {
             };
             break;
     }
-}
+};
 // [END maps_dds_datasets_polygon_colors_style_function]
 
 async function init() {

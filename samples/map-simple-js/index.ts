@@ -17,7 +17,7 @@ async function init(): Promise<void> {
     const { Map } = await google.maps.importLibrary('maps');
 
     // Create a new map from the div with id="map".
-    map = new Map(document.getElementById('map') as HTMLElement, {
+    map = new Map(document.getElementById('map')!, {
         center: { lat: -34.397, lng: 150.644 },
         zoom: 8,
         renderingType: 'VECTOR',

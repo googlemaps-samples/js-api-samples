@@ -5,7 +5,7 @@
  */
 
 // [START maps_3d_polyline_extruded]
-let map;
+let map: google.maps.maps3d.Map3DElement;
 async function init() {
     const { Map3DElement, Polyline3DElement } =
         await google.maps.importLibrary('maps3d');

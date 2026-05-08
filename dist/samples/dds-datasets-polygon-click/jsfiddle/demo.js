@@ -12,19 +12,19 @@ let lastClickedFeatureIds = [];
 let datasetLayer;
 
 // Note, 'globalid' is an attribute in this Dataset.
-function handleClick(e) {
-    if (e.features) {
-        lastClickedFeatureIds = e.features.map(
-            (f) => f.datasetAttributes['globalid']
+function handleClick(event) {
+    if (event.features) {
+        lastClickedFeatureIds = event.features.map(
+            (f) => f.datasetAttributes.globalid
         );
     }
     datasetLayer.style = applyStyle;
 }
 
-function handleMouseMove(e) {
-    if (e.features) {
-        lastInteractedFeatureIds = e.features.map(
-            (f) => f.datasetAttributes['globalid']
+function handleMouseMove(event) {
+    if (event.features) {
+        lastInteractedFeatureIds = event.features.map(
+            (f) => f.datasetAttributes.globalid
         );
     }
     datasetLayer.style = applyStyle;
@@ -84,7 +84,7 @@ function applyStyle(params) {
     // Note, 'globalid' is an attribute in this dataset.
     if (
         lastClickedFeatureIds.includes(
-            datasetFeature.datasetAttributes['globalid']
+            datasetFeature.datasetAttributes.globalid
         )
     ) {
         return styleClicked;
@@ -92,7 +92,7 @@ function applyStyle(params) {
 
     if (
         lastInteractedFeatureIds.includes(
-            datasetFeature.datasetAttributes['globalid']
+            datasetFeature.datasetAttributes.globalid
         )
     ) {
         return styleMouseMove;

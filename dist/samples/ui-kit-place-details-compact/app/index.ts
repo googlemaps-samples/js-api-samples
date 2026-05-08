@@ -53,21 +53,24 @@ async function init(): Promise<void> {
 
     /* [START maps_ui_kit_place_details_compact_event] */
     // Add an event listener to handle clicks.
-    map.innerMap.addListener('click', (event) => {
-        event.stop();
+    map.innerMap.addListener(
+        'click',
+        (event: google.maps.MapMouseEvent | google.maps.IconMouseEvent) => {
+            event.stop();
 
-        if (event.placeId) {
-            // When the user clicks a POI.
-            marker.position = event.latLng;
-            placeDetailsRequest.place = event.placeId;
-            showInfoWindow();
-        } else {
-            // When the user clicks the map (not on a POI).
-            marker.position = null;
-            placeDetailsRequest.place = null;
-            console.log('No place was selected.');
+            if ('placeId' in event) {
+                // When the user clicks a POI.
+                marker.position = event.latLng;
+                placeDetailsRequest.place = event.placeId;
+                showInfoWindow();
+            } else {
+                // When the user clicks the map (not on a POI).
+                marker.position = null;
+                placeDetailsRequest.place = null;
+                console.log('No place was selected.');
+            }
         }
-    });
+    );
 }
 /* [END maps_ui_kit_place_details_compact_event] */
 void init();

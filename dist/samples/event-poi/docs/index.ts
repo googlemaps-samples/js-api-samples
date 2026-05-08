@@ -19,21 +19,24 @@ async function init() {
     innerMap = mapElement.innerMap;
 
     // Create the initial info window.
-    const infoWindow = new InfoWindow({});
+    const infoWindow = new InfoWindow();
 
     // Add a listener for click events on the map.
-    innerMap.addListener('click', (event) => {
-        // Prevent the default POI info window from showing.
-        event.stop();
+    innerMap.addListener(
+        'click',
+        (event: google.maps.MapMouseEvent | google.maps.IconMouseEvent) => {
+            // Prevent the default POI info window from showing.
+            event.stop();
 
-        // If the event has a placeId, show the info window.
-        if (isIconMouseEvent(event) && event.placeId) {
-            void showInfoWindow(event, infoWindow);
-        } else {
-            // Close the info window if there is no placeId.
-            infoWindow.close();
+            // If the event has a placeId, show the info window.
+            if (isIconMouseEvent(event) && event.placeId) {
+                void showInfoWindow(event, infoWindow);
+            } else {
+                // Close the info window if there is no placeId.
+                infoWindow.close();
+            }
         }
-    });
+    );
 }
 
 // Helper function to show the info window.
@@ -41,6 +44,8 @@ async function showInfoWindow(
     event: google.maps.IconMouseEvent,
     infoWindow: google.maps.InfoWindow
 ) {
+    if (!event.placeId) return;
+
     const { Size } = await google.maps.importLibrary('core');
 
     // Retrieve the place details for the selected POI.
@@ -65,7 +70,7 @@ async function showInfoWindow(
         position: event.latLng,
         pixelOffset: new Size(0, -30),
         headerContent: name,
-        content: content,
+        content,
     });
 
     innerMap.panTo(event.latLng!);
@@ -73,7 +78,7 @@ async function showInfoWindow(
 }
 
 // Helper function to get place details.
-async function getPlaceDetails(placeId) {
+async function getPlaceDetails(placeId: string) {
     // Import the Places library.
     const { Place } = await google.maps.importLibrary('places');
 

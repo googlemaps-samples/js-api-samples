@@ -109,6 +109,7 @@ async function initMap() {
             }
         }
         else {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             map3DElement[prop] = val;
         }
         updateUI();

@@ -20,7 +20,7 @@ async function init() {
     innerMap = mapElement.innerMap;
 
     // Create the initial info window.
-    const infoWindow = new InfoWindow({});
+    const infoWindow = new InfoWindow();
 
     // Add a listener for click events on the map.
     innerMap.addListener('click', (event) => {
@@ -39,6 +39,8 @@ async function init() {
 
 // Helper function to show the info window.
 async function showInfoWindow(event, infoWindow) {
+    if (!event.placeId) return;
+
     const { Size } = await google.maps.importLibrary('core');
 
     // Retrieve the place details for the selected POI.
@@ -63,7 +65,7 @@ async function showInfoWindow(event, infoWindow) {
         position: event.latLng,
         pixelOffset: new Size(0, -30),
         headerContent: name,
-        content: content,
+        content,
     });
 
     innerMap.panTo(event.latLng);

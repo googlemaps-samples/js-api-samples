@@ -6,21 +6,25 @@
 
 // [START maps_boundaries_click_event]
 let innerMap: google.maps.Map;
-let featureLayer;
-let infoWindow;
+let featureLayer: google.maps.FeatureLayer;
+let infoWindow: google.maps.InfoWindow;
 let lastInteractedFeatureIds: string[] = [];
 let lastClickedFeatureIds: string[] = [];
 
 // [START maps_boundaries_click_event_handler]
-function handleClick(e) {
-    lastClickedFeatureIds = e.features.map((f) => f.placeId);
+function handleClick(event: google.maps.FeatureMouseEvent) {
+    lastClickedFeatureIds = event.features.map(
+        (f) => (f as google.maps.PlaceFeature).placeId
+    );
     lastInteractedFeatureIds = [];
     featureLayer.style = applyStyle;
-    void createInfoWindow(e);
+    void createInfoWindow(event);
 }
 
-function handleMouseMove(e) {
-    lastInteractedFeatureIds = e.features.map((f) => f.placeId);
+function handleMouseMove(event: google.maps.FeatureMouseEvent) {
+    lastInteractedFeatureIds = event.features.map(
+        (f) => (f as google.maps.PlaceFeature).placeId
+    );
     featureLayer.style = applyStyle;
 }
 // [END maps_boundaries_click_event_handler]
@@ -61,14 +65,14 @@ async function init() {
     // [END maps_boundaries_click_event_add_layer]
 
     // Create the infoWindow.
-    infoWindow = new InfoWindow({});
+    infoWindow = new InfoWindow();
     // Apply style on load, to enable clicking.
     featureLayer.style = applyStyle;
 }
 
 // Helper function for the infoWindow.
-async function createInfoWindow(event) {
-    const feature = event.features[0];
+async function createInfoWindow(event: google.maps.FeatureMouseEvent) {
+    const feature = event.features[0] as google.maps.PlaceFeature;
     if (!feature.placeId) return;
 
     // Update the info window.
@@ -132,7 +136,10 @@ function applyStyle(params: google.maps.FeatureStyleFunctionOptions) {
 // [END maps_boundaries_click_event_style]
 
 // Helper function to create an info window.
-function updateInfoWindow(content, center) {
+function updateInfoWindow(
+    content: HTMLElement,
+    center: google.maps.LatLng | google.maps.LatLngLiteral | null | undefined
+) {
     infoWindow.setContent(content);
     infoWindow.setPosition(center);
     infoWindow.open({

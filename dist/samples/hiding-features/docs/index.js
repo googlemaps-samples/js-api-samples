@@ -24,10 +24,10 @@ async function init() {
 
     // Apply new JSON when the user chooses to hide/show features.
     document.getElementById('hide-poi').addEventListener('click', () => {
-        innerMap.setOptions({ styles: styles['hide'] });
+        innerMap.setOptions({ styles: styles.hide });
     });
     document.getElementById('show-poi').addEventListener('click', () => {
-        innerMap.setOptions({ styles: styles['default'] });
+        innerMap.setOptions({ styles: styles.default });
     });
 }
 

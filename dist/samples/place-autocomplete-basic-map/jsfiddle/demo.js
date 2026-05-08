@@ -38,7 +38,7 @@ async function init() {
 
     // Create an advanced marker to show the location of a selected place.
     const advancedMarkerElement = new AdvancedMarkerElement({
-        map: map,
+        map,
         collisionBehavior: 'REQUIRED_AND_HIDES_OPTIONAL',
     });
 

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 /* [START maps_ui_kit_place_details] */
+
 // Use querySelector to select elements for interaction.
 /* [START maps_ui_kit_place_details_query_selector] */
 const map = document.querySelector('gmp-map')!;
@@ -27,7 +28,7 @@ async function init(): Promise<void> {
 
     // Function to update map and marker based on place details
     const updateMapAndMarker = () => {
-        if (placeDetails.place && placeDetails.place.location) {
+        if (placeDetails.place?.location) {
             map.innerMap.panTo(placeDetails.place.location);
             map.innerMap.setZoom(16); // Set zoom after panning if needed
             marker.position = placeDetails.place.location;
@@ -43,19 +44,22 @@ async function init(): Promise<void> {
 
     /* [START maps_ui_kit_place_details_event] */
     // Add an event listener to handle clicks.
-    map.innerMap.addListener('click', (event) => {
-        marker.position = null;
-        event.stop();
-        if (event.placeId) {
-            // Fire when the user clicks a POI.
-            placeDetailsRequest.place = event.placeId;
-            updateMapAndMarker();
-        } else {
-            // Fire when the user clicks the map (not on a POI).
-            console.log('No place was selected.');
-            marker.style.display = 'none';
+    map.innerMap.addListener(
+        'click',
+        (event: google.maps.MapMouseEvent | google.maps.IconMouseEvent) => {
+            marker.position = null;
+            event.stop();
+            if ('placeId' in event && event.placeId) {
+                // Fire when the user clicks a POI.
+                placeDetailsRequest.place = event.placeId;
+                updateMapAndMarker();
+            } else {
+                // Fire when the user clicks the map (not on a POI).
+                console.log('No place was selected.');
+                marker.style.display = 'none';
+            }
         }
-    });
+    );
 }
 /* [END maps_ui_kit_place_details_event] */
 

@@ -5,6 +5,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 /* [START maps_ui_kit_place_details] */
+
 // Use querySelector to select elements for interaction.
 /* [START maps_ui_kit_place_details_query_selector] */
 const map = document.querySelector('gmp-map');
@@ -28,7 +29,7 @@ async function init() {
 
     // Function to update map and marker based on place details
     const updateMapAndMarker = () => {
-        if (placeDetails.place && placeDetails.place.location) {
+        if (placeDetails.place?.location) {
             map.innerMap.panTo(placeDetails.place.location);
             map.innerMap.setZoom(16); // Set zoom after panning if needed
             marker.position = placeDetails.place.location;
@@ -47,7 +48,7 @@ async function init() {
     map.innerMap.addListener('click', (event) => {
         marker.position = null;
         event.stop();
-        if (event.placeId) {
+        if ('placeId' in event && event.placeId) {
             // Fire when the user clicks a POI.
             placeDetailsRequest.place = event.placeId;
             updateMapAndMarker();

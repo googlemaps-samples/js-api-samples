@@ -59,7 +59,7 @@ async function init() {
     mapElement.append(centerMarker);
 
     // Wait for the map to finish drawing its tiles.
-    event.addListenerOnce(innerMap, 'tilesloaded', function () {
+    event.addListenerOnce(innerMap, 'tilesloaded', () => {
         // Get the controls div
         const controls = document.getElementById('control-panel');
 
@@ -80,6 +80,7 @@ async function init() {
     // Handle user click, reset the map center and position the circle.
     innerMap.addListener('click', (mapsMouseEvent) => {
         const newCenter = mapsMouseEvent.latLng;
+        if (!newCenter) return;
         walkingCircle.setCenter(newCenter);
         centerMarker.position = newCenter;
         innerMap.panTo(newCenter);
