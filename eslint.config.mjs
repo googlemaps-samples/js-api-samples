@@ -32,6 +32,7 @@ export default defineConfig([
             'no-shadow': 'error',
             'no-prototype-builtins': 'off', // samples show more vanilla patterns
             'object-shorthand': ['error', 'always'],
+            eqeqeq: ['error', 'always', { null: 'ignore' }],
         },
     },
     {

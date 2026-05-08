@@ -235,7 +235,7 @@ function applyStyle(placeid?: string) {
 
     const featureStyle = (params: google.maps.FeatureStyleFunctionOptions) => {
         const placeFeature = params.feature as google.maps.PlaceFeature;
-        if (placeFeature.placeId == placeid) {
+        if (placeFeature.placeId === placeid) {
             return styleStrokeFill;
         } else {
             return styleStrokeOnly;
@@ -280,7 +280,7 @@ function buildMenu() {
         countryOption.textContent = item.name;
         countryOption.value = item.code;
         // Set U.S. as the default.
-        if (item.code == 'US') {
+        if (item.code === 'US') {
             countryOption.selected = true;
         }
         countryMenu.appendChild(countryOption);
@@ -419,7 +419,7 @@ async function showSelectedPolygon(placeid: string, mode: number) {
     placeInfo.id = 'place-info';
 
     // Show information if boundary was clicked (mode 0).
-    if (mode == 0) {
+    if (mode === 0) {
         const boldAddress = document.createElement('b');
         boldAddress.textContent = place.formattedAddress!;
         const placeIdCode = document.createElement('code');

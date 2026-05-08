@@ -29,7 +29,7 @@ async function init() {
     const toggleButton = document.getElementById('toggleButton')!;
     toggleButton.addEventListener('click', function () {
         // Toggle the labels.
-        if (map.mode == 'SATELLITE') {
+        if (map.mode === 'SATELLITE') {
             // Setting the map mode to HYBRID turns the labels on.
             map.mode = 'HYBRID';
             toggleButton.innerText = 'Labels are on. (HYBRID)';

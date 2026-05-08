@@ -60,7 +60,7 @@ function styleBoundary(placeid: string) {
     // Define the feature style function.
     featureLayer.style = (params: google.maps.FeatureStyleFunctionOptions) => {
         const placeFeature = params.feature as google.maps.PlaceFeature;
-        if (placeFeature.placeId == placeid) {
+        if (placeFeature.placeId === placeid) {
             return styleFill;
         }
         return null;
