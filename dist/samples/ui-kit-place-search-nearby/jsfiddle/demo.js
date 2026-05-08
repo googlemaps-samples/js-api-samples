@@ -42,7 +42,9 @@ async function init() {
     });
 
     // Add event listeners to the type select and place search elements.
-    typeSelect.addEventListener('change', () => searchPlaces());
+    typeSelect.addEventListener('change', () => {
+        searchPlaces();
+    });
 
     placeSearch.addEventListener('gmp-select', (event) => {
         const { place } = event;
@@ -52,7 +54,7 @@ async function init() {
         void addMarkers();
     });
 
-    void searchPlaces();
+    searchPlaces();
 }
 
 // The searchPlaces function is called when the user changes the type select or when the page loads.

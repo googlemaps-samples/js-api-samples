@@ -21,7 +21,7 @@ async function init() {
 
     map = new Map(document.getElementById('map'), {
         zoom: 12,
-        center: center,
+        center,
         mapTypeControl: false,
         mapId: 'DEMO_MAP_ID',
     });
@@ -95,7 +95,9 @@ async function init() {
     }
     mapPolylines = routes[0].createPolylines();
     // Add polylines to the map.
-    mapPolylines.forEach((polyline) => polyline.setMap(map));
+    mapPolylines.forEach((polyline) => {
+        polyline.setMap(map);
+    });
 
     // Create markers to start and end points.
     const markers = await routes[0].createWaypointAdvancedMarkers();

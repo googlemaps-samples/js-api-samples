@@ -16,12 +16,13 @@ async function init() {
     const mapElement = document.querySelector('gmp-map');
     const innerMap = mapElement.innerMap;
 
-    innerMap.addListener('click', (e) => {
+    innerMap.addListener('click', (event) => {
+        if (!event.latLng) return;
         new AdvancedMarkerElement({
-            position: e.latLng,
+            position: event.latLng,
             map: innerMap,
         });
-        innerMap.panTo(e.latLng);
+        innerMap.panTo(event.latLng);
     });
 }
 

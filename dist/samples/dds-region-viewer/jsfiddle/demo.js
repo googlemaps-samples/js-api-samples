@@ -219,7 +219,8 @@ function applyStyle(placeid) {
     revertStyles();
 
     const featureStyle = (params) => {
-        if (params.feature.placeId == placeid) {
+        const placeFeature = params.feature;
+        if (placeFeature.placeId === placeid) {
             return styleStrokeFill;
         } else {
             return styleStrokeOnly;
@@ -264,7 +265,7 @@ function buildMenu() {
         countryOption.textContent = item.name;
         countryOption.value = item.code;
         // Set U.S. as the default.
-        if (item.code == 'US') {
+        if (item.code === 'US') {
             countryOption.selected = true;
         }
         countryMenu.appendChild(countryOption);
@@ -297,11 +298,10 @@ function updateFeatureMenuAvailability(countryCode) {
 }
 
 // Return a map of feature availability for a country.
-function getFeatureAvailability(countryName) {
+function getFeatureAvailability(countryCode) {
     // Return the data for the selected country.
-
     const selectedCountry = countries.default.find((country) => {
-        return country.code === countryName;
+        return country.code === countryCode;
     });
 
     // Create a map for our values.
@@ -332,7 +332,8 @@ function revertStyles() {
 
 // Apply styling to the clicked place.
 function handlePlaceClick(event) {
-    const clickedPlaceId = event.features[0].placeId;
+    const placeFeature = event.features[0];
+    const clickedPlaceId = placeFeature.placeId;
     if (!clickedPlaceId) return;
     void showSelectedPolygon(clickedPlaceId, 0);
 }
@@ -403,7 +404,7 @@ async function showSelectedPolygon(placeid, mode) {
     placeInfo.id = 'place-info';
 
     // Show information if boundary was clicked (mode 0).
-    if (mode == 0) {
+    if (mode === 0) {
         const boldAddress = document.createElement('b');
         boldAddress.textContent = place.formattedAddress;
         const placeIdCode = document.createElement('code');

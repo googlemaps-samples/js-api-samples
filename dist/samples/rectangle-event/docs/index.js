@@ -30,7 +30,7 @@ async function init() {
 
     // Define the rectangle and set its editable property to true.
     rectangle = new Rectangle({
-        bounds: bounds,
+        bounds,
         editable: true,
         draggable: true,
     });

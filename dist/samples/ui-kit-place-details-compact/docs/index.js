@@ -57,7 +57,7 @@ async function init() {
     map.innerMap.addListener('click', (event) => {
         event.stop();
 
-        if (event.placeId) {
+        if ('placeId' in event) {
             // When the user clicks a POI.
             marker.position = event.latLng;
             placeDetailsRequest.place = event.placeId;

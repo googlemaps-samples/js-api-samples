@@ -50,7 +50,9 @@ async function init() {
     }
     mapPolylines = routes[0].createPolylines();
     // Add polylines to the map.
-    mapPolylines.forEach((polyline) => polyline.setMap(map));
+    mapPolylines.forEach((polyline) => {
+        polyline.setMap(map);
+    });
 
     void fitMapToPath(routes[0].path);
 

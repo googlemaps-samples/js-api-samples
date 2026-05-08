@@ -5,9 +5,9 @@
  */
 
 // [START maps_place_text_search]
-let map;
-let markers = {};
-let infoWindow;
+let map: google.maps.Map;
+let markers: Record<string, google.maps.marker.AdvancedMarkerElement> = {};
+let infoWindow: google.maps.InfoWindow;
 
 async function init() {
     const [{ Map, InfoWindow }, { ControlPosition }] = await Promise.all([
@@ -16,8 +16,8 @@ async function init() {
     ]);
 
     const center = { lat: 37.4161493, lng: -122.0812166 };
-    map = new Map(document.getElementById('map') as HTMLElement, {
-        center: center,
+    map = new Map(document.getElementById('map')!, {
+        center,
         zoom: 11,
         mapTypeControl: false,
         mapId: 'DEMO_MAP_ID',
@@ -27,7 +27,7 @@ async function init() {
     const textInputButton = document.getElementById(
         'text-input-button'
     ) as HTMLButtonElement;
-    const card = document.getElementById('text-input-card') as HTMLElement;
+    const card = document.getElementById('text-input-card')!;
     map.controls[ControlPosition.TOP_LEFT].push(card);
 
     textInputButton.addEventListener('click', () => {
@@ -43,18 +43,19 @@ async function init() {
     infoWindow = new InfoWindow();
 }
 
-async function findPlaces(query) {
+async function findPlaces(query: string) {
     const [{ Place }, { AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('places'),
         google.maps.importLibrary('marker'),
     ]);
+
     // [START maps_place_text_search_request]
     const request = {
         textQuery: query,
         fields: ['displayName', 'location', 'businessStatus'],
         includedType: '', // Restrict query to a specific type (leave blank for any).
         useStrictTypeFiltering: true,
-        locationBias: map.center,
+        locationBias: map.getCenter(),
         isOpenNow: true,
         language: 'en-US',
         maxResultCount: 8,
@@ -76,7 +77,7 @@ async function findPlaces(query) {
         markers = {};
 
         // Loop through and get all the results.
-        places.forEach((place) => {
+        places.forEach((place: google.maps.places.Place) => {
             const marker = new AdvancedMarkerElement({
                 map,
                 position: place.location,
@@ -85,8 +86,8 @@ async function findPlaces(query) {
             markers[place.id] = marker;
 
             marker.addListener('gmp-click', () => {
-                map.panTo(place.location);
-                void updateInfoWindow(place.displayName, place.id, marker);
+                map.panTo(place.location!);
+                updateInfoWindow(place.displayName!, place.id, marker);
             });
 
             if (place.location != null) {
@@ -101,7 +102,11 @@ async function findPlaces(query) {
 }
 
 // Helper function to create an info window.
-function updateInfoWindow(title, content, anchor) {
+function updateInfoWindow(
+    title: string | Element | null,
+    content: string | Element | null,
+    anchor: google.maps.marker.AdvancedMarkerElement
+) {
     infoWindow.setContent(content);
     infoWindow.setHeaderContent(title);
     infoWindow.open({

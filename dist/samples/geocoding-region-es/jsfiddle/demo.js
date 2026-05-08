@@ -27,11 +27,11 @@ async function init() {
                 position,
             });
         })
-        .catch((e) =>
+        .catch((e) => {
             window.alert(
                 'Geocode was not successful for the following reason: ' + e
-            )
-        );
+            );
+        });
 }
 
 void init();

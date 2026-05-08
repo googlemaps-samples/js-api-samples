@@ -11,7 +11,7 @@
 // 3. Populate the form fields with those address components.
 // This sample requires the Places library, Maps JavaScript API.
 
-let placeAutocomplete;
+let placeAutocomplete: google.maps.places.PlaceAutocompleteElement;
 let address1Field: HTMLInputElement;
 let address2Field: HTMLInputElement;
 let postalField: HTMLInputElement;
@@ -39,7 +39,9 @@ async function init() {
 }
 
 // [START maps_places_autocomplete_addressform_fillform]
-async function fillInAddress(placePrediction) {
+async function fillInAddress(
+    placePrediction: google.maps.places.PlacePrediction
+) {
     // The placePrediction object does not have all the details needed
     // for the form, so we'll call fetchFields to get the place details.
     const place = placePrediction.toPlace();

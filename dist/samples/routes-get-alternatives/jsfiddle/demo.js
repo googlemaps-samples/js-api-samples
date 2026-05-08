@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-let mapPolylines = [];
+const mapPolylines = [];
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
 
@@ -77,8 +77,8 @@ async function getDirections() {
 }
 
 function drawRoute(route, isPrimaryRoute) {
-    mapPolylines = mapPolylines.concat(
-        route.createPolylines({
+    mapPolylines.push(
+        ...route.createPolylines({
             polylineOptions: isPrimaryRoute
                 ? {
                       map: innerMap,

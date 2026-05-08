@@ -45,6 +45,7 @@ async function init() {
 // Defines the callback function referenced in the jsonp file.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function earthquakeDataLoad(data: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     innerMap.data.addGeoJson(data);
 }
 
