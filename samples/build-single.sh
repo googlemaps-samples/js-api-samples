@@ -175,13 +175,22 @@ if ls *.js; then # Note: DNE for react builds
   npx prettier -w *.js --ignore-path /dev/null # --ignore-path /dev/null forces enablement 
 fi
 
-# one more check (this one needs typings stripped to work)
+# post-build checks:
 set +e
+
+start_snippet_ct=$(grep "\[START " "${common_recursive_grep_options[@]}" --include=*.js | wc -l)
+end_snippet_ct=$(grep "\[END " "${common_recursive_grep_options[@]}" --include=*.js | wc -l)
+if [[ $start_snippet_ct -ne $end_snippet_ct ]]; then
+  echo "Mismatched snippet tags in final output (may have been stripped by TSC)."
+  exit 1
+fi
+
 grep "google\.maps\." "${common_recursive_grep_options[@]}" --include=*.js | grep -v "google.maps.importLibrary" | grep -v -E '^[-_./a-z0-9]+:\s*//'
 if [[ $? -eq 0 ]]; then
   echo "Using google.maps namespace for something other than google.maps.importLibrary()."
   exit 1
 fi
+
 set -e
 
 bash ../jsfiddle.sh "$NAME"
