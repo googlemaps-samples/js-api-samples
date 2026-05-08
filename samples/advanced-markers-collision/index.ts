@@ -5,6 +5,8 @@
  */
 
 // [START maps_advanced_markers_collision]
+const mapElement = document.querySelector('gmp-map')!;
+
 declare namespace mdc {
     namespace select {
         class MDCSelect {
@@ -14,8 +16,6 @@ declare namespace mdc {
         }
     }
 }
-
-const mapElement = document.querySelector('gmp-map')!;
 
 // Initialize and add the map
 async function init(): Promise<void> {
