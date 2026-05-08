@@ -36,7 +36,7 @@ export default defineConfig([
     },
     {
         files: ['**/*.ts', '**/*.tsx'],
-        extends: [...tseslint.configs.recommendedTypeChecked],
+        extends: [...tseslint.configs.strictTypeChecked],
         languageOptions: {
             parserOptions: {
                 projectService: true,
@@ -62,6 +62,12 @@ export default defineConfig([
 
             // If something is already "any", then allow member access
             '@typescript-eslint/no-unsafe-member-access': 'warn',
+
+            // disabled for historic reasons:
+            '@typescript-eslint/no-non-null-assertion': 'off',
+            '@typescript-eslint/restrict-template-expressions': 'off',
+            '@typescript-eslint/restrict-plus-operands': 'off',
+            '@typescript-eslint/no-unnecessary-condition': 'off',
         },
     },
     {

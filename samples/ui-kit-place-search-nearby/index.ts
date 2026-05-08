@@ -46,7 +46,9 @@ async function init(): Promise<void> {
 
     /* [START maps_ui_kit_place_search_nearby_event] */
     // Add event listeners to the type select and place search elements.
-    typeSelect.addEventListener('change', () => searchPlaces());
+    typeSelect.addEventListener('change', () => {
+        searchPlaces();
+    });
 
     placeSearch.addEventListener('gmp-select', (event) => {
         const { place } = event;
@@ -56,7 +58,7 @@ async function init(): Promise<void> {
         void addMarkers();
     });
 
-    void searchPlaces();
+    searchPlaces();
 }
 /* [END maps_ui_kit_place_search_nearby_event] */
 /* [START maps_ui_kit_place_search_nearby_function] */

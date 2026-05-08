@@ -87,7 +87,7 @@ async function findPlaces(query: string) {
 
             marker.addListener('gmp-click', () => {
                 map.panTo(place.location!);
-                void updateInfoWindow(place.displayName!, place.id, marker);
+                updateInfoWindow(place.displayName!, place.id, marker);
             });
 
             if (place.location != null) {

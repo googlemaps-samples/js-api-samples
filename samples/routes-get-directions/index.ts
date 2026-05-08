@@ -103,7 +103,9 @@ async function init(): Promise<void> {
     }
     mapPolylines = routes[0].createPolylines();
     // Add polylines to the map.
-    mapPolylines.forEach((polyline) => polyline.setMap(map));
+    mapPolylines.forEach((polyline) => {
+        polyline.setMap(map);
+    });
 
     // Create markers to start and end points.
     const markers = await routes[0].createWaypointAdvancedMarkers();

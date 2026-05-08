@@ -51,7 +51,9 @@ const PlacesSearchLayout = () => {
                     defaultZoom={16}
                     mapId="DEMO_MAP_ID"
                     clickableIcons={false}
-                    onClick={() => setSelectedPlace(null)}>
+                    onClick={() => {
+                        setSelectedPlace(null);
+                    }}>
                     <PlaceSearchController
                         placeSearchRef={placeSearchRef}
                         selectedType={selectedType}
@@ -79,7 +81,9 @@ const PlacesSearchLayout = () => {
                     name="types"
                     className="type-select"
                     value={selectedType}
-                    onChange={(e) => setSelectedType(e.target.value)}>
+                    onChange={(e) => {
+                        setSelectedType(e.target.value);
+                    }}>
                     <option value="">Select a place type</option>
                     <option value="cafe">Cafe</option>
                     <option value="restaurant">Restaurant</option>
@@ -189,7 +193,9 @@ const PlaceSearchController = ({
             }
         };
 
-        const handleSelect = (event: any) => setSelectedPlace(event.place);
+        const handleSelect = (event: any) => {
+            setSelectedPlace(event.place);
+        };
 
         placeSearch.addEventListener('gmp-load', handleLoad);
         placeSearch.addEventListener('gmp-select', handleSelect);
