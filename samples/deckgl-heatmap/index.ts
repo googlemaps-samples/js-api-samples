@@ -6,7 +6,6 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 /* [START maps_deckgl_heatmap] */
@@ -17,6 +16,19 @@ let heatmapLayer: deck.HeatmapLayer;
 let googleMapsOverlay: deck.GoogleMapsOverlay;
 let marker: google.maps.marker.AdvancedMarkerElement | undefined;
 let infoWindow: google.maps.InfoWindow;
+
+// Declare global namespace for MDC to satisfy TypeScript compiler
+declare namespace mdc {
+    namespace linearProgress {
+        class MDCLinearProgress {
+            constructor(el: Element);
+            open(): void;
+            close(): void;
+            determinate: boolean;
+            done?: () => void;
+        }
+    }
+}
 
 // Declare global namespace for Deck.gl to satisfy TypeScript compiler
 declare namespace deck {
@@ -36,18 +48,17 @@ declare namespace deck {
 
 async function init(): Promise<void> {
     // Progress bar logic moved from index.html
-    let progress;
-    const progressDiv = document.querySelector('.mdc-linear-progress')!;
+    let progress: mdc.linearProgress.MDCLinearProgress | undefined;
+    const progressDiv = document.querySelector('.mdc-linear-progress');
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-        // @ts-expect-error: mdc not typed
         progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
         progress.done = function () {
-            progress.close();
-            progressDiv?.remove(); // Use optional chaining in case progressDiv is null
+            progress!.close();
+            progressDiv.remove();
         };
     }
 
@@ -134,7 +145,7 @@ async function init(): Promise<void> {
         // Check if progress is defined
         // Add a small delay to ensure the progress bar is removed
         setTimeout(() => {
-            progress.done(); // hides progress bar
+            progress.done?.(); // hides progress bar
         }, 100); // 100ms delay
     }
 

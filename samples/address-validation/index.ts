@@ -114,7 +114,7 @@ const verdictMessages: Record<
 // Helper function to get the verdict message for a given verdict key
 function getVerdictMessage(
     verdict: google.maps.addressValidation.Verdict | null,
-    key: string
+    key: keyof google.maps.addressValidation.Verdict
 ): string {
     if (!verdict || !verdictMessages[key]) return 'Unknown';
     return verdict[key]

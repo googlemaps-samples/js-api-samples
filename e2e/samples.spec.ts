@@ -205,7 +205,8 @@ foldersToTest.forEach((sampleFolder) => {
 
             // Wait for Google Maps to load.
             await page.waitForFunction(
-                () => globalThis.google && globalThis.google.maps,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                () => (window as any).google && (window as any).google.maps,
                 { timeout: 500 }
             );
 
@@ -216,19 +217,21 @@ foldersToTest.forEach((sampleFolder) => {
             // The sample must load the Google Maps API.
             const hasGoogleMaps = await page.evaluate(() => {
                 return (
-                    typeof globalThis.google !== 'undefined' &&
-                    typeof globalThis.google.maps !== 'undefined'
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    typeof (window as any).google !== 'undefined' &&
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    typeof (window as any).google.maps !== 'undefined'
                 );
             });
             expect(hasGoogleMaps).toBeTruthy();
 
             /** const mapElement = await page.locator('#map');
-      if (await page.locator('#map').isVisible()) {
-        console.log(`✅ Assertion passed: Map is visible.`);
-      } else {
-        console.error(`❌ Assertion failed: Map is not visible.`);
-        throw new Error('Assertion failed: Map is not visible.');
-      }*/
+             if (await page.locator('#map').isVisible()) {
+                console.log(`✅ Assertion passed: Map is visible.`);
+            } else {
+                console.error(`❌ Assertion failed: Map is not visible.`);
+                throw new Error('Assertion failed: Map is not visible.');
+            }*/
         } finally {
             // viteProcess.kill(); // We used to just kill the process. Curious to see about how the other stuff works.
             if (viteProcess.pid) {

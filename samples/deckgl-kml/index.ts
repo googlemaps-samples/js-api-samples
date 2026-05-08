@@ -47,6 +47,19 @@ declare namespace deck {
     // Add other Deck.gl types used globally if needed
 }
 
+// Declare global namespace for MDC to satisfy TypeScript compiler
+declare namespace mdc {
+    namespace linearProgress {
+        class MDCLinearProgress {
+            constructor(el: Element);
+            open(): void;
+            close(): void;
+            determinate: boolean;
+            done?: () => void;
+        }
+    }
+}
+
 // Initialize and add the map
 let map: google.maps.Map;
 let geojsonLayer: deck.GeoJsonLayer;
@@ -54,12 +67,11 @@ let googleMapsOverlay: deck.GoogleMapsOverlay;
 
 async function init(): Promise<void> {
     // Progress bar logic moved from index.html
-    let progress;
+    let progress: mdc.linearProgress.MDCLinearProgress;
     const progressDiv = document.querySelector('.mdc-linear-progress')!;
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-        // @ts-expect-error: mdc not typed
         progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
@@ -120,7 +132,7 @@ async function init(): Promise<void> {
                 // Check if progress is defined
                 // Add a small delay to ensure the progress bar is removed
                 setTimeout(() => {
-                    progress.done(); // hides progress bar
+                    progress.done?.(); // hides progress bar
                 }, 100); // 100ms delay
             }
         },

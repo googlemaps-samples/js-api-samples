@@ -4,16 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
 // [START maps_dds_datasets_point]
 const mapElement = document.querySelector('gmp-map')!;
 let innerMap: google.maps.Map;
 // [START maps_dds_datasets_point_style_function]
-function setStyle(params) {
+function setStyle(params: { feature: google.maps.Feature }) {
     // [START maps_dds_datasets_point_style_get_features]
     // Get the dataset feature, so we can work with all of its attributes.
-    const datasetFeature = params.feature;
+    const datasetFeature = params.feature as google.maps.DatasetFeature;
     // Get all of the needed dataset attributes.
     const furColors =
         datasetFeature.datasetAttributes[
@@ -127,8 +125,8 @@ function makeLegend() {
     title.innerText = 'Fur Colors';
     title.classList.add('title');
     legend!.appendChild(title);
-    let color;
-    for (color in colors) {
+
+    for (const color of Object.keys(colors) as Iterable<keyof typeof colors>) {
         const wrapper = document.createElement('div');
         wrapper.id = 'container';
         const box = document.createElement('div');

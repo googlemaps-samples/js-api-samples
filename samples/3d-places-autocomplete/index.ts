@@ -6,7 +6,6 @@
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 
 // [START maps_3d_places_autocomplete]
 let map: google.maps.maps3d.Map3DElement;
@@ -41,7 +40,9 @@ async function initAutocomplete() {
 
     placeAutocomplete.addEventListener(
         'gmp-select',
-        async ({ placePrediction }) => {
+        async ({
+            placePrediction,
+        }: google.maps.places.PlacePredictionSelectEvent) => {
             const place = placePrediction.toPlace();
             await place.fetchFields({
                 fields: ['displayName', 'location', 'id'],

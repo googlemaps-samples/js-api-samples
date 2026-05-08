@@ -32,10 +32,12 @@ async function init(): Promise<void> {
     document.body.appendChild(selectedPlaceInfo);
 
     // [START maps_place_autocomplete_element_listener]
-    // Add the gmp-placeselect listener, and display the results.
+    // Add the gmp-select listener, and display the results.
     placeAutocomplete.addEventListener(
         'gmp-select',
-        async ({ placePrediction }) => {
+        async ({
+            placePrediction,
+        }: google.maps.places.PlacePredictionSelectEvent) => {
             const place = placePrediction.toPlace();
             await place.fetchFields({
                 fields: ['displayName', 'formattedAddress', 'location'],

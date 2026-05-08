@@ -121,7 +121,8 @@ async function initMap(): Promise<void> {
                 };
             }
         } else {
-            map3DElement[prop] = val;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (map3DElement as any)[prop] = val;
         }
         updateUI();
     });

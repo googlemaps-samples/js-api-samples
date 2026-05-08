@@ -23,8 +23,8 @@ import process from 'node:process';
 
 export async function waitForGoogleMapsToLoad(page: Page) {
     await page.waitForFunction(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        () => globalThis.google && globalThis.google.maps
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return
+        () => (window as any).google && (window as any).google.maps
     );
     await page.waitForTimeout(100);
 }
