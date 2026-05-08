@@ -43,14 +43,14 @@ async function init() {
     inputElement.addEventListener('input', makeAutocompleteRequest);
 }
 
-async function makeAutocompleteRequest(inputEvent) {
+async function makeAutocompleteRequest(inputEvent: Event) {
     // To avoid race conditions, store the request ID and compare after the request.
     const requestId = ++newestRequestId;
 
     const { AutocompleteSuggestion } =
         await google.maps.importLibrary('places');
 
-    if (!inputEvent.target?.value) {
+    if (!(inputEvent.target as HTMLInputElement)?.value) {
         titleElement.textContent = '';
         resultsContainerElement.replaceChildren();
         return;

@@ -5,6 +5,9 @@
  */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 
 /* [START maps_deckgl_kml_updated] */
 // Import necessary loader
@@ -44,6 +47,19 @@ declare namespace deck {
     // Add other Deck.gl types used globally if needed
 }
 
+// Declare global namespace for MDC to satisfy TypeScript compiler
+declare namespace mdc {
+    namespace linearProgress {
+        class MDCLinearProgress {
+            constructor(el: Element);
+            open(): void;
+            close(): void;
+            determinate: boolean;
+            done?: () => void;
+        }
+    }
+}
+
 // Initialize and add the map
 let map: google.maps.Map;
 let geojsonLayer: deck.GeoJsonLayer;
@@ -51,18 +67,17 @@ let googleMapsOverlay: deck.GoogleMapsOverlay;
 
 async function init(): Promise<void> {
     // Progress bar logic moved from index.html
-    let progress;
+    let progress: mdc.linearProgress.MDCLinearProgress;
     const progressDiv = document.querySelector('.mdc-linear-progress')!;
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-        // @ts-expect-error: mdc not typed
         progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
         progress.done = function () {
-            progress.close();
-            progressDiv?.remove(); // Use optional chaining in case progressDiv is null
+            progress!.close();
+            progressDiv.remove(); // Use optional chaining in case progressDiv is null
         };
     }
 
@@ -106,12 +121,12 @@ async function init(): Promise<void> {
         pointRadiusMinPixels: 2,
         pointRadiusMaxPixels: 200,
         getRadius: () => 8000,
-        getFillColor: (f) => {
+        getFillColor: (f: any) => {
             // Extract magnitude from the description string
             const description = f.properties.description;
             const magnitudeMatch = description.match(/M (\d+\.?\d*)/);
             let parsedMagnitude: number | null = null;
-            if (magnitudeMatch && magnitudeMatch[1]) {
+            if (magnitudeMatch?.[1]) {
                 parsedMagnitude = parseFloat(magnitudeMatch[1]);
             } else {
                 console.log('Magnitude not found');
@@ -176,7 +191,7 @@ async function init(): Promise<void> {
         },
         onDataLoad: () => {
             console.log('KML data loaded');
-            if (progress && progress.done) {
+            if (progress?.done) {
                 progress.done();
             }
         },

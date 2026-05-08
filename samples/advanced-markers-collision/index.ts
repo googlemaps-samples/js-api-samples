@@ -5,6 +5,16 @@
  */
 
 // [START maps_advanced_markers_collision]
+declare namespace mdc {
+    namespace select {
+        class MDCSelect {
+            constructor(el: Element | null);
+            listen(evtType: string, handler: (event: Event) => void): void;
+            value: string;
+        }
+    }
+}
+
 const mapElement = document.querySelector('gmp-map')!;
 
 // Initialize and add the map
@@ -19,7 +29,6 @@ async function init(): Promise<void> {
 
     const collisionBehavior: google.maps.CollisionBehaviorString = 'REQUIRED';
 
-    // @ts-expect-error: mdc not typed
     const select = new mdc.select.MDCSelect(
         document.querySelector('.mdc-select')
     );

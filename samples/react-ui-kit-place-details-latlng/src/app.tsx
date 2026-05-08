@@ -14,10 +14,10 @@ import './styles.css';
 
 const API_KEY = 'AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8';
 
-type PlaceDetailsProps = {
+interface PlaceDetailsProps {
     lat: number;
     lng: number;
-};
+}
 
 // Renders place details using a latitude and longitude.
 const PlaceDetails = ({ lat, lng }: PlaceDetailsProps) => {

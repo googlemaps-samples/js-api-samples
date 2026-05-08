@@ -5,7 +5,7 @@
  */
 
 // [START maps_3d_label_toggle]
-let map;
+let map: google.maps.maps3d.Map3DElement;
 async function init() {
     const { Map3DElement } = await google.maps.importLibrary('maps3d');
 
@@ -27,9 +27,9 @@ async function init() {
 
     // Get the button element by its ID
     const toggleButton = document.getElementById('toggleButton')!;
-    toggleButton.addEventListener('click', function () {
+    toggleButton.addEventListener('click', () => {
         // Toggle the labels.
-        if (map.mode == 'SATELLITE') {
+        if (map.mode === 'SATELLITE') {
             // Setting the map mode to HYBRID turns the labels on.
             map.mode = 'HYBRID';
             toggleButton.innerText = 'Labels are on. (HYBRID)';
