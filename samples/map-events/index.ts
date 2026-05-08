@@ -29,7 +29,7 @@ const events = [
 ];
 
 function setupListener(map: google.maps.Map, name: string) {
-    const eventRow = document.getElementById(name) as HTMLElement;
+    const eventRow = document.getElementById(name)!;
     map.addListener(name, () => {
         eventRow.className = 'event active';
         setTimeout(() => {
@@ -59,7 +59,7 @@ async function init() {
 
 // Dynamically create the table of events from the defined hashmap
 function populateTable() {
-    const eventsTable = document.getElementById('sidebar') as HTMLElement;
+    const eventsTable = document.getElementById('sidebar')!;
 
     for (let i = 0; i < events.length; i++) {
         const eventDiv = document.createElement('div');

@@ -31,6 +31,7 @@ export default defineConfig([
             'spaced-comment': ['error', 'always'],
             'no-shadow': 'error',
             'no-prototype-builtins': 'off', // samples show more vanilla patterns
+            'object-shorthand': ['error', 'always'],
         },
     },
     {
@@ -59,12 +60,8 @@ export default defineConfig([
                 { allowDeclarations: true, allowDefinitionFiles: true },
             ],
 
-            // temporarily downgraded to warn for historic reasons:
+            // If something is already "any", then allow member access
             '@typescript-eslint/no-unsafe-member-access': 'warn',
-            '@typescript-eslint/no-unsafe-assignment': 'warn',
-            '@typescript-eslint/no-unsafe-call': 'warn',
-            '@typescript-eslint/no-unsafe-return': 'warn',
-            '@typescript-eslint/no-unsafe-argument': 'warn',
         },
     },
     {

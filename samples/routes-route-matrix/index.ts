@@ -27,7 +27,7 @@ async function init(): Promise<void> {
 
     const bounds = new LatLngBounds();
 
-    map = new Map(document.getElementById('map') as HTMLElement, {
+    map = new Map(document.getElementById('map')!, {
         zoom: 8,
         center,
         mapId: 'DEMO_MAP_ID',

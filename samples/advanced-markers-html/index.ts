@@ -14,7 +14,7 @@ async function init() {
     ]);
 
     const center = { lat: 37.43238031167444, lng: -122.16795397128632 };
-    const map = new Map(document.getElementById('map') as HTMLElement, {
+    const map = new Map(document.getElementById('map')!, {
         zoom: 11,
         center,
         mapId: '4504f8b37365c3d0',
@@ -46,7 +46,7 @@ interface Property {
 }
 
 function toggleHighlight(markerView: google.maps.marker.AdvancedMarkerElement) {
-    const content = markerView.children[0] as HTMLElement;
+    const content = markerView.children[0]!;
 
     if (content.classList.contains('highlight')) {
         content.classList.remove('highlight');

@@ -54,7 +54,7 @@ async function init() {
     placeAutocomplete = document.querySelector('gmp-place-autocomplete')!;
     placeAutocomplete.includedPrimaryTypes = ['(regions)'];
 
-    contentDiv = document.getElementById('pac-content') as HTMLElement;
+    contentDiv = document.getElementById('pac-content')!;
     searchInputOption = document.getElementById(
         'pac-filter-option'
     ) as HTMLInputElement;

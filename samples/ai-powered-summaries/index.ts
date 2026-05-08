@@ -9,8 +9,8 @@
 const mapElement = document.querySelector('gmp-map')!;
 const placeAutocomplete = document.querySelector('gmp-place-autocomplete')!;
 const summaryPanel = document.getElementById('summary-panel')!;
-const placeName = document.getElementById('place-name') as HTMLElement;
-const placeAddress = document.getElementById('place-address') as HTMLElement;
+const placeName = document.getElementById('place-name')!;
+const placeAddress = document.getElementById('place-address')!;
 const tabContainer = document.getElementById('tab-container')!;
 const summaryContent = document.getElementById('summary-content')!;
 const aiDisclosure = document.getElementById('ai-disclosure')!;

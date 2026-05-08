@@ -27,7 +27,7 @@ async function init() {
     innerMap.setMapTypeId('gallPeters');
 
     // Show the lat and lng under the mouse cursor.
-    const coordsDiv = document.getElementById('coords') as HTMLElement;
+    const coordsDiv = document.getElementById('coords')!;
 
     innerMap.addListener('mousemove', (event: google.maps.MapMouseEvent) => {
         coordsDiv.textContent =

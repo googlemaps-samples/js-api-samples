@@ -11,7 +11,7 @@ const placeAutocompleteElement = document.querySelector(
 const placeDetailsElement = document.querySelector(
     'gmp-place-details-compact'
 )!;
-const placeDetailsParent = placeDetailsElement.parentElement as HTMLElement;
+const placeDetailsParent = placeDetailsElement.parentElement!;
 const gmpMapElement = document.querySelector('gmp-map')!;
 
 async function init(): Promise<void> {

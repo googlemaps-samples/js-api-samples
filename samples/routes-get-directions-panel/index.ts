@@ -17,7 +17,7 @@ async function init(): Promise<void> {
         google.maps.importLibrary('routes'),
     ]);
 
-    map = new Map(document.getElementById('map') as HTMLElement, {
+    map = new Map(document.getElementById('map')!, {
         zoom: 12,
         center,
         mapTypeControl: false,

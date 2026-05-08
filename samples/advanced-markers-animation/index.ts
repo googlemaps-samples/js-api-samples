@@ -54,7 +54,7 @@ async function init(): Promise<void> {
 
     const position = { lat: 37.4242011827985, lng: -122.09242296450893 };
 
-    const map = new Map(document.getElementById('map') as HTMLElement, {
+    const map = new Map(document.getElementById('map')!, {
         zoom: 14,
         center: position,
         mapId: '4504f8b37365c3d0',

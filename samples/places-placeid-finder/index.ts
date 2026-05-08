@@ -39,9 +39,7 @@ async function init(): Promise<void> {
     });
 
     const infoWindow = new InfoWindow();
-    const infoWindowContent = document.getElementById(
-        'infowindow-content'
-    ) as HTMLElement;
+    const infoWindowContent = document.getElementById('infowindow-content')!;
 
     infoWindow.setContent(infoWindowContent);
 
@@ -81,19 +79,12 @@ async function init(): Promise<void> {
             marker.position = place.location;
             // marker.setVisible(true); // AdvancedMarkerElement is visible by default when map and position are set.
 
-            (
-                infoWindowContent.children.namedItem(
-                    'place-name'
-                ) as HTMLElement
-            ).textContent = place.displayName!;
-            (
-                infoWindowContent.children.namedItem('place-id') as HTMLElement
-            ).textContent = place.id;
-            (
-                infoWindowContent.children.namedItem(
-                    'place-address'
-                ) as HTMLElement
-            ).textContent = place.formattedAddress!;
+            infoWindowContent.children.namedItem('place-name')!.textContent =
+                place.displayName!;
+            infoWindowContent.children.namedItem('place-id')!.textContent =
+                place.id;
+            infoWindowContent.children.namedItem('place-address')!.textContent =
+                place.formattedAddress!;
             infoWindow.open(map, marker);
         }
     );

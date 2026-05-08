@@ -16,8 +16,6 @@ import { defineConfig, devices } from '@playwright/test';
  * limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv

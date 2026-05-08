@@ -16,7 +16,7 @@ async function init() {
     ]);
 
     const center = { lat: 37.4161493, lng: -122.0812166 };
-    map = new Map(document.getElementById('map') as HTMLElement, {
+    map = new Map(document.getElementById('map')!, {
         center,
         zoom: 11,
         mapTypeControl: false,
@@ -27,7 +27,7 @@ async function init() {
     const textInputButton = document.getElementById(
         'text-input-button'
     ) as HTMLButtonElement;
-    const card = document.getElementById('text-input-card') as HTMLElement;
+    const card = document.getElementById('text-input-card')!;
     map.controls[ControlPosition.TOP_LEFT].push(card);
 
     textInputButton.addEventListener('click', () => {

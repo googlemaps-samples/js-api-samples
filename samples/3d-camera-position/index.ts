@@ -21,13 +21,13 @@ async function initMap(): Promise<void> {
     const fovSlider = document.getElementById('fov') as HTMLInputElement;
     const rollSlider = document.getElementById('roll') as HTMLInputElement;
 
-    const headingVal = document.getElementById('heading-val') as HTMLElement;
-    const tiltVal = document.getElementById('tilt-val') as HTMLElement;
-    const rangeVal = document.getElementById('range-val') as HTMLElement;
-    const altitudeVal = document.getElementById('altitude-val') as HTMLElement;
-    const fovVal = document.getElementById('fov-val') as HTMLElement;
-    const rollVal = document.getElementById('roll-val') as HTMLElement;
-    const codeElem = document.getElementById('generated-code') as HTMLElement;
+    const headingVal = document.getElementById('heading-val')!;
+    const tiltVal = document.getElementById('tilt-val')!;
+    const rangeVal = document.getElementById('range-val')!;
+    const altitudeVal = document.getElementById('altitude-val')!;
+    const fovVal = document.getElementById('fov-val')!;
+    const rollVal = document.getElementById('roll-val')!;
+    const codeElem = document.getElementById('generated-code')!;
     const copyBtn = document.getElementById('copy-btn') as HTMLButtonElement;
 
     let currentAltitude = 30;
@@ -82,7 +82,7 @@ async function initMap(): Promise<void> {
     });
 
     // Listen to slider changes using event delegation.
-    const panel = document.querySelector('.panel') as HTMLElement;
+    const panel = document.querySelector('.panel')!;
 
     panel.addEventListener('input', (e) => {
         const target = e.target as HTMLInputElement;

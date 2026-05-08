@@ -432,9 +432,8 @@ async function init() {
             toggleTrafficAwarePolyline();
 
             // Toggle transit options for Transit mode
-            (
-                document.getElementById('transit-options') as HTMLElement
-            ).style.display = travelMode.value === 'TRANSIT' ? 'flex' : 'none';
+            document.getElementById('transit-options')!.style.display =
+                travelMode.value === 'TRANSIT' ? 'flex' : 'none';
         });
 
         routingPreference.addEventListener('change', () => {

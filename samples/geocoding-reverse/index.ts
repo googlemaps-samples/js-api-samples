@@ -25,7 +25,7 @@ async function init() {
     const latLngQuery = document.getElementById('latlng') as HTMLInputElement;
 
     // Get the submit button.
-    const submitButton = document.getElementById('submit') as HTMLElement;
+    const submitButton = document.getElementById('submit')!;
 
     // Set the cursor to crosshair.
     innerMap.setOptions({
