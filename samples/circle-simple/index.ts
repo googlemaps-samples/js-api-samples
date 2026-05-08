@@ -59,7 +59,7 @@ async function init() {
     mapElement.append(centerMarker);
 
     // Wait for the map to finish drawing its tiles.
-    event.addListenerOnce(innerMap, 'tilesloaded', function () {
+    event.addListenerOnce(innerMap, 'tilesloaded', () => {
         // Get the controls div
         const controls = document.getElementById('control-panel');
 

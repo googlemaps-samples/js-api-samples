@@ -27,7 +27,7 @@ async function init() {
 
     // Get the button element by its ID
     const toggleButton = document.getElementById('toggleButton')!;
-    toggleButton.addEventListener('click', function () {
+    toggleButton.addEventListener('click', () => {
         // Toggle the labels.
         if (map.mode === 'SATELLITE') {
             // Setting the map mode to HYBRID turns the labels on.

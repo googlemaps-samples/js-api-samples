@@ -33,6 +33,7 @@ export default defineConfig([
             'no-prototype-builtins': 'off', // samples show more vanilla patterns
             'object-shorthand': ['error', 'always'],
             eqeqeq: ['error', 'always', { null: 'ignore' }],
+            'prefer-arrow-callback': 'error',
         },
     },
     {
