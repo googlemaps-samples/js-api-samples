@@ -130,6 +130,6 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: dist-pr.yml
-          ref: "temp-build-branch"
+          ref: "main"
           token: ${{ secrets.GH_APPROVER_TOKEN }} # Use the same token that pushed, it needs 'workflows: write' permissions
           inputs: '{ "source_run_id": "${{ github.run_id }}" }' # Optional: Pass the run ID for traceability
