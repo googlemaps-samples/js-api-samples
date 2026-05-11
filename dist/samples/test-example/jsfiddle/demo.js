@@ -39,6 +39,6 @@ async function init() {
         title: 'Uluru',
     });
 
-    console.log('Hello! I hope you are doing well.');
+    console.log('Hello! Beautiful day, eh?');
 }
 void init();
