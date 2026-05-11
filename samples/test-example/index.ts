@@ -45,7 +45,7 @@ async function init() {
 
     // [START maps_test_example_why_me]
     console.log(
-        'Happy Thursday! (TODO: verify whether it is actually Thursday.'
+        'Good Day! Today we are doing good things!'
     );
     // [END maps_test_example_why_me]
 }
