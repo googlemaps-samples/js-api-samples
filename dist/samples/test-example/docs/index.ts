@@ -44,7 +44,7 @@ async function init() {
     // [END maps_test_example_instantiate_marker]
 
     // [START maps_test_example_why_me]
-    console.log('Hello! Beautiful day, eh?');
+    console.log('Hello! Having fun yet?');
     // [END maps_test_example_why_me]
 }
 void init();
