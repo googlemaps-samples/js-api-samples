@@ -39,8 +39,6 @@ async function init() {
         title: 'Uluru',
     });
 
-    console.log(
-        'Happy Thursday! (TODO: verify whether it is actually Thursday.'
-    );
+    console.log('Hello! Today we are doing good things!');
 }
 void init();
