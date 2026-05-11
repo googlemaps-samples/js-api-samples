@@ -43,7 +43,6 @@ jobs:
 
       - name: Ensure temp branch exists on origin
         run: |
-          git fetch origin temp-build-branch:temp-build-branch
           git ls-remote --exit-code --heads origin temp-build-branch
 
       - name: Find existing PR
