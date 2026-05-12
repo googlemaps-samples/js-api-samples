@@ -92,13 +92,13 @@ jobs:
       - name: Approve PR
         env:
           PR_URL: ${{ steps.pr.outputs.pr_url }}
-          GH_TOKEN: ${{ secrets.GH_APPROVER_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr review --approve "$PR_URL"
 
       - name: Enable auto-merge
         env:
           PR_URL: ${{ steps.pr.outputs.pr_url }}
-          GH_TOKEN: ${{ secrets.GH_APPROVER_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr merge --auto --squash --delete-branch "$PR_URL"
