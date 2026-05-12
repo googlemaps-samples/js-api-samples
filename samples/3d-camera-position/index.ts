@@ -138,12 +138,7 @@ async function initMap(): Promise<void> {
 
     // Update UI on camera change events.
     map3DElement.addEventListener('gmp-headingchange', updateUI);
-    map3DElement.addEventListener('gmp-tiltchange', () => {
-        if ((map3DElement.tilt ?? 0) < 0) {
-            map3DElement.tilt = 0;
-        }
-        updateUI();
-    });
+    map3DElement.addEventListener('gmp-tiltchange', updateUI);
     map3DElement.addEventListener('gmp-rangechange', updateUI);
     map3DElement.addEventListener('gmp-fovchange', updateUI);
 
