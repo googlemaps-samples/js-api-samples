@@ -5,7 +5,7 @@
  */
 
 // [START maps_3d_accessibility_features]
-async function initMap() {
+async function initMap(): Promise<void> {
     // Import the needed libraries.
     const [{ Marker3DInteractiveElement, PopoverElement }, { PinElement }] =
         await Promise.all([
@@ -43,16 +43,16 @@ async function initMap() {
 
     tourStops.forEach(({ position, title }, i) => {
         const pin = new PinElement({
-            glyphText: `${i + 1}`,
+            glyphText: String(i + 1),
             scale: 1.5,
             glyphColor: '#FFFFFF',
         });
         const popover = new PopoverElement();
 
-        const content = `${i + 1}. ${title}`;
+        const content = `${String(i + 1)}. ${title}`;
         const header = document.createElement('span');
         // Include the label for screen readers.
-        header.ariaLabel = `This is marker ${i + 1}. ${title}`;
+        header.ariaLabel = `This is marker ${String(i + 1)}. ${title}`;
         header.slot = 'header';
 
         popover.append(header);
@@ -74,5 +74,5 @@ async function initMap() {
     document.body.append(map3DElement);
 }
 
-void init();
+void initMap();
 // [END maps_3d_accessibility_features]
