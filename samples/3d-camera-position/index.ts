@@ -36,7 +36,8 @@ async function initMap(): Promise<void> {
     // Update values on UI when the map changes.
     const updateUI = () => {
         const heading = map3DElement.heading?.toFixed(0) ?? '0';
-        const tilt = map3DElement.tilt?.toFixed(0) ?? '0';
+        const rawTilt = map3DElement.tilt ?? 0;
+        const tilt = Math.max(0, rawTilt).toFixed(0);
         const range = map3DElement.range?.toFixed(0) ?? '0';
         const rawFov = parseFloat(map3DElement.fov?.toFixed(0) ?? '45');
         const fovClamped = Math.min(80, Math.max(5, rawFov));
@@ -121,8 +122,9 @@ async function initMap(): Promise<void> {
                 };
             }
         } else {
+            const finalVal = prop === 'tilt' ? Math.max(0, val) : val;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (map3DElement as any)[prop] = val;
+            (map3DElement as any)[prop] = finalVal;
         }
         updateUI();
     });
@@ -136,7 +138,12 @@ async function initMap(): Promise<void> {
 
     // Update UI on camera change events.
     map3DElement.addEventListener('gmp-headingchange', updateUI);
-    map3DElement.addEventListener('gmp-tiltchange', updateUI);
+    map3DElement.addEventListener('gmp-tiltchange', () => {
+        if ((map3DElement.tilt ?? 0) < 0) {
+            map3DElement.tilt = 0;
+        }
+        updateUI();
+    });
     map3DElement.addEventListener('gmp-rangechange', updateUI);
     map3DElement.addEventListener('gmp-fovchange', updateUI);
 
