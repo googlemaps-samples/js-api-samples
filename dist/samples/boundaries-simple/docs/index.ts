@@ -10,9 +10,9 @@
  */
 
 // [START maps_boundaries_simple]
-let featureLayer;
+let featureLayer: google.maps.FeatureLayer;
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -38,14 +38,16 @@ async function initMap() {
     };
 
     // Apply the style to a single boundary.
-    featureLayer.style = (options: { feature: { placeId: string } }) => {
-        if (options.feature.placeId == 'ChIJ0zQtYiWsVHkRk8lRoB1RNPo') {
+    featureLayer.style = (options: google.maps.FeatureStyleFunctionOptions) => {
+        const feature = options.feature as google.maps.PlaceFeature;
+        if (feature.placeId === 'ChIJ0zQtYiWsVHkRk8lRoB1RNPo') {
             // Hana, HI
             return featureStyleOptions;
         }
+        return null;
     };
     // [END maps_boundaries_simple_style_single]
 }
 
-initMap();
+void init();
 // [END maps_boundaries_simple]

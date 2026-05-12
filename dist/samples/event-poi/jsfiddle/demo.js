@@ -7,9 +7,9 @@
 
 let innerMap;
 
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
-    google.maps.importLibrary('core'); // preload
+    void google.maps.importLibrary('core'); // preload
     const { InfoWindow } = await google.maps.importLibrary('maps');
 
     // Retrieve the map element.
@@ -19,7 +19,7 @@ async function initMap() {
     innerMap = mapElement.innerMap;
 
     // Create the initial info window.
-    const infoWindow = new InfoWindow({});
+    const infoWindow = new InfoWindow();
 
     // Add a listener for click events on the map.
     innerMap.addListener('click', (event) => {
@@ -28,7 +28,7 @@ async function initMap() {
 
         // If the event has a placeId, show the info window.
         if (isIconMouseEvent(event) && event.placeId) {
-            showInfoWindow(event, infoWindow);
+            void showInfoWindow(event, infoWindow);
         } else {
             // Close the info window if there is no placeId.
             infoWindow.close();
@@ -38,6 +38,8 @@ async function initMap() {
 
 // Helper function to show the info window.
 async function showInfoWindow(event, infoWindow) {
+    if (!event.placeId) return;
+
     const { Size } = await google.maps.importLibrary('core');
 
     // Retrieve the place details for the selected POI.
@@ -62,7 +64,7 @@ async function showInfoWindow(event, infoWindow) {
         position: event.latLng,
         pixelOffset: new Size(0, -30),
         headerContent: name,
-        content: content,
+        content,
     });
 
     innerMap.panTo(event.latLng);
@@ -89,4 +91,4 @@ function isIconMouseEvent(e) {
     return 'placeId' in e;
 }
 
-initMap();
+void init();

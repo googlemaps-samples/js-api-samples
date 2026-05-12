@@ -11,7 +11,7 @@ let mapPolylines = [];
 const center = { lat: 37.447646, lng: -122.113878 }; // Palo Alto, CA
 
 // Initialize and add the map.
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     const [{ Map }, { Place }, { Route }] = await Promise.all([
         google.maps.importLibrary('maps'),
@@ -21,7 +21,7 @@ async function initMap() {
 
     map = new Map(document.getElementById('map'), {
         zoom: 12,
-        center: center,
+        center,
         mapTypeControl: false,
         mapId: 'DEMO_MAP_ID',
     });
@@ -32,6 +32,8 @@ async function initMap() {
         destination: '345 Spear Street, San Francisco, CA',
         fields: ['path'],
     };
+
+    console.log({ requestWithAddressStrings });
 
     // Use Place IDs in a directions request.
     const originPlaceInstance = new Place({
@@ -48,6 +50,8 @@ async function initMap() {
         fields: ['path'], // Request fields needed to draw polylines.
     };
 
+    console.log({ requestWithPlaceIds });
+
     // Use lat/lng in a directions request.
     // Mountain View, CA
     const originLatLng = { lat: 37.422, lng: -122.084058 };
@@ -61,12 +65,16 @@ async function initMap() {
         fields: ['path'],
     };
 
+    console.log({ requestWithLatLngs });
+
     // Use Plus Codes in a directions request.
     const requestWithPlusCodes = {
         origin: '849VCWC8+R9', // Mountain View, CA
         destination: 'CRHJ+C3 Stanford, CA 94305, USA', // Stanford, CA
         fields: ['path'],
     };
+
+    console.log({ requestWithPlusCodes });
 
     // Define a routes request.
     const request = {
@@ -78,8 +86,7 @@ async function initMap() {
 
     // Call computeRoutes to get the directions.
 
-    const { routes, fallbackInfo, geocodingResults } =
-        await Route.computeRoutes(request);
+    const { routes } = await Route.computeRoutes(request);
 
     // Use createPolylines to create polylines for the route.
     if (!routes) {
@@ -88,7 +95,9 @@ async function initMap() {
     }
     mapPolylines = routes[0].createPolylines();
     // Add polylines to the map.
-    mapPolylines.forEach((polyline) => polyline.setMap(map));
+    mapPolylines.forEach((polyline) => {
+        polyline.setMap(map);
+    });
 
     // Create markers to start and end points.
     const markers = await routes[0].createWaypointAdvancedMarkers();
@@ -101,7 +110,7 @@ async function initMap() {
     console.log(`Response:\n ${JSON.stringify(routes, null, 2)}`);
 
     // Fit the map to the path.
-    fitMapToPath(routes[0].path);
+    void fitMapToPath(routes[0].path);
 }
 
 // Helper function to fit the map to the path.
@@ -114,4 +123,4 @@ async function fitMapToPath(path) {
     map.fitBounds(bounds);
 }
 
-initMap();
+void init();

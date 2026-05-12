@@ -3,6 +3,7 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 /* [START maps_deckgl_kml] */
 // Import necessary loader
 import { KMLLoader } from '@loaders.gl/kml';
@@ -12,14 +13,13 @@ let map;
 let geojsonLayer;
 let googleMapsOverlay;
 
-async function initMap() {
+async function init() {
     // Progress bar logic moved from index.html
     let progress;
     const progressDiv = document.querySelector('.mdc-linear-progress');
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-        // @ts-expect-error: mdc not typed
         progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
@@ -30,7 +30,7 @@ async function initMap() {
     }
 
     // The location for the map center (adjust as needed for the KML data)
-    const position = { lat: 41.8692576, lng: -87.689769 };
+    const center = { lat: 41.8692576, lng: -87.689769 };
 
     //  Request needed libraries.
     const { Map } = await google.maps.importLibrary('maps');
@@ -44,7 +44,7 @@ async function initMap() {
     // The map, centered at the specified position
     map = new Map(mapDiv, {
         zoom: 11, // Adjust zoom as needed
-        center: position,
+        center,
         // mapId: '6a17c323f461e521', // Replace with your Map ID
         mapId: '6a17c323f461e521',
         zoomControl: true,
@@ -80,7 +80,7 @@ async function initMap() {
                 // Check if progress is defined
                 // Add a small delay to ensure the progress bar is removed
                 setTimeout(() => {
-                    progress.done(); // hides progress bar
+                    progress.done?.(); // hides progress bar
                 }, 100); // 100ms delay
             }
         },
@@ -125,8 +125,7 @@ async function initMap() {
             if (d.properties.centroid) {
                 position = d.properties.centroid;
             } else if (
-                d.geometry &&
-                d.geometry.coordinates &&
+                d.geometry?.coordinates &&
                 d.geometry.coordinates.length > 0
             ) {
                 // Assuming Polygon or MultiPolygon
@@ -188,5 +187,5 @@ function hexOrAabbggrrToRgba(color) {
     return null; // Invalid format
 }
 
-initMap();
+void init();
 /* [END maps_deckgl_kml] */

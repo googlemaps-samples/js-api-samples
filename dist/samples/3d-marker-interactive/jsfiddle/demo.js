@@ -92,4 +92,4 @@ const positions = [
     },
 ];
 
-init();
+void init();

@@ -3,10 +3,13 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 // [START maps_routes_compute_routes]
 let markers: google.maps.marker.AdvancedMarkerElement[] = [];
 let polylines: google.maps.Polyline[] = [];
-const waypointInfoWindow: google.maps.InfoWindow | null = null;
 
 interface PlaceAutocompleteSelection {
     predictionText: string | null;
@@ -52,7 +55,7 @@ async function init() {
 
         computeRoutesForm.addEventListener('submit', (event) => {
             event.preventDefault();
-            sendRequest(new FormData(computeRoutesForm));
+            void sendRequest(new FormData(computeRoutesForm));
         });
     }
 
@@ -92,9 +95,8 @@ async function init() {
         formData: FormData
     ): google.maps.routes.ComputeRoutesRequest {
         const travelMode =
-            (formData.get('travel_mode') as string) === ''
-                ? undefined
-                : formData.get('travel_mode');
+            (formData.get('travel_mode') as google.maps.TravelModeString) ||
+            undefined;
         const extraComputations: google.maps.routes.ComputeRoutesExtraComputation[] =
             [];
         const requestedReferenceRoutes: google.maps.routes.ReferenceRoute[] =
@@ -128,19 +130,15 @@ async function init() {
                 ),
                 (input) => (input as HTMLInputElement).value
             ),
-            travelMode: travelMode as google.maps.TravelMode,
+            travelMode,
             routingPreference:
-                formData.get('routing_preference') === ''
-                    ? undefined
-                    : (formData.get(
-                          'routing_preference'
-                      ) as google.maps.routes.RoutingPreference),
+                (formData.get(
+                    'routing_preference'
+                ) as google.maps.routes.RoutingPreferenceString) || undefined,
             polylineQuality:
-                formData.get('polyline_quality') === ''
-                    ? undefined
-                    : (formData.get(
-                          'polyline_quality'
-                      ) as google.maps.routes.PolylineQuality),
+                (formData.get(
+                    'polyline_quality'
+                ) as google.maps.routes.PolylineQualityString) || undefined,
             computeAlternativeRoutes:
                 formData.get('compute_alternative_routes') === 'on',
             routeModifiers: {
@@ -189,12 +187,9 @@ async function init() {
                 (input) =>
                     (input as HTMLInputElement).value as google.maps.TransitMode
             );
-            transitPreference.routingPreference =
-                formData.get('transit_preference') === ''
-                    ? undefined
-                    : (formData.get(
-                          'transit_preference'
-                      ) as google.maps.TransitRoutePreference);
+            transitPreference.routingPreference = formData.get(
+                'transit_preference'
+            ) as google.maps.TransitRoutePreferenceString;
         }
 
         return request;
@@ -204,7 +199,7 @@ async function init() {
         autocompleteSelection: PlaceAutocompleteSelection,
         locationInput?: FormDataEntryValue | null,
         headingInput?: FormDataEntryValue | null,
-        travelModeInput?: FormDataEntryValue | null
+        travelModeInput?: google.maps.TravelModeString | null
     ): string | google.maps.routes.DirectionalLocationLiteral {
         if (!locationInput) {
             throw new Error('Location is required.');
@@ -245,7 +240,7 @@ async function init() {
     }
 
     function setErrorMessage(error: string) {
-        const alertBox = document.getElementById('alert') as HTMLDivElement;
+        const alertBox = document.getElementById('alert')!;
         alertBox.querySelector('p')!.textContent = error;
         alertBox.style.display = 'flex';
     }
@@ -357,7 +352,7 @@ async function init() {
     }
 
     function attachMapClickListener() {
-        if (!map || !map.innerMap) {
+        if (!map?.innerMap) {
             return;
         }
 
@@ -437,9 +432,8 @@ async function init() {
             toggleTrafficAwarePolyline();
 
             // Toggle transit options for Transit mode
-            (
-                document.getElementById('transit-options') as HTMLElement
-            ).style.display = travelMode.value === 'TRANSIT' ? 'flex' : 'none';
+            document.getElementById('transit-options')!.style.display =
+                travelMode.value === 'TRANSIT' ? 'flex' : 'none';
         });
 
         routingPreference.addEventListener('change', () => {
@@ -468,7 +462,7 @@ async function init() {
     }
 
     function attachAlertWindowListener() {
-        const alertBox = document.getElementById('alert') as HTMLDivElement;
+        const alertBox = document.getElementById('alert')!;
         const closeBtn = alertBox.querySelector('.close')!;
         closeBtn.addEventListener('click', () => {
             if (alertBox.style.display !== 'none') {
@@ -529,5 +523,5 @@ async function init() {
     }
 }
 
-window.addEventListener('load', init);
+void init();
 // [END maps_routes_compute_routes]

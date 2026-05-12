@@ -12,17 +12,19 @@
  */
 // [START maps_map_simple_js]
 let map: google.maps.Map;
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Import the needed libraries
-    const { Map, RenderingType } = await google.maps.importLibrary('maps');
+    const { Map } = await google.maps.importLibrary('maps');
 
     // Create a new map from the div with id="map".
-    map = new Map(document.getElementById('map') as HTMLElement, {
+    map = new Map(document.getElementById('map')!, {
         center: { lat: -34.397, lng: 150.644 },
         zoom: 8,
         renderingType: 'VECTOR',
     });
+
+    console.log(map);
 }
 
-initMap();
+void init();
 // [END maps_map_simple_js]

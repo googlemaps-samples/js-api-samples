@@ -6,7 +6,7 @@
  */
 
 // [START maps_3d_camera_center]
-async function initMap() {
+async function init() {
     // Import the needed libraries.
     await google.maps.importLibrary('maps3d');
 
@@ -37,5 +37,5 @@ async function initMap() {
     });
 }
 
-initMap();
+void init();
 // [END maps_3d_camera_center]

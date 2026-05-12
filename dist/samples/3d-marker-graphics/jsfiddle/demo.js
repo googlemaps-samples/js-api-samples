@@ -5,10 +5,12 @@
  */
 
 async function init() {
-    const { Map3DElement, Marker3DElement } =
-        await google.maps.importLibrary('maps3d');
-    const { PinElement } = await google.maps.importLibrary('marker');
-    const { Place } = await google.maps.importLibrary('places');
+    const [{ Map3DElement, Marker3DElement }, { PinElement }, { Place }] =
+        await Promise.all([
+            google.maps.importLibrary('maps3d'),
+            google.maps.importLibrary('marker'),
+            google.maps.importLibrary('places'),
+        ]);
 
     const map = new Map3DElement({
         center: { lat: 37.426, lng: -122.082, altitude: 18 },
@@ -101,5 +103,5 @@ async function init() {
     document.body.append(map);
 }
 
-init();
+void init();
 export {};

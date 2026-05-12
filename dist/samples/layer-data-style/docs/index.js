@@ -6,9 +6,11 @@
  */
 
 // [START maps_layer_data_style]
-async function initMap() {
-    await google.maps.importLibrary('maps');
-    const { event } = await google.maps.importLibrary('core');
+async function init() {
+    const [{ event }] = await Promise.all([
+        google.maps.importLibrary('core'),
+        google.maps.importLibrary('maps'),
+    ]);
 
     const mapElement = document.querySelector('gmp-map');
 
@@ -30,5 +32,5 @@ async function initMap() {
     // [END maps_layer_data_style_script_snippet_style]
 }
 
-initMap();
+void init();
 // [END maps_layer_data_style]

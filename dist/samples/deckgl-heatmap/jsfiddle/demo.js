@@ -13,20 +13,19 @@ let googleMapsOverlay;
 let marker;
 let infoWindow;
 
-async function initMap() {
+async function init() {
     // Progress bar logic moved from index.html
     let progress;
     const progressDiv = document.querySelector('.mdc-linear-progress');
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-        // @ts-expect-error: mdc not typed
         progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
         progress.done = function () {
             progress.close();
-            progressDiv?.remove(); // Use optional chaining in case progressDiv is null
+            progressDiv.remove();
         };
     }
 
@@ -34,8 +33,10 @@ async function initMap() {
     const position = { lat: 37.77325660358167, lng: -122.41712341793448 }; // Using the center from original deckgl-polygon.js
 
     //  Request needed libraries.
-    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+    const [{ Map, InfoWindow }, { AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+    ]);
 
     const mapDiv = document.getElementById('map');
     if (!mapDiv) {
@@ -111,7 +112,7 @@ async function initMap() {
         // Check if progress is defined
         // Add a small delay to ensure the progress bar is removed
         setTimeout(() => {
-            progress.done(); // hides progress bar
+            progress.done?.(); // hides progress bar
         }, 100); // 100ms delay
     }
 
@@ -119,14 +120,14 @@ async function initMap() {
     infoWindow = new InfoWindow();
 
     // Add click listener to the map
-    map.addListener('click', async (event) => {
+    map.addListener('click', (event) => {
         const latLng = event.latLng;
         if (!latLng) return; // Ensure latLng is not null
 
         if (!marker) {
             // Create the marker on the first click
             marker = new AdvancedMarkerElement({
-                map: map,
+                map,
                 position: latLng,
                 gmpClickable: true,
             });
@@ -182,4 +183,4 @@ async function initMap() {
     }
 }
 
-initMap();
+void init();

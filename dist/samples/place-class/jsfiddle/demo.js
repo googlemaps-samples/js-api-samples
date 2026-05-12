@@ -9,17 +9,20 @@ const mapElement = document.querySelector('gmp-map');
 let innerMap;
 let infoWindow;
 
-async function initMap() {
-    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
+async function init() {
+    const { InfoWindow } = await google.maps.importLibrary('maps');
 
     innerMap = mapElement.innerMap;
     infoWindow = new InfoWindow();
-    getPlaceDetails();
+    void getPlaceDetails();
 }
 
 async function getPlaceDetails() {
-    const { Place } = await google.maps.importLibrary('places');
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+    const [{ Place }, { AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('places'),
+        google.maps.importLibrary('marker'),
+    ]);
+
     // Use place ID to create a new Place instance.
     const place = new Place({
         id: 'ChIJyYB_SZVU2YARR-I1Jjf08F0', // San Diego Zoo
@@ -66,4 +69,4 @@ async function getPlaceDetails() {
     });
 }
 
-initMap();
+void init();

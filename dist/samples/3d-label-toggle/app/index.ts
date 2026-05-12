@@ -5,7 +5,7 @@
  */
 
 // [START maps_3d_label_toggle]
-let map;
+let map: google.maps.maps3d.Map3DElement;
 async function init() {
     const { Map3DElement } = await google.maps.importLibrary('maps3d');
 
@@ -25,22 +25,11 @@ async function init() {
 
     document.body.append(map);
 
-    const locationCamera = {
-        center: {
-            lat: 21.263523536467105,
-            lng: -157.80663691939296,
-            altitude: 80.28936069489404,
-        },
-        range: 1500.8202963253427,
-        tilt: 76.9173260789542,
-        heading: -44.59196007522445,
-    };
-
     // Get the button element by its ID
     const toggleButton = document.getElementById('toggleButton')!;
-    toggleButton.addEventListener('click', function () {
+    toggleButton.addEventListener('click', () => {
         // Toggle the labels.
-        if (map.mode == 'SATELLITE') {
+        if (map.mode === 'SATELLITE') {
             // Setting the map mode to HYBRID turns the labels on.
             map.mode = 'HYBRID';
             toggleButton.innerText = 'Labels are on. (HYBRID)';
@@ -52,5 +41,5 @@ async function init() {
     });
 }
 
-init();
+void init();
 // [END maps_3d_label_toggle]

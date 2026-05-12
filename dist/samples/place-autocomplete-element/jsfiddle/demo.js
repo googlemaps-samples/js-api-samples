@@ -5,13 +5,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-async function initMap() {
+// Remove these disables once the PlacesLibrary typing is fixed:
+
+async function init() {
     // Request needed libraries.
-    // @ts-expect-error - currently missing. bug fix pending
+
     const { PlaceAutocompleteElement } =
         await google.maps.importLibrary('places');
     // Create the input HTML element, and append it.
-    const placeAutocomplete = new PlaceAutocompleteElement({});
+    const placeAutocomplete = new PlaceAutocompleteElement();
     document.body.appendChild(placeAutocomplete);
 
     // Inject HTML UI.
@@ -23,7 +25,7 @@ async function initMap() {
     selectedPlaceInfo.textContent = '';
     document.body.appendChild(selectedPlaceInfo);
 
-    // Add the gmp-placeselect listener, and display the results.
+    // Add the gmp-select listener, and display the results.
     placeAutocomplete.addEventListener(
         'gmp-select',
         async ({ placePrediction }) => {
@@ -41,4 +43,4 @@ async function initMap() {
     );
 }
 
-initMap();
+void init();

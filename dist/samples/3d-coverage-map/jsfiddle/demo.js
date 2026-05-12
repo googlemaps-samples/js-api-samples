@@ -16,10 +16,12 @@ const layerStyle = {
 const mapElement = document.querySelector('gmp-map');
 const placeAutocomplete = document.querySelector('gmp-place-autocomplete');
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    await google.maps.importLibrary('maps');
-    await google.maps.importLibrary('places');
+    await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('places'),
+    ]);
 
     // Get the inner map from the map element.
     const innerMap = mapElement.innerMap;
@@ -51,4 +53,4 @@ async function initMap() {
         }
     );
 }
-initMap();
+void init();

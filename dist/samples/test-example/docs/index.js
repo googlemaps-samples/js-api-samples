@@ -15,14 +15,15 @@
 // Declare the gmp-map element.
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
-const advancedMarkerElement = document.querySelector('gmp-advanced-marker');
 let center;
 
-async function initMap() {
+async function init() {
     // [START maps_test_example_instantiate_map]
     //  Request the needed libraries.
-    const { Map } = await google.maps.importLibrary('maps');
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+    const [{ AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
+    ]);
 
     // Get the inner map from the gmp-map element.
     innerMap = mapElement.innerMap;
@@ -36,7 +37,7 @@ async function initMap() {
 
     // [START maps_test_example_instantiate_marker]
     // Add a marker, positioned at Uluru.
-    const marker = new AdvancedMarkerElement({
+    new AdvancedMarkerElement({
         map: innerMap,
         position: center,
         title: 'Uluru',
@@ -44,8 +45,8 @@ async function initMap() {
     // [END maps_test_example_instantiate_marker]
 
     // [START maps_test_example_why_me]
-    console.log("Say there Mac, why'd you choose me to test this change?");
+    console.log('May there be peace.');
     // [END maps_test_example_why_me]
 }
-initMap();
+void init();
 // [END maps_test_example]

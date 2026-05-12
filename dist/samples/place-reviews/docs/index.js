@@ -10,7 +10,7 @@ let innerMap;
 let infoWindow;
 const mapElement = document.querySelector('gmp-map');
 
-async function initMap() {
+async function init() {
     // Import the needed libraries.
     const [{ InfoWindow }, { AdvancedMarkerElement }, { Place }] =
         await Promise.all([
@@ -89,5 +89,5 @@ async function initMap() {
     });
 }
 
-initMap();
+void init();
 // [END maps_place_reviews]

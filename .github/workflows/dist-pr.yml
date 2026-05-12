@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Create release PR for dist
+name: Create, approve, and merge release PR for dist
 
 on:
   workflow_dispatch:
@@ -23,30 +23,82 @@ on:
         type: string
 
 jobs:
-  create-pr:
+  create-approve-merge-pr:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
       contents: write
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_MERGE_TOKEN }}
-          fetch-depth: 0 # Fetch all history
+          fetch-depth: 0
 
       - name: Set Git Identity
         run: |
           git config --global user.name 'googlemaps-bot'
           git config --global user.email 'googlemaps-bot@google.com'
 
-      - name: Create Pull Request
+      - name: Ensure temp branch exists on origin
         run: |
-          gh pr create \
+          git fetch origin temp-build-branch:temp-build-branch
+          git ls-remote --exit-code --heads origin temp-build-branch
+
+      - name: Find existing PR
+        id: find_pr
+        env:
+          GH_TOKEN: ${{ secrets.GH_MERGE_TOKEN }}
+        run: |
+          PR_URL="$(gh pr list \
+            --base main \
+            --head temp-build-branch \
+            --state open \
+            --json url \
+            --jq '.[0].url')"
+
+          if [ -n "$PR_URL" ] && [ "$PR_URL" != "null" ]; then
+            echo "pr_url=$PR_URL" >> "$GITHUB_OUTPUT"
+            echo "pr_exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "pr_exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create Pull Request
+        id: create_pr
+        if: steps.find_pr.outputs.pr_exists != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_MERGE_TOKEN }}
+        run: |
+          PR_URL="$(gh pr create \
             --base main \
             --head temp-build-branch \
             --title "chore: automated output update (dist)" \
             --body "This PR contains updated build output from the dist branch." \
-            --label "automated pr,dist-update"
+            --label "automated pr" \
+            --label "dist-update")"
+          echo "pr_url=$PR_URL" >> "$GITHUB_OUTPUT"
+
+      - name: Determine PR URL
+        id: pr
+        run: |
+          if [ "${{ steps.find_pr.outputs.pr_exists }}" = "true" ]; then
+            echo "pr_url=${{ steps.find_pr.outputs.pr_url }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "pr_url=${{ steps.create_pr.outputs.pr_url }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Approve PR
         env:
-          GH_TOKEN: ${{ secrets.GH_MERGE_TOKEN }}
+          PR_URL: ${{ steps.pr.outputs.pr_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr review --approve "$PR_URL"
+
+      - name: Enable auto-merge
+        env:
+          PR_URL: ${{ steps.pr.outputs.pr_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr merge --auto --squash --delete-branch "$PR_URL"

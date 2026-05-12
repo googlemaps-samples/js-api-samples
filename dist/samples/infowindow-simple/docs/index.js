@@ -9,10 +9,12 @@
 // This example displays a marker at the center of Australia.
 // When the user clicks the marker, an info window opens.
 
-async function initMap() {
+async function init() {
     // Import the needed libraries.
-    const { InfoWindow } = await google.maps.importLibrary('maps');
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+    const [{ InfoWindow }, { AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+    ]);
 
     // Get the map element and the inner map from it.
     const mapElement = document.querySelector('gmp-map');
@@ -48,7 +50,7 @@ async function initMap() {
     // Create the info window.
     const infoWindow = new InfoWindow({
         headerContent: heading,
-        content: content,
+        content,
         ariaLabel: 'Uluru',
         maxWidth: 500, // Set max width (optional).
     });
@@ -76,5 +78,5 @@ async function initMap() {
     });
 }
 
-initMap();
+void init();
 // [END maps_infowindow_simple]

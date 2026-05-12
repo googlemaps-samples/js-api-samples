@@ -6,22 +6,22 @@
 
 // [START maps_circle_simple]
 const mapElement = document.querySelector('gmp-map')!;
-let innerMap;
+let innerMap: google.maps.Map;
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const { Circle } = await google.maps.importLibrary('maps');
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
-    const { event } = await google.maps.importLibrary('core');
-
-    // Get the gmp-map element.
-    const mapElement = document.querySelector('gmp-map')!;
+    const [{ Circle }, { AdvancedMarkerElement }, { event }] =
+        await Promise.all([
+            google.maps.importLibrary('maps'),
+            google.maps.importLibrary('marker'),
+            google.maps.importLibrary('core'),
+        ]);
 
     // Set the initial map center point.
     const initialCenter = { lat: 34.98956821576194, lng: 135.74239981260283 }; // Hotel Emion, Kyoto, Japan
 
     // Get the inner map.
-    const innerMap = mapElement.innerMap;
+    innerMap = mapElement.innerMap;
 
     // Get the buttons.
     const buttons = document.querySelectorAll('input[name="radius"]');
@@ -59,7 +59,7 @@ async function initMap() {
     mapElement.append(centerMarker);
 
     // Wait for the map to finish drawing its tiles.
-    event.addListenerOnce(innerMap, 'tilesloaded', function () {
+    event.addListenerOnce(innerMap, 'tilesloaded', () => {
         // Get the controls div
         const controls = document.getElementById('control-panel');
 
@@ -71,19 +71,27 @@ async function initMap() {
 
     // Add event listener to update the radius based on user selection.
     buttons.forEach((button) => {
-        button.addEventListener('change', (event) => {
-            const target = event.target as HTMLInputElement;
+        button.addEventListener('change', (changeEvent) => {
+            const target = changeEvent.target as HTMLInputElement;
             walkingCircle.setRadius(Number(target.value));
         });
     });
 
     // Handle user click, reset the map center and position the circle.
-    innerMap.addListener('click', (mapsMouseEvent) => {
-        const newCenter = mapsMouseEvent.latLng;
-        walkingCircle.setCenter(newCenter);
-        centerMarker.position = newCenter;
-        innerMap.panTo(newCenter);
-    });
+    innerMap.addListener(
+        'click',
+        (
+            mapsMouseEvent:
+                | google.maps.MapMouseEvent
+                | google.maps.IconMouseEvent
+        ) => {
+            const newCenter = mapsMouseEvent.latLng;
+            if (!newCenter) return;
+            walkingCircle.setCenter(newCenter);
+            centerMarker.position = newCenter;
+            innerMap.panTo(newCenter);
+        }
+    );
 
     // Handle user dragging the circle, update the center marker position.
     walkingCircle.addListener('center_changed', () => {
@@ -91,5 +99,5 @@ async function initMap() {
     });
 }
 
-initMap();
+void init();
 // [END maps_circle_simple]

@@ -51,5 +51,5 @@ async function init() {
     document.body.appendChild(controls);
 }
 
-init();
+void init();
 // [END maps_3d_map_roadmap]

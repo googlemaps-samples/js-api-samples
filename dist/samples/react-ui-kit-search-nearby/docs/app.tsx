@@ -3,6 +3,13 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+
 {
     /* [START maps_react_places_ui_kit_search_nearby] */
 }
@@ -31,7 +38,7 @@ const App = () => (
 const PlacesSearchLayout = () => {
     const [selectedType, setSelectedType] = useState('');
     const [places, setPlaces] = useState<any[]>([]);
-    const [selectedPlace, setSelectedPlace] = useState<any | null>(null);
+    const [selectedPlace, setSelectedPlace] = useState<any>(null);
 
     const placeSearchRef = useRef<HTMLDivElement>(null);
 
@@ -44,7 +51,9 @@ const PlacesSearchLayout = () => {
                     defaultZoom={16}
                     mapId="DEMO_MAP_ID"
                     clickableIcons={false}
-                    onClick={() => setSelectedPlace(null)}>
+                    onClick={() => {
+                        setSelectedPlace(null);
+                    }}>
                     <PlaceSearchController
                         placeSearchRef={placeSearchRef}
                         selectedType={selectedType}
@@ -72,7 +81,9 @@ const PlacesSearchLayout = () => {
                     name="types"
                     className="type-select"
                     value={selectedType}
-                    onChange={(e) => setSelectedType(e.target.value)}>
+                    onChange={(e) => {
+                        setSelectedType(e.target.value);
+                    }}>
                     <option value="">Select a place type</option>
                     <option value="cafe">Cafe</option>
                     <option value="restaurant">Restaurant</option>
@@ -89,8 +100,8 @@ interface PlaceSearchControllerProps {
     placeSearchRef: RefObject<HTMLDivElement | null>;
     selectedType: string;
     setPlaces: (places: any[]) => void;
-    setSelectedPlace: (place: any | null) => void;
-    selectedPlace: any | null;
+    setSelectedPlace: (place: any) => void;
+    selectedPlace: any;
 }
 
 const PlaceSearchController = ({
@@ -182,7 +193,9 @@ const PlaceSearchController = ({
             }
         };
 
-        const handleSelect = (event: any) => setSelectedPlace(event.place);
+        const handleSelect = (event: any) => {
+            setSelectedPlace(event.place);
+        };
 
         placeSearch.addEventListener('gmp-load', handleLoad);
         placeSearch.addEventListener('gmp-select', handleSelect);
@@ -211,7 +224,7 @@ const PlaceSearchController = ({
         )
             return;
 
-        if (selectedPlace && selectedPlace.location) {
+        if (selectedPlace?.location) {
             placeRequestRef.current.place = selectedPlace;
             if (placeDetailsRef.current)
                 placeDetailsRef.current.style.display = 'block';
@@ -245,7 +258,7 @@ const PlaceSearchController = ({
     return null;
 };
 
-const root = createRoot(document.getElementById('app') as HTMLElement);
+const root = createRoot(document.getElementById('app')!);
 root.render(
     <React.StrictMode>
         <App />

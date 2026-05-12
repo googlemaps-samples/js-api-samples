@@ -6,7 +6,7 @@
 
 // [START maps_place_autocomplete_data_simple]
 async function init() {
-    const { Place, AutocompleteSessionToken, AutocompleteSuggestion } =
+    const { AutocompleteSessionToken, AutocompleteSuggestion } =
         await google.maps.importLibrary('places');
 
     // [START maps_place_autocomplete_data_simple_request]
@@ -39,14 +39,14 @@ async function init() {
     const { suggestions } =
         await AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
 
-    const title = document.getElementById('title') as HTMLElement;
+    const title = document.getElementById('title')!;
     title.appendChild(
         document.createTextNode(
             'Query predictions for "' + request.input + '":'
         )
     );
 
-    const resultsElement = document.getElementById('results') as HTMLElement;
+    const resultsElement = document.getElementById('results')!;
 
     for (const suggestion of suggestions) {
         const placePrediction = suggestion.placePrediction;
@@ -70,10 +70,10 @@ async function init() {
     });
     // [END maps_place_autocomplete_data_simple_fetch]
 
-    const placeInfo = document.getElementById('prediction') as HTMLElement;
+    const placeInfo = document.getElementById('prediction')!;
     placeInfo.textContent = `First predicted place: ${place.displayName}: ${place.formattedAddress}`;
     // [END maps_place_autocomplete_data_simple_prediction]
 }
 
-init();
+void init();
 // [END maps_place_autocomplete_data_simple]

@@ -13,7 +13,7 @@
 // [START maps_boundaries_simple]
 let featureLayer;
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -40,13 +40,15 @@ async function initMap() {
 
     // Apply the style to a single boundary.
     featureLayer.style = (options) => {
-        if (options.feature.placeId == 'ChIJ0zQtYiWsVHkRk8lRoB1RNPo') {
+        const feature = options.feature;
+        if (feature.placeId === 'ChIJ0zQtYiWsVHkRk8lRoB1RNPo') {
             // Hana, HI
             return featureStyleOptions;
         }
+        return null;
     };
     // [END maps_boundaries_simple_style_single]
 }
 
-initMap();
+void init();
 // [END maps_boundaries_simple]

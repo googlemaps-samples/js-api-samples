@@ -7,10 +7,8 @@
 
 // DOM Refs
 const addressForm = document.getElementById('address-form');
-const validateButton = document.getElementById('validate-button');
 const clearFormButton = document.getElementById('clear-form-button');
 const resultDisplay = document.getElementById('result-display');
-const loadingText = document.getElementById('loading-text');
 // Input field refs
 const streetAddress1Input = document.getElementById('street-address-1');
 const streetAddress2Input = document.getElementById('street-address-2');
@@ -56,11 +54,11 @@ async function handleValidationSubmit(event) {
 
         resultDisplay.textContent =
             'Verdict summary\n================\n' +
-            `Formatted address: ${result.address.formattedAddress}\n` +
-            `Entered: ${result.verdict.inputGranularity}\n` +
-            `Validated: ${result.verdict.validationGranularity}\n` +
-            `Geocoded: ${result.verdict.geocodeGranularity}\n` +
-            `Possible next action: ${result.verdict.possibleNextAction}\n\n` +
+            `Formatted address: ${result.address?.formattedAddress}\n` +
+            `Entered: ${result.verdict?.inputGranularity}\n` +
+            `Validated: ${result.verdict?.validationGranularity}\n` +
+            `Geocoded: ${result.verdict?.geocodeGranularity}\n` +
+            `Possible next action: ${result.verdict?.possibleNextAction}\n\n` +
             `${getVerdictMessage(result.verdict, 'addressComplete')}\n` +
             `${getVerdictMessage(result.verdict, 'hasUnconfirmedComponents')}\n` +
             `${getVerdictMessage(result.verdict, 'hasInferredComponents')}\n` +
@@ -202,4 +200,4 @@ function populateAddressFields(exampleAddress) {
     console.log('Populated fields with example: ', exampleAddress);
 }
 
-init();
+void init();

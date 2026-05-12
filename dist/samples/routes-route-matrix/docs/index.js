@@ -10,7 +10,7 @@ let map;
 const markers = [];
 const center = { lat: 51.55, lng: -1.8 };
 
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     const [
         { Map },
@@ -30,7 +30,7 @@ async function initMap() {
 
     map = new Map(document.getElementById('map'), {
         zoom: 8,
-        center: center,
+        center,
         mapId: 'DEMO_MAP_ID',
     });
 
@@ -105,8 +105,7 @@ async function initMap() {
     }
 
     // Add markers for the destinations.
-    for (let i = 0; i < destinations.length; i++) {
-        const destination = destinations[i];
+    for (const destination of destinations) {
         if (destination.location) {
             const pin = new PinElement({
                 glyphText: 'D',
@@ -118,8 +117,8 @@ async function initMap() {
             const marker = new AdvancedMarkerElement({
                 map,
                 position: destination.location,
-                content: pin.element,
-                title: `Destination: ${destination.displayName}`,
+                content: pin,
+                title: `Destination: ${destination.displayName ?? 'Unknown'}`,
             });
 
             markers.push(marker);
@@ -131,5 +130,5 @@ async function initMap() {
     map.fitBounds(bounds);
 }
 
-initMap();
+void init();
 // [END maps_routes_route_matrix]

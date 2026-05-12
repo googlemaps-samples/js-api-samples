@@ -3,6 +3,13 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+
 {
     /* [START maps_react_places_ui_kit_search_text] */
 }
@@ -35,7 +42,7 @@ const App = () => (
 const PlacesSearchLayout = () => {
     const [query, setQuery] = useState('');
     const [places, setPlaces] = useState<any[]>([]);
-    const [selectedPlace, setSelectedPlace] = useState<any | null>(null);
+    const [selectedPlace, setSelectedPlace] = useState<any>(null);
 
     const placeSearchRef = useRef<HTMLDivElement>(null);
     const queryInputRef = useRef<HTMLInputElement>(null);
@@ -54,7 +61,9 @@ const PlacesSearchLayout = () => {
                     defaultZoom={14}
                     mapId="DEMO_MAP_ID"
                     clickableIcons={false}
-                    onClick={() => setSelectedPlace(null)}>
+                    onClick={() => {
+                        setSelectedPlace(null);
+                    }}>
                     <PlaceSearchController
                         placeSearchRef={placeSearchRef}
                         query={query}
@@ -95,8 +104,8 @@ interface PlaceSearchControllerProps {
     placeSearchRef: RefObject<HTMLDivElement | null>;
     query: string;
     setPlaces: (places: any[]) => void;
-    setSelectedPlace: (place: any | null) => void;
-    selectedPlace: any | null;
+    setSelectedPlace: (place: any) => void;
+    selectedPlace: any;
 }
 
 const PlaceSearchController = ({
@@ -184,7 +193,9 @@ const PlaceSearchController = ({
                 if (!newBounds.isEmpty()) map.fitBounds(newBounds);
             }
         };
-        const handleSelect = (event: any) => setSelectedPlace(event.place);
+        const handleSelect = (event: any) => {
+            setSelectedPlace(event.place);
+        };
 
         placeSearch.addEventListener('gmp-load', handleLoad);
         placeSearch.addEventListener('gmp-select', handleSelect);
@@ -205,7 +216,7 @@ const PlaceSearchController = ({
         )
             return;
 
-        if (selectedPlace && selectedPlace.location) {
+        if (selectedPlace?.location) {
             placeRequestRef.current.place = selectedPlace;
             if (placeDetailsRef.current)
                 placeDetailsRef.current.style.display = 'block';
@@ -239,7 +250,7 @@ const PlaceSearchController = ({
     return null;
 };
 
-const root = createRoot(document.getElementById('app') as HTMLElement);
+const root = createRoot(document.getElementById('app')!);
 root.render(
     <React.StrictMode>
         <App />

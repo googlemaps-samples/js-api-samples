@@ -6,13 +6,15 @@
 
 // [START maps_advanced_markers_html]
 // [START maps_advanced_markers_html_snippet]
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const { Map } = await google.maps.importLibrary('maps');
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+    const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+    ]);
 
     const center = { lat: 37.43238031167444, lng: -122.16795397128632 };
-    const map = new Map(document.getElementById('map') as HTMLElement, {
+    const map = new Map(document.getElementById('map')!, {
         zoom: 11,
         center,
         mapId: '4504f8b37365c3d0',
@@ -27,22 +29,35 @@ async function initMap() {
         });
 
         advancedMarkerElement.addListener('click', () => {
-            toggleHighlight(advancedMarkerElement, property);
+            toggleHighlight(advancedMarkerElement);
         });
     }
 }
 
-function toggleHighlight(markerView, property) {
-    if (markerView.content.classList.contains('highlight')) {
-        markerView.content.classList.remove('highlight');
+interface Property {
+    address: string;
+    description: string;
+    price: string;
+    type: string;
+    bed: number;
+    bath: number;
+    size: number;
+    position: google.maps.LatLngLiteral;
+}
+
+function toggleHighlight(markerView: google.maps.marker.AdvancedMarkerElement) {
+    const content = markerView.children[0];
+
+    if (content.classList.contains('highlight')) {
+        content.classList.remove('highlight');
         markerView.zIndex = null;
     } else {
-        markerView.content.classList.add('highlight');
+        content.classList.add('highlight');
         markerView.zIndex = 1;
     }
 }
 
-function buildContent(property) {
+function buildContent(property: Property) {
     const content = document.createElement('div');
     content.classList.add('property');
     content.innerHTML = `
@@ -75,7 +90,7 @@ function buildContent(property) {
     return content;
 }
 
-const properties = [
+const properties: Property[] = [
     {
         address: '215 Emily St, MountainView, CA',
         description: 'Single family house with modern design',
@@ -209,5 +224,5 @@ const properties = [
     },
 ];
 
-initMap();
+void init();
 // [END maps_advanced_markers_html]

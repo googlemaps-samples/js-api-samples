@@ -74,5 +74,5 @@ async function initMap() {
     document.body.append(map3DElement);
 }
 
-initMap();
+void init();
 // [END maps_3d_accessibility_features]

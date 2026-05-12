@@ -10,10 +10,12 @@ const mapElement = document.querySelector('gmp-map');
 let innerMap;
 
 // Initialize and add the map.
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
-    await google.maps.importLibrary('maps');
-    const { event } = await google.maps.importLibrary('core');
+    const [{ event }] = await Promise.all([
+        google.maps.importLibrary('core'),
+        google.maps.importLibrary('maps'),
+    ]);
 
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
@@ -23,7 +25,7 @@ async function initMap() {
 
     // Call the function after the map is loaded.
     event.addListenerOnce(innerMap, 'idle', () => {
-        getDirections();
+        void getDirections();
     });
 }
 
@@ -57,7 +59,7 @@ async function getDirections() {
     // [START maps_routes_markers_style_maker]
     // Alter style based on marker index.
     function markerOptionsMaker(defaultOptions, waypointMarkerDetails) {
-        const { index, totalMarkers, leg } = waypointMarkerDetails;
+        const { index, totalMarkers } = waypointMarkerDetails;
 
         // Style the origin waypoint.
         if (index === 0) {
@@ -69,7 +71,7 @@ async function getDirections() {
                     glyphColor: 'white',
                     background: 'green',
                     borderColor: 'green',
-                }).element,
+                }),
             };
         }
 
@@ -83,7 +85,7 @@ async function getDirections() {
                     glyphColor: 'white',
                     background: 'blue',
                     borderColor: 'blue',
-                }).element,
+                }),
             };
         }
 
@@ -97,17 +99,14 @@ async function getDirections() {
                     glyphColor: 'white',
                     background: 'red',
                     borderColor: 'red',
-                }).element,
+                }),
             };
         }
 
         return { ...defaultOptions, map: innerMap };
     }
 
-    const markers =
-        await result.routes[0].createWaypointAdvancedMarkers(
-            markerOptionsMaker
-        );
+    await result.routes[0].createWaypointAdvancedMarkers(markerOptionsMaker);
     // [END maps_routes_markers_style_maker]
 
     // Fit the map to the route.
@@ -116,8 +115,10 @@ async function getDirections() {
 
     // Create polylines and add them to the map.
     mapPolylines = result.routes[0].createPolylines();
-    mapPolylines.forEach((polyline) => polyline.setMap(innerMap));
+    mapPolylines.forEach((polyline) => {
+        polyline.setMap(innerMap);
+    });
 }
 
-initMap();
+void init();
 // [END maps_routes_markers]

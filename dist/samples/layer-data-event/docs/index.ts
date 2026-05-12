@@ -5,9 +5,7 @@
  */
 
 // [START maps_layer_data_event]
-let map: google.maps.Map;
-
-async function initMap() {
+async function init() {
     await google.maps.importLibrary('maps');
 
     const mapElement = document.querySelector('gmp-map')!;
@@ -27,12 +25,15 @@ async function initMap() {
 
     // [START maps_layer_data_event_snippet]
     // Set mouseover event for each feature.
-    innerMap.data.addListener('mouseover', (event) => {
-        (document.getElementById('info-box') as HTMLElement).textContent =
-            event.feature.getProperty('letter');
-    });
+    innerMap.data.addListener(
+        'mouseover',
+        (event: google.maps.Data.MouseEvent) => {
+            document.getElementById('info-box')!.textContent =
+                event.feature.getProperty('letter') as string;
+        }
+    );
     // [END maps_layer_data_event_snippet]
 }
 
-initMap();
+void init();
 // [END maps_layer_data_event]

@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-async function initMap() {
+async function init() {
     const [{ Geocoder }, { AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('geocoding'),
         google.maps.importLibrary('marker'),
@@ -27,11 +27,11 @@ async function initMap() {
                 position,
             });
         })
-        .catch((e) =>
+        .catch((e) => {
             window.alert(
                 'Geocode was not successful for the following reason: ' + e
-            )
-        );
+            );
+        });
 }
 
-initMap();
+void init();

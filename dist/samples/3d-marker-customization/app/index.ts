@@ -6,9 +6,11 @@
 
 // [START maps_3d_marker_customization]
 async function init() {
-    const { Map3DElement, Marker3DElement } =
-        await google.maps.importLibrary('maps3d');
-    const { PinElement } = await google.maps.importLibrary('marker');
+    const [{ Map3DElement, Marker3DElement }, { PinElement }] =
+        await Promise.all([
+            google.maps.importLibrary('maps3d'),
+            google.maps.importLibrary('marker'),
+        ]);
 
     const map = new Map3DElement({
         center: { lat: 37.4176, lng: -122.02, altitude: 0 },
@@ -97,5 +99,5 @@ async function init() {
     document.body.append(map);
 }
 
-init();
+void init();
 // [END maps_3d_marker_customization]

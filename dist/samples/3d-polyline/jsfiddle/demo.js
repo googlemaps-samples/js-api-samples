@@ -46,4 +46,4 @@ async function init() {
     map.append(polyline);
 }
 
-init();
+void init();

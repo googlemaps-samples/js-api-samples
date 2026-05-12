@@ -5,9 +5,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-async function initMap() {
-    await google.maps.importLibrary('maps');
-    const { event } = await google.maps.importLibrary('core');
+async function init() {
+    const [{ event }] = await Promise.all([
+        google.maps.importLibrary('core'),
+        google.maps.importLibrary('maps'),
+    ]);
 
     const mapElement = document.querySelector('gmp-map');
 
@@ -25,4 +27,4 @@ async function initMap() {
     });
 }
 
-initMap();
+void init();

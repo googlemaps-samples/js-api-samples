@@ -9,11 +9,13 @@
 // You can set control options to change the default position or style of many
 // of the map controls.
 
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
-    const { MapTypeControlStyle, MapTypeId } =
-        await google.maps.importLibrary('maps');
-    const { ControlPosition } = await google.maps.importLibrary('core');
+    const [{ MapTypeControlStyle, MapTypeId }, { ControlPosition }] =
+        await Promise.all([
+            google.maps.importLibrary('maps'),
+            google.maps.importLibrary('core'),
+        ]);
 
     const mapElement = document.querySelector('gmp-map');
 
@@ -31,5 +33,5 @@ async function initMap() {
     // [END maps_control_options_change_default]
 }
 
-initMap();
+void init();
 // [END maps_control_options]

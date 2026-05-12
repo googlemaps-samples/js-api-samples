@@ -6,7 +6,7 @@
  */
 
 // Initialize the map.
-async function initMap() {
+async function init() {
     const [{ Geocoder }, { InfoWindow }] = await Promise.all([
         google.maps.importLibrary('geocoding'),
         google.maps.importLibrary('maps'),
@@ -19,7 +19,7 @@ async function initMap() {
     const infoWindow = new InfoWindow();
 
     document.getElementById('submit').addEventListener('click', () => {
-        geocodePlaceId(geocoder, innerMap, infoWindow);
+        void geocodePlaceId(geocoder, innerMap, infoWindow);
     });
 }
 
@@ -29,7 +29,7 @@ async function geocodePlaceId(geocoder, map, infoWindow) {
 
     const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
-    const { results } = await geocoder.geocode({ placeId: placeId });
+    const { results } = await geocoder.geocode({ placeId });
     if (results[0]) {
         map.setZoom(11);
         map.setCenter(results[0].geometry.location);
@@ -46,4 +46,4 @@ async function geocodePlaceId(geocoder, map, infoWindow) {
     }
 }
 
-initMap();
+void init();

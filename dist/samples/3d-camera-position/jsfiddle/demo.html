@@ -1,0 +1,145 @@
+<!doctype html>
+<!--
+@license
+Copyright 2026 Google LLC. All Rights Reserved.
+SPDX-License-Identifier: Apache-2.0
+-->
+
+<html>
+    <head>
+        <title>Google Maps 3D - Camera Position Controller</title>
+        <link rel="stylesheet" type="text/css" href="./style.css" />
+        <script type="module" src="./index.js"></script>
+        <!-- prettier-ignore -->
+        <script>(g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })
+            ({ key: "AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8"});</script>
+    </head>
+
+    <body>
+        <gmp-map-3d
+            center="40.7811,-73.9599,0"
+            mode="HYBRID"
+            tilt="76"
+            range="3270"
+            heading="-154"></gmp-map-3d>
+        <div id="ui-container">
+            <div class="panel">
+                <div class="control-group">
+                    <label for="heading"
+                        >Heading: <span id="heading-val">0</span>&deg;</label
+                    >
+                    <input
+                        type="range"
+                        id="heading"
+                        name="heading"
+                        min="-180"
+                        max="180"
+                        value="0"
+                        step="1" />
+                </div>
+
+                <div class="control-group">
+                    <label for="tilt"
+                        >Tilt: <span id="tilt-val">45</span>&deg;</label
+                    >
+                    <input
+                        type="range"
+                        id="tilt"
+                        name="tilt"
+                        min="0"
+                        max="90"
+                        value="45"
+                        step="1" />
+                </div>
+
+                <div class="control-group">
+                    <label for="range"
+                        >Range: <span id="range-val">1000</span>m</label
+                    >
+                    <input
+                        type="range"
+                        id="range"
+                        name="range"
+                        min="100"
+                        max="10000"
+                        value="1000"
+                        step="100" />
+                </div>
+
+                <div class="control-group row">
+                    <div class="col">
+                        <label for="lat">Latitude</label>
+                        <input
+                            type="number"
+                            id="lat"
+                            name="lat"
+                            min="-90"
+                            max="90"
+                            value="40.7040"
+                            step="0.0001" />
+                    </div>
+                    <div class="col">
+                        <label for="lng">Longitude</label>
+                        <input
+                            type="number"
+                            id="lng"
+                            name="lng"
+                            min="-180"
+                            max="180"
+                            value="-74.0180"
+                            step="0.0001" />
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="altitude"
+                        >Altitude: <span id="altitude-val">30</span>m</label
+                    >
+                    <input
+                        type="range"
+                        id="altitude"
+                        name="altitude"
+                        min="0"
+                        max="5000"
+                        value="30"
+                        step="10" />
+                </div>
+
+                <div class="control-group">
+                    <label for="fov"
+                        >FOV: <span id="fov-val">35</span>&deg;</label
+                    >
+                    <input
+                        type="range"
+                        id="fov"
+                        name="fov"
+                        min="5"
+                        max="80"
+                        value="35"
+                        step="1" />
+                </div>
+
+                <div class="control-group">
+                    <label for="roll"
+                        >Roll: <span id="roll-val">0</span>&deg;</label
+                    >
+                    <input
+                        type="range"
+                        id="roll"
+                        name="roll"
+                        min="-180"
+                        max="180"
+                        value="0"
+                        step="1" />
+                </div>
+
+                <div class="status-group">
+                    <div class="code-box">
+                        <pre><code id="generated-code"></code></pre>
+                    </div>
+                    <button id="copy-btn">Copy HTML</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

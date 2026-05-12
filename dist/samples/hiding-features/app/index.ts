@@ -5,7 +5,7 @@
  */
 
 // [START maps_hiding_features]
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -22,18 +22,12 @@ async function initMap() {
     });
 
     // Apply new JSON when the user chooses to hide/show features.
-    (document.getElementById('hide-poi') as HTMLElement).addEventListener(
-        'click',
-        () => {
-            innerMap.setOptions({ styles: styles['hide'] });
-        }
-    );
-    (document.getElementById('show-poi') as HTMLElement).addEventListener(
-        'click',
-        () => {
-            innerMap.setOptions({ styles: styles['default'] });
-        }
-    );
+    document.getElementById('hide-poi')!.addEventListener('click', () => {
+        innerMap.setOptions({ styles: styles.hide });
+    });
+    document.getElementById('show-poi')!.addEventListener('click', () => {
+        innerMap.setOptions({ styles: styles.default });
+    });
 }
 
 const styles: Record<string, google.maps.MapTypeStyle[]> = {
@@ -51,5 +45,5 @@ const styles: Record<string, google.maps.MapTypeStyle[]> = {
     ],
 };
 
-initMap();
+void init();
 // [END maps_hiding_features]

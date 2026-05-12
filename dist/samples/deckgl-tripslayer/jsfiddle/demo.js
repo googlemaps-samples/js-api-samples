@@ -16,7 +16,7 @@ const VENDOR_COLORS = [
     [0, 0, 255], // vendor #1
 ];
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -42,7 +42,8 @@ async function initMap() {
         shadowEnabled: false,
     };
 
-    const overlay = new GoogleMapsOverlay({});
+    const googleMapsOverlayProps = {};
+    const overlay = new GoogleMapsOverlay(googleMapsOverlayProps);
 
     const animate = () => {
         currentTime = (currentTime + 1) % LOOP_LENGTH;
@@ -64,4 +65,4 @@ async function initMap() {
     overlay.setMap(innerMap);
 }
 
-initMap();
+void init();

@@ -14,7 +14,7 @@ const placeDetailsRequest = document.querySelector(
 );
 const marker = document.querySelector('gmp-advanced-marker');
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await Promise.all([
         google.maps.importLibrary('maps'),
@@ -27,7 +27,7 @@ async function initMap() {
 
     // Function to update map and marker based on place details
     const updateMapAndMarker = () => {
-        if (placeDetails.place && placeDetails.place.location) {
+        if (placeDetails.place?.location) {
             map.innerMap.panTo(placeDetails.place.location);
             map.innerMap.setZoom(16); // Set zoom after panning if needed
             marker.position = placeDetails.place.location;
@@ -37,15 +37,15 @@ async function initMap() {
     };
 
     // Set up map once widget is loaded.
-    placeDetails.addEventListener('gmp-load', (event) => {
+    placeDetails.addEventListener('gmp-load', () => {
         updateMapAndMarker();
     });
 
     // Add an event listener to handle clicks.
-    map.innerMap.addListener('click', async (event) => {
+    map.innerMap.addListener('click', (event) => {
         marker.position = null;
         event.stop();
-        if (event.placeId) {
+        if ('placeId' in event && event.placeId) {
             // Fire when the user clicks a POI.
             placeDetailsRequest.place = event.placeId;
             updateMapAndMarker();
@@ -57,4 +57,4 @@ async function initMap() {
     });
 }
 
-initMap();
+void init();
