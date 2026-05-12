@@ -44,7 +44,7 @@ async function init() {
     // [END maps_test_example_instantiate_marker]
 
     // [START maps_test_example_why_me]
-    console.log('Hello! Having fun yet?');
+    console.log('Let there be peace.');
     // [END maps_test_example_why_me]
 }
 void init();
