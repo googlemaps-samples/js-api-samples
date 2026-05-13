@@ -32,7 +32,7 @@ async function init() {
     });
     markerWithBorder.append(pinBorder);
     // [END maps_3d_marker_pin_border]
-    
+
     // Add a label.
     const markerWithLabel = new Marker3DElement({
         position: { lat: 37.419, lng: -122.03 },
