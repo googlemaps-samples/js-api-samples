@@ -48,7 +48,7 @@ async function init() {
         position: { lat: 37.419, lng: -122.02 },
     });
     markerWithScale.append(pinScaled);
-    // [END maps_3d_marker_label]
+    // [END maps_3d_marker_scale]
 
     // [START maps_3d_marker_glyph_color]
     // Change the glyph color.

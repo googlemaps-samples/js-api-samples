@@ -26,7 +26,7 @@ async function init() {
             // Try setting a different collision behavior here.
             collisionBehavior: 'REQUIRED',
         });
-        // [START maps_3d_marker_collision_snippet]
+        // [END maps_3d_marker_collision_snippet]
 
         markers.push(marker);
         map.append(marker);
