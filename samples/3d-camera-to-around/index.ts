@@ -37,14 +37,14 @@ async function init() {
     };
 
     // Fly the camera from San Francisco to Hawaii, can be controlled by a button alternatively.
-    // [START maps_3d_camera_to]
+    // [START maps_3d_camera_to_around_flyto]
     map.flyCameraTo({
         // Where we are going to.
         endCamera: flyToCamera,
         // How long we want the flight to take.
         durationMillis: 30000,
     });
-    // [END maps_3d_camera_to]
+    // [END maps_3d_camera_to_around_flyto]
     // When the animation has completed, fly around the location.
     map.addEventListener(
         'gmp-animationend',

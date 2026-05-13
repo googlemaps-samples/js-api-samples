@@ -22,7 +22,7 @@ async function init() {
 
     map.mode = 'SATELLITE';
 
-    // [START maps_3d_marker_pin_border]
+    // [START maps_3d_marker_customization_pin_border]
     // Change the border color.
     const pinBorder = new PinElement({
         borderColor: '#FFFFFF',
@@ -31,7 +31,7 @@ async function init() {
         position: { lat: 37.415, lng: -122.035 },
     });
     markerWithBorder.append(pinBorder);
-    // [END maps_3d_marker_pin_border]
+    // [END maps_3d_marker_customization_pin_border]
 
     // Add a label.
     const markerWithLabel = new Marker3DElement({
@@ -39,7 +39,7 @@ async function init() {
         label: 'Simple label',
     });
 
-    // [START maps_3d_marker_scale]
+    // [START maps_3d_marker_customization_scale]
     // Adjust the scale.
     const pinScaled = new PinElement({
         scale: 1.5,
@@ -48,9 +48,9 @@ async function init() {
         position: { lat: 37.419, lng: -122.02 },
     });
     markerWithScale.append(pinScaled);
-    // [END maps_3d_marker_scale]
+    // [END maps_3d_marker_customization_scale]
 
-    // [START maps_3d_marker_glyph_color]
+    // [START maps_3d_marker_customization_glyph_color]
     // Change the glyph color.
     const pinGlyph = new PinElement({
         glyphColor: 'white',
@@ -59,9 +59,9 @@ async function init() {
         position: { lat: 37.415, lng: -122.025 },
     });
     markerWithGlyphColor.append(pinGlyph);
-    // [END maps_3d_marker_glyph_color]
+    // [END maps_3d_marker_customization_glyph_color]
 
-    // [START maps_3d_marker_glyph_text]
+    // [START maps_3d_marker_customization_glyph_text]
     // Change many elements together and extrude marker.
     const pinTextGlyph = new PinElement({
         background: '#F0F6FC',
@@ -75,16 +75,16 @@ async function init() {
         altitudeMode: 'RELATIVE_TO_GROUND',
     });
     markerWithGlyphText.append(pinTextGlyph);
-    // [END maps_3d_marker_glyph_text]
+    // [END maps_3d_marker_customization_glyph_text]
 
-    // [START maps_3d_marker_extruded]
+    // [START maps_3d_marker_customization_extruded]
     // Change a marker's altitude and add an extrusion.
     const extrudedMarker = new Marker3DElement({
         position: { lat: 37.4239163, lng: -122.0947209, altitude: 100 },
         altitudeMode: 'RELATIVE_TO_GROUND',
         extruded: true,
     });
-    // [END maps_3d_marker_extruded]
+    // [END maps_3d_marker_customization_extruded]
 
     // Hide the glyph.
     const pinNoGlyph = new PinElement({
@@ -94,7 +94,7 @@ async function init() {
         position: { lat: 37.415, lng: -122.005 },
     });
     markerWithNoGlyph.append(pinNoGlyph);
-    // [START maps_3d_marker_background]
+    // [START maps_3d_marker_customization_background]
     // Change the background color.
     const pinBackground = new PinElement({
         background: '#FBBC04',
@@ -104,7 +104,7 @@ async function init() {
         position: { lat: 37.419, lng: -122.01 },
     });
     markerWithBackground.append(pinBackground);
-    // [END maps_3d_marker_background]
+    // [END maps_3d_marker_customization_background]
 
     map.append(markerWithLabel);
     map.append(markerWithScale);
