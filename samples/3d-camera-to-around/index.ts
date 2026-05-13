@@ -49,7 +49,7 @@ async function init() {
     map.addEventListener(
         'gmp-animationend',
         () => {
-            // [START maps_3d_camera_around]
+            // [START maps_3d_camera_to_around_flyaround]
             map.flyCameraAround({
                 // Location to fly around.
                 camera: flyToCamera,
@@ -58,7 +58,7 @@ async function init() {
                 // Number of rotations to make in the specified time.
                 repeatCount: 1,
             });
-            // [END maps_3d_camera_around]
+            // [END maps_3d_camera_to_around_flyaround]
         },
         { once: true }
     ); // Stop animation after flying around.
