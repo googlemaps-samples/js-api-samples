@@ -37,6 +37,7 @@ async function init() {
     };
 
     // Fly the camera from San Francisco to Hawaii, can be controlled by a button alternatively.
+
     map.flyCameraTo({
         // Where we are going to.
         endCamera: flyToCamera,
