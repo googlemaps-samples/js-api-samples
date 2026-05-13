@@ -56,6 +56,6 @@ dropdown.addEventListener('change', drawMap);
 
 function drawMap() {
     for (const marker of markers) {
-        marker.collisionBehavior = dropdown.value || 'REQUIRED';
+        marker.collisionBehavior = dropdown.value;
     }
 }
