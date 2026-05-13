@@ -20,11 +20,13 @@ async function init() {
     });
 
     for (const [lng, lat] of positions) {
+        // [START maps_3d_marker_collision_behavior_setbehavior]
         const marker = new Marker3DElement({
             position: { lat, lng },
             // Try setting a different collision behavior here.
             collisionBehavior: 'REQUIRED',
         });
+        // [END maps_3d_marker_collision_behavior_setbehavior]
 
         markers.push(marker);
         map.append(marker);
@@ -59,7 +61,7 @@ dropdown.addEventListener('change', drawMap);
 function drawMap() {
     for (const marker of markers) {
         marker.collisionBehavior =
-            (dropdown.value as google.maps.CollisionBehavior) || 'REQUIRED';
+            dropdown.value as google.maps.CollisionBehavior;
     }
 }
 
