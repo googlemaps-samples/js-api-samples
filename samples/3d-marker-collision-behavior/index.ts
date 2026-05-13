@@ -20,11 +20,13 @@ async function init() {
     });
 
     for (const [lng, lat] of positions) {
+        // [START maps_3d_marker_collision_snippet]
         const marker = new Marker3DElement({
             position: { lat, lng },
             // Try setting a different collision behavior here.
             collisionBehavior: 'REQUIRED',
         });
+        // [START maps_3d_marker_collision_snippet]
 
         markers.push(marker);
         map.append(marker);
