@@ -7,8 +7,5 @@
     "start": "tsc && vite build --base './' && vite",
     "build:vite": "vite build --base './'",
     "preview": "vite preview"
-  },
-  "dependencies": {
-    
   }
 }
