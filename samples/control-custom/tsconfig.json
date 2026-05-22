@@ -11,7 +11,10 @@
       "dom",
       "dom.iterable"
     ],
-    "moduleResolution": "Node",
-    "jsx": "preserve"
+    "moduleResolution": "bundler",
+    "jsx": "preserve",
+    "types": [
+      "@types/google.maps"
+    ]
   }
 }
