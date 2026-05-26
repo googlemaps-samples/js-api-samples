@@ -16,7 +16,7 @@
     "@eslint/css": "^1.1.0",
     "@eslint/js": "^10.0.1",
     "@eslint/json": "^1.2.0",
-    "@eslint/markdown": "^8.0.1",
+    "@eslint/markdown": "^8.0.2",
     "@playwright/test": "^1.60.0",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/google.maps": "^3.64.1",
