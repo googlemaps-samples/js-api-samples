@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// [START maps_3d_hero_showcase]
-
 interface TourStop {
     name: string;
     desc: string;
@@ -99,18 +97,22 @@ let isAnimationCallbackActive = false;
 let tourAnimationCleanup: (() => void) | null = null;
 
 async function init() {
-    const {
-        Map3DElement,
-        Polyline3DElement,
-        Polygon3DElement,
-        Polygon3DInteractiveElement,
-        Model3DElement,
-        Marker3DInteractiveElement,
-        PopoverElement,
-        FlattenerElement,
-    } = await google.maps.importLibrary('maps3d');
-
-    const { PinElement } = await google.maps.importLibrary('marker');
+    const [
+        {
+            Map3DElement,
+            Polyline3DElement,
+            Polygon3DElement,
+            Polygon3DInteractiveElement,
+            Model3DElement,
+            Marker3DInteractiveElement,
+            PopoverElement,
+            FlattenerElement,
+        },
+        { PinElement },
+    ] = await Promise.all([
+        google.maps.importLibrary('maps3d'),
+        google.maps.importLibrary('marker'),
+    ]);
 
     // 1. Initialize the 3D Map (Centered on Rijksmuseum)
     map = new Map3DElement({
@@ -583,5 +585,3 @@ function endTour() {
 window.addEventListener('load', () => {
     void init();
 });
-
-// [END maps_3d_hero_showcase]
