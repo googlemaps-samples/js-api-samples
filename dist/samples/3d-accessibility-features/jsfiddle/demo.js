@@ -1,14 +1,19 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-// @ts-nocheck
 
-async function initMap() {
-    const { Map3DElement, Marker3DInteractiveElement, PopoverElement } = await google.maps.importLibrary('maps3d');
-    const { PinElement } = await google.maps.importLibrary('marker');
+async function init() {
+    const [
+        { Map3DElement, Marker3DInteractiveElement, PopoverElement },
+        { PinElement },
+    ] = await Promise.all([
+        google.maps.importLibrary('maps3d'),
+        google.maps.importLibrary('marker'),
+    ]);
+
     const map = new Map3DElement({
         center: { lat: 34.8405, lng: -111.7909, altitude: 1322.7 },
         range: 13279.5,
@@ -17,6 +22,7 @@ async function initMap() {
         mode: 'SATELLITE',
         gestureHandling: 'COOPERATIVE',
     });
+
     // Set LatLng and title text for the markers. The first marker (Boynton Pass)
     // receives the initial focus when tab is pressed. Use arrow keys to move
     // between markers; press tab again to cycle through the map controls.
@@ -42,6 +48,7 @@ async function initMap() {
             title: 'Bell Rock',
         },
     ];
+
     tourStops.forEach(({ position, title }, i) => {
         const pin = new PinElement({
             glyphText: `${i + 1}`,
@@ -49,24 +56,30 @@ async function initMap() {
             glyphColor: '#FFFFFF',
         });
         const popover = new PopoverElement();
+
         const content = `${i + 1}. ${title}`;
         const header = document.createElement('span');
         // Include the label for screen readers.
         header.ariaLabel = `This is marker ${i + 1}. ${title}`;
         header.slot = 'header';
+
         popover.append(header);
         popover.append(content);
+
         const interactiveMarker = new Marker3DInteractiveElement({
             // Include a title, used for accessibility text for use by screen readers.
             title,
             position,
             gmpPopoverTargetElement: popover,
         });
+
         interactiveMarker.append(pin);
+
         map.append(interactiveMarker);
         map.append(popover);
     });
+
     document.body.append(map);
 }
-initMap();
 
+void init();

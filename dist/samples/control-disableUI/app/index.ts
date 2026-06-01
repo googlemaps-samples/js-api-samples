@@ -5,13 +5,11 @@
  */
 
 // [START maps_control_disableUI]
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     await google.maps.importLibrary('maps');
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     const innerMap = mapElement.innerMap;
 
@@ -23,5 +21,5 @@ async function initMap() {
     // [END maps_control_disableUI_options]
 }
 
-initMap();
+void init();
 // [END maps_control_disableUI]

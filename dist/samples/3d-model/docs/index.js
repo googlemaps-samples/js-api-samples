@@ -1,14 +1,16 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-// @ts-nocheck
+
 // [START maps_3d_model]
 async function init() {
     // Import the needed libraries.
-    const { Map3DElement, Model3DElement } = await google.maps.importLibrary('maps3d');
+    const { Map3DElement, Model3DElement } =
+        await google.maps.importLibrary('maps3d');
+
     const map = new Map3DElement({
         center: { lat: 39.1178, lng: -106.4452, altitude: 4395.4952 },
         range: 1500,
@@ -17,6 +19,7 @@ async function init() {
         mode: 'HYBRID',
         gestureHandling: 'COOPERATIVE',
     });
+
     const model = new Model3DElement({
         src: 'https://maps-docs-team.web.app/assets/windmill.glb',
         position: { lat: 39.1178, lng: -106.4452, altitude: 4495.4952 },
@@ -24,8 +27,10 @@ async function init() {
         scale: 0.15,
         altitudeMode: 'CLAMP_TO_GROUND',
     });
+
     document.body.append(map);
     map.append(model);
 }
-init();
+
+void init();
 // [END maps_3d_model]

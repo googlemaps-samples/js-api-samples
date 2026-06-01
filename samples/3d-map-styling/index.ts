@@ -1,12 +1,11 @@
 /*
  * @license
- * Copyright 2025 Google LLC. All Rights Reserved.
+ * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
-//@ts-nocheck
 // [START maps_3d_map_styling]
-async function initMap() {
+async function init() {
     const { Map3DElement } = await google.maps.importLibrary('maps3d');
 
     const map = new Map3DElement({
@@ -18,7 +17,7 @@ async function initMap() {
         tilt: 67.5,
         heading: 108.94057782079429,
         range: 6605.57279990986,
-        mapId: 'bcce776b92de1336e22c569f',
+        mapId: 'bcce776b92de1336e22c569f', // Styles are associated with map IDs.
         mode: 'HYBRID',
         gestureHandling: 'COOPERATIVE',
     });
@@ -26,5 +25,5 @@ async function initMap() {
     document.body.append(map);
 }
 
-initMap();
+void init();
 // [END maps_3d_map_styling]

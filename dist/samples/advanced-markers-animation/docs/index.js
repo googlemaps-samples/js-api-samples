@@ -1,14 +1,13 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 // [START maps_advanced_markers_animation]
 /**
  * Returns a random lat lng position within the map bounds.
- * @param {!google.maps.Map} map
- * @return {!google.maps.LatLngLiteral}
  */
 function getRandomPosition(map) {
     const bounds = map.getBounds();
@@ -16,7 +15,9 @@ function getRandomPosition(map) {
     const minLng = bounds.getSouthWest().lng();
     const maxLat = bounds.getNorthEast().lat();
     const maxLng = bounds.getNorthEast().lng();
+
     const latRange = maxLat - minLat;
+
     // Note: longitude can span from a positive longitude in the west to a
     // negative one in the east. e.g. 150lng (150E) <-> -30lng (30W) is a large
     // span that covers the whole USA.
@@ -24,12 +25,13 @@ function getRandomPosition(map) {
     if (maxLng < minLng) {
         lngRange += 360;
     }
+
     return {
         lat: minLat + Math.random() * latRange,
         lng: minLng + Math.random() * lngRange,
     };
 }
-const total = 100;
+
 const intersectionObserver = new IntersectionObserver((entries) => {
     for (const entry of entries) {
         if (entry.isIntersecting) {
@@ -38,44 +40,58 @@ const intersectionObserver = new IntersectionObserver((entries) => {
         }
     }
 });
-async function initMap() {
+
+async function init() {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary('maps'));
-    const { AdvancedMarkerElement, PinElement } = (await google.maps.importLibrary('marker'));
+    const [
+        { Map },
+        { event, ControlPosition },
+        { AdvancedMarkerElement, PinElement },
+    ] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('core'),
+        google.maps.importLibrary('marker'),
+    ]);
+
     const position = { lat: 37.4242011827985, lng: -122.09242296450893 };
+
     const map = new Map(document.getElementById('map'), {
         zoom: 14,
         center: position,
         mapId: '4504f8b37365c3d0',
     });
+
     // Create 100 markers to animate.
-    google.maps.event.addListenerOnce(map, 'idle', () => {
+    event.addListenerOnce(map, 'idle', () => {
         for (let i = 0; i < 100; i++) {
             createMarker(map, AdvancedMarkerElement, PinElement);
         }
     });
+
     // Add a button to reset the example.
     const controlDiv = document.createElement('div');
     const controlUI = document.createElement('button');
+
     controlUI.classList.add('ui-button');
     controlUI.innerText = 'Reset the example';
     controlUI.addEventListener('click', () => {
-        // Reset the example by reloading the map iframe.
+        // Reset the example by recreating the map.
         refreshMap();
     });
     controlDiv.appendChild(controlUI);
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(controlDiv);
+    map.controls[ControlPosition.TOP_CENTER].push(controlDiv);
 }
+
 function createMarker(map, AdvancedMarkerElement, PinElement) {
-    const pinElement = new PinElement();
-    const content = pinElement.element;
-    const advancedMarker = new AdvancedMarkerElement({
+    const content = new PinElement();
+    new AdvancedMarkerElement({
         position: getRandomPosition(map),
-        map: map,
-        content: content,
+        map,
+        content,
     });
+
     content.style.opacity = '0';
-    content.addEventListener('animationend', (event) => {
+    content.addEventListener('animationend', () => {
         content.classList.remove('drop');
         content.style.opacity = '1';
     });
@@ -83,6 +99,7 @@ function createMarker(map, AdvancedMarkerElement, PinElement) {
     content.style.setProperty('--delay-time', time + 's');
     intersectionObserver.observe(content);
 }
+
 function refreshMap() {
     // Refresh the map.
     const mapContainer = document.getElementById('mapContainer');
@@ -91,7 +108,8 @@ function refreshMap() {
     const mapDiv = document.createElement('div');
     mapDiv.id = 'map';
     mapContainer.appendChild(mapDiv);
-    initMap();
+    void init();
 }
-initMap();
+
+void init();
 // [END maps_advanced_markers_animation]

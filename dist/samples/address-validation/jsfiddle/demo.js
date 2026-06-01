@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
@@ -7,10 +7,8 @@
 
 // DOM Refs
 const addressForm = document.getElementById('address-form');
-const validateButton = document.getElementById('validate-button');
 const clearFormButton = document.getElementById('clear-form-button');
 const resultDisplay = document.getElementById('result-display');
-const loadingText = document.getElementById('loading-text');
 // Input field refs
 const streetAddress1Input = document.getElementById('street-address-1');
 const streetAddress2Input = document.getElementById('street-address-2');
@@ -19,6 +17,7 @@ const stateInput = document.getElementById('state');
 const zipCodeInput = document.getElementById('zip-code');
 const regionSelect = document.getElementById('region-select');
 const exampleSelect = document.getElementById('example-select');
+
 // Core Initialization
 async function init() {
     // Load the Address Validation library.
@@ -33,38 +32,40 @@ async function init() {
 async function handleValidationSubmit(event) {
     event.preventDefault(); // Prevent default form submission
     resultDisplay.textContent = 'Validating...'; // Clear previous results
+
+    const { AddressValidation } =
+        await google.maps.importLibrary('addressValidation');
+
     // Validate the address
     try {
-        //prettier-ignore
-        //@ts-ignore
-        const result = await google.maps.addressValidation.AddressValidation.fetchAddressValidation({
+        const result = await AddressValidation.fetchAddressValidation({
             address: {
                 regionCode: regionSelect.value.trim(),
                 languageCode: 'en',
                 addressLines: [
                     streetAddress1Input.value.trim(),
                     streetAddress2Input.value.trim(),
-                ].filter((line) => line), // Filter out empty lines
+                ].filter(Boolean), // Filter out empty lines
                 locality: cityInput.value.trim(),
                 administrativeArea: stateInput.value.trim(),
                 postalCode: zipCodeInput.value.trim(),
             },
         });
+
         resultDisplay.textContent =
             'Verdict summary\n================\n' +
-                `Formatted address: ${result.address.formattedAddress}\n` +
-                `Entered: ${result.verdict.inputGranularity}\n` +
-                `Validated: ${result.verdict.validationGranularity}\n` +
-                `Geocoded: ${result.verdict.geocodeGranularity}\n` +
-                `Possible next action: ${result.verdict.possibleNextAction}\n\n` +
-                `${getVerdictMessage(result.verdict, 'addressComplete')}\n` +
-                `${getVerdictMessage(result.verdict, 'hasUnconfirmedComponents')}\n` +
-                `${getVerdictMessage(result.verdict, 'hasInferredComponents')}\n` +
-                `${getVerdictMessage(result.verdict, 'hasReplacedComponents')}\n\n` +
-                `Raw JSON response\n=================\n` +
-                JSON.stringify(result, null, '  ');
-    }
-    catch (error) {
+            `Formatted address: ${result.address?.formattedAddress}\n` +
+            `Entered: ${result.verdict?.inputGranularity}\n` +
+            `Validated: ${result.verdict?.validationGranularity}\n` +
+            `Geocoded: ${result.verdict?.geocodeGranularity}\n` +
+            `Possible next action: ${result.verdict?.possibleNextAction}\n\n` +
+            `${getVerdictMessage(result.verdict, 'addressComplete')}\n` +
+            `${getVerdictMessage(result.verdict, 'hasUnconfirmedComponents')}\n` +
+            `${getVerdictMessage(result.verdict, 'hasInferredComponents')}\n` +
+            `${getVerdictMessage(result.verdict, 'hasReplacedComponents')}\n\n` +
+            `Raw JSON response\n=================\n` +
+            JSON.stringify(result, null, '  ');
+    } catch (error) {
         console.error('Validation failed:', error);
         if (error instanceof Error) {
             resultDisplay.textContent = `Error: ${error.message}`;
@@ -75,15 +76,18 @@ async function handleValidationSubmit(event) {
 // Verdict messages
 const verdictMessages = {
     addressComplete: {
-        trueMessage: '- The API found no unresolved, unexpected, or missing address elements.',
-        falseMessage: '- At least one address element is unresolved, unexpected, or missing.',
+        trueMessage:
+            '- The API found no unresolved, unexpected, or missing address elements.',
+        falseMessage:
+            '- At least one address element is unresolved, unexpected, or missing.',
     },
     hasUnconfirmedComponents: {
         trueMessage: "- The API can't confirm at least one address component.",
         falseMessage: '- The API confirmed all address components.',
     },
     hasInferredComponents: {
-        trueMessage: '- The API inferred (added) at least one address component.',
+        trueMessage:
+            '- The API inferred (added) at least one address component.',
         falseMessage: '- The API did not infer (add) any address components.',
     },
     hasReplacedComponents: {
@@ -91,24 +95,25 @@ const verdictMessages = {
         falseMessage: '- The API did not replace any address components.',
     },
 };
+
 // Helper function to get the verdict message for a given verdict key
 function getVerdictMessage(verdict, key) {
-    if (!verdict || !verdictMessages[key])
-        return 'Unknown';
+    if (!verdict || !verdictMessages[key]) return 'Unknown';
     return verdict[key]
         ? verdictMessages[key].trueMessage
         : verdictMessages[key].falseMessage;
 }
+
 // Handler for Dropdown Change
 function handleExampleSelectChange(event) {
     const selectedValue = event.target.value;
     if (selectedValue && examples[selectedValue]) {
         populateAddressFields(examples[selectedValue]);
-    }
-    else if (!selectedValue) {
+    } else if (!selectedValue) {
         populateAddressFields(null); // Pass null to clear fields
     }
 }
+
 // Clear Form Handler
 function handleClearForm() {
     streetAddress1Input.value = '';
@@ -121,6 +126,7 @@ function handleClearForm() {
     resultDisplay.textContent = 'Result will appear here...';
     console.log('Cleared form');
 }
+
 // Example Address Data
 const examples = {
     google: {
@@ -172,12 +178,14 @@ const examples = {
         region: 'US',
     },
 };
+
 // Helper function to populate form fields with example address data
 function populateAddressFields(exampleAddress) {
     if (!exampleAddress) {
         console.warn('No example address data provided.');
         return;
     }
+
     // Get values from example, providing empty string as default
     streetAddress1Input.value = exampleAddress.streetAddress1 || '';
     streetAddress2Input.value = exampleAddress.streetAddress2 || '';
@@ -185,9 +193,11 @@ function populateAddressFields(exampleAddress) {
     stateInput.value = exampleAddress.state || '';
     zipCodeInput.value = exampleAddress.zipCode || '';
     regionSelect.value = exampleAddress.region || '';
+
     // Clear previous results and errors
     resultDisplay.textContent = 'Result will appear here...';
+
     console.log('Populated fields with example: ', exampleAddress);
 }
-init();
 
+void init();

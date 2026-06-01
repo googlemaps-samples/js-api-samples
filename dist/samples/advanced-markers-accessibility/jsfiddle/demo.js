@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2019 Google LLC. All Rights Reserved.
@@ -6,10 +6,15 @@
  */
 
 const mapElement = document.querySelector('gmp-map');
-async function initMap() {
+
+async function init() {
     // Request needed libraries.
-    const { Map, InfoWindow } = (await google.maps.importLibrary('maps'));
-    const { AdvancedMarkerElement, PinElement } = (await google.maps.importLibrary('marker'));
+    const [{ InfoWindow }, { AdvancedMarkerElement, PinElement }] =
+        await Promise.all([
+            google.maps.importLibrary('maps'),
+            google.maps.importLibrary('marker'),
+        ]);
+
     // Set LatLng and title text for the markers. The first marker (Boynton Pass)
     // receives the initial focus when tab is pressed. Use arrow keys to move
     // between markers; press tab again to cycle through the map controls.
@@ -35,13 +40,13 @@ async function initMap() {
             title: 'Bell Rock',
         },
     ];
+
     // Create an info window to share between markers.
     const infoWindow = new InfoWindow();
+
     // Create the markers.
     tourStops.forEach(({ position, title }, i) => {
-        
         const pin = new PinElement({
-            //@ts-ignore
             glyphText: `${i + 1}`,
             scale: 1.5,
         });
@@ -52,17 +57,14 @@ async function initMap() {
         });
         marker.append(pin);
         mapElement.append(marker);
-        
-        
+
         // Add a click listener for each marker, and set up the info window.
-        marker.addListener('click', ({ domEvent, latLng }) => {
-            const { target } = domEvent;
+        marker.addEventListener('gmp-click', () => {
             infoWindow.close();
             infoWindow.setContent(marker.title);
             infoWindow.open(marker.map, marker);
         });
-        
     });
 }
-initMap();
 
+void init();

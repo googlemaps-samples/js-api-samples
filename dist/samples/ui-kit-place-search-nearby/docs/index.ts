@@ -7,31 +7,26 @@
 
 /* [START maps_ui_kit_place_search_nearby_query_selectors] */
 // Query selectors for various elements in the HTML file.
-const map = document.querySelector('gmp-map') as google.maps.MapElement;
-const placeSearch = document.querySelector('gmp-place-search') as any;
+const map = document.querySelector('gmp-map')!;
+const placeSearch = document.querySelector('gmp-place-search')!;
 const placeSearchQuery = document.querySelector(
     'gmp-place-nearby-search-request'
-) as any;
-const placeDetails = document.querySelector('gmp-place-details-compact') as any;
-const placeRequest = document.querySelector(
-    'gmp-place-details-place-request'
-) as any;
+)!;
+const placeDetails = document.querySelector('gmp-place-details-compact')!;
+const placeRequest = document.querySelector('gmp-place-details-place-request')!;
 const typeSelect = document.querySelector('.type-select') as HTMLSelectElement;
 /* [END maps_ui_kit_place_search_nearby_query_selectors] */
 
 // Global variables for the map, markers, and info window.
-const markers: Map<string, google.maps.marker.AdvancedMarkerElement> =
-    new Map();
+const markers = new Map<string, google.maps.marker.AdvancedMarkerElement>();
 let infoWindow: google.maps.InfoWindow;
 
 // The init function is called when the page loads.
 async function init(): Promise<void> {
     // Import the necessary libraries from the Google Maps API.
-    const [{ InfoWindow }, { Place }] = await Promise.all([
-        google.maps.importLibrary('maps') as Promise<google.maps.MapsLibrary>,
-        google.maps.importLibrary(
-            'places'
-        ) as Promise<google.maps.PlacesLibrary>,
+    const [{ InfoWindow }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('places'),
     ]);
 
     // Create a new info window and set its content to the place details element.
@@ -50,14 +45,16 @@ async function init(): Promise<void> {
 
     /* [START maps_ui_kit_place_search_nearby_event] */
     // Add event listeners to the type select and place search elements.
-    typeSelect.addEventListener('change', () => searchPlaces());
+    typeSelect.addEventListener('change', () => {
+        searchPlaces();
+    });
 
-    placeSearch.addEventListener('gmp-select', (event: Event) => {
-        const { place } = event as any;
+    placeSearch.addEventListener('gmp-select', (event) => {
+        const { place } = event;
         markers.get(place.id)?.click();
     });
     placeSearch.addEventListener('gmp-load', () => {
-        addMarkers();
+        void addMarkers();
     });
 
     searchPlaces();
@@ -65,7 +62,7 @@ async function init(): Promise<void> {
 /* [END maps_ui_kit_place_search_nearby_event] */
 /* [START maps_ui_kit_place_search_nearby_function] */
 // The searchPlaces function is called when the user changes the type select or when the page loads.
-async function searchPlaces() {
+function searchPlaces() {
     // Close the info window and clear the markers.
     infoWindow.close();
     for (const marker of markers.values()) {
@@ -89,10 +86,8 @@ async function searchPlaces() {
 async function addMarkers() {
     // Import the necessary libraries from the Google Maps API.
     const [{ AdvancedMarkerElement }, { LatLngBounds }] = await Promise.all([
-        google.maps.importLibrary(
-            'marker'
-        ) as Promise<google.maps.MarkerLibrary>,
-        google.maps.importLibrary('core') as Promise<google.maps.CoreLibrary>,
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('core'),
     ]);
     const bounds = new LatLngBounds();
 
@@ -101,11 +96,11 @@ async function addMarkers() {
     }
 
     for (const place of placeSearch.places) {
+        if (!place.location) continue;
         const marker = new AdvancedMarkerElement({
             map: map.innerMap,
             position: place.location,
-            collisionBehavior:
-                google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL,
+            collisionBehavior: 'REQUIRED_AND_HIDES_OPTIONAL',
         });
 
         markers.set(place.id, marker);
@@ -120,5 +115,5 @@ async function addMarkers() {
     map.innerMap.fitBounds(bounds);
 }
 
-init();
+void init();
 /* [END maps_ui_kit_place_search_nearby] */

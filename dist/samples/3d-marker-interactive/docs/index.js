@@ -1,14 +1,16 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-// @ts-nocheck
+
 // [START maps_3d_marker_interactive]
 async function init() {
     // Request needed libraries.
-    const { Map3DElement, Marker3DInteractiveElement, PopoverElement } = await google.maps.importLibrary('maps3d');
+    const { Map3DElement, Marker3DInteractiveElement, PopoverElement } =
+        await google.maps.importLibrary('maps3d');
+
     const map = new Map3DElement({
         center: { lat: 37.469, lng: -122.1074, altitude: 0 },
         tilt: 67.5,
@@ -16,21 +18,30 @@ async function init() {
         mode: 'HYBRID',
         gestureHandling: 'COOPERATIVE',
     });
+
     map.mode = 'SATELLITE';
+
     for (const position of positions) {
         const popover = new PopoverElement({
             open: true,
         });
+
         popover.append(position.name);
+
+        // [START maps_3d_marker_interactive_interaction]
         const interactiveMarker = new Marker3DInteractiveElement({
             position,
             gmpPopoverTargetElement: popover,
         });
+        // [END maps_3d_marker_interactive_interaction]
+
         map.append(interactiveMarker);
         map.append(popover);
     }
+
     document.body.append(map);
 }
+
 const positions = [
     {
         lat: 37.50981071450543,
@@ -83,5 +94,6 @@ const positions = [
         name: 'Google San Francisco',
     },
 ];
-init();
+
+void init();
 // [END maps_3d_marker_interactive]

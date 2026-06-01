@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_model]
 async function init() {
     // Import the needed libraries.
@@ -32,5 +31,5 @@ async function init() {
     map.append(model);
 }
 
-init();
+void init();
 // [END maps_3d_model]

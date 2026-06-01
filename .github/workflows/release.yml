@@ -19,7 +19,7 @@ on:
     branches:
       - main
     paths:
-      - 'samples/**'
+      - "samples/**"
 
 jobs:
   release:
@@ -49,9 +49,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: '22.x'
+          node-version: "24.x"
 
       - run: npm i
 
@@ -93,7 +93,7 @@ jobs:
             echo "  - samples/$workspace"
             rm -rf dist/samples/$workspace
           done
-          
+
       - name: Generate Index
         run: bash samples/generate-index.sh
 
@@ -130,6 +130,6 @@ jobs:
         uses: benc-uk/workflow-dispatch@v1
         with:
           workflow: dist-pr.yml
-          ref: 'temp-build-branch'
+          ref: "main"
           token: ${{ secrets.GH_APPROVER_TOKEN }} # Use the same token that pushed, it needs 'workflows: write' permissions
           inputs: '{ "source_run_id": "${{ github.run_id }}" }' # Optional: Pass the run ID for traceability

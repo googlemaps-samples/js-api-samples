@@ -1,32 +1,38 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-// @ts-nocheck
 
 const markers = [];
+
 async function init() {
     // Request needed libraries.
-    const { Map3DElement, MapMode, Marker3DElement } = await google.maps.importLibrary('maps3d');
+    const { Map3DElement, Marker3DElement } =
+        await google.maps.importLibrary('maps3d');
+
     const map = new Map3DElement({
         center: { lat: 47.6094, lng: -122.339, altitude: 0 },
         range: 1000,
-        mode: MapMode.HYBRID,
+        mode: 'HYBRID',
         gestureHandling: 'COOPERATIVE',
     });
+
     for (const [lng, lat] of positions) {
         const marker = new Marker3DElement({
             position: { lat, lng },
             // Try setting a different collision behavior here.
-            collisionBehavior: google.maps.CollisionBehavior.REQUIRED,
+            collisionBehavior: 'REQUIRED',
         });
+
         markers.push(marker);
         map.append(marker);
     }
+
     document.body.append(map);
 }
+
 const positions = [
     [-122.3402, 47.6093],
     [-122.3402, 47.6094],
@@ -42,13 +48,14 @@ const positions = [
     [-122.3381, 47.6095],
     [-122.3378, 47.6095],
 ];
-init();
+
+void init();
+
 const dropdown = document.getElementById('selectElementId');
 dropdown.addEventListener('change', drawMap);
-function drawMap(event) {
+
+function drawMap() {
     for (const marker of markers) {
-        marker.collisionBehavior =
-            dropdown.value || google.maps.CollisionBehavior.REQUIRED;
+        marker.collisionBehavior = dropdown.value;
     }
 }
-

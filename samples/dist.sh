@@ -3,6 +3,11 @@
 # Copy/generate:
 #   - Vite build output for hosting
 
+if [ "$SKIP_DIST" = "true" ]; then
+  echo ">>>Skipping dist.sh (SKIP_DIST is true)"
+  exit 0
+fi
+
 echo ">>>Running dist.sh"
 
 NAME=$1 # The name of the folder, taken from package.json "build" line.

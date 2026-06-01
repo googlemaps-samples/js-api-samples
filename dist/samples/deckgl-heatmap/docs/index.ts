@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+
 /* [START maps_deckgl_heatmap] */
 // Initialize and add the map
 let map: google.maps.Map;
@@ -12,6 +16,19 @@ let heatmapLayer: deck.HeatmapLayer;
 let googleMapsOverlay: deck.GoogleMapsOverlay;
 let marker: google.maps.marker.AdvancedMarkerElement | undefined;
 let infoWindow: google.maps.InfoWindow;
+
+// Declare global namespace for MDC to satisfy TypeScript compiler
+declare namespace mdc {
+    namespace linearProgress {
+        class MDCLinearProgress {
+            constructor(el: Element);
+            open(): void;
+            close(): void;
+            determinate: boolean;
+            done?: () => void;
+        }
+    }
+}
 
 // Declare global namespace for Deck.gl to satisfy TypeScript compiler
 declare namespace deck {
@@ -29,22 +46,19 @@ declare namespace deck {
     // Add other Deck.gl types used globally if needed
 }
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Progress bar logic moved from index.html
-    var progress,
-        progressDiv = document.querySelector('.mdc-linear-progress');
+    let progress: mdc.linearProgress.MDCLinearProgress | undefined;
+    const progressDiv = document.querySelector('.mdc-linear-progress');
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-        // @ts-ignore
-        progress = new mdc.linearProgress.MDCLinearProgress(
-            progressDiv as HTMLElement
-        );
+        progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
         progress.done = function () {
-            progress.close();
-            progressDiv?.remove(); // Use optional chaining in case progressDiv is null
+            progress!.close();
+            progressDiv.remove();
         };
     }
 
@@ -52,12 +66,10 @@ async function initMap(): Promise<void> {
     const position = { lat: 37.77325660358167, lng: -122.41712341793448 }; // Using the center from original deckgl-polygon.js
 
     //  Request needed libraries.
-    const { Map, InfoWindow } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    const [{ Map, InfoWindow }, { AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+    ]);
 
     const mapDiv = document.getElementById('map');
     if (!mapDiv) {
@@ -133,8 +145,7 @@ async function initMap(): Promise<void> {
         // Check if progress is defined
         // Add a small delay to ensure the progress bar is removed
         setTimeout(() => {
-            // @ts-ignore
-            progress.done(); // hides progress bar
+            progress.done?.(); // hides progress bar
         }, 100); // 100ms delay
     }
 
@@ -142,20 +153,20 @@ async function initMap(): Promise<void> {
     infoWindow = new InfoWindow();
 
     // Add click listener to the map
-    map.addListener('click', async (event: google.maps.MapMouseEvent) => {
+    map.addListener('click', (event: google.maps.MapMouseEvent) => {
         const latLng = event.latLng;
         if (!latLng) return; // Ensure latLng is not null
 
         if (!marker) {
             // Create the marker on the first click
             marker = new AdvancedMarkerElement({
-                map: map,
+                map,
                 position: latLng,
                 gmpClickable: true,
             });
 
             // Add click listener to the marker
-            marker.addListener('click', () => {
+            marker.addEventListener('gmp-click', () => {
                 infoWindow.close();
                 const content = `
             <div>Location: ${latLng.lat().toFixed(3)}, ${latLng.lng().toFixed(3)}</div>
@@ -205,5 +216,5 @@ async function initMap(): Promise<void> {
     }
 }
 
-initMap();
+void init();
 /* [END maps_deckgl_heatmap] */

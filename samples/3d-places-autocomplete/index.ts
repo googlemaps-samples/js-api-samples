@@ -4,9 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 // [START maps_3d_places_autocomplete]
-let map = null;
+let map: google.maps.maps3d.Map3DElement;
 
 async function init() {
     const { Map3DElement } = await google.maps.importLibrary('maps3d');
@@ -23,21 +25,24 @@ async function init() {
 
     document.body.append(map);
 
-    initAutocomplete();
+    void initAutocomplete();
 }
 
 async function initAutocomplete() {
+    // @ts-expect-error - currently missing. bug fix pending
     const { PlaceAutocompleteElement } =
         await google.maps.importLibrary('places');
 
-    const placeAutocomplete = new google.maps.places.PlaceAutocompleteElement();
+    const placeAutocomplete = new PlaceAutocompleteElement();
     placeAutocomplete.id = 'place-autocomplete-input';
-    const card = document.getElementById('pac-container');
+    const card = document.getElementById('pac-container')!;
     card.appendChild(placeAutocomplete);
 
     placeAutocomplete.addEventListener(
         'gmp-select',
-        async ({ placePrediction }) => {
+        async ({
+            placePrediction,
+        }: google.maps.places.PlacePredictionSelectEvent) => {
             const place = placePrediction.toPlace();
             await place.fetchFields({
                 fields: ['displayName', 'location', 'id'],
@@ -47,23 +52,18 @@ async function initAutocomplete() {
                 window.alert('No viewport for input: ' + place.displayName);
                 return;
             }
-            flyToPlace(place);
+            void flyToPlace(place);
         }
     );
 }
 
-const flyToPlace = async (place) => {
-    const {
-        AltitudeMode,
-        Polyline3DElement,
-        Polygon3DElement,
-        Marker3DElement,
-    } = await google.maps.importLibrary('maps3d');
+const flyToPlace = async (place: google.maps.places.Place) => {
+    const { Marker3DElement } = await google.maps.importLibrary('maps3d');
 
-    const location = place.location;
+    const location = place.location!;
 
     // We need to find the elevation for the point so we place the marker at 50m above the elevation.
-    const elevation = await getElevationforPoint(location);
+    const elevation = await getElevationforPoint(location, place);
 
     const marker = new Marker3DElement({
         position: {
@@ -71,9 +71,9 @@ const flyToPlace = async (place) => {
             lng: location.lng(),
             altitude: elevation + 50,
         },
-        altitudeMode: AltitudeMode.ABSOLUTE,
+        altitudeMode: 'ABSOLUTE',
         extruded: true,
-        label: place.displayName,
+        label: place.displayName!,
     });
 
     // Add the marker.
@@ -95,23 +95,30 @@ const flyToPlace = async (place) => {
     });
 };
 
-async function getElevationforPoint(location) {
+async function getElevationforPoint(
+    location: google.maps.LatLng,
+    place: google.maps.places.Place
+) {
+    const defaultElevation = 10;
     const { ElevationService } = await google.maps.importLibrary('elevation');
     // Get place elevation using the ElevationService.
-    const elevatorService = new google.maps.ElevationService();
+    const elevatorService = new ElevationService();
     const elevationResponse = await elevatorService.getElevationForLocations({
         locations: [location],
     });
 
-    if (!(elevationResponse.results && elevationResponse.results.length)) {
-        window.alert(`Insufficient elevation data for place: ${place.name}`);
-        return;
+    if (!elevationResponse?.results.length) {
+        window.alert(
+            `Insufficient elevation data for place: ${place.displayName}`
+        );
+        return defaultElevation;
     }
-    const elevation = elevationResponse.results[0].elevation || 10;
+    const elevation =
+        elevationResponse.results[0].elevation || defaultElevation;
 
     return elevation;
 }
 
-init();
+void init();
 
 // [END maps_3d_places_autocomplete]

@@ -1,0 +1,14 @@
+{
+  "name": "@js-api-samples/geocoding-component-restriction",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "bash ../build-single.sh",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    
+  }
+}

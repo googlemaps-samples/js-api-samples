@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 class SimpleWeatherWidget extends HTMLElement {
     constructor() {
         super();
@@ -160,23 +163,18 @@ class SimpleWeatherWidget extends HTMLElement {
         const iconElement = this.shadowRoot!.getElementById(
             'condition-icon'
         ) as HTMLImageElement;
-        const temperatureElement = this.shadowRoot!.getElementById(
-            'temperature'
-        ) as HTMLSpanElement;
-        const rainProbabilityElement = this.shadowRoot!.getElementById(
-            'rain-probability'
-        ) as HTMLSpanElement;
-        const rainQpfElement = this.shadowRoot!.getElementById(
-            'rain-qpf'
-        ) as HTMLSpanElement;
-        const rainDetailsElement = this.shadowRoot!.getElementById(
-            'rain-details'
-        ) as HTMLDivElement;
+        const temperatureElement =
+            this.shadowRoot!.getElementById('temperature')!;
+        const rainProbabilityElement =
+            this.shadowRoot!.getElementById('rain-probability')!;
+        const rainQpfElement = this.shadowRoot!.getElementById('rain-qpf')!;
+        const rainDetailsElement =
+            this.shadowRoot!.getElementById('rain-details')!;
 
         if (!weatherData || weatherData.error) {
             iconElement.style.display = 'none';
             rainDetailsElement.style.display = 'none';
-            if (weatherData && weatherData.error) {
+            if (weatherData?.error) {
                 temperatureElement.textContent = weatherData.error;
                 temperatureElement.classList.add('error-message'); // Add error class
             } else {
@@ -190,10 +188,10 @@ class SimpleWeatherWidget extends HTMLElement {
         const isForecastDay =
             weatherData.daytimeForecast || weatherData.nighttimeForecast;
 
-        let temperature: number | undefined,
-            iconBaseUri: string | undefined,
-            rainProbability: number | undefined,
-            rainQpf: number | undefined;
+        let temperature: number | undefined;
+        let iconBaseUri: string | undefined;
+        let rainProbability: number | undefined;
+        let rainQpf: number | undefined;
 
         if (isForecastDay) {
             // Data is a forecast day object

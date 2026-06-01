@@ -1,15 +1,18 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2019 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
-async function initMap() {
-    (await google.maps.importLibrary('maps'));
+async function init() {
+    await google.maps.importLibrary('maps');
+
     const mapElement = document.querySelector('gmp-map');
-    let innerMap = mapElement.innerMap;
+
+    const innerMap = mapElement.innerMap;
+
     innerMap.data.loadGeoJson('google.json');
 }
-initMap();
 
+void init();

@@ -5,59 +5,52 @@
  */
 
 // [START maps_place_nearby_search]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-let innerMap;
-const advancedMarkerElement = document.querySelector(
-    'gmp-advanced-marker'
-) as google.maps.marker.AdvancedMarkerElement;
-let center;
-let typeSelect;
-let infoWindow;
+const mapElement = document.querySelector('gmp-map')!;
+let innerMap: google.maps.Map;
+let center: google.maps.LatLngLiteral | google.maps.LatLng;
+let typeSelect: HTMLSelectElement;
+let infoWindow: google.maps.InfoWindow;
 
-async function initMap() {
-    const { Map, InfoWindow } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { LatLng } = (await google.maps.importLibrary(
-        'core'
-    )) as google.maps.CoreLibrary;
+async function init() {
+    const [{ InfoWindow }, { event }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('core'),
+    ]);
 
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
         mapTypeControl: false,
     });
 
-    typeSelect = document.querySelector('.type-select');
+    typeSelect = document.querySelector('.type-select')!;
 
     typeSelect.addEventListener('change', () => {
-        nearbySearch();
+        void nearbySearch();
     });
 
     infoWindow = new InfoWindow();
 
     // Kick off an initial search once map has loaded.
-    google.maps.event.addListenerOnce(innerMap, 'idle', () => {
-        nearbySearch();
+    event.addListenerOnce(innerMap, 'idle', () => {
+        void nearbySearch();
     });
 }
 
 async function nearbySearch() {
-    const { Place, SearchNearbyRankPreference } =
-        (await google.maps.importLibrary(
-            'places'
-        )) as google.maps.PlacesLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
-    const { spherical } = (await google.maps.importLibrary(
-        'geometry'
-    )) as google.maps.GeometryLibrary;
+    const [
+        { Place, SearchNearbyRankPreference },
+        { AdvancedMarkerElement },
+        { spherical },
+    ] = await Promise.all([
+        google.maps.importLibrary('places'),
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('geometry'),
+    ]);
     // [START maps_place_nearby_search_request]
     // Get bounds and radius to constrain search.
-    center = mapElement.center;
-    let bounds = innerMap.getBounds();
-    const ne = bounds.getNorthEast();
-    const sw = bounds.getSouthWest();
+    center = mapElement.center!;
+    const ne = innerMap.getBounds()!.getNorthEast();
+    const sw = innerMap.getBounds()!.getSouthWest();
     const diameter = spherical.computeDistanceBetween(ne, sw);
     const radius = Math.min(diameter / 2, 50000); // Radius cannot be more than 50000.
 
@@ -83,9 +76,7 @@ async function nearbySearch() {
     // [END maps_place_nearby_search_request]
 
     if (places.length) {
-        const { LatLngBounds } = (await google.maps.importLibrary(
-            'core'
-        )) as google.maps.CoreLibrary;
+        const { LatLngBounds } = await google.maps.importLibrary('core');
         const bounds = new LatLngBounds();
 
         // First remove all existing markers.
@@ -120,8 +111,8 @@ async function nearbySearch() {
             }
 
             marker.addListener('gmp-click', () => {
-                innerMap.panTo(place.location);
-                updateInfoWindow(place.displayName, content, marker);
+                innerMap.panTo(place.location!);
+                updateInfoWindow(place.displayName!, content, marker);
             });
         });
 
@@ -131,7 +122,11 @@ async function nearbySearch() {
     }
 }
 
-function updateInfoWindow(title, content, anchor) {
+function updateInfoWindow(
+    title: string | Element | null,
+    content: string | Element | null,
+    anchor: google.maps.marker.AdvancedMarkerElement
+) {
     infoWindow.setContent(content);
     infoWindow.setHeaderContent(title);
     infoWindow.open({
@@ -139,5 +134,5 @@ function updateInfoWindow(title, content, anchor) {
     });
 }
 
-initMap();
+void init();
 // [END maps_place_nearby_search]

@@ -3,6 +3,12 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+
 /* [START maps_deckgl_kml_updated] */
 // Import necessary loader
 import { KMLLoader } from '@loaders.gl/kml';
@@ -41,27 +47,37 @@ declare namespace deck {
     // Add other Deck.gl types used globally if needed
 }
 
+// Declare global namespace for MDC to satisfy TypeScript compiler
+declare namespace mdc {
+    namespace linearProgress {
+        class MDCLinearProgress {
+            constructor(el: Element);
+            open(): void;
+            close(): void;
+            determinate: boolean;
+            done?: () => void;
+        }
+    }
+}
+
 // Initialize and add the map
 let map: google.maps.Map;
 let geojsonLayer: deck.GeoJsonLayer;
 let googleMapsOverlay: deck.GoogleMapsOverlay;
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Progress bar logic moved from index.html
-    var progress,
-        progressDiv = document.querySelector('.mdc-linear-progress');
+    let progress: mdc.linearProgress.MDCLinearProgress;
+    const progressDiv = document.querySelector('.mdc-linear-progress')!;
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-        // @ts-ignore
-        progress = new mdc.linearProgress.MDCLinearProgress(
-            progressDiv as HTMLElement
-        );
+        progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
         progress.done = function () {
-            progress.close();
-            progressDiv?.remove(); // Use optional chaining in case progressDiv is null
+            progress!.close();
+            progressDiv.remove(); // Use optional chaining in case progressDiv is null
         };
     }
 
@@ -69,9 +85,7 @@ async function initMap(): Promise<void> {
     const position = { lat: 19.223718899391237, lng: -148.62590882823457 };
 
     //  Request needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { Map } = await google.maps.importLibrary('maps');
 
     const mapDiv = document.getElementById('map');
     if (!mapDiv) {
@@ -106,13 +120,13 @@ async function initMap(): Promise<void> {
         // lineWidthMinPixels: 4, // Not needed for points
         pointRadiusMinPixels: 2,
         pointRadiusMaxPixels: 200,
-        getRadius: (f) => 8000,
-        getFillColor: (f, { index }) => {
+        getRadius: () => 8000,
+        getFillColor: (f: any) => {
             // Extract magnitude from the description string
             const description = f.properties.description;
             const magnitudeMatch = description.match(/M (\d+\.?\d*)/);
             let parsedMagnitude: number | null = null;
-            if (magnitudeMatch && magnitudeMatch[1]) {
+            if (magnitudeMatch?.[1]) {
                 parsedMagnitude = parseFloat(magnitudeMatch[1]);
             } else {
                 console.log('Magnitude not found');
@@ -177,7 +191,7 @@ async function initMap(): Promise<void> {
         },
         onDataLoad: () => {
             console.log('KML data loaded');
-            if (progress && progress.done) {
+            if (progress?.done) {
                 progress.done();
             }
         },
@@ -239,5 +253,5 @@ async function initMap(): Promise<void> {
     }
 }
 
-initMap();
+void init();
 /* [END maps_deckgl_kml_updated] */

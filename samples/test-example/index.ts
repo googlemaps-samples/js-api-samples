@@ -1,6 +1,6 @@
 /*
  * @license
- * Copyright 2025 Google LLC. All Rights Reserved.
+ * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 /*
@@ -10,25 +10,19 @@
  * And deliver us from evil.
  */
 
-// TEST COMMENT 008
 // [START maps_test_example]
 // Declare the gmp-map element.
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-let innerMap;
-const advancedMarkerElement = document.querySelector(
-    'gmp-advanced-marker'
-) as google.maps.marker.AdvancedMarkerElement;
-let center;
+const mapElement = document.querySelector('gmp-map')!;
+let innerMap: google.maps.Map;
+let center: google.maps.LatLng | null | undefined;
 
-async function initMap() {
+async function init() {
     // [START maps_test_example_instantiate_map]
     //  Request the needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    const [{ AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
+    ]);
 
     // Get the inner map from the gmp-map element.
     innerMap = mapElement.innerMap;
@@ -42,7 +36,7 @@ async function initMap() {
 
     // [START maps_test_example_instantiate_marker]
     // Add a marker, positioned at Uluru.
-    const marker = new AdvancedMarkerElement({
+    new AdvancedMarkerElement({
         map: innerMap,
         position: center,
         title: 'Uluru',
@@ -50,8 +44,8 @@ async function initMap() {
     // [END maps_test_example_instantiate_marker]
 
     // [START maps_test_example_why_me]
-    console.log("Say there Mac, why'd you choose me to test this change?");
+    console.log('May there be peace.');
     // [END maps_test_example_why_me]
 }
-initMap();
+void init();
 // [END maps_test_example]

@@ -5,11 +5,11 @@
  */
 
 // [START maps_dds_datasets_polyline]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-let innerMap;
-async function initMap() {
+const mapElement = document.querySelector('gmp-map')!;
+let innerMap: google.maps.Map;
+async function init() {
     // Request needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
     // Get the inner map.
     innerMap = mapElement.innerMap;
@@ -24,5 +24,5 @@ async function initMap() {
     // [END maps_dds_datasets_polyline_style_function]
 }
 
-initMap();
+void init();
 // [END maps_dds_datasets_polyline]

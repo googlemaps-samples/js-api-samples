@@ -4,23 +4,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_polyline_click_event]
-let map;
+let map: google.maps.maps3d.Map3DElement;
 async function init() {
-    const {
-        Map3DElement,
-        MapMode,
-        AltitudeMode,
-        Polyline3DInteractiveElement,
-    } = await google.maps.importLibrary('maps3d');
+    const { Map3DElement, Polyline3DInteractiveElement } =
+        await google.maps.importLibrary('maps3d');
 
     map = new Map3DElement({
         center: { lat: 37.7927, lng: -122.402, altitude: 65.93 },
         range: 3362.87,
         tilt: 64.01,
         heading: 25.0,
-        mode: MapMode.SATELLITE,
+        mode: 'SATELLITE',
         gestureHandling: 'COOPERATIVE',
     });
 
@@ -44,18 +39,17 @@ async function init() {
         outerColor: 'white',
         strokeWidth: 10,
         outerWidth: 0.4,
-        altitudeMode: AltitudeMode.RELATIVE_TO_GROUND, // Place it on the ground (as it has no altitude it will just be at ground height).
+        altitudeMode: 'RELATIVE_TO_GROUND', // Place it on the ground (as it has no altitude it will just be at ground height).
         drawsOccludedSegments: true, // Show the line through the buildings or anything else that might get in the way.
     });
 
-    polyline.addEventListener('gmp-click', (event) => {
+    polyline.addEventListener('gmp-click', function () {
         // Toggle whether the line draws occluded segments.
-        event.target.drawsOccludedSegments =
-            !event.target.drawsOccludedSegments;
+        this.drawsOccludedSegments = !this.drawsOccludedSegments;
     });
 
     map.append(polyline);
 }
 
-init();
+void init();
 // [END maps_3d_polyline_click_event]

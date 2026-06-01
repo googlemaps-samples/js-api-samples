@@ -1,43 +1,50 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2019 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary('maps'));
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
+    const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+    ]);
+
     const center = { lat: 37.43238031167444, lng: -122.16795397128632 };
     const map = new Map(document.getElementById('map'), {
         zoom: 11,
         center,
         mapId: '4504f8b37365c3d0',
     });
+
     for (const property of properties) {
-        const advancedMarkerElement = new google.maps.marker.AdvancedMarkerElement({
+        const advancedMarkerElement = new AdvancedMarkerElement({
             map,
             content: buildContent(property),
             position: property.position,
             title: property.description,
         });
+
         advancedMarkerElement.addListener('click', () => {
-            toggleHighlight(advancedMarkerElement, property);
+            toggleHighlight(advancedMarkerElement);
         });
     }
 }
-function toggleHighlight(markerView, property) {
-    if (markerView.content.classList.contains('highlight')) {
-        markerView.content.classList.remove('highlight');
+
+function toggleHighlight(markerView) {
+    const content = markerView.children[0];
+
+    if (content.classList.contains('highlight')) {
+        content.classList.remove('highlight');
         markerView.zIndex = null;
-    }
-    else {
-        markerView.content.classList.add('highlight');
+    } else {
+        content.classList.add('highlight');
         markerView.zIndex = 1;
     }
 }
+
 function buildContent(property) {
     const content = document.createElement('div');
     content.classList.add('property');
@@ -70,6 +77,7 @@ function buildContent(property) {
     `;
     return content;
 }
+
 const properties = [
     {
         address: '215 Emily St, MountainView, CA',
@@ -97,7 +105,7 @@ const properties = [
             lng: -122.2160620727,
         },
     },
-    
+
     {
         address: '100 Chris St, Portola Valley, CA',
         description: 'Spacious warehouse great for small business',
@@ -203,5 +211,5 @@ const properties = [
         },
     },
 ];
-initMap();
 
+void init();

@@ -6,26 +6,24 @@
 
 // [START maps_ai_powered_summaries]
 // Define DOM elements.
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-const placeAutocomplete = document.querySelector(
-    'gmp-place-autocomplete'
-) as google.maps.places.PlaceAutocompleteElement;
-const summaryPanel = document.getElementById('summary-panel') as HTMLDivElement;
-const placeName = document.getElementById('place-name') as HTMLElement;
-const placeAddress = document.getElementById('place-address') as HTMLElement;
-const tabContainer = document.getElementById('tab-container') as HTMLDivElement;
-const summaryContent = document.getElementById(
-    'summary-content'
-) as HTMLDivElement;
-const aiDisclosure = document.getElementById('ai-disclosure') as HTMLDivElement;
-const flagContentLink = document.getElementById('flag-content-link') as HTMLAnchorElement;
+const mapElement = document.querySelector('gmp-map')!;
+const placeAutocomplete = document.querySelector('gmp-place-autocomplete')!;
+const summaryPanel = document.getElementById('summary-panel')!;
+const placeName = document.getElementById('place-name')!;
+const placeAddress = document.getElementById('place-address')!;
+const tabContainer = document.getElementById('tab-container')!;
+const summaryContent = document.getElementById('summary-content')!;
+const aiDisclosure = document.getElementById('ai-disclosure')!;
+const flagContentLink = document.getElementById(
+    'flag-content-link'
+) as HTMLAnchorElement;
 
-let innerMap;
+let innerMap: google.maps.Map;
 let marker: google.maps.marker.AdvancedMarkerElement;
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Request needed libraries.
-    const [] = await Promise.all([
+    const [{ AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('marker'),
         google.maps.importLibrary('places'),
     ]);
@@ -38,19 +36,19 @@ async function initMap(): Promise<void> {
     });
 
     // Bind autocomplete bounds to map bounds.
-    google.maps.event.addListener(innerMap, 'bounds_changed', async () => {
-        placeAutocomplete.locationRestriction = innerMap.getBounds();
+    innerMap.addListener('bounds_changed', () => {
+        placeAutocomplete.locationRestriction = innerMap.getBounds()!;
     });
 
     // Create the marker.
-    marker = new google.maps.marker.AdvancedMarkerElement({
+    marker = new AdvancedMarkerElement({
         map: innerMap,
     });
 
     // Handle selection of an autocomplete result.
-    // prettier-ignore
-    // @ts-ignore
-    placeAutocomplete.addEventListener('gmp-select', async ({ placePrediction }) => {
+    placeAutocomplete.addEventListener(
+        'gmp-select',
+        async ({ placePrediction }) => {
             const place = placePrediction.toPlace();
 
             // Fetch all summary fields.
@@ -72,7 +70,7 @@ async function initMap(): Promise<void> {
             if (place.viewport) {
                 innerMap.fitBounds(place.viewport);
             } else {
-                innerMap.setCenter(place.location);
+                innerMap.setCenter(place.location!);
                 innerMap.setZoom(17);
             }
             marker.position = place.location;
@@ -101,8 +99,8 @@ function updateSummaryPanel(place: google.maps.places.Place) {
     const createTab = (
         label: string,
         content: string | Node,
-        disclosure: string,
-        flagUrl: string
+        disclosure: string | null,
+        flagUrl: string | null
     ) => {
         const btn = document.createElement('button');
         btn.className = 'tab-button';
@@ -115,9 +113,9 @@ function updateSummaryPanel(place: google.maps.places.Place) {
             }
 
             // Manage the active class state.
-            document
-                .querySelectorAll('.tab-button')
-                .forEach((b) => b.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach((b) => {
+                b.classList.remove('active');
+            });
             btn.classList.add('active');
 
             if (typeof content === 'string') {
@@ -132,7 +130,7 @@ function updateSummaryPanel(place: google.maps.places.Place) {
             // Add the content flag URI.
             if (flagUrl) {
                 flagContentLink.href = flagUrl;
-                flagContentLink.textContent = "Report an issue"
+                flagContentLink.textContent = 'Report an issue';
             }
         };
 
@@ -146,51 +144,37 @@ function updateSummaryPanel(place: google.maps.places.Place) {
     };
 
     // --- 1. Generative Summary (Place) ---
-    //@ts-ignore
     if (place.generativeSummary?.overview) {
         createTab(
             'Overview',
-            //@ts-ignore
             place.generativeSummary.overview,
-            //@ts-ignore
             place.generativeSummary.disclosureText,
-            //@ts-ignore
             place.generativeSummary.flagContentURI
         );
     }
 
     // --- 2. Review Summary ---
-    //@ts-ignore
     if (place.reviewSummary?.text) {
         createTab(
             'Reviews',
-            //@ts-ignore
             place.reviewSummary.text,
-            //@ts-ignore
             place.reviewSummary.disclosureText,
-            //@ts-ignore
             place.reviewSummary.flagContentURI
         );
     }
 
     // --- 3. Neighborhood Summary ---
-    //@ts-ignore
     if (place.neighborhoodSummary?.overview?.content) {
         createTab(
             'Neighborhood',
-            //@ts-ignore
             place.neighborhoodSummary.overview.content,
-            //@ts-ignore
             place.neighborhoodSummary.disclosureText,
-            //@ts-ignore
             place.neighborhoodSummary.flagContentURI
         );
     }
 
     // --- 4. EV Amenity Summary (uses content blocks)) ---
-    //@ts-ignore
     if (place.evChargeAmenitySummary) {
-        //@ts-ignore
         const evSummary = place.evChargeAmenitySummary;
         const evContainer = document.createDocumentFragment();
 
@@ -253,5 +237,5 @@ function updateSummaryPanel(place: google.maps.places.Place) {
     }
 }
 
-initMap();
+void init();
 // [END maps_ai_powered_summaries]

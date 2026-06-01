@@ -1,0 +1,23 @@
+{
+  "name": "@js-api-samples/react-ui-kit-place-details",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "bash ../build-single.sh",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --base './' && vite",
+    "build:vite": "vite build --base './'",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vis.gl/react-google-maps": "1.8.3",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.3",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.12"
+  }
+}
