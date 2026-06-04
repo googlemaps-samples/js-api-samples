@@ -19,7 +19,7 @@
     "@eslint/markdown": "^8.0.2",
     "@playwright/test": "^1.60.0",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "@types/google.maps": "^3.64.1",
+    "@types/google.maps": "^3.65.0",
     "@types/node": "^25.9.1",
     "eslint": "^10.4.0",
     "globals": "^17.6.0",
