@@ -13,6 +13,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@googlemaps/js-api-loader": "^2.0.2"
+    "@googlemaps/js-api-loader": "^2.1.0"
   }
 }
