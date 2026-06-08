@@ -121,7 +121,6 @@ async function init() {
         heading: 0,
         range: 4000,
         mode: 'SATELLITE',
-        gestureHandling: 'COOPERATIVE',
     });
     document.body.append(map);
 
