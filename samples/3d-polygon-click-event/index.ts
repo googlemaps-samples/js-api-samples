@@ -54,7 +54,7 @@ function randomizeHexColor(originalHexColor: string) {
     const g = Math.floor(Math.random() * 256);
     const b = Math.floor(Math.random() * 256);
 
-    console.log(r + ' ' + g + ' ' + b);
+    console.log(`${r} ${g} ${b}`);
 
     // Convert decimal to 2-digit hex, padding with '0' if needed
     const rHex = ('0' + r.toString(16)).slice(-2);

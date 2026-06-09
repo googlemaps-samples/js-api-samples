@@ -3,7 +3,6 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 // [START maps_weather_api_compact]
@@ -18,6 +17,10 @@ const DARK_MAP_ID = '6b73a9fe7e831a00';
 let map: google.maps.Map;
 let activeWeatherWidget: SimpleWeatherWidget | null = null; // To keep track of the currently active widget
 let allMarkers: google.maps.marker.AdvancedMarkerElement[] = []; // To store all active markers
+const markerTypes = new WeakMap<
+    google.maps.marker.AdvancedMarkerElement,
+    'initial' | 'button' | 'dynamic'
+>(); // To store marker types safely
 let markersLoaded = false; // Flag to track if button markers are loaded
 
 async function init(): Promise<void> {
@@ -50,7 +53,7 @@ async function init(): Promise<void> {
     map.addListener('click', async (event: google.maps.MapMouseEvent) => {
         // Check if the click was on a marker. If so, the marker's own click listener will handle it.
         // If not, create a new dynamic marker or hide the active widget.
-        let target = event.domEvent.target as Element;
+        let target = event.domEvent.target as Element | null;
         let isClickOnMarker = false;
         while (target) {
             if (
@@ -61,7 +64,7 @@ async function init(): Promise<void> {
                 isClickOnMarker = true;
                 break;
             }
-            target = target.parentElement!;
+            target = target.parentElement;
         }
 
         if (!isClickOnMarker && event.latLng) {
@@ -89,7 +92,7 @@ async function init(): Promise<void> {
 
             // Remove the previous dynamic marker if it exists
             const currentDynamicMarkerIndex = allMarkers.findIndex(
-                (marker) => (marker as any).markerType === 'dynamic'
+                (marker) => markerTypes.get(marker) === 'dynamic'
             );
             if (currentDynamicMarkerIndex !== -1) {
                 allMarkers[currentDynamicMarkerIndex].map = null;
@@ -141,7 +144,7 @@ async function createAndAddMarker(
     marker.append(weatherWidget);
 
     // Store the marker type
-    (marker as any).markerType = markerType;
+    markerTypes.set(marker, markerType);
 
     // Fetch and update weather data for this location
     void updateWeatherDisplayForMarker(
@@ -248,7 +251,7 @@ async function toggleDarkMode() {
     map.addListener('click', async (event: google.maps.MapMouseEvent) => {
         // Check if the click was on a marker. If so, the marker's own click listener will handle it.
         // If not, create a new dynamic marker or hide the active widget.
-        let target = event.domEvent.target as Element;
+        let target = event.domEvent.target as Element | null;
         let isClickOnMarker = false;
         while (target) {
             if (
@@ -259,7 +262,7 @@ async function toggleDarkMode() {
                 isClickOnMarker = true;
                 break;
             }
-            target = target.parentElement!;
+            target = target.parentElement;
         }
 
         if (!isClickOnMarker && event.latLng) {
@@ -286,7 +289,7 @@ async function toggleDarkMode() {
 
             // Remove the previous dynamic marker if it exists
             const currentDynamicMarkerIndex = allMarkers.findIndex(
-                (marker) => (marker as any).markerType === 'dynamic'
+                (marker) => markerTypes.get(marker) === 'dynamic'
             );
             if (currentDynamicMarkerIndex !== -1) {
                 allMarkers[currentDynamicMarkerIndex].map = null;
@@ -330,7 +333,7 @@ function removeButtonMarkers(): void {
         const buttonMarker = allMarkers.find(
             (marker) =>
                 marker.firstElementChild === activeWeatherWidget &&
-                (marker as any).markerType === 'button'
+                markerTypes.get(marker) === 'button'
         );
         if (buttonMarker) {
             const rainDetailsElement =
@@ -348,7 +351,7 @@ function removeButtonMarkers(): void {
 
     // Remove button markers from the map and the allMarkers array
     const markersToRemove = allMarkers.filter(
-        (marker) => (marker as any).markerType === 'button'
+        (marker) => markerTypes.get(marker) === 'button'
     );
     markersToRemove.forEach((marker) => {
         marker.map = null;
@@ -357,6 +360,13 @@ function removeButtonMarkers(): void {
             allMarkers.splice(index, 1);
         }
     });
+}
+
+interface WeatherApiError {
+    error?: {
+        status?: string;
+        message?: string;
+    };
 }
 
 async function updateWeatherDisplayForMarker(
@@ -373,16 +383,18 @@ async function updateWeatherDisplayForMarker(
         const response = await fetch(currentConditionsUrl);
 
         if (!response.ok) {
-            const errorBody = await response.json();
+            const errorBody = (await response.json()) as WeatherApiError;
             console.error('API error response:', errorBody);
 
             if (
                 response.status === 404 &&
-                errorBody?.error?.status === 'NOT_FOUND'
+                errorBody.error?.status === 'NOT_FOUND'
             ) {
                 widget.data = { error: 'Location not supported' };
             } else {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(
+                    `HTTP error! status: ${response.status}`
+                );
             }
         } else {
             const weatherData = await response.json();

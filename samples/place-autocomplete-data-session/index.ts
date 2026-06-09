@@ -7,7 +7,7 @@
 // [START maps_place_autocomplete_data_session]
 const mapElement = document.querySelector('gmp-map')!;
 let innerMap: google.maps.Map;
-let marker: google.maps.marker.AdvancedMarkerElement;
+let marker: google.maps.marker.AdvancedMarkerElement | undefined;
 const titleElement = document.querySelector<HTMLElement>('.title')!;
 const resultsContainerElement = document.querySelector('.results')!;
 const inputElement = document.querySelector('input')!;
@@ -50,7 +50,7 @@ async function makeAutocompleteRequest(inputEvent: Event) {
     const { AutocompleteSuggestion } =
         await google.maps.importLibrary('places');
 
-    if (!(inputEvent.target as HTMLInputElement)?.value) {
+    if (!(inputEvent.target as HTMLInputElement).value) {
         titleElement.textContent = '';
         resultsContainerElement.replaceChildren();
         return;

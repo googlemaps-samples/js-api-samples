@@ -49,16 +49,9 @@ function showNewRect() {
     const sw = rectangle.getBounds()!.getSouthWest();
 
     const contentString =
-        '<b>Rectangle moved.</b><br>' +
-        'New north-east corner: ' +
-        ne.lat() +
-        ', ' +
-        ne.lng() +
-        '<br>' +
-        'New south-west corner: ' +
-        sw.lat() +
-        ', ' +
-        sw.lng();
+        `<b>Rectangle moved.</b><br>` +
+        `New north-east corner: ${String(ne.lat())}, ${String(ne.lng())}<br>` +
+        `New south-west corner: ${String(sw.lat())}, ${String(sw.lng())}`;
 
     // Set the info window's content and position.
     infoWindow.setContent(contentString);

@@ -95,7 +95,7 @@ async function init(): Promise<void> {
             const marker = new AdvancedMarkerElement({
                 map,
                 position: origin.location,
-                title: `Origin: ${origin.displayName}`,
+                title: `Origin: ${origin.displayName ?? 'Unknown'}`,
             });
             marker.append(pin);
             markers.push(marker);

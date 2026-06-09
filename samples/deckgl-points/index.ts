@@ -27,8 +27,8 @@ function isEarthquake(
     return (
         f.properties !== null &&
         typeof f.properties === 'object' &&
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        typeof (f.properties as any).mag === 'number'
+        'mag' in f.properties &&
+        typeof (f.properties as Record<string, unknown>).mag === 'number'
     );
 }
 

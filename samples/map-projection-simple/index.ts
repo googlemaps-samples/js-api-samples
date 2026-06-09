@@ -30,12 +30,7 @@ async function init() {
     const coordsDiv = document.getElementById('coords')!;
 
     innerMap.addListener('mousemove', (event: google.maps.MapMouseEvent) => {
-        coordsDiv.textContent =
-            'lat: ' +
-            Math.round(event.latLng!.lat()) +
-            ', ' +
-            'lng: ' +
-            Math.round(event.latLng!.lng());
+        coordsDiv.textContent = `lat: ${String(Math.round(event.latLng!.lat()))}, lng: ${String(Math.round(event.latLng!.lng()))}`;
     });
 
     // Add some markers to the map.
@@ -72,7 +67,7 @@ async function initGallPeters() {
 
             if (y < 0 || y >= scale) return '';
 
-            return 'gall-peters_' + zoom + '_' + x + '_' + y + '.png';
+            return `gall-peters_${zoom}_${x}_${y}.png`;
         },
         tileSize: new Size(GALL_PETERS_RANGE_X, GALL_PETERS_RANGE_Y),
         minZoom: 0,

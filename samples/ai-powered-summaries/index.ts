@@ -88,10 +88,8 @@ function updateSummaryPanel(place: google.maps.places.Place) {
     summaryContent.textContent = '';
     aiDisclosure.textContent = '';
 
-    placeName.textContent = place.displayName || '';
-    placeAddress.textContent = place.formattedAddress || '';
-
-    let firstTabActivated = false;
+    placeName.textContent = place.displayName ?? '';
+    placeAddress.textContent = place.formattedAddress ?? '';
 
     /**
      * Safe Helper: Accepts either a text string or a DOM Node (like a div or DocumentFragment).
@@ -125,7 +123,7 @@ function updateSummaryPanel(place: google.maps.places.Place) {
             }
 
             // Set the disclosure text.
-            aiDisclosure.textContent = disclosure || 'AI-generated content.';
+            aiDisclosure.textContent = disclosure ?? 'AI-generated content.';
 
             // Add the content flag URI.
             if (flagUrl) {
@@ -135,12 +133,6 @@ function updateSummaryPanel(place: google.maps.places.Place) {
         };
 
         tabContainer.appendChild(btn);
-
-        // Auto-select the first available summary.
-        if (!firstTabActivated) {
-            btn.click();
-            firstTabActivated = true;
-        }
     };
 
     // --- 1. Generative Summary (Place) ---
@@ -227,8 +219,10 @@ function updateSummaryPanel(place: google.maps.places.Place) {
         }
     }
 
-    // Safely handle the empty state.
-    if (!firstTabActivated) {
+    // Safely handle the empty state or activate first tab.
+    if (tabContainer.firstChild) {
+        (tabContainer.firstChild as HTMLButtonElement).click();
+    } else {
         const msg = document.createElement('em');
         msg.textContent =
             'No AI summaries are available for this specific location.';

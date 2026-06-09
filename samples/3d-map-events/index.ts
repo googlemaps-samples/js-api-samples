@@ -15,7 +15,7 @@ async function init() {
         (i) => i.textContent
     );
     for (const event of events) {
-        mapElement?.addEventListener(event, () => {
+        mapElement.addEventListener(event, () => {
             const eventElement = document.querySelector(`#${event}`);
             eventElement?.classList.add('active');
             setTimeout(() => {

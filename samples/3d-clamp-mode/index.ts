@@ -5,7 +5,7 @@
  */
 
 // [START maps_3d_clamp_mode]
-let polyline: google.maps.maps3d.Polyline3DElement;
+let polyline: google.maps.maps3d.Polyline3DElement | undefined;
 
 async function init() {
     const { Map3DElement, Polyline3DElement } =

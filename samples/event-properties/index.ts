@@ -20,7 +20,7 @@ async function init() {
     infoWindow.open(innerMap);
 
     innerMap.addListener('zoom_changed', () => {
-        infoWindow.setContent('Zoom: ' + innerMap.getZoom()!);
+        infoWindow.setContent(`Zoom: ${String(innerMap.getZoom())}`);
     });
 }
 

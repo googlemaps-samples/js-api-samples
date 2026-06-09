@@ -29,11 +29,11 @@ function initZoomControl(map: google.maps.Map) {
     const zoomOutButton = document.querySelector('.zoom-control-out')!;
 
     zoomInButton.addEventListener('click', () => {
-        map.setZoom((map.getZoom() || 0) + 1);
+        map.setZoom((map.getZoom() ?? 0) + 1);
     });
 
     zoomOutButton.addEventListener('click', () => {
-        map.setZoom((map.getZoom() || 0) - 1);
+        map.setZoom((map.getZoom() ?? 0) - 1);
     });
 }
 

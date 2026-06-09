@@ -14,7 +14,7 @@ const placeSearchQuery = document.querySelector(
 )!;
 const placeDetails = document.querySelector('gmp-place-details-compact')!;
 const placeRequest = document.querySelector('gmp-place-details-place-request')!;
-const typeSelect = document.querySelector('.type-select') as HTMLSelectElement;
+const typeSelect = document.querySelector<HTMLSelectElement>('.type-select')!;
 /* [END maps_ui_kit_place_search_nearby_query_selectors] */
 
 // Global variables for the map, markers, and info window.

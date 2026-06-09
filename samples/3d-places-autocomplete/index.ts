@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 
 // [START maps_3d_places_autocomplete]
@@ -33,7 +32,7 @@ async function initAutocomplete() {
     const { PlaceAutocompleteElement } =
         await google.maps.importLibrary('places');
 
-    const placeAutocomplete = new PlaceAutocompleteElement();
+    const placeAutocomplete = new PlaceAutocompleteElement() as google.maps.places.PlaceAutocompleteElement;
     placeAutocomplete.id = 'place-autocomplete-input';
     const card = document.getElementById('pac-container')!;
     card.appendChild(placeAutocomplete);
@@ -49,7 +48,9 @@ async function initAutocomplete() {
             });
             // If the place has a geometry, then present it on a map.
             if (!place.location) {
-                window.alert('No viewport for input: ' + place.displayName);
+                window.alert(
+                    `No viewport for input: ${place.displayName}`
+                );
                 return;
             }
             void flyToPlace(place);
@@ -107,7 +108,7 @@ async function getElevationforPoint(
         locations: [location],
     });
 
-    if (!elevationResponse?.results.length) {
+    if (!elevationResponse.results.length) {
         window.alert(
             `Insufficient elevation data for place: ${place.displayName}`
         );

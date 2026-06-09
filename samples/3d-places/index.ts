@@ -29,9 +29,9 @@ async function init() {
 
         // Display place details.
         document.getElementById('placeName')!.innerHTML =
-            '<b>Name :</b><br>&nbsp;' + place.displayName;
+            `<b>Name :</b><br>&nbsp;${place.displayName ?? ''}`;
         document.getElementById('placeId')!.innerHTML =
-            '<b>Id :</b><br>&nbsp;' + place.id;
+            `<b>Id :</b><br>&nbsp;${place.id}`;
         document.getElementById('placeType')!.innerHTML = '<b>Types :<b/>';
 
         for (const type of place.types ?? []) {

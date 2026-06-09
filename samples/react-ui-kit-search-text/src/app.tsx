@@ -27,10 +27,6 @@ import './styles.css';
 
 const API_KEY = 'AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8';
 
-if (!API_KEY) {
-    console.error('Missing Google Maps API key');
-}
-
 const App = () => (
     <APIProvider
         apiKey={API_KEY}
@@ -183,7 +179,7 @@ const PlaceSearchController = ({
         placeSearchRef.current.appendChild(placeSearch);
 
         const handleLoad = () => {
-            const newPlaces = (placeSearch as any).places || [];
+            const newPlaces = (placeSearch as any).places ?? [];
             setPlaces(newPlaces);
             if (newPlaces.length > 0) {
                 const newBounds = new coreLib.LatLngBounds();
@@ -218,8 +214,7 @@ const PlaceSearchController = ({
 
         if (selectedPlace?.location) {
             placeRequestRef.current.place = selectedPlace;
-            if (placeDetailsRef.current)
-                placeDetailsRef.current.style.display = 'block';
+            placeDetailsRef.current.style.display = 'block';
 
             popupMarkerRef.current.position = selectedPlace.location;
             popupMarkerRef.current.map = map;
@@ -242,8 +237,7 @@ const PlaceSearchController = ({
             }
         } else {
             popupMarkerRef.current.map = null;
-            if (placeDetailsRef.current)
-                placeDetailsRef.current.style.display = 'none';
+            placeDetailsRef.current.style.display = 'none';
         }
     }, [selectedPlace, map]);
 

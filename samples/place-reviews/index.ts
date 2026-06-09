@@ -48,12 +48,12 @@ async function init() {
         const authorUri = place.reviews[0].authorAttribution!.uri;
 
         // Safely populate the HTML.
-        title.textContent = place.displayName || '';
-        address.textContent = place.formattedAddress || '';
+        title.textContent = place.displayName ?? '';
+        address.textContent = place.formattedAddress ?? '';
         rating.textContent = `Rating: ${reviewRating} stars`;
-        review.textContent = reviewText || '';
+        review.textContent = reviewText ?? '';
         authorLink.textContent = authorName;
-        authorLink.href = authorUri || '';
+        authorLink.href = authorUri ?? '';
         authorLink.target = '_blank';
 
         content.appendChild(title);

@@ -55,7 +55,7 @@ async function showInfoWindow(
     const content = document.createElement('div');
     const address = document.createElement('div');
     const placeId = document.createElement('div');
-    address.textContent = place.formattedAddress || '';
+    address.textContent = place.formattedAddress ?? '';
     placeId.textContent = place.id || '';
     content.append(address, placeId);
 
@@ -63,7 +63,7 @@ async function showInfoWindow(
     const name = document.createElement('div');
     name.style.fontWeight = 'bold';
     name.style.fontSize = 'medium';
-    name.textContent = place.displayName || '';
+    name.textContent = place.displayName ?? '';
 
     // Update info window options.
     infoWindow.setOptions({

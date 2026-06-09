@@ -5,9 +5,6 @@
  */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 
 /* [START maps_deckgl_kml_updated] */
 // Import necessary loader
@@ -60,6 +57,12 @@ declare namespace mdc {
     }
 }
 
+interface KmlFeature {
+    properties: {
+        description: string;
+    };
+}
+
 // Initialize and add the map
 let map: google.maps.Map;
 let geojsonLayer: deck.GeoJsonLayer;
@@ -67,8 +70,8 @@ let googleMapsOverlay: deck.GoogleMapsOverlay;
 
 async function init(): Promise<void> {
     // Progress bar logic moved from index.html
-    let progress: mdc.linearProgress.MDCLinearProgress;
-    const progressDiv = document.querySelector('.mdc-linear-progress')!;
+    let progress: mdc.linearProgress.MDCLinearProgress | undefined;
+    const progressDiv = document.querySelector('.mdc-linear-progress');
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
@@ -76,8 +79,8 @@ async function init(): Promise<void> {
         progress.open();
         progress.determinate = false;
         progress.done = function () {
-            progress!.close();
-            progressDiv.remove(); // Use optional chaining in case progressDiv is null
+            progress?.close();
+            progressDiv.remove();
         };
     }
 
@@ -107,7 +110,7 @@ async function init(): Promise<void> {
     // Deck.gl Layer and Overlay
     geojsonLayer = new deck.GeoJsonLayer({
         id: 'geojson-layer',
-        data: `https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_week_age.kml?t=${Date.now()}`, // Append timestamp to prevent caching
+        data: `https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_week_age.kml?t=${String(Date.now())}`, // Append timestamp to prevent caching
         loaders: [KMLLoader],
         pickable: true,
         stroked: true, // Set to true to add a border
@@ -121,10 +124,10 @@ async function init(): Promise<void> {
         pointRadiusMinPixels: 2,
         pointRadiusMaxPixels: 200,
         getRadius: () => 8000,
-        getFillColor: (f: any) => {
+        getFillColor: (f: KmlFeature) => {
             // Extract magnitude from the description string
             const description = f.properties.description;
-            const magnitudeMatch = description.match(/M (\d+\.?\d*)/);
+            const magnitudeMatch = /M (\d+\.?\d*)/.exec(description);
             let parsedMagnitude: number | null = null;
             if (magnitudeMatch?.[1]) {
                 parsedMagnitude = parseFloat(magnitudeMatch[1]);
@@ -139,8 +142,7 @@ async function init(): Promise<void> {
             const maxMag = 7;
 
             // Use parsed magnitude for color calculation
-            const magnitudeForColor =
-                parsedMagnitude !== null ? parsedMagnitude : minMag;
+            const magnitudeForColor = parsedMagnitude ?? minMag;
 
             // Normalize magnitude
             const normalizedMagnitude = Math.max(
@@ -176,14 +178,22 @@ async function init(): Promise<void> {
             },
         },
         // Optional: Add onHover or onClick handlers for interactivity
-        onHover: ({ object, x, y }: { object: any; x: number; y: number }) => {
+        onHover: ({
+            object,
+            x,
+            y,
+        }: {
+            object: KmlFeature | undefined;
+            x: number;
+            y: number;
+        }) => {
             const tooltip = document.getElementById('tooltip'); // Assuming a tooltip element exists
             if (tooltip && object) {
                 let tooltipContent = `Earthquakes 1.0_week_age`;
                 tooltipContent += `<p> ${object.properties.description}</p>`;
                 tooltip.innerHTML = tooltipContent;
-                tooltip.style.left = x + 'px';
-                tooltip.style.top = y + 'px';
+                tooltip.style.left = String(x) + 'px';
+                tooltip.style.top = String(y) + 'px';
                 tooltip.style.display = 'block';
             } else if (tooltip) {
                 tooltip.style.display = 'none';
@@ -191,9 +201,7 @@ async function init(): Promise<void> {
         },
         onDataLoad: () => {
             console.log('KML data loaded');
-            if (progress?.done) {
-                progress.done();
-            }
+            progress?.done?.();
         },
     });
 
@@ -228,7 +236,7 @@ async function init(): Promise<void> {
                 minColor[1] + normalizedMagnitude * (maxColor[1] - minColor[1]);
             const b =
                 minColor[2] + normalizedMagnitude * (maxColor[2] - minColor[2]);
-            const color = `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
+            const color = `rgb(${String(Math.round(r))}, ${String(Math.round(g))}, ${String(Math.round(b))})`;
 
             // Create legend item element
             const legendItem = document.createElement('div');
@@ -241,7 +249,7 @@ async function init(): Promise<void> {
 
             // Create label
             const label = document.createElement('span');
-            label.textContent = `${magnitude}`; // Adjust label format as needed
+            label.textContent = String(magnitude); // Adjust label format as needed
 
             // Append color swatch and label to legend item
             legendItem.appendChild(colorSwatch);

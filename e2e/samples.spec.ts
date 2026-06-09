@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -138,7 +136,7 @@ foldersToTest.forEach((sampleFolder) => {
     test(`test ${sampleFolder}`, async ({ page }) => {
         // START run the preview
         // Get an available port
-        const port = 8080;
+        const port = '8080';
         const url = `http://localhost:${port}/`;
 
         const viteProcess = childProcess.spawn(
@@ -205,8 +203,9 @@ foldersToTest.forEach((sampleFolder) => {
 
             // Wait for Google Maps to load.
             await page.waitForFunction(
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                () => (window as any).google?.maps,
+                () =>
+                    (window as typeof window & { google?: { maps?: unknown } })
+                        .google?.maps,
                 { timeout: 500 }
             );
 
@@ -216,12 +215,10 @@ foldersToTest.forEach((sampleFolder) => {
             // Assertions. These must be met or the test will fail.
             // The sample must load the Google Maps API.
             const hasGoogleMaps = await page.evaluate(() => {
-                return (
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    typeof (window as any).google !== 'undefined' &&
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    typeof (window as any).google.maps !== 'undefined'
-                );
+                const w = window as typeof window & {
+                    google?: { maps?: unknown };
+                };
+                return typeof w.google?.maps !== 'undefined';
             });
             expect(hasGoogleMaps).toBeTruthy();
 
@@ -240,7 +237,7 @@ foldersToTest.forEach((sampleFolder) => {
                     process.kill(viteProcess.pid, 'SIGINT');
                 } catch (error) {
                     console.warn(
-                        `Failed to kill Vite process for ${sampleFolder} (PID: ${viteProcess.pid}):`,
+                        `Failed to kill Vite process for ${sampleFolder} (PID: ${String(viteProcess.pid)}):`,
                         error
                     );
                 }

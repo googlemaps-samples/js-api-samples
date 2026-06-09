@@ -43,7 +43,6 @@ async function initMap(): Promise<void> {
         const fov = fovClamped.toString();
         const roll = map3DElement.roll?.toFixed(0) ?? '0';
         const center = map3DElement.center;
-        const mode = map3DElement.mode;
 
         headingVal.textContent = heading;
         tiltVal.textContent = tilt;
@@ -68,7 +67,7 @@ async function initMap(): Promise<void> {
             lngSlider.value = lng;
             altitudeVal.textContent = alt;
 
-            codeElem.textContent = `<gmp-map-3d center="${lat},${lng},${alt}" mode="${mode}" tilt="${tilt}" range="${range}" heading="${heading}" fov="${fov}" roll="${roll}"></gmp-map-3d>`;
+            codeElem.textContent = `<gmp-map-3d center="${lat},${lng},${alt}" tilt="${tilt}" range="${range}" heading="${heading}" fov="${fov}" roll="${roll}"></gmp-map-3d>`;
         }
     };
 
@@ -124,8 +123,14 @@ async function initMap(): Promise<void> {
             map3DElement.tilt = Math.max(0, val);
         } else if (prop === 'fov') {
             map3DElement.fov = Math.min(80, Math.max(5, val));
+        } else if (prop === 'heading') {
+            map3DElement.heading = val;
+        } else if (prop === 'range') {
+            map3DElement.range = val;
+        } else if (prop === 'roll') {
+            map3DElement.roll = val;
         } else {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
             (map3DElement as any)[prop] = val;
         }
         updateUI();

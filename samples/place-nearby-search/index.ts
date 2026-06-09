@@ -97,7 +97,7 @@ async function nearbySearch() {
             // Build the content of the InfoWindow safely using DOM elements.
             const content = document.createElement('div');
             const address = document.createElement('div');
-            address.textContent = place.formattedAddress || '';
+            address.textContent = place.formattedAddress ?? '';
             const placeId = document.createElement('div');
             placeId.textContent = place.id;
             content.append(address, placeId);

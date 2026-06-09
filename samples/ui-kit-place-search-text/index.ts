@@ -14,7 +14,7 @@ const placeSearchQuery = document.querySelector(
 )!;
 const placeDetails = document.querySelector('gmp-place-details-compact')!;
 const placeRequest = document.querySelector('gmp-place-details-place-request')!;
-const queryInput = document.querySelector('.query-input') as HTMLInputElement;
+const queryInput = document.querySelector<HTMLInputElement>('.query-input')!;
 const searchButton = document.querySelector('.search-button')!;
 /* [END maps_ui_kit_place_search_text_query_selectors] */
 

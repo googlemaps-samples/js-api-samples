@@ -4,8 +4,41 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+interface CombinedWeatherData {
+    error?: string | null;
+    temperature?: {
+        degrees?: number | null;
+    } | null;
+    weatherCondition?: {
+        iconBaseUri?: string | null;
+    } | null;
+    currentConditionsHistory?: {
+        qpf?: {
+            quantity?: number | null;
+        } | null;
+    } | null;
+    maxTemperature?: {
+        degrees?: number | null;
+    } | null;
+    daytimeForecast?: {
+        weatherCondition?: {
+            iconBaseUri?: string | null;
+        } | null;
+    } | null;
+    nighttimeForecast?: {
+        weatherCondition?: {
+            iconBaseUri?: string | null;
+        } | null;
+    } | null;
+    precipitation?: {
+        probability?: {
+            percent?: number | null;
+        } | null;
+        qpf?: {
+            quantity?: number | null;
+        } | null;
+    } | null;
+}
 
 class SimpleWeatherWidget extends HTMLElement {
     constructor() {
@@ -159,7 +192,7 @@ class SimpleWeatherWidget extends HTMLElement {
         `;
     }
 
-    set data(weatherData: any) {
+    set data(weatherData: CombinedWeatherData | null | undefined) {
         const iconElement = this.shadowRoot!.getElementById(
             'condition-icon'
         ) as HTMLImageElement;
@@ -185,20 +218,21 @@ class SimpleWeatherWidget extends HTMLElement {
         }
 
         // Check if the data is current conditions or forecast day structure
-        const isForecastDay =
-            weatherData.daytimeForecast || weatherData.nighttimeForecast;
+        const isForecastDay = !!(
+            weatherData.daytimeForecast ?? weatherData.nighttimeForecast
+        );
 
-        let temperature: number | undefined;
-        let iconBaseUri: string | undefined;
-        let rainProbability: number | undefined;
-        let rainQpf: number | undefined;
+        let temperature: number | null | undefined;
+        let iconBaseUri: string | null | undefined;
+        let rainProbability: number | null | undefined;
+        let rainQpf: number | null | undefined;
 
         if (isForecastDay) {
             // Data is a forecast day object
             const conditions = weatherData;
             temperature = conditions.maxTemperature?.degrees;
             iconBaseUri =
-                conditions.daytimeForecast?.weatherCondition?.iconBaseUri ||
+                conditions.daytimeForecast?.weatherCondition?.iconBaseUri ??
                 conditions.nighttimeForecast?.weatherCondition?.iconBaseUri;
             rainProbability = conditions.precipitation?.probability?.percent;
             rainQpf = conditions.precipitation?.qpf?.quantity;
@@ -208,11 +242,9 @@ class SimpleWeatherWidget extends HTMLElement {
             temperature = conditions.temperature?.degrees;
             iconBaseUri = conditions.weatherCondition?.iconBaseUri;
             rainProbability = conditions.precipitation?.probability?.percent;
-            // For current conditions, prioritize qpf from history if available
             rainQpf =
-                conditions.currentConditionsHistory?.qpf?.quantity !== undefined
-                    ? conditions.currentConditionsHistory.qpf.quantity
-                    : conditions.precipitation?.qpf?.quantity;
+                conditions.currentConditionsHistory?.qpf?.quantity ??
+                conditions.precipitation?.qpf?.quantity;
         }
 
         let iconSrc = ''; // Initialize iconSrc
@@ -235,20 +267,11 @@ class SimpleWeatherWidget extends HTMLElement {
         };
         iconElement.src = iconSrc;
 
-        temperatureElement.textContent = `${temperature !== undefined ? temperature.toFixed(0) : 'N/A'}°C`; // Rounded temperature
+        temperatureElement.textContent = `${typeof temperature === 'number' ? temperature.toFixed(0) : 'N/A'}°C`; // Rounded temperature
         temperatureElement.classList.remove('error-message'); // Remove error class if data is valid
 
-        if (rainProbability !== undefined && rainProbability !== null) {
-            rainProbabilityElement.textContent = `${rainProbability}%`;
-        } else {
-            rainProbabilityElement.textContent = '0%';
-        }
-
-        if (rainQpf !== undefined && rainQpf !== null) {
-            rainQpfElement.textContent = `${rainQpf.toFixed(1)}mm`; // Rounded QPF to 1 decimal place
-        } else {
-            rainQpfElement.textContent = '0.0mm'; // Display 0.0mm if data is not available
-        }
+        rainProbabilityElement.textContent = `${rainProbability ?? 0}%`;
+        rainQpfElement.textContent = `${(rainQpf ?? 0).toFixed(1)}mm`;
     }
 
     /**

@@ -40,7 +40,6 @@ async function init() {
     placeAutocomplete.addEventListener(
         'gmp-select',
         async ({ placePrediction }) => {
-            if (!placePrediction) return;
             const place = placePrediction.toPlace();
             await place.fetchFields({
                 fields: ['location'],

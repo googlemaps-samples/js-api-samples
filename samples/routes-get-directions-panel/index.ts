@@ -62,7 +62,7 @@ async function init(): Promise<void> {
     // Render navigation instructions
     const directionsPanel = document.getElementById('directions');
 
-    if (!routes || routes.length === 0) {
+    if (routes.length === 0) {
         if (directionsPanel) {
             directionsPanel.textContent = 'No routes available.';
         }
@@ -88,7 +88,7 @@ async function init(): Promise<void> {
         legTitleElement.textContent = `Leg ${index + 1} of ${route.legs!.length}`;
         legContainer.appendChild(legTitleElement);
 
-        if (leg.steps && leg.steps.length > 0) {
+        if (leg.steps.length > 0) {
             // Add steps to an ordered list
             const stepsList = document.createElement('ol');
             stepsList.className = 'directions-steps';
@@ -111,7 +111,7 @@ async function init(): Promise<void> {
                 // Distance and Duration
                 if (step.localizedValues) {
                     const distanceNode = document.createElement('p');
-                    distanceNode.textContent = `${step.localizedValues.distance} (${step.localizedValues.staticDuration})`;
+                    distanceNode.textContent = `${step.localizedValues.distance ?? ''} (${step.localizedValues.staticDuration ?? ''})`;
                     distanceNode.className = 'distance';
                     directionWrapper.appendChild(distanceNode);
                 }

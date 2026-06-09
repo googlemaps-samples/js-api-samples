@@ -95,8 +95,9 @@ async function init() {
         formData: FormData
     ): google.maps.routes.ComputeRoutesRequest {
         const travelMode =
-            (formData.get('travel_mode') as google.maps.TravelModeString) ||
-            undefined;
+            (formData.get(
+                'travel_mode'
+            ) as google.maps.TravelModeString | null) ?? undefined;
         const extraComputations: google.maps.routes.ComputeRoutesExtraComputation[] =
             [];
         const requestedReferenceRoutes: google.maps.routes.ReferenceRoute[] =
@@ -134,11 +135,13 @@ async function init() {
             routingPreference:
                 (formData.get(
                     'routing_preference'
-                ) as google.maps.routes.RoutingPreferenceString) || undefined,
+                ) as google.maps.routes.RoutingPreferenceString | null) ??
+                undefined,
             polylineQuality:
                 (formData.get(
                     'polyline_quality'
-                ) as google.maps.routes.PolylineQualityString) || undefined,
+                ) as google.maps.routes.PolylineQualityString | null) ??
+                undefined,
             computeAlternativeRoutes:
                 formData.get('compute_alternative_routes') === 'on',
             routeModifiers: {
@@ -313,8 +316,7 @@ async function init() {
             detailsDiv.appendChild(distanceP);
 
             const durationP = document.createElement('p');
-            durationP.textContent =
-                `Duration: ${route.localizedValues.duration}`!;
+            durationP.textContent = `Duration: ${route.localizedValues.duration ?? ''}`;
             detailsDiv.appendChild(durationP);
         }
 
@@ -352,10 +354,6 @@ async function init() {
     }
 
     function attachMapClickListener() {
-        if (!map?.innerMap) {
-            return;
-        }
-
         let infoWindowAlert = document.getElementById('infowindow-alert');
         if (!infoWindowAlert) {
             infoWindowAlert = document.createElement('div');
@@ -385,7 +383,7 @@ async function init() {
                 });
 
                 await navigator.clipboard.writeText(
-                    `${mapsMouseEvent.latLng.lat()},${mapsMouseEvent.latLng.lng()}`
+                    `${String(mapsMouseEvent.latLng.lat())},${String(mapsMouseEvent.latLng.lng())}`
                 );
 
                 infoWindow.open(map.innerMap);
@@ -474,15 +472,17 @@ async function init() {
     function initializeLocationInputs() {
         const originAutocomplete = new PlaceAutocompleteElement({
             name: 'origin_location',
-        });
+        }) as HTMLElement;
         const destinationAutocomplete = new PlaceAutocompleteElement({
             name: 'destination_location',
-        });
+        }) as HTMLElement;
 
-        [
+        const autocompletes: [HTMLElement, PlaceAutocompleteSelection][] = [
             [originAutocomplete, originAutocompleteSelection],
             [destinationAutocomplete, destinationAutocompleteSelection],
-        ].forEach(([autocomplete, autocompleteData]) => {
+        ];
+
+        autocompletes.forEach(([autocomplete, autocompleteData]) => {
             autocomplete.addEventListener(
                 'gmp-select',
                 async (

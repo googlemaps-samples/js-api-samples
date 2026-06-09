@@ -3,9 +3,6 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 
 /* [START maps_deckgl_polygon] */
 // Initialize and add the map
@@ -26,18 +23,45 @@ declare namespace mdc {
     }
 }
 
+interface ZipcodeData {
+    contour: [number, number][] | [number, number][][];
+    population: number;
+    area: number;
+    zipcode: string;
+}
+
+interface PolygonLayerProps {
+    id: string;
+    data: string;
+    getPolygon: (d: ZipcodeData) => [number, number][] | [number, number][][];
+    getElevation: (d: ZipcodeData) => number;
+    getFillColor: (d: ZipcodeData) => number[];
+    getLineColor?: number[];
+    getLineWidth?: number;
+    lineWidthMinPixels?: number;
+    visible?: boolean;
+    opacity?: number;
+    pickable?: boolean;
+    onDataLoad?: () => void;
+    onHover?: (info: {
+        object: ZipcodeData | undefined;
+        x: number;
+        y: number;
+    }) => void;
+}
+
 // Declare global namespace for Deck.gl to satisfy TypeScript compiler
 declare namespace deck {
     class PolygonLayer {
-        constructor(props: any);
-        props: any;
-        clone(props: any): PolygonLayer;
+        constructor(props: PolygonLayerProps);
+        props: PolygonLayerProps;
+        clone(props: Partial<PolygonLayerProps>): PolygonLayer;
         pickable: boolean; // Added pickable property
     }
     class GoogleMapsOverlay {
-        constructor(props: any);
+        constructor(props: { layers: PolygonLayer[] });
         setMap(map: google.maps.Map | null): void;
-        setProps(props: any): void;
+        setProps(props: { layers: PolygonLayer[] }): void;
     }
     // Add other Deck.gl types used globally if needed
 }
@@ -87,9 +111,9 @@ async function init(): Promise<void> {
         id: 'PolygonLayer',
         data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/sf-zipcodes.json',
 
-        getPolygon: (d: any) => d.contour, // Use 'any' for simplicity
-        getElevation: (d: any) => d.population / d.area / 10, // Use 'any' for simplicity
-        getFillColor: (d: any) => [d.population / d.area / 60, 140, 0], // Use 'any' for simplicity
+        getPolygon: (d: ZipcodeData) => d.contour,
+        getElevation: (d: ZipcodeData) => d.population / d.area / 10,
+        getFillColor: (d: ZipcodeData) => [d.population / d.area / 60, 140, 0],
         getLineColor: [255, 255, 255],
         getLineWidth: 20,
         lineWidthMinPixels: 1,
@@ -101,32 +125,30 @@ async function init(): Promise<void> {
                 // Check if progress is defined
                 // Add a small delay to ensure the progress bar is removed
                 setTimeout(() => {
-                    progress?.done?.(); // hides progress bar
+                    progress.done?.(); // hides progress bar
                 }, 100); // 100ms delay
             }
         },
-        onHover: ({ object, x, y }: { object: any; x: number; y: number }) => {
-            // Use 'any' for object for simplicity
+        onHover: ({
+            object,
+            x,
+            y,
+        }: {
+            object: ZipcodeData | undefined;
+            x: number;
+            y: number;
+        }) => {
             const tooltip = document.getElementById('tooltip');
             if (tooltip) {
                 if (object) {
                     // Format data for tooltip (example: display specific properties)
                     let tooltipContent = ''; // Updated title
-                    const properties = object; // Correctly access the properties object
-                    if (properties) {
-                        if (properties.zipcode !== undefined) {
-                            tooltipContent += `<strong>Zipcode:</strong> ${properties.zipcode}<br>`;
-                        }
-                        if (properties.population !== undefined) {
-                            tooltipContent += `<strong>Population:</strong> ${properties.population}<br>`;
-                        }
-                        if (properties.area !== undefined) {
-                            tooltipContent += `<strong>Area:</strong> ${properties.area}<br>`;
-                        }
-                    }
+                    tooltipContent += `<strong>Zipcode:</strong> ${object.zipcode}<br>`;
+                    tooltipContent += `<strong>Population:</strong> ${object.population}<br>`;
+                    tooltipContent += `<strong>Area:</strong> ${object.area}<br>`;
                     tooltip.innerHTML = tooltipContent;
-                    tooltip.style.left = x + 'px';
-                    tooltip.style.top = y + 'px';
+                    tooltip.style.left = String(x) + 'px';
+                    tooltip.style.top = String(y) + 'px';
                     tooltip.style.display = 'block';
                 } else {
                     tooltip.style.display = 'none';
@@ -147,7 +169,7 @@ async function init(): Promise<void> {
     if (toggleButton) {
         // Check if toggleButton is found
         toggleButton.addEventListener('click', () => {
-            const currentVisible = polygonLayer.props.visible;
+            const currentVisible = polygonLayer.props.visible ?? true;
             // Create a new layer instance with toggled visibility
             const newPolygonLayer = polygonLayer.clone({
                 visible: !currentVisible,

@@ -72,7 +72,14 @@ export default defineConfig([
             '@typescript-eslint/no-non-null-assertion': 'off',
 
             // downgraded to warn for historic reasons:
-            '@typescript-eslint/restrict-template-expressions': 'warn',
+            '@typescript-eslint/restrict-template-expressions': [
+                'warn',
+                {
+                    allowNumber: true,
+                    allowNullish: true,
+                    allowBoolean: true,
+                },
+            ],
             '@typescript-eslint/restrict-plus-operands': 'warn',
             '@typescript-eslint/prefer-nullish-coalescing': 'warn',
 

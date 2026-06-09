@@ -51,7 +51,7 @@ async function init() {
 
     tourStops.forEach(({ position, title }, i) => {
         const pin = new PinElement({
-            glyphText: `${i + 1}`,
+            glyphText: String(i + 1),
             scale: 1.5,
             glyphColor: '#FFFFFF',
         });

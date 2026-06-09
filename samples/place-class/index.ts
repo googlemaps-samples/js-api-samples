@@ -50,7 +50,7 @@ async function getPlaceDetails() {
     const content = document.createElement('div');
     const address = document.createElement('div');
     const placeId = document.createElement('div');
-    address.textContent = place.formattedAddress || '';
+    address.textContent = place.formattedAddress ?? '';
     placeId.textContent = place.id;
     content.append(placeId, address);
 

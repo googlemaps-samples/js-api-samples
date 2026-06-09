@@ -52,7 +52,7 @@ async function init() {
     // Add a click event listener to the map.
     innerMap.addListener('click', (event: google.maps.MapMouseEvent) => {
         if (event.latLng) {
-            latLngQuery.value = `${event.latLng.lat()}, ${event.latLng.lng()}`;
+            latLngQuery.value = `${String(event.latLng.lat())}, ${String(event.latLng.lng())}`;
             void geocodeLatLng(geocoder, innerMap, infoWindow);
         }
     });

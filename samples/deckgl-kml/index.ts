@@ -5,20 +5,35 @@
  */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 
 /* [START maps_deckgl_kml] */
 // Import necessary loader
 import { KMLLoader } from '@loaders.gl/kml';
 
+interface KmlFeatureProperties {
+    color?: string;
+    stroke?: string;
+    name?: string;
+    description?: string;
+    styleUrl?: string;
+    'stroke-width'?: string;
+    fill?: string;
+    centroid?: [number, number];
+    [key: string]: string | [number, number] | undefined;
+}
+interface KmlFeature {
+    properties: KmlFeatureProperties;
+    geometry?: {
+        type: string;
+        coordinates: number[][][];
+    };
+}
+
 // Declare global namespace for Deck.gl to satisfy TypeScript compiler
 declare namespace deck {
     class GeoJsonLayer {
         constructor(props: any);
-        props: any;
+        props: { data: string };
         clone(props: any): GeoJsonLayer;
         pickable: boolean;
         getFillColor: (d: any) => number[];
@@ -67,8 +82,8 @@ let googleMapsOverlay: deck.GoogleMapsOverlay;
 
 async function init(): Promise<void> {
     // Progress bar logic moved from index.html
-    let progress: mdc.linearProgress.MDCLinearProgress;
-    const progressDiv = document.querySelector('.mdc-linear-progress')!;
+    let progress: mdc.linearProgress.MDCLinearProgress | undefined;
+    const progressDiv = document.querySelector('.mdc-linear-progress');
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
@@ -76,8 +91,8 @@ async function init(): Promise<void> {
         progress.open();
         progress.determinate = false;
         progress.done = function () {
-            progress.close();
-            progressDiv?.remove(); // Use optional chaining in case progressDiv is null
+            progress?.close();
+            progressDiv.remove();
         };
     }
 
@@ -114,9 +129,9 @@ async function init(): Promise<void> {
         extruded: false, // Set to false for lines
         lineWidthScale: 14, // Adjust line width scale
         lineWidthMinPixels: 4,
-        getLineColor: (d: any) => {
+        getLineColor: (d: KmlFeature) => {
             // Function to get color from properties
-            const color = d.properties.color || d.properties.stroke; // Try 'color' or 'stroke' property
+            const color = d.properties.color ?? d.properties.stroke; // Try 'color' or 'stroke' property
             if (color) {
                 // Convert hex or AABBGGRR string to RGBA array
                 const rgba = hexOrAabbggrrToRgba(color);
@@ -137,10 +152,18 @@ async function init(): Promise<void> {
             }
         },
         // Optional: Add onHover or onClick handlers for interactivity
-        onHover: ({ object, x, y }: { object: any; x: number; y: number }) => {
+        onHover: ({
+            object,
+            x,
+            y,
+        }: {
+            object: KmlFeature | undefined;
+            x: number;
+            y: number;
+        }) => {
             const tooltip = document.getElementById('tooltip'); // Assuming a tooltip element exists
             if (tooltip && object) {
-                let tooltipContent = `<h4>${object.properties.name || 'GeoJSON Feature'}</h4>`;
+                let tooltipContent = `<h4>${object.properties.name ?? 'GeoJSON Feature'}</h4>`;
                 // Define a list of common KML properties to display
                 const kmlProperties = [
                     'description',
@@ -152,15 +175,18 @@ async function init(): Promise<void> {
                 ];
                 for (const key of kmlProperties) {
                     if (
-                        object.properties.hasOwnProperty(key) &&
+                        Object.prototype.hasOwnProperty.call(
+                            object.properties,
+                            key
+                        ) &&
                         object.properties[key] !== undefined
                     ) {
-                        tooltipContent += `<p><strong>${key}:</strong> ${object.properties[key]}</p>`;
+                        tooltipContent += `<p><strong>${key}:</strong> ${String(object.properties[key])}</p>`;
                     }
                 }
                 tooltip.innerHTML = tooltipContent;
-                tooltip.style.left = x + 'px';
-                tooltip.style.top = y + 'px';
+                tooltip.style.left = String(x) + 'px';
+                tooltip.style.top = String(y) + 'px';
                 tooltip.style.display = 'block';
             } else if (tooltip) {
                 tooltip.style.display = 'none';
@@ -171,7 +197,7 @@ async function init(): Promise<void> {
     const textLayer = new deck.TextLayer({
         id: 'text-layer',
         data: geojsonLayer.props.data, // Use the same data as the GeoJsonLayer
-        getPosition: (d: any) => {
+        getPosition: (d: KmlFeature) => {
             // Attempt to use a 'centroid' property if available, otherwise use the first coordinate
             let position = [0, 0]; // Default position
             if (d.properties.centroid) {
@@ -182,13 +208,13 @@ async function init(): Promise<void> {
             ) {
                 // Assuming Polygon or MultiPolygon
                 const coordinates = d.geometry.coordinates[0][0];
-                if (coordinates && coordinates.length >= 2) {
+                if (coordinates.length >= 2) {
                     position = [coordinates[0], coordinates[1]]; // [lng, lat]
                 }
             }
             return position;
         },
-        getText: (d: any) => d.properties.name || '', // Display the name property
+        getText: (d: KmlFeature) => d.properties.name ?? '', // Display the name property
         getColor: [0, 0, 0, 255], // Black text color for better visibility
         getSize: 16, // Increased text size
         getAngle: 0,

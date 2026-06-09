@@ -57,7 +57,7 @@ async function init() {
         // If the map gets a mousemove, that means there are no feature layers
         // with listeners registered under the mouse, so we clear the last
         // interacted feature ids.
-        if (lastInteractedFeatureIds?.length) {
+        if (lastInteractedFeatureIds.length) {
             lastInteractedFeatureIds = [];
             featureLayer.style = applyStyle;
         }

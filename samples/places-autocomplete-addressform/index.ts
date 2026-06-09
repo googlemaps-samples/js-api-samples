@@ -59,23 +59,23 @@ async function fillInAddress(
     // the specified type-value.
     for (const component of place.addressComponents) {
         if (component.types.includes('street_address')) {
-            address1 = `${component.longText} ${address1}`;
+            address1 = `${component.longText ?? ''} ${address1}`;
         }
 
         if (component.types.includes('street_number')) {
-            address1 = `${component.longText} ${address1}`;
+            address1 = `${component.longText ?? ''} ${address1}`;
         }
 
         if (component.types.includes('route')) {
-            address1 += component.shortText;
+            address1 += component.shortText ?? '';
         }
 
         if (component.types.includes('postal_code')) {
-            postcode = `${component.longText}${postcode}`;
+            postcode = `${component.longText ?? ''}${postcode}`;
         }
 
         if (component.types.includes('postal_code_suffix')) {
-            postcode = `${postcode}-${component.longText}`;
+            postcode = `${postcode}-${component.longText ?? ''}`;
         }
 
         if (component.types.includes('locality')) {

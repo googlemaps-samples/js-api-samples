@@ -4,10 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-
 /* [START maps_deckgl_heatmap] */
 // Initialize and add the map
 let map: google.maps.Map;
@@ -30,18 +26,42 @@ declare namespace mdc {
     }
 }
 
+interface BikeParking {
+    COORDINATES: [number, number];
+    SPACES: number;
+    ADDRESS?: string;
+    RACKS?: number;
+}
+
+interface PickingInfo<T> {
+    object?: T;
+    x: number;
+    y: number;
+}
+
+interface HeatmapLayerProps {
+    id: string;
+    data: string;
+    getPosition: (d: BikeParking) => [number, number];
+    getWeight: (d: BikeParking) => number;
+    radiusPixels?: number;
+    visible?: boolean;
+    pickable?: boolean;
+    onHover?: (info: PickingInfo<BikeParking>) => void;
+}
+
 // Declare global namespace for Deck.gl to satisfy TypeScript compiler
 declare namespace deck {
     class HeatmapLayer {
-        constructor(props: any);
-        props: any;
-        clone(props: any): HeatmapLayer;
+        constructor(props: HeatmapLayerProps);
+        props: HeatmapLayerProps;
+        clone(props: Partial<HeatmapLayerProps>): HeatmapLayer;
         pickable: boolean; // Added pickable property
     }
     class GoogleMapsOverlay {
-        constructor(props: any);
+        constructor(props: { layers: HeatmapLayer[]; controller?: boolean });
         setMap(map: google.maps.Map | null): void;
-        setProps(props: any): void;
+        setProps(props: { layers: HeatmapLayer[] }): void;
     }
     // Add other Deck.gl types used globally if needed
 }
@@ -94,13 +114,13 @@ async function init(): Promise<void> {
         // Assign to the outer heatmapLayer
         id: 'HeatmapLayer', // Change layer ID
         data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/sf-bike-parking.json', // Use the loaded data
-        getPosition: (d: any) => d.COORDINATES, // Use 'any' for simplicity, or define a proper type
-        getWeight: (d: any) => d.SPACES, // Use 'any' for simplicity, or define a proper type
+        getPosition: (d: BikeParking) => d.COORDINATES,
+        getWeight: (d: BikeParking) => d.SPACES,
         radiusPixels: 25, // Adjust radius as in user's example
 
         visible: true,
         pickable: true,
-        onHover: (info: any) => {
+        onHover: (info: PickingInfo<BikeParking>) => {
             // Use 'any' for info for simplicity, or define a proper type
             const tooltip = document.getElementById('tooltip');
             if (tooltip) {
@@ -114,12 +134,10 @@ async function init(): Promise<void> {
                     if (info.object.RACKS !== undefined) {
                         tooltipContent += `<strong>Racks:</strong> ${info.object.RACKS}<br>`;
                     }
-                    if (info.object.SPACES !== undefined) {
-                        tooltipContent += `<strong>Spaces:</strong> ${info.object.SPACES}<br>`;
-                    }
+                    tooltipContent += `<strong>Spaces:</strong> ${info.object.SPACES}<br>`;
                     tooltip.innerHTML = tooltipContent;
-                    tooltip.style.left = info.x + 'px';
-                    tooltip.style.top = info.y + 'px';
+                    tooltip.style.left = String(info.x) + 'px';
+                    tooltip.style.top = String(info.y) + 'px';
                     tooltip.style.display = 'block';
                 } else {
                     tooltip.style.display = 'none';
@@ -170,7 +188,7 @@ async function init(): Promise<void> {
                 infoWindow.close();
                 const content = `
             <div>Location: ${latLng.lat().toFixed(3)}, ${latLng.lng().toFixed(3)}</div>
-            <div><a href="https://www.google.com/maps/search/?api=1&query=${latLng.lat()},${latLng.lng()}" target="_blank">Open in Google Maps</a></div>
+            <div><a href="https://www.google.com/maps/search/?api=1&query=${String(latLng.lat())},${String(latLng.lng())}" target="_blank">Open in Google Maps</a></div>
           `;
                 infoWindow.setContent(content);
                 infoWindow.open(map, marker);
@@ -179,7 +197,7 @@ async function init(): Promise<void> {
             // Open InfoWindow immediately on first click
             const content = `
           <div>Location: ${latLng.lat().toFixed(3)}, ${latLng.lng().toFixed(3)}</div>
-          <div><a href="https://www.google.com/maps/search/?api=1&query=${latLng.lat()},${latLng.lng()}" target="_blank">Open in Google Maps</a></div>
+          <div><a href="https://www.google.com/maps/search/?api=1&query=${String(latLng.lat())},${String(latLng.lng())}" target="_blank">Open in Google Maps</a></div>
         `;
             infoWindow.setContent(content);
             infoWindow.open(map, marker);
@@ -189,7 +207,7 @@ async function init(): Promise<void> {
             // InfoWindow remains open
             const content = `
           <div>Location: ${latLng.lat().toFixed(3)}, ${latLng.lng().toFixed(3)}</div>
-          <div><a href="https://www.google.com/maps/search/?api=1&query=${latLng.lat()},${latLng.lng()}" target="_blank">Open in Google Maps</a></div>
+          <div><a href="https://www.google.com/maps/search/?api=1&query=${String(latLng.lat())},${String(latLng.lng())}" target="_blank">Open in Google Maps</a></div>
         `;
             infoWindow.setContent(content);
             infoWindow.open(map, marker);

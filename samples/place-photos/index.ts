@@ -30,11 +30,11 @@ async function init() {
 
     // Add photos to the gallery.
     place.photos?.forEach((photo) => {
-        const altText = 'Photo of ' + place.displayName;
+        const altText = `Photo of ${place.displayName}`;
         const img = document.createElement('img');
         const imgButton = document.createElement('button');
         const expandedImage = document.createElement('img');
-        img.src = photo?.getURI({ maxHeight: 380 });
+        img.src = photo.getURI({ maxHeight: 380 });
         img.alt = altText;
         imgButton.addEventListener('click', (event) => {
             centerSelectedThumbnail(imgButton);
@@ -61,11 +61,11 @@ async function init() {
     if (place.photos && place.photos.length > 0) {
         const photo = place.photos[0];
         const img = document.createElement('img');
-        img.alt = 'Photo of ' + place.displayName;
+        img.alt = `Photo of ${place.displayName}`;
         img.src = photo.getURI();
         expandedImageDiv.appendChild(img);
 
-        if (photo.authorAttributions && photo.authorAttributions.length > 0) {
+        if (photo.authorAttributions.length > 0) {
             expandedImageDiv.appendChild(
                 createAttribution(photo.authorAttributions[0])
             );

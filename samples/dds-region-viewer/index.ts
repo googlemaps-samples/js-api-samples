@@ -4,10 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-
 /**
  * Data-driven styling region coverage viewer!
  * - View feature boundary availability around the world.
@@ -36,6 +32,24 @@ let schoolDistrictLayer: google.maps.FeatureLayer;
 let selectedPlaceId: string;
 
 import * as countries from './src/countries.json';
+
+interface CountryFeatures {
+    country: boolean;
+    administrative_area_level_1: boolean;
+    administrative_area_level_2: boolean;
+    postal_code: boolean;
+    locality: boolean;
+    school_district: boolean;
+}
+
+interface CountryInfo {
+    name: string;
+    code: string;
+    feature: CountryFeatures;
+}
+
+const countriesList = (countries as unknown as { default: CountryInfo[] })
+    .default;
 
 async function init() {
     await Promise.all([
@@ -275,7 +289,7 @@ function applyStyle(placeid?: string) {
 
 // Populate the countries menu.
 function buildMenu() {
-    for (const item of (countries as any).default) {
+    for (const item of countriesList) {
         const countryOption = document.createElement('option');
         countryOption.textContent = item.name;
         countryOption.value = item.code;
@@ -307,7 +321,7 @@ function updateFeatureMenuAvailability(countryCode: string) {
 
     // Do a comparison on the map, and disable any false items.
     for (const [feature, isAvailable] of featureAvailabilityMap) {
-        const menuItem = featureMenu.namedItem(feature)!;
+        const menuItem = featureMenu.namedItem(feature);
         if (menuItem) menuItem.disabled = !isAvailable;
     }
 }
@@ -315,12 +329,12 @@ function updateFeatureMenuAvailability(countryCode: string) {
 // Return a map of feature availability for a country.
 function getFeatureAvailability(countryCode: string) {
     // Return the data for the selected country.
-    const selectedCountry = (countries as any).default.find((country: any) => {
+    const selectedCountry = countriesList.find((country) => {
         return country.code === countryCode;
     });
 
     // Create a map for our values.
-    const featureAvailabilityMap = new Map([
+    const featureAvailabilityMap = new Map<string, boolean | undefined>([
         ['country', selectedCountry?.feature.country],
         [
             'administrative_area_level_1',

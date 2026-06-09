@@ -14,20 +14,16 @@ let datasetLayer: google.maps.FeatureLayer;
 // [START maps_dds_datasets_polygon_click_eventhandler]
 // Note, 'globalid' is an attribute in this Dataset.
 function handleClick(event: google.maps.FeatureMouseEvent) {
-    if (event.features) {
-        lastClickedFeatureIds = event.features.map(
-            (f) => (f as google.maps.DatasetFeature).datasetAttributes.globalid
-        );
-    }
+    lastClickedFeatureIds = event.features.map(
+        (f) => (f as google.maps.DatasetFeature).datasetAttributes.globalid
+    );
     datasetLayer.style = applyStyle;
 }
 
 function handleMouseMove(event: google.maps.FeatureMouseEvent) {
-    if (event.features) {
-        lastInteractedFeatureIds = event.features.map(
-            (f) => (f as google.maps.DatasetFeature).datasetAttributes.globalid
-        );
-    }
+    lastInteractedFeatureIds = event.features.map(
+        (f) => (f as google.maps.DatasetFeature).datasetAttributes.globalid
+    );
     datasetLayer.style = applyStyle;
 }
 // [END maps_dds_datasets_polygon_click_eventhandler]
@@ -54,7 +50,7 @@ async function init() {
         // If the map gets a mousemove, that means there are no feature layers
         // with listeners registered under the mouse, so we clear the last
         // interacted feature ids.
-        if (lastInteractedFeatureIds?.length) {
+        if (lastInteractedFeatureIds.length) {
             lastInteractedFeatureIds = [];
             datasetLayer.style = applyStyle;
         }

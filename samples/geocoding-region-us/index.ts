@@ -29,7 +29,7 @@ async function init(): Promise<void> {
         })
         .catch((e: unknown) => {
             window.alert(
-                'Geocode was not successful for the following reason: ' + e
+                `Geocode was not successful for the following reason: ${String(e)}`
             );
         });
 }

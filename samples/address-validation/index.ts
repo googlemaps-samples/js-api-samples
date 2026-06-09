@@ -88,7 +88,7 @@ async function handleValidationSubmit(event: Event) {
 // Verdict messages
 const verdictMessages: Record<
     string,
-    { trueMessage: string; falseMessage: string }
+    { trueMessage: string; falseMessage: string } | undefined
 > = {
     addressComplete: {
         trueMessage:
@@ -155,7 +155,7 @@ interface ExampleAddress {
 }
 
 // Example Address Data
-const examples: Record<string, ExampleAddress> = {
+const examples: Record<string, ExampleAddress | undefined> = {
     google: {
         streetAddress1: '1600 Amphitheatre Parkway',
         streetAddress2: '', // Explicitly empty
@@ -215,7 +215,7 @@ function populateAddressFields(exampleAddress: ExampleAddress | null) {
 
     // Get values from example, providing empty string as default
     streetAddress1Input.value = exampleAddress.streetAddress1 || '';
-    streetAddress2Input.value = exampleAddress.streetAddress2 || '';
+    streetAddress2Input.value = exampleAddress.streetAddress2 ?? '';
     cityInput.value = exampleAddress.city || '';
     stateInput.value = exampleAddress.state || '';
     zipCodeInput.value = exampleAddress.zipCode || '';

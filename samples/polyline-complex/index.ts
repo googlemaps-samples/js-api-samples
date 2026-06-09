@@ -45,7 +45,7 @@ async function init() {
         // Add a new marker at the new plotted point on the polyline.
         new AdvancedMarkerElement({
             position: latLng,
-            title: '#' + path.getLength(),
+            title: `#${String(path.getLength())}`,
             map: innerMap,
         });
     });
