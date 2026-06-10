@@ -8,7 +8,5 @@
     "build:vite": "vite build --base './'",
     "preview": "vite preview"
   },
-  "dependencies": {
-    
-  }
+  "dependencies": {}
 }

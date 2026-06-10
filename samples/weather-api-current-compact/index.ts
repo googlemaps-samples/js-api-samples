@@ -392,9 +392,7 @@ async function updateWeatherDisplayForMarker(
             ) {
                 widget.data = { error: 'Location not supported' };
             } else {
-                throw new Error(
-                    `HTTP error! status: ${response.status}`
-                );
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
         } else {
             const weatherData = await response.json();
