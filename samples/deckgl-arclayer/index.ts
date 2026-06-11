@@ -36,6 +36,7 @@ async function init() {
         id: 'flights',
         data: dataUrl,
 
+        // @ts-expect-error - DeckGL typings are incompatible with GeoJSON Feature Arrays
         dataTransform: (
             data: GeoJSON.FeatureCollection<GeoJSON.Point, Properties>
         ) => data.features.filter((f) => f.properties.scalerank < 4),
