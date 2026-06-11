@@ -29,7 +29,8 @@ async function initAutocomplete() {
     const { PlaceAutocompleteElement } =
         await google.maps.importLibrary('places');
 
-    const placeAutocomplete = new PlaceAutocompleteElement({});
+    const options: google.maps.places.PlaceAutocompleteElementOptions = {};
+    const placeAutocomplete = new PlaceAutocompleteElement(options);
     placeAutocomplete.id = 'place-autocomplete-input';
     const card = document.getElementById('pac-container')!;
     card.appendChild(placeAutocomplete);
