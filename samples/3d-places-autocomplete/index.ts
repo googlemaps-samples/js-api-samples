@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 
 // [START maps_3d_places_autocomplete]
 let map: google.maps.maps3d.Map3DElement;
@@ -28,12 +27,10 @@ async function init() {
 }
 
 async function initAutocomplete() {
-    // @ts-expect-error - currently missing. bug fix pending
     const { PlaceAutocompleteElement } =
         await google.maps.importLibrary('places');
 
-    const placeAutocomplete =
-        new PlaceAutocompleteElement() as google.maps.places.PlaceAutocompleteElement;
+    const placeAutocomplete = new PlaceAutocompleteElement({});
     placeAutocomplete.id = 'place-autocomplete-input';
     const card = document.getElementById('pac-container')!;
     card.appendChild(placeAutocomplete);
