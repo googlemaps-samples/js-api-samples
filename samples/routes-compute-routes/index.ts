@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 // [START maps_routes_compute_routes]
 let markers: google.maps.marker.AdvancedMarkerElement[] = [];
 let polylines: google.maps.Polyline[] = [];
