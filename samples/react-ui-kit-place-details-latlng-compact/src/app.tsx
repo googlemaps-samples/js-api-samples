@@ -42,10 +42,7 @@ const PlaceDetails = ({ lat, lng }: PlaceDetailsProps) => {
         );
 
         // Set the location on the location request element.
-        locationRequest.setAttribute(
-            'location',
-            `${lat},${lng}`
-        );
+        locationRequest.setAttribute('location', `${lat},${lng}`);
 
         // Append the location request to the place details element.
         placeDetails.appendChild(locationRequest);
