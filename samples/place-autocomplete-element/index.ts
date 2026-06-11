@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 // [START maps_place_autocomplete_element]
 async function init(): Promise<void> {
     // [START maps_place_autocomplete_element_add]
