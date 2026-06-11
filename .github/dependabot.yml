@@ -18,6 +18,10 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      all-npm-dependencies:
+        patterns:
+          - "*"
     ignore:
       - dependency-name: "three"
       - dependency-name: "@types/three"
