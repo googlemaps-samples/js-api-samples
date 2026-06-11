@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 
 // [START maps_routes_compute_routes]
 let markers: google.maps.marker.AdvancedMarkerElement[] = [];
@@ -29,7 +27,6 @@ async function init() {
     const [
         { InfoWindow },
         { AdvancedMarkerElement },
-        // @ts-expect-error - currently missing. bug fix pending
         { PlaceAutocompleteElement },
         { ComputeRoutesExtraComputation, ReferenceRoute, Route, RouteLabel },
     ] = await Promise.all([
@@ -262,7 +259,9 @@ async function init() {
                           strokeOpacity: 0.5,
                           strokeWeight: 8,
                       },
-                colorScheme: map.innerMap.get('colorScheme'),
+                colorScheme: map.innerMap.get(
+                    'colorScheme'
+                ) as google.maps.ColorScheme,
             })
         );
 
