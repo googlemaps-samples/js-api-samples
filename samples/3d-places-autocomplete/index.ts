@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 // [START maps_3d_places_autocomplete]
 let map: google.maps.maps3d.Map3DElement;
 
