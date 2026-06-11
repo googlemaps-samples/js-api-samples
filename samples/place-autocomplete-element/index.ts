@@ -11,7 +11,8 @@ async function init(): Promise<void> {
     const { PlaceAutocompleteElement } =
         await google.maps.importLibrary('places');
     // Create the input HTML element, and append it.
-    const placeAutocomplete = new PlaceAutocompleteElement({});
+    const options: google.maps.places.PlaceAutocompleteElementOptions = {};
+    const placeAutocomplete = new PlaceAutocompleteElement(options);
     document.body.appendChild(placeAutocomplete);
     // [END maps_place_autocomplete_element_add]
 
