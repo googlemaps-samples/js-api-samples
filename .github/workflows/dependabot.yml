@@ -32,5 +32,7 @@ jobs:
         run: gh pr comment --body "@dependabot rebase" "$PR_URL"
       - name: approve
         run: gh pr review --approve "$PR_URL"
+      # Merge step is commented out to prevent auto merging.
+      # This allows us to review version updates for breakage before publishing.
       # - name: merge
         # run: gh pr merge --auto --squash --delete-branch "$PR_URL"
