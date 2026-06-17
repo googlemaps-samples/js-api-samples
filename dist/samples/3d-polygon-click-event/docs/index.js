@@ -15,7 +15,6 @@ async function init() {
         heading: 340,
         tilt: 70,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     document.body.append(map);
