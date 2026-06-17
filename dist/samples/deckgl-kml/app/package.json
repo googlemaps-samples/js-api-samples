@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@deck.gl/core": "^9.3.2",
+    "@deck.gl/core": "^9.3.4",
     "@deck.gl/google-maps": "^9.3.2",
     "@deck.gl/layers": "^9.3.1",
     "@loaders.gl/kml": "^4.4.2",
