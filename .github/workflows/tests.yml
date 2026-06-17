@@ -216,6 +216,7 @@ jobs:
         run: npx playwright test e2e/samples.spec.ts
         env:
           CI: true
+          TEST_ALL_SAMPLES: "true"
 
       - name: Upload Test Report Artifact
         uses: actions/upload-artifact@v4
