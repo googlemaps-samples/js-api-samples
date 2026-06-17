@@ -28,10 +28,12 @@ async function init() {
 
         popover.append(position.name);
 
+        // [START maps_3d_marker_interactive_interaction]
         const interactiveMarker = new Marker3DInteractiveElement({
             position,
             gmpPopoverTargetElement: popover,
         });
+        // [END maps_3d_marker_interactive_interaction]
 
         map.append(interactiveMarker);
         map.append(popover);

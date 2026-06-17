@@ -69,6 +69,13 @@ async function init() {
     });
     markerWithGlyphText.append(pinTextGlyph);
 
+    // Change a marker's altitude and add an extrusion.
+    const extrudedMarker = new Marker3DElement({
+        position: { lat: 37.4239163, lng: -122.0947209, altitude: 100 },
+        altitudeMode: 'RELATIVE_TO_GROUND',
+        extruded: true,
+    });
+
     // Hide the glyph.
     const pinNoGlyph = new PinElement({
         glyphText: '',
@@ -95,6 +102,7 @@ async function init() {
     map.append(markerWithGlyphColor);
     map.append(markerWithGlyphText);
     map.append(markerWithNoGlyph);
+    map.append(extrudedMarker);
 
     document.body.append(map);
 }

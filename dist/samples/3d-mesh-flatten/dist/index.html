@@ -19,14 +19,17 @@
       <link rel="stylesheet" crossorigin href="./assets/index-LuL_qCVs.css">
     </head>
     <body>
+        <!-- [START maps_3d_mesh_flatten_snippet] -->
         <gmp-map-3d
             center="40.70304023274898,-73.99453903360259,397.3687221767566"
             heading="-54.63577922139952"
             tilt="65.59195953953744"
             mode="SATELLITE">
             <gmp-flattener
-                path="40.707680607935245,-74.00310353377735,500 40.70829665151717,-74.00193595590612,500 40.7073748659931,-74.00122787224885,500 40.706738652153156,-74.00232125268805,500 40.70738164589913,-74.0028721484274,500"></gmp-flattener>
+                path="40.707680607935245,-74.00310353377735,500 40.70829665151717,-74.00193595590612,500 40.7073748659931,-74.00122787224885,500 40.706738652153156,-74.00232125268805,500 40.70738164589913,-74.0028721484274,500">
+            </gmp-flattener>
         </gmp-map-3d>
+        <!-- [END maps_3d_mesh_flatten_snippet] -->
 
         <button class="toggleButton" id="toggleButton" type="button">
             Disable Flattener

@@ -120,6 +120,10 @@ async function initMap(): Promise<void> {
                     altitude: val,
                 };
             }
+        } else if (prop === 'tilt') {
+            map3DElement.tilt = Math.max(0, val);
+        } else if (prop === 'fov') {
+            map3DElement.fov = Math.min(80, Math.max(5, val));
         } else {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (map3DElement as any)[prop] = val;
