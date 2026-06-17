@@ -1,25 +1,6 @@
-/*
- * @license
- * Copyright 2026 Google LLC. All Rights Reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
+'use strict';
 
-interface TourStop {
-    name: string;
-    desc: string;
-    camera: {
-        center: { lat: number; lng: number; altitude: number };
-        range: number;
-        tilt: number;
-        heading: number;
-    };
-    stats: {
-        size: string;
-        highlight: string;
-    };
-}
-
-const TOUR_STOPS: TourStop[] = [
+const TOUR_STOPS = [
     {
         name: 'Rijksmuseum',
         desc: 'The national museum of the Netherlands. The footprint of this grand Gothic-Renaissance building is highlighted, and its 3D building mesh can be toggled on or off.',
@@ -79,22 +60,22 @@ const TOUR_STOPS: TourStop[] = [
 ];
 
 // Reference to map elements
-let map: google.maps.maps3d.Map3DElement;
-let windmillModel: google.maps.maps3d.Model3DElement;
-let canalPolyline: google.maps.maps3d.Polyline3DElement;
-let vondelparkPolygon: google.maps.maps3d.Polygon3DElement;
-let museumPolygon: google.maps.maps3d.Polygon3DElement;
-let museumFlattener: google.maps.maps3d.FlattenerElement;
+let map;
+let windmillModel;
+let canalPolyline;
+let vondelparkPolygon;
+let museumPolygon;
+let museumFlattener;
 
 // Collections of pins
-const standardMarkers: google.maps.maps3d.Marker3DInteractiveElement[] = [];
-const standardPopovers: google.maps.maps3d.PopoverElement[] = [];
+const standardMarkers = [];
+const standardPopovers = [];
 
 // Tour State
 let isTouring = false;
 let currentStopIndex = -1;
 let isAnimationCallbackActive = false;
-let tourAnimationCleanup: (() => void) | null = null;
+let tourAnimationCleanup = null;
 
 async function init() {
     const [
@@ -304,18 +285,10 @@ async function init() {
 }
 
 function syncLayers() {
-    const showMarkers = (
-        document.getElementById('toggle-markers') as HTMLInputElement
-    ).checked;
-    const showPolyline = (
-        document.getElementById('toggle-polyline') as HTMLInputElement
-    ).checked;
-    const showPolygons = (
-        document.getElementById('toggle-polygons') as HTMLInputElement
-    ).checked;
-    const showModel = (
-        document.getElementById('toggle-model') as HTMLInputElement
-    ).checked;
+    const showMarkers = document.getElementById('toggle-markers').checked;
+    const showPolyline = document.getElementById('toggle-polyline').checked;
+    const showPolygons = document.getElementById('toggle-polygons').checked;
+    const showModel = document.getElementById('toggle-model').checked;
 
     // Standard Markers & Popovers
     standardMarkers.forEach((marker, index) => {
@@ -353,9 +326,7 @@ function syncLayers() {
 }
 
 function syncRijksmuseumMesh() {
-    const showMesh = (
-        document.getElementById('toggle-salesforce-mesh') as HTMLInputElement
-    ).checked;
+    const showMesh = document.getElementById('toggle-salesforce-mesh').checked;
     if (showMesh) {
         museumFlattener.remove();
     } else {
@@ -365,7 +336,7 @@ function syncRijksmuseumMesh() {
 
 function setupUIListeners() {
     // Welcome dismiss
-    const welcome = document.getElementById('welcome-banner') as HTMLDivElement;
+    const welcome = document.getElementById('welcome-banner');
     document
         .getElementById('btn-welcome-dismiss')
         ?.addEventListener('click', () => {
@@ -373,14 +344,9 @@ function setupUIListeners() {
         });
 
     // Tour buttons
-    const btnStart = document.getElementById(
-        'btn-start-tour'
-    ) as HTMLButtonElement;
-    const btnStop = document.getElementById(
-        'btn-stop-tour'
-    ) as HTMLButtonElement;
-    const tourNav = document.getElementById('btn-prev-stop')
-        ?.parentElement as HTMLDivElement;
+    const btnStart = document.getElementById('btn-start-tour');
+    const btnStop = document.getElementById('btn-stop-tour');
+    const tourNav = document.getElementById('btn-prev-stop')?.parentElement;
 
     btnStart.addEventListener('click', () => {
         isTouring = true;
@@ -426,10 +392,8 @@ function setupUIListeners() {
         ?.addEventListener('change', syncLayers);
 
     // Map Mode Selectors
-    const modeSat = document.getElementById(
-        'mode-satellite'
-    ) as HTMLButtonElement;
-    const modeHyb = document.getElementById('mode-hybrid') as HTMLButtonElement;
+    const modeSat = document.getElementById('mode-satellite');
+    const modeHyb = document.getElementById('mode-hybrid');
 
     modeSat.addEventListener('click', () => {
         map.mode = 'SATELLITE';
@@ -453,7 +417,7 @@ function setupUIListeners() {
     });
 }
 
-function jumpToStop(index: number) {
+function jumpToStop(index) {
     if (tourAnimationCleanup) {
         tourAnimationCleanup();
     }
@@ -462,15 +426,9 @@ function jumpToStop(index: number) {
     isAnimationCallbackActive = true;
 
     // Update Tour Nav UI
-    const prevBtn = document.getElementById(
-        'btn-prev-stop'
-    ) as HTMLButtonElement;
-    const nextBtn = document.getElementById(
-        'btn-next-stop'
-    ) as HTMLButtonElement;
-    const progressText = document.getElementById(
-        'tour-progress'
-    ) as HTMLSpanElement;
+    const prevBtn = document.getElementById('btn-prev-stop');
+    const nextBtn = document.getElementById('btn-next-stop');
+    const progressText = document.getElementById('tour-progress');
 
     prevBtn.disabled = index === 0;
     nextBtn.disabled = index === TOUR_STOPS.length - 1;
@@ -513,7 +471,7 @@ function jumpToStop(index: number) {
     map.addEventListener('gmp-animationend', listener);
 }
 
-function flyAroundStop(index: number) {
+function flyAroundStop(index) {
     isAnimationCallbackActive = false; // Prevent loop trigger
     const stop = TOUR_STOPS[index];
     const spinStartTime = Date.now();
@@ -567,14 +525,9 @@ function endTour() {
     // Close all popovers
     standardPopovers.forEach((p) => (p.open = false));
 
-    const btnStart = document.getElementById(
-        'btn-start-tour'
-    ) as HTMLButtonElement;
-    const btnStop = document.getElementById(
-        'btn-stop-tour'
-    ) as HTMLButtonElement;
-    const tourNav = document.getElementById('btn-prev-stop')
-        ?.parentElement as HTMLDivElement;
+    const btnStart = document.getElementById('btn-start-tour');
+    const btnStop = document.getElementById('btn-stop-tour');
+    const tourNav = document.getElementById('btn-prev-stop')?.parentElement;
 
     btnStart.classList.remove('hidden');
     btnStop.classList.add('hidden');
