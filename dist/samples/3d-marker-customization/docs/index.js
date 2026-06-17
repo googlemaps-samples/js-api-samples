@@ -18,7 +18,6 @@ async function init() {
         tilt: 67.5,
         range: 7000,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     map.mode = 'SATELLITE';
