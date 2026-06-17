@@ -20,7 +20,6 @@ async function init() {
         heading: 0,
         roll: 0,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     document.body.append(map);

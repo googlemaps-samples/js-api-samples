@@ -17,7 +17,6 @@ async function init() {
         tilt: 64.01,
         heading: 25.0,
         mode: 'SATELLITE',
-        gestureHandling: 'COOPERATIVE',
     });
 
     document.body.append(map);
