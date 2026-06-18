@@ -5,8 +5,8 @@
  */
 
 // [START maps_control_bounds_restriction]
-let innerMap;
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+let innerMap: google.maps.Map;
+const mapElement = document.querySelector('gmp-map')!;
 
 // [START maps_control_bounds_restriction_region]
 const NEW_ZEALAND_BOUNDS = {
@@ -17,21 +17,21 @@ const NEW_ZEALAND_BOUNDS = {
 };
 // [END maps_control_bounds_restriction_region]
 
-async function initMap() {
+async function init() {
     // Import the needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
     innerMap = mapElement.innerMap;
     // [START maps_control_bounds_restriction_options]
     // Restrict the map to the provided bounds.
     innerMap.setOptions({
-      restriction: {
-        latLngBounds: NEW_ZEALAND_BOUNDS,
-        strictBounds: false,
-      }
+        restriction: {
+            latLngBounds: NEW_ZEALAND_BOUNDS,
+            strictBounds: false,
+        },
     });
     // [END maps_control_bounds_restriction_options]
 }
 
-initMap();
+void init();
 // [END maps_control_bounds_restriction]

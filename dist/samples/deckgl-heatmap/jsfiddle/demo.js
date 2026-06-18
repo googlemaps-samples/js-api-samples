@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-/* [START maps_deckgl_heatmap] */
+
 // Initialize and add the map
 let map;
 // Use global types for Deck.gl components
@@ -12,31 +12,38 @@ let heatmapLayer;
 let googleMapsOverlay;
 let marker;
 let infoWindow;
-async function initMap() {
+
+async function init() {
     // Progress bar logic moved from index.html
-    var progress, progressDiv = document.querySelector('.mdc-linear-progress');
+    let progress;
+    const progressDiv = document.querySelector('.mdc-linear-progress');
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-        // @ts-ignore
         progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
         progress.done = function () {
             progress.close();
-            progressDiv?.remove(); // Use optional chaining in case progressDiv is null
+            progressDiv.remove();
         };
     }
+
     // The location for the map center.
     const position = { lat: 37.77325660358167, lng: -122.41712341793448 }; // Using the center from original deckgl-polygon.js
+
     //  Request needed libraries.
-    const { Map, InfoWindow } = (await google.maps.importLibrary('maps'));
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
+    const [{ Map, InfoWindow }, { AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+    ]);
+
     const mapDiv = document.getElementById('map');
     if (!mapDiv) {
         console.error('Map element not found!');
         return;
     }
+
     // The map, centered at the specified position
     map = new Map(mapDiv, {
         zoom: 13, // Using the zoom from original deckgl-polygon.js
@@ -47,6 +54,7 @@ async function initMap() {
         fullscreenControl: false, // Disable fullscreen control
         clickableIcons: false, // Disable clicks on base map POIs
     });
+
     // Deck.gl Layer and Overlay
     // Use global deck object
     heatmapLayer = new deck.HeatmapLayer({
@@ -56,6 +64,7 @@ async function initMap() {
         getPosition: (d) => d.COORDINATES, // Use 'any' for simplicity, or define a proper type
         getWeight: (d) => d.SPACES, // Use 'any' for simplicity, or define a proper type
         radiusPixels: 25, // Adjust radius as in user's example
+
         visible: true,
         pickable: true,
         onHover: (info) => {
@@ -79,45 +88,50 @@ async function initMap() {
                     tooltip.style.left = info.x + 'px';
                     tooltip.style.top = info.y + 'px';
                     tooltip.style.display = 'block';
-                }
-                else {
+                } else {
                     tooltip.style.display = 'none';
                 }
                 console.log('Tooltip content set to:', tooltip.innerHTML);
             }
         },
     });
+
     heatmapLayer.pickable = true; // Ensure pickable is true after creation
+
     // Use global deck object
     googleMapsOverlay = new deck.GoogleMapsOverlay({
         // Assign to the outer googleMapsOverlay
         layers: [heatmapLayer],
         controller: true, // Enable Deck.gl to control map view
     });
+
     googleMapsOverlay.setMap(map);
+
     // Hide progress bar after data is loaded and layer is added
     if (progress) {
         // Check if progress is defined
         // Add a small delay to ensure the progress bar is removed
         setTimeout(() => {
-            // @ts-ignore
-            progress.done(); // hides progress bar
+            progress.done?.(); // hides progress bar
         }, 100); // 100ms delay
     }
+
     // Create a single InfoWindow instance
     infoWindow = new InfoWindow();
+
     // Add click listener to the map
-    map.addListener('click', async (event) => {
+    map.addListener('click', (event) => {
         const latLng = event.latLng;
-        if (!latLng)
-            return; // Ensure latLng is not null
+        if (!latLng) return; // Ensure latLng is not null
+
         if (!marker) {
             // Create the marker on the first click
             marker = new AdvancedMarkerElement({
-                map: map,
+                map,
                 position: latLng,
                 gmpClickable: true,
             });
+
             // Add click listener to the marker
             marker.addEventListener('gmp-click', () => {
                 infoWindow.close();
@@ -128,6 +142,7 @@ async function initMap() {
                 infoWindow.setContent(content);
                 infoWindow.open(map, marker);
             });
+
             // Open InfoWindow immediately on first click
             const content = `
           <div>Location: ${latLng.lat().toFixed(3)}, ${latLng.lng().toFixed(3)}</div>
@@ -135,8 +150,7 @@ async function initMap() {
         `;
             infoWindow.setContent(content);
             infoWindow.open(map, marker);
-        }
-        else {
+        } else {
             // Move the existing marker on subsequent clicks
             marker.position = latLng;
             // InfoWindow remains open
@@ -148,6 +162,7 @@ async function initMap() {
             infoWindow.open(map, marker);
         }
     });
+
     // Button functionality
     const toggleButton = document.getElementById('toggleButton');
     if (toggleButton) {
@@ -160,11 +175,12 @@ async function initMap() {
                 layers: [newLayer],
             });
             heatmapLayer = newLayer; // Update the heatmapLayer variable
+
             toggleButton.textContent = !currentVisible
                 ? 'Hide Heatmap Layer'
                 : 'Show Heatmap Layer';
         });
     }
 }
-initMap();
-/* [END maps_deckgl_heatmap] */
+
+void init();

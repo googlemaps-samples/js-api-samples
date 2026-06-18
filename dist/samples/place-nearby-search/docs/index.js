@@ -1,45 +1,60 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2024 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 // [START maps_place_nearby_search]
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
-const advancedMarkerElement = document.querySelector('gmp-advanced-marker');
 let center;
 let typeSelect;
 let infoWindow;
-async function initMap() {
-    const { Map, InfoWindow } = (await google.maps.importLibrary('maps'));
-    const { LatLng } = (await google.maps.importLibrary('core'));
+
+async function init() {
+    const [{ InfoWindow }, { event }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('core'),
+    ]);
+
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
         mapTypeControl: false,
     });
+
     typeSelect = document.querySelector('.type-select');
+
     typeSelect.addEventListener('change', () => {
-        nearbySearch();
+        void nearbySearch();
     });
+
     infoWindow = new InfoWindow();
+
     // Kick off an initial search once map has loaded.
-    google.maps.event.addListenerOnce(innerMap, 'idle', () => {
-        nearbySearch();
+    event.addListenerOnce(innerMap, 'idle', () => {
+        void nearbySearch();
     });
 }
+
 async function nearbySearch() {
-    const { Place, SearchNearbyRankPreference } = (await google.maps.importLibrary('places'));
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
-    const { spherical } = (await google.maps.importLibrary('geometry'));
+    const [
+        { Place, SearchNearbyRankPreference },
+        { AdvancedMarkerElement },
+        { spherical },
+    ] = await Promise.all([
+        google.maps.importLibrary('places'),
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('geometry'),
+    ]);
     // [START maps_place_nearby_search_request]
     // Get bounds and radius to constrain search.
     center = mapElement.center;
-    let bounds = innerMap.getBounds();
-    const ne = bounds.getNorthEast();
-    const sw = bounds.getSouthWest();
+    const ne = innerMap.getBounds().getNorthEast();
+    const sw = innerMap.getBounds().getSouthWest();
     const diameter = spherical.computeDistanceBetween(ne, sw);
     const radius = Math.min(diameter / 2, 50000); // Radius cannot be more than 50000.
+
     const request = {
         // required parameters
         fields: [
@@ -57,24 +72,29 @@ async function nearbySearch() {
         maxResultCount: 5,
         rankPreference: SearchNearbyRankPreference.POPULARITY,
     };
+
     const { places } = await Place.searchNearby(request);
     // [END maps_place_nearby_search_request]
+
     if (places.length) {
-        const { LatLngBounds } = (await google.maps.importLibrary('core'));
+        const { LatLngBounds } = await google.maps.importLibrary('core');
         const bounds = new LatLngBounds();
+
         // First remove all existing markers.
         for (const marker of mapElement.querySelectorAll('gmp-advanced-marker'))
             marker.remove();
+
         // Loop through and get all the results.
         places.forEach((place) => {
-            if (!place.location)
-                return;
+            if (!place.location) return;
             bounds.extend(place.location);
+
             const marker = new AdvancedMarkerElement({
                 map: innerMap,
                 position: place.location,
                 title: place.displayName,
             });
+
             // Build the content of the InfoWindow safely using DOM elements.
             const content = document.createElement('div');
             const address = document.createElement('div');
@@ -82,6 +102,7 @@ async function nearbySearch() {
             const placeId = document.createElement('div');
             placeId.textContent = place.id;
             content.append(address, placeId);
+
             if (place.googleMapsURI) {
                 const link = document.createElement('a');
                 link.href = place.googleMapsURI;
@@ -89,17 +110,19 @@ async function nearbySearch() {
                 link.textContent = 'View Details on Google Maps';
                 content.appendChild(link);
             }
+
             marker.addListener('gmp-click', () => {
                 innerMap.panTo(place.location);
                 updateInfoWindow(place.displayName, content, marker);
             });
         });
+
         innerMap.fitBounds(bounds, 100);
-    }
-    else {
+    } else {
         console.log('No results');
     }
 }
+
 function updateInfoWindow(title, content, anchor) {
     infoWindow.setContent(content);
     infoWindow.setHeaderContent(title);
@@ -107,5 +130,6 @@ function updateInfoWindow(title, content, anchor) {
         anchor,
     });
 }
-initMap();
+
+void init();
 // [END maps_place_nearby_search]

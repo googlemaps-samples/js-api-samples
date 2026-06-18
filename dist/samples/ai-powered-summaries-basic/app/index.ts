@@ -5,29 +5,27 @@
  */
 
 // [START maps_ai_powered_summaries_basic]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-let innerMap;
-let infoWindow;
+const mapElement = document.querySelector('gmp-map')!;
+let innerMap: google.maps.Map;
+let infoWindow: google.maps.InfoWindow;
 
-async function initMap() {
-    const { Map, InfoWindow } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+async function init() {
+    const { InfoWindow } = await google.maps.importLibrary('maps');
 
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
-        mapTypeControl: false
+        mapTypeControl: false,
     });
 
     infoWindow = new InfoWindow();
-    getPlaceDetails();
+    void getPlaceDetails();
 }
 
 async function getPlaceDetails() {
     // Request needed libraries.
-    const [ {AdvancedMarkerElement}, { Place } ] = await Promise.all([
-        google.maps.importLibrary('marker') as Promise<google.maps.MarkerLibrary>,
-        google.maps.importLibrary('places') as Promise<google.maps.PlacesLibrary>,
+    const [{ AdvancedMarkerElement }, { Place }] = await Promise.all([
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('places'),
     ]);
 
     // [START maps_ai_powered_summaries_basic_placeid]
@@ -65,28 +63,25 @@ async function getPlaceDetails() {
     const attribution = document.createElement('div');
 
     // Retrieve the textual data (summary, disclosure, flag URI).
-    //@ts-ignore
-    let overviewText = place.generativeSummary.overview ?? 'No summary is available.';
-    //@ts-ignore
-    let disclosureText = place.generativeSummary.disclosureText;
-    //@ts-ignore
-    let reportingUri = place.generativeSummary.flagContentURI;
+    const overviewText = place.generativeSummary?.overview;
+    const disclosureText = place.generativeSummary?.disclosureText;
+    const reportingURI = place.generativeSummary?.flagContentURI;
 
     // Create HTML for reporting link.
     const reportingLink = document.createElement('a');
-    reportingLink.href = reportingUri;
+    reportingLink.href = reportingURI ?? '';
     reportingLink.target = '_blank';
-    reportingLink.textContent = "Report a problem."
+    reportingLink.textContent = 'Report a problem.';
 
     // Add text to layout.
     address.textContent = place.formattedAddress ?? '';
-    summary.textContent = overviewText;
-    attribution.textContent = `${disclosureText}  `;
-    attribution.appendChild(reportingLink);
+    summary.textContent = overviewText ?? 'No summary is available.';
+    attribution.textContent = overviewText ? `${disclosureText}  ` : '';
+    if (overviewText) attribution.appendChild(reportingLink);
 
     content.append(address, lineBreak, summary, lineBreak, attribution);
 
-    innerMap.setCenter(place.location);
+    innerMap.setCenter(place.location!);
 
     // Handle marker click.
     marker.addListener('gmp-click', () => {
@@ -97,7 +92,11 @@ async function getPlaceDetails() {
     showInfoWindow(marker, place, content);
 }
 
-function showInfoWindow(marker, place, content) {
+function showInfoWindow(
+    marker: google.maps.marker.AdvancedMarkerElement,
+    place: google.maps.places.Place,
+    content: HTMLElement
+) {
     // Display an info window.
     infoWindow.setHeaderContent(place.displayName);
     infoWindow.setContent(content);
@@ -106,5 +105,5 @@ function showInfoWindow(marker, place, content) {
     });
 }
 
-initMap();
+void init();
 // [END maps_ai_powered_summaries_basic]

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
@@ -6,42 +6,44 @@
  */
 
 // Initialize the map.
-async function initMap() {
-    await Promise.all([
-        google.maps.importLibrary("maps"),
-        google.maps.importLibrary("geocoding"),
-        google.maps.importLibrary("marker"),
+async function init() {
+    const [{ Geocoder }, { InfoWindow }] = await Promise.all([
+        google.maps.importLibrary('geocoding'),
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
     ]);
-    const mapElement = document.querySelector("gmp-map");
+
+    const mapElement = document.querySelector('gmp-map');
     const innerMap = mapElement.innerMap;
-    const geocoder = new google.maps.Geocoder();
-    const infowindow = new google.maps.InfoWindow();
-    document.getElementById("submit").addEventListener("click", () => {
-        geocodePlaceId(geocoder, innerMap, infowindow);
+    const geocoder = new Geocoder();
+    const infoWindow = new InfoWindow();
+
+    document.getElementById('submit').addEventListener('click', () => {
+        void geocodePlaceId(geocoder, innerMap, infoWindow);
     });
 }
-// This function is called when the user clicks the UI button.
-function geocodePlaceId(geocoder, map, infowindow) {
-    const placeId = document.getElementById("place-id")
-        .value;
-    geocoder
-        .geocode({ placeId: placeId })
-        .then(({ results }) => {
-        if (results[0]) {
-            map.setZoom(11);
-            map.setCenter(results[0].geometry.location);
-            const marker = new google.maps.marker.AdvancedMarkerElement({
-                map,
-                position: results[0].geometry.location,
-            });
-            infowindow.setContent(results[0].formatted_address);
-            infowindow.open(map, marker);
-        }
-        else {
-            window.alert("No results found");
-        }
-    })
-        .catch((e) => window.alert("Geocoder failed due to: " + e));
-}
-initMap();
 
+// This function is called when the user clicks the UI button.
+async function geocodePlaceId(geocoder, map, infoWindow) {
+    const placeId = document.getElementById('place-id').value;
+
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+
+    const { results } = await geocoder.geocode({ placeId });
+    if (results[0]) {
+        map.setZoom(11);
+        map.setCenter(results[0].geometry.location);
+
+        const marker = new AdvancedMarkerElement({
+            map,
+            position: results[0].geometry.location,
+        });
+
+        infoWindow.setContent(results[0].formatted_address);
+        infoWindow.open(map, marker);
+    } else {
+        window.alert('No results found');
+    }
+}
+
+void init();

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
@@ -7,29 +7,35 @@
 
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
-async function initMap() {
+
+async function init() {
     // Request needed libraries.
-    (await google.maps.importLibrary('maps'));
+    const [{ MapTypeControlStyle }, { ControlPosition }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('core'),
+    ]);
+
     // Get the inner map.
-    const innerMap = mapElement.innerMap;
+    innerMap = mapElement.innerMap;
+
     // Set the map's controls options.
     innerMap.setOptions({
         mapTypeControl: true,
         mapTypeControlOptions: {
-            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-            position: google.maps.ControlPosition.BLOCK_START_INLINE_CENTER,
+            style: MapTypeControlStyle.HORIZONTAL_BAR,
+            position: ControlPosition.BLOCK_START_INLINE_CENTER,
         },
         zoomControl: true,
         zoomControlOptions: {
-            position: google.maps.ControlPosition.INLINE_START_BLOCK_CENTER,
+            position: ControlPosition.INLINE_START_BLOCK_CENTER,
         },
         scaleControl: true,
         streetViewControl: true,
         streetViewControlOptions: {
-            position: google.maps.ControlPosition.INLINE_START_BLOCK_START,
+            position: ControlPosition.INLINE_START_BLOCK_START,
         },
         fullscreenControl: true,
     });
 }
-initMap();
 
+void init();

@@ -5,22 +5,16 @@
  */
 
 // [START maps_advanced_markers_graphics]
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement, PinElement } =
-        (await google.maps.importLibrary(
-            'marker'
-        )) as google.maps.MarkerLibrary;
-    const { Place } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
+    const [{ AdvancedMarkerElement, PinElement }, { Place }] =
+        await Promise.all([
+            google.maps.importLibrary('marker'),
+            google.maps.importLibrary('places'),
+            google.maps.importLibrary('maps'),
+        ]);
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     // [START maps_advanced_markers_graphics_inline]
     const parser = new DOMParser();
@@ -36,7 +30,6 @@ async function initMap() {
     const pinSvgMarker = new AdvancedMarkerElement({
         position: { lat: 37.42475, lng: -122.094 },
         title: 'A marker using a custom SVG image.',
-        //@ts-ignore
         anchorLeft: '-50%',
         anchorTop: '-50%',
     });
@@ -52,7 +45,6 @@ async function initMap() {
     const beachFlagMarker = new AdvancedMarkerElement({
         position: { lat: 37.434, lng: -122.082 },
         title: 'A marker using a custom PNG Image',
-        //@ts-ignore
         anchorLeft: '0px',
         anchorTop: '100%',
     });
@@ -65,7 +57,6 @@ async function initMap() {
     const glyphImgSrc = new URL('./public/google_logo_g.svg', import.meta.url);
 
     const glyphSvgPinElement = new PinElement({
-        //@ts-ignore
         glyphSrc: glyphImgSrc,
     });
 
@@ -95,7 +86,6 @@ async function initMap() {
 
     const pinElement = new PinElement({
         background: place.iconBackgroundColor,
-        //@ts-ignore
         glyphSrc: new URL(String(place.svgIconMaskURI)),
     });
 
@@ -108,5 +98,5 @@ async function initMap() {
     // [END maps_advanced_markers_graphics_place_icon]
 }
 
-initMap();
+void init();
 // [END maps_advanced_markers_graphics]

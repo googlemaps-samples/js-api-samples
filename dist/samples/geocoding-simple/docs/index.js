@@ -1,74 +1,96 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 // [START maps_geocoding_simple]
 let geocoder;
 let mapElement;
 let innerMap;
 let marker;
 let responseDiv;
-let response;
-async function initMap() {
+let responsePre;
+
+async function init() {
     //  Request the needed libraries.
-    const [{ Map, InfoWindow }, { Geocoder }, { AdvancedMarkerElement }] = await Promise.all([
-        google.maps.importLibrary('maps'),
-        google.maps.importLibrary('geocoding'),
-        google.maps.importLibrary('marker'),
-    ]);
+    const [{ Geocoder }, { AdvancedMarkerElement }, { ControlPosition }] =
+        await Promise.all([
+            google.maps.importLibrary('geocoding'),
+            google.maps.importLibrary('marker'),
+            google.maps.importLibrary('core'),
+            google.maps.importLibrary('maps'),
+        ]);
+
     // Get the gmp-map element.
     mapElement = document.querySelector('gmp-map');
+
     // Get the inner map.
     innerMap = mapElement.innerMap;
+
     // Set map options.
     innerMap.setOptions({
         mapTypeControl: false,
         fullscreenControl: false,
         cameraControlOptions: {
-            position: google.maps.ControlPosition.INLINE_START_BLOCK_END,
+            position: ControlPosition.INLINE_START_BLOCK_END,
         },
         draggableCursor: 'crosshair',
     });
-    geocoder = new google.maps.Geocoder();
+
+    geocoder = new Geocoder();
+
     const inputText = document.getElementById('address');
     const submitButton = document.getElementById('submit');
     const clearButton = document.getElementById('clear');
     responseDiv = document.getElementById('response-container');
-    response = document.getElementById('response');
-    marker = new google.maps.marker.AdvancedMarkerElement({});
+    responsePre = document.getElementById('response');
+
+    marker = new AdvancedMarkerElement();
+
     innerMap.addListener('click', (e) => {
-        geocode({ location: e.latLng });
+        void geocode({ location: e.latLng });
     });
-    submitButton.addEventListener('click', () => geocode({ address: inputText.value }));
+
+    submitButton.addEventListener('click', () => {
+        void geocode({ address: inputText.value });
+    });
+
     clearButton.addEventListener('click', () => {
         clear();
     });
+
     clear();
 }
-async function clear() {
-    marker.setMap(null);
+
+function clear() {
+    marker.map = null;
     responseDiv.style.display = 'none';
 }
+
 // [START maps_geocoding_simple_request]
 async function geocode(request) {
     clear();
-    geocoder
-        .geocode(request)
-        .then((result) => {
-        const { results } = result;
+    const { LatLng } = await google.maps.importLibrary('core');
+
+    try {
+        const response = await geocoder.geocode(request);
+        const { results } = response;
+
         innerMap.setCenter(results[0].geometry.location);
-        marker.position = new google.maps.LatLng(results[0].geometry.location);
+        marker.position = new LatLng(results[0].geometry.location);
         mapElement.append(marker);
         responseDiv.style.display = 'block';
-        response.innerText = JSON.stringify(result, null, 2);
+        responsePre.innerText = JSON.stringify(response, null, 2);
         return results;
-    })
-        .catch((e) => {
-        alert('Geocode was not successful for the following reason: ' + e);
-    });
+    } catch (e) {
+        alert(
+            'Geocode was not successful for the following reason: ' + String(e)
+        );
+    }
 }
 // [END maps_geocoding_simple_request]
-initMap();
+
+void init();
 // [END maps_geocoding_simple]

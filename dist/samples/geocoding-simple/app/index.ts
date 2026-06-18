@@ -6,31 +6,24 @@
 
 // [START maps_geocoding_simple]
 let geocoder: google.maps.Geocoder;
-let mapElement;
-let innerMap;
-let marker;
-let responseDiv;
-let response;
+let mapElement: google.maps.MapElement;
+let innerMap: google.maps.Map;
+let marker: google.maps.marker.AdvancedMarkerElement;
+let responseDiv: HTMLElement;
+let responsePre: HTMLPreElement;
 
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
-    const [{ Map, InfoWindow }, { Geocoder }, { AdvancedMarkerElement }] =
+    const [{ Geocoder }, { AdvancedMarkerElement }, { ControlPosition }] =
         await Promise.all([
-            google.maps.importLibrary(
-                'maps'
-            ) as Promise<google.maps.MapsLibrary>,
-            google.maps.importLibrary(
-                'geocoding'
-            ) as Promise<google.maps.GeocodingLibrary>,
-            google.maps.importLibrary(
-                'marker'
-            ) as Promise<google.maps.MarkerLibrary>,
+            google.maps.importLibrary('geocoding'),
+            google.maps.importLibrary('marker'),
+            google.maps.importLibrary('core'),
+            google.maps.importLibrary('maps'),
         ]);
 
     // Get the gmp-map element.
-    mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    mapElement = document.querySelector('gmp-map')!;
 
     // Get the inner map.
     innerMap = mapElement.innerMap;
@@ -40,28 +33,28 @@ async function initMap() {
         mapTypeControl: false,
         fullscreenControl: false,
         cameraControlOptions: {
-            position: google.maps.ControlPosition.INLINE_START_BLOCK_END,
+            position: ControlPosition.INLINE_START_BLOCK_END,
         },
         draggableCursor: 'crosshair',
     });
 
-    geocoder = new google.maps.Geocoder();
+    geocoder = new Geocoder();
 
     const inputText = document.getElementById('address') as HTMLInputElement;
     const submitButton = document.getElementById('submit') as HTMLInputElement;
     const clearButton = document.getElementById('clear') as HTMLInputElement;
-    responseDiv = document.getElementById('response-container') as HTMLDivElement;
-    response = document.getElementById('response') as HTMLPreElement;
+    responseDiv = document.getElementById('response-container')!;
+    responsePre = document.getElementById('response') as HTMLPreElement;
 
-    marker = new google.maps.marker.AdvancedMarkerElement({});
+    marker = new AdvancedMarkerElement();
 
     innerMap.addListener('click', (e: google.maps.MapMouseEvent) => {
-        geocode({ location: e.latLng });
+        void geocode({ location: e.latLng });
     });
 
-    submitButton.addEventListener('click', () =>
-        geocode({ address: inputText.value })
-    );
+    submitButton.addEventListener('click', () => {
+        void geocode({ address: inputText.value });
+    });
 
     clearButton.addEventListener('click', () => {
         clear();
@@ -70,31 +63,33 @@ async function initMap() {
     clear();
 }
 
-async function clear() {
-    marker.setMap(null);
+function clear() {
+    marker.map = null;
     responseDiv.style.display = 'none';
 }
 
 // [START maps_geocoding_simple_request]
 async function geocode(request: google.maps.GeocoderRequest) {
     clear();
+    const { LatLng } = await google.maps.importLibrary('core');
 
-    geocoder
-        .geocode(request)
-        .then((result) => {
-            const { results } = result;
-            innerMap.setCenter(results[0].geometry.location);
-            marker.position = new google.maps.LatLng(results[0].geometry.location);
-            mapElement.append(marker);
-            responseDiv.style.display = 'block';
-            response.innerText = JSON.stringify(result, null, 2);
-            return results;
-        })
-        .catch((e) => {
-            alert('Geocode was not successful for the following reason: ' + e);
-        });
+    try {
+        const response = await geocoder.geocode(request);
+        const { results } = response;
+
+        innerMap.setCenter(results[0].geometry.location);
+        marker.position = new LatLng(results[0].geometry.location);
+        mapElement.append(marker);
+        responseDiv.style.display = 'block';
+        responsePre.innerText = JSON.stringify(response, null, 2);
+        return results;
+    } catch (e) {
+        alert(
+            'Geocode was not successful for the following reason: ' + String(e)
+        );
+    }
 }
 // [END maps_geocoding_simple_request]
 
-initMap();
+void init();
 // [END maps_geocoding_simple]

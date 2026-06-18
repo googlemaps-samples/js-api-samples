@@ -8,10 +8,10 @@
 // This example defines an image map type using the Gall-Peters
 // projection.
 // https://en.wikipedia.org/wiki/Gall%E2%80%93Peters_projection
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-let innerMap;
+const mapElement = document.querySelector('gmp-map')!;
+let innerMap: google.maps.Map;
 
-async function initMap() {
+async function init() {
     // Request the needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -22,12 +22,12 @@ async function initMap() {
     });
 
     // Set the Gall-Peters map type.
-    initGallPeters();
+    void initGallPeters();
     innerMap.mapTypes.set('gallPeters', gallPetersMapType);
     innerMap.setMapTypeId('gallPeters');
 
     // Show the lat and lng under the mouse cursor.
-    const coordsDiv = document.getElementById('coords') as HTMLElement;
+    const coordsDiv = document.getElementById('coords')!;
 
     innerMap.addListener('mousemove', (event: google.maps.MapMouseEvent) => {
         coordsDiv.textContent =
@@ -48,15 +48,20 @@ async function initMap() {
     innerMap.data.addGeoJson(cities);
 }
 
-let gallPetersMapType;
+let gallPetersMapType: google.maps.ImageMapType;
 
-function initGallPeters() {
+async function initGallPeters() {
+    const [{ ImageMapType }, { Size, Point, LatLng }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('core'),
+    ]);
+
     const GALL_PETERS_RANGE_X = 800;
     const GALL_PETERS_RANGE_Y = 512;
 
     // Fetch Gall-Peters tiles stored locally on our server.
-    gallPetersMapType = new google.maps.ImageMapType({
-        getTileUrl: function (coord, zoom) {
+    gallPetersMapType = new ImageMapType({
+        getTileUrl(coord, zoom) {
             const scale = 1 << zoom;
 
             // Wrap tiles horizontally.
@@ -69,10 +74,7 @@ function initGallPeters() {
 
             return 'gall-peters_' + zoom + '_' + x + '_' + y + '.png';
         },
-        tileSize: new google.maps.Size(
-            GALL_PETERS_RANGE_X,
-            GALL_PETERS_RANGE_Y
-        ),
+        tileSize: new Size(GALL_PETERS_RANGE_X, GALL_PETERS_RANGE_Y),
         minZoom: 0,
         maxZoom: 1,
         name: 'Gall-Peters',
@@ -80,18 +82,18 @@ function initGallPeters() {
 
     // Describe the Gall-Peters projection used by these tiles.
     gallPetersMapType.projection = {
-        fromLatLngToPoint: function (latLng) {
+        fromLatLngToPoint(latLng: google.maps.LatLng) {
             const latRadians = (latLng.lat() * Math.PI) / 180;
-            return new google.maps.Point(
+            return new Point(
                 GALL_PETERS_RANGE_X * (0.5 + latLng.lng() / 360),
                 GALL_PETERS_RANGE_Y * (0.5 - 0.5 * Math.sin(latRadians))
             );
         },
-        fromPointToLatLng: function (point, noWrap) {
+        fromPointToLatLng(point: google.maps.Point, noWrap?: boolean) {
             const x = point.x / GALL_PETERS_RANGE_X;
             const y = Math.max(0, Math.min(1, point.y / GALL_PETERS_RANGE_Y));
 
-            return new google.maps.LatLng(
+            return new LatLng(
                 (Math.asin(1 - 2 * y) * 180) / Math.PI,
                 -180 + 360 * x,
                 noWrap
@@ -147,5 +149,5 @@ const cities = {
     ],
 };
 
-initMap();
+void init();
 // [END maps_map_projection_simple]

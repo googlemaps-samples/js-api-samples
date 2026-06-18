@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
@@ -9,21 +9,23 @@
 let map;
 let mapPolylines = [];
 const center = { lat: 37.447646, lng: -122.113878 }; // Palo Alto, CA
+
 // Initialize and add the map.
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     const [{ Map }, { Place }, { Route }] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('places'),
-        //@ts-ignore
         google.maps.importLibrary('routes'),
     ]);
+
     map = new Map(document.getElementById('map'), {
         zoom: 12,
-        center: center,
+        center,
         mapTypeControl: false,
         mapId: 'DEMO_MAP_ID',
     });
+
     // [START maps_routes_get_directions_request_string]
     // Use address strings in a directions request.
     const requestWithAddressStrings = {
@@ -32,26 +34,33 @@ async function initMap() {
         fields: ['path'],
     };
     // [END maps_routes_get_directions_request_string]
+    console.log({ requestWithAddressStrings });
+
     // [START maps_routes_get_directions_request_placeid]
     // Use Place IDs in a directions request.
     const originPlaceInstance = new Place({
         id: 'ChIJiQHsW0m3j4ARm69rRkrUF3w', // Mountain View, CA
     });
+
     const destinationPlaceInstance = new Place({
         id: 'ChIJIQBpAG2ahYAR_6128GcTUEo', // San Francisco, CA
     });
+
     const requestWithPlaceIds = {
         origin: originPlaceInstance,
         destination: destinationPlaceInstance,
         fields: ['path'], // Request fields needed to draw polylines.
     };
     // [END maps_routes_get_directions_request_placeid]
+    console.log({ requestWithPlaceIds });
+
     // [START maps_routes_get_directions_request_latlng]
     // Use lat/lng in a directions request.
     // Mountain View, CA
     const originLatLng = { lat: 37.422, lng: -122.084058 };
     // San Francisco, CA
     const destinationLatLng = { lat: 37.774929, lng: -122.419415 };
+
     // Define a computeRoutes request.
     const requestWithLatLngs = {
         origin: originLatLng,
@@ -59,6 +68,8 @@ async function initMap() {
         fields: ['path'],
     };
     // [END maps_routes_get_directions_request_latlng]
+    console.log({ requestWithLatLngs });
+
     // [START maps_routes_get_directions_request_pluscode]
     // Use Plus Codes in a directions request.
     const requestWithPlusCodes = {
@@ -67,6 +78,8 @@ async function initMap() {
         fields: ['path'],
     };
     // [END maps_routes_get_directions_request_pluscode]
+    console.log({ requestWithPlusCodes });
+
     // [START maps_routes_get_directions_request_complete]
     // [START maps_routes_get_directions_request_simple]
     // Define a routes request.
@@ -77,34 +90,49 @@ async function initMap() {
         fields: ['path'], // Request fields needed to draw polylines.
     };
     // [END maps_routes_get_directions_request_simple]
+
     // Call computeRoutes to get the directions.
     // [START maps_routes_get_directions_compute]
-    const { routes, fallbackInfo, geocodingResults } = await Route.computeRoutes(request);
+    const { routes } = await Route.computeRoutes(request);
     // [END maps_routes_get_directions_compute]
+
     // [START maps_routes_get_directions_polyline]
     // Use createPolylines to create polylines for the route.
+    if (!routes) {
+        console.warn('No routes found.');
+        return;
+    }
     mapPolylines = routes[0].createPolylines();
     // Add polylines to the map.
-    mapPolylines.forEach((polyline) => polyline.setMap(map));
+    mapPolylines.forEach((polyline) => {
+        polyline.setMap(map);
+    });
+
     // Create markers to start and end points.
     const markers = await routes[0].createWaypointAdvancedMarkers();
     // Add markers to the map
-    markers.forEach((marker) => marker.setMap(map));
+    markers.forEach((marker) => {
+        marker.map = map;
+    });
     // [END maps_routes_get_directions_polyline]
     // [END maps_routes_get_directions_request_complete]
+
     // Display the raw JSON for the result in the console.
     console.log(`Response:\n ${JSON.stringify(routes, null, 2)}`);
+
     // Fit the map to the path.
-    fitMapToPath(routes[0].path);
+    void fitMapToPath(routes[0].path);
 }
+
 // Helper function to fit the map to the path.
 async function fitMapToPath(path) {
-    const { LatLngBounds } = (await google.maps.importLibrary('core'));
+    const { LatLngBounds } = await google.maps.importLibrary('core');
     const bounds = new LatLngBounds();
     path.forEach((point) => {
         bounds.extend(point);
     });
     map.fitBounds(bounds);
 }
-initMap();
+
+void init();
 // [END maps_routes_get_directions]

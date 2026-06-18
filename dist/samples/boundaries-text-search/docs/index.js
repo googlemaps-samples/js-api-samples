@@ -1,24 +1,31 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 // [START maps_boundaries_text_search]
 let innerMap;
 let featureLayer;
 let center;
-async function initMap() {
+
+async function init() {
     // Load the needed libraries.
-    (await google.maps.importLibrary('maps'));
+    await google.maps.importLibrary('maps');
+
     center = { lat: 41.059, lng: -124.151 }; // Trinidad, CA
+
     // Get the gmp-map element.
     const mapElement = document.querySelector('gmp-map');
+
     // Get the inner map.
     innerMap = mapElement.innerMap;
+
     // Get the LOCALITY feature layer.
-    featureLayer = innerMap.getFeatureLayer(google.maps.FeatureType.LOCALITY);
-    findBoundary();
+    featureLayer = innerMap.getFeatureLayer('LOCALITY');
+
+    void findBoundary();
 }
 // [START maps_boundaries_text_search_find_region]
 async function findBoundary() {
@@ -28,17 +35,19 @@ async function findBoundary() {
         includedType: 'locality',
         locationBias: center,
     };
-    const { Place } = (await google.maps.importLibrary('places'));
+
+    const { Place } = await google.maps.importLibrary('places');
     const { places } = await Place.searchByText(request);
+
     if (places.length) {
         const place = places[0];
         styleBoundary(place.id);
         innerMap.setCenter(place.location);
-    }
-    else {
+    } else {
         console.log('No results');
     }
 }
+
 function styleBoundary(placeid) {
     // Define a style of transparent purple with opaque stroke.
     const styleFill = {
@@ -48,13 +57,16 @@ function styleBoundary(placeid) {
         fillColor: '#810FCB',
         fillOpacity: 0.5,
     };
+
     // Define the feature style function.
     featureLayer.style = (params) => {
-        if (params.feature.placeId == placeid) {
+        const placeFeature = params.feature;
+        if (placeFeature.placeId === placeid) {
             return styleFill;
         }
+        return null;
     };
 }
 // [END maps_boundaries_text_search_find_region]
-initMap();
+void init();
 // [END maps_boundaries_text_search]

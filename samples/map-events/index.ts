@@ -29,48 +29,46 @@ const events = [
 ];
 
 function setupListener(map: google.maps.Map, name: string) {
-    const eventRow = document.getElementById(name) as HTMLElement;
-    google.maps.event.addListener(map, name, () => {
+    const eventRow = document.getElementById(name)!;
+    map.addListener(name, () => {
         eventRow.className = 'event active';
-        const timeout = setTimeout(() => {
+        setTimeout(() => {
             eventRow.className = 'event inactive';
         }, 1000);
     });
 }
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     populateTable();
 
     // Get the inner map.
-    let innerMap = mapElement.innerMap;
+    const innerMap = mapElement.innerMap;
     innerMap.setOptions({
         mapTypeControl: false,
     });
-    
-    for (let i = 0; i < events.length; i++) {
-        setupListener(innerMap, events[i]);
+
+    for (const event of events) {
+        setupListener(innerMap, event);
     }
 }
 
 // Dynamically create the table of events from the defined hashmap
 function populateTable() {
-    const eventsTable = document.getElementById('sidebar') as HTMLElement;
+    const eventsTable = document.getElementById('sidebar')!;
 
-    for (let i = 0; i < events.length; i++) {
+    for (const event of events) {
         const eventDiv = document.createElement('div');
         eventDiv.className = 'event';
-        eventDiv.id = events[i];
-        eventDiv.innerText = events[i];
+        eventDiv.id = event;
+        eventDiv.innerText = event;
         eventsTable.appendChild(eventDiv);
     }
 }
 
-initMap();
+void init();
 // [END maps_map_events]

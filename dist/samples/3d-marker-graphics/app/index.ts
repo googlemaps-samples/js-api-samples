@@ -4,25 +4,26 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_marker_graphics]
 async function init() {
-    const { Map3DElement, Marker3DElement } =
-        await google.maps.importLibrary('maps3d');
-    const { PinElement } = await google.maps.importLibrary('marker');
-    const { Place } = await google.maps.importLibrary('places');
+    const [{ Map3DElement, Marker3DElement }, { PinElement }, { Place }] =
+        await Promise.all([
+            google.maps.importLibrary('maps3d'),
+            google.maps.importLibrary('marker'),
+            google.maps.importLibrary('places'),
+        ]);
 
     const map = new Map3DElement({
         center: { lat: 37.426, lng: -122.082, altitude: 18 },
         tilt: 67.5,
         range: 4000,
         mode: 'SATELLITE',
-        gestureHandling: 'COOPERATIVE',
     });
 
+    // [START maps_3d_marker_graphics_png]
     // A marker with a with a URL pointing to a PNG.
     const beachFlagImg = document.createElement('img');
-    beachFlagImg.src = new URL('images/beachflag.png', import.meta.url);
+    beachFlagImg.src = String(new URL('images/beachflag.png', import.meta.url));
 
     const beachFlagMarker = new Marker3DElement({
         position: { lat: 37.434, lng: -122.082 },
@@ -32,7 +33,9 @@ async function init() {
     beachFlagMarker.append(templateForImg);
 
     map.append(beachFlagMarker);
+    // [END maps_3d_marker_graphics_png]
 
+    // [START maps_3d_marker_graphics_glyph]
     // A marker with a custom SVG glyph and white background.
     const glyphImgUrl = new URL('images/192px.svg', import.meta.url);
     const glyphSvgPinElement = new PinElement({
@@ -45,6 +48,7 @@ async function init() {
         altitudeMode: 'ABSOLUTE',
     });
     glyphSvgMarker.append(glyphSvgPinElement);
+    // [END maps_3d_marker_graphics_glyph]
 
     try {
         map.append(glyphSvgMarker);
@@ -52,6 +56,7 @@ async function init() {
         console.error(error);
     }
 
+    // [START maps_3d_marker_graphics_place]
     // A marker customized using a place icon and color, name, and geometry.
     const place = new Place({
         id: 'ChIJN5Nz71W3j4ARhx5bwpTQEGg',
@@ -72,12 +77,14 @@ async function init() {
         glyphSrc: new URL(String(place.svgIconMaskURI)),
     });
     const placeIconMarker = new Marker3DElement({
-        position: place.location,
+        position: place.location?.toJSON(),
     });
     placeIconMarker.append(pinElement);
 
     map.append(placeIconMarker);
+    // [END maps_3d_marker_graphics_place]
 
+    // [START maps_3d_marker_graphics_svg]
     // Used to parse the SVG string.
     const parser = new DOMParser();
 
@@ -99,9 +106,10 @@ async function init() {
     markerWithCustomSvg.append(templateForSvg);
 
     map.append(markerWithCustomSvg);
+    // [END maps_3d_marker_graphics_svg]
 
     document.body.append(map);
 }
 
-init();
+void init();
 // [END maps_3d_marker_graphics]

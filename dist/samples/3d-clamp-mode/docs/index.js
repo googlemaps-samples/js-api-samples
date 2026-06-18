@@ -1,14 +1,17 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-//@ts-nocheck
+
 // [START maps_3d_clamp_mode]
 let polyline;
+
 async function init() {
-    const { Map3DElement, AltitudeMode, Polyline3DElement } = await google.maps.importLibrary('maps3d');
+    const { Map3DElement, Polyline3DElement } =
+        await google.maps.importLibrary('maps3d');
+
     const map = new Map3DElement({
         center: {
             lat: 47.660545553614604,
@@ -19,8 +22,8 @@ async function init() {
         range: 4800,
         heading: 31,
         mode: 'SATELLITE',
-        gestureHandling: 'COOPERATIVE',
     });
+
     polyline = new Polyline3DElement({
         path: [
             { lat: 47.6589, lng: -122.43012, altitude: 10 },
@@ -37,19 +40,22 @@ async function init() {
         ],
         strokeColor: 'red',
         strokeWidth: 5,
-        altitudeMode: AltitudeMode.CLAMP_TO_GROUND,
+        altitudeMode: 'CLAMP_TO_GROUND',
         drawsOccludedSegments: true,
     });
+
     map.append(polyline);
     document.body.append(map);
 }
-init();
+
+void init();
+
 // Dropdown event listener
 const dropdown = document.getElementById('selectElementId');
-dropdown.addEventListener('change', updateAltitudeMode);
-function updateAltitudeMode(event) {
+dropdown.addEventListener('change', () => {
     if (polyline && dropdown.value) {
         polyline.altitudeMode = dropdown.value;
     }
-}
+});
+
 // [END maps_3d_clamp_mode]

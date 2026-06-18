@@ -3,7 +3,6 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-//@ts-nocheck
 // [START maps_3d_simple_marker]
 async function init() {
     // Make sure the Marker3DElement is included.
@@ -15,7 +14,6 @@ async function init() {
         tilt: 67.5,
         range: 1000,
         mode: 'SATELLITE',
-        gestureHandling: 'COOPERATIVE',
     });
 
     const marker = new Marker3DElement({
@@ -29,5 +27,5 @@ async function init() {
     document.body.append(map);
 }
 
-init();
+void init();
 // [END maps_3d_simple_marker]
