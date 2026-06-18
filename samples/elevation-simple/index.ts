@@ -42,17 +42,17 @@ function displayLocationElevation(
             if (results[0]) {
                 // Open the infowindow indicating the elevation at the clicked position.
                 infowindow.setContent(
-                    'The elevation at this point <br>is ' +
-                        results[0].elevation +
-                        ' meters.'
+                    `The elevation at this point <br>is ${String(results[0].elevation)} meters.`
                 );
             } else {
                 infowindow.setContent('No results found');
             }
         })
-        .catch((e) =>
-            infowindow.setContent('Elevation service failed due to: ' + e)
-        );
+        .catch((e: unknown) => {
+            infowindow.setContent(
+                `Elevation service failed due to: ${String(e)}`
+            );
+        });
 }
 
 void initMap();
