@@ -7,9 +7,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "strict": true,
-    "noImplicitAny": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "types": ["google.maps"],
+    "types": ["google.maps"]
   }
 }

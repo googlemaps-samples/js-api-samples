@@ -2,7 +2,7 @@
     "name": "@js-api-samples/address-validation",
     "version": "1.0.0",
     "scripts": {
-      "build": "tsc && bash ../jsfiddle.sh address-validation && bash ../app.sh address-validation && bash ../docs.sh address-validation && npm run build:vite --workspace=. && bash ../dist.sh address-validation",
+      "build": "bash ../build-single.sh",
       "test": "tsc && npm run build:vite --workspace=.",
       "start": "tsc && vite build --base './' && vite",
       "build:vite": "vite build --base './'",

@@ -5,8 +5,8 @@
  */
 
 // [START maps_dds_datasets_polygon]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-let innerMap;
+const mapElement = document.querySelector('gmp-map')!;
+let innerMap: google.maps.Map;
 // [START maps_dds_datasets_polygon_featurestyleoptions]
 const styleOptions = {
     strokeColor: 'green',
@@ -17,9 +17,9 @@ const styleOptions = {
 };
 // [END maps_dds_datasets_polygon_featurestyleoptions]
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
     // Get the inner map.
     innerMap = mapElement.innerMap;
@@ -33,5 +33,5 @@ async function initMap() {
     // [END maps_dds_datasets_polygon_featurelayer]
 }
 
-initMap();
+void init();
 // [END maps_dds_datasets_polygon]

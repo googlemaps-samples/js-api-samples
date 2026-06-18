@@ -5,15 +5,12 @@
  */
 
 // [START maps_layer_data_quakes_simple]
-let innerMap;
-let earthquakeData;
+let innerMap: google.maps.Map;
 
-async function initMap() {
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+async function init() {
+    await google.maps.importLibrary('maps');
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     innerMap = mapElement.innerMap;
 
@@ -22,16 +19,18 @@ async function initMap() {
     //   http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
     const script = document.createElement('script');
 
-    script.setAttribute('src', 'quakes.geo.json');
+    script.setAttribute('src', 'quakes.geo.js');
 
     document.getElementsByTagName('head')[0].appendChild(script);
 }
 
 // Defines the callback function referenced in the jsonp file.
-function eqfeed_callback(data: any) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function earthquakeDataLoad(data: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     innerMap.data.addGeoJson(data);
 }
 
-window.eqfeed_callback = eqfeed_callback;
-initMap();
+window.earthquakeDataLoad = earthquakeDataLoad;
+void init();
 // [END maps_layer_data_quakes_simple]

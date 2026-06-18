@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
@@ -6,33 +6,45 @@
  */
 
 let innerMap;
-async function initMap() {
+
+async function init() {
     //  Request the needed libraries.
-    await google.maps.importLibrary('maps');
+    void google.maps.importLibrary('core'); // preload
+    const { InfoWindow } = await google.maps.importLibrary('maps');
+
     // Retrieve the map element.
     const mapElement = document.querySelector('gmp-map');
+
     // Get the inner map from the map element.
     innerMap = mapElement.innerMap;
+
     // Create the initial info window.
-    let infowindow = new google.maps.InfoWindow({});
+    const infoWindow = new InfoWindow();
+
     // Add a listener for click events on the map.
     innerMap.addListener('click', (event) => {
         // Prevent the default POI info window from showing.
         event.stop();
+
         // If the event has a placeId, show the info window.
         if (isIconMouseEvent(event) && event.placeId) {
-            showInfoWindow(event, infowindow);
-        }
-        else {
+            void showInfoWindow(event, infoWindow);
+        } else {
             // Close the info window if there is no placeId.
-            infowindow.close();
+            infoWindow.close();
         }
     });
 }
+
 // Helper function to show the info window.
-async function showInfoWindow(event, infowindow) {
+async function showInfoWindow(event, infoWindow) {
+    if (!event.placeId) return;
+
+    const { Size } = await google.maps.importLibrary('core');
+
     // Retrieve the place details for the selected POI.
     const place = await getPlaceDetails(event.placeId);
+
     // Assemble the info window content.
     const content = document.createElement('div');
     const address = document.createElement('div');
@@ -40,36 +52,43 @@ async function showInfoWindow(event, infowindow) {
     address.textContent = place.formattedAddress || '';
     placeId.textContent = place.id || '';
     content.append(address, placeId);
+
     // Create an element to use the place name as header content.
     const name = document.createElement('div');
     name.style.fontWeight = 'bold';
     name.style.fontSize = 'medium';
     name.textContent = place.displayName || '';
+
     // Update info window options.
-    infowindow.setOptions({
+    infoWindow.setOptions({
         position: event.latLng,
-        pixelOffset: new google.maps.Size(0, -30),
+        pixelOffset: new Size(0, -30),
         headerContent: name,
-        content: content,
+        content,
     });
+
     innerMap.panTo(event.latLng);
-    infowindow.open(innerMap);
+    infoWindow.open(innerMap);
 }
+
 // Helper function to get place details.
 async function getPlaceDetails(placeId) {
     // Import the Places library.
-    const { Place } = (await google.maps.importLibrary('places'));
+    const { Place } = await google.maps.importLibrary('places');
+
     // Create a Place instance with the place id and fetch the details.
     const place = new Place({ id: placeId });
     await place.fetchFields({
         fields: ['displayName', 'formattedAddress'],
     });
+
     // Return the place details.
     return place;
 }
+
 // Helper type guard to determine if the event is an IconMouseEvent.
 function isIconMouseEvent(e) {
     return 'placeId' in e;
 }
-initMap();
 
+void init();

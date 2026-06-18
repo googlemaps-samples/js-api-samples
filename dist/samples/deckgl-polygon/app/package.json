@@ -2,15 +2,11 @@
   "name": "@js-api-samples/deckgl-polygon",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh deckgl-polygon && bash ../app.sh deckgl-polygon && bash ../docs.sh deckgl-polygon && npm run build:vite --workspace=. && bash ../dist.sh deckgl-polygon",
+    "build": "bash ../build-single.sh",
     "test": "tsc && npm run build:vite --workspace=.",
     "start": "tsc && vite build --base './' && vite",
     "build:vite": "vite build --base './'",
     "preview": "vite preview"
   },
-  "dependencies": {
-    "@deck.gl/core": "^9.3.0",
-    "@deck.gl/google-maps": "^9.3.0",
-    "@deck.gl/layers": "^9.3.0"
-  }
+  "dependencies": {}
 }

@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_model_interactive]
 async function init() {
     // Import the needed libraries.
@@ -17,7 +16,6 @@ async function init() {
         tilt: 74,
         heading: 0,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     const model = new Model3DInteractiveElement({
@@ -28,14 +26,13 @@ async function init() {
         altitudeMode: 'CLAMP_TO_GROUND',
     });
 
-    model.addEventListener('gmp-click', (event) => {
-        const clickedModel = event.target;
-        clickedModel.scale = Math.random() * (0.5 - 0.1) + 0.1;
+    model.addEventListener('gmp-click', function () {
+        this.scale = Math.random() * (0.5 - 0.1) + 0.1;
     });
 
     document.body.append(map);
     map.append(model);
 }
 
-init();
+void init();
 // [END maps_3d_model_interactive]

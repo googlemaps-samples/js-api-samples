@@ -2,7 +2,7 @@
   "name": "@js-api-samples/infowindow-simple",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh infowindow-simple && bash ../app.sh infowindow-simple && bash ../docs.sh infowindow-simple && npm run build:vite --workspace=. && bash ../dist.sh infowindow-simple",
+    "build": "bash ../build-single.sh",
     "test": "tsc && npm run build:vite --workspace=.",
     "start": "tsc && vite build --base './' && vite",
     "build:vite": "vite build --base './'",

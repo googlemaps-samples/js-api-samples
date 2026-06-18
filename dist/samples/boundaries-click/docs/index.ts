@@ -5,36 +5,36 @@
  */
 
 // [START maps_boundaries_click_event]
-let innerMap;
-let featureLayer;
-let infoWindow;
-let lastInteractedFeatureIds = [];
-let lastClickedFeatureIds = [];
+let innerMap: google.maps.Map;
+let featureLayer: google.maps.FeatureLayer;
+let infoWindow: google.maps.InfoWindow;
+let lastInteractedFeatureIds: string[] = [];
+let lastClickedFeatureIds: string[] = [];
 
 // [START maps_boundaries_click_event_handler]
-function handleClick(/* MouseEvent */ e) {
-    lastClickedFeatureIds = e.features.map((f) => f.placeId);
+function handleClick(event: google.maps.FeatureMouseEvent) {
+    lastClickedFeatureIds = event.features.map(
+        (f) => (f as google.maps.PlaceFeature).placeId
+    );
     lastInteractedFeatureIds = [];
     featureLayer.style = applyStyle;
-    createInfoWindow(e);
+    void createInfoWindow(event);
 }
 
-function handleMouseMove(/* MouseEvent */ e) {
-    lastInteractedFeatureIds = e.features.map((f) => f.placeId);
+function handleMouseMove(event: google.maps.FeatureMouseEvent) {
+    lastInteractedFeatureIds = event.features.map(
+        (f) => (f as google.maps.PlaceFeature).placeId
+    );
     featureLayer.style = applyStyle;
 }
 // [END maps_boundaries_click_event_handler]
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const { Map, InfoWindow } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
+    const { InfoWindow } = await google.maps.importLibrary('maps');
 
     // Get the gmp-map element.
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     // Get the inner map.
     innerMap = mapElement.innerMap;
@@ -44,11 +44,9 @@ async function initMap() {
         mapTypeControl: false,
     });
 
-    //[START maps_boundaries_click_event_add_layer]
+    // [START maps_boundaries_click_event_add_layer]
     // Add the feature layer.
-    featureLayer = innerMap.getFeatureLayer(
-        google.maps.FeatureType.ADMINISTRATIVE_AREA_LEVEL_2
-    );
+    featureLayer = innerMap.getFeatureLayer('ADMINISTRATIVE_AREA_LEVEL_2');
 
     // Add the event listeners for the feature layer.
     featureLayer.addListener('click', handleClick);
@@ -64,17 +62,17 @@ async function initMap() {
             featureLayer.style = applyStyle;
         }
     });
-    //[END maps_boundaries_click_event_add_layer]
+    // [END maps_boundaries_click_event_add_layer]
 
-    // Create the infowindow.
-    infoWindow = new InfoWindow({});
+    // Create the infoWindow.
+    infoWindow = new InfoWindow();
     // Apply style on load, to enable clicking.
     featureLayer.style = applyStyle;
 }
 
-// Helper function for the infowindow.
-async function createInfoWindow(event) {
-    let feature = event.features[0];
+// Helper function for the infoWindow.
+async function createInfoWindow(event: google.maps.FeatureMouseEvent) {
+    const feature = event.features[0] as google.maps.PlaceFeature;
     if (!feature.placeId) return;
 
     // Update the info window.
@@ -82,14 +80,14 @@ async function createInfoWindow(event) {
     const place = await feature.fetchPlace();
 
     // Create a new div to hold the text content.
-    let content = document.createElement('div');
+    const content = document.createElement('div');
 
     // Get the text values.
-    let nameText = document.createElement('span');
+    const nameText = document.createElement('span');
     nameText.textContent = `Display name: ${place.displayName}`;
-    let placeIdText = document.createElement('span');
+    const placeIdText = document.createElement('span');
     placeIdText.textContent = `Place ID: ${feature.placeId}`;
-    let featureTypeText = document.createElement('span');
+    const featureTypeText = document.createElement('span');
     featureTypeText.textContent = `Feature type: ${feature.featureType}`;
 
     // Append the text to the div.
@@ -125,13 +123,11 @@ const styleMouseMove = {
 };
 
 // Apply styles using a feature style function.
-function applyStyle(/* FeatureStyleFunctionOptions */ params) {
-    const placeId = params.feature.placeId;
-    //@ts-ignore
+function applyStyle(params: google.maps.FeatureStyleFunctionOptions) {
+    const placeId = (params.feature as google.maps.PlaceFeature).placeId;
     if (lastClickedFeatureIds.includes(placeId)) {
         return styleClicked;
     }
-    //@ts-ignore
     if (lastInteractedFeatureIds.includes(placeId)) {
         return styleMouseMove;
     }
@@ -140,7 +136,10 @@ function applyStyle(/* FeatureStyleFunctionOptions */ params) {
 // [END maps_boundaries_click_event_style]
 
 // Helper function to create an info window.
-function updateInfoWindow(content, center) {
+function updateInfoWindow(
+    content: HTMLElement,
+    center: google.maps.LatLng | google.maps.LatLngLiteral | null | undefined
+) {
     infoWindow.setContent(content);
     infoWindow.setPosition(center);
     infoWindow.open({
@@ -149,5 +148,5 @@ function updateInfoWindow(content, center) {
     });
 }
 
-initMap();
+void init();
 // [END maps_boundaries_click_event]

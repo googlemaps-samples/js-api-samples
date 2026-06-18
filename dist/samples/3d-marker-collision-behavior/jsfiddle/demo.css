@@ -4,7 +4,8 @@
 * SPDX-License-Identifier: Apache-2.0
 */
 
-/* * Always set the map height explicitly to define the size of the div element
+/* 
+ * Always set the map height explicitly to define the size of the div element
  * that contains the map. 
  */
 html,
@@ -20,4 +21,3 @@ selector {
     padding: 2px;
     float: right;
 }
-

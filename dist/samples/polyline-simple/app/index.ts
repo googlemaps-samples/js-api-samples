@@ -8,11 +8,11 @@
 // This example creates a 2-pixel-wide red polyline showing the path of
 // the first trans-Pacific flight between Oakland, CA, and Brisbane,
 // Australia which was made by Charles Kingsford Smith.
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-let innerMap;
+const mapElement = document.querySelector('gmp-map')!;
+let innerMap: google.maps.Map;
 
-async function initMap() {
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+async function init() {
+    const { Polyline } = await google.maps.importLibrary('maps');
     innerMap = mapElement.innerMap;
 
     const flightPlanCoordinates = [
@@ -21,7 +21,7 @@ async function initMap() {
         { lat: -18.142, lng: 178.431 },
         { lat: -27.467, lng: 153.027 },
     ];
-    const flightPath = new google.maps.Polyline({
+    const flightPath = new Polyline({
         path: flightPlanCoordinates,
         geodesic: true,
         strokeColor: '#FF0000',
@@ -32,5 +32,5 @@ async function initMap() {
     flightPath.setMap(innerMap);
 }
 
-initMap();
+void init();
 // [END maps_polyline_simple]

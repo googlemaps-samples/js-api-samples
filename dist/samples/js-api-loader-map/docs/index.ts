@@ -12,17 +12,16 @@ import { setOptions, importLibrary } from '@googlemaps/js-api-loader';
 
 const API_KEY = 'AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8';
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // [START maps_js_api_loader_map_options]
     // Set loader options.
     setOptions({
         key: API_KEY,
-        v: 'weekly',
     });
     // [END maps_js_api_loader_map_options]
 
     // Load the Maps library.
-    const { Map } = (await importLibrary('maps'));
+    const { Map } = await importLibrary('maps');
 
     // Set map options.
     const mapOptions = {
@@ -31,11 +30,8 @@ async function initMap(): Promise<void> {
     };
 
     // Declare the map.
-    const map = new Map(
-        document.getElementById('map') as HTMLElement,
-        mapOptions
-    );
+    new Map(document.getElementById('map')!, mapOptions);
 }
 
-initMap();
+void init();
 // [END maps_js_api_loader_map]

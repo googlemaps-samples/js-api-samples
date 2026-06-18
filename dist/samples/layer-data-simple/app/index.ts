@@ -5,17 +5,15 @@
  */
 
 // [START maps_layer_data_simple]
-async function initMap() {
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+async function init() {
+    await google.maps.importLibrary('maps');
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
-    let innerMap = mapElement.innerMap;
+    const innerMap = mapElement.innerMap;
 
     innerMap.data.loadGeoJson('google.json');
 }
 
-initMap();
+void init();
 // [END maps_layer_data_simple]

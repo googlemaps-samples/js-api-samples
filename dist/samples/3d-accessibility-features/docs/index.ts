@@ -4,12 +4,15 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_accessibility_features]
-async function initMap() {
-    const { Map3DElement, Marker3DInteractiveElement, PopoverElement } =
-        await google.maps.importLibrary('maps3d');
-    const { PinElement } = await google.maps.importLibrary('marker');
+async function init() {
+    const [
+        { Map3DElement, Marker3DInteractiveElement, PopoverElement },
+        { PinElement },
+    ] = await Promise.all([
+        google.maps.importLibrary('maps3d'),
+        google.maps.importLibrary('marker'),
+    ]);
 
     const map = new Map3DElement({
         center: { lat: 34.8405, lng: -111.7909, altitude: 1322.7 },
@@ -17,7 +20,6 @@ async function initMap() {
         tilt: 67.44,
         heading: 0.01,
         mode: 'SATELLITE',
-        gestureHandling: 'COOPERATIVE',
     });
 
     // Set LatLng and title text for the markers. The first marker (Boynton Pass)
@@ -79,5 +81,5 @@ async function initMap() {
     document.body.append(map);
 }
 
-initMap();
+void init();
 // [END maps_3d_accessibility_features]

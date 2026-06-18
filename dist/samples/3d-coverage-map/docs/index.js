@@ -1,9 +1,10 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 // [START maps_3d_coverage_map]
 const layerStyle = {
     strokeColor: '#2a76ff',
@@ -12,36 +13,46 @@ const layerStyle = {
     fillColor: '#2a76ff',
     fillOpacity: 0.3,
 };
+
 const mapElement = document.querySelector('gmp-map');
 const placeAutocomplete = document.querySelector('gmp-place-autocomplete');
-async function initMap() {
+
+async function init() {
     // Request needed libraries.
-    await google.maps.importLibrary('maps');
-    await google.maps.importLibrary('places');
+    await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('places'),
+    ]);
+
     // Get the inner map from the map element.
     const innerMap = mapElement.innerMap;
+
     innerMap.setOptions({
         mapTypeControl: false,
     });
-    const dataLayer = innerMap.getDatasetFeatureLayer('bcf6598c-7603-4698-9493-9e927d8d3d38');
+
+    const dataLayer = innerMap.getDatasetFeatureLayer(
+        'bcf6598c-7603-4698-9493-9e927d8d3d38'
+    );
     dataLayer.style = layerStyle;
-    //@ts-ignore
+
     placeAutocomplete.includedPrimaryTypes = ['(regions)'];
-    //prettier-ignore
-    //@ts-ignore
-    placeAutocomplete.addEventListener("gmp-select", async ({ placePrediction }) => {
-        if (!placePrediction)
-            return;
-        const place = placePrediction.toPlace();
-        await place.fetchFields({
-            fields: ["location"]
-        });
-        if (!place.location) {
-            return;
+
+    placeAutocomplete.addEventListener(
+        'gmp-select',
+        async ({ placePrediction }) => {
+            if (!placePrediction) return;
+            const place = placePrediction.toPlace();
+            await place.fetchFields({
+                fields: ['location'],
+            });
+            if (!place.location) {
+                return;
+            }
+            innerMap.setCenter(place.location);
+            innerMap.setZoom(9);
         }
-        innerMap.setCenter(place.location);
-        innerMap.setZoom(9);
-    });
+    );
 }
-initMap();
+void init();
 // [END maps_3d_coverage_map]

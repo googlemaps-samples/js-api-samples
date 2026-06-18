@@ -4,27 +4,19 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 // [START maps_geocoding_reverse]
-let marker;
+let marker: google.maps.marker.AdvancedMarkerElement;
 
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
-    const [{ Map, InfoWindow }, { Geocoder }, { AdvancedMarkerElement }] =
+    const [{ InfoWindow }, { Geocoder }, { AdvancedMarkerElement }] =
         await Promise.all([
-            google.maps.importLibrary(
-                'maps'
-            ) as Promise<google.maps.MapsLibrary>,
-            google.maps.importLibrary(
-                'geocoding'
-            ) as Promise<google.maps.GeocodingLibrary>,
-            google.maps.importLibrary(
-                'marker'
-            ) as Promise<google.maps.MarkerLibrary>,
+            google.maps.importLibrary('maps'),
+            google.maps.importLibrary('geocoding'),
+            google.maps.importLibrary('marker'),
         ]);
 
     // Get the gmp-map element.
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     // Get the inner map.
     const innerMap = mapElement.innerMap;
@@ -33,7 +25,7 @@ async function initMap() {
     const latLngQuery = document.getElementById('latlng') as HTMLInputElement;
 
     // Get the submit button.
-    const submitButton = document.getElementById('submit') as HTMLElement;
+    const submitButton = document.getElementById('submit')!;
 
     // Set the cursor to crosshair.
     innerMap.setOptions({
@@ -47,30 +39,32 @@ async function initMap() {
         map: innerMap,
     });
 
-    marker.anchorTop = "40px";
+    marker.anchorTop = '40px';
 
     const geocoder = new Geocoder();
-    const infowindow = new InfoWindow();
+    const infoWindow = new InfoWindow();
 
     // Add a click event listener to the submit button.
     submitButton.addEventListener('click', () => {
-        geocodeLatLng(geocoder, innerMap, infowindow);
+        void geocodeLatLng(geocoder, innerMap, infoWindow);
     });
 
     // Add a click event listener to the map.
-    innerMap.addListener('click', (event) => {
-        latLngQuery.value = `${event.latLng.lat()}, ${event.latLng.lng()}`;
-        geocodeLatLng(geocoder, innerMap, infowindow);
+    innerMap.addListener('click', (event: google.maps.MapMouseEvent) => {
+        if (event.latLng) {
+            latLngQuery.value = `${event.latLng.lat()}, ${event.latLng.lng()}`;
+            void geocodeLatLng(geocoder, innerMap, infoWindow);
+        }
     });
 
     // Make an initial request upon loading.
-    geocodeLatLng(geocoder, innerMap, infowindow);
+    void geocodeLatLng(geocoder, innerMap, infoWindow);
 }
 
 async function geocodeLatLng(
     geocoder: google.maps.Geocoder,
     map: google.maps.Map,
-    infowindow: google.maps.InfoWindow
+    infoWindow: google.maps.InfoWindow
 ) {
     const input = (document.getElementById('latlng') as HTMLInputElement).value;
     const latlngStr = input.split(',', 2);
@@ -79,20 +73,21 @@ async function geocodeLatLng(
         lng: parseFloat(latlngStr[1]),
     };
 
-    geocoder
-        .geocode({ location: latlng })
-        .then((response) => {
-            if (response.results[0]) {
-                marker.position = latlng;
-                map.setCenter(latlng);
-                infowindow.setContent(response.results[0].formatted_address);
-                infowindow.open(map, marker);
-            } else {
-                window.alert('No results found');
-            }
-        })
-        .catch((e) => window.alert('Geocoder failed due to: ' + e));
+    try {
+        const { results } = await geocoder.geocode({ location: latlng });
+
+        if (results[0]) {
+            marker.position = latlng;
+            map.setCenter(latlng);
+            infoWindow.setContent(results[0].formatted_address);
+            infoWindow.open(map, marker);
+        } else {
+            window.alert('No results found');
+        }
+    } catch (e) {
+        window.alert('Geocoder failed due to: ' + String(e));
+    }
 }
 
-initMap();
+void init();
 // [END maps_geocoding_reverse]

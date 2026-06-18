@@ -7,11 +7,9 @@
 // [START maps_advanced_markers_animation]
 /**
  * Returns a random lat lng position within the map bounds.
- * @param {!google.maps.Map} map
- * @return {!google.maps.LatLngLiteral}
  */
-function getRandomPosition(map) {
-    const bounds = map.getBounds();
+function getRandomPosition(map: google.maps.Map): google.maps.LatLngLiteral {
+    const bounds = map.getBounds()!;
     const minLat = bounds.getSouthWest().lat();
     const minLng = bounds.getSouthWest().lng();
     const maxLat = bounds.getNorthEast().lat();
@@ -33,7 +31,6 @@ function getRandomPosition(map) {
     };
 }
 
-const total = 100;
 const intersectionObserver = new IntersectionObserver((entries) => {
     for (const entry of entries) {
         if (entry.isIntersecting) {
@@ -43,26 +40,28 @@ const intersectionObserver = new IntersectionObserver((entries) => {
     }
 });
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement, PinElement } =
-        (await google.maps.importLibrary(
-            'marker'
-        )) as google.maps.MarkerLibrary;
+    const [
+        { Map },
+        { event, ControlPosition },
+        { AdvancedMarkerElement, PinElement },
+    ] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('core'),
+        google.maps.importLibrary('marker'),
+    ]);
 
     const position = { lat: 37.4242011827985, lng: -122.09242296450893 };
 
-    const map = new Map(document.getElementById('map') as HTMLElement, {
+    const map = new Map(document.getElementById('map')!, {
         zoom: 14,
         center: position,
         mapId: '4504f8b37365c3d0',
     });
 
     // Create 100 markers to animate.
-    google.maps.event.addListenerOnce(map, 'idle', () => {
+    event.addListenerOnce(map, 'idle', () => {
         for (let i = 0; i < 100; i++) {
             createMarker(map, AdvancedMarkerElement, PinElement);
         }
@@ -75,24 +74,27 @@ async function initMap(): Promise<void> {
     controlUI.classList.add('ui-button');
     controlUI.innerText = 'Reset the example';
     controlUI.addEventListener('click', () => {
-        // Reset the example by reloading the map iframe.
+        // Reset the example by recreating the map.
         refreshMap();
     });
     controlDiv.appendChild(controlUI);
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(controlDiv);
+    map.controls[ControlPosition.TOP_CENTER].push(controlDiv);
 }
 
-function createMarker(map, AdvancedMarkerElement, PinElement) {
-    const pinElement = new PinElement();
-    const content = pinElement.element;
-    const advancedMarker = new AdvancedMarkerElement({
+function createMarker(
+    map: google.maps.Map,
+    AdvancedMarkerElement: typeof google.maps.marker.AdvancedMarkerElement,
+    PinElement: typeof google.maps.marker.PinElement
+) {
+    const content = new PinElement();
+    new AdvancedMarkerElement({
         position: getRandomPosition(map),
-        map: map,
-        content: content,
+        map,
+        content,
     });
 
     content.style.opacity = '0';
-    content.addEventListener('animationend', (event) => {
+    content.addEventListener('animationend', () => {
         content.classList.remove('drop');
         content.style.opacity = '1';
     });
@@ -109,8 +111,8 @@ function refreshMap() {
     const mapDiv = document.createElement('div');
     mapDiv.id = 'map';
     mapContainer!.appendChild(mapDiv);
-    initMap();
+    void init();
 }
 
-initMap();
+void init();
 // [END maps_advanced_markers_animation]

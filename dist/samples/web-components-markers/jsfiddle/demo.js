@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
@@ -6,10 +6,3 @@
  */
 
 // This example adds a map with markers, using web components.
-
-async function initMap() {
-    console.log('Maps JavaScript API loaded.');
-}
-
-initMap();
-

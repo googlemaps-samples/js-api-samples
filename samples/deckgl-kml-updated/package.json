@@ -2,17 +2,14 @@
   "name": "@js-api-samples/deckgl-kml-updated",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh deckgl-kml-updated && bash ../app.sh deckgl-kml-updated && bash ../docs.sh deckgl-kml-updated && npm run build:vite --workspace=. && bash ../dist.sh deckgl-kml-updated",
+    "build": "bash ../build-single.sh",
     "test": "tsc && npm run build:vite",
     "start": "vite",
     "build:vite": "vite build --base './'",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@loaders.gl/kml": "^4.4.1",
-    "@deck.gl/core": "^9.3.1",
-    "@deck.gl/google-maps": "^9.3.1",
-    "@deck.gl/layers": "^9.3.1"
+    "@tmcw/togeojson": "^7.1.2"
   },
   "devDependencies": {
     "apache-arrow": "^21.1.0"

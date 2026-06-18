@@ -10,26 +10,18 @@
 // the place ID and other information about the place that the user has
 // selected.
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Request needed libraries.
     const [{ InfoWindow }, { AdvancedMarkerElement }] = await Promise.all([
-        google.maps.importLibrary('maps') as Promise<google.maps.MapsLibrary>,
-        google.maps.importLibrary(
-            'marker'
-        ) as Promise<google.maps.MarkerLibrary>,
-        google.maps.importLibrary(
-            'places'
-        ) as Promise<google.maps.PlacesLibrary>,
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('places'),
     ]);
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
-    const map = mapElement.innerMap as google.maps.Map;
+    const mapElement = document.querySelector('gmp-map')!;
+    const map = mapElement.innerMap;
 
-    const placeAutocomplete = document.querySelector(
-        'gmp-place-autocomplete'
-    ) as google.maps.places.PlaceAutocompleteElement;
+    const placeAutocomplete = document.querySelector('gmp-place-autocomplete')!;
 
     // Set the map options.
     map.setOptions({
@@ -46,28 +38,25 @@ async function initMap(): Promise<void> {
         }
     });
 
-    const infowindow = new InfoWindow();
-    const infowindowContent = document.getElementById(
-        'infowindow-content'
-    ) as HTMLElement;
+    const infoWindow = new InfoWindow();
+    const infoWindowContent = document.getElementById('infowindow-content')!;
 
-    infowindow.setContent(infowindowContent);
+    infoWindow.setContent(infoWindowContent);
 
     const marker = new AdvancedMarkerElement({
-        map: map,
-        collisionBehavior:
-            google.maps.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL,
+        map,
+        collisionBehavior: 'REQUIRED_AND_HIDES_OPTIONAL',
         gmpClickable: true,
     });
 
     marker.addEventListener('gmp-click', () => {
-        infowindow.open(map, marker);
+        infoWindow.open(map, marker);
     });
 
     placeAutocomplete.addEventListener(
         'gmp-select',
-        async ({ placePrediction }: any) => {
-            infowindow.close();
+        async ({ placePrediction }) => {
+            infoWindow.close();
 
             const place = placePrediction.toPlace();
 
@@ -90,23 +79,16 @@ async function initMap(): Promise<void> {
             marker.position = place.location;
             // marker.setVisible(true); // AdvancedMarkerElement is visible by default when map and position are set.
 
-            (
-                infowindowContent.children.namedItem(
-                    'place-name'
-                ) as HTMLElement
-            ).textContent = place.displayName as string;
-            (
-                infowindowContent.children.namedItem('place-id') as HTMLElement
-            ).textContent = place.id as string;
-            (
-                infowindowContent.children.namedItem(
-                    'place-address'
-                ) as HTMLElement
-            ).textContent = place.formattedAddress as string;
-            infowindow.open(map, marker);
+            infoWindowContent.children.namedItem('place-name')!.textContent =
+                place.displayName!;
+            infoWindowContent.children.namedItem('place-id')!.textContent =
+                place.id;
+            infoWindowContent.children.namedItem('place-address')!.textContent =
+                place.formattedAddress!;
+            infoWindow.open(map, marker);
         }
     );
 }
 
-initMap();
+void init();
 // [END maps_places_placeid_finder]

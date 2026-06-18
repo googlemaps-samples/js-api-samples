@@ -1,21 +1,21 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     await google.maps.importLibrary('maps');
+
     const mapElement = document.querySelector('gmp-map');
+
     const innerMap = mapElement.innerMap;
-    
+
     innerMap.setOptions({
         cameraControl: false,
         scaleControl: true,
     });
-    
 }
-initMap();
-
+void init();

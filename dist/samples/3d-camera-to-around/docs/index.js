@@ -1,13 +1,14 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-// @ts-nocheck
+
 // [START maps_3d_camera_to_around]
 async function init() {
     const { Map3DElement } = await google.maps.importLibrary('maps3d');
+
     const map = new Map3DElement({
         center: {
             lat: 37.79810773998413,
@@ -17,10 +18,12 @@ async function init() {
         range: 6062.016931506805,
         tilt: 81.17100663963272,
         heading: -56.047035719765596,
-        gestureHandling: 'COOPERATIVE',
     });
+
     map.mode = 'SATELLITE';
+
     document.body.append(map);
+
     // Used for both the fly to function and the location to fly around.
     const flyToCamera = {
         center: {
@@ -32,28 +35,39 @@ async function init() {
         tilt: 76.9173260789542,
         heading: -44.59196007522445,
     };
+
     // Fly the camera from San Francisco to Hawaii, can be controlled by a button alternatively.
+    // [START maps_3d_camera_to_around_flyto]
     map.flyCameraTo({
         // Where we are going to.
         endCamera: flyToCamera,
         // How long we want the flight to take.
         durationMillis: 30000,
     });
+    // [END maps_3d_camera_to_around_flyto]
     // When the animation has completed, fly around the location.
-    map.addEventListener('gmp-animationend', () => {
-        map.flyCameraAround({
-            // Location to fly around.
-            camera: flyToCamera,
-            // Length of time to fly to the location.
-            durationMillis: 50000,
-            // Number of rotations to make in the specified time.
-            repeatCount: 1,
-        });
-    }, { once: true }); // Stop animation after flying around.
+    map.addEventListener(
+        'gmp-animationend',
+        () => {
+            // [START maps_3d_camera_to_around_flyaround]
+            map.flyCameraAround({
+                // Location to fly around.
+                camera: flyToCamera,
+                // Length of time to fly to the location.
+                durationMillis: 50000,
+                // Number of rotations to make in the specified time.
+                repeatCount: 1,
+            });
+            // [END maps_3d_camera_to_around_flyaround]
+        },
+        { once: true }
+    ); // Stop animation after flying around.
+
     // At any time stop the animation.
-    map.addEventListener('gmp-click', (event) => {
+    map.addEventListener('gmp-click', () => {
         map.stopCameraAnimation();
     });
 }
-init();
+
+void init();
 // [END maps_3d_camera_to_around]

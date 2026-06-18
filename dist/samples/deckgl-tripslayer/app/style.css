@@ -4,14 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 :root {
-  --mdc-theme-primary: #1a73e8;
-  --mdc-theme-secondary: #rgb(225, 245, 254);
-  --mdc-theme-on-primary: #fff;
-  --mdc-theme-on-secondary: rgb(1, 87, 155);
+    --mdc-theme-primary: #1a73e8;
+    --mdc-theme-secondary: #rgb(225, 245, 254);
+    --mdc-theme-on-primary: #fff;
+    --mdc-theme-on-secondary: rgb(1, 87, 155);
 }
 
 .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
-  color: var(--mdc-theme-primary);
+    color: var(--mdc-theme-primary);
 }
 
 /* [START maps_deckgl_tripslayer] */
@@ -20,7 +20,7 @@
  * that contains the map. 
  */
 #map {
-  height: 100%;
+    height: 100%;
 }
 
 /* 
@@ -28,9 +28,9 @@
  */
 html,
 body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 /* [END maps_deckgl_tripslayer] */

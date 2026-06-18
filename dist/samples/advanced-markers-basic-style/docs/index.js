@@ -1,17 +1,22 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2019 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 // [START maps_advanced_markers_basic_style]
-const parser = new DOMParser();
 const mapElement = document.querySelector('gmp-map');
-async function initMap() {
+
+async function init() {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary('maps'));
-    const { AdvancedMarkerElement, PinElement } = (await google.maps.importLibrary('marker'));
+    const [{ AdvancedMarkerElement, PinElement }] = await Promise.all([
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
+    ]);
+
     // Each PinElement is paired with a marker to demonstrate setting each parameter.
+
     // [START maps_advanced_markers_basic_style_title]
     // Default marker with title text (no PinElement).
     const markerWithText = new AdvancedMarkerElement({
@@ -20,6 +25,7 @@ async function initMap() {
     });
     mapElement.append(markerWithText);
     // [END maps_advanced_markers_basic_style_title]
+
     // [START maps_advanced_markers_basic_style_scale]
     // Adjust the scale.
     const pinScaled = new PinElement({
@@ -31,6 +37,7 @@ async function initMap() {
     markerScaled.append(pinScaled);
     mapElement.append(markerScaled);
     // [END maps_advanced_markers_basic_style_scale]
+
     // [START maps_advanced_markers_basic_style_background]
     // Change the background color.
     const pinBackground = new PinElement({
@@ -42,6 +49,7 @@ async function initMap() {
     markerBackground.append(pinBackground);
     mapElement.append(markerBackground);
     // [END maps_advanced_markers_basic_style_background]
+
     // [START maps_advanced_markers_basic_style_border]
     // Change the border color.
     const pinBorder = new PinElement({
@@ -53,6 +61,7 @@ async function initMap() {
     markerBorder.append(pinBorder);
     mapElement.append(markerBorder);
     // [END maps_advanced_markers_basic_style_border]
+
     // [START maps_advanced_markers_basic_style_glyph]
     // Change the glyph color.
     const pinGlyph = new PinElement({
@@ -64,9 +73,9 @@ async function initMap() {
     markerGlyph.append(pinGlyph);
     mapElement.append(markerGlyph);
     // [END maps_advanced_markers_basic_style_glyph]
+
     // [START maps_advanced_markers_basic_style_text_glyph]
     const pinTextGlyph = new PinElement({
-        //@ts-ignore
         glyphText: 'T',
         glyphColor: 'white',
     });
@@ -76,10 +85,10 @@ async function initMap() {
     markerGlyphText.append(pinTextGlyph);
     mapElement.append(markerGlyphText);
     // [END maps_advanced_markers_basic_style_text_glyph]
+
     // [START maps_advanced_markers_basic_style_hide_glyph]
     // Hide the glyph.
     const pinNoGlyph = new PinElement({
-        //@ts-ignore
         glyphText: '',
     });
     const markerNoGlyph = new AdvancedMarkerElement({
@@ -89,5 +98,6 @@ async function initMap() {
     mapElement.append(markerNoGlyph);
     // [END maps_advanced_markers_basic_style_hide_glyph]
 }
-initMap();
+
+void init();
 // [END maps_advanced_markers_basic_style]

@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 /**
  * Data-driven styling region coverage viewer!
  * - View feature boundary availability around the world.
@@ -11,9 +15,9 @@
  */
 
 // [START maps_dds_region_viewer]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-let placeAutocomplete;
-let innerMap;
+const mapElement = document.querySelector('gmp-map')!;
+let placeAutocomplete: google.maps.places.PlaceAutocompleteElement;
+let innerMap: google.maps.Map;
 let countryMenu: HTMLSelectElement;
 let featureMenu: HTMLSelectElement;
 let searchInputOption: HTMLInputElement;
@@ -21,22 +25,24 @@ let fillColorPicker: HTMLInputElement;
 let strokeColorPicker: HTMLInputElement;
 let contentDiv: HTMLElement;
 
-let allLayers;
-let countryLayer;
-let admin1Layer;
-let admin2Layer;
-let localityLayer;
-let postalCodeLayer;
-let schoolDistrictLayer;
+let allLayers: google.maps.FeatureLayer[];
+let countryLayer: google.maps.FeatureLayer;
+let admin1Layer: google.maps.FeatureLayer;
+let admin2Layer: google.maps.FeatureLayer;
+let localityLayer: google.maps.FeatureLayer;
+let postalCodeLayer: google.maps.FeatureLayer;
+let schoolDistrictLayer: google.maps.FeatureLayer;
 
 let selectedPlaceId: string;
 
 import * as countries from './src/countries.json';
 
-async function initMap() {
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
-    (await google.maps.importLibrary('places')) as google.maps.PlacesLibrary;
-    (await google.maps.importLibrary('marker')) as google.maps.MarkerLibrary;
+async function init() {
+    await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('places'),
+        google.maps.importLibrary('marker'),
+    ]);
 
     // Get the inner map.
     innerMap = mapElement.innerMap;
@@ -45,12 +51,10 @@ async function initMap() {
     });
 
     // Create the Place Autocomplete widget.
-    placeAutocomplete = document.querySelector(
-        'gmp-place-autocomplete'
-    ) as google.maps.places.PlaceAutocompleteElement;
+    placeAutocomplete = document.querySelector('gmp-place-autocomplete')!;
     placeAutocomplete.includedPrimaryTypes = ['(regions)'];
 
-    contentDiv = document.getElementById('pac-content') as HTMLElement;
+    contentDiv = document.getElementById('pac-content')!;
     searchInputOption = document.getElementById(
         'pac-filter-option'
     ) as HTMLInputElement;
@@ -86,30 +90,27 @@ async function initMap() {
     });
 
     // Handle autocomplete widget selection.
-    placeAutocomplete.addEventListener(
-        'gmp-select',
-        async ({ placePrediction }) => {
-            const types = placePrediction.types as string[];
+    placeAutocomplete.addEventListener('gmp-select', ({ placePrediction }) => {
+        const types = placePrediction.types;
 
-            // Find the first type that matches a feature menu option.
-            const validFeatureTypes = [
-                'country',
-                'administrative_area_level_1',
-                'administrative_area_level_2',
-                'locality',
-                'postal_code',
-                'school_district',
-            ];
-            for (const type of types) {
-                if (validFeatureTypes.includes(type)) {
-                    featureMenu.value = type; // Set the menu value directly
-                    break; // Use the first matching type found
-                }
+        // Find the first type that matches a feature menu option.
+        const validFeatureTypes = [
+            'country',
+            'administrative_area_level_1',
+            'administrative_area_level_2',
+            'locality',
+            'postal_code',
+            'school_district',
+        ];
+        for (const type of types) {
+            if (validFeatureTypes.includes(type)) {
+                featureMenu.value = type; // Set the menu value directly
+                break; // Use the first matching type found
             }
-            setFeatureType(); // Update autocomplete filtering based on new menu selection
-            showSelectedPolygon(placePrediction.placeId, 1);
         }
-    );
+        setFeatureType(); // Update autocomplete filtering based on new menu selection
+        void showSelectedPolygon(placePrediction.placeId, 1);
+    });
 
     // Add all the feature layers.
     countryLayer = innerMap.getFeatureLayer('COUNTRY');
@@ -149,7 +150,7 @@ async function initMap() {
 // Restyle and make a request when the feature type is changed.
 function featureTypeChanged() {
     // Style for coloring the outline of the entire feature type.
-    let styleStrokeOnly = /** @type {!google.maps.FeatureStyleOptions} */ {
+    const styleStrokeOnly = {
         fillColor: 'white',
         fillOpacity: 0.01,
         strokeColor: strokeColorPicker.value,
@@ -212,9 +213,9 @@ function styleChanged() {
 }
 
 // Apply styling to a polygon.
-function applyStyle(placeid?) {
+function applyStyle(placeid?: string) {
     // Define styles.
-    let styleStrokeOnly = /** @type {!google.maps.FeatureStyleOptions} */ {
+    const styleStrokeOnly = {
         strokeColor: strokeColorPicker.value,
         strokeOpacity: 1.0,
         strokeWeight: 2.0,
@@ -222,7 +223,7 @@ function applyStyle(placeid?) {
         fillOpacity: 0.1,
     };
 
-    let styleStrokeFill = /** @type {!google.maps.FeatureStyleOptions} */ {
+    const styleStrokeFill = {
         strokeColor: strokeColorPicker.value,
         strokeOpacity: 1.0,
         strokeWeight: 2.0,
@@ -232,8 +233,9 @@ function applyStyle(placeid?) {
 
     revertStyles();
 
-    const featureStyle = (params) => {
-        if (params.feature.placeId == placeid) {
+    const featureStyle = (params: google.maps.FeatureStyleFunctionOptions) => {
+        const placeFeature = params.feature as google.maps.PlaceFeature;
+        if (placeFeature.placeId === placeid) {
             return styleStrokeFill;
         } else {
             return styleStrokeOnly;
@@ -274,11 +276,11 @@ function applyStyle(placeid?) {
 // Populate the countries menu.
 function buildMenu() {
     for (const item of (countries as any).default) {
-        let countryOption = document.createElement('option');
+        const countryOption = document.createElement('option');
         countryOption.textContent = item.name;
         countryOption.value = item.code;
         // Set U.S. as the default.
-        if (item.code == 'US') {
+        if (item.code === 'US') {
             countryOption.selected = true;
         }
         countryMenu.appendChild(countryOption);
@@ -294,7 +296,9 @@ function onCountrySelected() {
     // Set the feature list selection to 'country'.
     featureMenu.namedItem('country')!.selected = true;
 
-    showSelectedCountry(countryMenu.options[countryMenu.selectedIndex].text);
+    void showSelectedCountry(
+        countryMenu.options[countryMenu.selectedIndex].text
+    );
 }
 
 // Enables or disables items in the feature menu based on country support.
@@ -303,20 +307,20 @@ function updateFeatureMenuAvailability(countryCode: string) {
 
     // Do a comparison on the map, and disable any false items.
     for (const [feature, isAvailable] of featureAvailabilityMap) {
-        const menuItem = featureMenu.namedItem(feature) as HTMLOptionElement;
+        const menuItem = featureMenu.namedItem(feature)!;
         if (menuItem) menuItem.disabled = !isAvailable;
     }
 }
 
 // Return a map of feature availability for a country.
-function getFeatureAvailability(countryName) {
+function getFeatureAvailability(countryCode: string) {
     // Return the data for the selected country.
-    const selectedCountry = (countries as any).default.find((country) => {
-        return country.code === countryName;
+    const selectedCountry = (countries as any).default.find((country: any) => {
+        return country.code === countryCode;
     });
 
     // Create a map for our values.
-    let featureAvailabilityMap = new Map([
+    const featureAvailabilityMap = new Map([
         ['country', selectedCountry?.feature.country],
         [
             'administrative_area_level_1',
@@ -342,17 +346,16 @@ function revertStyles() {
 }
 
 // Apply styling to the clicked place.
-function handlePlaceClick(event) {
-    let clickedPlaceId = event.features[0].placeId;
+function handlePlaceClick(event: google.maps.FeatureMouseEvent) {
+    const placeFeature = event.features[0] as google.maps.PlaceFeature;
+    const clickedPlaceId = placeFeature.placeId;
     if (!clickedPlaceId) return;
-    showSelectedPolygon(clickedPlaceId, 0);
+    void showSelectedPolygon(clickedPlaceId, 0);
 }
 
 // Get the place ID for the selected country, then call showSelectedPolygon().
-async function showSelectedCountry(countryName) {
-    const { Place } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
+async function showSelectedCountry(countryName: string) {
+    const { Place } = await google.maps.importLibrary('places');
 
     contentDiv.textContent = '';
 
@@ -364,17 +367,15 @@ async function showSelectedCountry(countryName) {
     const { places } = await Place.searchByText(request);
 
     if (places.length > 0) {
-        showSelectedPolygon(places[0].id, 0);
+        await showSelectedPolygon(places[0].id, 0);
     }
 }
 
 // Event handler for when a polygon is selected.
 // mode 0 = click, mode 1 = autocomplete.
-async function showSelectedPolygon(placeid, mode) {
+async function showSelectedPolygon(placeid: string, mode: number) {
     let isFeatureSupported;
-    const { Place } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
+    const { Place } = await google.maps.importLibrary('places');
     selectedPlaceId = placeid;
     contentDiv.textContent = ''; // Clear the info display.
 
@@ -405,20 +406,20 @@ async function showSelectedPolygon(placeid, mode) {
             featureMenu.value
         );
     }
-    var viewport = place.viewport as google.maps.LatLngBounds;
+    const viewport = place.viewport!;
     innerMap.fitBounds(viewport, 155);
 
     // Build the HTML.
     contentDiv.appendChild(document.createElement('hr'));
 
-    const types = place.types as string[];
+    const types = place.types!;
 
     // Create HTML for place information.
     const placeInfo = document.createElement('div');
     placeInfo.id = 'place-info';
 
     // Show information if boundary was clicked (mode 0).
-    if (mode == 0) {
+    if (mode === 0) {
         const boldAddress = document.createElement('b');
         boldAddress.textContent = place.formattedAddress!;
         const placeIdCode = document.createElement('code');
@@ -451,5 +452,5 @@ async function showSelectedPolygon(placeid, mode) {
     applyStyle(placeid);
 }
 
-initMap();
+void init();
 // [END maps_dds_region_viewer]

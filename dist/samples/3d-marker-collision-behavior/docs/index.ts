@@ -4,28 +4,28 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_marker_collision_behavior]
-const markers = [];
+const markers: google.maps.maps3d.Marker3DElement[] = [];
 
 async function init() {
     // Request needed libraries.
-    const { Map3DElement, MapMode, Marker3DElement } =
+    const { Map3DElement, Marker3DElement } =
         await google.maps.importLibrary('maps3d');
 
     const map = new Map3DElement({
         center: { lat: 47.6094, lng: -122.339, altitude: 0 },
         range: 1000,
-        mode: MapMode.HYBRID,
-        gestureHandling: 'COOPERATIVE',
+        mode: 'HYBRID',
     });
 
     for (const [lng, lat] of positions) {
+        // [START maps_3d_marker_collision_behavior_setbehavior]
         const marker = new Marker3DElement({
             position: { lat, lng },
             // Try setting a different collision behavior here.
-            collisionBehavior: google.maps.CollisionBehavior.REQUIRED,
+            collisionBehavior: 'REQUIRED',
         });
+        // [END maps_3d_marker_collision_behavior_setbehavior]
 
         markers.push(marker);
         map.append(marker);
@@ -50,15 +50,17 @@ const positions = [
     [-122.3378, 47.6095],
 ];
 
-init();
+void init();
 
-const dropdown = document.getElementById('selectElementId');
+const dropdown = document.getElementById(
+    'selectElementId'
+) as HTMLSelectElement;
 dropdown.addEventListener('change', drawMap);
 
-function drawMap(event) {
+function drawMap() {
     for (const marker of markers) {
         marker.collisionBehavior =
-            dropdown.value || google.maps.CollisionBehavior.REQUIRED;
+            dropdown.value as google.maps.CollisionBehavior;
     }
 }
 

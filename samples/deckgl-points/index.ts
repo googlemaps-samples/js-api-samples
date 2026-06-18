@@ -4,14 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 // [START maps_deckgl_points]
-
-import { Feature } from 'geojson';
+// Import the needed libraries.
 import { GoogleMapsOverlay } from '@deck.gl/google-maps';
 import { GeoJsonLayer } from '@deck.gl/layers';
+import { Feature } from 'geojson';
 
-type Properties = { mag: number };
-
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map')!;
 let innerMap: google.maps.Map;
 
 interface EarthquakeProperties {
@@ -23,20 +21,23 @@ interface EarthquakeProperties {
 /**
  * Validates that a feature has the properties we need for rendering.
  */
-function isEarthquake(f: Feature): f is Feature & { properties: EarthquakeProperties } {
-  return (
-    f.properties !== null &&
-    typeof f.properties === 'object' &&
-    typeof (f.properties as any).mag === 'number'
-  );
+function isEarthquake(
+    f: Feature
+): f is Feature & { properties: EarthquakeProperties } {
+    return (
+        f.properties !== null &&
+        typeof f.properties === 'object' &&
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        typeof (f.properties as any).mag === 'number'
+    );
 }
 
 // Initialize and add the map
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     await google.maps.importLibrary('maps');
 
-    innerMap = await mapElement.innerMap;
+    innerMap = mapElement.innerMap;
 
     const deckOverlay = new GoogleMapsOverlay({
         layers: [
@@ -54,7 +55,7 @@ async function initMap() {
                     }
                     return 0; // Fallback for invalid data.
                 },
-                getFillColor: (f: Feature): [number, number, number, number] => {
+                getFillColor: (): [number, number, number, number] => {
                     return [255, 70, 30, 180]; // Default color for other earthquakes.
                 },
                 autoHighlight: true,
@@ -77,5 +78,5 @@ async function initMap() {
     deckOverlay.setMap(innerMap);
 }
 
-initMap();
+void init();
 // [END maps_deckgl_points]

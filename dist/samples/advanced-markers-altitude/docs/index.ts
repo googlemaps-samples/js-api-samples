@@ -5,17 +5,14 @@
  */
 
 // [START maps_advanced_markers_altitude]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map')!;
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const { Map } = (await google.maps.importLibrary(
-        'maps'
-    )) as google.maps.MapsLibrary;
-    const { AdvancedMarkerElement, PinElement } =
-        (await google.maps.importLibrary(
-            'marker'
-        )) as google.maps.MarkerLibrary;
+    const [{ AdvancedMarkerElement, PinElement }] = await Promise.all([
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
+    ]);
 
     mapElement.innerMap.setOptions({
         tilt: 67.5,
@@ -36,7 +33,7 @@ async function initMap() {
             lat: 47.65170843460547,
             lng: -122.30754,
             altitude: 20,
-        } as google.maps.LatLngAltitudeLiteral,
+        },
     });
     marker.append(pin);
 
@@ -44,5 +41,5 @@ async function initMap() {
     // [END maps_advanced_markers_altitude_marker]
 }
 
-initMap();
+void init();
 // [END maps_advanced_markers_altitude]
