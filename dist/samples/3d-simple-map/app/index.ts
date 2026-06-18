@@ -12,7 +12,6 @@ async function init() {
         center: { lat: 37.7704, lng: -122.3985, altitude: 500 },
         tilt: 67.5,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     document.body.append(map);

@@ -17,7 +17,6 @@ async function init() {
         tilt: 67.5,
         range: 4000,
         mode: 'SATELLITE',
-        gestureHandling: 'COOPERATIVE',
     });
 
     // A marker with a with a URL pointing to a PNG.

@@ -21,7 +21,6 @@ async function init() {
         tilt: 67.44,
         heading: 0.01,
         mode: 'SATELLITE',
-        gestureHandling: 'COOPERATIVE',
     });
 
     // Set LatLng and title text for the markers. The first marker (Boynton Pass)

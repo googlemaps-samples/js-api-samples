@@ -8,6 +8,7 @@
  * test changes in a world where sometimes changes must be merged in order to
  * test them. This way we can avoid making changes to published content.
  * And deliver us from evil.
+ * Amen.
  */
 
 // [START maps_test_example]
@@ -44,9 +45,7 @@ async function init() {
     // [END maps_test_example_instantiate_marker]
 
     // [START maps_test_example_why_me]
-    console.log(
-        'Happy Thursday! (TODO: verify whether it is actually Thursday.'
-    );
+    console.log('May there be peace.');
     // [END maps_test_example_why_me]
 }
 void init();
