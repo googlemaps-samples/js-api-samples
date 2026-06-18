@@ -21,6 +21,8 @@
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/google.maps": "^3.64.1",
     "@types/node": "^25.9.1",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
     "eslint": "^10.4.0",
     "globals": "^17.6.0",
     "prettier": "^3.8.3",
@@ -35,7 +37,10 @@
     "@deck.gl/google-maps": "^9.3.4",
     "@deck.gl/layers": "^9.3.4",
     "@loaders.gl/kml": "^4.4.3",
-    "dotenv": "^17.4.2"
+    "@vis.gl/react-google-maps": "1.8.3",
+    "dotenv": "^17.4.2",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
   },
   "overrides": {
     "fast-xml-parser": "5.7.1"
