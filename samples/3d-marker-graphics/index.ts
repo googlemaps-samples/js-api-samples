@@ -18,7 +18,6 @@ async function init() {
         tilt: 67.5,
         range: 4000,
         mode: 'SATELLITE',
-        gestureHandling: 'COOPERATIVE',
     });
 
     // [START maps_3d_marker_graphics_png]

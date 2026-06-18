@@ -14,7 +14,6 @@ async function init() {
         tilt: 64,
         heading: -5,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     document.body.append(map3DElement);
