@@ -16,7 +16,6 @@ async function init() {
         tilt: 74,
         heading: 38,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     const popover = new PopoverElement({
