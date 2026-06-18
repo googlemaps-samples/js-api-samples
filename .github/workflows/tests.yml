@@ -34,7 +34,6 @@ on:
     - cron: "0 12 * * *"
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   SKIP_DIST: ${{ github.event_name == 'pull_request' || github.event_name == 'schedule' }}
 
 concurrency:
