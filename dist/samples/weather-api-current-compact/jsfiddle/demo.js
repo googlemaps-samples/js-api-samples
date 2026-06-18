@@ -125,7 +125,7 @@ async function createAndAddMarker(location, markerType) {
     }
 
     const marker = new AdvancedMarkerElement({
-        map: map,
+        map,
         position: { lat: location.lat, lng: location.lng },
         title: location.name, // Add a title for accessibility
         gmpClickable: true,
@@ -133,7 +133,6 @@ async function createAndAddMarker(location, markerType) {
     marker.append(weatherWidget);
 
     // Store the marker type
-
     marker.markerType = markerType;
 
     // Fetch and update weather data for this location

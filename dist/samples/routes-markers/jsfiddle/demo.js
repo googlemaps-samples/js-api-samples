@@ -109,7 +109,9 @@ async function getDirections() {
 
     // Create polylines and add them to the map.
     mapPolylines = result.routes[0].createPolylines();
-    mapPolylines.forEach((polyline) => polyline.setMap(innerMap));
+    mapPolylines.forEach((polyline) => {
+        polyline.setMap(innerMap);
+    });
 }
 
 void init();

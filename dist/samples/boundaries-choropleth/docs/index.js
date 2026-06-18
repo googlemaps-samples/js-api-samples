@@ -47,6 +47,7 @@ async function init() {
         };
     };
     // [END maps_boundaries_choropleth_style_function]
+
     // Population data by state.
     const states = {
         ChIJdf5LHzR_hogR6czIUzU0VV4: 5039877, // Alabama

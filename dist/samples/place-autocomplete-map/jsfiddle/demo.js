@@ -34,9 +34,9 @@ async function init() {
         map: innerMap,
     });
 
-    infoWindow = new InfoWindow({});
+    infoWindow = new InfoWindow();
 
-    // Add the gmp-placeselect listener, and display the results on the map.
+    // Add the gmp-select listener, and display the results on the map.
     placeAutocomplete.addEventListener(
         'gmp-select',
         async ({ placePrediction }) => {

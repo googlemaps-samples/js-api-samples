@@ -7,7 +7,7 @@
 // [START maps_ai_powered_summaries_basic]
 const mapElement = document.querySelector('gmp-map')!;
 let innerMap: google.maps.Map;
-let infoWindow;
+let infoWindow: google.maps.InfoWindow;
 
 async function init() {
     const { InfoWindow } = await google.maps.importLibrary('maps');
@@ -92,7 +92,11 @@ async function getPlaceDetails() {
     showInfoWindow(marker, place, content);
 }
 
-function showInfoWindow(marker, place, content) {
+function showInfoWindow(
+    marker: google.maps.marker.AdvancedMarkerElement,
+    place: google.maps.places.Place,
+    content: HTMLElement
+) {
     // Display an info window.
     infoWindow.setHeaderContent(place.displayName);
     infoWindow.setContent(content);

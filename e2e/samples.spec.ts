@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+
 import { test, expect } from '@playwright/test';
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import childProcess, { execSync } from 'child_process';
 
 const samplesDir = path.join(__dirname, '..', 'samples');
@@ -203,7 +205,8 @@ foldersToTest.forEach((sampleFolder) => {
 
             // Wait for Google Maps to load.
             await page.waitForFunction(
-                () => window.google && window.google.maps,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                () => (window as any).google?.maps,
                 { timeout: 500 }
             );
 
@@ -214,29 +217,31 @@ foldersToTest.forEach((sampleFolder) => {
             // The sample must load the Google Maps API.
             const hasGoogleMaps = await page.evaluate(() => {
                 return (
-                    typeof window.google !== 'undefined' &&
-                    typeof window.google.maps !== 'undefined'
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    typeof (window as any).google !== 'undefined' &&
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    typeof (window as any).google.maps !== 'undefined'
                 );
             });
             expect(hasGoogleMaps).toBeTruthy();
 
             /** const mapElement = await page.locator('#map');
-      if (await page.locator('#map').isVisible()) {
-        console.log(`✅ Assertion passed: Map is visible.`);
-      } else {
-        console.error(`❌ Assertion failed: Map is not visible.`);
-        throw new Error('Assertion failed: Map is not visible.');
-      }*/
+             if (await page.locator('#map').isVisible()) {
+                console.log(`✅ Assertion passed: Map is visible.`);
+            } else {
+                console.error(`❌ Assertion failed: Map is not visible.`);
+                throw new Error('Assertion failed: Map is not visible.');
+            }*/
         } finally {
             // viteProcess.kill(); // We used to just kill the process. Curious to see about how the other stuff works.
             if (viteProcess.pid) {
                 try {
                     // Use process.kill for cross-platform compatibility, sending SIGINT
                     process.kill(viteProcess.pid, 'SIGINT');
-                } catch (e) {
+                } catch (error) {
                     console.warn(
                         `Failed to kill Vite process for ${sampleFolder} (PID: ${viteProcess.pid}):`,
-                        e.message
+                        error
                     );
                 }
             }

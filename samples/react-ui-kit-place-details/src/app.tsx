@@ -14,9 +14,9 @@ import './styles.css';
 
 const API_KEY = 'AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8';
 
-type PlaceDetailsProps = {
+interface PlaceDetailsProps {
     placeId: string;
-};
+}
 
 // Renders place details using a place ID.
 const PlaceDetails = ({ placeId }: PlaceDetailsProps) => {

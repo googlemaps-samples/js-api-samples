@@ -29,7 +29,7 @@ async function geocodePlaceId(geocoder, map, infoWindow) {
 
     const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
-    const { results } = await geocoder.geocode({ placeId: placeId });
+    const { results } = await geocoder.geocode({ placeId });
     if (results[0]) {
         map.setZoom(11);
         map.setCenter(results[0].geometry.location);

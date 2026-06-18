@@ -4,6 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 // [START maps_3d_places_autocomplete]
 let map: google.maps.maps3d.Map3DElement;
 
@@ -17,7 +20,6 @@ async function init() {
         heading: 0,
         roll: 0,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     document.body.append(map);
@@ -37,7 +39,9 @@ async function initAutocomplete() {
 
     placeAutocomplete.addEventListener(
         'gmp-select',
-        async ({ placePrediction }) => {
+        async ({
+            placePrediction,
+        }: google.maps.places.PlacePredictionSelectEvent) => {
             const place = placePrediction.toPlace();
             await place.fetchFields({
                 fields: ['displayName', 'location', 'id'],
@@ -52,10 +56,10 @@ async function initAutocomplete() {
     );
 }
 
-const flyToPlace = async (place) => {
+const flyToPlace = async (place: google.maps.places.Place) => {
     const { Marker3DElement } = await google.maps.importLibrary('maps3d');
 
-    const location = place.location;
+    const location = place.location!;
 
     // We need to find the elevation for the point so we place the marker at 50m above the elevation.
     const elevation = await getElevationforPoint(location, place);
@@ -68,7 +72,7 @@ const flyToPlace = async (place) => {
         },
         altitudeMode: 'ABSOLUTE',
         extruded: true,
-        label: place.displayName,
+        label: place.displayName!,
     });
 
     // Add the marker.
@@ -90,7 +94,10 @@ const flyToPlace = async (place) => {
     });
 };
 
-async function getElevationforPoint(location, place) {
+async function getElevationforPoint(
+    location: google.maps.LatLng,
+    place: google.maps.places.Place
+) {
     const defaultElevation = 10;
     const { ElevationService } = await google.maps.importLibrary('elevation');
     // Get place elevation using the ElevationService.
@@ -99,8 +106,10 @@ async function getElevationforPoint(location, place) {
         locations: [location],
     });
 
-    if (!(elevationResponse.results && elevationResponse.results.length)) {
-        window.alert(`Insufficient elevation data for place: ${place.name}`);
+    if (!elevationResponse?.results.length) {
+        window.alert(
+            `Insufficient elevation data for place: ${place.displayName}`
+        );
         return defaultElevation;
     }
     const elevation =

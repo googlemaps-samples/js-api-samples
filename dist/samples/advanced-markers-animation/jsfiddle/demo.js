@@ -82,12 +82,11 @@ async function init() {
 }
 
 function createMarker(map, AdvancedMarkerElement, PinElement) {
-    const pinElement = new PinElement();
-    const content = pinElement.element;
+    const content = new PinElement();
     new AdvancedMarkerElement({
         position: getRandomPosition(map),
-        map: map,
-        content: content,
+        map,
+        content,
     });
 
     content.style.opacity = '0';

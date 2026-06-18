@@ -19,13 +19,12 @@ async function init() {
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-
         progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
         progress.done = function () {
             progress.close();
-            progressDiv?.remove(); // Use optional chaining in case progressDiv is null
+            progressDiv.remove(); // Use optional chaining in case progressDiv is null
         };
     }
 
@@ -74,7 +73,7 @@ async function init() {
             const description = f.properties.description;
             const magnitudeMatch = description.match(/M (\d+\.?\d*)/);
             let parsedMagnitude = null;
-            if (magnitudeMatch && magnitudeMatch[1]) {
+            if (magnitudeMatch?.[1]) {
                 parsedMagnitude = parseFloat(magnitudeMatch[1]);
             } else {
                 console.log('Magnitude not found');
@@ -139,7 +138,7 @@ async function init() {
         },
         onDataLoad: () => {
             console.log('KML data loaded');
-            if (progress && progress.done) {
+            if (progress?.done) {
                 progress.done();
             }
         },

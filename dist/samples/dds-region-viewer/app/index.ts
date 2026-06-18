@@ -4,6 +4,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 /**
  * Data-driven styling region coverage viewer!
  * - View feature boundary availability around the world.
@@ -12,7 +16,7 @@
 
 // [START maps_dds_region_viewer]
 const mapElement = document.querySelector('gmp-map')!;
-let placeAutocomplete;
+let placeAutocomplete: google.maps.places.PlaceAutocompleteElement;
 let innerMap: google.maps.Map;
 let countryMenu: HTMLSelectElement;
 let featureMenu: HTMLSelectElement;
@@ -21,13 +25,13 @@ let fillColorPicker: HTMLInputElement;
 let strokeColorPicker: HTMLInputElement;
 let contentDiv: HTMLElement;
 
-let allLayers;
-let countryLayer;
-let admin1Layer;
-let admin2Layer;
-let localityLayer;
-let postalCodeLayer;
-let schoolDistrictLayer;
+let allLayers: google.maps.FeatureLayer[];
+let countryLayer: google.maps.FeatureLayer;
+let admin1Layer: google.maps.FeatureLayer;
+let admin2Layer: google.maps.FeatureLayer;
+let localityLayer: google.maps.FeatureLayer;
+let postalCodeLayer: google.maps.FeatureLayer;
+let schoolDistrictLayer: google.maps.FeatureLayer;
 
 let selectedPlaceId: string;
 
@@ -50,7 +54,7 @@ async function init() {
     placeAutocomplete = document.querySelector('gmp-place-autocomplete')!;
     placeAutocomplete.includedPrimaryTypes = ['(regions)'];
 
-    contentDiv = document.getElementById('pac-content') as HTMLElement;
+    contentDiv = document.getElementById('pac-content')!;
     searchInputOption = document.getElementById(
         'pac-filter-option'
     ) as HTMLInputElement;
@@ -87,7 +91,7 @@ async function init() {
 
     // Handle autocomplete widget selection.
     placeAutocomplete.addEventListener('gmp-select', ({ placePrediction }) => {
-        const types = placePrediction.types as string[];
+        const types = placePrediction.types;
 
         // Find the first type that matches a feature menu option.
         const validFeatureTypes = [
@@ -209,7 +213,7 @@ function styleChanged() {
 }
 
 // Apply styling to a polygon.
-function applyStyle(placeid?) {
+function applyStyle(placeid?: string) {
     // Define styles.
     const styleStrokeOnly = {
         strokeColor: strokeColorPicker.value,
@@ -229,8 +233,9 @@ function applyStyle(placeid?) {
 
     revertStyles();
 
-    const featureStyle = (params) => {
-        if (params.feature.placeId == placeid) {
+    const featureStyle = (params: google.maps.FeatureStyleFunctionOptions) => {
+        const placeFeature = params.feature as google.maps.PlaceFeature;
+        if (placeFeature.placeId === placeid) {
             return styleStrokeFill;
         } else {
             return styleStrokeOnly;
@@ -270,13 +275,12 @@ function applyStyle(placeid?) {
 
 // Populate the countries menu.
 function buildMenu() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     for (const item of (countries as any).default) {
         const countryOption = document.createElement('option');
         countryOption.textContent = item.name;
         countryOption.value = item.code;
         // Set U.S. as the default.
-        if (item.code == 'US') {
+        if (item.code === 'US') {
             countryOption.selected = true;
         }
         countryMenu.appendChild(countryOption);
@@ -303,17 +307,16 @@ function updateFeatureMenuAvailability(countryCode: string) {
 
     // Do a comparison on the map, and disable any false items.
     for (const [feature, isAvailable] of featureAvailabilityMap) {
-        const menuItem = featureMenu.namedItem(feature) as HTMLOptionElement;
+        const menuItem = featureMenu.namedItem(feature)!;
         if (menuItem) menuItem.disabled = !isAvailable;
     }
 }
 
 // Return a map of feature availability for a country.
-function getFeatureAvailability(countryName) {
+function getFeatureAvailability(countryCode: string) {
     // Return the data for the selected country.
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const selectedCountry = (countries as any).default.find((country) => {
-        return country.code === countryName;
+    const selectedCountry = (countries as any).default.find((country: any) => {
+        return country.code === countryCode;
     });
 
     // Create a map for our values.
@@ -343,14 +346,15 @@ function revertStyles() {
 }
 
 // Apply styling to the clicked place.
-function handlePlaceClick(event) {
-    const clickedPlaceId = event.features[0].placeId;
+function handlePlaceClick(event: google.maps.FeatureMouseEvent) {
+    const placeFeature = event.features[0] as google.maps.PlaceFeature;
+    const clickedPlaceId = placeFeature.placeId;
     if (!clickedPlaceId) return;
     void showSelectedPolygon(clickedPlaceId, 0);
 }
 
 // Get the place ID for the selected country, then call showSelectedPolygon().
-async function showSelectedCountry(countryName) {
+async function showSelectedCountry(countryName: string) {
     const { Place } = await google.maps.importLibrary('places');
 
     contentDiv.textContent = '';
@@ -369,7 +373,7 @@ async function showSelectedCountry(countryName) {
 
 // Event handler for when a polygon is selected.
 // mode 0 = click, mode 1 = autocomplete.
-async function showSelectedPolygon(placeid, mode) {
+async function showSelectedPolygon(placeid: string, mode: number) {
     let isFeatureSupported;
     const { Place } = await google.maps.importLibrary('places');
     selectedPlaceId = placeid;
@@ -408,14 +412,14 @@ async function showSelectedPolygon(placeid, mode) {
     // Build the HTML.
     contentDiv.appendChild(document.createElement('hr'));
 
-    const types = place.types as string[];
+    const types = place.types!;
 
     // Create HTML for place information.
     const placeInfo = document.createElement('div');
     placeInfo.id = 'place-info';
 
     // Show information if boundary was clicked (mode 0).
-    if (mode == 0) {
+    if (mode === 0) {
         const boldAddress = document.createElement('b');
         boldAddress.textContent = place.formattedAddress!;
         const placeIdCode = document.createElement('code');

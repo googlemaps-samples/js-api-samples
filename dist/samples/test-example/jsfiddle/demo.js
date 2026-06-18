@@ -9,6 +9,7 @@
  * test changes in a world where sometimes changes must be merged in order to
  * test them. This way we can avoid making changes to published content.
  * And deliver us from evil.
+ * Amen.
  */
 
 // Declare the gmp-map element.
@@ -39,6 +40,6 @@ async function init() {
         title: 'Uluru',
     });
 
-    console.log("Say there Mac, why'd you choose me to test this change?");
+    console.log('May there be peace.');
 }
 void init();
