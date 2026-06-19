@@ -1,0 +1,12 @@
+{
+    "name": "@js-api-samples/layer-bicycling",
+    "version": "1.0.0",
+    "scripts": {
+        "build": "tsc && bash ../jsfiddle.sh layer-bicycling && bash ../app.sh layer-bicycling && bash ../docs.sh layer-bicycling && npm run build:vite --workspace=. && bash ../dist.sh layer-bicycling",
+        "test": "tsc && npm run build:vite --workspace=.",
+        "start": "tsc && vite build --base './' && vite",
+        "build:vite": "vite build --base './'",
+        "preview": "vite preview"
+    },
+    "dependencies": {}
+}
