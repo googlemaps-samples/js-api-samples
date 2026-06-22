@@ -42,6 +42,13 @@ const getChangedSampleFolders = (): string[] => {
             'find-changes.sh'
         );
 
+        if (process.env.TEST_ALL_SAMPLES === 'true') {
+            console.log(
+                'TEST_ALL_SAMPLES is set. Running tests for all samples.'
+            );
+            return getAllSampleFolders();
+        }
+
         if (!fs.existsSync(scriptPath)) {
             console.warn(
                 `Warning: find-changes.sh not found at ${scriptPath}. Running tests for all samples.`

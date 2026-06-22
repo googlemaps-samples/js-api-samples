@@ -34,7 +34,6 @@ on:
     - cron: "0 12 * * *"
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   SKIP_DIST: ${{ github.event_name == 'pull_request' || github.event_name == 'schedule' }}
 
 concurrency:
@@ -216,6 +215,7 @@ jobs:
         run: npx playwright test e2e/samples.spec.ts
         env:
           CI: true
+          TEST_ALL_SAMPLES: "true"
 
       - name: Upload Test Report Artifact
         uses: actions/upload-artifact@v4
