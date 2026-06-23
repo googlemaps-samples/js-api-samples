@@ -146,7 +146,7 @@ foldersToTest.forEach((sampleFolder) => {
         // START run the preview
         // Get an available port
         const port = 8080;
-        const url = `http://localhost:${port}/`;
+        const url = `http://localhost:${port}/samples/${sampleFolder}/dist/`;
 
         const viteProcess = childProcess.spawn(
             'vite',
@@ -154,7 +154,6 @@ foldersToTest.forEach((sampleFolder) => {
             {
                 cwd: path.join(samplesDir, sampleFolder),
                 stdio: 'inherit',
-                detached: true, // Allows parent to exit independently, though we kill it in finally
             }
         );
 
@@ -252,8 +251,8 @@ foldersToTest.forEach((sampleFolder) => {
                     );
                 }
             }
-            // Add a small delay to allow the process to terminate
-            await page.waitForTimeout(500);
+            // Add a small delay to allow the process to terminate without depending on the potentially closed page object
+            await new Promise((resolve) => setTimeout(resolve, 500));
         }
     });
 });
