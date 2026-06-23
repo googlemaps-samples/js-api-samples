@@ -63,6 +63,11 @@ export default defineConfig(({ command }) => {
         }
     }
 
+    const isCI = process.env.CI === 'true';
+    const apiKey = isCI
+        ? process.env.GOOGLE_MAPS_API_KEY
+        : process.env.JS_MAPS_DEV || process.env.GOOGLE_MAPS_API_KEY;
+
     return {
         root: projectRepoRoot, // Vite's project root is js-api-samples/
         build: {
@@ -79,9 +84,7 @@ export default defineConfig(({ command }) => {
         },
 
         define: {
-            'import.meta.env.GOOGLE_MAPS_API_KEY': JSON.stringify(
-                process.env.GOOGLE_MAPS_API_KEY
-            ),
+            'import.meta.env.GOOGLE_MAPS_API_KEY': JSON.stringify(apiKey),
         },
     };
 });
