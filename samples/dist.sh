@@ -22,4 +22,5 @@ SAMPLE_DIR="${PROJECT_ROOT}/dist/samples/${NAME}"
 echo "PROJECT_ROOT: ${PROJECT_ROOT}"
 
 # Copy Vite output files to /dist/samples/${NAME}/dist
-cp -r "${SCRIPT_DIR}/${NAME}/dist" "${SAMPLE_DIR}"
+# This is no longer necessary as Vite is now configured to output directly to ${SAMPLE_DIR}/dist natively!
+# cp -r "${SCRIPT_DIR}/${NAME}/dist" "${SAMPLE_DIR}"
