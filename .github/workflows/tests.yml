@@ -150,6 +150,7 @@ jobs:
           done
         env:
           STEPS_GET_WORKSPACES_OUTPUTS_CHANGED_WORKSPACES: ${{ steps.get_workspaces.outputs.changed_workspaces }}
+          GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_DEV }}"
 
       - name: Generate Index (Run Once After Builds)
         run: bash samples/generate-index.sh
@@ -164,6 +165,7 @@ jobs:
           # Pass the correct base reference for find-changes.sh when called by samples.spec.ts
           GIT_BASE_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
           CI: true
+          GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_DEV }}"
 
       - name: Upload Test Report Artifact
         uses: actions/upload-artifact@v4
@@ -216,6 +218,8 @@ jobs:
 
       - name: Build All Projects
         run: npm run build-all
+        env:
+          GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_DEV }}"
 
       - name: Generate Index (Run Once After Full Builds)
         run: bash samples/generate-index.sh
@@ -229,6 +233,7 @@ jobs:
         env:
           CI: true
           TEST_ALL_SAMPLES: "true"
+          GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_DEV }}"
 
       - name: Upload Test Report Artifact
         uses: actions/upload-artifact@v4
