@@ -35,6 +35,7 @@ on:
 
 env:
   SKIP_DIST: ${{ github.event_name == 'pull_request' || github.event_name == 'schedule' }}
+  GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_DEV }}"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

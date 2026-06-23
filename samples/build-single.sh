@@ -197,4 +197,3 @@ bash ../jsfiddle.sh "$NAME"
 bash ../app.sh "$NAME"
 bash ../docs.sh "$NAME"
 npm run build:vite --workspace=. 
-bash ../dist.sh "$NAME"
