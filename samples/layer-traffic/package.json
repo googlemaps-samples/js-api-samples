@@ -1,0 +1,12 @@
+{
+    "name": "@js-api-samples/layer-traffic",
+    "version": "1.0.0",
+    "scripts": {
+        "build": "tsc && bash ../jsfiddle.sh layer-traffic && bash ../app.sh layer-traffic && bash ../docs.sh layer-traffic && npm run build:vite --workspace=. && bash ../dist.sh layer-traffic",
+        "test": "tsc && npm run build:vite --workspace=.",
+        "start": "tsc && vite build --base './' && vite",
+        "build:vite": "vite build --base './'",
+        "preview": "vite preview"
+    },
+    "dependencies": {}
+}
