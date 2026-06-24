@@ -18,11 +18,11 @@ import { defineConfig } from 'vite';
 import dotenv from 'dotenv';
 import { resolve, basename } from 'path';
 
-dotenv.config();
+dotenv.config({ path: resolve(__dirname, '.env') });
 
 export default defineConfig(({ command }) => {
-    // __dirname is /Users/wfrench/git/js-api-samples/samples/
-    const projectRepoRoot = resolve(__dirname, '..'); // /Users/wfrench/git/js-api-samples/
+    // __dirname is /Users/[username]/git/js-api-samples/samples/
+    const projectRepoRoot = resolve(__dirname);
 
     let effectiveOutDir;
     const effectiveBuildInput = {}; // For rollupOptions.input
@@ -30,7 +30,7 @@ export default defineConfig(({ command }) => {
     if (command === 'build') {
         // When `npm run build:vite --workspace=.` is run from a sample's directory,
         // process.cwd() will be the path to that sample's directory.
-        const workspaceDir = process.cwd(); // e.g., /Users/wfrench/git/js-api-samples/samples/test-example
+        const workspaceDir = process.cwd(); // e.g., /Users/[username]/git/js-api-samples/samples/test-example
         const samplesBaseDir = resolve(projectRepoRoot, 'samples');
 
         // Ensure we are building a specific sample within the 'samples' directory
@@ -49,10 +49,7 @@ export default defineConfig(({ command }) => {
                 'dist'
             );
             // Vite's `root` is projectRepoRoot, so input path is relative to that.
-            effectiveBuildInput[resolve(workspaceDir, 'index.html')] = resolve(
-                workspaceDir,
-                'index.html'
-            );
+            effectiveBuildInput['index'] = resolve(workspaceDir, 'index.html');
         } else {
             // Fallback for builds not initiated from a specific workspace.
             // This shouldn't happen with your current per-sample build scripts.
@@ -63,8 +60,31 @@ export default defineConfig(({ command }) => {
         }
     }
 
+    const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+
     return {
-        root: projectRepoRoot, // Vite's project root is js-api-samples/
+        root: process.cwd(), // Always use the sample directory as the root
+        plugins: [
+            {
+                name: 'html-transform',
+                enforce: 'pre',
+                transformIndexHtml(html) {
+                    return html.replace(/GOOGLE_MAPS_API_KEY/g, apiKey);
+                },
+            },
+            {
+                name: 'code-transform',
+                enforce: 'pre',
+                transform(code) {
+                    if (code.includes('GOOGLE_MAPS_API_KEY')) {
+                        return {
+                            code: code.replace(/GOOGLE_MAPS_API_KEY/g, apiKey),
+                            map: null,
+                        };
+                    }
+                },
+            },
+        ],
         build: {
             emptyOutDir: false, // Crucial: Do not empty the main dist dir for each sample.
             outDir: effectiveOutDir || resolve(projectRepoRoot, 'dist'), // Default for serve/preview
@@ -79,9 +99,7 @@ export default defineConfig(({ command }) => {
         },
 
         define: {
-            'import.meta.env.GOOGLE_MAPS_API_KEY': JSON.stringify(
-                process.env.GOOGLE_MAPS_API_KEY
-            ),
+            'import.meta.env.GOOGLE_MAPS_API_KEY': JSON.stringify(apiKey),
         },
     };
 });
