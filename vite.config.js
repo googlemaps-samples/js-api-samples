@@ -72,6 +72,18 @@ export default defineConfig(({ command }) => {
                     return html.replace(/GOOGLE_MAPS_API_KEY/g, apiKey);
                 },
             },
+            {
+                name: 'code-transform',
+                enforce: 'pre',
+                transform(code) {
+                    if (code.includes('GOOGLE_MAPS_API_KEY')) {
+                        return {
+                            code: code.replace(/GOOGLE_MAPS_API_KEY/g, apiKey),
+                            map: null,
+                        };
+                    }
+                },
+            },
         ],
         build: {
             emptyOutDir: false, // Crucial: Do not empty the main dist dir for each sample.
