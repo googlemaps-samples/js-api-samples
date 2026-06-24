@@ -15,14 +15,11 @@
  */
 
 // /* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 
 // import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
-import childProcess, { execSync } from 'child_process';
+import { execSync } from 'child_process';
 
 const samplesDir = path.join(__dirname, '..', 'samples');
 
