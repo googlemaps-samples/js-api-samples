@@ -100,14 +100,12 @@ jobs:
       - uses: google-github-actions/auth@v1
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
-
+      
       - name: Install Firebase CLI
-        run: npm install -g firebase-tools
-
+        run: npm install -g firebase-tools@13.30.0
+      
       - name: Deploy to Firebase Hosting
-        run: firebase deploy --only hosting
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: firebase deploy --only hosting:maps-docs-team --project 285779793579
 
       - name: Create temporary branch
         run: git checkout -b temp-build-branch
