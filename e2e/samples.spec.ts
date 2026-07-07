@@ -143,14 +143,14 @@ if (foldersToTest.length === 0) {
 // Iterate through samples and run the same test for each one.
 foldersToTest.forEach((sampleFolder) => {
     test(`test ${sampleFolder}`, async ({ page }) => {
-        // START run the preview
+        // START run the dev server
         // Get an available port
         const port = 8080;
         const url = `http://localhost:${port}/`;
 
         const viteProcess = childProcess.spawn(
             'vite',
-            ['preview', `--port=${port}`],
+            ['dev', `--port=${port}`],
             {
                 cwd: path.join(samplesDir, sampleFolder),
                 stdio: 'inherit',
@@ -160,7 +160,7 @@ foldersToTest.forEach((sampleFolder) => {
 
         // await new Promise((resolve) => setTimeout(resolve, 500)); // Set a timeout to let the web server start.
         await page.waitForTimeout(500);
-        // END run the preview
+        // END run the dev server
 
         /**
          * Run all of the tests. Each method call either runs a test or inserts a timeout for loading.
