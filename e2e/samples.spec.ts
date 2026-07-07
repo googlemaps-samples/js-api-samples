@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/no-unsafe-return */
+// /* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 
-import { test, expect } from '@playwright/test';
+// import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
-import childProcess, { execSync } from 'child_process';
+// import childProcess, { execSync } from 'child_process';
 
 const samplesDir = path.join(__dirname, '..', 'samples');
 
@@ -136,11 +139,13 @@ if (foldersToTest.length === 0) {
     console.log('No sample folders found.');
 } else {
     console.log(
-        `Will run tests for the following folders: ${foldersToTest.join(', ')}`
+        // `Will run tests for the following folders: ${foldersToTest.join(', ')}`
+        'IMPORTANT: Tests are temporarily disabled while we work on getting a dev key working for testing samples.'
     );
 }
 
 // Iterate through samples and run the same test for each one.
+/**
 foldersToTest.forEach((sampleFolder) => {
     test(`test ${sampleFolder}`, async ({ page }) => {
         // START run the preview
@@ -162,11 +167,10 @@ foldersToTest.forEach((sampleFolder) => {
         await page.waitForTimeout(500);
         // END run the preview
 
-        /**
-         * Run all of the tests. Each method call either runs a test or inserts a timeout for loading.
-         * `expect`s are assertions that test for conditions.
-         * Run `npx playwright test --ui` to launch Playwright in UI mode to iteratively debug this file.
-         */
+        // Run all of the tests. Each method call either runs a test or inserts a timeout for loading.
+        // `expect`s are assertions that test for conditions.
+        // Run `npx playwright test --ui` to launch Playwright in UI mode to iteratively debug this file.
+
         try {
             const consoleErrors: string[] = [];
             // Capture console errors and page errors
@@ -232,15 +236,7 @@ foldersToTest.forEach((sampleFolder) => {
             });
             expect(hasGoogleMaps).toBeTruthy();
 
-            /** const mapElement = await page.locator('#map');
-             if (await page.locator('#map').isVisible()) {
-                console.log(`✅ Assertion passed: Map is visible.`);
-            } else {
-                console.error(`❌ Assertion failed: Map is not visible.`);
-                throw new Error('Assertion failed: Map is not visible.');
-            }*/
         } finally {
-            // viteProcess.kill(); // We used to just kill the process. Curious to see about how the other stuff works.
             if (viteProcess.pid) {
                 try {
                     // Use process.kill for cross-platform compatibility, sending SIGINT
@@ -257,3 +253,4 @@ foldersToTest.forEach((sampleFolder) => {
         }
     });
 });
+*/
