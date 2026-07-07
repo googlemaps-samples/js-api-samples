@@ -107,16 +107,32 @@ jobs:
         if: env.HAS_CHANGES == 'true'
         run: npm install
 
-      - name: Prettier Check
+      - name: Prettier Check Changed Workspaces
         if: env.HAS_CHANGES == 'true'
-        run: npx prettier ./samples/ --check --log-level warn
+        run: |
+          IFS=$'\n'
+          CHANGED_WORKSPACES_ARRAY=(${STEPS_GET_WORKSPACES_OUTPUTS_CHANGED_WORKSPACES})
+          echo "Checking Prettier on changed workspaces:"
+          for workspace in "${CHANGED_WORKSPACES_ARRAY[@]}"; do
+            echo "  - samples/$workspace"
+            npx prettier ./samples/$workspace --check --log-level warn
+          done
         env:
+          STEPS_GET_WORKSPACES_OUTPUTS_CHANGED_WORKSPACES: ${{ steps.get_workspaces.outputs.changed_workspaces }}
           CI: true
 
-      - name: ESLint Check
+      - name: ESLint Check Changed Workspaces
         if: env.HAS_CHANGES == 'true'
-        run: npx eslint
+        run: |
+          IFS=$'\n'
+          CHANGED_WORKSPACES_ARRAY=(${STEPS_GET_WORKSPACES_OUTPUTS_CHANGED_WORKSPACES})
+          echo "Checking ESLint on changed workspaces:"
+          for workspace in "${CHANGED_WORKSPACES_ARRAY[@]}"; do
+            echo "  - samples/$workspace"
+            npx eslint ./samples/$workspace
+          done
         env:
+          STEPS_GET_WORKSPACES_OUTPUTS_CHANGED_WORKSPACES: ${{ steps.get_workspaces.outputs.changed_workspaces }}
           CI: true
 
       - name: Install Playwright Browsers
