@@ -73,7 +73,7 @@ jobs:
         if: env.HAS_CHANGES == 'true'
         uses: actions/setup-node@v4
         with:
-          node-version: "24.x"
+          node-version: "24.18.0"
 
       - name: Cache npm dependencies
         if: env.HAS_CHANGES == 'true'
@@ -173,7 +173,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "24.x"
+          node-version: "24.18.0"
 
       - name: Cache npm dependencies
         uses: actions/cache@v4
