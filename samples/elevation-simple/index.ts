@@ -5,16 +5,17 @@
  */
 
 // [START maps_elevation_simple]
-async function initMap(): Promise<void> {
-    // Request needed libraries.
-    await google.maps.importLibrary('maps');
-    await google.maps.importLibrary('elevation');
+async function init(): Promise<void> {
+    const [{ InfoWindow }, { ElevationService }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('elevation'),
+    ]);
 
     const mapElement = document.querySelector('gmp-map')!;
     const innerMap = mapElement.innerMap;
 
-    const elevator = new google.maps.ElevationService();
-    const infowindow = new google.maps.InfoWindow({});
+    const elevator = new ElevationService();
+    const infowindow = new InfoWindow();
 
     infowindow.open(innerMap);
 
@@ -55,5 +56,5 @@ function displayLocationElevation(
         });
 }
 
-void initMap();
+void init();
 // [END maps_elevation_simple]
