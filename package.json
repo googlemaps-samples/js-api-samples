@@ -32,7 +32,7 @@
     "vite": "^8.0.16"
   },
   "dependencies": {
-    "@deck.gl/core": "^9.3.4",
+    "@deck.gl/core": "^9.3.6",
     "@deck.gl/geo-layers": "^9.3.4",
     "@deck.gl/google-maps": "^9.3.4",
     "@deck.gl/layers": "^9.3.4",
