@@ -105,17 +105,29 @@ jobs:
 
       - name: Install dependencies
         if: env.HAS_CHANGES == 'true'
-        run: npm install
+        run: npm ci
 
-      - name: Prettier Check
+      - name: Prettier Check (Changed Files Only)
         if: env.HAS_CHANGES == 'true'
-        run: npx prettier ./samples/ --check --log-level warn
+        run: |
+          FILES=$(git diff --name-only --diff-filter=ACMRT origin/main...HEAD | grep -E '\.(js|ts|jsx|tsx|json|md)$' || true)
+          if [ -n "$FILES" ]; then
+            echo "$FILES" | tr '\n' '\0' | xargs -0 -r npx prettier --check --log-level warn
+          else
+            echo "No supported files changed. Skipping Prettier."
+          fi
         env:
           CI: true
 
-      - name: ESLint Check
+      - name: ESLint Check (Changed Files Only)
         if: env.HAS_CHANGES == 'true'
-        run: npx eslint
+        run: |
+          FILES=$(git diff --name-only --diff-filter=ACMRT origin/main...HEAD | grep -E '\.(js|ts|jsx|tsx)$' || true)
+          if [ -n "$FILES" ]; then
+            echo "$FILES" | tr '\n' '\0' | xargs -0 -r npx eslint
+          else
+            echo "No JS/TS files changed. Skipping ESLint."
+          fi
         env:
           CI: true
 
