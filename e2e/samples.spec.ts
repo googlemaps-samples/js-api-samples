@@ -22,7 +22,7 @@
 // import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
-// import childProcess, { execSync } from 'child_process';
+import childProcess, { execSync } from 'child_process';
 
 const samplesDir = path.join(__dirname, '..', 'samples');
 
@@ -143,6 +143,13 @@ if (foldersToTest.length === 0) {
         'IMPORTANT: Tests are temporarily disabled while we work on getting a dev key working for testing samples.'
     );
 }
+
+import { test, expect } from '@playwright/test';
+
+test('Placeholder test', () => {
+    // Tests are temporarily disabled, this placeholder prevents Playwright from failing with "No tests found"
+    expect(true).toBe(true);
+});
 
 // Iterate through samples and run the same test for each one.
 /**
