@@ -24,7 +24,7 @@
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
     "eslint": "^10.4.0",
-    "globals": "^17.6.0",
+    "globals": "^17.7.0",
     "prettier": "^3.9.4",
     "rimraf": "^6.1.3",
     "typescript": "^6.0.3",
@@ -32,7 +32,7 @@
     "vite": "^8.0.16"
   },
   "dependencies": {
-    "@deck.gl/core": "^9.3.4",
+    "@deck.gl/core": "^9.3.6",
     "@deck.gl/geo-layers": "^9.3.4",
     "@deck.gl/google-maps": "^9.3.4",
     "@deck.gl/layers": "^9.3.4",
