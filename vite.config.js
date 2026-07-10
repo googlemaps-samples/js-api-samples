@@ -19,6 +19,10 @@ export default defineConfig(() => {
                 name: 'html-transform',
                 enforce: 'pre',
                 transformIndexHtml(html) {
+                    console.log(
+                        'transformIndexHtml running! API Key length:',
+                        apiKey.length
+                    );
                     return html.replace(/GOOGLE_MAPS_API_KEY/g, apiKey);
                 },
             },

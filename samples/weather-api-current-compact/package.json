@@ -5,10 +5,7 @@
     "build": "bash ../build-single.sh",
     "test": "tsc && npm run build:vite --workspace=.",
     "start": "vite --port 5173",
-    "build:vite": "vite build --base './'",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    
+    "build:vite": "vite build --config ../../vite.config.js --base './'",
+    "preview": "vite preview --config ../../vite.config.js"
   }
 }
