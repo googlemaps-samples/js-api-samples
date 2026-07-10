@@ -4,11 +4,12 @@ import { resolve } from 'path';
 
 dotenv.config({ path: resolve(__dirname, '.env') });
 
-export default defineConfig(({ command }) => {
+export default defineConfig(() => {
     const projectRepoRoot = resolve(__dirname);
     const workspaceDir = process.cwd();
-    const isSample = workspaceDir !== projectRepoRoot && workspaceDir.includes('/samples/');
-    
+    const isSample =
+        workspaceDir !== projectRepoRoot && workspaceDir.includes('/samples/');
+
     const apiKey = process.env.GOOGLE_MAPS_API_KEY || '';
 
     return {
