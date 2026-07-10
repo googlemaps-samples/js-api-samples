@@ -93,6 +93,7 @@ function setupModeButtons(): void {
                 setActiveButton(buttonId);
                 const modeName = modeButtons[buttonId];
 
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                 if (!draw) {
                     return;
                 }
@@ -133,7 +134,7 @@ function initUI(): void {
 }
 
 let map: google.maps.Map;
-let draw: TerraDraw;
+let draw!: TerraDraw;
 const history: GeoJSONStoreFeatures[][] = [];
 let redoHistory: GeoJSONStoreFeatures[][] = [];
 let selectedFeatureId: string | null = null;
@@ -141,7 +142,7 @@ let isRestoring = false;
 let resizingEnabled = false;
 let debounceTimeout: number | undefined;
 
-async function initMap() {
+async function init() {
     try {
         const { Map } = await google.maps.importLibrary('maps');
 
@@ -162,6 +163,7 @@ async function initMap() {
         map = new Map(mapDiv, mapOptions);
 
         map.addListener('click', () => {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (draw) {
                 console.log('Current draw mode on map click:', draw.getMode());
             }
@@ -593,5 +595,5 @@ async function initMap() {
     }
 }
 
-void initMap();
+void init();
 // [END maps_map_drawing_terradraw]
