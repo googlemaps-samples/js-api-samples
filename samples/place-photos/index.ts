@@ -35,8 +35,8 @@ async function init() {
                 fields: ['displayName', 'photos', 'editorialSummary'],
             });
 
-            heading.textContent = place.displayName || city.name;
-            summary.textContent = place.editorialSummary || '';
+            heading.textContent = place.displayName ?? city.name;
+            summary.textContent = place.editorialSummary ?? '';
             expandedImageDiv.innerHTML = '';
 
             if (place.photos && place.photos.length > 0) {
@@ -46,11 +46,11 @@ async function init() {
                 const photo = place.photos[randomIndex];
 
                 const img = document.createElement('img');
-                img.alt = `Photo of ${place.displayName || city.name}`;
+                img.alt = `Photo of ${place.displayName ?? city.name}`;
                 img.src = photo.getURI({ maxHeight: 800 });
                 expandedImageDiv.appendChild(img);
 
-                if (photo.authorAttributions?.length) {
+                if (photo.authorAttributions.length) {
                     expandedImageDiv.appendChild(
                         createAttribution(photo.authorAttributions[0])
                     );
