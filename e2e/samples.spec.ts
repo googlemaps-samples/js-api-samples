@@ -16,10 +16,10 @@
 
 // /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-// import { test, expect } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
-import { execSync } from 'child_process';
+import { execSync, spawn } from 'child_process';
 
 const samplesDir = path.join(__dirname, '..', 'samples');
 
@@ -136,20 +136,13 @@ if (foldersToTest.length === 0) {
     console.log('No sample folders found.');
 } else {
     console.log(
-        // `Will run tests for the following folders: ${foldersToTest.join(', ')}`
-        'IMPORTANT: Tests are temporarily disabled while we work on getting a dev key working for testing samples.'
+        `Will run tests for the following folders: ${foldersToTest.join(', ')}`
     );
 }
 
-import { test, expect } from '@playwright/test';
 
-test('Placeholder test', () => {
-    // Tests are temporarily disabled, this placeholder prevents Playwright from failing with "No tests found"
-    expect(true).toBe(true);
-});
 
 // Iterate through samples and run the same test for each one.
-/**
 foldersToTest.forEach((sampleFolder) => {
     test(`test ${sampleFolder}`, async ({ page }) => {
         // START run the preview
@@ -157,9 +150,9 @@ foldersToTest.forEach((sampleFolder) => {
         const port = 8080;
         const url = `http://localhost:${port}/samples/${sampleFolder}/dist/`;
 
-        const viteProcess = childProcess.spawn(
-            'vite',
-            ['preview', `--port=${port}`],
+        const viteProcess = spawn(
+            'npm',
+            ['run', 'preview', '--', `--port=${port}`],
             {
                 cwd: path.join(samplesDir, sampleFolder),
                 stdio: 'inherit',
@@ -256,4 +249,3 @@ foldersToTest.forEach((sampleFolder) => {
         }
     });
 });
-*/
