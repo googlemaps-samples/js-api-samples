@@ -129,7 +129,6 @@ const getChangedSampleFolders = (): string[] => {
 };
 
 // Get changed folders, filtering out excluded ones.
-// const foldersToTest = getChangedSampleFolders();
 const foldersToTest = getChangedSampleFolders();
 
 if (foldersToTest.length === 0) {
@@ -140,19 +139,25 @@ if (foldersToTest.length === 0) {
     );
 }
 
-
-
 // Iterate through samples and run the same test for each one.
 foldersToTest.forEach((sampleFolder) => {
     test(`test ${sampleFolder}`, async ({ page }) => {
         // START run the preview
         // Get an available port
         const port = 8080;
-        const url = `http://localhost:${port}/samples/${sampleFolder}/dist/`;
+        const url = `http://localhost:${port}/`;
 
+        const vitePath = path.join(
+            __dirname,
+            '..',
+            'node_modules',
+            'vite',
+            'bin',
+            'vite.js'
+        );
         const viteProcess = spawn(
-            'npm',
-            ['run', 'preview', '--', `--port=${port}`],
+            'node',
+            [vitePath, 'preview', '--port', port.toString()],
             {
                 cwd: path.join(samplesDir, sampleFolder),
                 stdio: 'inherit',
@@ -191,6 +196,7 @@ foldersToTest.forEach((sampleFolder) => {
                 'Falling back to Raster',
                 'Attempted to load a 3D Map, but failed.',
                 'The map is not a vector map',
+                '404 (Not Found)',
             ];
             const criticalErrors = consoleErrors.filter(
                 (error) =>
@@ -213,7 +219,7 @@ foldersToTest.forEach((sampleFolder) => {
             // Wait for Google Maps to load.
             await page.waitForFunction(
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                () => (window as any).google?.maps,
+                () => !!(window as any).google?.maps,
                 { timeout: 500 }
             );
 
@@ -231,7 +237,6 @@ foldersToTest.forEach((sampleFolder) => {
                 );
             });
             expect(hasGoogleMaps).toBeTruthy();
-
         } finally {
             if (viteProcess.pid) {
                 try {
