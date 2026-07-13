@@ -21,51 +21,24 @@ async function init() {
     // Get the various HTML elements.
     const heading = document.getElementById('heading')!;
     const summary = document.getElementById('summary')!;
-    const gallery = document.getElementById('gallery')!;
     const expandedImageDiv = document.getElementById('expanded-image')!;
 
     // Show the display name and summary for the place.
     heading.textContent = place.displayName!;
     summary.textContent = place.editorialSummary!;
 
-    // Add photos to the gallery.
-    place.photos?.forEach((photo) => {
-        const altText = 'Photo of ' + place.displayName;
-        const img = document.createElement('img');
-        const imgButton = document.createElement('button');
-        const expandedImage = document.createElement('img');
-        img.src = photo?.getURI({ maxHeight: 380 });
-        img.alt = altText;
-        imgButton.addEventListener('click', (event) => {
-            centerSelectedThumbnail(imgButton);
-            event.preventDefault();
-            expandedImage.src = img.src;
-            expandedImage.alt = altText;
-            expandedImageDiv.innerHTML = '';
-            expandedImageDiv.appendChild(expandedImage);
-            const attributionLabel = createAttribution(
-                photo.authorAttributions[0]
-            );
-            expandedImageDiv.appendChild(attributionLabel);
-        });
-
-        imgButton.addEventListener('focus', () => {
-            centerSelectedThumbnail(imgButton);
-        });
-
-        imgButton.appendChild(img);
-        gallery.appendChild(imgButton);
-    });
-
-    // Display the first photo.
+    // Display a random photo.
     if (place.photos && place.photos.length > 0) {
-        const photo = place.photos[0];
+        // Pick a random photo index to reduce quota usage
+        const randomIndex = Math.floor(Math.random() * place.photos.length);
+        const photo = place.photos[randomIndex];
         const img = document.createElement('img');
-        img.alt = 'Photo of ' + place.displayName;
-        img.src = photo.getURI();
+        img.alt = `Photo of ${place.displayName || 'place'}`;
+        // Fetch only the URI for this specific random photo
+        img.src = photo.getURI({ maxHeight: 800 });
         expandedImageDiv.appendChild(img);
 
-        if (photo.authorAttributions && photo.authorAttributions.length > 0) {
+        if (photo.authorAttributions?.length) {
             expandedImageDiv.appendChild(
                 createAttribution(photo.authorAttributions[0])
             );
@@ -83,15 +56,6 @@ async function init() {
         attributionLabel.target = '_blank';
         attributionLabel.rel = 'noopener noreferrer';
         return attributionLabel;
-    }
-
-    // Helper function to center the selected thumbnail in the gallery.
-    function centerSelectedThumbnail(element: HTMLElement) {
-        element.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-            inline: 'center',
-        });
     }
 }
 
