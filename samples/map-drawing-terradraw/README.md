@@ -5,7 +5,7 @@ This sample demonstrates a basic implementation of Terra Draw with the Google Ma
 ![Roadmap View](./screenshots/draw-roadmap.png)
 ![Satellite View](./screenshots/draw-satellite.png)
 
-# Google Maps JavaScript Sample
+## Google Maps JavaScript Sample
 
 ## map-drawing-terradraw
 

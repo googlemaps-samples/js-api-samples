@@ -3,11 +3,23 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 // [START maps_map_drawing_terradraw]
 // [START maps_map_drawing_terradraw_libraries]
-import { TerraDraw, TerraDrawSelectMode, TerraDrawPointMode, TerraDrawLineStringMode, TerraDrawPolygonMode, TerraDrawRectangleMode, TerraDrawCircleMode, TerraDrawFreehandMode, } from 'terra-draw';
+import {
+    TerraDraw,
+    TerraDrawSelectMode,
+    TerraDrawPointMode,
+    TerraDrawLineStringMode,
+    TerraDrawPolygonMode,
+    TerraDrawRectangleMode,
+    TerraDrawCircleMode,
+    TerraDrawFreehandMode,
+} from 'terra-draw';
 import { TerraDrawGoogleMapsAdapter } from 'terra-draw-google-maps-adapter';
+
 // [END maps_map_drawing_terradraw_libraries]
+
 const colorPalette = [
     '#E74C3C',
     '#FF0066',
@@ -27,17 +39,20 @@ const colorPalette = [
     '#FF5722',
     '#795548',
 ];
-const getRandomColor = () => colorPalette[Math.floor(Math.random() * colorPalette.length)];
+
+const getRandomColor = () =>
+    colorPalette[Math.floor(Math.random() * colorPalette.length)];
+
 function processSnapshotForUndo(snapshot) {
     // console.log("Processing snapshot for undo:", snapshot);
     return snapshot.map((feature) => {
         const newFeature = JSON.parse(JSON.stringify(feature));
+
         if (newFeature.properties.mode === 'rectangle') {
             // console.log("Processing rectangle for undo:", newFeature);
             newFeature.geometry.type = 'Polygon';
             newFeature.properties.mode = 'polygon';
-        }
-        else if (newFeature.properties.mode === 'circle') {
+        } else if (newFeature.properties.mode === 'circle') {
             // console.log("Processing circle for undo:", newFeature);
             newFeature.geometry.type = 'Polygon';
             // The radius is already in properties, so we just need to ensure the mode is correct for re-creation
@@ -46,11 +61,13 @@ function processSnapshotForUndo(snapshot) {
         return newFeature;
     });
 }
+
 function setupModeButtons() {
     const modeUI = document.getElementById('mode-ui');
     if (!modeUI) {
         return;
     }
+
     const modeButtons = {
         'select-mode': 'select',
         'point-mode': 'point',
@@ -61,46 +78,53 @@ function setupModeButtons() {
         'freehand-mode': 'freehand',
         'clear-mode': 'static',
     };
+
     for (const buttonId in modeButtons) {
         const button = document.getElementById(buttonId);
         if (button) {
             button.onclick = () => {
                 setActiveButton(buttonId);
                 const modeName = modeButtons[buttonId];
+
                 if (!draw) {
                     return;
                 }
                 if (modeName === 'static') {
                     draw.clear();
                     draw.setMode('static');
-                }
-                else if (modeName) {
+                } else if (modeName) {
                     draw.setMode(modeName);
                 }
             };
         }
     }
 }
+
 function setActiveButton(buttonId) {
     const buttons = document.querySelectorAll('.mode-button');
     const resizeButton = document.getElementById('resize-button');
     const isResizeActive = resizeButton?.classList.contains('active');
+
     buttons.forEach((button) => {
         if (button.id !== 'resize-button') {
             button.classList.remove('active');
         }
     });
+
     const activeButton = document.getElementById(buttonId);
     if (activeButton) {
         activeButton.classList.add('active');
     }
+
     if (isResizeActive) {
         resizeButton?.classList.add('active');
     }
 }
+
 function initUI() {
     setActiveButton('point-mode');
 }
+
 let map;
 let draw;
 const history = [];
@@ -109,9 +133,11 @@ let selectedFeatureId = null;
 let isRestoring = false;
 let resizingEnabled = false;
 let debounceTimeout;
-async function initMap() {
+
+async function init() {
     try {
         const { Map } = await google.maps.importLibrary('maps');
+
         const mapOptions = {
             center: { lat: 48.862, lng: 2.342 },
             zoom: 12,
@@ -124,15 +150,19 @@ async function initMap() {
             streetViewControl: false,
             fullscreenControl: false,
         };
+
         const mapDiv = document.getElementById('map');
         map = new Map(mapDiv, mapOptions);
+
         map.addListener('click', () => {
             if (draw) {
                 console.log('Current draw mode on map click:', draw.getMode());
             }
         });
+
         map.addListener('projection_changed', () => {
             // [START maps_drawing_terradraw_modes]
+
             draw = new TerraDraw({
                 adapter: new TerraDrawGoogleMapsAdapter({
                     map,
@@ -205,6 +235,7 @@ async function initMap() {
                             },
                         },
                     }),
+
                     new TerraDrawPointMode({
                         editable: true,
                         styles: { pointColor: getRandomColor() },
@@ -252,13 +283,16 @@ async function initMap() {
                     }),
                 ],
             });
+
             draw.start();
+
             draw.on('ready', () => {
                 console.log('TerraDraw is ready!');
                 initUI();
                 setupModeButtons();
                 draw.setMode('point');
                 setActiveButton('point-mode');
+
                 draw.on('select', (id) => {
                     // console.log(`Feature selected: ${id}`);
                     if (selectedFeatureId && selectedFeatureId !== id) {
@@ -266,28 +300,39 @@ async function initMap() {
                     }
                     selectedFeatureId = id;
                 });
+
                 draw.on('deselect', () => {
                     // console.log("Feature deselected");
                     selectedFeatureId = null;
                 });
+
                 history.push(processSnapshotForUndo(draw.getSnapshot())); // Push initial empty state
+
                 draw.on('change', () => {
                     if (isRestoring) {
                         return;
                     }
+
                     if (debounceTimeout) {
                         clearTimeout(debounceTimeout);
                     }
+
                     debounceTimeout = window.setTimeout(() => {
                         const snapshot = draw.getSnapshot();
-                        const processedSnapshot = processSnapshotForUndo(snapshot);
-                        const filteredSnapshot = processedSnapshot.filter((f) => !f.properties.midPoint &&
-                            !f.properties.selectionPoint);
+                        const processedSnapshot =
+                            processSnapshotForUndo(snapshot);
+                        const filteredSnapshot = processedSnapshot.filter(
+                            (f) =>
+                                !f.properties.midPoint &&
+                                !f.properties.selectionPoint
+                        );
                         history.push(filteredSnapshot);
                         redoHistory = [];
                     }, 200);
                 });
+
                 // [END maps_drawing_terradraw_modes]
+
                 const exportButton = document.getElementById('export-button');
                 if (exportButton) {
                     exportButton.onclick = () => {
@@ -306,28 +351,32 @@ async function initMap() {
                         URL.revokeObjectURL(url);
                     };
                 }
+
                 const uploadButton = document.getElementById('upload-button');
                 const uploadInput = document.getElementById('upload-input');
+
                 if (uploadButton && uploadInput) {
                     uploadButton.onclick = () => {
                         uploadInput.click();
                     };
+
                     uploadInput.onchange = (event) => {
-                        const file = event.target
-                            .files?.[0];
+                        const file = event.target.files?.[0];
                         if (file) {
                             const reader = new FileReader();
                             reader.onload = (e) => {
                                 try {
-                                    const geojson = JSON.parse(e.target?.result);
+                                    const geojson = JSON.parse(
+                                        e.target?.result
+                                    );
                                     if (geojson.type === 'FeatureCollection') {
                                         draw.addFeatures(geojson.features);
+                                    } else {
+                                        alert(
+                                            'Invalid GeoJSON file: must be a FeatureCollection.'
+                                        );
                                     }
-                                    else {
-                                        alert('Invalid GeoJSON file: must be a FeatureCollection.');
-                                    }
-                                }
-                                catch {
+                                } catch {
                                     alert('Error parsing GeoJSON file.');
                                 }
                             };
@@ -335,11 +384,16 @@ async function initMap() {
                         }
                     };
                 }
+
                 const resizeButton = document.getElementById('resize-button');
                 if (resizeButton) {
                     resizeButton.onclick = () => {
                         resizingEnabled = !resizingEnabled;
-                        resizeButton.classList.toggle('active', resizingEnabled);
+                        resizeButton.classList.toggle(
+                            'active',
+                            resizingEnabled
+                        );
+
                         const flags = {
                             polygon: {
                                 feature: {
@@ -397,20 +451,24 @@ async function initMap() {
                                 },
                             },
                         };
+
                         console.log('Updating flags:', flags);
                         draw.updateModeOptions('select', { flags });
                     };
                 }
-                const deleteSelectedButton = document.getElementById('delete-selected-button');
+
+                const deleteSelectedButton = document.getElementById(
+                    'delete-selected-button'
+                );
                 if (deleteSelectedButton) {
                     deleteSelectedButton.onclick = () => {
                         if (selectedFeatureId) {
                             draw.removeFeatures([selectedFeatureId]);
-                        }
-                        else {
+                        } else {
                             const features = draw.getSnapshot();
                             if (features.length > 0) {
-                                const lastFeature = features[features.length - 1];
+                                const lastFeature =
+                                    features[features.length - 1];
                                 if (lastFeature.id) {
                                     draw.removeFeatures([lastFeature.id]);
                                 }
@@ -418,6 +476,7 @@ async function initMap() {
                         }
                     };
                 }
+
                 const undoButton = document.getElementById('undo-button');
                 if (undoButton) {
                     undoButton.onclick = () => {
@@ -426,8 +485,12 @@ async function initMap() {
                             if (popped) {
                                 redoHistory.push(popped);
                             }
-                            const snapshotToRestore = history[history.length - 1];
-                            console.log('Restoring snapshot (undo):', snapshotToRestore);
+                            const snapshotToRestore =
+                                history[history.length - 1];
+                            console.log(
+                                'Restoring snapshot (undo):',
+                                snapshotToRestore
+                            );
                             isRestoring = true;
                             draw.clear();
                             draw.addFeatures(snapshotToRestore);
@@ -437,6 +500,7 @@ async function initMap() {
                         }
                     };
                 }
+
                 const redoButton = document.getElementById('redo-button');
                 if (redoButton) {
                     redoButton.onclick = () => {
@@ -454,24 +518,30 @@ async function initMap() {
                     };
                 }
             });
+
             function rotateFeature(feature, angle) {
                 const newFeature = JSON.parse(JSON.stringify(feature));
                 const coordinates = newFeature.geometry.coordinates;
                 const center = getCenter(coordinates);
+
                 const rotatedCoordinates = coordinates.map((ring) => {
                     return ring.map((point) => {
                         const x = point[0] - center[0];
                         const y = point[1] - center[1];
-                        const newX = x * Math.cos((angle * Math.PI) / 180) -
+                        const newX =
+                            x * Math.cos((angle * Math.PI) / 180) -
                             y * Math.sin((angle * Math.PI) / 180);
-                        const newY = x * Math.sin((angle * Math.PI) / 180) +
+                        const newY =
+                            x * Math.sin((angle * Math.PI) / 180) +
                             y * Math.cos((angle * Math.PI) / 180);
                         return [newX + center[0], newY + center[1]];
                     });
                 });
+
                 newFeature.geometry.coordinates = rotatedCoordinates;
                 return newFeature;
             }
+
             function getCenter(coordinates) {
                 let x = 0;
                 let y = 0;
@@ -485,10 +555,14 @@ async function initMap() {
                 });
                 return [x / count, y / count];
             }
+
             document.addEventListener('keydown', (event) => {
                 if (event.key === 'r' && selectedFeatureId) {
                     const features = draw.getSnapshot();
-                    const selectedFeature = features.find((f) => f.id === selectedFeatureId);
+                    const selectedFeature = features.find(
+                        (f) => f.id === selectedFeatureId
+                    );
+
                     if (selectedFeature) {
                         const newFeature = rotateFeature(selectedFeature, 15);
                         draw.addFeatures([newFeature]);
@@ -496,10 +570,10 @@ async function initMap() {
                 }
             });
         });
-    }
-    catch (e) {
+    } catch (e) {
         console.error('Error loading Google Maps API:', e);
     }
 }
-void initMap();
+
+void init();
 // [END maps_map_drawing_terradraw]

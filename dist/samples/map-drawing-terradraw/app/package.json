@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Basic sample for Terra Draw with Google Maps API.",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh map-drawing-terradraw && bash ../app.sh map-drawing-terradraw && bash ../docs.sh map-drawing-terradraw && npm run build:vite --workspace=. && bash ../dist.sh map-drawing-terradraw",
+    "build": "bash ../build-single.sh",
     "test": "tsc && npm run build:vite --workspace=.",
     "start": "tsc && vite build --base './' && vite",
     "build:vite": "vite build --base './'",
@@ -16,6 +16,6 @@
   "devDependencies": {
     "@types/google.maps": "latest",
     "typescript": "^5.9.3",
-    "vite": "^7.2.2"
+    "vite": "^8.1.4"
   }
 }
