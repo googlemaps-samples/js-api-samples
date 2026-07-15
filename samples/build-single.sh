@@ -119,9 +119,9 @@ if [[ $? -eq 0 ]]; then
   exit 1
 fi
 
-grep -E "key:\s*[\"']AIza" "${html_recursive_grep_options[@]}"
+grep -E "(key:\s*[\"']|key=)" "${html_recursive_grep_options[@]}" | grep -v "GOOGLE_MAPS_API_KEY"
 if [[ $? -eq 0 ]]; then
-  echo "Found hardcoded API key ('AIza'). Please use the 'GOOGLE_MAPS_API_KEY' placeholder instead."
+  echo "Found a custom API key. Please use the 'GOOGLE_MAPS_API_KEY' placeholder instead."
   exit 1
 fi
 
