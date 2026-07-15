@@ -125,6 +125,12 @@ if [[ $? -eq 0 ]]; then
   exit 1
 fi
 
+grep -i -E "[a-z0-9]{39}" "${all_type_recursive_grep_options[@]}"
+if [[ $? -eq 0 ]]; then
+  echo "Found a 39-character string that looks like a real API key. Please use the 'GOOGLE_MAPS_API_KEY' placeholder instead."
+  exit 1
+fi
+
 # callback & __ib__ both show up the in the inline loader, that's okay. comments also okay
 grep callback "${all_type_recursive_grep_options[@]}" | grep -v -E '^[-_./a-z0-9]+:\s*//' | grep -v __ib__ 
 if [[ $? -eq 0 ]]; then
