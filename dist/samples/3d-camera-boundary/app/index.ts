@@ -4,9 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// @ts-nocheck
 // [START maps_3d_camera_boundary]
-async function initMap() {
+async function init() {
     const { Map3DElement } = await google.maps.importLibrary('maps3d');
 
     const map = new Map3DElement({
@@ -14,11 +13,10 @@ async function initMap() {
         tilt: 67.5,
         mode: 'HYBRID',
         bounds: { south: -48.3, west: 163.56, north: -32.86, east: -180 },
-        gestureHandling: 'COOPERATIVE',
     });
 
     document.body.append(map);
 }
 
-initMap();
+void init();
 // [END maps_3d_camera_boundary]

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
@@ -15,19 +15,19 @@ const NEW_ZEALAND_BOUNDS = {
     east: -175.81,
 };
 
-async function initMap() {
+async function init() {
     // Import the needed libraries.
-    (await google.maps.importLibrary('maps'));
+    await google.maps.importLibrary('maps');
+
     innerMap = mapElement.innerMap;
-    
+
     // Restrict the map to the provided bounds.
     innerMap.setOptions({
         restriction: {
             latLngBounds: NEW_ZEALAND_BOUNDS,
             strictBounds: false,
-        }
+        },
     });
-    
 }
-initMap();
 
+void init();

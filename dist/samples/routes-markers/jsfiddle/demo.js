@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
@@ -8,29 +8,34 @@
 let mapPolylines = [];
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
+
 // Initialize and add the map.
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
-    await google.maps.importLibrary('maps');
-    innerMap = await mapElement.innerMap;
+    const [{ event }] = await Promise.all([
+        google.maps.importLibrary('core'),
+        google.maps.importLibrary('maps'),
+    ]);
+
+    innerMap = mapElement.innerMap;
     innerMap.setOptions({
         mapTypeControl: false,
         mapId: 'DEMO_MAP_ID',
     });
+
     // Call the function after the map is loaded.
-    google.maps.event.addListenerOnce(innerMap, 'idle', () => {
-        getDirections();
+    event.addListenerOnce(innerMap, 'idle', () => {
+        void getDirections();
     });
 }
+
 async function getDirections() {
-    //@ts-ignore
     // Request the needed libraries.
     const [{ Route }, { PinElement }] = await Promise.all([
         google.maps.importLibrary('routes'),
         google.maps.importLibrary('marker'),
     ]);
-    
-    
+
     // Define routes request with an intermediate stop.
     const request = {
         origin: 'Parking lot, Christmas Tree Point Rd, San Francisco, CA 94131',
@@ -39,20 +44,18 @@ async function getDirections() {
         travelMode: 'DRIVING',
         fields: ['path', 'legs', 'viewport'],
     };
-    
+
     // Call computeRoutes to get the directions.
     const result = await Route.computeRoutes(request);
     if (!result.routes || result.routes.length === 0) {
         console.warn('No routes found');
         return;
     }
-    
-    
+
     // Alter style based on marker index.
-    function markerOptionsMaker(defaultOptions, 
-    //@ts-ignore
-    waypointMarkerDetails) {
-        const { index, totalMarkers, leg } = waypointMarkerDetails;
+    function markerOptionsMaker(defaultOptions, waypointMarkerDetails) {
+        const { index, totalMarkers } = waypointMarkerDetails;
+
         // Style the origin waypoint.
         if (index === 0) {
             return {
@@ -63,9 +66,10 @@ async function getDirections() {
                     glyphColor: 'white',
                     background: 'green',
                     borderColor: 'green',
-                }).element,
+                }),
             };
         }
+
         // Style all intermediate waypoints.
         if (!(index === 0 || index === totalMarkers - 1)) {
             return {
@@ -76,9 +80,10 @@ async function getDirections() {
                     glyphColor: 'white',
                     background: 'blue',
                     borderColor: 'blue',
-                }).element,
+                }),
             };
         }
+
         // Style the destination waypoint.
         if (index === totalMarkers - 1) {
             return {
@@ -89,19 +94,24 @@ async function getDirections() {
                     glyphColor: 'white',
                     background: 'red',
                     borderColor: 'red',
-                }).element,
+                }),
             };
         }
+
         return { ...defaultOptions, map: innerMap };
     }
-    const markers = await result.routes[0].createWaypointAdvancedMarkers(markerOptionsMaker);
-    
+
+    await result.routes[0].createWaypointAdvancedMarkers(markerOptionsMaker);
+
     // Fit the map to the route.
     innerMap.fitBounds(result.routes[0].viewport);
     innerMap.setHeading(270);
+
     // Create polylines and add them to the map.
     mapPolylines = result.routes[0].createPolylines();
-    mapPolylines.forEach((polyline) => polyline.setMap(innerMap));
+    mapPolylines.forEach((polyline) => {
+        polyline.setMap(innerMap);
+    });
 }
-initMap();
 
+void init();

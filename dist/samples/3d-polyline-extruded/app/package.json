@@ -2,13 +2,11 @@
   "name": "@js-api-samples/3d-polyline-extruded",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh 3d-polyline-extruded && bash ../app.sh 3d-polyline-extruded && bash ../docs.sh 3d-polyline-extruded &&  npm run build:vite --workspace=. && bash ../dist.sh 3d-polyline-extruded",
+    "build": "bash ../build-single.sh",
     "test": "tsc && npm run build:vite --workspace=.",
-    "start": "tsc && vite build --base './' && vite",
-    "build:vite": "vite build --base './'",
-    "preview": "vite preview"
+    "start": "tsc && vite build --config ../../vite.config.js --base './' && vite --config ../../vite.config.js",
+    "build:vite": "vite build --config ../../vite.config.js --base './'",
+    "preview": "vite preview --config ../../vite.config.js"
   },
-  "dependencies": {
-    
-  }
+  "author": "Google LLC"
 }

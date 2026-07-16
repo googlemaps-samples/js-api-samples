@@ -5,26 +5,31 @@
  */
 // [START maps_routes_route_matrix]
 // Initialize and add the map.
-let map;
-let markers: google.maps.marker.AdvancedMarkerElement[] = [];
-let center = { lat: 51.55, lng: -1.8 };
+let map: google.maps.Map;
+const markers: google.maps.marker.AdvancedMarkerElement[] = [];
+const center = { lat: 51.55, lng: -1.8 };
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     //  Request the needed libraries.
-    //prettier-ignore
-    //@ts-ignore
-    const [{Map}, {Place}, {AdvancedMarkerElement, PinElement}, {RouteMatrix}] = await Promise.all([
-    google.maps.importLibrary('maps') as Promise<google.maps.MapsLibrary>,
-    google.maps.importLibrary('places') as Promise<google.maps.PlacesLibrary>,
-    google.maps.importLibrary('marker') as Promise<google.maps.MarkerLibrary>,
-    google.maps.importLibrary('routes') as Promise<google.maps.RoutesLibrary>
-  ]);
+    const [
+        { Map },
+        { Place },
+        { AdvancedMarkerElement, PinElement },
+        { RouteMatrix },
+        { LatLngBounds, UnitSystem },
+    ] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('places'),
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('routes'),
+        google.maps.importLibrary('core'),
+    ]);
 
-    const bounds = new google.maps.LatLngBounds();
+    const bounds = new LatLngBounds();
 
-    map = new Map(document.getElementById('map') as HTMLElement, {
+    map = new Map(document.getElementById('map')!, {
         zoom: 8,
-        center: center,
+        center,
         mapId: 'DEMO_MAP_ID',
     });
 
@@ -50,31 +55,38 @@ async function initMap(): Promise<void> {
     ]);
 
     // [START maps_routes_route_matrix_request]
-    const request = {
-        origins: [origin1, origin2],
-        destinations: [destinationA, destinationB],
+    const destinations = [destinationA, destinationB];
+    const origins = [origin1, origin2];
+    const request: google.maps.routes.ComputeRouteMatrixRequest = {
+        origins,
+        destinations,
         travelMode: 'DRIVING',
-        units: google.maps.UnitSystem.METRIC,
+        units: UnitSystem.METRIC,
         fields: ['distanceMeters', 'durationMillis', 'condition'],
     };
     // [END maps_routes_route_matrix_request]
 
     // Show the request.
-    (document.getElementById('request') as HTMLDivElement).innerText =
-        JSON.stringify(request, null, 2);
+    document.getElementById('request')!.innerText = JSON.stringify(
+        request,
+        null,
+        2
+    );
 
     // Get the RouteMatrix response.
     const response = await RouteMatrix.computeRouteMatrix(request);
 
     // Show the response.
-    (document.getElementById('response') as HTMLDivElement).innerText =
-        JSON.stringify(response, null, 2);
+    document.getElementById('response')!.innerText = JSON.stringify(
+        response,
+        null,
+        2
+    );
 
     // Add markers for the origins.
-    for (const origin of request.origins) {
+    for (const origin of origins) {
         if (origin.location) {
             const pin = new PinElement({
-                //@ts-ignore
                 glyphText: 'O',
                 glyphColor: 'white',
                 background: '#137333',
@@ -83,20 +95,18 @@ async function initMap(): Promise<void> {
             const marker = new AdvancedMarkerElement({
                 map,
                 position: origin.location,
-                content: pin.element,
                 title: `Origin: ${origin.displayName}`,
             });
+            marker.append(pin);
             markers.push(marker);
             bounds.extend(origin.location);
         }
     }
 
     // Add markers for the destinations.
-    for (let i = 0; i < request.destinations.length; i++) {
-        const destination = request.destinations[i];
+    for (const destination of destinations) {
         if (destination.location) {
             const pin = new PinElement({
-                //@ts-ignore
                 glyphText: 'D',
                 glyphColor: 'white',
                 background: '#C5221F',
@@ -106,8 +116,8 @@ async function initMap(): Promise<void> {
             const marker = new AdvancedMarkerElement({
                 map,
                 position: destination.location,
-                content: pin.element,
-                title: `Destination: ${destination.displayName}`,
+                content: pin,
+                title: `Destination: ${destination.displayName ?? 'Unknown'}`,
             });
 
             markers.push(marker);
@@ -119,5 +129,5 @@ async function initMap(): Promise<void> {
     map.fitBounds(bounds);
 }
 
-initMap();
+void init();
 // [END maps_routes_route_matrix]

@@ -1,63 +1,73 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
+const CITIES = [
+    { name: 'New York', id: 'ChIJOwg_06VPwokRYv534QaPC8g' },
+    { name: 'London', id: 'ChIJdd4hrwug2EcRmSrV3Vo6llI' },
+    { name: 'Paris', id: 'ChIJD7fiBh9u5kcRYJSMaMOCCwQ' },
+    { name: 'Tokyo', id: 'ChIJ51cu8IcbXWARiRtXIothAS4' },
+    { name: 'Rome', id: 'ChIJu46S-ZZhLxMROG5lkwZ3D7k' },
+];
+
 async function init() {
-    const { Place } = (await google.maps.importLibrary('places'));
-    // Use a place ID to create a new Place instance.
-    const place = new Place({
-        id: 'ChIJydSuSkkUkFQRsqhB-cEtYnw', // Woodland Park Zoo, Seattle WA
-    });
-    // Call fetchFields, passing the desired data fields.
-    await place.fetchFields({
-        fields: ['displayName', 'photos', 'editorialSummary'],
-    });
-    // Get the various HTML elements.
+    const { Place } = await google.maps.importLibrary('places');
+
     const heading = document.getElementById('heading');
     const summary = document.getElementById('summary');
-    const gallery = document.getElementById('gallery');
     const expandedImageDiv = document.getElementById('expanded-image');
-    // Show the display name and summary for the place.
-    heading.textContent = place.displayName;
-    summary.textContent = place.editorialSummary;
-    // Add photos to the gallery.
-    place.photos?.forEach((photo) => {
-        const altText = 'Photo of ' + place.displayName;
-        const img = document.createElement('img');
-        const imgButton = document.createElement('button');
-        const expandedImage = document.createElement('img');
-        img.src = photo?.getURI({ maxHeight: 380 });
-        img.alt = altText;
-        imgButton.addEventListener('click', (event) => {
-            centerSelectedThumbnail(imgButton);
-            event.preventDefault();
-            expandedImage.src = img.src;
-            expandedImage.alt = altText;
+    const randomizeBtn = document.getElementById('randomize-btn');
+
+    async function showRandomCityPhoto() {
+        randomizeBtn.disabled = true;
+
+        // Pick a random city
+        const city = CITIES[Math.floor(Math.random() * CITIES.length)];
+
+        try {
+            const place = new Place({ id: city.id });
+            await place.fetchFields({
+                fields: ['displayName', 'photos', 'editorialSummary'],
+            });
+
+            heading.textContent = place.displayName ?? city.name;
+            summary.textContent = place.editorialSummary ?? '';
             expandedImageDiv.innerHTML = '';
-            expandedImageDiv.appendChild(expandedImage);
-            const attributionLabel = createAttribution(photo.authorAttributions[0]);
-            expandedImageDiv.appendChild(attributionLabel);
-        });
-        imgButton.addEventListener('focus', () => {
-            centerSelectedThumbnail(imgButton);
-        });
-        imgButton.appendChild(img);
-        gallery.appendChild(imgButton);
-    });
-    // Display the first photo.
-    if (place.photos && place.photos.length > 0) {
-        const photo = place.photos[0];
-        const img = document.createElement('img');
-        img.alt = 'Photo of ' + place.displayName;
-        img.src = photo.getURI();
-        expandedImageDiv.appendChild(img);
-        if (photo.authorAttributions && photo.authorAttributions.length > 0) {
-            expandedImageDiv.appendChild(createAttribution(photo.authorAttributions[0]));
+
+            if (place.photos && place.photos.length > 0) {
+                // Pick one of the first 10 photos
+                const maxPhotos = Math.min(10, place.photos.length);
+                const randomIndex = Math.floor(Math.random() * maxPhotos);
+                const photo = place.photos[randomIndex];
+
+                const img = document.createElement('img');
+                img.alt = `Photo of ${place.displayName ?? city.name}`;
+                img.src = photo.getURI({ maxHeight: 800 });
+                expandedImageDiv.appendChild(img);
+
+                if (photo.authorAttributions.length) {
+                    expandedImageDiv.appendChild(
+                        createAttribution(photo.authorAttributions[0])
+                    );
+                }
+            } else {
+                expandedImageDiv.textContent =
+                    'No photos available for this location.';
+            }
+        } catch (error) {
+            console.error('Failed to fetch place details:', error);
+            summary.textContent = 'Failed to load data.';
         }
+
+        // Re-enable button after 2 seconds
+        setTimeout(() => {
+            randomizeBtn.disabled = false;
+        }, 2000);
     }
+
     // Helper function to create attribution DIV.
     function createAttribution(attribution) {
         const attributionLabel = document.createElement('a');
@@ -68,14 +78,11 @@ async function init() {
         attributionLabel.rel = 'noopener noreferrer';
         return attributionLabel;
     }
-    // Helper function to center the selected thumbnail in the gallery.
-    function centerSelectedThumbnail(element) {
-        element.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-            inline: 'center',
-        });
-    }
-}
-init();
 
+    randomizeBtn.addEventListener('click', () => void showRandomCityPhoto());
+
+    // Initial load
+    void showRandomCityPhoto();
+}
+
+void init();

@@ -5,18 +5,19 @@
  */
 
 // [START maps_layer_data_style]
-async function initMap() {
-    (await google.maps.importLibrary('maps')) as google.maps.MapsLibrary;
+async function init() {
+    const [{ event }] = await Promise.all([
+        google.maps.importLibrary('core'),
+        google.maps.importLibrary('maps'),
+    ]);
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     const innerMap = mapElement.innerMap;
 
     // [START maps_layer_data_style_script_snippet_load]
     // Load GeoJSON.
-    google.maps.event.addListenerOnce(innerMap, 'idle', () => {
+    event.addListenerOnce(innerMap, 'idle', () => {
         innerMap.data.loadGeoJson('google.json');
     });
     // [END maps_layer_data_style_script_snippet_load]
@@ -30,5 +31,5 @@ async function initMap() {
     // [END maps_layer_data_style_script_snippet_style]
 }
 
-initMap();
+void init();
 // [END maps_layer_data_style]

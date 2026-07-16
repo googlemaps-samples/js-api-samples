@@ -1,38 +1,43 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-/* [START maps_deckgl_polygon] */
+
 // Initialize and add the map
 let map;
 let polygonLayer; // Declare polygonLayer outside for button access
 let googleMapsOverlay; // Declare googleMapsOverlay outside for button access
-async function initMap() {
+
+async function init() {
     // Progress bar logic moved from index.html
-    var progress, progressDiv = document.querySelector('.mdc-linear-progress');
+    let progress;
+    const progressDiv = document.querySelector('.mdc-linear-progress');
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-        // @ts-ignore
         progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
         progress.done = function () {
             progress.close();
-            progressDiv?.remove(); // Use optional chaining in case progressDiv is null
+            progressDiv.remove();
         };
     }
+
     // The location for the map center.
     const position = { lat: 37.752954624496304, lng: -122.44754059928648 }; // Using the center from original deckgl-polygon.js
+
     //  Request needed libraries.
-    const { Map } = (await google.maps.importLibrary('maps'));
+    const { Map } = await google.maps.importLibrary('maps');
+
     const mapDiv = document.getElementById('map');
     if (!mapDiv) {
         console.error('Map element not found!');
         return;
     }
+
     // The map, centered at the specified position
     map = new Map(mapDiv, {
         zoom: 12, // Using the zoom from original deckgl-polygon.js
@@ -43,11 +48,13 @@ async function initMap() {
         streetViewControl: false,
         // clickableIcons: false, // Disable clicks on base map POIs
     });
+
     // Deck.gl Layer and Overlay
     polygonLayer = new deck.PolygonLayer({
         // Assign to the outer polygonLayer
         id: 'PolygonLayer',
         data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/sf-zipcodes.json',
+
         getPolygon: (d) => d.contour, // Use 'any' for simplicity
         getElevation: (d) => d.population / d.area / 10, // Use 'any' for simplicity
         getFillColor: (d) => [d.population / d.area / 60, 140, 0], // Use 'any' for simplicity
@@ -62,8 +69,7 @@ async function initMap() {
                 // Check if progress is defined
                 // Add a small delay to ensure the progress bar is removed
                 setTimeout(() => {
-                    // @ts-ignore
-                    progress.done(); // hides progress bar
+                    progress?.done?.(); // hides progress bar
                 }, 100); // 100ms delay
             }
         },
@@ -90,18 +96,20 @@ async function initMap() {
                     tooltip.style.left = x + 'px';
                     tooltip.style.top = y + 'px';
                     tooltip.style.display = 'block';
-                }
-                else {
+                } else {
                     tooltip.style.display = 'none';
                 }
             }
         },
     });
+
     googleMapsOverlay = new deck.GoogleMapsOverlay({
         // Assign to the outer googleMapsOverlay
         layers: [polygonLayer],
     });
+
     googleMapsOverlay.setMap(map);
+
     // Button functionality
     const toggleButton = document.getElementById('toggleButton');
     if (toggleButton) {
@@ -118,11 +126,12 @@ async function initMap() {
             });
             // Update the polygonLayer variable to the new instance
             polygonLayer = newPolygonLayer;
+
             toggleButton.textContent = !currentVisible
                 ? 'Hide Polygon Layer'
                 : 'Show Polygon Layer';
         });
     }
 }
-initMap();
-/* [END maps_deckgl_polygon] */
+
+void init();

@@ -9,11 +9,11 @@
 // from the map.
 
 let flightPath: google.maps.Polyline;
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-let innerMap;
+const mapElement = document.querySelector('gmp-map')!;
+let innerMap: google.maps.Map;
 
-async function initMap() {
-    await google.maps.importLibrary('maps');
+async function init() {
+    const { Polyline } = await google.maps.importLibrary('maps');
     innerMap = mapElement.innerMap;
 
     const flightPathCoordinates: google.maps.LatLngLiteral[] = [
@@ -23,7 +23,7 @@ async function initMap() {
         { lat: -27.467, lng: 153.027 },
     ];
 
-    flightPath = new google.maps.Polyline({
+    flightPath = new Polyline({
         path: flightPathCoordinates,
         strokeColor: '#FF0000',
         strokeOpacity: 1.0,
@@ -48,5 +48,5 @@ function removeLine(): void {
     flightPath.setMap(null);
 }
 
-initMap();
+void init();
 // [END maps_polyline_remove]

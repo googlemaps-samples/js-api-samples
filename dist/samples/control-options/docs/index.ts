@@ -8,13 +8,15 @@
 // You can set control options to change the default position or style of many
 // of the map controls.
 
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
-    await google.maps.importLibrary('maps');
+    const [{ MapTypeControlStyle, MapTypeId }, { ControlPosition }] =
+        await Promise.all([
+            google.maps.importLibrary('maps'),
+            google.maps.importLibrary('core'),
+        ]);
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
 
     const innerMap = mapElement.innerMap;
 
@@ -22,16 +24,13 @@ async function initMap() {
     innerMap.setOptions({
         mapTypeControl: true,
         mapTypeControlOptions: {
-            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-            mapTypeIds: [
-                google.maps.MapTypeId.ROADMAP,
-                google.maps.MapTypeId.TERRAIN,
-            ],
-            position: google.maps.ControlPosition.TOP_CENTER,
+            style: MapTypeControlStyle.DROPDOWN_MENU,
+            mapTypeIds: [MapTypeId.ROADMAP, MapTypeId.TERRAIN],
+            position: ControlPosition.TOP_CENTER,
         },
     });
     // [END maps_control_options_change_default]
 }
 
-initMap();
+void init();
 // [END maps_control_options]

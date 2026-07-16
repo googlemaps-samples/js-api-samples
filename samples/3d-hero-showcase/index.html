@@ -1,0 +1,189 @@
+<!doctype html>
+<!--
+ @license
+ Copyright 2026 Google LLC. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+-->
+<!-- [START maps_3d_hero_showcase] -->
+<html>
+    <head>
+        <title>Amsterdam 3D Explorer</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap"
+            rel="stylesheet" />
+
+        <link rel="stylesheet" type="text/css" href="./style.css" />
+        <script type="module" src="./index.js"></script>
+        <script>
+            // prettier-ignore
+            (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+                key: "GOOGLE_MAPS_API_KEY"
+            });
+        </script>
+    </head>
+    <body>
+        <!-- Googly minimal floating control card -->
+        <div id="control-panel" class="google-card">
+            <header class="card-header">
+                <div class="logo-area">
+                    <span class="logo-text">
+                        <span class="g-blue">A</span>
+                        <span class="g-red">m</span>
+                        <span class="g-yellow">s</span>
+                        <span class="g-blue">t</span>
+                        <span class="g-green">e</span>
+                        <span class="g-red">r</span>
+                        <span class="g-blue">d</span>
+                        <span class="g-green">a</span>
+                        <span class="g-red">m</span>
+                    </span>
+                    <span class="badge-3d">3D</span>
+                </div>
+                <p class="subtitle">Rijksmuseum & attractions</p>
+            </header>
+
+            <div class="scrollable-content">
+                <!-- Tour Actions -->
+                <div class="action-block">
+                    <button id="btn-start-tour" class="google-btn primary-btn">
+                        <span class="btn-icon">▶</span> Start Guided Tour
+                    </button>
+                    <button
+                        id="btn-stop-tour"
+                        class="google-btn danger-btn hidden">
+                        <span class="btn-icon">⏹</span> Stop Tour
+                    </button>
+
+                    <div id="tour-nav" class="tour-nav hidden">
+                        <button
+                            id="btn-prev-stop"
+                            class="nav-arrow"
+                            title="Previous Stop">
+                            ◀
+                        </button>
+                        <span id="tour-progress" class="progress-text"
+                            >Stop 1 of 4</span
+                        >
+                        <button
+                            id="btn-next-stop"
+                            class="nav-arrow"
+                            title="Next Stop">
+                            ▶
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Map Mode -->
+                <div class="option-block">
+                    <h3>Map Mode</h3>
+                    <div class="segmented-control">
+                        <button id="mode-satellite" class="segment-btn active">
+                            Satellite
+                        </button>
+                        <button id="mode-hybrid" class="segment-btn">
+                            Hybrid
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Layer Options -->
+                <div class="option-block">
+                    <h3>Map Layers</h3>
+                    <div class="toggle-list">
+                        <label class="switch-row">
+                            <span class="switch-label"
+                                ><span class="emoji">📍</span> Point-of-interest
+                                Markers
+                            </span>
+                            <div class="switch-control">
+                                <input
+                                    type="checkbox"
+                                    id="toggle-markers"
+                                    checked />
+                                <span class="lever"></span>
+                            </div>
+                        </label>
+
+                        <label class="switch-row">
+                            <span class="switch-label"
+                                ><span class="emoji">🏢</span> Rijksmuseum 3D
+                                Buildings
+                            </span>
+                            <div class="switch-control">
+                                <input
+                                    type="checkbox"
+                                    id="toggle-salesforce-mesh"
+                                    checked />
+                                <span class="lever"></span>
+                            </div>
+                        </label>
+
+                        <label class="switch-row">
+                            <span class="switch-label"
+                                ><span class="emoji">📐</span> Park Boundaries
+                                (Polygons)
+                            </span>
+                            <div class="switch-control">
+                                <input
+                                    type="checkbox"
+                                    id="toggle-polygons"
+                                    checked />
+                                <span class="lever"></span>
+                            </div>
+                        </label>
+
+                        <label class="switch-row">
+                            <span class="switch-label"
+                                ><span class="emoji">⛵</span> Canal Route
+                                (Polyline)
+                            </span>
+                            <div class="switch-control">
+                                <input
+                                    type="checkbox"
+                                    id="toggle-polyline"
+                                    checked />
+                                <span class="lever"></span>
+                            </div>
+                        </label>
+
+                        <label class="switch-row">
+                            <span class="switch-label"
+                                ><span class="emoji">⚙</span> De Gooyer 3D Model
+                            </span>
+                            <div class="switch-control">
+                                <input
+                                    type="checkbox"
+                                    id="toggle-model"
+                                    checked />
+                                <span class="lever"></span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer">Google Maps 3D Platform</div>
+        </div>
+
+        <!-- Welcome Floating Alert -->
+        <div id="welcome-banner" class="google-card welcome-toast">
+            <div class="toast-content">
+                <h3>Explore Amsterdam in 3D</h3>
+                <p>
+                    Start the tour to fly around the Rijksmuseum, Vondelpark,
+                    Prinsengracht, and De Gooyer Windmill.
+                </p>
+                <button id="btn-welcome-dismiss" class="google-btn text-btn">
+                    Dismiss
+                </button>
+            </div>
+        </div>
+    </body>
+</html>
+<!-- [END maps_3d_hero_showcase] -->

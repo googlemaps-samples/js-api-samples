@@ -2,13 +2,11 @@
   "name": "@js-api-samples/dds-datasets-polygon-click",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh dds-datasets-polygon-click && bash ../app.sh dds-datasets-polygon-click && bash ../docs.sh dds-datasets-polygon-click && npm run build:vite --workspace=. && bash ../dist.sh dds-datasets-polygon-click",
+    "build": "bash ../build-single.sh",
     "test": "tsc && npm run build:vite --workspace=.",
-    "start": "tsc && vite build --base './' && vite",
-    "build:vite": "vite build --base './'",
-    "preview": "vite preview"
+    "start": "tsc && vite build --config ../../vite.config.js --base './' && vite --config ../../vite.config.js",
+    "build:vite": "vite build --config ../../vite.config.js --base './'",
+    "preview": "vite preview --config ../../vite.config.js"
   },
-  "dependencies": {
-    
-  }
+  "author": "Google LLC"
 }

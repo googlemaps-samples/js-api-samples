@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
@@ -9,37 +9,37 @@
  * test changes in a world where sometimes changes must be merged in order to
  * test them. This way we can avoid making changes to published content.
  * And deliver us from evil.
+ * Amen.
  */
 
 // Declare the gmp-map element.
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
-const advancedMarkerElement = document.querySelector('gmp-advanced-marker');
 let center;
-async function initMap() {
-    
+
+async function init() {
     //  Request the needed libraries.
-    const { Map } = (await google.maps.importLibrary('maps'));
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
+    const [{ AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
+    ]);
+
     // Get the inner map from the gmp-map element.
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
         mapTypeControl: false,
     });
-    
+
     // Get the lat/lng from the inner map.
     center = innerMap.getCenter();
-    
+
     // Add a marker, positioned at Uluru.
-    const marker = new AdvancedMarkerElement({
+    new AdvancedMarkerElement({
         map: innerMap,
         position: center,
         title: 'Uluru',
     });
-    
-    
-    console.log("Say there Mac, why'd you choose me to test this change?");
-    
-}
-initMap();
 
+    console.log('May there be peace.');
+}
+void init();

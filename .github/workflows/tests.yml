@@ -1,0 +1,243 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Tests
+
+on:
+  pull_request:
+    types: [opened, synchronize, edited]
+    paths:
+      - "samples/**"
+      - "e2e/samples.spec.ts"
+      - "playwright.config.ts"
+      - "package.json"
+  push:
+    branches:
+      - main
+    paths:
+      - "samples/**"
+      - "e2e/samples.spec.ts"
+      - "playwright.config.ts"
+      - "package.json"
+  schedule:
+    - cron: "0 12 * * *"
+
+env:
+  SKIP_DIST: ${{ github.event_name == 'pull_request' || github.event_name == 'schedule' }}
+  GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_DEV_KEY }}"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pr_and_push_tests:
+    name: Playwright PR/Push Tests
+    if: |
+      (github.event_name == 'pull_request' && github.event.pull_request.merged == false) ||
+      (github.event_name == 'push' && !contains(github.event.head_commit.message, 'chore: update dist folder'))
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Get Changed Workspaces
+        id: get_workspaces
+        # For PRs, compare against the origin's version of the base branch.
+        # For pushes, compare against the commit before the push.
+        run: |
+          bash samples/find-changes.sh ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if [ "${{ steps.get_workspaces.outputs.changed_workspaces }}" != "" ]; then
+            echo "HAS_CHANGES=true" >> $GITHUB_ENV
+          else
+            echo "HAS_CHANGES=false" >> $GITHUB_ENV
+          fi
+
+      - name: Setup Node.js
+        if: env.HAS_CHANGES == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.18.0"
+
+      - name: Cache npm dependencies
+        if: env.HAS_CHANGES == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Get Playwright Version
+        id: playwright-version
+        if: env.HAS_CHANGES == 'true'
+        run: |
+          echo "version=$(node -p "require('./package.json').devDependencies['@playwright/test']")" >> $GITHUB_OUTPUT
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        if: env.HAS_CHANGES == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright # Default Playwright cache path
+          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}-${{ hashFiles('playwright.config.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}- # Fallback for lock file changes
+            ${{ runner.os }}-playwright- # Broader fallback
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: ~/.cache/ms-playwright
+
+      - name: Install dependencies
+        if: env.HAS_CHANGES == 'true'
+        run: npm ci
+
+      - name: Prettier Check (Changed Files Only)
+        if: env.HAS_CHANGES == 'true'
+        run: |
+          FILES=$(git diff --name-only --diff-filter=ACMRT origin/main...HEAD | grep -E '\.(js|ts|jsx|tsx|json|md)$' || true)
+          if [ -n "$FILES" ]; then
+            echo "$FILES" | tr '\n' '\0' | xargs -0 -r npx prettier --check --log-level warn
+          else
+            echo "No supported files changed. Skipping Prettier."
+          fi
+        env:
+          CI: true
+
+      - name: ESLint Check (Changed Files Only)
+        if: env.HAS_CHANGES == 'true'
+        run: |
+          FILES=$(git diff --name-only --diff-filter=ACMRT origin/main...HEAD | grep -E '\.(js|ts|jsx|tsx)$' || true)
+          if [ -n "$FILES" ]; then
+            echo "$FILES" | tr '\n' '\0' | xargs -0 -r npx eslint
+          else
+            echo "No JS/TS files changed. Skipping ESLint."
+          fi
+        env:
+          CI: true
+
+      - name: Install Playwright Browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true' && env.HAS_CHANGES == 'true'
+        run: npx playwright install chromium --with-deps
+
+      - name: Build Changed Workspaces
+        if: env.HAS_CHANGES == 'true'
+        run: |
+          IFS=$'\n'
+          CHANGED_WORKSPACES_ARRAY=(${STEPS_GET_WORKSPACES_OUTPUTS_CHANGED_WORKSPACES})
+          echo "Changed Workspaces Array: ${CHANGED_WORKSPACES_ARRAY[@]}"
+
+          echo "Building changed workspaces:"
+          for workspace in "${CHANGED_WORKSPACES_ARRAY[@]}"; do
+            echo "  - samples/$workspace"
+            npm run build --workspace=samples/$workspace
+          done
+        env:
+          STEPS_GET_WORKSPACES_OUTPUTS_CHANGED_WORKSPACES: ${{ steps.get_workspaces.outputs.changed_workspaces }}
+          GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_DEV_KEY }}"
+
+      - name: Generate Index (Run Once After Builds)
+        run: bash samples/generate-index.sh
+        if: |
+          env.HAS_CHANGES == 'true' ||
+          contains(github.event.pull_request.paths.*, 'samples/generate-index.sh')
+
+      - name: Run All Playwright Tests
+        if: env.HAS_CHANGES == 'true'
+        run: npx playwright test e2e/samples.spec.ts
+        env:
+          # Pass the correct base reference for find-changes.sh when called by samples.spec.ts
+          GIT_BASE_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
+          CI: true
+          GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_DEV_KEY }}"
+
+      - name: Upload Test Report Artifact
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: Test Results
+          path: test-results/
+
+  scheduled_full_test:
+    name: Scheduled Full E2E Tests
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.18.0"
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Get Playwright Version
+        id: playwright-version
+        run: |
+          echo "version=$(node -p "require('./package.json').devDependencies['@playwright/test']")" >> $GITHUB_OUTPUT
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright # Default Playwright cache path
+          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}-${{ hashFiles('playwright.config.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}- # Fallback for lock file changes
+            ${{ runner.os }}-playwright- # Broader fallback
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build All Projects
+        run: npm run build-all
+        env:
+          GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_DEV_KEY }}"
+
+      - name: Generate Index (Run Once After Full Builds)
+        run: bash samples/generate-index.sh
+
+      - name: Install Playwright browsers with OS dependencies
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium --with-deps
+
+      - name: Run Full E2E Tests (Scheduled)
+        run: npx playwright test e2e/samples.spec.ts
+        env:
+          CI: true
+          TEST_ALL_SAMPLES: "true"
+          GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_DEV_KEY }}"
+
+      - name: Upload Test Report Artifact
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: Test Results
+          path: test-results/

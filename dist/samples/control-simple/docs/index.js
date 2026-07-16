@@ -1,15 +1,19 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 // [START maps_control_simple]
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     await google.maps.importLibrary('maps');
+
     const mapElement = document.querySelector('gmp-map');
+
     const innerMap = mapElement.innerMap;
+
     // [START maps_control_simple_options]
     innerMap.setOptions({
         cameraControl: false,
@@ -17,5 +21,5 @@ async function initMap() {
     });
     // [END maps_control_simple_options]
 }
-initMap();
+void init();
 // [END maps_control_simple]

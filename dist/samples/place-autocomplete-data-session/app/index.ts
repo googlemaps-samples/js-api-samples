@@ -5,13 +5,13 @@
  */
 
 // [START maps_place_autocomplete_data_session]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
+const mapElement = document.querySelector('gmp-map')!;
 let innerMap: google.maps.Map;
 let marker: google.maps.marker.AdvancedMarkerElement;
-let titleElement = document.querySelector('.title') as HTMLElement;
-let resultsContainerElement = document.querySelector('.results') as HTMLElement;
-let inputElement = document.querySelector('input') as HTMLInputElement;
-let tokenStatusElement = document.querySelector('.token-status') as HTMLElement;
+const titleElement = document.querySelector<HTMLElement>('.title')!;
+const resultsContainerElement = document.querySelector('.results')!;
+const inputElement = document.querySelector('input')!;
+const tokenStatusElement = document.querySelector('.token-status')!;
 let newestRequestId = 0;
 let tokenCount = 0;
 
@@ -35,7 +35,7 @@ async function init() {
     });
 
     // Update request center and bounds when the map bounds change.
-    google.maps.event.addListener(innerMap, 'bounds_changed', async () => {
+    innerMap.addListener('bounds_changed', () => {
         request.locationRestriction = innerMap.getBounds();
         request.origin = innerMap.getCenter();
     });
@@ -43,15 +43,14 @@ async function init() {
     inputElement.addEventListener('input', makeAutocompleteRequest);
 }
 
-async function makeAutocompleteRequest(inputEvent) {
+async function makeAutocompleteRequest(inputEvent: Event) {
     // To avoid race conditions, store the request ID and compare after the request.
     const requestId = ++newestRequestId;
 
-    const { AutocompleteSuggestion } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
+    const { AutocompleteSuggestion } =
+        await google.maps.importLibrary('places');
 
-    if (!inputEvent.target?.value) {
+    if (!(inputEvent.target as HTMLInputElement)?.value) {
         titleElement.textContent = '';
         resultsContainerElement.replaceChildren();
         return;
@@ -83,8 +82,9 @@ async function makeAutocompleteRequest(inputEvent) {
         // We are using a button element to take advantage of its a11y capabilities.
         const placeButton = document.createElement('button');
         placeButton.addEventListener('click', () => {
-            onPlaceSelected(placePrediction.toPlace());
+            void onPlaceSelected(placePrediction.toPlace());
         });
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         placeButton.textContent = placePrediction.text.toString();
         placeButton.classList.add('place-button');
 
@@ -97,9 +97,7 @@ async function makeAutocompleteRequest(inputEvent) {
 
 // Event handler for clicking on a suggested place.
 async function onPlaceSelected(place: google.maps.places.Place) {
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary(
-        'marker'
-    )) as google.maps.MarkerLibrary;
+    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
     await place.fetchFields({
         fields: ['displayName', 'formattedAddress', 'location'],
@@ -132,9 +130,8 @@ async function onPlaceSelected(place: google.maps.places.Place) {
 
 // Helper function to refresh the session token.
 async function refreshToken() {
-    const { AutocompleteSessionToken } = (await google.maps.importLibrary(
-        'places'
-    )) as google.maps.PlacesLibrary;
+    const { AutocompleteSessionToken } =
+        await google.maps.importLibrary('places');
 
     // Increment the token counter.
     tokenCount++;
@@ -144,5 +141,5 @@ async function refreshToken() {
     tokenStatusElement.textContent = `Session token count: ${tokenCount}`;
 }
 
-init();
+void init();
 // [END maps_place_autocomplete_data_session]

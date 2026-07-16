@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /**
  * @license
  * Copyright 2022 Google LLC. All Rights Reserved.
@@ -8,20 +8,26 @@
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
 let infoWindow;
-async function initMap() {
-    const { Map, InfoWindow } = (await google.maps.importLibrary('maps'));
+
+async function init() {
+    const { InfoWindow } = await google.maps.importLibrary('maps');
+
     innerMap = mapElement.innerMap;
     infoWindow = new InfoWindow();
-    getPlaceDetails();
+    void getPlaceDetails();
 }
 
 async function getPlaceDetails() {
-    const { Place } = (await google.maps.importLibrary('places'));
-    const { AdvancedMarkerElement } = (await google.maps.importLibrary('marker'));
+    const [{ Place }, { AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('places'),
+        google.maps.importLibrary('marker'),
+    ]);
+
     // Use place ID to create a new Place instance.
     const place = new Place({
         id: 'ChIJyYB_SZVU2YARR-I1Jjf08F0', // San Diego Zoo
     });
+
     // Call fetchFields, passing the desired data fields.
     await place.fetchFields({
         fields: [
@@ -31,12 +37,14 @@ async function getPlaceDetails() {
             'googleMapsURI',
         ],
     });
+
     // Add an Advanced Marker
     const marker = new AdvancedMarkerElement({
         map: innerMap,
         position: place.location,
         title: place.displayName,
     });
+
     // Assemble the info window content.
     const content = document.createElement('div');
     const address = document.createElement('div');
@@ -44,6 +52,7 @@ async function getPlaceDetails() {
     address.textContent = place.formattedAddress || '';
     placeId.textContent = place.id;
     content.append(placeId, address);
+
     if (place.googleMapsURI) {
         const link = document.createElement('a');
         link.href = place.googleMapsURI;
@@ -51,6 +60,7 @@ async function getPlaceDetails() {
         link.textContent = 'View Details on Google Maps';
         content.appendChild(link);
     }
+
     // Display an info window.
     infoWindow.setHeaderContent(place.displayName);
     infoWindow.setContent(content);
@@ -59,5 +69,4 @@ async function getPlaceDetails() {
     });
 }
 
-initMap();
-
+void init();

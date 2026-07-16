@@ -5,17 +5,17 @@
  */
 
 // [START maps_dds_datasets_polygon_colors]
-const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-let innerMap;
+const mapElement = document.querySelector('gmp-map')!;
+let innerMap: google.maps.Map;
 // [START maps_dds_datasets_polygon_colors_style_function]
-function setStyle(/* FeatureStyleFunctionOptions */ params) {
-    const datasetFeature = params.feature;
+const setStyle: google.maps.FeatureStyleFunction = (params) => {
+    const datasetFeature = params.feature as google.maps.DatasetFeature;
     // 'typecategory' is an attribute in this Dataset.
-    const typeCategory = datasetFeature.datasetAttributes['typecategory'];
+    const typeCategory = datasetFeature.datasetAttributes.typecategory;
 
     switch (typeCategory) {
         case 'Undeveloped': // Color undeveloped areas blue.
-            return /* FeatureStyleOptions */ {
+            return {
                 strokeColor: 'blue',
                 strokeWeight: 2,
                 strokeOpacity: 1,
@@ -24,7 +24,7 @@ function setStyle(/* FeatureStyleFunctionOptions */ params) {
             };
             break;
         case 'Parkway': // Color historical house sites red.
-            return /* FeatureStyleOptions */ {
+            return {
                 strokeColor: 'red',
                 strokeWeight: 2,
                 strokeOpacity: 1,
@@ -33,7 +33,7 @@ function setStyle(/* FeatureStyleFunctionOptions */ params) {
             };
             break;
         default: // Color other type categories green.
-            return /* FeatureStyleOptions */ {
+            return {
                 strokeColor: 'green',
                 strokeWeight: 2,
                 strokeOpacity: 1,
@@ -42,12 +42,12 @@ function setStyle(/* FeatureStyleFunctionOptions */ params) {
             };
             break;
     }
-}
+};
 // [END maps_dds_datasets_polygon_colors_style_function]
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
+    await google.maps.importLibrary('maps');
 
     // Get the inner map.
     innerMap = mapElement.innerMap;
@@ -58,5 +58,5 @@ async function initMap() {
     datasetLayer.style = setStyle;
 }
 
-initMap();
+void init();
 // [END maps_dds_datasets_polygon_colors]

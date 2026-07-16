@@ -5,26 +5,25 @@
  */
 
 // [START maps_event_arguments]
-async function initMap() {
-  // Request needed libraries.
-  await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
-  await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
+async function init() {
+    // Request needed libraries.
+    const [{ AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
+    ]);
 
-  const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
-  const innerMap = mapElement.innerMap;
+    const mapElement = document.querySelector('gmp-map')!;
+    const innerMap = mapElement.innerMap;
 
-  innerMap.addListener("click", (e) => {
-    placeMarkerAndPanTo(e.latLng, innerMap);
-  });
+    innerMap.addListener('click', (event: google.maps.MapMouseEvent) => {
+        if (!event.latLng) return;
+        new AdvancedMarkerElement({
+            position: event.latLng,
+            map: innerMap,
+        });
+        innerMap.panTo(event.latLng);
+    });
 }
 
-function placeMarkerAndPanTo(latLng: google.maps.LatLng, map: google.maps.Map) {
-  new google.maps.marker.AdvancedMarkerElement({
-    position: latLng,
-    map: map,
-  });
-  map.panTo(latLng);
-}
-
-initMap();
+void init();
 // [END maps_event_arguments]
