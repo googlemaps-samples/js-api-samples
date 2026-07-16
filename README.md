@@ -51,6 +51,31 @@ also contains a `dist/` folder, but this is only used by Vite for live preview.
 
 - To test, navigate to project root and run `npx playwright test`. {# TODO: Expand this section. #}
 
+### Code Quality Checks
+
+This repository strictly enforces code formatting and best practices using ESLint, Prettier, and custom validation scripts.
+
+#### Global Checks (`check-and-fix`)
+
+You can automatically check and fix issues across **all** samples at once from the root directory:
+
+```bash
+npm run check-and-fix
+```
+
+This command will:
+1. Run `eslint --fix` to catch and resolve JavaScript/TypeScript linting errors.
+2. Run `prettier -w` to format all files (HTML, CSS, TS, JS, JSON) according to the repository's styling rules.
+3. Run `tsc --noEmit` across all samples to verify TypeScript compilation passes.
+
+#### Build-time Checks (`build-single.sh`)
+
+When you build an individual sample using `npm run build`, the build is handled by `samples/build-single.sh`. This script enforces several Google Maps Platform best practices before compilation, including:
+- Preventing synchronous `await google` calls in close proximity (suggesting `Promise.all()` instead).
+- Verifying that `<script>` tags correctly reside inside `<head>` rather than `<body>`.
+- Ensuring the inline bootstrap loader uses the correct format and does not use hardcoded API keys.
+- Running Prettier, ESLint, and TSC specifically for that sample to ensure it meets quality standards.
+
 ## Contributing
 
 Contributions are welcome! Please see [contributing](../docs/contributing.md) for more information.
