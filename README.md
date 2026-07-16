@@ -22,6 +22,14 @@ Try the examples out at [Google Maps JavaScript API documentation](https://devel
 
 Each example is one atomic unit, for which dependencies must be individually set up.
 
+### Environment Setup
+
+1. Copy the `.env.template` file to `.env`:
+   ```bash
+   cp .env.template .env
+   ```
+2. Open `.env` and replace `<Insert your own development API key here>` with your Google Maps API key. The `.env` file is already added to `.gitignore` to prevent accidentally committing your key.
+
 ### Build samples
 
 1. Run `npm i` to install dependencies. You only need to do this once, and
