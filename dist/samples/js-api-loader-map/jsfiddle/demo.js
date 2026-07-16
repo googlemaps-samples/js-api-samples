@@ -7,7 +7,7 @@
 // Import the needed libraries.
 import { setOptions, importLibrary } from '@googlemaps/js-api-loader';
 
-const API_KEY = 'AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8';
+const API_KEY = 'GOOGLE_MAPS_API_KEY';
 
 async function init() {
     // Set loader options.
