@@ -10,7 +10,7 @@
     "preview": "npm run start"
   },
   "keywords": [],
-  "author": "",
+  "author": "Google Inc.",
   "license": "MIT",
   "dependencies": {
     "@googlemaps/js-api-loader": "^2.1.1"

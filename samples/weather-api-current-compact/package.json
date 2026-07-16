@@ -7,5 +7,6 @@
     "start": "vite --port 5173",
     "build:vite": "vite build --config ../../vite.config.js --base './'",
     "preview": "vite preview --config ../../vite.config.js"
-  }
+  },
+  "author": "Google Inc."
 }
