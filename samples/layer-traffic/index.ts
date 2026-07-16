@@ -5,17 +5,17 @@
  */
 
 // [START maps_layer_traffic]
-async function initMap(): Promise<void> {
-    await google.maps.importLibrary('maps');
+async function init(): Promise<void> {
+    const { TrafficLayer } = await google.maps.importLibrary('maps');
 
     const mapElement =
         document.querySelector<google.maps.MapElement>('gmp-map')!;
     const innerMap = mapElement.innerMap;
 
-    const trafficLayer = new google.maps.TrafficLayer();
+    const trafficLayer = new TrafficLayer();
 
     trafficLayer.setMap(innerMap);
 }
 
-void initMap();
+void init();
 // [END maps_layer_traffic]
