@@ -20,10 +20,10 @@ DOCS_DIR="${PROJECT_ROOT}/dist/samples/${NAME}/docs"
 mkdir -p ${DOCS_DIR}
 
 # Copy files
-cp "${SCRIPT_DIR}/${NAME}/index.ts" "${DOCS_DIR}/index.ts"
-cp "${SCRIPT_DIR}/${NAME}/index.js" "${DOCS_DIR}/index.js"
-cp "${SCRIPT_DIR}/${NAME}/index.html" "${DOCS_DIR}/index.html"
-cp "${SCRIPT_DIR}/${NAME}/style.css" "${DOCS_DIR}/style.css"
+[ -f "${SCRIPT_DIR}/${NAME}/index.ts" ] && cp "${SCRIPT_DIR}/${NAME}/index.ts" "${DOCS_DIR}/index.ts"
+[ -f "${SCRIPT_DIR}/${NAME}/index.js" ] && cp "${SCRIPT_DIR}/${NAME}/index.js" "${DOCS_DIR}/index.js"
+[ -f "${SCRIPT_DIR}/${NAME}/index.html" ] && cp "${SCRIPT_DIR}/${NAME}/index.html" "${DOCS_DIR}/index.html"
+[ -f "${SCRIPT_DIR}/${NAME}/style.css" ] && cp "${SCRIPT_DIR}/${NAME}/style.css" "${DOCS_DIR}/style.css"
 
 # Copy the public folder if one is found (graphics, other static files).
 if [ -d "public" ] && [ "$(ls -A public)" ]; then

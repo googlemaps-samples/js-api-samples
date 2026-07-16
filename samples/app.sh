@@ -24,12 +24,12 @@ APP_DIR="${PROJECT_ROOT}/dist/samples/${NAME}/app"
 mkdir -p ${APP_DIR}
 
 # Copy files
-cp "${SCRIPT_DIR}/${NAME}/index.html" "${APP_DIR}/index.html"
-cp "${SCRIPT_DIR}/${NAME}/index.ts" "${APP_DIR}/index.ts"
-cp "${SCRIPT_DIR}/${NAME}/style.css" "${APP_DIR}/style.css"
-cp "${SCRIPT_DIR}/${NAME}/package.json" "${APP_DIR}/package.json"
-cp "${SCRIPT_DIR}/${NAME}/tsconfig.json" "${APP_DIR}/tsconfig.json"
-cp "${SCRIPT_DIR}/${NAME}/README.md" "${APP_DIR}/README.md"
+[ -f "${SCRIPT_DIR}/${NAME}/index.html" ] && cp "${SCRIPT_DIR}/${NAME}/index.html" "${APP_DIR}/index.html"
+[ -f "${SCRIPT_DIR}/${NAME}/index.ts" ] && cp "${SCRIPT_DIR}/${NAME}/index.ts" "${APP_DIR}/index.ts"
+[ -f "${SCRIPT_DIR}/${NAME}/style.css" ] && cp "${SCRIPT_DIR}/${NAME}/style.css" "${APP_DIR}/style.css"
+[ -f "${SCRIPT_DIR}/${NAME}/package.json" ] && cp "${SCRIPT_DIR}/${NAME}/package.json" "${APP_DIR}/package.json"
+[ -f "${SCRIPT_DIR}/${NAME}/tsconfig.json" ] && cp "${SCRIPT_DIR}/${NAME}/tsconfig.json" "${APP_DIR}/tsconfig.json"
+[ -f "${SCRIPT_DIR}/${NAME}/README.md" ] && cp "${SCRIPT_DIR}/${NAME}/README.md" "${APP_DIR}/README.md"
 
 # Generate .eslintsrc.json
 touch "${APP_DIR}/.eslintsrc.json"
