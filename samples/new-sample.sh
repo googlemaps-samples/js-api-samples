@@ -80,76 +80,8 @@ body {
 /* [END $REGION_TAG] */
 EOF
 
-# Create package.json
-cat > "$NAME/package.json" << EOF
-{
-  "name": "@js-api-samples/$NAME",
-  "version": "1.0.0",
-  "scripts": {
-    "build": "bash ../build-single.sh",
-    "test": "tsc && npm run build:vite --workspace=.",
-    "start": "tsc && vite build --config ../../vite.config.js --base './' && vite --config ../../vite.config.js",
-    "build:vite": "vite build --config ../../vite.config.js --base './'",
-    "preview": "vite preview --config ../../vite.config.js"
-  },
-  "author": "Google LLC"
-}
-EOF
-
-# Create tsconfig.json
-cat > "$NAME/tsconfig.json" << 'EOF'
-{
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "rootDir": "."
-  },
-  "include": ["./*.ts"]
-}
-EOF
-
-# Create README.md
-cat > "$NAME/README.md" << EOF
-# Google Maps JavaScript Sample
-
-## $NAME
-
-Add a meaningful description for $NAME here...
-
-## Setup
-
-### Before starting run:
-
-\`npm i\`
-
-### Run an example on a local web server
-
-\`cd samples/$NAME\`
-\`npm start\`
-
-### Build an individual example
-
-\`cd samples/$NAME\`
-\`npm run build\`
-
-From 'samples':
-
-\`npm run build --workspace=$NAME/\`
-
-### Build all of the examples.
-
-From 'samples':
-
-\`npm run build-all\`
-
-### Run lint to check for problems
-
-\`cd samples/$NAME\`
-\`npx eslint index.ts\`
-
-## Feedback
-
-For feedback related to this sample, please open a new issue on
-[GitHub](https://github.com/googlemaps-samples/js-api-samples/issues).
-EOF
+# Generate shared boilerplate
+TITLE="Add a meaningful description for $NAME here..."
+bash "$(dirname "$0")/generate-shared-boilerplate.sh" "$NAME" "$TITLE" "."
 
 echo "Sample $NAME created successfully in directory ./$NAME"
