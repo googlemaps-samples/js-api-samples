@@ -11,7 +11,7 @@ import './simple-weather-widget'; // Import the custom element
 
 const CURRENT_CONDITIONS_API_URL =
     'https://weather.googleapis.com/v1/currentConditions:lookup'; // Current Conditions API endpoint.
-const API_KEY = 'AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8'; // Use the hardcoded API key from index.html
+const API_KEY = 'GOOGLE_MAPS_API_KEY'; // Use the hardcoded API key from index.html
 const LIGHT_MAP_ID = 'c306b3c6dd3ed8d9';
 const DARK_MAP_ID = '6b73a9fe7e831a00';
 
