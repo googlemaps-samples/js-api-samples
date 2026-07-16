@@ -10,7 +10,7 @@
 import { setOptions, importLibrary } from '@googlemaps/js-api-loader';
 // [END maps_js_api_loader_map_load]
 
-const API_KEY = 'AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8';
+const API_KEY = 'GOOGLE_MAPS_API_KEY';
 
 async function init(): Promise<void> {
     // [START maps_js_api_loader_map_options]

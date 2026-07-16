@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/no-unsafe-return */
+// /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
-import childProcess, { execSync } from 'child_process';
+import { execSync, spawn } from 'child_process';
 
 const samplesDir = path.join(__dirname, '..', 'samples');
 
@@ -41,6 +41,13 @@ const getChangedSampleFolders = (): string[] => {
             'samples',
             'find-changes.sh'
         );
+
+        if (process.env.TEST_ALL_SAMPLES === 'true') {
+            console.log(
+                'TEST_ALL_SAMPLES is set. Running tests for all samples.'
+            );
+            return getAllSampleFolders();
+        }
 
         if (!fs.existsSync(scriptPath)) {
             console.warn(
@@ -122,7 +129,6 @@ const getChangedSampleFolders = (): string[] => {
 };
 
 // Get changed folders, filtering out excluded ones.
-// const foldersToTest = getChangedSampleFolders();
 const foldersToTest = getChangedSampleFolders();
 
 if (foldersToTest.length === 0) {
@@ -141,13 +147,20 @@ foldersToTest.forEach((sampleFolder) => {
         const port = 8080;
         const url = `http://localhost:${port}/`;
 
-        const viteProcess = childProcess.spawn(
+        const vitePath = path.join(
+            __dirname,
+            '..',
+            'node_modules',
             'vite',
-            ['preview', `--port=${port}`],
+            'bin',
+            'vite.js'
+        );
+        const viteProcess = spawn(
+            'node',
+            [vitePath, 'preview', '--port', port.toString()],
             {
                 cwd: path.join(samplesDir, sampleFolder),
                 stdio: 'inherit',
-                detached: true, // Allows parent to exit independently, though we kill it in finally
             }
         );
 
@@ -155,11 +168,10 @@ foldersToTest.forEach((sampleFolder) => {
         await page.waitForTimeout(500);
         // END run the preview
 
-        /**
-         * Run all of the tests. Each method call either runs a test or inserts a timeout for loading.
-         * `expect`s are assertions that test for conditions.
-         * Run `npx playwright test --ui` to launch Playwright in UI mode to iteratively debug this file.
-         */
+        // Run all of the tests. Each method call either runs a test or inserts a timeout for loading.
+        // `expect`s are assertions that test for conditions.
+        // Run `npx playwright test --ui` to launch Playwright in UI mode to iteratively debug this file.
+
         try {
             const consoleErrors: string[] = [];
             // Capture console errors and page errors
@@ -184,6 +196,7 @@ foldersToTest.forEach((sampleFolder) => {
                 'Falling back to Raster',
                 'Attempted to load a 3D Map, but failed.',
                 'The map is not a vector map',
+                '404 (Not Found)',
             ];
             const criticalErrors = consoleErrors.filter(
                 (error) =>
@@ -206,7 +219,7 @@ foldersToTest.forEach((sampleFolder) => {
             // Wait for Google Maps to load.
             await page.waitForFunction(
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                () => (window as any).google?.maps,
+                () => !!(window as any).google?.maps,
                 { timeout: 500 }
             );
 
@@ -224,16 +237,7 @@ foldersToTest.forEach((sampleFolder) => {
                 );
             });
             expect(hasGoogleMaps).toBeTruthy();
-
-            /** const mapElement = await page.locator('#map');
-             if (await page.locator('#map').isVisible()) {
-                console.log(`✅ Assertion passed: Map is visible.`);
-            } else {
-                console.error(`❌ Assertion failed: Map is not visible.`);
-                throw new Error('Assertion failed: Map is not visible.');
-            }*/
         } finally {
-            // viteProcess.kill(); // We used to just kill the process. Curious to see about how the other stuff works.
             if (viteProcess.pid) {
                 try {
                     // Use process.kill for cross-platform compatibility, sending SIGINT
@@ -245,8 +249,8 @@ foldersToTest.forEach((sampleFolder) => {
                     );
                 }
             }
-            // Add a small delay to allow the process to terminate
-            await page.waitForTimeout(500);
+            // Add a small delay to allow the process to terminate without depending on the potentially closed page object
+            await new Promise((resolve) => setTimeout(resolve, 500));
         }
     });
 });

@@ -82,8 +82,7 @@ async function init() {
         'click',
         (
             mapsMouseEvent:
-                | google.maps.MapMouseEvent
-                | google.maps.IconMouseEvent
+                google.maps.MapMouseEvent | google.maps.IconMouseEvent
         ) => {
             const newCenter = mapsMouseEvent.latLng;
             if (!newCenter) return;
