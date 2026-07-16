@@ -5,18 +5,16 @@
  */
 
 // [START maps_layer_bicycling]
-async function initMap(): Promise<void> {
-    await google.maps.importLibrary('maps');
+async function init(): Promise<void> {
+    const { BicyclingLayer } = await google.maps.importLibrary('maps');
 
-    const mapElement = document.querySelector(
-        'gmp-map'
-    ) as google.maps.MapElement;
+    const mapElement = document.querySelector('gmp-map')!;
     const innerMap = mapElement.innerMap;
 
-    const bikeLayer = new google.maps.BicyclingLayer();
+    const bikeLayer = new BicyclingLayer();
 
     bikeLayer.setMap(innerMap);
 }
 
-initMap();
+void init();
 // [END maps_layer_bicycling]
