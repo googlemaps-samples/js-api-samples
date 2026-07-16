@@ -38,7 +38,7 @@ cp "${INPUT_DIR}/dist/samples/${NAME}/docs/style.css" "${OUTPUT_DIR}/${NAME}/"
 # Generate a placeholder for index.js.
 touch "${OUTPUT_DIR}/${NAME}/index.js"
 cat > "${OUTPUT_DIR}/${NAME}/index.js" << EOF
-<!-- Placeholder for index.js (run TSC to generate). -->
+// Placeholder for index.js (run TSC to generate).
 EOF
 
 # Generate package.json
@@ -50,10 +50,11 @@ cat > "${OUTPUT_DIR}/${NAME}/package.json" << EOF
   "scripts": {
     "build": "bash ../build-single.sh",
     "test": "tsc && npm run build:vite --workspace=.",
-    "start": "tsc && vite build --base './' && vite",
-    "build:vite": "vite build --base './'",
-    "preview": "vite preview"
-  }
+    "start": "tsc && vite build --config ../../vite.config.js --base './' && vite --config ../../vite.config.js",
+    "build:vite": "vite build --config ../../vite.config.js --base './'",
+    "preview": "vite preview --config ../../vite.config.js"
+  },
+  "author": "Google LLC"
 }
 EOF
 
@@ -65,9 +66,7 @@ cat > "${OUTPUT_DIR}/${NAME}/tsconfig.json" << EOF
   "compilerOptions": {
     "rootDir": "."
   },
-  "include": [
-    "./*.ts"
-  ]
+  "include": ["./*.ts"]
 }
 EOF
 
