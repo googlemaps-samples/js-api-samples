@@ -13,5 +13,6 @@
   },
   "devDependencies": {
     "apache-arrow": "^21.1.0"
-  }
+  },
+  "author": "Google LLC"
 }

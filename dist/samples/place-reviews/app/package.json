@@ -7,5 +7,6 @@
         "start": "tsc && vite build --config ../../vite.config.js --base './' && vite --config ../../vite.config.js",
         "build:vite": "vite build --config ../../vite.config.js --base './'",
         "preview": "vite preview --config ../../vite.config.js"
-    }
+    },
+    "author": "Google LLC"
 }
