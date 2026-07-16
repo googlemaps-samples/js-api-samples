@@ -34,12 +34,12 @@ echo "Copy files to ${DIST_DIR}/samples/${NAME}/jsfiddle/"
 
 # Copy the public folder if one is found (graphics, other static files).
 if [ -d "public" ] && [ "$(ls -A public)" ]; then
-  cp -r public/* "${DOCS_DIR}/"
+  cp -r public/* "${DIST_DIR}/samples/${NAME}/jsfiddle/"
 fi
 
 # Copy the src folder if one is found (.js, .json, anything parseable by Vite).
 if [ -d "src" ] && [ "$(ls -A src)" ]; then
-  cp -r src/* "${DOCS_DIR}/"
+  cp -r src/* "${DIST_DIR}/samples/${NAME}/jsfiddle/"
 fi
 
 pushd "${DIST_DIR}/samples/${NAME}/jsfiddle"

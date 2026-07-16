@@ -31,6 +31,17 @@ mkdir -p ${APP_DIR}
 [ -f "${SCRIPT_DIR}/${NAME}/tsconfig.json" ] && cp "${SCRIPT_DIR}/${NAME}/tsconfig.json" "${APP_DIR}/tsconfig.json"
 [ -f "${SCRIPT_DIR}/${NAME}/README.md" ] && cp "${SCRIPT_DIR}/${NAME}/README.md" "${APP_DIR}/README.md"
 
+# Copy the public folder if one is found (graphics, other static files).
+if [ -d "${SCRIPT_DIR}/${NAME}/public" ] && [ "$(ls -A "${SCRIPT_DIR}/${NAME}/public")" ]; then
+  cp -r "${SCRIPT_DIR}/${NAME}/public/"* "${APP_DIR}/"
+fi
+
+# Copy the src folder if one is found.
+if [ -d "${SCRIPT_DIR}/${NAME}/src" ] && [ "$(ls -A "${SCRIPT_DIR}/${NAME}/src")" ]; then
+  mkdir -p "${APP_DIR}/src"
+  cp -r "${SCRIPT_DIR}/${NAME}/src/"* "${APP_DIR}/src/"
+fi
+
 # Generate .eslintsrc.json
 touch "${APP_DIR}/.eslintsrc.json"
 cat > "${APP_DIR}/.eslintsrc.json" << EOF
