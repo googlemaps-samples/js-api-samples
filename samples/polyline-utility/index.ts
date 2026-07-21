@@ -102,6 +102,30 @@ async function init(): Promise<void> {
     document
         .getElementById('clear-all-btn')!
         .addEventListener('click', clearAll);
+
+    // Panel Resizer
+    const resizer = document.getElementById('drag-resizer')!;
+    const sidePanel = document.getElementById('side-panel')!;
+    let isResizing = false;
+
+    resizer.addEventListener('mousedown', () => {
+        isResizing = true;
+        document.body.classList.add('is-resizing');
+        resizer.classList.add('dragging');
+    });
+
+    document.addEventListener('mousemove', (e: MouseEvent) => {
+        if (!isResizing) return;
+        sidePanel.style.width = `${String(e.clientX)}px`;
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (isResizing) {
+            isResizing = false;
+            document.body.classList.remove('is-resizing');
+            resizer.classList.remove('dragging');
+        }
+    });
 }
 
 function addPoint(latLng: google.maps.LatLng) {
