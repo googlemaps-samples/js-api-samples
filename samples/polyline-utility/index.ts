@@ -1,4 +1,9 @@
 // [START maps_polyline_utility]
+// Remove these disables once the PlacesLibrary typing is fixed:
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
 let map: google.maps.Map;
 let polyline: google.maps.Polyline;
 let markers: google.maps.marker.AdvancedMarkerElement[] = [];
@@ -24,16 +29,18 @@ async function init(): Promise<void> {
     const [
         { Polyline },
         { AdvancedMarkerElement },
-        { Autocomplete },
         { LatLng, LatLngBounds },
         geometryLibrary,
     ] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('marker'),
-        google.maps.importLibrary('places'),
         google.maps.importLibrary('core'),
         google.maps.importLibrary('geometry'),
     ]);
+
+    // @ts-expect-error - when this gets addressed also remove the global eslint-disables above
+    const { PlaceAutocompleteElement } =
+        await google.maps.importLibrary('places');
 
     geometryLib = geometryLibrary;
     AdvancedMarkerElementClass = AdvancedMarkerElement;
@@ -59,25 +66,31 @@ async function init(): Promise<void> {
     });
 
     // Setup Places Autocomplete
-    const input = document.getElementById('pac-input') as HTMLInputElement;
-    const autocomplete = new Autocomplete(input, {
-        fields: ['geometry', 'name'],
-    });
-    autocomplete.bindTo('bounds', map);
-    autocomplete.addListener('place_changed', () => {
-        const place = autocomplete.getPlace();
-        if (!place.geometry?.location) {
-            const name = place.name ?? '';
-            alert(`No details available for input: '${name}'`);
-            return;
+    const pacContainer = document.getElementById('pac-container')!;
+    const autocomplete = new PlaceAutocompleteElement();
+    pacContainer.appendChild(autocomplete);
+
+    autocomplete.addEventListener(
+        'gmp-select',
+        async ({
+            placePrediction,
+        }: google.maps.places.PlacePredictionSelectEvent) => {
+            const place = placePrediction.toPlace();
+            await place.fetchFields({
+                fields: ['location', 'viewport', 'displayName'],
+            });
+
+            if (place.viewport) {
+                map.fitBounds(place.viewport);
+            } else if (place.location) {
+                map.setCenter(place.location);
+                map.setZoom(17);
+            } else {
+                const name = place.displayName ?? '';
+                alert(`No details available for input: '${name}'`);
+            }
         }
-        if (place.geometry.viewport) {
-            map.fitBounds(place.geometry.viewport);
-        } else {
-            map.setCenter(place.geometry.location);
-            map.setZoom(17);
-        }
-    });
+    );
 
     // Buttons and Textareas
     document
