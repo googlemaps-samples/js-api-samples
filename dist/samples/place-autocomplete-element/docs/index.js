@@ -5,13 +5,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Remove these disables once the PlacesLibrary typing is fixed:
-
 // [START maps_place_autocomplete_element]
 async function init() {
     // [START maps_place_autocomplete_element_add]
     // Request needed libraries.
-
     const { PlaceAutocompleteElement } =
         await google.maps.importLibrary('places');
     // Create the input HTML element, and append it.
