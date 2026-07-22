@@ -1,8 +1,4 @@
 // [START maps_polyline_utility]
-// Remove these disables once the PlacesLibrary typing is fixed:
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 let map: google.maps.Map;
 let polyline: google.maps.Polyline;
@@ -38,7 +34,6 @@ async function init(): Promise<void> {
         google.maps.importLibrary('geometry'),
     ]);
 
-    // @ts-expect-error - when this gets addressed also remove the global eslint-disables above
     const { PlaceAutocompleteElement } =
         await google.maps.importLibrary('places');
 
