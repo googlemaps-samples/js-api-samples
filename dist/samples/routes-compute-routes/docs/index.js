@@ -22,7 +22,6 @@ async function init() {
     const [
         { InfoWindow },
         { AdvancedMarkerElement },
-
         { PlaceAutocompleteElement },
         { ComputeRoutesExtraComputation, ReferenceRoute, Route, RouteLabel },
     ] = await Promise.all([
@@ -85,7 +84,7 @@ async function init() {
     }
 
     function buildComputeRoutesJsRequest(formData) {
-        const travelMode = formData.get('travel_mode') || undefined;
+        const travelMode = formData.get('travel_mode') ?? undefined;
         const extraComputations = [];
         const requestedReferenceRoutes = [];
         const transitPreference = {};
@@ -118,8 +117,8 @@ async function init() {
                 (input) => input.value
             ),
             travelMode,
-            routingPreference: formData.get('routing_preference') || undefined,
-            polylineQuality: formData.get('polyline_quality') || undefined,
+            routingPreference: formData.get('routing_preference') ?? undefined,
+            polylineQuality: formData.get('polyline_quality') ?? undefined,
             computeAlternativeRoutes:
                 formData.get('compute_alternative_routes') === 'on',
             routeModifiers: {
@@ -287,7 +286,7 @@ async function init() {
             detailsDiv.appendChild(distanceP);
 
             const durationP = document.createElement('p');
-            durationP.textContent = `Duration: ${route.localizedValues.duration}`;
+            durationP.textContent = `Duration: ${route.localizedValues.duration ?? ''}`;
             detailsDiv.appendChild(durationP);
         }
 
@@ -323,7 +322,7 @@ async function init() {
     }
 
     function attachMapClickListener() {
-        if (!map?.innerMap) {
+        if (!map.innerMap) {
             return;
         }
 
@@ -354,7 +353,7 @@ async function init() {
             });
 
             await navigator.clipboard.writeText(
-                `${mapsMouseEvent.latLng.lat()},${mapsMouseEvent.latLng.lng()}`
+                `${mapsMouseEvent.latLng.lat().toString()},${mapsMouseEvent.latLng.lng().toString()}`
             );
 
             infoWindow.open(map.innerMap);
@@ -451,7 +450,7 @@ async function init() {
                 await place.fetchFields({
                     fields: ['location'],
                 });
-                autocompleteData.location = place.location;
+                autocompleteData.location = place.location ?? null;
             });
         });
 
