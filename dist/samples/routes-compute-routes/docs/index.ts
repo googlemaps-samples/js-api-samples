@@ -5,7 +5,6 @@
  */
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 
 // [START maps_routes_compute_routes]
 let markers: google.maps.marker.AdvancedMarkerElement[] = [];
@@ -29,7 +28,6 @@ async function init() {
     const [
         { InfoWindow },
         { AdvancedMarkerElement },
-        // @ts-expect-error - currently missing. bug fix pending
         { PlaceAutocompleteElement },
         { ComputeRoutesExtraComputation, ReferenceRoute, Route, RouteLabel },
     ] = await Promise.all([
@@ -94,9 +92,8 @@ async function init() {
     function buildComputeRoutesJsRequest(
         formData: FormData
     ): google.maps.routes.ComputeRoutesRequest {
-        const travelMode =
-            (formData.get('travel_mode') as google.maps.TravelModeString) ||
-            undefined;
+        const travelMode = (formData.get('travel_mode') ?? undefined) as
+            google.maps.TravelModeString | undefined;
         const extraComputations: google.maps.routes.ComputeRoutesExtraComputation[] =
             [];
         const requestedReferenceRoutes: google.maps.routes.ReferenceRoute[] =
@@ -131,14 +128,11 @@ async function init() {
                 (input) => (input as HTMLInputElement).value
             ),
             travelMode,
-            routingPreference:
-                (formData.get(
-                    'routing_preference'
-                ) as google.maps.routes.RoutingPreferenceString) || undefined,
-            polylineQuality:
-                (formData.get(
-                    'polyline_quality'
-                ) as google.maps.routes.PolylineQualityString) || undefined,
+            routingPreference: (formData.get('routing_preference') ??
+                undefined) as
+                google.maps.routes.RoutingPreferenceString | undefined,
+            polylineQuality: (formData.get('polyline_quality') ?? undefined) as
+                google.maps.routes.PolylineQualityString | undefined,
             computeAlternativeRoutes:
                 formData.get('compute_alternative_routes') === 'on',
             routeModifiers: {
@@ -313,8 +307,7 @@ async function init() {
             detailsDiv.appendChild(distanceP);
 
             const durationP = document.createElement('p');
-            durationP.textContent =
-                `Duration: ${route.localizedValues.duration}`!;
+            durationP.textContent = `Duration: ${route.localizedValues.duration ?? ''}`;
             detailsDiv.appendChild(durationP);
         }
 
@@ -352,7 +345,8 @@ async function init() {
     }
 
     function attachMapClickListener() {
-        if (!map?.innerMap) {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        if (!map.innerMap) {
             return;
         }
 
@@ -385,7 +379,7 @@ async function init() {
                 });
 
                 await navigator.clipboard.writeText(
-                    `${mapsMouseEvent.latLng.lat()},${mapsMouseEvent.latLng.lng()}`
+                    `${mapsMouseEvent.latLng.lat().toString()},${mapsMouseEvent.latLng.lng().toString()}`
                 );
 
                 infoWindow.open(map.innerMap);
@@ -479,10 +473,15 @@ async function init() {
             name: 'destination_location',
         });
 
-        [
-            [originAutocomplete, originAutocompleteSelection],
-            [destinationAutocomplete, destinationAutocompleteSelection],
-        ].forEach(([autocomplete, autocompleteData]) => {
+        (
+            [
+                [originAutocomplete, originAutocompleteSelection],
+                [destinationAutocomplete, destinationAutocompleteSelection],
+            ] as [
+                google.maps.places.PlaceAutocompleteElement,
+                PlaceAutocompleteSelection,
+            ][]
+        ).forEach(([autocomplete, autocompleteData]) => {
             autocomplete.addEventListener(
                 'gmp-select',
                 async (
@@ -495,7 +494,7 @@ async function init() {
                     await place.fetchFields({
                         fields: ['location'],
                     });
-                    autocompleteData.location = place.location;
+                    autocompleteData.location = place.location ?? null;
                 }
             );
         });
