@@ -8,11 +8,11 @@
 let panorama: google.maps.StreetViewPanorama;
 let innerMap: google.maps.Map;
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const [{ Map }, { Marker }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ Marker }] = await Promise.all([
         google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
     ]);
 
     // Set the location of Astor Place.
@@ -36,21 +36,21 @@ async function initMap() {
     busIcon.src = new URL('./public/bus_icon.svg', import.meta.url).href;
 
     // Set up the markers on the map
-    const cafeMarker = new Marker({
+    new Marker({
         position: { lat: 40.730031, lng: -73.991428 },
         map: innerMap,
         title: 'Cafe',
         icon: cafeIcon.src,
     });
 
-    const bankMarker = new Marker({
+    new Marker({
         position: { lat: 40.729681, lng: -73.991138 },
         map: innerMap,
         title: 'Bank',
         icon: dollarIcon.src,
     });
 
-    const busMarker = new Marker({
+    new Marker({
         position: { lat: 40.729559, lng: -73.990741 },
         map: innerMap,
         title: 'Bus Stop',
@@ -70,12 +70,12 @@ async function initMap() {
 function toggleStreetView(): void {
     const toggle = panorama.getVisible();
 
-    if (toggle == false) {
+    if (!toggle) {
         panorama.setVisible(true);
     } else {
         panorama.setVisible(false);
     }
 }
 
-initMap();
+void init();
 // [END maps_streetview_overlays]

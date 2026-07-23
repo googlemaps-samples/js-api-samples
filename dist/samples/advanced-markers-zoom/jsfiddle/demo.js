@@ -7,10 +7,12 @@
 
 const mapElement = document.querySelector('gmp-map');
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const { Map } = await google.maps.importLibrary('maps');
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+    const [{ AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
+    ]);
 
     const markerOptions = [
         {
@@ -51,4 +53,4 @@ async function initMap() {
     });
 }
 
-initMap();
+void init();

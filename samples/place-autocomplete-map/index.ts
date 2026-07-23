@@ -7,11 +7,10 @@
 // [START maps_place_autocomplete_map]
 const mapElement = document.querySelector('gmp-map')!;
 const placeAutocomplete = document.querySelector('gmp-place-autocomplete')!;
-let innerMap;
+let innerMap: google.maps.Map;
 let marker: google.maps.marker.AdvancedMarkerElement;
 let infoWindow: google.maps.InfoWindow;
-const center = { lat: 40.749933, lng: -73.98633 }; // New York City
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Request needed libraries.
     const [{ AdvancedMarkerElement }, { InfoWindow }] = await Promise.all([
         google.maps.importLibrary('marker'),
@@ -26,8 +25,8 @@ async function initMap(): Promise<void> {
     });
 
     // Use the bounds_changed event to restrict results to the current map bounds.
-    innerMap.addListener('bounds_changed', async () => {
-        placeAutocomplete.locationRestriction = innerMap.getBounds();
+    innerMap.addListener('bounds_changed', () => {
+        placeAutocomplete.locationRestriction = innerMap.getBounds()!;
     });
 
     // Create the marker and infoWindow.
@@ -35,10 +34,10 @@ async function initMap(): Promise<void> {
         map: innerMap,
     });
 
-    infoWindow = new InfoWindow({});
+    infoWindow = new InfoWindow();
 
     // [START maps_place_autocomplete_map_listener]
-    // Add the gmp-placeselect listener, and display the results on the map.
+    // Add the gmp-select listener, and display the results on the map.
     placeAutocomplete.addEventListener(
         'gmp-select',
         async ({ placePrediction }) => {
@@ -51,7 +50,7 @@ async function initMap(): Promise<void> {
             if (place.viewport) {
                 innerMap.fitBounds(place.viewport);
             } else {
-                innerMap.setCenter(place.location);
+                innerMap.setCenter(place.location!);
                 innerMap.setZoom(17);
             }
 
@@ -72,7 +71,10 @@ async function initMap(): Promise<void> {
 }
 
 // Helper function to create an info window.
-function updateInfoWindow(content, center) {
+function updateInfoWindow(
+    content: string | Element | Text | null | undefined,
+    center: google.maps.LatLng | google.maps.LatLngLiteral | null | undefined
+) {
     infoWindow.setContent(content);
     infoWindow.setPosition(center);
     infoWindow.open({
@@ -82,5 +84,5 @@ function updateInfoWindow(content, center) {
     });
 }
 
-initMap();
+void init();
 // [END maps_place_autocomplete_map]

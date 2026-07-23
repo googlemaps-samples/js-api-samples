@@ -6,7 +6,7 @@
  */
 
 // [START maps_boundaries_choropleth]
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -47,6 +47,7 @@ async function initMap() {
         };
     };
     // [END maps_boundaries_choropleth_style_function]
+
     // Population data by state.
     const states = {
         ChIJdf5LHzR_hogR6czIUzU0VV4: 5039877, // Alabama
@@ -102,5 +103,5 @@ async function initMap() {
     };
 }
 
-initMap();
+void init();
 // [END maps_boundaries_choropleth]

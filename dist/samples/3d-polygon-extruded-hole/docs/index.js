@@ -15,7 +15,6 @@ async function init() {
         heading: 340,
         tilt: 70,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     const polygonOptions = {
@@ -48,5 +47,5 @@ async function init() {
     document.body.append(map3DElement);
 }
 
-init();
+void init();
 // [END maps_3d_polygon_extruded_hole]

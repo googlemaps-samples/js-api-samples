@@ -15,7 +15,6 @@ async function init() {
         tilt: 74,
         heading: 38,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     const popover = new PopoverElement({
@@ -31,4 +30,4 @@ async function init() {
     document.body.append(map);
 }
 
-init();
+void init();

@@ -16,7 +16,6 @@ async function init() {
         center: { lat: 47.6094, lng: -122.339, altitude: 0 },
         range: 1000,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     for (const [lng, lat] of positions) {
@@ -49,13 +48,13 @@ const positions = [
     [-122.3378, 47.6095],
 ];
 
-init();
+void init();
 
 const dropdown = document.getElementById('selectElementId');
 dropdown.addEventListener('change', drawMap);
 
-function drawMap(event) {
+function drawMap() {
     for (const marker of markers) {
-        marker.collisionBehavior = dropdown.value || 'REQUIRED';
+        marker.collisionBehavior = dropdown.value;
     }
 }

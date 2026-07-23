@@ -17,7 +17,6 @@ async function init() {
         tilt: 74,
         heading: 0,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     const model = new Model3DElement({
@@ -32,5 +31,5 @@ async function init() {
     map.append(model);
 }
 
-init();
+void init();
 // [END maps_3d_model]

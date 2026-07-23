@@ -20,7 +20,7 @@ const flagContentLink = document.getElementById('flag-content-link');
 let innerMap;
 let marker;
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const [{ AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('marker'),
@@ -35,7 +35,7 @@ async function initMap() {
     });
 
     // Bind autocomplete bounds to map bounds.
-    innerMap.addListener('bounds_changed', async () => {
+    innerMap.addListener('bounds_changed', () => {
         placeAutocomplete.locationRestriction = innerMap.getBounds();
     });
 
@@ -107,9 +107,9 @@ function updateSummaryPanel(place) {
             }
 
             // Manage the active class state.
-            document
-                .querySelectorAll('.tab-button')
-                .forEach((b) => b.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach((b) => {
+                b.classList.remove('active');
+            });
             btn.classList.add('active');
 
             if (typeof content === 'string') {
@@ -231,5 +231,5 @@ function updateSummaryPanel(place) {
     }
 }
 
-initMap();
+void init();
 // [END maps_ai_powered_summaries]

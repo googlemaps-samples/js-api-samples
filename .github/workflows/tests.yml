@@ -34,8 +34,8 @@ on:
     - cron: "0 12 * * *"
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   SKIP_DIST: ${{ github.event_name == 'pull_request' || github.event_name == 'schedule' }}
+  GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_DEV_KEY }}"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -74,7 +74,7 @@ jobs:
         if: env.HAS_CHANGES == 'true'
         uses: actions/setup-node@v4
         with:
-          node-version: "24.x"
+          node-version: "24.18.0"
 
       - name: Cache npm dependencies
         if: env.HAS_CHANGES == 'true'
@@ -106,17 +106,29 @@ jobs:
 
       - name: Install dependencies
         if: env.HAS_CHANGES == 'true'
-        run: npm install
+        run: npm ci
 
-      - name: Prettier Check
+      - name: Prettier Check (Changed Files Only)
         if: env.HAS_CHANGES == 'true'
-        run: npx prettier ./samples/ --check --log-level warn
+        run: |
+          FILES=$(git diff --name-only --diff-filter=ACMRT origin/main...HEAD | grep -E '\.(js|ts|jsx|tsx|json|md)$' || true)
+          if [ -n "$FILES" ]; then
+            echo "$FILES" | tr '\n' '\0' | xargs -0 -r npx prettier --check --log-level warn
+          else
+            echo "No supported files changed. Skipping Prettier."
+          fi
         env:
           CI: true
 
-      - name: ESLint Check
+      - name: ESLint Check (Changed Files Only)
         if: env.HAS_CHANGES == 'true'
-        run: npx eslint
+        run: |
+          FILES=$(git diff --name-only --diff-filter=ACMRT origin/main...HEAD | grep -E '\.(js|ts|jsx|tsx)$' || true)
+          if [ -n "$FILES" ]; then
+            echo "$FILES" | tr '\n' '\0' | xargs -0 -r npx eslint
+          else
+            echo "No JS/TS files changed. Skipping ESLint."
+          fi
         env:
           CI: true
 
@@ -138,6 +150,7 @@ jobs:
           done
         env:
           STEPS_GET_WORKSPACES_OUTPUTS_CHANGED_WORKSPACES: ${{ steps.get_workspaces.outputs.changed_workspaces }}
+          GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_DEV_KEY }}"
 
       - name: Generate Index (Run Once After Builds)
         run: bash samples/generate-index.sh
@@ -152,6 +165,7 @@ jobs:
           # Pass the correct base reference for find-changes.sh when called by samples.spec.ts
           GIT_BASE_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
           CI: true
+          GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_DEV_KEY }}"
 
       - name: Upload Test Report Artifact
         uses: actions/upload-artifact@v4
@@ -174,7 +188,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "24.x"
+          node-version: "24.18.0"
 
       - name: Cache npm dependencies
         uses: actions/cache@v4
@@ -204,6 +218,8 @@ jobs:
 
       - name: Build All Projects
         run: npm run build-all
+        env:
+          GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_DEV_KEY }}"
 
       - name: Generate Index (Run Once After Full Builds)
         run: bash samples/generate-index.sh
@@ -216,6 +232,8 @@ jobs:
         run: npx playwright test e2e/samples.spec.ts
         env:
           CI: true
+          TEST_ALL_SAMPLES: "true"
+          GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_DEV_KEY }}"
 
       - name: Upload Test Report Artifact
         uses: actions/upload-artifact@v4

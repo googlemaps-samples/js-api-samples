@@ -13,22 +13,22 @@ let lastInteractedFeatureIds = [];
 let lastClickedFeatureIds = [];
 
 // [START maps_boundaries_click_event_handler]
-function handleClick(e) {
-    lastClickedFeatureIds = e.features.map((f) => f.placeId);
+function handleClick(event) {
+    lastClickedFeatureIds = event.features.map((f) => f.placeId);
     lastInteractedFeatureIds = [];
     featureLayer.style = applyStyle;
-    createInfoWindow(e);
+    void createInfoWindow(event);
 }
 
-function handleMouseMove(e) {
-    lastInteractedFeatureIds = e.features.map((f) => f.placeId);
+function handleMouseMove(event) {
+    lastInteractedFeatureIds = event.features.map((f) => f.placeId);
     featureLayer.style = applyStyle;
 }
 // [END maps_boundaries_click_event_handler]
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
+    const { InfoWindow } = await google.maps.importLibrary('maps');
 
     // Get the gmp-map element.
     const mapElement = document.querySelector('gmp-map');
@@ -62,7 +62,7 @@ async function initMap() {
     // [END maps_boundaries_click_event_add_layer]
 
     // Create the infoWindow.
-    infoWindow = new InfoWindow({});
+    infoWindow = new InfoWindow();
     // Apply style on load, to enable clicking.
     featureLayer.style = applyStyle;
 }
@@ -142,5 +142,5 @@ function updateInfoWindow(content, center) {
     });
 }
 
-initMap();
+void init();
 // [END maps_boundaries_click_event]

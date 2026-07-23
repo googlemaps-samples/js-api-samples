@@ -17,11 +17,15 @@
 // IMPORTANT: Keep this file, it contains things you may need. This file is not
 
 import { Page } from '@playwright/test';
+import process from 'node:process';
 
 // from https://github.com/lit/lit.dev/blob/5d79d1e0989e68f8b5905e5271229ffe4c55265c/packages/lit-dev-tests/src/playwright/util.ts
 
 export async function waitForGoogleMapsToLoad(page: Page) {
-    await page.waitForFunction(() => window.google && window.google.maps);
+    await page.waitForFunction(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return
+        () => (window as any).google?.maps
+    );
     await page.waitForTimeout(100);
 }
 

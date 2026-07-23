@@ -4,26 +4,26 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
 /* [START maps_deckgl_polygon] */
 // Initialize and add the map
 let map;
 let polygonLayer; // Declare polygonLayer outside for button access
 let googleMapsOverlay; // Declare googleMapsOverlay outside for button access
 
-async function initMap() {
+async function init() {
     // Progress bar logic moved from index.html
     let progress;
     const progressDiv = document.querySelector('.mdc-linear-progress');
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-        // @ts-expect-error: mdc not typed
         progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
         progress.done = function () {
             progress.close();
-            progressDiv?.remove(); // Use optional chaining in case progressDiv is null
+            progressDiv.remove();
         };
     }
 
@@ -70,7 +70,7 @@ async function initMap() {
                 // Check if progress is defined
                 // Add a small delay to ensure the progress bar is removed
                 setTimeout(() => {
-                    progress.done(); // hides progress bar
+                    progress?.done?.(); // hides progress bar
                 }, 100); // 100ms delay
             }
         },
@@ -135,5 +135,5 @@ async function initMap() {
     }
 }
 
-initMap();
+void init();
 /* [END maps_deckgl_polygon] */

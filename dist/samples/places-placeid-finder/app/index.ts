@@ -10,7 +10,7 @@
 // the place ID and other information about the place that the user has
 // selected.
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Request needed libraries.
     const [{ InfoWindow }, { AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('maps'),
@@ -39,14 +39,12 @@ async function initMap(): Promise<void> {
     });
 
     const infoWindow = new InfoWindow();
-    const infoWindowContent = document.getElementById(
-        'infowindow-content'
-    ) as HTMLElement;
+    const infoWindowContent = document.getElementById('infowindow-content')!;
 
     infoWindow.setContent(infoWindowContent);
 
     const marker = new AdvancedMarkerElement({
-        map: map,
+        map,
         collisionBehavior: 'REQUIRED_AND_HIDES_OPTIONAL',
         gmpClickable: true,
     });
@@ -57,7 +55,7 @@ async function initMap(): Promise<void> {
 
     placeAutocomplete.addEventListener(
         'gmp-select',
-        async ({ placePrediction }: any) => {
+        async ({ placePrediction }) => {
             infoWindow.close();
 
             const place = placePrediction.toPlace();
@@ -81,23 +79,16 @@ async function initMap(): Promise<void> {
             marker.position = place.location;
             // marker.setVisible(true); // AdvancedMarkerElement is visible by default when map and position are set.
 
-            (
-                infoWindowContent.children.namedItem(
-                    'place-name'
-                ) as HTMLElement
-            ).textContent = place.displayName as string;
-            (
-                infoWindowContent.children.namedItem('place-id') as HTMLElement
-            ).textContent = place.id as string;
-            (
-                infoWindowContent.children.namedItem(
-                    'place-address'
-                ) as HTMLElement
-            ).textContent = place.formattedAddress as string;
+            infoWindowContent.children.namedItem('place-name')!.textContent =
+                place.displayName!;
+            infoWindowContent.children.namedItem('place-id')!.textContent =
+                place.id;
+            infoWindowContent.children.namedItem('place-address')!.textContent =
+                place.formattedAddress!;
             infoWindow.open(map, marker);
         }
     );
 }
 
-initMap();
+void init();
 // [END maps_places_placeid_finder]

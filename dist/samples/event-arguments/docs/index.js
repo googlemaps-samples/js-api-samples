@@ -6,22 +6,25 @@
  */
 
 // [START maps_event_arguments]
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    await google.maps.importLibrary('maps');
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+    const [{ AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
+    ]);
 
     const mapElement = document.querySelector('gmp-map');
     const innerMap = mapElement.innerMap;
 
-    innerMap.addListener('click', (e) => {
+    innerMap.addListener('click', (event) => {
+        if (!event.latLng) return;
         new AdvancedMarkerElement({
-            position: e.latLng,
+            position: event.latLng,
             map: innerMap,
         });
-        innerMap.panTo(e.latLng);
+        innerMap.panTo(event.latLng);
     });
 }
 
-initMap();
+void init();
 // [END maps_event_arguments]

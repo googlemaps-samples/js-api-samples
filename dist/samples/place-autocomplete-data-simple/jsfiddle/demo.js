@@ -6,7 +6,7 @@
  */
 
 async function init() {
-    const { Place, AutocompleteSessionToken, AutocompleteSuggestion } =
+    const { AutocompleteSessionToken, AutocompleteSuggestion } =
         await google.maps.importLibrary('places');
 
     // Add an initial request body.
@@ -50,7 +50,6 @@ async function init() {
         const listItem = document.createElement('li');
 
         listItem.appendChild(
-            // eslint-disable-next-line @typescript-eslint/no-base-to-string
             document.createTextNode(placePrediction.text.toString())
         );
         resultsElement.appendChild(listItem);
@@ -66,4 +65,4 @@ async function init() {
     placeInfo.textContent = `First predicted place: ${place.displayName}: ${place.formattedAddress}`;
 }
 
-init();
+void init();

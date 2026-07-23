@@ -10,9 +10,9 @@
 import { setOptions, importLibrary } from '@googlemaps/js-api-loader';
 // [END maps_js_api_loader_map_load]
 
-const API_KEY = 'AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8';
+const API_KEY = 'GOOGLE_MAPS_API_KEY';
 
-async function initMap() {
+async function init() {
     // [START maps_js_api_loader_map_options]
     // Set loader options.
     setOptions({
@@ -30,8 +30,8 @@ async function initMap() {
     };
 
     // Declare the map.
-    const map = new Map(document.getElementById('map'), mapOptions);
+    new Map(document.getElementById('map'), mapOptions);
 }
 
-initMap();
+void init();
 // [END maps_js_api_loader_map]

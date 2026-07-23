@@ -35,7 +35,7 @@ async function init() {
     });
 
     // Update request center and bounds when the map bounds change.
-    innerMap.addListener('bounds_changed', async () => {
+    innerMap.addListener('bounds_changed', () => {
         request.locationRestriction = innerMap.getBounds();
         request.origin = innerMap.getCenter();
     });
@@ -43,14 +43,14 @@ async function init() {
     inputElement.addEventListener('input', makeAutocompleteRequest);
 }
 
-async function makeAutocompleteRequest(inputEvent) {
+async function makeAutocompleteRequest(inputEvent: Event) {
     // To avoid race conditions, store the request ID and compare after the request.
     const requestId = ++newestRequestId;
 
     const { AutocompleteSuggestion } =
         await google.maps.importLibrary('places');
 
-    if (!inputEvent.target?.value) {
+    if (!(inputEvent.target as HTMLInputElement)?.value) {
         titleElement.textContent = '';
         resultsContainerElement.replaceChildren();
         return;
@@ -82,9 +82,9 @@ async function makeAutocompleteRequest(inputEvent) {
         // We are using a button element to take advantage of its a11y capabilities.
         const placeButton = document.createElement('button');
         placeButton.addEventListener('click', () => {
-            onPlaceSelected(placePrediction.toPlace());
+            void onPlaceSelected(placePrediction.toPlace());
         });
-        // eslint-disable-next-line @typescript-eslint/no-base-to-string
+
         placeButton.textContent = placePrediction.text.toString();
         placeButton.classList.add('place-button');
 
@@ -141,5 +141,5 @@ async function refreshToken() {
     tokenStatusElement.textContent = `Session token count: ${tokenCount}`;
 }
 
-init();
+void init();
 // [END maps_place_autocomplete_data_session]

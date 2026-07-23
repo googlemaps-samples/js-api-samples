@@ -15,7 +15,6 @@ async function init() {
         tilt: 67.5,
         range: 45000,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     map.mode = 'SATELLITE';
@@ -27,10 +26,12 @@ async function init() {
 
         popover.append(position.name);
 
+        // [START maps_3d_marker_interactive_interaction]
         const interactiveMarker = new Marker3DInteractiveElement({
             position,
             gmpPopoverTargetElement: popover,
         });
+        // [END maps_3d_marker_interactive_interaction]
 
         map.append(interactiveMarker);
         map.append(popover);
@@ -92,5 +93,5 @@ const positions = [
     },
 ];
 
-init();
+void init();
 // [END maps_3d_marker_interactive]

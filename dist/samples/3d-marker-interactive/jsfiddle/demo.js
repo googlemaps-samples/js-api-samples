@@ -15,7 +15,6 @@ async function init() {
         tilt: 67.5,
         range: 45000,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     map.mode = 'SATELLITE';
@@ -92,4 +91,4 @@ const positions = [
     },
 ];
 
-init();
+void init();

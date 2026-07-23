@@ -17,7 +17,6 @@ async function init() {
         range: 6062.016931506805,
         tilt: 81.17100663963272,
         heading: -56.047035719765596,
-        gestureHandling: 'COOPERATIVE',
     });
 
     map.mode = 'SATELLITE';
@@ -37,6 +36,7 @@ async function init() {
     };
 
     // Fly the camera from San Francisco to Hawaii, can be controlled by a button alternatively.
+
     map.flyCameraTo({
         // Where we are going to.
         endCamera: flyToCamera,
@@ -61,9 +61,9 @@ async function init() {
     ); // Stop animation after flying around.
 
     // At any time stop the animation.
-    map.addEventListener('gmp-click', (event) => {
+    map.addEventListener('gmp-click', () => {
         map.stopCameraAnimation();
     });
 }
 
-init();
+void init();

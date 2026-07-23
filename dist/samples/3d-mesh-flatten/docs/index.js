@@ -6,7 +6,7 @@
  */
 
 // [START maps_3d_mesh_flatten]
-async function initMap() {
+async function init() {
     await google.maps.importLibrary('maps3d');
 
     const map = document.querySelector('gmp-map-3d');
@@ -25,5 +25,5 @@ async function initMap() {
     });
 }
 
-initMap();
+void init();
 // [END maps_3d_mesh_flatten]

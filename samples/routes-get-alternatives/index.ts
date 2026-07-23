@@ -4,16 +4,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 // [START maps_routes_get_alternatives]
-let mapPolylines: google.maps.Polyline[] = [];
+const mapPolylines: google.maps.Polyline[] = [];
 const mapElement = document.querySelector('gmp-map')!;
-let innerMap;
+let innerMap: google.maps.Map;
 
 // Initialize and add the map.
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
-    const [, { event }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ event }] = await Promise.all([
         google.maps.importLibrary('core'),
+        google.maps.importLibrary('maps'),
     ]);
 
     innerMap = mapElement.innerMap;
@@ -24,7 +24,7 @@ async function initMap() {
 
     // Call the function after the map is loaded.
     event.addListenerOnce(innerMap, 'idle', () => {
-        getDirections();
+        void getDirections();
     });
 }
 
@@ -33,6 +33,7 @@ async function getDirections() {
     const [{ Route, RouteLabel }] = await Promise.all([
         google.maps.importLibrary('routes'),
     ]);
+
     // [START maps_routes_get_alternatives_request_full]
     // [START maps_routes_get_alternatives_request]
     // Build a request.
@@ -53,7 +54,7 @@ async function getDirections() {
         return;
     }
 
-    let primaryRoute;
+    let primaryRoute: google.maps.routes.Route | undefined;
 
     for (const route of result.routes) {
         // Save the primary route for last so it's drawn on top.
@@ -70,7 +71,7 @@ async function getDirections() {
     if (primaryRoute) {
         drawRoute(primaryRoute, true);
         await primaryRoute.createWaypointAdvancedMarkers({ map: innerMap });
-        innerMap.fitBounds(primaryRoute.viewport, 50);
+        innerMap.fitBounds(primaryRoute.viewport!, 50);
         innerMap.setHeading(70);
     }
     // [END maps_routes_get_alternatives_compute]
@@ -80,9 +81,9 @@ async function getDirections() {
     console.log(`Response:\n ${JSON.stringify(result, null, 2)}`);
 }
 
-function drawRoute(route, isPrimaryRoute) {
-    mapPolylines = mapPolylines.concat(
-        route.createPolylines({
+function drawRoute(route: google.maps.routes.Route, isPrimaryRoute: boolean) {
+    mapPolylines.push(
+        ...route.createPolylines({
             polylineOptions: isPrimaryRoute
                 ? {
                       map: innerMap,
@@ -94,10 +95,12 @@ function drawRoute(route, isPrimaryRoute) {
                       strokeOpacity: 0.5,
                       strokeWeight: 5,
                   },
-            colorScheme: innerMap.get('colorScheme'),
+            colorScheme: innerMap!.get(
+                'colorScheme'
+            ) as google.maps.ColorScheme,
         })
     );
 }
 
-initMap();
+void init();
 // [END maps_routes_get_alternatives]

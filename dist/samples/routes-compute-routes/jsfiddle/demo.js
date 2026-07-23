@@ -7,7 +7,6 @@
 
 let markers = [];
 let polylines = [];
-const waypointInfoWindow = null;
 
 const originAutocompleteSelection = {
     predictionText: null,
@@ -22,7 +21,6 @@ async function init() {
     const [
         { InfoWindow },
         { AdvancedMarkerElement },
-        // @ts-expect-error - currently missing. bug fix pending
         { PlaceAutocompleteElement },
         { ComputeRoutesExtraComputation, ReferenceRoute, Route, RouteLabel },
     ] = await Promise.all([
@@ -48,7 +46,7 @@ async function init() {
 
         computeRoutesForm.addEventListener('submit', (event) => {
             event.preventDefault();
-            sendRequest(new FormData(computeRoutesForm));
+            void sendRequest(new FormData(computeRoutesForm));
         });
     }
 
@@ -85,10 +83,7 @@ async function init() {
     }
 
     function buildComputeRoutesJsRequest(formData) {
-        const travelMode =
-            formData.get('travel_mode') === ''
-                ? undefined
-                : formData.get('travel_mode');
+        const travelMode = formData.get('travel_mode') ?? undefined;
         const extraComputations = [];
         const requestedReferenceRoutes = [];
         const transitPreference = {};
@@ -120,15 +115,9 @@ async function init() {
                 ),
                 (input) => input.value
             ),
-            travelMode: travelMode,
-            routingPreference:
-                formData.get('routing_preference') === ''
-                    ? undefined
-                    : formData.get('routing_preference'),
-            polylineQuality:
-                formData.get('polyline_quality') === ''
-                    ? undefined
-                    : formData.get('polyline_quality'),
+            travelMode,
+            routingPreference: formData.get('routing_preference') ?? undefined,
+            polylineQuality: formData.get('polyline_quality') ?? undefined,
             computeAlternativeRoutes:
                 formData.get('compute_alternative_routes') === 'on',
             routeModifiers: {
@@ -175,9 +164,7 @@ async function init() {
                 (input) => input.value
             );
             transitPreference.routingPreference =
-                formData.get('transit_preference') === ''
-                    ? undefined
-                    : formData.get('transit_preference');
+                formData.get('transit_preference');
         }
 
         return request;
@@ -298,7 +285,7 @@ async function init() {
             detailsDiv.appendChild(distanceP);
 
             const durationP = document.createElement('p');
-            durationP.textContent = `Duration: ${route.localizedValues.duration}`;
+            durationP.textContent = `Duration: ${route.localizedValues.duration ?? ''}`;
             detailsDiv.appendChild(durationP);
         }
 
@@ -334,7 +321,7 @@ async function init() {
     }
 
     function attachMapClickListener() {
-        if (!map || !map.innerMap) {
+        if (!map.innerMap) {
             return;
         }
 
@@ -365,7 +352,7 @@ async function init() {
             });
 
             await navigator.clipboard.writeText(
-                `${mapsMouseEvent.latLng.lat()},${mapsMouseEvent.latLng.lng()}`
+                `${mapsMouseEvent.latLng.lat().toString()},${mapsMouseEvent.latLng.lng().toString()}`
             );
 
             infoWindow.open(map.innerMap);
@@ -462,7 +449,7 @@ async function init() {
                 await place.fetchFields({
                     fields: ['location'],
                 });
-                autocompleteData.location = place.location;
+                autocompleteData.location = place.location ?? null;
             });
         });
 
@@ -483,4 +470,4 @@ async function init() {
     }
 }
 
-window.addEventListener('load', init);
+void init();

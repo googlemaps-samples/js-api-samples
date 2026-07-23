@@ -6,11 +6,11 @@
 
 // [START maps_address_validation]
 // DOM Refs
-const addressForm = document.getElementById('address-form');
-const validateButton = document.getElementById('validate-button');
-const clearFormButton = document.getElementById('clear-form-button');
-const resultDisplay = document.getElementById('result-display');
-const loadingText = document.getElementById('loading-text');
+const addressForm = document.getElementById('address-form') as HTMLFormElement;
+const clearFormButton = document.getElementById(
+    'clear-form-button'
+) as HTMLButtonElement;
+const resultDisplay = document.getElementById('result-display')!;
 // Input field refs
 const streetAddress1Input = document.getElementById(
     'street-address-1'
@@ -40,7 +40,7 @@ async function init() {
 
 // [START maps_address_validation_form_handler]
 // Validation Handler
-async function handleValidationSubmit(event) {
+async function handleValidationSubmit(event: Event) {
     event.preventDefault(); // Prevent default form submission
     resultDisplay.textContent = 'Validating...'; // Clear previous results
 
@@ -65,11 +65,11 @@ async function handleValidationSubmit(event) {
 
         resultDisplay.textContent =
             'Verdict summary\n================\n' +
-            `Formatted address: ${result.address.formattedAddress}\n` +
-            `Entered: ${result.verdict.inputGranularity}\n` +
-            `Validated: ${result.verdict.validationGranularity}\n` +
-            `Geocoded: ${result.verdict.geocodeGranularity}\n` +
-            `Possible next action: ${result.verdict.possibleNextAction}\n\n` +
+            `Formatted address: ${result.address?.formattedAddress}\n` +
+            `Entered: ${result.verdict?.inputGranularity}\n` +
+            `Validated: ${result.verdict?.validationGranularity}\n` +
+            `Geocoded: ${result.verdict?.geocodeGranularity}\n` +
+            `Possible next action: ${result.verdict?.possibleNextAction}\n\n` +
             `${getVerdictMessage(result.verdict, 'addressComplete')}\n` +
             `${getVerdictMessage(result.verdict, 'hasUnconfirmedComponents')}\n` +
             `${getVerdictMessage(result.verdict, 'hasInferredComponents')}\n` +
@@ -86,7 +86,10 @@ async function handleValidationSubmit(event) {
 // [END maps_address_validation_form_handler]
 
 // Verdict messages
-const verdictMessages = {
+const verdictMessages: Record<
+    string,
+    { trueMessage: string; falseMessage: string }
+> = {
     addressComplete: {
         trueMessage:
             '- The API found no unresolved, unexpected, or missing address elements.',
@@ -109,7 +112,10 @@ const verdictMessages = {
 };
 
 // Helper function to get the verdict message for a given verdict key
-function getVerdictMessage(verdict, key) {
+function getVerdictMessage(
+    verdict: google.maps.addressValidation.Verdict | null,
+    key: keyof google.maps.addressValidation.Verdict
+): string {
     if (!verdict || !verdictMessages[key]) return 'Unknown';
     return verdict[key]
         ? verdictMessages[key].trueMessage
@@ -117,8 +123,8 @@ function getVerdictMessage(verdict, key) {
 }
 
 // Handler for Dropdown Change
-function handleExampleSelectChange(event) {
-    const selectedValue = event.target.value;
+function handleExampleSelectChange(event: Event) {
+    const selectedValue = (event.target as HTMLSelectElement).value;
     if (selectedValue && examples[selectedValue]) {
         populateAddressFields(examples[selectedValue]);
     } else if (!selectedValue) {
@@ -139,8 +145,17 @@ function handleClearForm() {
     console.log('Cleared form');
 }
 
+interface ExampleAddress {
+    streetAddress1: string;
+    streetAddress2: string | null;
+    city: string;
+    state: string;
+    zipCode: string;
+    region: string;
+}
+
 // Example Address Data
-const examples = {
+const examples: Record<string, ExampleAddress> = {
     google: {
         streetAddress1: '1600 Amphitheatre Parkway',
         streetAddress2: '', // Explicitly empty
@@ -192,7 +207,7 @@ const examples = {
 };
 
 // Helper function to populate form fields with example address data
-function populateAddressFields(exampleAddress) {
+function populateAddressFields(exampleAddress: ExampleAddress | null) {
     if (!exampleAddress) {
         console.warn('No example address data provided.');
         return;
@@ -212,5 +227,5 @@ function populateAddressFields(exampleAddress) {
     console.log('Populated fields with example: ', exampleAddress);
 }
 
-init();
+void init();
 // [END maps_address_validation]

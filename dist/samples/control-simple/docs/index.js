@@ -6,7 +6,7 @@
  */
 
 // [START maps_control_simple]
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -21,5 +21,5 @@ async function initMap() {
     });
     // [END maps_control_simple_options]
 }
-initMap();
+void init();
 // [END maps_control_simple]

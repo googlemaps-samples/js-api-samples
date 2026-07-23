@@ -3,6 +3,13 @@
  * Copyright 2025 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+
 /* [START maps_deckgl_kml] */
 // Import necessary loader
 import { KMLLoader } from '@loaders.gl/kml';
@@ -40,19 +47,31 @@ declare namespace deck {
     // Add other Deck.gl types used globally if needed
 }
 
+// Declare global namespace for MDC to satisfy TypeScript compiler
+declare namespace mdc {
+    namespace linearProgress {
+        class MDCLinearProgress {
+            constructor(el: Element);
+            open(): void;
+            close(): void;
+            determinate: boolean;
+            done?: () => void;
+        }
+    }
+}
+
 // Initialize and add the map
 let map: google.maps.Map;
 let geojsonLayer: deck.GeoJsonLayer;
 let googleMapsOverlay: deck.GoogleMapsOverlay;
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Progress bar logic moved from index.html
-    let progress;
+    let progress: mdc.linearProgress.MDCLinearProgress;
     const progressDiv = document.querySelector('.mdc-linear-progress')!;
     if (progressDiv) {
         // Assuming 'mdc' is globally available, potentially loaded via a script tag
         // If not, you might need to import it or add type definitions.
-        // @ts-expect-error: mdc not typed
         progress = new mdc.linearProgress.MDCLinearProgress(progressDiv);
         progress.open();
         progress.determinate = false;
@@ -63,7 +82,7 @@ async function initMap(): Promise<void> {
     }
 
     // The location for the map center (adjust as needed for the KML data)
-    const position = { lat: 41.8692576, lng: -87.689769 };
+    const center = { lat: 41.8692576, lng: -87.689769 };
 
     //  Request needed libraries.
     const { Map } = await google.maps.importLibrary('maps');
@@ -77,7 +96,7 @@ async function initMap(): Promise<void> {
     // The map, centered at the specified position
     map = new Map(mapDiv, {
         zoom: 11, // Adjust zoom as needed
-        center: position,
+        center,
         // mapId: '6a17c323f461e521', // Replace with your Map ID
         mapId: '6a17c323f461e521',
         zoomControl: true,
@@ -113,7 +132,7 @@ async function initMap(): Promise<void> {
                 // Check if progress is defined
                 // Add a small delay to ensure the progress bar is removed
                 setTimeout(() => {
-                    progress.done(); // hides progress bar
+                    progress.done?.(); // hides progress bar
                 }, 100); // 100ms delay
             }
         },
@@ -158,8 +177,7 @@ async function initMap(): Promise<void> {
             if (d.properties.centroid) {
                 position = d.properties.centroid;
             } else if (
-                d.geometry &&
-                d.geometry.coordinates &&
+                d.geometry?.coordinates &&
                 d.geometry.coordinates.length > 0
             ) {
                 // Assuming Polygon or MultiPolygon
@@ -221,5 +239,5 @@ function hexOrAabbggrrToRgba(color: string): number[] | null {
     return null; // Invalid format
 }
 
-initMap();
+void init();
 /* [END maps_deckgl_kml] */

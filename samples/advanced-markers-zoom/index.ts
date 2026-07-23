@@ -7,11 +7,11 @@
 // [START maps_advanced_markers_zoom]
 const mapElement = document.querySelector('gmp-map')!;
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
-        google.maps.importLibrary('maps'),
+    const [{ AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
     ]);
 
     const markerOptions = [
@@ -55,5 +55,5 @@ async function initMap() {
     // [END maps_advanced_markers_zoom_listener]
 }
 
-initMap();
+void init();
 // [END maps_advanced_markers_zoom]

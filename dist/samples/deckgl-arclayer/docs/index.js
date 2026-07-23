@@ -8,7 +8,7 @@
 import { GoogleMapsOverlay } from '@deck.gl/google-maps';
 import { ArcLayer } from '@deck.gl/layers';
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -29,6 +29,7 @@ async function initMap() {
     const flightsLayer = new ArcLayer({
         id: 'flights',
         data: dataUrl,
+
         dataTransform: (data) =>
             data.features.filter((f) => f.properties.scalerank < 4),
         getSourcePosition: () => [14.42076, 50.08804], // Prague
@@ -46,5 +47,5 @@ async function initMap() {
     overlay.setMap(innerMap);
 }
 
-initMap();
+void init();
 // [END maps_deckgl_arclayer]

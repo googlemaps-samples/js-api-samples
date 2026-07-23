@@ -5,10 +5,9 @@
  */
 
 // [START maps_layer_data_quakes_simple]
-let innerMap;
-let earthquakeData;
+let innerMap: google.maps.Map;
 
-async function initMap() {
+async function init() {
     await google.maps.importLibrary('maps');
 
     const mapElement = document.querySelector('gmp-map')!;
@@ -26,10 +25,12 @@ async function initMap() {
 }
 
 // Defines the callback function referenced in the jsonp file.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function earthquakeDataLoad(data: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     innerMap.data.addGeoJson(data);
 }
 
 window.earthquakeDataLoad = earthquakeDataLoad;
-initMap();
+void init();
 // [END maps_layer_data_quakes_simple]

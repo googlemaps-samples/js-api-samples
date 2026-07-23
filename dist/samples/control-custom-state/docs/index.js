@@ -9,9 +9,12 @@
 let innerMap;
 const mapElement = document.querySelector('gmp-map');
 
-let center = { lat: 41.85, lng: -87.65 };
+let center = {
+    lat: 41.85,
+    lng: -87.65,
+};
 
-async function initMap() {
+async function init() {
     await google.maps.importLibrary('maps');
 
     innerMap = mapElement.innerMap;
@@ -40,5 +43,5 @@ async function initMap() {
     // [END maps_control_custom_state_event_listeners]
 }
 
-initMap();
+void init();
 // [END maps_control_custom_state]

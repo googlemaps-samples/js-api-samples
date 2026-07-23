@@ -10,7 +10,7 @@
 // the place ID and other information about the place that the user has
 // selected.
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const [{ InfoWindow }, { AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('maps'),
@@ -44,7 +44,7 @@ async function initMap() {
     infoWindow.setContent(infoWindowContent);
 
     const marker = new AdvancedMarkerElement({
-        map: map,
+        map,
         collisionBehavior: 'REQUIRED_AND_HIDES_OPTIONAL',
         gmpClickable: true,
     });
@@ -90,4 +90,4 @@ async function initMap() {
     );
 }
 
-initMap();
+void init();

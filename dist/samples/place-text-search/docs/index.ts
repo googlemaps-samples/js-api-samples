@@ -5,17 +5,19 @@
  */
 
 // [START maps_place_text_search]
-let map;
-let markers = {};
-let infoWindow;
+let map: google.maps.Map;
+let markers: Record<string, google.maps.marker.AdvancedMarkerElement> = {};
+let infoWindow: google.maps.InfoWindow;
 
-async function initMap() {
-    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
-    const { ControlPosition } = await google.maps.importLibrary('core');
+async function init() {
+    const [{ Map, InfoWindow }, { ControlPosition }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('core'),
+    ]);
 
     const center = { lat: 37.4161493, lng: -122.0812166 };
-    map = new Map(document.getElementById('map') as HTMLElement, {
-        center: center,
+    map = new Map(document.getElementById('map')!, {
+        center,
         zoom: 11,
         mapTypeControl: false,
         mapId: 'DEMO_MAP_ID',
@@ -25,32 +27,35 @@ async function initMap() {
     const textInputButton = document.getElementById(
         'text-input-button'
     ) as HTMLButtonElement;
-    const card = document.getElementById('text-input-card') as HTMLElement;
+    const card = document.getElementById('text-input-card')!;
     map.controls[ControlPosition.TOP_LEFT].push(card);
 
     textInputButton.addEventListener('click', () => {
-        findPlaces(textInput.value);
+        void findPlaces(textInput.value);
     });
 
     textInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
-            findPlaces(textInput.value);
+            void findPlaces(textInput.value);
         }
     });
 
     infoWindow = new InfoWindow();
 }
 
-async function findPlaces(query) {
-    const { Place } = await google.maps.importLibrary('places');
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+async function findPlaces(query: string) {
+    const [{ Place }, { AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('places'),
+        google.maps.importLibrary('marker'),
+    ]);
+
     // [START maps_place_text_search_request]
     const request = {
         textQuery: query,
         fields: ['displayName', 'location', 'businessStatus'],
         includedType: '', // Restrict query to a specific type (leave blank for any).
         useStrictTypeFiltering: true,
-        locationBias: map.center,
+        locationBias: map.getCenter(),
         isOpenNow: true,
         language: 'en-US',
         maxResultCount: 8,
@@ -72,7 +77,7 @@ async function findPlaces(query) {
         markers = {};
 
         // Loop through and get all the results.
-        places.forEach((place) => {
+        places.forEach((place: google.maps.places.Place) => {
             const marker = new AdvancedMarkerElement({
                 map,
                 position: place.location,
@@ -81,8 +86,8 @@ async function findPlaces(query) {
             markers[place.id] = marker;
 
             marker.addListener('gmp-click', () => {
-                map.panTo(place.location);
-                updateInfoWindow(place.displayName, place.id, marker);
+                map.panTo(place.location!);
+                updateInfoWindow(place.displayName!, place.id, marker);
             });
 
             if (place.location != null) {
@@ -97,7 +102,11 @@ async function findPlaces(query) {
 }
 
 // Helper function to create an info window.
-async function updateInfoWindow(title, content, anchor) {
+function updateInfoWindow(
+    title: string | Element | null,
+    content: string | Element | null,
+    anchor: google.maps.marker.AdvancedMarkerElement
+) {
     infoWindow.setContent(content);
     infoWindow.setHeaderContent(title);
     infoWindow.open({
@@ -107,5 +116,5 @@ async function updateInfoWindow(title, content, anchor) {
     });
 }
 
-initMap();
+void init();
 // [END maps_place_text_search]

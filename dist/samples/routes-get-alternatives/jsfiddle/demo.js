@@ -5,15 +5,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-let mapPolylines = [];
+const mapPolylines = [];
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
 
 // Initialize and add the map.
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
-    await google.maps.importLibrary('maps');
-    const { event } = await google.maps.importLibrary('core');
+    const [{ event }] = await Promise.all([
+        google.maps.importLibrary('core'),
+        google.maps.importLibrary('maps'),
+    ]);
 
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
@@ -23,7 +25,7 @@ async function initMap() {
 
     // Call the function after the map is loaded.
     event.addListenerOnce(innerMap, 'idle', () => {
-        getDirections();
+        void getDirections();
     });
 }
 
@@ -75,8 +77,8 @@ async function getDirections() {
 }
 
 function drawRoute(route, isPrimaryRoute) {
-    mapPolylines = mapPolylines.concat(
-        route.createPolylines({
+    mapPolylines.push(
+        ...route.createPolylines({
             polylineOptions: isPrimaryRoute
                 ? {
                       map: innerMap,
@@ -93,4 +95,4 @@ function drawRoute(route, isPrimaryRoute) {
     );
 }
 
-initMap();
+void init();

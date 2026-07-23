@@ -4,16 +4,21 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+
 // [START maps_deckgl_arclayer]
 import { GoogleMapsOverlay } from '@deck.gl/google-maps';
 import { ArcLayer } from '@deck.gl/layers';
 import type * as GeoJSON from 'geojson';
 
-type Properties = { scalerank: number };
+interface Properties {
+    scalerank: number;
+}
 type Feature = GeoJSON.Feature<GeoJSON.Point, Properties>;
-type Data = GeoJSON.FeatureCollection<GeoJSON.Point, Properties>;
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -34,6 +39,7 @@ async function initMap() {
     const flightsLayer = new ArcLayer<Feature>({
         id: 'flights',
         data: dataUrl,
+
         dataTransform: (data: any) =>
             data.features.filter((f: any) => f.properties.scalerank < 4),
         getSourcePosition: () => [14.42076, 50.08804], // Prague
@@ -52,5 +58,5 @@ async function initMap() {
     overlay.setMap(innerMap);
 }
 
-initMap();
+void init();
 // [END maps_deckgl_arclayer]

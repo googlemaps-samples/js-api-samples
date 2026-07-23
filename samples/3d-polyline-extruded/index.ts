@@ -5,7 +5,7 @@
  */
 
 // [START maps_3d_polyline_extruded]
-let map;
+let map: google.maps.maps3d.Map3DElement;
 async function init() {
     const { Map3DElement, Polyline3DElement } =
         await google.maps.importLibrary('maps3d');
@@ -16,7 +16,6 @@ async function init() {
         tilt: 64.01,
         heading: 25.0,
         mode: 'SATELLITE',
-        gestureHandling: 'COOPERATIVE',
     });
 
     document.body.append(map);
@@ -44,5 +43,5 @@ async function init() {
     map.append(polyline);
 }
 
-init();
+void init();
 // [END maps_3d_polyline_extruded]

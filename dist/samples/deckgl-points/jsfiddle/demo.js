@@ -1,3 +1,10 @@
+/**
+ * @license
+ * Copyright 2026 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// Import the needed libraries.
 import { GoogleMapsOverlay } from '@deck.gl/google-maps';
 import { GeoJsonLayer } from '@deck.gl/layers';
 
@@ -16,7 +23,7 @@ function isEarthquake(f) {
 }
 
 // Initialize and add the map
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -38,7 +45,7 @@ async function initMap() {
                     }
                     return 0; // Fallback for invalid data.
                 },
-                getFillColor: (f) => {
+                getFillColor: () => {
                     return [255, 70, 30, 180]; // Default color for other earthquakes.
                 },
                 autoHighlight: true,
@@ -61,4 +68,4 @@ async function initMap() {
     deckOverlay.setMap(innerMap);
 }
 
-initMap();
+void init();

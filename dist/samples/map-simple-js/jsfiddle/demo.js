@@ -13,9 +13,9 @@
  */
 
 let map;
-async function initMap() {
+async function init() {
     // Import the needed libraries
-    const { Map, RenderingType } = await google.maps.importLibrary('maps');
+    const { Map } = await google.maps.importLibrary('maps');
 
     // Create a new map from the div with id="map".
     map = new Map(document.getElementById('map'), {
@@ -23,6 +23,8 @@ async function initMap() {
         zoom: 8,
         renderingType: 'VECTOR',
     });
+
+    console.log(map);
 }
 
-initMap();
+void init();
