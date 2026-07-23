@@ -1,26 +1,19 @@
 /*
  * @license
- * Copyright 2025 Google LLC. All Rights Reserved.
+ * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
 // [START maps_3d_accessibility_features]
-async function init() {
-    const [
-        { Map3DElement, Marker3DInteractiveElement, PopoverElement },
-        { PinElement },
-    ] = await Promise.all([
-        google.maps.importLibrary('maps3d'),
-        google.maps.importLibrary('marker'),
-    ]);
+async function init(): Promise<void> {
+    // Import the needed libraries.
+    const [{ Marker3DInteractiveElement, PopoverElement }, { PinElement }] =
+        await Promise.all([
+            google.maps.importLibrary('maps3d'),
+            google.maps.importLibrary('marker'),
+        ]);
 
-    const map = new Map3DElement({
-        center: { lat: 34.8405, lng: -111.7909, altitude: 1322.7 },
-        range: 13279.5,
-        tilt: 67.44,
-        heading: 0.01,
-        mode: 'SATELLITE',
-    });
+    const map3DElement = document.querySelector('gmp-map-3d')!;
 
     // Set LatLng and title text for the markers. The first marker (Boynton Pass)
     // receives the initial focus when tab is pressed. Use arrow keys to move
@@ -50,16 +43,16 @@ async function init() {
 
     tourStops.forEach(({ position, title }, i) => {
         const pin = new PinElement({
-            glyphText: `${i + 1}`,
+            glyphText: String(i + 1),
             scale: 1.5,
             glyphColor: '#FFFFFF',
         });
         const popover = new PopoverElement();
 
-        const content = `${i + 1}. ${title}`;
+        const content = `${String(i + 1)}. ${title}`;
         const header = document.createElement('span');
         // Include the label for screen readers.
-        header.ariaLabel = `This is marker ${i + 1}. ${title}`;
+        header.ariaLabel = `This is marker ${String(i + 1)}. ${title}`;
         header.slot = 'header';
 
         popover.append(header);
@@ -74,11 +67,11 @@ async function init() {
 
         interactiveMarker.append(pin);
 
-        map.append(interactiveMarker);
-        map.append(popover);
+        map3DElement.append(interactiveMarker);
+        map3DElement.append(popover);
     });
 
-    document.body.append(map);
+    document.body.append(map3DElement);
 }
 
 void init();
