@@ -44,6 +44,7 @@ async function init(): Promise<void> {
 
     const mapElement = document.querySelector('gmp-map')!;
     map = mapElement.innerMap;
+    map.setOptions({ draggableCursor: 'crosshair' });
 
     // Setup Polyline
     polyline = new Polyline({
