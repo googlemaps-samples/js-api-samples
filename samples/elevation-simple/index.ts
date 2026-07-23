@@ -22,14 +22,15 @@ async function init(): Promise<void> {
     // Add a listener for the click event. Display the elevation for the LatLng of
     // the click inside the infowindow.
     innerMap.addListener('click', (event: google.maps.MapMouseEvent) => {
-        displayLocationElevation(event.latLng!, elevator, infowindow);
+        displayLocationElevation(event.latLng!, elevator, infowindow, innerMap);
     });
 }
 
 function displayLocationElevation(
     location: google.maps.LatLng,
     elevator: google.maps.ElevationService,
-    infowindow: google.maps.InfoWindow
+    infowindow: google.maps.InfoWindow,
+    map: google.maps.Map
 ) {
     // Initiate the location request
     elevator
@@ -48,6 +49,8 @@ function displayLocationElevation(
             } else {
                 infowindow.setContent('No results found');
             }
+
+            infowindow.open(map);
         })
         .catch((e: unknown) => {
             infowindow.setContent(
