@@ -15,14 +15,11 @@
  */
 
 // /* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 
-// import { test, expect } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
-import childProcess, { execSync } from 'child_process';
+import { execSync, spawn } from 'child_process';
 
 const samplesDir = path.join(__dirname, '..', 'samples');
 
@@ -132,27 +129,17 @@ const getChangedSampleFolders = (): string[] => {
 };
 
 // Get changed folders, filtering out excluded ones.
-// const foldersToTest = getChangedSampleFolders();
 const foldersToTest = getChangedSampleFolders();
 
 if (foldersToTest.length === 0) {
     console.log('No sample folders found.');
 } else {
     console.log(
-        // `Will run tests for the following folders: ${foldersToTest.join(', ')}`
-        'IMPORTANT: Tests are temporarily disabled while we work on getting a dev key working for testing samples.'
+        `Will run tests for the following folders: ${foldersToTest.join(', ')}`
     );
 }
 
-import { test, expect } from '@playwright/test';
-
-test('Placeholder test', () => {
-    // Tests are temporarily disabled, this placeholder prevents Playwright from failing with "No tests found"
-    expect(true).toBe(true);
-});
-
 // Iterate through samples and run the same test for each one.
-/**
 foldersToTest.forEach((sampleFolder) => {
     test(`test ${sampleFolder}`, async ({ page }) => {
         // START run the preview
@@ -160,13 +147,20 @@ foldersToTest.forEach((sampleFolder) => {
         const port = 8080;
         const url = `http://localhost:${port}/`;
 
-        const viteProcess = childProcess.spawn(
+        const vitePath = path.join(
+            __dirname,
+            '..',
+            'node_modules',
             'vite',
-            ['preview', `--port=${port}`],
+            'bin',
+            'vite.js'
+        );
+        const viteProcess = spawn(
+            'node',
+            [vitePath, 'preview', '--port', port.toString()],
             {
                 cwd: path.join(samplesDir, sampleFolder),
                 stdio: 'inherit',
-                detached: true, // Allows parent to exit independently, though we kill it in finally
             }
         );
 
@@ -202,6 +196,7 @@ foldersToTest.forEach((sampleFolder) => {
                 'Falling back to Raster',
                 'Attempted to load a 3D Map, but failed.',
                 'The map is not a vector map',
+                '404 (Not Found)',
             ];
             const criticalErrors = consoleErrors.filter(
                 (error) =>
@@ -224,7 +219,7 @@ foldersToTest.forEach((sampleFolder) => {
             // Wait for Google Maps to load.
             await page.waitForFunction(
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                () => (window as any).google?.maps,
+                () => !!(window as any).google?.maps,
                 { timeout: 500 }
             );
 
@@ -242,7 +237,6 @@ foldersToTest.forEach((sampleFolder) => {
                 );
             });
             expect(hasGoogleMaps).toBeTruthy();
-
         } finally {
             if (viteProcess.pid) {
                 try {
@@ -255,9 +249,8 @@ foldersToTest.forEach((sampleFolder) => {
                     );
                 }
             }
-            // Add a small delay to allow the process to terminate
-            await page.waitForTimeout(500);
+            // Add a small delay to allow the process to terminate without depending on the potentially closed page object
+            await new Promise((resolve) => setTimeout(resolve, 500));
         }
     });
 });
-*/
