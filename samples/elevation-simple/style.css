@@ -15,4 +15,8 @@ body {
     padding: 0;
 }
 
+gmp-map {
+    height: 100%;
+}
+
 /* [END maps_elevation_simple] */
