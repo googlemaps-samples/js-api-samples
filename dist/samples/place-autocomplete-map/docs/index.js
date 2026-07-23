@@ -11,8 +11,7 @@ const placeAutocomplete = document.querySelector('gmp-place-autocomplete');
 let innerMap;
 let marker;
 let infoWindow;
-const center = { lat: 40.749933, lng: -73.98633 }; // New York City
-async function initMap() {
+async function init() {
     // Request needed libraries.
     const [{ AdvancedMarkerElement }, { InfoWindow }] = await Promise.all([
         google.maps.importLibrary('marker'),
@@ -27,7 +26,7 @@ async function initMap() {
     });
 
     // Use the bounds_changed event to restrict results to the current map bounds.
-    innerMap.addListener('bounds_changed', async () => {
+    innerMap.addListener('bounds_changed', () => {
         placeAutocomplete.locationRestriction = innerMap.getBounds();
     });
 
@@ -36,10 +35,10 @@ async function initMap() {
         map: innerMap,
     });
 
-    infoWindow = new InfoWindow({});
+    infoWindow = new InfoWindow();
 
     // [START maps_place_autocomplete_map_listener]
-    // Add the gmp-placeselect listener, and display the results on the map.
+    // Add the gmp-select listener, and display the results on the map.
     placeAutocomplete.addEventListener(
         'gmp-select',
         async ({ placePrediction }) => {
@@ -83,5 +82,5 @@ function updateInfoWindow(content, center) {
     });
 }
 
-initMap();
+void init();
 // [END maps_place_autocomplete_map]

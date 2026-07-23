@@ -7,14 +7,15 @@
 
 const mapElement = document.querySelector('gmp-map');
 let innerMap;
-const advancedMarkerElement = document.querySelector('gmp-advanced-marker');
 let center;
 let typeSelect;
 let infoWindow;
 
-async function initMap() {
-    const { InfoWindow } = await google.maps.importLibrary('maps');
-    const { event } = await google.maps.importLibrary('core');
+async function init() {
+    const [{ InfoWindow }, { event }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('core'),
+    ]);
 
     innerMap = mapElement.innerMap;
     innerMap.setOptions({
@@ -24,28 +25,32 @@ async function initMap() {
     typeSelect = document.querySelector('.type-select');
 
     typeSelect.addEventListener('change', () => {
-        nearbySearch();
+        void nearbySearch();
     });
 
     infoWindow = new InfoWindow();
 
     // Kick off an initial search once map has loaded.
     event.addListenerOnce(innerMap, 'idle', () => {
-        nearbySearch();
+        void nearbySearch();
     });
 }
 
 async function nearbySearch() {
-    const { Place, SearchNearbyRankPreference } =
-        await google.maps.importLibrary('places');
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
-    const { spherical } = await google.maps.importLibrary('geometry');
+    const [
+        { Place, SearchNearbyRankPreference },
+        { AdvancedMarkerElement },
+        { spherical },
+    ] = await Promise.all([
+        google.maps.importLibrary('places'),
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('geometry'),
+    ]);
 
     // Get bounds and radius to constrain search.
     center = mapElement.center;
-    const bounds = innerMap.getBounds();
-    const ne = bounds.getNorthEast();
-    const sw = bounds.getSouthWest();
+    const ne = innerMap.getBounds().getNorthEast();
+    const sw = innerMap.getBounds().getSouthWest();
     const diameter = spherical.computeDistanceBetween(ne, sw);
     const radius = Math.min(diameter / 2, 50000); // Radius cannot be more than 50000.
 
@@ -124,4 +129,4 @@ function updateInfoWindow(title, content, anchor) {
     });
 }
 
-initMap();
+void init();

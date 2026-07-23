@@ -15,9 +15,7 @@ function setStyle(params) {
     const datasetFeature = params.feature;
     // Get all of the needed dataset attributes.
     const furColors =
-        datasetFeature.datasetAttributes[
-            'CombinationofPrimaryandHighlightColor'
-        ];
+        datasetFeature.datasetAttributes.CombinationofPrimaryandHighlightColor;
     // [END maps_dds_datasets_point_style_get_features]
 
     // Apply styles. Fill is primary fur color, stroke is secondary fur color.
@@ -85,17 +83,19 @@ function setStyle(params) {
 }
 // [END maps_dds_datasets_point_style_function]
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    await google.maps.importLibrary('maps');
-    const { event } = await google.maps.importLibrary('core');
+    const [{ event }] = await Promise.all([
+        google.maps.importLibrary('core'),
+        google.maps.importLibrary('maps'),
+    ]);
 
     // Get the inner map.
     innerMap = mapElement.innerMap;
 
     event.addListenerOnce(innerMap, 'idle', () => {
         // Add the data legend.
-        makeLegend(innerMap);
+        makeLegend();
     });
 
     // Dataset ID for squirrel dataset.
@@ -105,7 +105,7 @@ async function initMap() {
 }
 
 // Creates a legend for the map.
-async function makeLegend(innerMap) {
+function makeLegend() {
     const colors = {
         black: ['black'],
         cinnamon: ['#8b0000'],
@@ -124,8 +124,8 @@ async function makeLegend(innerMap) {
     title.innerText = 'Fur Colors';
     title.classList.add('title');
     legend.appendChild(title);
-    let color;
-    for (color in colors) {
+
+    for (const color of Object.keys(colors)) {
         const wrapper = document.createElement('div');
         wrapper.id = 'container';
         const box = document.createElement('div');
@@ -145,5 +145,5 @@ async function makeLegend(innerMap) {
     }
 }
 
-initMap();
+void init();
 // [END maps_dds_datasets_point]

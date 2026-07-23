@@ -5,7 +5,7 @@
  */
 
 // [START maps_js_geocoding_region_es]
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     const [{ Geocoder }, { AdvancedMarkerElement }] = await Promise.all([
         google.maps.importLibrary('geocoding'),
         google.maps.importLibrary('marker'),
@@ -27,12 +27,12 @@ async function initMap(): Promise<void> {
                 position,
             });
         })
-        .catch((e) =>
+        .catch((e: unknown) => {
             window.alert(
                 'Geocode was not successful for the following reason: ' + e
-            )
-        );
+            );
+        });
 }
 
-initMap();
+void init();
 // [END maps_js_geocoding_region_es]

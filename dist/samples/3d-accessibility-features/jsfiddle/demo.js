@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-async function initMap() {
+async function init() {
     // Import the needed libraries.
     const [{ Marker3DInteractiveElement, PopoverElement }, { PinElement }] =
         await Promise.all([
@@ -74,4 +74,4 @@ async function initMap() {
     document.body.append(map3DElement);
 }
 
-void initMap();
+void init();

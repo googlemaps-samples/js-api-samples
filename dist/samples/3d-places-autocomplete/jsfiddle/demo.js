@@ -17,16 +17,14 @@ async function init() {
         heading: 0,
         roll: 0,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     document.body.append(map);
 
-    initAutocomplete();
+    void initAutocomplete();
 }
 
 async function initAutocomplete() {
-    // @ts-expect-error - currently missing. bug fix pending
     const { PlaceAutocompleteElement } =
         await google.maps.importLibrary('places');
 
@@ -47,14 +45,13 @@ async function initAutocomplete() {
                 window.alert('No viewport for input: ' + place.displayName);
                 return;
             }
-            flyToPlace(place);
+            void flyToPlace(place);
         }
     );
 }
 
 const flyToPlace = async (place) => {
-    const { Polyline3DElement, Polygon3DElement, Marker3DElement } =
-        await google.maps.importLibrary('maps3d');
+    const { Marker3DElement } = await google.maps.importLibrary('maps3d');
 
     const location = place.location;
 
@@ -100,8 +97,10 @@ async function getElevationforPoint(location, place) {
         locations: [location],
     });
 
-    if (!(elevationResponse.results && elevationResponse.results.length)) {
-        window.alert(`Insufficient elevation data for place: ${place.name}`);
+    if (!elevationResponse?.results.length) {
+        window.alert(
+            `Insufficient elevation data for place: ${place.displayName}`
+        );
         return defaultElevation;
     }
     const elevation =
@@ -110,4 +109,4 @@ async function getElevationforPoint(location, place) {
     return elevation;
 }
 
-init();
+void init();

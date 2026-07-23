@@ -5,11 +5,11 @@
  */
 // [START maps_routes_route_matrix]
 // Initialize and add the map.
-let map;
+let map: google.maps.Map;
 const markers: google.maps.marker.AdvancedMarkerElement[] = [];
 const center = { lat: 51.55, lng: -1.8 };
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     //  Request the needed libraries.
     const [
         { Map },
@@ -27,9 +27,9 @@ async function initMap(): Promise<void> {
 
     const bounds = new LatLngBounds();
 
-    map = new Map(document.getElementById('map') as HTMLElement, {
+    map = new Map(document.getElementById('map')!, {
         zoom: 8,
-        center: center,
+        center,
         mapId: 'DEMO_MAP_ID',
     });
 
@@ -67,15 +67,21 @@ async function initMap(): Promise<void> {
     // [END maps_routes_route_matrix_request]
 
     // Show the request.
-    (document.getElementById('request') as HTMLDivElement).innerText =
-        JSON.stringify(request, null, 2);
+    document.getElementById('request')!.innerText = JSON.stringify(
+        request,
+        null,
+        2
+    );
 
     // Get the RouteMatrix response.
     const response = await RouteMatrix.computeRouteMatrix(request);
 
     // Show the response.
-    (document.getElementById('response') as HTMLDivElement).innerText =
-        JSON.stringify(response, null, 2);
+    document.getElementById('response')!.innerText = JSON.stringify(
+        response,
+        null,
+        2
+    );
 
     // Add markers for the origins.
     for (const origin of origins) {
@@ -98,8 +104,7 @@ async function initMap(): Promise<void> {
     }
 
     // Add markers for the destinations.
-    for (let i = 0; i < destinations.length; i++) {
-        const destination = destinations[i];
+    for (const destination of destinations) {
         if (destination.location) {
             const pin = new PinElement({
                 glyphText: 'D',
@@ -111,8 +116,8 @@ async function initMap(): Promise<void> {
             const marker = new AdvancedMarkerElement({
                 map,
                 position: destination.location,
-                content: pin.element,
-                title: `Destination: ${destination.displayName}`,
+                content: pin,
+                title: `Destination: ${destination.displayName ?? 'Unknown'}`,
             });
 
             markers.push(marker);
@@ -124,5 +129,5 @@ async function initMap(): Promise<void> {
     map.fitBounds(bounds);
 }
 
-initMap();
+void init();
 // [END maps_routes_route_matrix]

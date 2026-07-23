@@ -14,7 +14,7 @@ let innerMap: google.maps.Map;
 
 let infoWindow: google.maps.InfoWindow;
 
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     const { Rectangle, InfoWindow } = await google.maps.importLibrary('maps');
 
     const mapElement = document.querySelector('gmp-map')!;
@@ -29,7 +29,7 @@ async function initMap(): Promise<void> {
 
     // Define the rectangle and set its editable property to true.
     rectangle = new Rectangle({
-        bounds: bounds,
+        bounds,
         editable: true,
         draggable: true,
     });
@@ -67,5 +67,5 @@ function showNewRect() {
     infoWindow.open(innerMap);
 }
 
-initMap();
+void init();
 // [END maps_rectangle_event]

@@ -5,7 +5,7 @@
  */
 
 // [START maps_3d_accessibility_features]
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Import the needed libraries.
     const [{ Marker3DInteractiveElement, PopoverElement }, { PinElement }] =
         await Promise.all([
@@ -74,5 +74,5 @@ async function initMap(): Promise<void> {
     document.body.append(map3DElement);
 }
 
-void initMap();
+void init();
 // [END maps_3d_accessibility_features]

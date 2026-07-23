@@ -13,9 +13,9 @@ const placeDetailsRequest = document.querySelector(
 )!;
 const marker = document.querySelector('gmp-advanced-marker')!;
 /* [END maps_ui_kit_place_details_compact_query_selector] */
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Request needed libraries.
-    Promise.all([
+    void Promise.all([
         google.maps.importLibrary('marker'),
         google.maps.importLibrary('places'),
     ]);
@@ -42,7 +42,7 @@ async function initMap(): Promise<void> {
         infoWindow.open({ anchor: marker });
     };
 
-    placeDetails.addEventListener('gmp-load', (event) => {
+    placeDetails.addEventListener('gmp-load', () => {
         // For the initial load case, with no user click, we fall back to the place's location, and ensure the map has a center set and the InfoWindow is show.
         // (The clicked POI LatLng will be a more natural marker position, when available.)
         if (!map.center && placeDetails.place?.location) {
@@ -53,22 +53,25 @@ async function initMap(): Promise<void> {
 
     /* [START maps_ui_kit_place_details_compact_event] */
     // Add an event listener to handle clicks.
-    map.innerMap.addListener('click', async (event) => {
-        event.stop();
+    map.innerMap.addListener(
+        'click',
+        (event: google.maps.MapMouseEvent | google.maps.IconMouseEvent) => {
+            event.stop();
 
-        if (event.placeId) {
-            // When the user clicks a POI.
-            marker.position = event.latLng;
-            placeDetailsRequest.place = event.placeId;
-            showInfoWindow();
-        } else {
-            // When the user clicks the map (not on a POI).
-            marker.position = null;
-            placeDetailsRequest.place = null;
-            console.log('No place was selected.');
+            if ('placeId' in event) {
+                // When the user clicks a POI.
+                marker.position = event.latLng;
+                placeDetailsRequest.place = event.placeId;
+                showInfoWindow();
+            } else {
+                // When the user clicks the map (not on a POI).
+                marker.position = null;
+                placeDetailsRequest.place = null;
+                console.log('No place was selected.');
+            }
         }
-    });
+    );
 }
 /* [END maps_ui_kit_place_details_compact_event] */
-initMap();
+void init();
 /* [END maps_ui_kit_place_details_compact] */

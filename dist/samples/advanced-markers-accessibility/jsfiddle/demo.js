@@ -7,11 +7,13 @@
 
 const mapElement = document.querySelector('gmp-map');
 
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const { Map, InfoWindow } = await google.maps.importLibrary('maps');
-    const { AdvancedMarkerElement, PinElement } =
-        await google.maps.importLibrary('marker');
+    const [{ InfoWindow }, { AdvancedMarkerElement, PinElement }] =
+        await Promise.all([
+            google.maps.importLibrary('maps'),
+            google.maps.importLibrary('marker'),
+        ]);
 
     // Set LatLng and title text for the markers. The first marker (Boynton Pass)
     // receives the initial focus when tab is pressed. Use arrow keys to move
@@ -57,8 +59,7 @@ async function initMap() {
         mapElement.append(marker);
 
         // Add a click listener for each marker, and set up the info window.
-        marker.addEventListener('gmp-click', (domEvent) => {
-            const { target } = domEvent;
+        marker.addEventListener('gmp-click', () => {
             infoWindow.close();
             infoWindow.setContent(marker.title);
             infoWindow.open(marker.map, marker);
@@ -66,4 +67,4 @@ async function initMap() {
     });
 }
 
-initMap();
+void init();

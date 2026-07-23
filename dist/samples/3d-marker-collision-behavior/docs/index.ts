@@ -16,15 +16,16 @@ async function init() {
         center: { lat: 47.6094, lng: -122.339, altitude: 0 },
         range: 1000,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     for (const [lng, lat] of positions) {
+        // [START maps_3d_marker_collision_behavior_setbehavior]
         const marker = new Marker3DElement({
             position: { lat, lng },
             // Try setting a different collision behavior here.
             collisionBehavior: 'REQUIRED',
         });
+        // [END maps_3d_marker_collision_behavior_setbehavior]
 
         markers.push(marker);
         map.append(marker);
@@ -49,17 +50,17 @@ const positions = [
     [-122.3378, 47.6095],
 ];
 
-init();
+void init();
 
 const dropdown = document.getElementById(
     'selectElementId'
 ) as HTMLSelectElement;
 dropdown.addEventListener('change', drawMap);
 
-function drawMap(event) {
+function drawMap() {
     for (const marker of markers) {
         marker.collisionBehavior =
-            (dropdown.value as google.maps.CollisionBehavior) || 'REQUIRED';
+            dropdown.value as google.maps.CollisionBehavior;
     }
 }
 

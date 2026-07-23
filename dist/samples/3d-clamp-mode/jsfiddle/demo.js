@@ -21,7 +21,6 @@ async function init() {
         range: 4800,
         heading: 31,
         mode: 'SATELLITE',
-        gestureHandling: 'COOPERATIVE',
     });
 
     polyline = new Polyline3DElement({
@@ -48,7 +47,7 @@ async function init() {
     document.body.append(map);
 }
 
-init();
+void init();
 
 // Dropdown event listener
 const dropdown = document.getElementById('selectElementId');

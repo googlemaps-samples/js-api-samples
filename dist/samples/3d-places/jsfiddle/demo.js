@@ -15,7 +15,6 @@ async function init() {
         tilt: 64,
         heading: -5,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     document.body.append(map3DElement);
@@ -42,4 +41,4 @@ async function init() {
         document.getElementById('details').style.display = 'block';
     });
 }
-init();
+void init();

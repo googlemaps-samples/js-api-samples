@@ -5,9 +5,8 @@
  */
 
 // [START maps_event_click_latlng]
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    await google.maps.importLibrary('maps');
     const { InfoWindow } = await google.maps.importLibrary('maps');
 
     // Set up the map.
@@ -27,21 +26,24 @@ async function initMap() {
 
     // [START maps_event_click_latlng_listener]
     // Configure the click listener.
-    innerMap.addListener('click', (mapsMouseEvent) => {
-        // Close the current InfoWindow.
-        infoWindow.close();
+    innerMap.addListener(
+        'click',
+        (mapsMouseEvent: google.maps.MapMouseEvent) => {
+            // Close the current InfoWindow.
+            infoWindow.close();
 
-        // Create a new InfoWindow.
-        infoWindow = new InfoWindow({
-            position: mapsMouseEvent.latLng,
-        });
-        infoWindow.setContent(
-            JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
-        );
-        infoWindow.open(innerMap);
-    });
+            // Create a new InfoWindow.
+            infoWindow = new InfoWindow({
+                position: mapsMouseEvent.latLng,
+            });
+            infoWindow.setContent(
+                JSON.stringify(mapsMouseEvent.latLng!.toJSON(), null, 2)
+            );
+            infoWindow.open(innerMap);
+        }
+    );
     // [END maps_event_click_latlng_listener]
 }
 
-initMap();
+void init();
 // [END maps_event_click_latlng]

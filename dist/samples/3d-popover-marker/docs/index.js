@@ -16,7 +16,6 @@ async function init() {
         tilt: 74,
         heading: 38,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     // Popovers can only be added to interactive Markers
@@ -32,7 +31,7 @@ async function init() {
 
     popover.append('Golden Gate Bridge');
 
-    interactiveMarker.addEventListener('gmp-click', (event) => {
+    interactiveMarker.addEventListener('gmp-click', () => {
         // toggle the marker to the other state (unlee you are clicking on the marker itself when it reopens it)
         popover.open = !popover.open;
     });
@@ -43,5 +42,5 @@ async function init() {
     document.body.append(map);
 }
 
-init();
+void init();
 // [END maps_3d_popover_marker]

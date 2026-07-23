@@ -6,16 +6,17 @@
  */
 
 async function init() {
-    const { Map3DElement, Marker3DElement } =
-        await google.maps.importLibrary('maps3d');
-    const { PinElement } = await google.maps.importLibrary('marker');
+    const [{ Map3DElement, Marker3DElement }, { PinElement }] =
+        await Promise.all([
+            google.maps.importLibrary('maps3d'),
+            google.maps.importLibrary('marker'),
+        ]);
 
     const map = new Map3DElement({
         center: { lat: 37.4176, lng: -122.02, altitude: 0 },
         tilt: 67.5,
         range: 7000,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     map.mode = 'SATELLITE';
@@ -67,6 +68,13 @@ async function init() {
     });
     markerWithGlyphText.append(pinTextGlyph);
 
+    // Change a marker's altitude and add an extrusion.
+    const extrudedMarker = new Marker3DElement({
+        position: { lat: 37.4239163, lng: -122.0947209, altitude: 100 },
+        altitudeMode: 'RELATIVE_TO_GROUND',
+        extruded: true,
+    });
+
     // Hide the glyph.
     const pinNoGlyph = new PinElement({
         glyphText: '',
@@ -93,8 +101,9 @@ async function init() {
     map.append(markerWithGlyphColor);
     map.append(markerWithGlyphText);
     map.append(markerWithNoGlyph);
+    map.append(extrudedMarker);
 
     document.body.append(map);
 }
 
-init();
+void init();

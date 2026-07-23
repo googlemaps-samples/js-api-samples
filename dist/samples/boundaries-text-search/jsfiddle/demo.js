@@ -9,7 +9,7 @@ let innerMap;
 let featureLayer;
 let center;
 
-async function initMap() {
+async function init() {
     // Load the needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -24,7 +24,7 @@ async function initMap() {
     // Get the LOCALITY feature layer.
     featureLayer = innerMap.getFeatureLayer('LOCALITY');
 
-    findBoundary();
+    void findBoundary();
 }
 
 async function findBoundary() {
@@ -59,10 +59,12 @@ function styleBoundary(placeid) {
 
     // Define the feature style function.
     featureLayer.style = (params) => {
-        if (params.feature.placeId == placeid) {
+        const placeFeature = params.feature;
+        if (placeFeature.placeId === placeid) {
             return styleFill;
         }
+        return null;
     };
 }
 
-initMap();
+void init();

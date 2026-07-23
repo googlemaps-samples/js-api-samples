@@ -19,14 +19,13 @@ const searchButton = document.querySelector('.search-button')!;
 /* [END maps_ui_kit_place_search_text_query_selectors] */
 
 // Global variables for the map, markers, and info window.
-const markers: Map<string, google.maps.marker.AdvancedMarkerElement> =
-    new Map();
+const markers = new Map<string, google.maps.marker.AdvancedMarkerElement>();
 let infoWindow: google.maps.InfoWindow;
 
 // The init function is called when the page loads.
 async function init(): Promise<void> {
     // Import the necessary libraries from the Google Maps API.
-    const [{ InfoWindow }, { Place }] = await Promise.all([
+    const [{ InfoWindow }] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('places'),
     ]);
@@ -47,19 +46,21 @@ async function init(): Promise<void> {
 
     /* [START maps_ui_kit_place_search_text_event] */
     // Add event listeners to the query input and place search elements.
-    searchButton.addEventListener('click', () => searchPlaces());
+    searchButton.addEventListener('click', () => {
+        searchPlaces();
+    });
     queryInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
             searchPlaces();
         }
     });
 
-    placeSearch.addEventListener('gmp-select', (event: Event) => {
-        const { place } = event as any;
+    placeSearch.addEventListener('gmp-select', (event) => {
+        const { place } = event;
         markers.get(place.id)?.click();
     });
     placeSearch.addEventListener('gmp-load', () => {
-        addMarkers();
+        void addMarkers();
     });
 
     searchPlaces();
@@ -67,7 +68,7 @@ async function init(): Promise<void> {
 /* [END maps_ui_kit_place_search_text_event] */
 /* [START maps_ui_kit_place_search_text_function] */
 // The searchPlaces function is called when the user changes the query input or when the page loads.
-async function searchPlaces() {
+function searchPlaces() {
     // Close the info window and clear the markers.
     infoWindow.close();
     for (const marker of markers.values()) {
@@ -124,5 +125,5 @@ async function addMarkers() {
     map.innerMap.fitBounds(bounds);
 }
 
-init();
+void init();
 /* [END maps_ui_kit_place_search_text] */

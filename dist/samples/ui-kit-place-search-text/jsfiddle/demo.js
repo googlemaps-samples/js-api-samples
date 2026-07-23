@@ -23,7 +23,7 @@ let infoWindow;
 // The init function is called when the page loads.
 async function init() {
     // Import the necessary libraries from the Google Maps API.
-    const [{ InfoWindow }, { Place }] = await Promise.all([
+    const [{ InfoWindow }] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('places'),
     ]);
@@ -43,7 +43,9 @@ async function init() {
     });
 
     // Add event listeners to the query input and place search elements.
-    searchButton.addEventListener('click', () => searchPlaces());
+    searchButton.addEventListener('click', () => {
+        searchPlaces();
+    });
     queryInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
             searchPlaces();
@@ -55,14 +57,14 @@ async function init() {
         markers.get(place.id)?.click();
     });
     placeSearch.addEventListener('gmp-load', () => {
-        addMarkers();
+        void addMarkers();
     });
 
     searchPlaces();
 }
 
 // The searchPlaces function is called when the user changes the query input or when the page loads.
-async function searchPlaces() {
+function searchPlaces() {
     // Close the info window and clear the markers.
     infoWindow.close();
     for (const marker of markers.values()) {
@@ -118,4 +120,4 @@ async function addMarkers() {
     map.innerMap.fitBounds(bounds);
 }
 
-init();
+void init();

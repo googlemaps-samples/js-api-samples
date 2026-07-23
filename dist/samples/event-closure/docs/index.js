@@ -6,10 +6,12 @@
  */
 
 // [START maps_event_closure]
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    await google.maps.importLibrary('maps');
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+    const [{ AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('maps'),
+    ]);
 
     const mapElement = document.querySelector('gmp-map');
     const innerMap = mapElement.innerMap;
@@ -32,7 +34,7 @@ async function initMap() {
     const lngSpan = bounds.east - bounds.west;
     const latSpan = bounds.north - bounds.south;
 
-    for (let i = 0; i < secretMessages.length; ++i) {
+    for (const secretMessage of secretMessages) {
         const marker = new AdvancedMarkerElement({
             position: {
                 lat: bounds.south + latSpan * Math.random(),
@@ -41,7 +43,7 @@ async function initMap() {
             map: innerMap,
         });
 
-        attachSecretMessage(marker, secretMessages[i]);
+        void attachSecretMessage(marker, secretMessage);
     }
 }
 
@@ -59,5 +61,5 @@ async function attachSecretMessage(marker, secretMessage) {
     });
 }
 
-initMap();
+void init();
 // [END maps_event_closure]

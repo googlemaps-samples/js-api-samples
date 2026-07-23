@@ -14,7 +14,6 @@ async function init() {
         tilt: 67.5,
         range: 1000,
         mode: 'SATELLITE',
-        gestureHandling: 'COOPERATIVE',
     });
 
     const marker = new Marker3DElement({
@@ -28,5 +27,5 @@ async function init() {
     document.body.append(map);
 }
 
-init();
+void init();
 // [END maps_3d_simple_marker]

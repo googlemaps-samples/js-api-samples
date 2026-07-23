@@ -38,87 +38,11 @@ cp "${INPUT_DIR}/dist/samples/${NAME}/docs/style.css" "${OUTPUT_DIR}/${NAME}/"
 # Generate a placeholder for index.js.
 touch "${OUTPUT_DIR}/${NAME}/index.js"
 cat > "${OUTPUT_DIR}/${NAME}/index.js" << EOF
-<!-- Placeholder for index.js (run TSC to generate). -->
+// Placeholder for index.js (run TSC to generate).
 EOF
 
-# Generate package.json
-touch "${OUTPUT_DIR}/${NAME}/package.json"
-cat > "${OUTPUT_DIR}/${NAME}/package.json" << EOF
-{
-  "name": "@js-api-samples/${NAME}",
-  "version": "1.0.0",
-  "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh ${NAME} && bash ../app.sh ${NAME} && bash ../docs.sh ${NAME} && npm run build:vite --workspace=. && bash ../dist.sh ${NAME}",
-    "test": "tsc && npm run build:vite --workspace=.",
-    "start": "tsc && vite build --base './' && vite",
-    "build:vite": "vite build --base './'",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    
-  }
-}
-EOF
-
-# Generate tsconfig.json
-touch "${OUTPUT_DIR}/${NAME}/tsconfig.json"
-cat > "${OUTPUT_DIR}/${NAME}/tsconfig.json" << EOF
-{
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "rootDir": "."
-  },
-  "include": [
-    "./*.ts",
-  ]
-}
-EOF
-
-# Generate README.md
-touch "${OUTPUT_DIR}/${NAME}/README.md"
-cat > "${OUTPUT_DIR}/${NAME}/README.md" << EOF
-# Google Maps JavaScript Sample
-
-## ${NAME}
-
-${TITLE}
-
-## Setup
-
-### Before starting run:
-
-\`npm i\`
-
-### Run an example on a local web server
-
-\`cd samples/${NAME}\`
-\`npm start\`
-
-### Build an individual example
-
-\`cd samples/${NAME}\`
-\`npm run build\`
-
-From 'samples':
-
-\`npm run build --workspace=${NAME}/\`
-
-### Build all of the examples.
-
-From 'samples':
-
-\`npm run build-all\`
-
-### Run lint to check for problems
-
-\`cd samples/${NAME}\`
-\`npx eslint index.ts\` 
-
-## Feedback
-
-For feedback related to this sample, please open a new issue on
-[GitHub](https://github.com/googlemaps-samples/js-api-samples/issues).
-EOF
+# Generate shared boilerplate
+bash "$(dirname "$0")/generate-shared-boilerplate.sh" "$NAME" "$TITLE" "$OUTPUT_DIR"
 
 # Git add the files.
 git add "${OUTPUT_DIR}/${NAME}/index.ts"

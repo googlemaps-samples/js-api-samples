@@ -7,9 +7,9 @@
 // [START maps_geocoding_reverse]
 let marker;
 
-async function initMap() {
+async function init() {
     //  Request the needed libraries.
-    const [{ Map, InfoWindow }, { Geocoder }, { AdvancedMarkerElement }] =
+    const [{ InfoWindow }, { Geocoder }, { AdvancedMarkerElement }] =
         await Promise.all([
             google.maps.importLibrary('maps'),
             google.maps.importLibrary('geocoding'),
@@ -47,17 +47,19 @@ async function initMap() {
 
     // Add a click event listener to the submit button.
     submitButton.addEventListener('click', () => {
-        geocodeLatLng(geocoder, innerMap, infoWindow);
+        void geocodeLatLng(geocoder, innerMap, infoWindow);
     });
 
     // Add a click event listener to the map.
     innerMap.addListener('click', (event) => {
-        latLngQuery.value = `${event.latLng.lat()}, ${event.latLng.lng()}`;
-        geocodeLatLng(geocoder, innerMap, infoWindow);
+        if (event.latLng) {
+            latLngQuery.value = `${event.latLng.lat()}, ${event.latLng.lng()}`;
+            void geocodeLatLng(geocoder, innerMap, infoWindow);
+        }
     });
 
     // Make an initial request upon loading.
-    geocodeLatLng(geocoder, innerMap, infoWindow);
+    void geocodeLatLng(geocoder, innerMap, infoWindow);
 }
 
 async function geocodeLatLng(geocoder, map, infoWindow) {
@@ -68,20 +70,21 @@ async function geocodeLatLng(geocoder, map, infoWindow) {
         lng: parseFloat(latlngStr[1]),
     };
 
-    geocoder
-        .geocode({ location: latlng })
-        .then((response) => {
-            if (response.results[0]) {
-                marker.position = latlng;
-                map.setCenter(latlng);
-                infoWindow.setContent(response.results[0].formatted_address);
-                infoWindow.open(map, marker);
-            } else {
-                window.alert('No results found');
-            }
-        })
-        .catch((e) => window.alert('Geocoder failed due to: ' + e));
+    try {
+        const { results } = await geocoder.geocode({ location: latlng });
+
+        if (results[0]) {
+            marker.position = latlng;
+            map.setCenter(latlng);
+            infoWindow.setContent(results[0].formatted_address);
+            infoWindow.open(map, marker);
+        } else {
+            window.alert('No results found');
+        }
+    } catch (e) {
+        window.alert('Geocoder failed due to: ' + String(e));
+    }
 }
 
-initMap();
+void init();
 // [END maps_geocoding_reverse]

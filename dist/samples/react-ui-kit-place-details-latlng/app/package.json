@@ -2,24 +2,15 @@
   "name": "@js-api-samples/react-ui-kit-place-details-latlng",
   "version": "1.0.0",
   "type": "module",
-
   "scripts": {
     "build": "bash ../build-single.sh",
     "test": "tsc && npm run build:vite --workspace=.",
-    "start": "tsc && vite build --base './' && vite",
-    "build:vite": "vite build --base './'",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@vis.gl/react-google-maps": "1.8.3",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.5"
+    "start": "tsc && vite build --config ../../vite.config.js --base './' && vite --config ../../vite.config.js",
+    "build:vite": "vite build --config ../../vite.config.js --base './'",
+    "preview": "vite preview --config ../../vite.config.js"
   },
   "devDependencies": {
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.1",
-    "typescript": "^6.0.3",
-    "vite": "^8.0.10"
-  }
+    "@vitejs/plugin-react": "^6.0.2"
+  },
+  "author": "Google LLC"
 }

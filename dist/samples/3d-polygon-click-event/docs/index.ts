@@ -14,7 +14,6 @@ async function init() {
         heading: 340,
         tilt: 70,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     document.body.append(map);
@@ -37,15 +36,15 @@ async function init() {
 
     examplePolygon.addEventListener('gmp-click', function (event) {
         // change the color of the polygon stroke and fill colors to a random alternatives!
-        this.fillColor = randomizeHexColor(this.fillColor);
-        this.strokeColor = randomizeHexColor(this.fillColor);
+        this.fillColor = randomizeHexColor(this.fillColor!);
+        this.strokeColor = randomizeHexColor(this.strokeColor!);
         console.log(event);
     });
 
     map.append(examplePolygon);
 }
 
-function randomizeHexColor(originalHexColor) {
+function randomizeHexColor(originalHexColor: string) {
     console.log(originalHexColor);
     const alpha = originalHexColor.substring(7);
 
@@ -65,5 +64,5 @@ function randomizeHexColor(originalHexColor) {
     return `#${rHex}${gHex}${bHex}${alpha}`;
 }
 
-init();
+void init();
 // [END maps_3d_polygon_click_event]

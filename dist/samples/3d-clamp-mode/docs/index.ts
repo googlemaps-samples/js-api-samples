@@ -5,7 +5,7 @@
  */
 
 // [START maps_3d_clamp_mode]
-let polyline;
+let polyline: google.maps.maps3d.Polyline3DElement;
 
 async function init() {
     const { Map3DElement, Polyline3DElement } =
@@ -21,7 +21,6 @@ async function init() {
         range: 4800,
         heading: 31,
         mode: 'SATELLITE',
-        gestureHandling: 'COOPERATIVE',
     });
 
     polyline = new Polyline3DElement({
@@ -48,7 +47,7 @@ async function init() {
     document.body.append(map);
 }
 
-init();
+void init();
 
 // Dropdown event listener
 const dropdown = document.getElementById(
@@ -56,7 +55,8 @@ const dropdown = document.getElementById(
 ) as HTMLSelectElement;
 dropdown.addEventListener('change', () => {
     if (polyline && dropdown.value) {
-        polyline.altitudeMode = dropdown.value;
+        polyline.altitudeMode =
+            dropdown.value as google.maps.maps3d.AltitudeModeString;
     }
 });
 

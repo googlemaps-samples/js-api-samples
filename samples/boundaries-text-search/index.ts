@@ -5,11 +5,11 @@
  */
 
 // [START maps_boundaries_text_search]
-let innerMap;
-let featureLayer;
-let center;
+let innerMap: google.maps.Map;
+let featureLayer: google.maps.FeatureLayer;
+let center: google.maps.LatLngLiteral;
 
-async function initMap() {
+async function init() {
     // Load the needed libraries.
     await google.maps.importLibrary('maps');
 
@@ -24,7 +24,7 @@ async function initMap() {
     // Get the LOCALITY feature layer.
     featureLayer = innerMap.getFeatureLayer('LOCALITY');
 
-    findBoundary();
+    void findBoundary();
 }
 // [START maps_boundaries_text_search_find_region]
 async function findBoundary() {
@@ -41,15 +41,15 @@ async function findBoundary() {
     if (places.length) {
         const place = places[0];
         styleBoundary(place.id);
-        innerMap.setCenter(place.location);
+        innerMap.setCenter(place.location!);
     } else {
         console.log('No results');
     }
 }
 
-function styleBoundary(placeid) {
+function styleBoundary(placeid: string) {
     // Define a style of transparent purple with opaque stroke.
-    const styleFill = {
+    const styleFill: google.maps.FeatureStyleOptions = {
         strokeColor: '#810FCB',
         strokeOpacity: 1.0,
         strokeWeight: 3.0,
@@ -58,12 +58,14 @@ function styleBoundary(placeid) {
     };
 
     // Define the feature style function.
-    featureLayer.style = (params) => {
-        if (params.feature.placeId == placeid) {
+    featureLayer.style = (params: google.maps.FeatureStyleFunctionOptions) => {
+        const placeFeature = params.feature as google.maps.PlaceFeature;
+        if (placeFeature.placeId === placeid) {
             return styleFill;
         }
+        return null;
     };
 }
 // [END maps_boundaries_text_search_find_region]
-initMap();
+void init();
 // [END maps_boundaries_text_search]

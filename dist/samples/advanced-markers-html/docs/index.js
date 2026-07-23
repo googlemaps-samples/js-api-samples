@@ -7,10 +7,12 @@
 
 // [START maps_advanced_markers_html]
 // [START maps_advanced_markers_html_snippet]
-async function initMap() {
+async function init() {
     // Request needed libraries.
-    const { Map } = await google.maps.importLibrary('maps');
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+    const [{ Map }, { AdvancedMarkerElement }] = await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+    ]);
 
     const center = { lat: 37.43238031167444, lng: -122.16795397128632 };
     const map = new Map(document.getElementById('map'), {
@@ -28,17 +30,19 @@ async function initMap() {
         });
 
         advancedMarkerElement.addListener('click', () => {
-            toggleHighlight(advancedMarkerElement, property);
+            toggleHighlight(advancedMarkerElement);
         });
     }
 }
 
-function toggleHighlight(markerView, property) {
-    if (markerView.content.classList.contains('highlight')) {
-        markerView.content.classList.remove('highlight');
+function toggleHighlight(markerView) {
+    const content = markerView.children[0];
+
+    if (content.classList.contains('highlight')) {
+        content.classList.remove('highlight');
         markerView.zIndex = null;
     } else {
-        markerView.content.classList.add('highlight');
+        content.classList.add('highlight');
         markerView.zIndex = 1;
     }
 }
@@ -210,5 +214,5 @@ const properties = [
     },
 ];
 
-initMap();
+void init();
 // [END maps_advanced_markers_html]

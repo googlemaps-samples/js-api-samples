@@ -79,7 +79,7 @@ body {
 
 /* Special buttons active/click states */
 #select-mode.active {
-    background-color: #A9A9A9; /* dark grey */
+    background-color: #a9a9a9; /* dark grey */
 }
 
 #clear-mode:active,
@@ -89,6 +89,6 @@ body {
 #export-button:active,
 #upload-button:active,
 #resize-button.active {
-    background-color: #A9A9A9; /* dark grey */
+    background-color: #a9a9a9; /* dark grey */
 }
 /* [END maps_map_drawing_terradraw] */

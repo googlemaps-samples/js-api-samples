@@ -12,12 +12,12 @@ import { APIProvider, useMapsLibrary } from '@vis.gl/react-google-maps';
 
 import './styles.css';
 
-const API_KEY = 'AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8';
+const API_KEY = 'GOOGLE_MAPS_API_KEY';
 
-type PlaceDetailsProps = {
+interface PlaceDetailsProps {
     lat: number;
     lng: number;
-};
+}
 
 // Renders place details using a latitude and longitude.
 const PlaceDetails = ({ lat, lng }: PlaceDetailsProps) => {
