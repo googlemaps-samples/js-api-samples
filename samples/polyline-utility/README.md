@@ -2,7 +2,7 @@
 
 ## polyline-utility
 
-Add a meaningful description for polyline-utility here...
+This sample demonstrates how to encode and decode polylines using the [Google Maps GeometryLibrary](https://developers.google.com/maps/documentation/javascript/reference/geometry). It also shows how to convert polylines to and from GeoJSON.
 
 ## Setup
 
