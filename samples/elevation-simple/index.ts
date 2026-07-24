@@ -32,21 +32,25 @@ function displayLocationElevation(
     infowindow: google.maps.InfoWindow,
     map: google.maps.Map
 ) {
+    // Format numeric values to two decimal places
+    const formatter = new Intl.NumberFormat(undefined, {
+        maximumFractionDigits: 2,
+    });
+
     // Initiate the location request
     elevator
         .getElevationForLocations({
             locations: [location],
         })
         .then(({ results }) => {
-            infowindow.setPosition(location);
-
-            // Retrieve the first result
             if (results[0]) {
-                // Open the infowindow indicating the elevation at the clicked position.
+                const { elevation, location: resultLocation } = results[0];
+                infowindow.setPosition(resultLocation);
                 infowindow.setContent(
-                    `The elevation at this point <br>is ${String(results[0].elevation)} meters.`
+                    `The elevation at ${String(resultLocation)} <br>is ${formatter.format(elevation)} meters.`
                 );
             } else {
+                infowindow.setPosition(location);
                 infowindow.setContent('No results found');
             }
 
