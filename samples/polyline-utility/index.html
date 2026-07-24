@@ -1,0 +1,86 @@
+<!doctype html>
+<!--
+ @license
+ Copyright 2026 Google LLC. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+-->
+<!-- [START maps_polyline_utility] -->
+<html>
+    <head>
+        <title>Polyline Encoder / Decoder Utility</title>
+        <!-- Use Inter font for premium look -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+            rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="./style.css" />
+        <script type="module" src="./index.js"></script>
+        <script>
+            // prettier-ignore
+            (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+                key: "GOOGLE_MAPS_API_KEY"
+            });
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="panel" id="side-panel">
+                <div class="header">
+                    <h2>Polyline Utility</h2>
+                    <p>Click on the map to draw, or decode existing paths.</p>
+                </div>
+
+                <div class="control-group">
+                    <label>Search for a place to center map</label>
+                    <div id="pac-container"></div>
+                </div>
+
+                <div class="control-group">
+                    <label>Encoded Polyline</label>
+                    <textarea
+                        id="encoded-polyline"
+                        placeholder="Enter encoded polyline..."></textarea>
+                    <div class="checkbox-row">
+                        <input type="checkbox" id="enableunescape" />
+                        <label for="enableunescape"
+                            >Unescape special characters</label
+                        >
+                    </div>
+                    <button id="decode-encoded-btn" class="primary-btn">
+                        Decode Polyline
+                    </button>
+                </div>
+
+                <div class="control-group">
+                    <label>GeoJSON LineString coordinates</label>
+                    <textarea
+                        id="geojson-polyline"
+                        placeholder="[[lng, lat], [lng, lat]]"></textarea>
+                    <button id="decode-geojson-btn" class="primary-btn">
+                        Decode GeoJSON
+                    </button>
+                </div>
+
+                <div class="control-group">
+                    <div class="list-header">
+                        <label
+                            >Locations (<span id="location-count">0</span
+                            >)</label
+                        >
+                        <button id="clear-all-btn" class="text-btn">
+                            Clear All
+                        </button>
+                    </div>
+                    <ul id="locations-list"></ul>
+                </div>
+            </div>
+            <div class="resizer" id="drag-resizer"></div>
+            <div class="map-container">
+                <gmp-map
+                    map-id="8b37d7206ccf012187ae1c48"
+                    center="41.85,-87.65"
+                    zoom="12"></gmp-map>
+            </div>
+        </div>
+    </body>
+</html>
+<!-- [END maps_polyline_utility] -->
