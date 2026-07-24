@@ -25,5 +25,5 @@ Specialized Standard Operating Procedures (SOPs) for complex repository tasks. Y
 While granular rules govern the code, follow these high-level workflow scripts when managing samples:
 
 - **Creating New Samples**: Never write boilerplate manually. Always use `./new-sample.sh [sample-name]` in the `samples/` directory to generate the standard modern boilerplate (Vite config, TS config, package.json).
-- **Building and Testing**: Always validate your changes by running `bash ../build-single.sh` from within the specific sample's directory. This script acts as the local CI gate and will catch TS errors, namespace violations, and formatting issues.
+- **Building and Testing**: Always validate your changes by running `bash ../build-single.sh` from within the specific sample's directory. This script acts as the local CI gate, automatically applying Prettier and running ESLint, and will catch TS errors, namespace violations, and formatting issues.
 - **Dependencies**: Any dependency changes or additions must include the updated `package-lock.json` in the commit to pass CI.
