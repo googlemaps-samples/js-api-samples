@@ -34,7 +34,7 @@
   "dependencies": {
     "@deck.gl/core": "^9.3.6",
     "@deck.gl/geo-layers": "^9.3.4",
-    "@deck.gl/google-maps": "^9.3.4",
+    "@deck.gl/google-maps": "^9.3.7",
     "@deck.gl/layers": "^9.3.4",
     "@loaders.gl/kml": "^4.4.3",
     "@vis.gl/react-google-maps": "1.8.3",
