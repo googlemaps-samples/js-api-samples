@@ -17,7 +17,7 @@
     "@eslint/js": "^10.0.1",
     "@eslint/json": "^2.0.1",
     "@eslint/markdown": "^8.0.3",
-    "@playwright/test": "^1.61.1",
+    "@playwright/test": "^1.62.0",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/google.maps": "^3.65.3",
     "@types/node": "^25.9.1",
@@ -32,10 +32,10 @@
     "vite": "^8.1.4"
   },
   "dependencies": {
-    "@deck.gl/core": "^9.3.6",
-    "@deck.gl/geo-layers": "^9.3.4",
-    "@deck.gl/google-maps": "^9.3.4",
-    "@deck.gl/layers": "^9.3.4",
+    "@deck.gl/core": "^9.3.7",
+    "@deck.gl/geo-layers": "^9.3.7",
+    "@deck.gl/google-maps": "^9.3.7",
+    "@deck.gl/layers": "^9.3.7",
     "@loaders.gl/kml": "^4.4.3",
     "@vis.gl/react-google-maps": "1.8.3",
     "dotenv": "^17.4.2",

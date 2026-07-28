@@ -1,5 +1,5 @@
 {
-  "name": "@js-api-samples/3d-polygon",
+  "name": "@js-api-samples/elevation-simple",
   "version": "1.0.0",
   "scripts": {
     "build": "bash ../build-single.sh",
