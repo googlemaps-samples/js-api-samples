@@ -25,17 +25,17 @@ async function init(): Promise<void> {
         {
             parking: {
                 name: 'Parking',
-                icon: 'local_parking',
+                icon: '/parking.svg',
                 color: '#1E88E5', // Blue
             },
             library: {
                 name: 'Library',
-                icon: 'local_library',
+                icon: '/library.svg',
                 color: '#43A047', // Green
             },
             info: {
                 name: 'Info',
-                icon: 'info',
+                icon: '/info.svg',
                 color: '#E53935', // Red
             },
         };
@@ -122,16 +122,10 @@ async function init(): Promise<void> {
     for (const feature of features) {
         const iconData = icons[feature.type];
 
-        // Create a span for the Material Icon
-        const iconElement = document.createElement('span');
-        iconElement.className = 'material-icons';
-        iconElement.textContent = iconData.icon;
-        iconElement.style.color = 'white';
-
         const pin = new PinElement({
             background: iconData.color,
             borderColor: iconData.color,
-            glyph: iconElement,
+            glyphSrc: new URL(iconData.icon, import.meta.url),
             scale: 1.5,
         });
 
@@ -150,17 +144,17 @@ function makeLegend(PinElementClass: typeof google.maps.marker.PinElement) {
         {
             parking: {
                 name: 'Parking',
-                icon: 'local_parking',
+                icon: '/parking.svg',
                 color: '#1E88E5',
             },
             library: {
                 name: 'Library',
-                icon: 'local_library',
+                icon: '/library.svg',
                 color: '#43A047',
             },
             info: {
                 name: 'Info',
-                icon: 'info',
+                icon: '/info.svg',
                 color: '#E53935',
             },
         };
@@ -178,16 +172,10 @@ function makeLegend(PinElementClass: typeof google.maps.marker.PinElement) {
         const wrapper = document.createElement('div');
         wrapper.classList.add('legend-item');
 
-        const iconElement = document.createElement('span');
-        iconElement.className = 'material-icons';
-        iconElement.textContent = type.icon;
-        iconElement.style.color = 'white';
-        iconElement.style.fontSize = '18px'; // Slightly smaller to fit the scale 1.0 pin
-
         const pin = new PinElementClass({
             background: type.color,
             borderColor: type.color,
-            glyph: iconElement,
+            glyphSrc: new URL(type.icon, import.meta.url),
             scale: 1.0,
         });
 
