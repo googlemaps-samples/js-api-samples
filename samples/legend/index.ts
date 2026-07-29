@@ -6,16 +6,19 @@
 
 // [START maps_legend]
 async function init(): Promise<void> {
-    await google.maps.importLibrary('maps');
-    const { AdvancedMarkerElement, PinElement } =
-        await google.maps.importLibrary('marker');
+    const [{ AdvancedMarkerElement, PinElement }, { event }] =
+        await Promise.all([
+            google.maps.importLibrary('marker'),
+            google.maps.importLibrary('core'),
+            google.maps.importLibrary('maps'),
+        ]);
 
     const mapElement = document.querySelector('gmp-map')!;
     const innerMap = mapElement.innerMap;
 
     // Wait for the map to load before building the legend.
-    google.maps.event.addListenerOnce(innerMap, 'idle', () => {
-        makeLegend();
+    event.addListenerOnce(innerMap, 'idle', () => {
+        makeLegend(PinElement);
     });
 
     const icons: Record<string, { name: string; icon: string; color: string }> =
@@ -142,7 +145,7 @@ async function init(): Promise<void> {
     }
 }
 
-function makeLegend() {
+function makeLegend(PinElementClass: typeof google.maps.marker.PinElement) {
     const icons: Record<string, { name: string; icon: string; color: string }> =
         {
             parking: {
@@ -181,7 +184,7 @@ function makeLegend() {
         iconElement.style.color = 'white';
         iconElement.style.fontSize = '18px'; // Slightly smaller to fit the scale 1.0 pin
 
-        const pin = new google.maps.marker.PinElement({
+        const pin = new PinElementClass({
             background: type.color,
             borderColor: type.color,
             glyph: iconElement,
