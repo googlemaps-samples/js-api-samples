@@ -78,6 +78,10 @@ With the modern inline loader (positioned after the module script tag in `<head>
 
 **Placement Note**: Position the inline loader after the module script tag in the `<head>`. Use a `// prettier-ignore` comment inside the `<script>` tag to prevent the script content from being wrapped by automated formatting tools.
 
+**Strict CI Validation**: The `build-single.sh` script enforces exact indentation for the loader configuration object to pass static analysis:
+- The `key: "GOOGLE_MAPS_API_KEY"` line **must** be indented with exactly 16 spaces.
+- The closing `});` line **must** be indented with exactly 12 spaces.
+
 #### Custom Parameters (Region, Language)
 When migrating samples that utilize specific `region` or `language` codes, ensure these are preserved in the bootstrap configuration object.
 
@@ -116,6 +120,16 @@ await Promise.all([
   google.maps.importLibrary("places"),
 ]);
 ```
+
+**Strict CI Validation**: Ensure you do not use empty array destructuring (e.g. `const [, { AdvancedMarkerElement }] = ...`) when extracting libraries, as the `build-single.sh` script explicitly bans `[,` in the code. Reorder your `Promise.all` array so that the library you need to destructure comes first.
+
+### Namespace Restrictions
+
+The `build-single.sh` script strictly prohibits direct access to the `google.maps` namespace in built code (except for `google.maps.importLibrary`).
+*   **Invalid**: `const pin = new google.maps.marker.PinElement({...})`
+*   **Valid**: `const { PinElement } = await google.maps.importLibrary('marker'); const pin = new PinElement({...})`
+
+If you need to access a Google Maps class in a separate function, pass the destructured class as a parameter rather than accessing it via the global namespace.
 
 ### Map Modernization (gmp-map)
 
@@ -331,6 +345,7 @@ Transition all samples from `google.maps.Marker` to `google.maps.marker.Advanced
 - [ ] Remove legacy `Window` interface augmentations and `export {}`.
 - [ ] Update license headers to the current year (2026).
 - [ ] Remove legacy `#map` height rules in CSS (ensure `html, body` height remains).
+- [ ] Run `npm run build` locally in the sample directory to execute `build-single.sh` and verify all strict CI rules are met before committing.
 
 ## Resources
 
