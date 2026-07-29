@@ -96,10 +96,10 @@ Remove that block and replace it with the following tag, making sure to position
 
 ```html
 <script>
-    // prettier-ignore
-    (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
-        key: "GOOGLE_MAPS_API_KEY"
-    });
+  // prettier-ignore
+  (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+                key: "GOOGLE_MAPS_API_KEY"
+            });
 </script>
 
 * Replace the "AIza..." API key with `GOOGLE_MAPS_API_KEY` placeholder. This ensures that API key injection will work correctly.
@@ -124,9 +124,9 @@ await google.maps.importLibrary("maps");
 Here is an example with variables, Promise.all, and destructuring:
 ```typescript
 // Request needed libraries.
-const [, { AdvancedMarkerElement, PinElement }] = await Promise.all([
-    google.maps.importLibrary('maps'),
+const [{ AdvancedMarkerElement, PinElement }] = await Promise.all([
     google.maps.importLibrary('marker'),
+    google.maps.importLibrary('maps'),
 ]);
 ```
 
@@ -300,6 +300,18 @@ https://developers.google.com/maps/documentation/javascript/advanced-markers/mig
 https://developers.google.com/maps/documentation/javascript/advanced-markers/overview
 https://developers.google.com/maps/documentation/javascript/advanced-markers/html-markers
 https://developers.google.com/maps/documentation/javascript/reference/advanced-markers#AdvancedMarkerElementOptions
+
+## Verify the build locally
+
+Before finishing the task, navigate to the newly migrated sample's directory (e.g. `cd samples/my-sample-name`) and run:
+`npm run build`
+
+This executes `build-single.sh` which enforces very strict CI validation rules:
+- **Whitespace formatting:** The inline bootstrap loader config object must use exactly 16 spaces for `key: "GOOGLE_MAPS_API_KEY"` and 12 spaces for `});`.
+- **Parallel loading:** You cannot use empty array destructuring (e.g. `[, { PinElement }]`) for `Promise.all` imports. Reorder your imports to destruct the first element.
+- **Namespace restrictions:** You cannot use the `google.maps` namespace in the built `.js` file (except for `importLibrary`). Pass required classes (like `PinElement`) via destructured imports or function arguments instead of calling `google.maps.marker.PinElement`.
+
+If the build fails, read the output carefully and fix the formatting or syntax issues until `npm run build` exits successfully.
 
 ## Update to use PlaceAutocompleteElement
 
