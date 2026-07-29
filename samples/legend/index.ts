@@ -21,21 +21,25 @@ async function init(): Promise<void> {
         makeLegend(PinElement);
     });
 
+    const parkingSvg = `<svg fill="white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M13 3H6v18h4v-6h3c3.31 0 6-2.69 6-6s-2.69-6-6-6zm.2 8H10V7h3.2c1.1 0 2 .9 2 2s-.9 2-2 2z"/></svg>`;
+    const librarySvg = `<svg fill="white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 11.55C9.64 9.35 6.48 8 3 8v11c3.48 0 6.64 1.35 9 3.55 2.36-2.19 5.52-3.55 9-3.55V8c-3.48 0-6.64 1.35-9 3.55zM12 8c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3z"/></svg>`;
+    const infoSvg = `<svg fill="white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>`;
+
     const icons: Record<string, { name: string; icon: string; color: string }> =
         {
             parking: {
                 name: 'Parking',
-                icon: '/parking.svg',
+                icon: parkingSvg,
                 color: '#1E88E5', // Blue
             },
             library: {
                 name: 'Library',
-                icon: '/library.svg',
+                icon: librarySvg,
                 color: '#43A047', // Green
             },
             info: {
                 name: 'Info',
-                icon: '/info.svg',
+                icon: infoSvg,
                 color: '#E53935', // Red
             },
         };
@@ -125,7 +129,9 @@ async function init(): Promise<void> {
         const pin = new PinElement({
             background: iconData.color,
             borderColor: iconData.color,
-            glyphSrc: new URL(iconData.icon, import.meta.url),
+            glyphSrc: new URL(
+                `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(iconData.icon)}`
+            ),
             scale: 1.5,
         });
 
@@ -139,22 +145,27 @@ async function init(): Promise<void> {
     }
 }
 
+// [START maps_legend_add_legend_elements]
 function makeLegend(PinElementClass: typeof google.maps.marker.PinElement) {
+    const parkingSvg = `<svg fill="white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M13 3H6v18h4v-6h3c3.31 0 6-2.69 6-6s-2.69-6-6-6zm.2 8H10V7h3.2c1.1 0 2 .9 2 2s-.9 2-2 2z"/></svg>`;
+    const librarySvg = `<svg fill="white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 11.55C9.64 9.35 6.48 8 3 8v11c3.48 0 6.64 1.35 9 3.55 2.36-2.19 5.52-3.55 9-3.55V8c-3.48 0-6.64 1.35-9 3.55zM12 8c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3z"/></svg>`;
+    const infoSvg = `<svg fill="white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>`;
+
     const icons: Record<string, { name: string; icon: string; color: string }> =
         {
             parking: {
                 name: 'Parking',
-                icon: '/parking.svg',
+                icon: parkingSvg,
                 color: '#1E88E5',
             },
             library: {
                 name: 'Library',
-                icon: '/library.svg',
+                icon: librarySvg,
                 color: '#43A047',
             },
             info: {
                 name: 'Info',
-                icon: '/info.svg',
+                icon: infoSvg,
                 color: '#E53935',
             },
         };
@@ -175,7 +186,9 @@ function makeLegend(PinElementClass: typeof google.maps.marker.PinElement) {
         const pin = new PinElementClass({
             background: type.color,
             borderColor: type.color,
-            glyphSrc: new URL(type.icon, import.meta.url),
+            glyphSrc: new URL(
+                `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(type.icon)}`
+            ),
             scale: 1.0,
         });
 
@@ -193,6 +206,7 @@ function makeLegend(PinElementClass: typeof google.maps.marker.PinElement) {
         legend.appendChild(wrapper);
     }
 }
+// [END maps_legend_add_legend_elements]
 
 void init();
 // [END maps_legend]
