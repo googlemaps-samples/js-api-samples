@@ -1,0 +1,50 @@
+/**
+ * @license
+ * Copyright 2019 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/* [START maps_legend] */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#legend {
+    background-color: #fff;
+    width: 15em;
+    margin: 1em;
+    border-radius: 8px;
+    font-family: Roboto, Arial, sans-serif;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+    padding: 0.5em 1em;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+    background-color: rgb(66, 133, 244);
+    color: white;
+    box-sizing: border-box;
+}
+
+.legend-item {
+    margin: 0.5em 1em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 0.5em;
+}
+
+.legend-icon {
+    margin-right: 1em;
+    font-size: 24px;
+}
+
+.legend-text {
+    font-size: 1.5em;
+}
+/* [END maps_legend] */
