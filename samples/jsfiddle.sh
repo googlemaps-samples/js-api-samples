@@ -34,12 +34,12 @@ cp "${SCRIPT_DIR}/${NAME}/style.css" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.
 
 # Copy the public folder if one is found (graphics, other static files).
 if [ -d "public" ] && [ "$(ls -A public)" ]; then
-  cp -r public/* "${DIST_DIR}/samples/${NAME}/jsfiddle/"
+  cp -r public/* "${DOCS_DIR}/"
 fi
 
 # Copy the src folder if one is found (.js, .json, anything parseable by Vite).
 if [ -d "src" ] && [ "$(ls -A src)" ]; then
-  cp -r src/* "${DIST_DIR}/samples/${NAME}/jsfiddle/"
+  cp -r src/* "${DOCS_DIR}/"
 fi
 
 pushd "${DIST_DIR}/samples/${NAME}/jsfiddle"
