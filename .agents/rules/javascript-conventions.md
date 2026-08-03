@@ -105,6 +105,65 @@ async function init() {
 }
 ```
 
+## Self-Contained Helper Functions (Dynamic Imports)
+
+When extracting logic into helper functions, avoid passing Maps classes as arguments. The `importLibrary` function is memoized, meaning subsequent calls return instantly from cache. You should call it directly within your helper functions to keep them self-contained.
+
+**Avoid:**
+```typescript
+function makeLegend(PinElementClass: typeof google.maps.marker.PinElement) {
+    const pin = new PinElementClass({ ... });
+}
+
+async function init() {
+    const { PinElement } = await google.maps.importLibrary('marker');
+    makeLegend(PinElement);
+}
+```
+
+**Instead:**
+```typescript
+async function makeLegend() {
+    const { PinElement } = await google.maps.importLibrary('marker');
+    const pin = new PinElement({ ... });
+}
+
+async function init() {
+    // No need to pass the class
+    void makeLegend(); 
+}
+```
+
+## Eliminating Configuration Duplication
+
+When refactoring or migrating samples, proactively check for duplicated configuration objects, arrays, or SVG strings across different functions. Ensure that shared configurations are hoisted to the file's global scope rather than being duplicated inside `init()` and helper functions.
+
+**Avoid:**
+```typescript
+async function init() {
+    const config = { color: 'red' };
+    // ...
+}
+
+async function makeLegend() {
+    const config = { color: 'red' }; // Duplicated
+    // ...
+}
+```
+
+**Instead:**
+```typescript
+const config = { color: 'red' };
+
+async function init() {
+    // Uses global config
+}
+
+async function makeLegend() {
+    // Uses global config
+}
+```
+
 ## Trust the MVCArray Types (Polyline/Polygon Paths)
 
 When working with Google Maps `Polyline` or `Polygon` paths, avoid creating custom fallback wrappers (e.g. `getLat()`, `getLng()`) or interfaces to abstract `LatLng` vs `LatLngLiteral` types.
