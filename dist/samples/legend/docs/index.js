@@ -6,6 +6,34 @@
  */
 
 // [START maps_legend]
+
+// [START maps_legend_svg]
+const parkingSvg = `<svg fill="white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M13 3H6v18h4v-6h3c3.31 0 6-2.69 6-6s-2.69-6-6-6zm.2 8H10V7h3.2c1.1 0 2 .9 2 2s-.9 2-2 2z"/></svg>`;
+const librarySvg = `<svg fill="white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 11.55C9.64 9.35 6.48 8 3 8v11c3.48 0 6.64 1.35 9 3.55 2.36-2.19 5.52-3.55 9-3.55V8c-3.48 0-6.64 1.35-9 3.55zM12 8c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3z"/></svg>`;
+const infoSvg = `<svg fill="white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>`;
+// [END maps_legend_svg]
+
+// [START maps_legend_icons]
+const icons = {
+    parking: {
+        name: 'Parking',
+        icon: parkingSvg,
+        color: '#1E88E5', // Blue
+    },
+    library: {
+        name: 'Library',
+        icon: librarySvg,
+        color: '#43A047', // Green
+    },
+    info: {
+        name: 'Info',
+        icon: infoSvg,
+        color: '#E53935', // Red
+    },
+};
+// [END maps_legend_icons]
+
+// [START maps_legend_init]
 async function init() {
     const [{ AdvancedMarkerElement, PinElement }, { event }] =
         await Promise.all([
@@ -19,30 +47,8 @@ async function init() {
 
     // Wait for the map to load before building the legend.
     event.addListenerOnce(innerMap, 'idle', () => {
-        makeLegend(PinElement);
+        void makeLegend();
     });
-
-    const parkingSvg = `<svg fill="white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M13 3H6v18h4v-6h3c3.31 0 6-2.69 6-6s-2.69-6-6-6zm.2 8H10V7h3.2c1.1 0 2 .9 2 2s-.9 2-2 2z"/></svg>`;
-    const librarySvg = `<svg fill="white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 11.55C9.64 9.35 6.48 8 3 8v11c3.48 0 6.64 1.35 9 3.55 2.36-2.19 5.52-3.55 9-3.55V8c-3.48 0-6.64 1.35-9 3.55zM12 8c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3z"/></svg>`;
-    const infoSvg = `<svg fill="white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>`;
-
-    const icons = {
-        parking: {
-            name: 'Parking',
-            icon: parkingSvg,
-            color: '#1E88E5', // Blue
-        },
-        library: {
-            name: 'Library',
-            icon: librarySvg,
-            color: '#43A047', // Green
-        },
-        info: {
-            name: 'Info',
-            icon: infoSvg,
-            color: '#E53935', // Red
-        },
-    };
 
     const features = [
         {
@@ -144,30 +150,11 @@ async function init() {
         mapElement.append(marker);
     }
 }
+// [END maps_legend_init]
 
 // [START maps_legend_add_legend_elements]
-function makeLegend(PinElementClass) {
-    const parkingSvg = `<svg fill="white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M13 3H6v18h4v-6h3c3.31 0 6-2.69 6-6s-2.69-6-6-6zm.2 8H10V7h3.2c1.1 0 2 .9 2 2s-.9 2-2 2z"/></svg>`;
-    const librarySvg = `<svg fill="white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 11.55C9.64 9.35 6.48 8 3 8v11c3.48 0 6.64 1.35 9 3.55 2.36-2.19 5.52-3.55 9-3.55V8c-3.48 0-6.64 1.35-9 3.55zM12 8c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3z"/></svg>`;
-    const infoSvg = `<svg fill="white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>`;
-
-    const icons = {
-        parking: {
-            name: 'Parking',
-            icon: parkingSvg,
-            color: '#1E88E5',
-        },
-        library: {
-            name: 'Library',
-            icon: librarySvg,
-            color: '#43A047',
-        },
-        info: {
-            name: 'Info',
-            icon: infoSvg,
-            color: '#E53935',
-        },
-    };
+async function makeLegend() {
+    const { PinElement } = await google.maps.importLibrary('marker');
 
     const legend = document.getElementById('legend');
 
@@ -176,13 +163,11 @@ function makeLegend(PinElementClass) {
     title.classList.add('title');
     legend.appendChild(title);
 
-    for (const key in icons) {
-        const type = icons[key];
-
+    for (const type of Object.values(icons)) {
         const wrapper = document.createElement('div');
         wrapper.classList.add('legend-item');
 
-        const pin = new PinElementClass({
+        const pin = new PinElement({
             background: type.color,
             borderColor: type.color,
             glyphSrc: new URL(
