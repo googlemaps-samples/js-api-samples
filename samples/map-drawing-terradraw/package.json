@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@types/google.maps": "latest",
-    "typescript": "^5.9.3",
+    "typescript": "^7.0.2",
     "vite": "^8.1.4"
   },
   "author": "Google LLC"
