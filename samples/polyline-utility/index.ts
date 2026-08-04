@@ -1,5 +1,4 @@
 // [START maps_polyline_utility]
-
 async function init(): Promise<void> {
     const [
         { Polyline },
