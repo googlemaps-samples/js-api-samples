@@ -62,7 +62,7 @@ const PlaceAutocomplete = ({
         const boundsListener = map.addListener('bounds_changed', syncBounds);
 
         // 3. Listen for the gmp-select event.
-        const placeSelectListener = (event: any) => {
+        const placeSelectListener = (event: google.maps.places.PlacePredictionSelectEvent) => {
             const placePrediction = event.placePrediction;
             if (!placePrediction) {
                 onPlaceSelect(null);
