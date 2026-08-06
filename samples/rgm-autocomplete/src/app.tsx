@@ -64,15 +64,9 @@ const PlaceAutocomplete = ({
         // 3. Listen for the gmp-select event.
         const placeSelectListener = (e: Event) => {
             const event = e as google.maps.places.PlacePredictionSelectEvent;
-            const placePrediction = event.placePrediction;
-            if (!placePrediction) {
-                onPlaceSelect(null);
-                return;
-            }
+            const place = event.placePrediction.toPlace();
 
-            const place = placePrediction.toPlace();
-
-            place
+            void place
                 .fetchFields({
                     fields: [
                         'location',
@@ -89,7 +83,8 @@ const PlaceAutocomplete = ({
                         map.setZoom(13);
                     }
                     onPlaceSelect(place);
-                });
+                })
+                .catch((e) => console.error(e));
         };
 
         autocomplete.addEventListener('gmp-select', placeSelectListener);
