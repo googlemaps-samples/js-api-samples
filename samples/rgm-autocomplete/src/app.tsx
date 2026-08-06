@@ -57,11 +57,11 @@ const PlaceAutocomplete = ({
             }
         };
 
-        // Sync initially and whenever the map moves
+        // Sync initially and whenever the map moves.
         syncBounds();
         const boundsListener = map.addListener('bounds_changed', syncBounds);
 
-        // 3. Listen for the gmp-select event
+        // 3. Listen for the gmp-select event.
         const placeSelectListener = (event: any) => {
             const placePrediction = event.placePrediction;
             if (!placePrediction) {
@@ -90,7 +90,7 @@ const PlaceAutocomplete = ({
             google.maps.event.removeListener(boundsListener);
             autocomplete.removeEventListener('gmp-select', placeSelectListener);
             
-            // Clean up the DOM element when unmounting
+            // Clean up the DOM element when unmounting.
             if (containerRef.current) {
                 containerRef.current.innerHTML = '';
             }
