@@ -45,13 +45,18 @@ For feedback related to this sample, please open a new issue on
 When integrating Google Maps within a React application, this sample implements several key best practices using the open source `@vis.gl/react-google-maps` library.
 
 ### 1. APIProvider
+
 The `<APIProvider>` component is used at the root of the application to load the Google Maps JavaScript API script once. It handles the API loading state and makes the Google Maps instance available to all child components via React Context.
 
 ### 2. Map Component
-Instead of manually instantiating `new google.maps.Map()` and attaching it to a DOM node, the `<Map>` component allows you to define the map declaratively. 
-* By using `defaultCenter` and `defaultZoom`, we create an "uncontrolled" map component where the map manages its own state internally, while still initializing it to the correct location.
-* The `mapId` property is passed to enable Cloud-based Maps Styling and Advanced Markers.
+
+Instead of manually instantiating `new google.maps.Map()` and attaching it to a DOM node, the `<Map>` component allows you to define the map declaratively.
+
+- By using `defaultCenter` and `defaultZoom`, we create an "uncontrolled" map component where the map manages its own state internally, while still initializing it to the correct location.
+- The `mapId` property is passed to enable Cloud-based Maps Styling and Advanced Markers.
 
 ### 3. Advanced Markers
+
 The legacy `google.maps.Marker` class is deprecated. This sample uses the `<AdvancedMarker>` component to declaratively render the modern `AdvancedMarkerElement` directly on the map.
-* **Gotcha:** `AdvancedMarker` requires a valid `mapId` to be provided to the parent `<Map>` component to function correctly.
+
+- **Gotcha:** `AdvancedMarker` requires a valid `mapId` to be provided to the parent `<Map>` component to function correctly.
