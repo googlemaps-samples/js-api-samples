@@ -61,17 +61,16 @@ const PlaceAutocomplete = ({
         syncBounds();
         const boundsListener = map.addListener('bounds_changed', syncBounds);
 
-        // 3. Listen for the gmp-placeselect event (the modern equivalent of place_changed)
-        const placeSelectListener = () => {
-            const place = autocomplete.place;
-            
-            if (!place) {
+        // 3. Listen for the gmp-select event
+        const placeSelectListener = (event: any) => {
+            const placePrediction = event.placePrediction;
+            if (!placePrediction) {
                 onPlaceSelect(null);
                 return;
             }
 
-            // The modern Web Component automatically fetches fields if requested, but we can also
-            // manually ensure we have the geometry before moving the map
+            const place = placePrediction.toPlace();
+
             place.fetchFields({
                 fields: ['location', 'viewport', 'displayName', 'formattedAddress'],
             }).then(() => {
@@ -85,11 +84,11 @@ const PlaceAutocomplete = ({
             });
         };
 
-        autocomplete.addEventListener('gmp-placeselect', placeSelectListener);
+        autocomplete.addEventListener('gmp-select', placeSelectListener);
 
         return () => {
             google.maps.event.removeListener(boundsListener);
-            autocomplete.removeEventListener('gmp-placeselect', placeSelectListener);
+            autocomplete.removeEventListener('gmp-select', placeSelectListener);
             
             // Clean up the DOM element when unmounting
             if (containerRef.current) {
