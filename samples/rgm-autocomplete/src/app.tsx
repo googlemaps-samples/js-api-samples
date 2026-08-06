@@ -71,17 +71,24 @@ const PlaceAutocomplete = ({
 
             const place = placePrediction.toPlace();
 
-            place.fetchFields({
-                fields: ['location', 'viewport', 'displayName', 'formattedAddress'],
-            }).then(() => {
-                if (place.viewport) {
-                    map.fitBounds(place.viewport);
-                } else if (place.location) {
-                    map.setCenter(place.location);
-                    map.setZoom(13);
-                }
-                onPlaceSelect(place);
-            });
+            place
+                .fetchFields({
+                    fields: [
+                        'location',
+                        'viewport',
+                        'displayName',
+                        'formattedAddress',
+                    ],
+                })
+                .then(() => {
+                    if (place.viewport) {
+                        map.fitBounds(place.viewport);
+                    } else if (place.location) {
+                        map.setCenter(place.location);
+                        map.setZoom(13);
+                    }
+                    onPlaceSelect(place);
+                });
         };
 
         autocomplete.addEventListener('gmp-select', placeSelectListener);
@@ -89,7 +96,7 @@ const PlaceAutocomplete = ({
         return () => {
             google.maps.event.removeListener(boundsListener);
             autocomplete.removeEventListener('gmp-select', placeSelectListener);
-            
+
             // Clean up the DOM element when unmounting.
             if (containerRef.current) {
                 containerRef.current.innerHTML = '';
