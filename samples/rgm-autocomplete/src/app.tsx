@@ -1,17 +1,7 @@
-/*
- * Copyright 2024 Google LLC. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/**
+ * @license
+ * Copyright 2026 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
  */
 // [START maps_rgm_autocomplete]
 import React, { useState, useEffect, useRef } from 'react';
@@ -44,7 +34,7 @@ declare global {
 const PlaceAutocomplete = ({
     onPlaceSelect,
 }: {
-    onPlaceSelect: (place: google.maps.places.PlaceResult | null) => void;
+    onPlaceSelect: (place: google.maps.places.Place | null) => void;
 }) => {
     const map = useMap();
     const placesLibrary = useMapsLibrary('places');
@@ -54,8 +44,9 @@ const PlaceAutocomplete = ({
         if (!map || !placesLibrary || !inputRef.current) return;
 
         const options = {
-            fields: ['geometry', 'name', 'formatted_address'],
-            strictBounds: true, // This enforces the same strict bounds constraint as locationRestriction
+            // Only request the ID, as we will use it to construct the modern Place object
+            fields: ['place_id'],
+            strictBounds: true, 
         };
 
         const autocomplete = new placesLibrary.Autocomplete(inputRef.current, options);
@@ -63,19 +54,29 @@ const PlaceAutocomplete = ({
         // The traditional API has a built-in bindTo method that flawlessly syncs to the map's internal bounds state
         autocomplete.bindTo('bounds', map);
 
-        const listener = autocomplete.addListener('place_changed', () => {
-            const place = autocomplete.getPlace();
+        const listener = autocomplete.addListener('place_changed', async () => {
+            const placeResult = autocomplete.getPlace();
             
-            if (!place.geometry || !place.geometry.location) {
+            if (!placeResult.place_id) {
                 onPlaceSelect(null);
                 return;
             }
 
-            if (place.geometry.viewport) {
-                map.fitBounds(place.geometry.viewport);
-            } else {
-                map.setCenter(place.geometry.location);
-                map.setZoom(17);
+            // Construct the modern Place object using the ID
+            const place = new placesLibrary.Place({
+                id: placeResult.place_id,
+            });
+
+            // Fetch the modern fields
+            await place.fetchFields({
+                fields: ['location', 'viewport', 'displayName', 'formattedAddress'],
+            });
+
+            if (place.viewport) {
+                map.fitBounds(place.viewport);
+            } else if (place.location) {
+                map.setCenter(place.location);
+                map.setZoom(13);
             }
 
             onPlaceSelect(place);
@@ -119,37 +120,37 @@ const PlaceAutocomplete = ({
 
 export default function App() {
     const [selectedPlace, setSelectedPlace] =
-        useState<google.maps.places.PlaceResult | null>(null);
+        useState<google.maps.places.Place | null>(null);
     const [markerRef, marker] = useAdvancedMarkerRef();
 
     return (
         <APIProvider apiKey={API_KEY}>
             <Map
-                defaultCenter={{ lat: 22.54992, lng: 0 }}
-                defaultZoom={3}
+                defaultCenter={{ lat: 40.749933, lng: -73.98633 }}
+                defaultZoom={13}
                 gestureHandling={'greedy'}
-                mapId="bf51a910020fa25a"
+                mapId="DEMO_MAP_ID"
                 disableDefaultUI={true}>
                 <MapControl position={ControlPosition.BLOCK_START_INLINE_START}>
                     <PlaceAutocomplete onPlaceSelect={setSelectedPlace} />
                 </MapControl>
 
-                {selectedPlace?.geometry?.location && (
+                {selectedPlace?.location && (
                     <AdvancedMarker
                         ref={markerRef}
-                        position={selectedPlace.geometry.location}
+                        position={selectedPlace.location}
                     />
                 )}
 
-                {selectedPlace?.geometry?.location && marker && (
+                {selectedPlace?.location && marker && (
                     <InfoWindow anchor={marker}>
                         <div>
                             <span style={{ fontWeight: 'bold' }}>
-                                {selectedPlace.name ?? 'No name'}
+                                {selectedPlace.displayName ?? 'No name'}
                             </span>
                             <br />
                             <span>
-                                {selectedPlace.formatted_address ?? 'No address'}
+                                {selectedPlace.formattedAddress ?? 'No address'}
                             </span>
                         </div>
                     </InfoWindow>
