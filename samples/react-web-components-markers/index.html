@@ -1,0 +1,38 @@
+<!doctype html>
+<!--
+ @license
+ Copyright 2026 Google LLC. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+-->
+<!-- [START maps_react_web_components_markers] -->
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <title>React - Web Components Markers</title>
+        <meta name="description" content="React Web Components Markers Example" />
+        <style>
+            body {
+                margin: 0;
+                font-family: sans-serif;
+            }
+            #app {
+                width: 100vw;
+                height: 100vh;
+            }
+            gmp-map {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+        <script type="module">
+            import { renderToDom } from './src/app';
+
+            renderToDom(document.querySelector('#app'));
+        </script>
+    </head>
+    <body>
+        <div id="app"></div>
+    </body>
+</html>
+<!-- [END maps_react_web_components_markers] -->
