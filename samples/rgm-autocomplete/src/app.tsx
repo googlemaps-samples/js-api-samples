@@ -38,52 +38,63 @@ const PlaceAutocomplete = ({
 }) => {
     const map = useMap();
     const placesLibrary = useMapsLibrary('places');
-    const inputRef = useRef<HTMLInputElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (!map || !placesLibrary || !inputRef.current) return;
+        if (!map || !placesLibrary || !containerRef.current) return;
 
-        const options = {
-            // Only request the ID, as we will use it to construct the modern Place object
-            fields: ['place_id'],
-            strictBounds: true, 
+        // 1. Programmatically instantiate the modern PlaceAutocompleteElement
+        const autocomplete = new placesLibrary.PlaceAutocompleteElement();
+        containerRef.current.appendChild(autocomplete);
+
+        // 2. Manually sync the map's bounds to the autocomplete's locationRestriction.
+        // We use map.getBounds().toJSON() to pass a plain object literal, which safely
+        // bypasses any cross-context 'instanceof' wipeout issues in React.
+        const syncBounds = () => {
+            const bounds = map.getBounds();
+            if (bounds) {
+                autocomplete.locationRestriction = bounds.toJSON();
+            }
         };
 
-        const autocomplete = new placesLibrary.Autocomplete(inputRef.current, options);
-        
-        // The traditional API has a built-in bindTo method that flawlessly syncs to the map's internal bounds state
-        autocomplete.bindTo('bounds', map);
+        // Sync initially and whenever the map moves
+        syncBounds();
+        const boundsListener = map.addListener('bounds_changed', syncBounds);
 
-        const listener = autocomplete.addListener('place_changed', async () => {
-            const placeResult = autocomplete.getPlace();
+        // 3. Listen for the gmp-placeselect event (the modern equivalent of place_changed)
+        const placeSelectListener = () => {
+            const place = autocomplete.place;
             
-            if (!placeResult.place_id) {
+            if (!place) {
                 onPlaceSelect(null);
                 return;
             }
 
-            // Construct the modern Place object using the ID
-            const place = new placesLibrary.Place({
-                id: placeResult.place_id,
-            });
-
-            // Fetch the modern fields
-            await place.fetchFields({
+            // The modern Web Component automatically fetches fields if requested, but we can also
+            // manually ensure we have the geometry before moving the map
+            place.fetchFields({
                 fields: ['location', 'viewport', 'displayName', 'formattedAddress'],
+            }).then(() => {
+                if (place.viewport) {
+                    map.fitBounds(place.viewport);
+                } else if (place.location) {
+                    map.setCenter(place.location);
+                    map.setZoom(13);
+                }
+                onPlaceSelect(place);
             });
+        };
 
-            if (place.viewport) {
-                map.fitBounds(place.viewport);
-            } else if (place.location) {
-                map.setCenter(place.location);
-                map.setZoom(13);
-            }
-
-            onPlaceSelect(place);
-        });
+        autocomplete.addEventListener('gmp-placeselect', placeSelectListener);
 
         return () => {
-            google.maps.event.removeListener(listener);
+            google.maps.event.removeListener(boundsListener);
+            autocomplete.removeEventListener('gmp-placeselect', placeSelectListener);
+            
+            // Clean up the DOM element when unmounting
+            if (containerRef.current) {
+                containerRef.current.innerHTML = '';
+            }
         };
     }, [map, placesLibrary, onPlaceSelect]);
 
@@ -100,20 +111,7 @@ const PlaceAutocomplete = ({
                 fontSize: 'small',
                 width: '300px',
             }}>
-            <input
-                ref={inputRef}
-                type="text"
-                placeholder="Search for a place..."
-                style={{
-                    width: '100%',
-                    boxSizing: 'border-box',
-                    padding: '8px 12px',
-                    border: '1px solid #ccc',
-                    borderRadius: '3px',
-                    fontSize: '14px',
-                    outline: 'none',
-                }}
-            />
+            <div ref={containerRef} style={{ width: '100%' }} />
         </div>
     );
 };
