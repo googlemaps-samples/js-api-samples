@@ -84,7 +84,9 @@ const PlaceAutocomplete = ({
                     }
                     onPlaceSelect(place);
                 })
-                .catch((e) => console.error(e));
+                .catch((err: unknown) => {
+                    console.error(err);
+                });
         };
 
         autocomplete.addEventListener('gmp-select', placeSelectListener);
