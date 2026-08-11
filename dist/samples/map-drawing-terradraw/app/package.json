@@ -10,7 +10,7 @@
     "preview": "vite preview --config ../../vite.config.js"
   },
   "dependencies": {
-    "terra-draw": "^1.32.2",
+    "terra-draw": "^1.32.3",
     "terra-draw-google-maps-adapter": "*"
   },
   "devDependencies": {
