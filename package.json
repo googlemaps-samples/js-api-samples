@@ -1,6 +1,7 @@
 {
   "name": "@googlemaps-samples/js-api-samples",
   "version": "1.0.0",
+  "type": "module",
   "description": "Samples for the Google Maps JavaScript API.",
   "scripts": {
     "build-all": "npm run clean && npm run build-all-parallel && npm run generate-index",
