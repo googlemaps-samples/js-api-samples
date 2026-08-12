@@ -2,10 +2,10 @@ import { defineConfig } from 'vite';
 import dotenv from 'dotenv';
 import { resolve } from 'path';
 
-dotenv.config({ path: resolve(__dirname, '.env') });
+dotenv.config({ path: resolve(import.meta.dirname, '.env') });
 
 export default defineConfig(() => {
-    const projectRepoRoot = resolve(__dirname);
+    const projectRepoRoot = resolve(import.meta.dirname);
     const workspaceDir = process.cwd();
     const isSample =
         workspaceDir !== projectRepoRoot && workspaceDir.includes('/samples/');
