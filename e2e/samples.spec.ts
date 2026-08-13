@@ -21,7 +21,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execSync, spawn } from 'child_process';
 
-const samplesDir = path.join(__dirname, '..', 'samples');
+const samplesDir = path.join(import.meta.dirname, '..', 'samples');
 
 // Function to return all sample folders.
 const getAllSampleFolders = () => {
@@ -36,7 +36,7 @@ const getAllSampleFolders = () => {
 const getChangedSampleFolders = (): string[] => {
     try {
         const scriptPath = path.join(
-            __dirname,
+            import.meta.dirname,
             '..',
             'samples',
             'find-changes.sh'
@@ -57,7 +57,7 @@ const getChangedSampleFolders = (): string[] => {
         }
 
         // Execute the script from the project root.
-        const projectRoot = path.join(__dirname, '..');
+        const projectRoot = path.join(import.meta.dirname, '..');
         // const output = execSync(`sh ${scriptPath}`, { cwd: projectRoot, encoding: 'utf-8' });
         const baseRefForScript = process.env.GIT_BASE_REF;
         let commandToExecute = `bash ${scriptPath}`; // Use bash to ensure consistency with shebang
@@ -148,7 +148,7 @@ foldersToTest.forEach((sampleFolder) => {
         const url = `http://localhost:${port}/`;
 
         const vitePath = path.join(
-            __dirname,
+            import.meta.dirname,
             '..',
             'node_modules',
             'vite',
