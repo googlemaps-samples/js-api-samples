@@ -13,6 +13,8 @@
 # limitations under the License.
 
 name: Dependabot
+# Safe: Workflow only interacts with the GitHub API via `gh` CLI to approve and auto-merge
+# verified Dependabot PRs; it does NOT checkout repository code or execute untrusted scripts.
 on: pull_request_target # zizmor: ignore[dangerous-triggers]
 
 permissions:

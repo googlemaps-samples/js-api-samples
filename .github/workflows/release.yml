@@ -30,6 +30,7 @@ jobs:
     env:
       GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_PROD_KEY }}"
     steps:
+      # Credentials must persist in local git config so subsequent steps can push to origin temp-build-branch
       - name: Checkout main # zizmor: ignore[artipacked]
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -107,6 +108,7 @@ jobs:
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
 
+      # Global CLI install needed on the runner for the subsequent firebase deploy step
       - name: Install Firebase CLI
         run: npm install -g firebase-tools # zizmor: ignore[adhoc-packages]
 

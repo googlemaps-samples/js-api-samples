@@ -14,6 +14,7 @@
 
 version: 2
 updates:
+  # Maintain weekly dependency update schedule without an artificial cooldown delay
   - package-ecosystem: "npm" # zizmor: ignore[dependabot-cooldown]
     directory: "/"
     schedule:

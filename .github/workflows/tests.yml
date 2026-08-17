@@ -57,7 +57,6 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
           lfs: true
-          persist-credentials: false
       - name: Get Changed Workspaces
         id: get_workspaces
         # For PRs, compare against the origin's version of the base branch.
