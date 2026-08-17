@@ -22,7 +22,7 @@ permissions:
 jobs:
   dependabot:
     runs-on: ubuntu-latest
-    if: github.actor == 'dependabot[bot]' && github.repository == github.event.pull_request.head.repo.full_name # zizmor: ignore[bot-conditions]
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
     env:
       PR_URL: ${{ github.event.pull_request.html_url }}
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
