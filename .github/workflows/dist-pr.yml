@@ -82,11 +82,15 @@ jobs:
 
       - name: Determine PR URL
         id: pr
+        env:
+          PR_EXISTS: ${{ steps.find_pr.outputs.pr_exists }}
+          FIND_PR_URL: ${{ steps.find_pr.outputs.pr_url }}
+          CREATE_PR_URL: ${{ steps.create_pr.outputs.pr_url }}
         run: |
-          if [ "${{ steps.find_pr.outputs.pr_exists }}" = "true" ]; then
-            echo "pr_url=${{ steps.find_pr.outputs.pr_url }}" >> "$GITHUB_OUTPUT"
+          if [ "$PR_EXISTS" = "true" ]; then
+            echo "pr_url=$FIND_PR_URL" >> "$GITHUB_OUTPUT"
           else
-            echo "pr_url=${{ steps.create_pr.outputs.pr_url }}" >> "$GITHUB_OUTPUT"
+            echo "pr_url=$CREATE_PR_URL" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Approve PR
