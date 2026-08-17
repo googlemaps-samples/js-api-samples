@@ -106,7 +106,9 @@ jobs:
 
       - name: Install dependencies
         if: env.HAS_CHANGES == 'true'
-        run: npm ci
+        run: |
+          npm ci --include=optional
+          npm rebuild rollup
 
       - name: Prettier Check (Changed Files Only)
         if: env.HAS_CHANGES == 'true'
@@ -214,7 +216,9 @@ jobs:
             ${{ runner.os }}-playwright- # Broader fallback
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci --include=optional
+          npm rebuild rollup
 
       - name: Build All Projects
         run: npm run build-all
