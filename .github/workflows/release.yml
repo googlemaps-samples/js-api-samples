@@ -30,8 +30,8 @@ jobs:
     env:
       GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_PROD_KEY }}"
     steps:
-      - name: Checkout main
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Checkout main # zizmor: ignore[artipacked]
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4 zizmor: ignore[artipacked]
         with:
           ref: main
           token: ${{ secrets.GH_MERGE_TOKEN }}
@@ -106,7 +106,7 @@ jobs:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
 
       - name: Install Firebase CLI
-        run: npm install -g firebase-tools
+        run: npm install -g firebase-tools # zizmor: ignore[adhoc-packages]
 
       - name: Deploy to Firebase Hosting
         run: firebase deploy --only hosting

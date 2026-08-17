@@ -35,7 +35,7 @@ jobs:
         with:
           token: ${{ secrets.GH_MERGE_TOKEN }}
           fetch-depth: 0
-
+          persist-credentials: false
       - name: Set Git Identity
         run: |
           git config --global user.name 'googlemaps-bot'
