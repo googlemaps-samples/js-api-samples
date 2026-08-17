@@ -31,7 +31,7 @@ jobs:
       GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_PROD_KEY }}"
     steps:
       - name: Checkout main
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           ref: main
           token: ${{ secrets.GH_MERGE_TOKEN }}
@@ -42,14 +42,14 @@ jobs:
           git config --global user.name 'googlemaps-bot'
           git config --global user.email 'googlemaps-bot@google.com'
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@6f8efc29b200d32929f49075959781ed54ec270c # v3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "24.18.0"
 
@@ -57,7 +57,9 @@ jobs:
 
       - name: Get Affected Workspaces
         id: get_workspaces
-        run: bash samples/find-changes.sh ${{ github.event.before }}
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+        run: bash samples/find-changes.sh "$BEFORE_SHA"
 
       - name: Build Affected Projects
         if: steps.get_workspaces.outputs.changed_workspaces != ''
@@ -81,7 +83,9 @@ jobs:
 
       - name: Get Deleted Workspaces
         id: get_deleted
-        run: bash samples/find-deleted-subfolders.sh ${{ github.event.before }}
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+        run: bash samples/find-deleted-subfolders.sh "$BEFORE_SHA"
 
       - name: Remove Output for Deleted Folders
         if: steps.get_deleted.outputs.deleted_workspaces != ''
@@ -97,7 +101,7 @@ jobs:
       - name: Generate Index
         run: bash samples/generate-index.sh
 
-      - uses: google-github-actions/auth@v1
+      - uses: google-github-actions/auth@955352c3b43196640b567e4646256d2fbb4aa1c7 # v1
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
 
@@ -127,7 +131,7 @@ jobs:
 
       - name: Trigger Create Release Workflow
         if: steps.commit_and_push.outputs.changes_pushed == 'true'
-        uses: benc-uk/workflow-dispatch@v1
+        uses: benc-uk/workflow-dispatch@31e2b3319479a63f0ab15bf800eff9e913504e26 # v1
         with:
           workflow: dist-pr.yml
           ref: "main"
