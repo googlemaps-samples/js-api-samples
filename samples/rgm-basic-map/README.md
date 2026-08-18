@@ -2,7 +2,8 @@
 
 ## rgm-basic-map
 
-React Google Maps Library - Basic Map
+This sample demonstrates using React with the vis.gl wrapper to create
+a map with an Advanced Marker.
 
 ## Setup
 
