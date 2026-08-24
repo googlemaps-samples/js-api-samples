@@ -33,10 +33,10 @@
     "vite": "^8.2.0"
   },
   "dependencies": {
-    "@deck.gl/core": "^9.3.7",
-    "@deck.gl/geo-layers": "^9.3.8",
-    "@deck.gl/google-maps": "^9.3.7",
-    "@deck.gl/layers": "^9.3.7",
+    "@deck.gl/core": "^9.3.10",
+    "@deck.gl/geo-layers": "^9.3.10",
+    "@deck.gl/google-maps": "^9.3.10",
+    "@deck.gl/layers": "^9.3.10",
     "@loaders.gl/kml": "^4.4.4",
     "@vis.gl/react-google-maps": "1.8.3",
     "dotenv": "^17.4.2",
