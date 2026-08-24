@@ -6,7 +6,7 @@
 
 // [START maps_3d_marker_customization]
 async function init() {
-    const [{ Map3DElement, Marker3DElement }, { PinElement }] =
+    const [{ Map3DElement, Marker3DElement, Label3DElement}, { PinElement }] =
         await Promise.all([
             google.maps.importLibrary('maps3d'),
             google.maps.importLibrary('marker'),
@@ -16,10 +16,8 @@ async function init() {
         center: { lat: 37.4176, lng: -122.02, altitude: 0 },
         tilt: 67.5,
         range: 7000,
-        mode: 'HYBRID',
+        mode: 'SATELLITE',
     });
-
-    map.mode = 'SATELLITE';
 
     // [START maps_3d_marker_customization_pin_border]
     // Change the border color.
@@ -104,6 +102,19 @@ async function init() {
     });
     markerWithBackground.append(pinBackground);
     // [END maps_3d_marker_customization_background]
+
+    // [START maps_3d_marker_customization_collisionbehavior]
+    const markerWithIndependentLabel = new Marker3DElement({
+        position: { lat: 37.419, lng: -122.01 },
+    });
+    markerWithIndependentLabel.id = 'marker-1';
+    const label = new Label3DElement({
+        collisionBehavior: google.maps.CollisionBehavior.OPTIONAL_AND_HIDES_LOWER_PRIORITY,
+        for: 'marker-1',
+    });
+    map.append(markerWithIndependentLabel);
+    label.append('Collision behavior label');
+    // [END maps_3d_marker_customization_collisionbehavior]
 
     map.append(markerWithLabel);
     map.append(markerWithScale);
