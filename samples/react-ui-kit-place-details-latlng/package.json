@@ -12,5 +12,6 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^6.0.2"
   },
-  "author": "Google LLC"
+  "author": "Google LLC",
+  "buildRevision": 1
 }
