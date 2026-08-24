@@ -167,7 +167,6 @@ npx eslint
 
 # clean comments for empty lines, and then clean up, to preserve newlines
 sed -i.sed-back 's#^$#// TMP EMPTY LINE#g' *.ts && rm *.sed-back
-set +e
 rm -rf dist
 set +e
 npx tsc
