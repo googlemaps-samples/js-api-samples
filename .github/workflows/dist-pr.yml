@@ -31,11 +31,11 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           token: ${{ secrets.GH_MERGE_TOKEN }}
           fetch-depth: 0
-
+          persist-credentials: false
       - name: Set Git Identity
         run: |
           git config --global user.name 'googlemaps-bot'
@@ -82,11 +82,15 @@ jobs:
 
       - name: Determine PR URL
         id: pr
+        env:
+          PR_EXISTS: ${{ steps.find_pr.outputs.pr_exists }}
+          FIND_PR_URL: ${{ steps.find_pr.outputs.pr_url }}
+          CREATE_PR_URL: ${{ steps.create_pr.outputs.pr_url }}
         run: |
-          if [ "${{ steps.find_pr.outputs.pr_exists }}" = "true" ]; then
-            echo "pr_url=${{ steps.find_pr.outputs.pr_url }}" >> "$GITHUB_OUTPUT"
+          if [ "$PR_EXISTS" = "true" ]; then
+            echo "pr_url=$FIND_PR_URL" >> "$GITHUB_OUTPUT"
           else
-            echo "pr_url=${{ steps.create_pr.outputs.pr_url }}" >> "$GITHUB_OUTPUT"
+            echo "pr_url=$CREATE_PR_URL" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Approve PR
