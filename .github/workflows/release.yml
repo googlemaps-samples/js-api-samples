@@ -32,7 +32,7 @@ jobs:
     steps:
       # Credentials must persist in local git config so subsequent steps can push to origin temp-build-branch
       - name: Checkout main # zizmor: ignore[artipacked]
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: main
           token: ${{ secrets.GH_MERGE_TOKEN }}
@@ -43,7 +43,7 @@ jobs:
           git config --global user.name 'googlemaps-bot'
           git config --global user.email 'googlemaps-bot@google.com'
 
-      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -104,7 +104,7 @@ jobs:
       - name: Generate Index
         run: bash samples/generate-index.sh
 
-      - uses: google-github-actions/auth@c200f3691d83b41bf9bbd8638997a462592937ed # v2
+      - uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
         with:
           credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
 
@@ -135,7 +135,7 @@ jobs:
 
       - name: Trigger Create Release Workflow
         if: steps.commit_and_push.outputs.changes_pushed == 'true'
-        uses: benc-uk/workflow-dispatch@e2e5e9a103e331dad343f381a29e654aea3cf8fc # v1.2.4
+        uses: benc-uk/workflow-dispatch@31e2b3319479a63f0ab15bf800eff9e913504e26 # v1.3.2
         with:
           workflow: dist-pr.yml
           ref: "main"
