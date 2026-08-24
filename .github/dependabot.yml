@@ -22,6 +22,10 @@ updates:
     ignore:
       - dependency-name: "three"
       - dependency-name: "@types/three"
+    groups:
+      deckgl:
+        patterns:
+          - "@deck.gl/*"
 
   - package-ecosystem: "github-actions" # zizmor: ignore[dependabot-cooldown]
     directory: "/"
