@@ -52,8 +52,8 @@ export default function App() {
     >(undefined);
 
     /**
-     * We track the map's camera state separately and use an onCameraChanged listener. 
-     * This prevents the map from becoming strictly "controlled" by college.location, 
+     * We track the map's camera state separately and use an onCameraChanged listener.
+     * This prevents the map from becoming strictly "controlled" by college.location,
      * which would otherwise lock the camera and prevent the user from panning or zooming.
      */
     const [cameraProps, setCameraProps] = useState({
