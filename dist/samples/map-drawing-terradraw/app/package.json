@@ -10,13 +10,13 @@
     "preview": "vite preview --config ../../vite.config.js"
   },
   "dependencies": {
-    "terra-draw": "latest",
-    "terra-draw-google-maps-adapter": "latest"
+    "terra-draw": "^1.32.3",
+    "terra-draw-google-maps-adapter": "*"
   },
   "devDependencies": {
-    "@types/google.maps": "latest",
+    "@types/google.maps": "*",
     "typescript": "^5.9.3",
-    "vite": "^8.1.4"
+    "vite": "^8.2.0"
   },
   "author": "Google LLC"
 }

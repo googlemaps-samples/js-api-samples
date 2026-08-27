@@ -10,7 +10,8 @@
     "preview": "vite preview --config ../../vite.config.js"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^6.0.2"
+    "@vitejs/plugin-react": "^6.1.0"
   },
-  "author": "Google LLC"
+  "author": "Google LLC",
+  "buildRevision": 1
 }
