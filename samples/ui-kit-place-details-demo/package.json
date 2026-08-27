@@ -1,0 +1,15 @@
+{
+  "name": "@js-api-samples/ui-kit-place-details-demo",
+  "version": "1.0.0",
+  "description": "Interactive Place Details customization demo with autocomplete search, content configurations, and custom brand themes.",
+  "main": "index.ts",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "@types/google.maps": "^3.58.1",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11"
+  }
+}
