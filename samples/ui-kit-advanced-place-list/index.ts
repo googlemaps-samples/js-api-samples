@@ -8,6 +8,7 @@
 // @ts-nocheck
 
 async function init() {
+    await google.maps.importLibrary('places');
     await customElements.whenDefined('gmp-advanced-place-list');
     const listElement = document.querySelector('gmp-advanced-place-list');
 
