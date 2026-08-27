@@ -1,9 +1,9 @@
 /**
  * @license
- * Copyright 2024 Google LLC. All Rights Reserved.
+ * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
-
+/* [START maps_ui_kit_advanced_place_list] */
 html,
 body {
     height: 100%;
@@ -11,3 +11,4 @@ body {
     padding: 0;
     font-family: Roboto, Arial, sans-serif;
 }
+/* [END maps_ui_kit_advanced_place_list] */

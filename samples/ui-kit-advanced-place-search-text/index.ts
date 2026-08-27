@@ -1,27 +1,30 @@
-/* eslint-disable */
-// @ts-nocheck
 /*
  * @license
- * Copyright 2025 Google LLC. All Rights Reserved.
+ * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 /* [START maps_ui_kit_advanced_place_search_text] */
 
 /* [START maps_ui_kit_advanced_place_search_text_query_selectors] */
 // Query selectors for various elements in the HTML file.
-const map = document.querySelector('gmp-map')!;
-const placeSearch: any = document.querySelector('gmp-advanced-place-search')!;
-const placeSearchQuery: any = document.querySelector(
-    'gmp-place-text-search-request'
-)!;
-const placeDetails = document.querySelector(
+const map = document.querySelector<google.maps.MapElement>('gmp-map')!;
+const placeSearch = document.querySelector<
+    HTMLElement & { places?: google.maps.places.Place[] }
+>('gmp-advanced-place-search')!;
+const placeSearchQuery = document.querySelector<
+    HTMLElement & {
+        textQuery?: string;
+        locationBias?: google.maps.LatLng | google.maps.LatLngLiteral;
+    }
+>('gmp-place-text-search-request')!;
+const placeDetails = document.querySelector<HTMLElement>(
     'gmp-advanced-place-details-compact'
 )!;
-const placeRequest: any = document.querySelector(
-    'gmp-place-details-place-request'
-)!;
-const queryInput = document.querySelector('.query-input') as HTMLInputElement;
-const searchButton = document.querySelector('.search-button')!;
+const placeRequest = document.querySelector<
+    HTMLElement & { place?: google.maps.places.Place }
+>('gmp-place-details-place-request')!;
+const queryInput = document.querySelector<HTMLInputElement>('.query-input')!;
+const searchButton = document.querySelector<HTMLElement>('.search-button')!;
 /* [END maps_ui_kit_advanced_place_search_text_query_selectors] */
 
 // Global variables for the map, markers, and info window.
@@ -55,15 +58,18 @@ async function init(): Promise<void> {
     searchButton.addEventListener('click', () => {
         searchPlaces();
     });
-    queryInput.addEventListener('keydown', (event) => {
+    queryInput.addEventListener('keydown', (event: KeyboardEvent) => {
         if (event.key === 'Enter') {
             searchPlaces();
         }
     });
 
-    placeSearch.addEventListener('gmp-select', (event) => {
-        const { place } = event;
-        markers.get(place.id)?.click();
+    placeSearch.addEventListener('gmp-select', (event: Event) => {
+        const place = (event as Event & { place?: google.maps.places.Place })
+            .place;
+        if (place?.id) {
+            markers.get(place.id)?.click();
+        }
     });
     placeSearch.addEventListener('gmp-load', () => {
         void addMarkers();
@@ -104,7 +110,7 @@ async function addMarkers() {
     ]);
     const bounds = new LatLngBounds();
 
-    if (placeSearch.places.length === 0) {
+    if (!placeSearch.places || placeSearch.places.length === 0) {
         return;
     }
 

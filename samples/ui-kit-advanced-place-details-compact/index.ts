@@ -1,5 +1,3 @@
-/* eslint-disable */
-// @ts-nocheck
 /*
  * @license
  * Copyright 2025 Google LLC. All Rights Reserved.
@@ -8,14 +6,16 @@
 /* [START maps_ui_kit_advanced_place_details_compact] */
 // Use querySelector to select elements for interaction.
 /* [START maps_ui_kit_advanced_place_details_compact_query_selector] */
-const map = document.querySelector('gmp-map')!;
-const placeDetails = document.querySelector(
-    'gmp-advanced-place-details-compact'
-)!;
-const placeDetailsRequest = document.querySelector(
+const map = document.querySelector<google.maps.MapElement>('gmp-map')!;
+const placeDetails = document.querySelector<
+    HTMLElement & { place?: google.maps.places.Place }
+>('gmp-advanced-place-details-compact')!;
+const placeDetailsRequest = document.querySelector<HTMLElement>(
     'gmp-place-details-place-request'
 )!;
-const marker = document.querySelector('gmp-advanced-marker')!;
+const marker = document.querySelector<google.maps.marker.AdvancedMarkerElement>(
+    'gmp-advanced-marker'
+)!;
 /* [END maps_ui_kit_advanced_place_details_compact_query_selector] */
 async function init(): Promise<void> {
     // Request needed libraries.
@@ -62,15 +62,18 @@ async function init(): Promise<void> {
         (event: google.maps.MapMouseEvent | google.maps.IconMouseEvent) => {
             event.stop();
 
-            if ('placeId' in event) {
+            if ('placeId' in event && event.placeId) {
                 // When the user clicks a POI.
                 marker.position = event.latLng;
-                placeDetailsRequest.place = event.placeId;
+                placeDetailsRequest.setAttribute(
+                    'place',
+                    `places/${event.placeId}`
+                );
                 showInfoWindow();
             } else {
                 // When the user clicks the map (not on a POI).
                 marker.position = null;
-                placeDetailsRequest.place = null;
+                placeDetailsRequest.removeAttribute('place');
                 console.log('No place was selected.');
             }
         }

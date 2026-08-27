@@ -1,10 +1,10 @@
 # Google Maps JavaScript Sample
 
-## ui-kit-place-search-nearby
+## ui-kit-advanced-place-search-nearby
 
-The ui-kit-place-search-nearby sample demonstrates using the Places UI Kit PlaceSearchElement.
+The ui-kit-advanced-place-search-nearby sample demonstrates using the Places UI Kit PlaceSearchElement.
 
-Follow these instructions to set up and run ui-kit-place-search-nearby sample on your local computer.
+Follow these instructions to set up and run ui-kit-advanced-place-search-nearby sample on your local computer.
 
 ## Setup
 
@@ -22,7 +22,7 @@ First `cd` to the folder for the sample to run, then:
 
 From `samples/`:
 
-`$npm run build --workspace=ui-kit-place-search-nearby/`
+`$npm run build --workspace=ui-kit-advanced-place-search-nearby/`
 
 ### Build all of the examples.
 

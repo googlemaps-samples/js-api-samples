@@ -1,10 +1,10 @@
 # Google Maps JavaScript Sample
 
-## ui-kit-place-details
+## ui-kit-advanced-place-details
 
-The ui-kit-place-details sample demonstrates how to use the UI Kit Place Details element.
+The ui-kit-advanced-place-details sample demonstrates how to use the UI Kit Place Details element.
 
-Follow these instructions to set up and run ui-kit-place-details sample on your local computer.
+Follow these instructions to set up and run ui-kit-advanced-place-details sample on your local computer.
 
 ## Setup
 
@@ -22,7 +22,7 @@ First `cd` to the folder for the sample to run, then:
 
 From `samples/`:
 
-`$npm run build --workspace=ui-kit-place-details/`
+`$npm run build --workspace=ui-kit-advanced-place-details/`
 
 ### Build all of the examples.
 

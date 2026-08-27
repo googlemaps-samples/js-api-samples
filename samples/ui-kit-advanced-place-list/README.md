@@ -2,7 +2,7 @@
 
 ## ui-kit-advanced-place-list
 
-Advanced Place List
+Display a list of nearby places using advanced place elements.
 
 ## Setup
 

@@ -1,20 +1,22 @@
-/* eslint-disable */
-// @ts-nocheck
 /*
  * @license
- * Copyright 2025 Google LLC. All Rights Reserved.
+ * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 /* [START maps_ui_kit_advanced_place_details] */
 
 // Use querySelector to select elements for interaction.
 /* [START maps_ui_kit_advanced_place_details_query_selector] */
-const map = document.querySelector('gmp-map')!;
-const placeDetails: any = document.querySelector('gmp-advanced-place-details')!;
-const placeDetailsRequest = document.querySelector(
+const map = document.querySelector<google.maps.MapElement>('gmp-map')!;
+const placeDetails = document.querySelector<
+    HTMLElement & { place?: google.maps.places.Place }
+>('gmp-advanced-place-details')!;
+const placeDetailsRequest = document.querySelector<HTMLElement>(
     'gmp-place-details-place-request'
 )!;
-const marker = document.querySelector('gmp-advanced-marker')!;
+const marker = document.querySelector<google.maps.marker.AdvancedMarkerElement>(
+    'gmp-advanced-marker'
+)!;
 /* [END maps_ui_kit_advanced_place_details_query_selector] */
 
 async function init(): Promise<void> {
@@ -53,7 +55,10 @@ async function init(): Promise<void> {
             event.stop();
             if ('placeId' in event && event.placeId) {
                 // Fire when the user clicks a POI.
-                placeDetailsRequest.place = event.placeId;
+                placeDetailsRequest.setAttribute(
+                    'place',
+                    `places/${event.placeId}`
+                );
                 updateMapAndMarker();
             } else {
                 // Fire when the user clicks the map (not on a POI).

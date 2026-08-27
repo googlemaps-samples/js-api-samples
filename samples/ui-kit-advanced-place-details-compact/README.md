@@ -1,10 +1,10 @@
 # Google Maps JavaScript Sample
 
-## ui-kit-place-details-compact
+## ui-kit-advanced-place-details-compact
 
-The ui-kit-place-details-compact sample demonstrates how to use the UI Kit for Place Details in a compact layout.
+The ui-kit-advanced-place-details-compact sample demonstrates how to use the UI Kit for Place Details in a compact layout.
 
-Follow these instructions to set up and run ui-kit-place-details-compact sample on your local computer.
+Follow these instructions to set up and run ui-kit-advanced-place-details-compact sample on your local computer.
 
 ## Setup
 
@@ -22,7 +22,7 @@ First `cd` to the folder for the sample to run, then:
 
 From `samples/`:
 
-`$npm run build --workspace=ui-kit-place-details-compact/`
+`$npm run build --workspace=ui-kit-advanced-place-details-compact/`
 
 ### Build all of the examples.
 
