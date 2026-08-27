@@ -14,7 +14,7 @@ async function init() {
 
     if (listElement) {
         listElement.addEventListener('gmp-error', (e) => {
-            console.error('Failed to load places: ', e.detail.errors);
+            console.error('Failed to load places: ', e.detail?.errors || e);
         });
     }
 }
