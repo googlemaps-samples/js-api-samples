@@ -14,6 +14,9 @@
 
 name: Tests
 
+permissions:
+  contents: read
+
 on:
   pull_request:
     types: [opened, synchronize, edited]
@@ -44,27 +47,31 @@ concurrency:
 jobs:
   pr_and_push_tests:
     name: Playwright PR/Push Tests
-    if: |
+    if: |-
       (github.event_name == 'pull_request' && github.event.pull_request.merged == false) ||
       (github.event_name == 'push' && !contains(github.event.head_commit.message, 'chore: update dist folder'))
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: false
           lfs: true
-
       - name: Get Changed Workspaces
         id: get_workspaces
         # For PRs, compare against the origin's version of the base branch.
         # For pushes, compare against the commit before the push.
+        env:
+          BASE_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
         run: |
-          bash samples/find-changes.sh ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
+          bash samples/find-changes.sh "$BASE_REF"
 
       - name: Check for changes
         id: check_changes
+        env:
+          CHANGED_WORKSPACES: ${{ steps.get_workspaces.outputs.changed_workspaces }}
         run: |
-          if [ "${{ steps.get_workspaces.outputs.changed_workspaces }}" != "" ]; then
+          if [ "$CHANGED_WORKSPACES" != "" ]; then
             echo "HAS_CHANGES=true" >> $GITHUB_ENV
           else
             echo "HAS_CHANGES=false" >> $GITHUB_ENV
@@ -72,13 +79,13 @@ jobs:
 
       - name: Setup Node.js
         if: env.HAS_CHANGES == 'true'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: "24.18.0"
 
       - name: Cache npm dependencies
         if: env.HAS_CHANGES == 'true'
-        uses: actions/cache@v4
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -94,7 +101,7 @@ jobs:
       - name: Cache Playwright browsers
         id: playwright-cache
         if: env.HAS_CHANGES == 'true'
-        uses: actions/cache@v4
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.cache/ms-playwright # Default Playwright cache path
           key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}-${{ hashFiles('playwright.config.ts') }}
@@ -106,7 +113,9 @@ jobs:
 
       - name: Install dependencies
         if: env.HAS_CHANGES == 'true'
-        run: npm ci
+        run: |
+          npm ci --include=optional
+          npm rebuild rollup
 
       - name: Prettier Check (Changed Files Only)
         if: env.HAS_CHANGES == 'true'
@@ -154,7 +163,7 @@ jobs:
 
       - name: Generate Index (Run Once After Builds)
         run: bash samples/generate-index.sh
-        if: |
+        if: |-
           env.HAS_CHANGES == 'true' ||
           contains(github.event.pull_request.paths.*, 'samples/generate-index.sh')
 
@@ -168,7 +177,7 @@ jobs:
           GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_DEV_KEY }}"
 
       - name: Upload Test Report Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: failure()
         with:
           name: Test Results
@@ -181,17 +190,17 @@ jobs:
     permissions:
       issues: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           lfs: true
-
+          persist-credentials: false
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: "24.18.0"
 
       - name: Cache npm dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -205,7 +214,7 @@ jobs:
 
       - name: Cache Playwright browsers
         id: playwright-cache
-        uses: actions/cache@v4
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/.cache/ms-playwright # Default Playwright cache path
           key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}-${{ hashFiles('playwright.config.ts') }}
@@ -214,7 +223,9 @@ jobs:
             ${{ runner.os }}-playwright- # Broader fallback
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci --include=optional
+          npm rebuild rollup
 
       - name: Build All Projects
         run: npm run build-all
@@ -236,7 +247,7 @@ jobs:
           GOOGLE_MAPS_API_KEY: "${{ secrets.JS_MAPS_DEV_KEY }}"
 
       - name: Upload Test Report Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: failure()
         with:
           name: Test Results

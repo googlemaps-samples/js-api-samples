@@ -8,8 +8,5 @@
     "build:vite": "vite build --config ../../vite.config.js --base './'",
     "preview": "vite preview --config ../../vite.config.js"
   },
-  "devDependencies": {
-    "@playwright/test": "^1.61.1"
-  },
   "author": "Google LLC"
 }

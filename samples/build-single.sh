@@ -167,6 +167,7 @@ npx eslint
 
 # clean comments for empty lines, and then clean up, to preserve newlines
 sed -i.sed-back 's#^$#// TMP EMPTY LINE#g' *.ts && rm *.sed-back
+rm -rf dist
 set +e
 npx tsc
 status=$? 
@@ -207,6 +208,10 @@ set -e
 
 bash ../jsfiddle.sh "$NAME"
 bash ../app.sh "$NAME"
-bash ../docs.sh "$NAME"
+if [ -f "src/app.tsx" ] || [ -f "src/app.jsx" ] || [ -f "src/app.js" ]; then
+  bash ../react-docs.sh "$NAME"
+else
+  bash ../docs.sh "$NAME"
+fi
 npm run build:vite --workspace=. 
 bash ../dist.sh "$NAME"
