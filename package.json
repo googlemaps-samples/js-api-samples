@@ -37,6 +37,7 @@
     "@deck.gl/geo-layers": "^9.3.10",
     "@deck.gl/google-maps": "^9.3.10",
     "@deck.gl/layers": "^9.3.10",
+    "@googlemaps/extended-component-library": "^0.6.15",
     "@loaders.gl/kml": "^4.4.4",
     "@vis.gl/react-google-maps": "1.9.0",
     "dotenv": "^17.4.2",
