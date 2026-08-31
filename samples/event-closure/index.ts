@@ -58,7 +58,7 @@ async function attachSecretMessage(
         content: secretMessage,
     });
 
-    marker.addListener('gmp-click', () => {
+    marker.addEventListener('gmp-click', () => {
         infoWindow.open(marker.map, marker);
     });
 }
