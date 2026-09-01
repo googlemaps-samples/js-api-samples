@@ -112,9 +112,7 @@ async function init(): Promise<void> {
             gmpDraggable: true,
         });
 
-        marker.addEventListener('gmp-dragend', () => {
-            rebuildPathFromMarkers();
-        });
+        marker.addEventListener('gmp-dragend', rebuildPathFromMarkers);
 
         markers.push(marker);
         updateOutputs();
@@ -133,6 +131,10 @@ async function init(): Promise<void> {
 
     function removePoint(index: number) {
         if (index >= 0 && index < markers.length) {
+            markers[index].removeEventListener(
+                'gmp-dragend',
+                rebuildPathFromMarkers
+            );
             markers[index].map = null;
             markers.splice(index, 1);
             rebuildPathFromMarkers();
@@ -141,6 +143,7 @@ async function init(): Promise<void> {
 
     function clearAll() {
         markers.forEach((m) => {
+            m.removeEventListener('gmp-dragend', rebuildPathFromMarkers);
             m.map = null;
         });
         markers = [];
