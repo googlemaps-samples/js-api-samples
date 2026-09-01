@@ -1,0 +1,16 @@
+File,Line(s),Risk Level,Vulnerability Type,Vulnerable Data,Fix Priority,Notes
+samples/advanced-markers-html/index.ts,48,Critical,innerHTML with dynamic data,"property.type, property.price, property.address, property.bed, property.bath, property.size",Medium,Property data from objects - could be user-provided or from external API
+samples/3d-places/index.ts,"29, 30, 34",Critical,innerHTML with API data,"place.displayName, place.id, place.types[]",Medium,Places API data - trusted source but should still be sanitized
+samples/deckgl-kml/index.ts,132,Critical,innerHTML with KML data,"object.properties.name, object.properties.description, KML properties",Highest,KML files can be user-uploaded - description field commonly contains HTML
+samples/deckgl-kml-updated/index.ts,156,Critical,innerHTML with KML data,"object.properties.name, object.properties.description, KML properties",Highest,Same as deckgl-kml - user-controlled KML files are XSS vectors
+samples/deckgl-heatmap/index.ts,100,Critical,innerHTML with data properties,"info.object.ADDRESS, info.object.RACKS, info.object.SPACES",High,Data from external CSV/JSON source - could be compromised
+samples/deckgl-polygon/index.ts,110,Critical,innerHTML with data properties,Dynamic data object properties,High,Similar to deckgl-heatmap - external data in tooltips
+samples/advanced-markers-graphics/index.ts,93,Medium,innerHTML with static HTML,Hardcoded Font Awesome icon HTML,Low,Currently safe but establishes unsafe pattern
+samples/react-ui-kit-place-details/src/app.tsx,44,Medium,innerHTML with static web components,Google Maps web component markup (static),Low,Static content - safe but should use createElement for best practice
+samples/react-ui-kit-place-details-latlng/src/app.tsx,45,Medium,innerHTML with static web components,Google Maps web component markup (static),Low,Static content - safe but should use createElement for best practice
+samples/react-ui-kit-place-details-latlng-compact/src/app.tsx,48,Medium,innerHTML with static web components,Google Maps web component markup (static),Low,Static content - safe but should use createElement for best practice
+samples/react-ui-kit-place-details-compact/src/app.tsx,47,Medium,innerHTML with static web components,Google Maps web component markup (static),Low,Static content - safe but should use createElement for best practice
+samples/weather-api-current-compact/simple-weather-widget.ts,11,Safe,innerHTML in Web Component constructor,Static CSS and HTML structure in Shadow DOM,None,Standard Web Component pattern - safe
+samples/ui-kit-customization/index.ts,"290, 293, 307",Safe,innerHTML for clearing only,"Empty string ('') for clearing content",None,Safe pattern - only clearing content
+samples/react-ui-kit-search-nearby/src/app.tsx,"130, 141",Safe,innerHTML for clearing only,"Empty string ('') for clearing content",None,Safe pattern - only clearing content
+samples/react-ui-kit-search-text/src/app.tsx,"134, 156",Safe,innerHTML for clearing only,"Empty string ('') for clearing content",None,Safe pattern - only clearing content
