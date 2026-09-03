@@ -128,7 +128,7 @@ async function addMarkers() {
         markers.set(place.id, marker);
         bounds.extend(place.location);
 
-        marker.addListener('click', () => {
+        marker.addEventListener('gmp-click', () => {
             placeRequest.place = place;
             infoWindow.open(map.innerMap, marker);
         });

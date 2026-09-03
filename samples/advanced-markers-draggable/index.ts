@@ -25,7 +25,7 @@ async function init() {
     mapElement.append(draggableMarker);
     // [END maps_advanced_markers_draggable_marker]
 
-    draggableMarker.addListener('dragend', () => {
+    draggableMarker.addEventListener('gmp-dragend', () => {
         const position = draggableMarker.position!;
         infoWindow.close();
         infoWindow.setContent(`Pin dropped at: ${JSON.stringify(position)}`);

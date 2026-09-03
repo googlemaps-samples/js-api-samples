@@ -85,7 +85,7 @@ async function findPlaces(query: string) {
             });
             markers[place.id] = marker;
 
-            marker.addListener('gmp-click', () => {
+            marker.addEventListener('gmp-click', () => {
                 map.panTo(place.location!);
                 updateInfoWindow(place.displayName!, place.id, marker);
             });
