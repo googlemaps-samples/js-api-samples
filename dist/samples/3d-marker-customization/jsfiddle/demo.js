@@ -6,20 +6,20 @@
  */
 
 async function init() {
-    const [{ Map3DElement, Marker3DElement }, { PinElement }] =
-        await Promise.all([
-            google.maps.importLibrary('maps3d'),
-            google.maps.importLibrary('marker'),
-        ]);
+    const [
+        { Map3DElement, Marker3DElement, Label3DElement },
+        { PinElement, CollisionBehavior },
+    ] = await Promise.all([
+        google.maps.importLibrary('maps3d'),
+        google.maps.importLibrary('marker'),
+    ]);
 
     const map = new Map3DElement({
         center: { lat: 37.4176, lng: -122.02, altitude: 0 },
         tilt: 67.5,
         range: 7000,
-        mode: 'HYBRID',
+        mode: 'SATELLITE',
     });
-
-    map.mode = 'SATELLITE';
 
     // Change the border color.
     const pinBorder = new PinElement({
@@ -93,6 +93,18 @@ async function init() {
         position: { lat: 37.419, lng: -122.01 },
     });
     markerWithBackground.append(pinBackground);
+
+    const markerWithIndependentLabel = new Marker3DElement({
+        position: { lat: 37.423, lng: -122.015 },
+    });
+    markerWithIndependentLabel.id = 'marker-1';
+    const label = new Label3DElement({
+        collisionBehavior: CollisionBehavior.OPTIONAL_AND_HIDES_LOWER_PRIORITY,
+        for: 'marker-1',
+    });
+    label.append('Independent label example');
+    map.append(markerWithIndependentLabel);
+    map.append(label);
 
     map.append(markerWithLabel);
     map.append(markerWithScale);
