@@ -1,0 +1,28 @@
+<!doctype html>
+<!--
+ @license
+ Copyright 2026 Google LLC. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+-->
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <!-- Prevents reviewer profile photos from breaking due to cross-origin Referer restrictions -->
+        <meta name="referrer" content="no-referrer" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <title>React - College Picker</title>
+        <meta name="description" content="React College Picker Example" />
+        <link rel="stylesheet" href="./style.css" />
+        <script type="module">
+            import { renderToDom } from './src/app';
+
+            renderToDom(document.querySelector('#app'));
+        </script>
+    </head>
+    <body>
+        <div id="app"></div>
+    </body>
+</html>
