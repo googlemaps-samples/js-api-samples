@@ -8,6 +8,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { AdvancedMarker, Map, Pin, APIProvider, } from '@vis.gl/react-google-maps';
 import { PlaceReviews, PlaceDataProvider, PlaceDirectionsButton, IconButton, PlaceOverview, SplitLayout, OverlayLayout, PlacePicker, } from '@googlemaps/extended-component-library/react';
+const COUNTRIES = ['us', 'ca'];
 const API_KEY = 'GOOGLE_MAPS_API_KEY';
 const DEFAULT_CENTER = { lat: 38, lng: -98 };
 const DEFAULT_ZOOM = 4;
@@ -50,7 +51,7 @@ export default function App() {
                 React.createElement("div", { className: "SlotDiv", slot: "fixed" },
                     React.createElement(OverlayLayout, { ref: overlayLayoutRef },
                         React.createElement("div", { className: "SlotDiv", slot: "main" },
-                            React.createElement(PlacePicker, { className: "CollegePicker", ref: pickerRef, forMap: "gmap", country: ['us', 'ca'], type: "university", placeholder: "Enter a college in the US or Canada", onPlaceChange: () => {
+                            React.createElement(PlacePicker, { className: "CollegePicker", ref: pickerRef, forMap: "gmap", country: COUNTRIES, type: "university", placeholder: "Enter a college in the US or Canada", onPlaceChange: () => {
                                     if (!pickerRef.current?.value) {
                                         setCollege(undefined);
                                     }
