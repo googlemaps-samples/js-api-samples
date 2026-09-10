@@ -35,6 +35,7 @@ import {
 import { OverlayLayout as TOverlayLayout } from '@googlemaps/extended-component-library/overlay_layout.js';
 import { PlacePicker as TPlacePicker } from '@googlemaps/extended-component-library/place_picker.js';
 
+const COUNTRIES = ['us', 'ca'];
 const API_KEY = 'GOOGLE_MAPS_API_KEY';
 const DEFAULT_CENTER = { lat: 38, lng: -98 };
 const DEFAULT_ZOOM = 4;
@@ -91,7 +92,7 @@ export default function App() {
                                     className="CollegePicker"
                                     ref={pickerRef}
                                     forMap="gmap"
-                                    country={['us', 'ca']}
+                                    country={COUNTRIES}
                                     type="university"
                                     placeholder="Enter a college in the US or Canada"
                                     onPlaceChange={() => {
