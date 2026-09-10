@@ -40,6 +40,7 @@ async function init() {
                 lng: bounds.west + lngSpan * Math.random(),
             },
             map: innerMap,
+            gmpClickable: true,
         });
 
         void attachSecretMessage(marker, secretMessage);
