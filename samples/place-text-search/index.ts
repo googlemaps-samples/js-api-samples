@@ -55,7 +55,7 @@ async function findPlaces(query: string) {
         fields: ['displayName', 'location', 'businessStatus'],
         includedType: '', // Restrict query to a specific type (leave blank for any).
         useStrictTypeFiltering: true,
-        locationBias: map.getCenter(),
+        locationRestriction: map.getBounds(),
         isOpenNow: true,
         language: 'en-US',
         maxResultCount: 8,
@@ -82,6 +82,7 @@ async function findPlaces(query: string) {
                 map,
                 position: place.location,
                 title: place.displayName,
+                gmpClickable: true,
             });
             markers[place.id] = marker;
 
