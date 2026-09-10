@@ -26,9 +26,10 @@ async function init() {
             content: buildContent(property),
             position: property.position,
             title: property.description,
+            gmpClickable: true,
         });
 
-        advancedMarkerElement.addListener('click', () => {
+        advancedMarkerElement.addEventListener('gmp-click', () => {
             toggleHighlight(advancedMarkerElement);
         });
     }
@@ -72,17 +73,17 @@ function buildContent(property: Property) {
         <div>
             <i aria-hidden="true" class="fa fa-bed fa-lg bed" title="bedroom"></i>
             <span class="fa-sr-only">bedroom</span>
-            <span>${property.bed}</span>
+            <span>${String(property.bed)}</span>
         </div>
         <div>
             <i aria-hidden="true" class="fa fa-bath fa-lg bath" title="bathroom"></i>
             <span class="fa-sr-only">bathroom</span>
-            <span>${property.bath}</span>
+            <span>${String(property.bath)}</span>
         </div>
         <div>
             <i aria-hidden="true" class="fa fa-ruler fa-lg size" title="size"></i>
             <span class="fa-sr-only">size</span>
-            <span>${property.size} ft<sup>2</sup></span>
+            <span>${String(property.size)} ft<sup>2</sup></span>
         </div>
         </div>
     </div>

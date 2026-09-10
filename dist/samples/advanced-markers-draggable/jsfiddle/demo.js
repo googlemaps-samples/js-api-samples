@@ -23,10 +23,12 @@ async function init() {
     });
     mapElement.append(draggableMarker);
 
-    draggableMarker.addListener('dragend', () => {
+    draggableMarker.addEventListener('gmp-dragend', () => {
         const position = draggableMarker.position;
         infoWindow.close();
-        infoWindow.setContent(`Pin dropped at: ${JSON.stringify(position)}`);
+        infoWindow.setContent(
+            `Pin dropped at: ${position.lat}, ${position.lng}`
+        );
         infoWindow.open(draggableMarker.map, draggableMarker);
     });
 }
