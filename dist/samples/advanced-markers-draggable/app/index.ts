@@ -29,7 +29,7 @@ async function init() {
         const position = draggableMarker.position as google.maps.LatLngAltitude;
         infoWindow.close();
         infoWindow.setContent(
-            `Pin dropped at: ${position.lat}, ${position.lng}`
+            `Pin dropped at: ${String(position.lat)}, ${String(position.lng)}`
         );
         infoWindow.open(draggableMarker.map, draggableMarker);
     });

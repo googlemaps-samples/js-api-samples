@@ -40,6 +40,7 @@ async function init() {
                 lng: bounds.west + lngSpan * Math.random(),
             },
             map: innerMap,
+            gmpClickable: true,
         });
 
         void attachSecretMessage(marker, secretMessage);
@@ -58,7 +59,7 @@ async function attachSecretMessage(
         content: secretMessage,
     });
 
-    marker.addListener('gmp-click', () => {
+    marker.addEventListener('gmp-click', () => {
         infoWindow.open(marker.map, marker);
     });
 }
