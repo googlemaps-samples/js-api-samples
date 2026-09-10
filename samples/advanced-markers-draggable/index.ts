@@ -26,9 +26,11 @@ async function init() {
     // [END maps_advanced_markers_draggable_marker]
 
     draggableMarker.addEventListener('gmp-dragend', () => {
-        const position = draggableMarker.position!;
+        const position = draggableMarker.position as google.maps.LatLngAltitude;
         infoWindow.close();
-        infoWindow.setContent(`Pin dropped at: ${JSON.stringify(position)}`);
+        infoWindow.setContent(
+            `Pin dropped at: ${String(position.lat)}, ${String(position.lng)}`
+        );
         infoWindow.open(draggableMarker.map, draggableMarker);
     });
 }
