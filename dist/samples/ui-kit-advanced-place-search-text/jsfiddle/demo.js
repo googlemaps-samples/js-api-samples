@@ -110,12 +110,13 @@ async function addMarkers() {
             map: map.innerMap,
             position: place.location,
             collisionBehavior: 'REQUIRED_AND_HIDES_OPTIONAL',
+            gmpClickable: true,
         });
 
         markers.set(place.id, marker);
         bounds.extend(place.location);
 
-        marker.addListener('click', () => {
+        marker.addEventListener('gmp-click', () => {
             placeRequest.place = place;
             infoWindow.open(map.innerMap, marker);
         });

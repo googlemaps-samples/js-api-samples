@@ -91,6 +91,7 @@ async function nearbySearch() {
                 map: innerMap,
                 position: place.location,
                 title: place.displayName,
+                gmpClickable: true,
             });
 
             // Build the content of the InfoWindow safely using DOM elements.
@@ -109,7 +110,7 @@ async function nearbySearch() {
                 content.appendChild(link);
             }
 
-            marker.addListener('gmp-click', () => {
+            marker.addEventListener('gmp-click', () => {
                 innerMap.panTo(place.location);
                 updateInfoWindow(place.displayName, content, marker);
             });

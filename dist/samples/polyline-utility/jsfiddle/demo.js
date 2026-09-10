@@ -4,7 +4,7 @@ async function init() {
     const [
         { Polyline },
         { AdvancedMarkerElement },
-        { LatLng, LatLngBounds, event },
+        { LatLng, LatLngBounds },
         { PlaceAutocompleteElement },
         geometryLibrary,
     ] = await Promise.all([
@@ -108,9 +108,7 @@ async function init() {
             gmpDraggable: true,
         });
 
-        marker.addListener('dragend', () => {
-            rebuildPathFromMarkers();
-        });
+        marker.addEventListener('gmp-dragend', rebuildPathFromMarkers);
 
         markers.push(marker);
         updateOutputs();
@@ -126,7 +124,10 @@ async function init() {
 
     function removePoint(index) {
         if (index >= 0 && index < markers.length) {
-            event.clearInstanceListeners(markers[index]);
+            markers[index].removeEventListener(
+                'gmp-dragend',
+                rebuildPathFromMarkers
+            );
             markers[index].map = null;
             markers.splice(index, 1);
             rebuildPathFromMarkers();
@@ -135,7 +136,7 @@ async function init() {
 
     function clearAll() {
         markers.forEach((m) => {
-            event.clearInstanceListeners(m);
+            m.removeEventListener('gmp-dragend', rebuildPathFromMarkers);
             m.map = null;
         });
         markers = [];
