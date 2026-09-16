@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "terra-draw": "^1.32.3",
-    "terra-draw-google-maps-adapter": "*"
+    "terra-draw-google-maps-adapter": "^1.6.2"
   },
   "devDependencies": {
     "@types/google.maps": "*",
