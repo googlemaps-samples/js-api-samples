@@ -33,9 +33,9 @@
     "vite": "^8.2.2"
   },
   "dependencies": {
-    "@deck.gl/core": "^9.3.11",
-    "@deck.gl/geo-layers": "^9.3.11",
-    "@deck.gl/google-maps": "^9.3.11",
+    "@deck.gl/core": "^9.4.0",
+    "@deck.gl/geo-layers": "^9.4.0",
+    "@deck.gl/google-maps": "^9.4.0",
     "@deck.gl/layers": "^9.3.11",
     "@googlemaps/extended-component-library": "^0.7.0",
     "@loaders.gl/kml": "^4.4.4",
