@@ -13,10 +13,5 @@
     "terra-draw": "^1.32.3",
     "terra-draw-google-maps-adapter": "^1.6.2"
   },
-  "devDependencies": {
-    "@types/google.maps": "*",
-    "typescript": "^5.9.3",
-    "vite": "^8.3.0"
-  },
   "author": "Google LLC"
 }
