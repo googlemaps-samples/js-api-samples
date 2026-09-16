@@ -116,8 +116,14 @@ async function init() {
                 (input) => input.value
             ),
             travelMode,
-            routingPreference: formData.get('routing_preference') ?? undefined,
-            polylineQuality: formData.get('polyline_quality') ?? undefined,
+            routingPreference:
+                formData.get('routing_preference') === ''
+                    ? undefined
+                    : formData.get('routing_preference'),
+            polylineQuality:
+                formData.get('polyline_quality') === ''
+                    ? undefined
+                    : formData.get('polyline_quality'),
             computeAlternativeRoutes:
                 formData.get('compute_alternative_routes') === 'on',
             routeModifiers: {
@@ -164,7 +170,9 @@ async function init() {
                 (input) => input.value
             );
             transitPreference.routingPreference =
-                formData.get('transit_preference');
+                formData.get('transit_preference') === ''
+                    ? undefined
+                    : formData.get('transit_preference');
         }
 
         return request;
