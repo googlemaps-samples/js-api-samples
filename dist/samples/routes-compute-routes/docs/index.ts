@@ -128,11 +128,18 @@ async function init() {
                 (input) => (input as HTMLInputElement).value
             ),
             travelMode,
-            routingPreference: (formData.get('routing_preference') ??
-                undefined) as
-                google.maps.routes.RoutingPreferenceString | undefined,
-            polylineQuality: (formData.get('polyline_quality') ?? undefined) as
-                google.maps.routes.PolylineQualityString | undefined,
+            routingPreference:
+                (formData.get('routing_preference') as string) === ''
+                    ? undefined
+                    : (formData.get(
+                          'routing_preference'
+                      ) as google.maps.routes.RoutingPreferenceString),
+            polylineQuality:
+                (formData.get('polyline_quality') as string) === ''
+                    ? undefined
+                    : (formData.get(
+                          'polyline_quality'
+                      ) as google.maps.routes.PolylineQualityString),
             computeAlternativeRoutes:
                 formData.get('compute_alternative_routes') === 'on',
             routeModifiers: {
@@ -181,9 +188,12 @@ async function init() {
                 (input) =>
                     (input as HTMLInputElement).value as google.maps.TransitMode
             );
-            transitPreference.routingPreference = formData.get(
-                'transit_preference'
-            ) as google.maps.TransitRoutePreferenceString;
+            transitPreference.routingPreference =
+                (formData.get('transit_preference') as string) === ''
+                    ? undefined
+                    : (formData.get(
+                          'transit_preference'
+                      ) as google.maps.TransitRoutePreferenceString);
         }
 
         return request;
