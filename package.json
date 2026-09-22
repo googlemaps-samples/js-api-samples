@@ -20,7 +20,7 @@
     "@eslint/markdown": "^8.0.3",
     "@playwright/test": "^1.63.0",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "@types/google.maps": "^3.66.0",
+    "@types/google.maps": "^3.66.3",
     "@types/node": "^26.6.2",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.3",
