@@ -82,7 +82,7 @@ async function getDirections() {
         if (!(index === 0 || index === totalMarkers - 1)) {
             return {
                 ...defaultOptions,
-                title: `Waypoint ${index + 1}`,
+                title: `Waypoint ${(index + 1).toString()}`,
                 map: innerMap,
                 content: new PinElement({
                     glyphText: (index + 1).toString(),
