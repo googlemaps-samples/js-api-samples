@@ -69,6 +69,7 @@ async function getDirections() {
                 ...defaultOptions,
                 title: 'Origin',
                 map: innerMap,
+                gmpClickable: true,
                 content: new PinElement({
                     glyphText: (index + 1).toString(),
                     glyphColor: 'white',
@@ -84,6 +85,7 @@ async function getDirections() {
                 ...defaultOptions,
                 title: `Waypoint ${(index + 1).toString()}`,
                 map: innerMap,
+                gmpClickable: true,
                 content: new PinElement({
                     glyphText: (index + 1).toString(),
                     glyphColor: 'white',
@@ -99,6 +101,7 @@ async function getDirections() {
                 ...defaultOptions,
                 title: 'Destination',
                 map: innerMap,
+                gmpClickable: true,
                 content: new PinElement({
                     glyphText: (index + 1).toString(),
                     glyphColor: 'white',
