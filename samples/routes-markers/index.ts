@@ -99,7 +99,6 @@ async function getDirections() {
         }
         // [END maps_routes_markers_style_maker_intermediate]
 
-        // [START maps_routes_markers_style_maker_destination]
         // Style the destination waypoint.
         if (index === totalMarkers - 1) {
             return {
