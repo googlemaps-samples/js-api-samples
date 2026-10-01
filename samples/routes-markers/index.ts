@@ -80,6 +80,7 @@ async function getDirections() {
             };
         }
 
+        // [START maps_routes_markers_style_maker_intermediate]
         // Style all intermediate waypoints.
         if (!(index === 0 || index === totalMarkers - 1)) {
             return {
@@ -96,7 +97,9 @@ async function getDirections() {
                 }),
             };
         }
+        // [END maps_routes_markers_style_maker_intermediate]
 
+        // [START maps_routes_markers_style_maker_destination]
         // Style the destination waypoint.
         if (index === totalMarkers - 1) {
             return {
@@ -109,7 +112,6 @@ async function getDirections() {
                     glyphColor: 'white',
                     background: 'red',
                     borderColor: 'red',
-                    scale: 1.5,
                 }),
             };
         }
