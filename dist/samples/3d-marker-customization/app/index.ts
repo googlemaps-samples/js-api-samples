@@ -4,15 +4,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
 // [START maps_3d_marker_customization]
 async function init() {
     const [
-        // @ts-expect-error - Label3DElement is not yet in @types/google.maps
         { Map3DElement, Marker3DElement, Label3DElement },
         { PinElement, CollisionBehavior },
     ] = await Promise.all([
