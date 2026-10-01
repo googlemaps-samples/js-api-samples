@@ -67,6 +67,7 @@ async function getDirections() {
         if (index === 0) {
             return {
                 ...defaultOptions,
+                title: 'Origin',
                 map: innerMap,
                 content: new PinElement({
                     glyphText: (index + 1).toString(),
@@ -81,6 +82,7 @@ async function getDirections() {
         if (!(index === 0 || index === totalMarkers - 1)) {
             return {
                 ...defaultOptions,
+                title: `Waypoint ${index + 1}`,
                 map: innerMap,
                 content: new PinElement({
                     glyphText: (index + 1).toString(),
@@ -95,6 +97,7 @@ async function getDirections() {
         if (index === totalMarkers - 1) {
             return {
                 ...defaultOptions,
+                title: 'Destination',
                 map: innerMap,
                 content: new PinElement({
                     glyphText: (index + 1).toString(),
