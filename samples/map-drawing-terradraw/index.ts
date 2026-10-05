@@ -169,7 +169,7 @@ async function init() {
             }
         });
 
-        map.addListener('projection_changed', () => {
+        google.maps.event.addListenerOnce(map, 'projection_changed', () => {
             // [START maps_drawing_terradraw_modes]
 
             draw = new TerraDraw({
