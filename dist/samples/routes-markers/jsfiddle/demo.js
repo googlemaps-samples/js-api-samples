@@ -77,15 +77,15 @@ async function getDirections() {
         if (!(index === 0 || index === totalMarkers - 1)) {
             return {
                 ...defaultOptions,
-                title: `Waypoint ${(index + 1).toString()}`,
+                title: `Waypoint ${(index + 1).toString()}`, // Provide label for screenreaders
                 map: innerMap,
-                gmpClickable: true,
+                gmpClickable: true, // Make marker focusable and allow keyboard navigation
                 content: new PinElement({
                     glyphText: (index + 1).toString(),
                     glyphColor: 'white',
                     background: 'blue',
                     borderColor: 'blue',
-                    scale: 1.5,
+                    scale: 1.5, // Increase size for better visibilty
                 }),
             };
         }
@@ -102,6 +102,7 @@ async function getDirections() {
                     glyphColor: 'white',
                     background: 'red',
                     borderColor: 'red',
+                    scale: 1.5,
                 }),
             };
         }
