@@ -111,6 +111,7 @@ async function getDirections() {
                     glyphColor: 'white',
                     background: 'red',
                     borderColor: 'red',
+                    scale: 1.5,
                 }),
             };
         }
