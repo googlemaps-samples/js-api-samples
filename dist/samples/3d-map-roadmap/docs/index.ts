@@ -44,7 +44,7 @@ async function init() {
     });
 
     selector.addEventListener('change', function () {
-        map.mode = this.value as google.maps.maps3d.MapMode;
+        map.mode = this.value as google.maps.maps3d.MapModeString;
     });
 
     controls.appendChild(selector);
