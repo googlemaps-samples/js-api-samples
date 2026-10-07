@@ -21,8 +21,8 @@ gmp-map-3d {
 
 .map-mode-control {
     position: fixed;
-    bottom: 24px;
-    right: 75px;
+    bottom: 125px;
+    right: 0px;
     display: flex;
     align-items: center;
     background-color: rgba(255, 255, 255, 0.9);
