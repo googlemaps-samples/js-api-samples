@@ -1,0 +1,36 @@
+/**
+ * @license
+ * Copyright 2026 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/* [START maps_control_custom] */
+
+/* 
+ * Optional: Makes the sample page fill the window. 
+ */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+gmp-map {
+  height: 100%;
+}
+
+#btnCenterMap {
+  background-color: #fff;
+  border: 2px solid #fff;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  color: rgb(25, 25, 25);
+  cursor: pointer;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 38px;
+  margin: 8px 0 22px;
+  padding: 0 5px;
+  text-align: center;
+}
+/* [END maps_control_custom] */
