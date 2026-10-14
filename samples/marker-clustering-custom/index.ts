@@ -68,23 +68,13 @@ async function init() {
             // Change color based on the number of markers in the cluster relative to the mean
             const isLargeCluster =
                 count > Math.max(10, stats.clusters.markers.mean);
-            const color = isLargeCluster ? '#ff0000' : '#0000ff';
+            const clusterClass = isLargeCluster
+                ? 'large-cluster'
+                : 'small-cluster';
 
             // Build the HTML content for the Advanced Marker
             const content = document.createElement('div');
-            content.style.width = '45px';
-            content.style.height = '45px';
-            content.style.borderRadius = '50%';
-            content.style.backgroundColor = color;
-            content.style.border = '2px solid white';
-            content.style.display = 'flex';
-            content.style.justifyContent = 'center';
-            content.style.alignItems = 'center';
-            content.style.color = 'white';
-            content.style.fontWeight = 'bold';
-            content.style.fontSize = '14px';
-            content.style.fontFamily = 'sans-serif';
-            content.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+            content.classList.add('custom-cluster-icon', clusterClass);
             content.textContent = String(count);
 
             return new AdvancedMarkerElement({
