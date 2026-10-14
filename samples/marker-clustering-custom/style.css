@@ -1,0 +1,38 @@
+/*
+ * @license
+ * Copyright 2026 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* [START maps_marker_clustering_custom] */
+html,
+body,
+gmp-map {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.custom-cluster-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    font-family: sans-serif;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.large-cluster {
+    background-color: #ff0000;
+}
+
+.small-cluster {
+    background-color: #0000ff;
+}
+/* [END maps_marker_clustering_custom] */
