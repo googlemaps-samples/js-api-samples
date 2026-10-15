@@ -47,6 +47,7 @@ async function fillInAddress(placePrediction) {
     await place.fetchFields({ fields: ['addressComponents'] });
 
     let address1 = '';
+    let address2 = '';
     let postcode = '';
 
     if (!place.addressComponents) {
@@ -77,6 +78,10 @@ async function fillInAddress(placePrediction) {
             postcode = `${postcode}-${component.longText}`;
         }
 
+        if (component.types.includes('subpremise')) {
+            address2 += component.longText;
+        }
+
         if (component.types.includes('locality')) {
             document.querySelector('#locality').value = component.longText;
         }
@@ -91,6 +96,7 @@ async function fillInAddress(placePrediction) {
     }
 
     address1Field.value = address1;
+    address2Field.value = address2;
     postalField.value = postcode;
 
     // After filling the form with address components from the Autocomplete
