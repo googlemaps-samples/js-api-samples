@@ -23,6 +23,9 @@ async function init() {
     // [START maps_3d_marker_graphics_png]
     // A marker with a with a URL pointing to a PNG.
     const beachFlagImg = document.createElement('img');
+    // When copying this code snippet, use the absolute URL to the hosted image:
+    // beachFlagImg.src = 'https://maps-docs-team.web.app/samples/3d-marker-graphics/dist/images/beachflag.png';
+    // For local development in this repository, we use Vite's import.meta.url:
     beachFlagImg.src = String(new URL('images/beachflag.png', import.meta.url));
 
     const beachFlagMarker = new Marker3DElement({
@@ -37,6 +40,9 @@ async function init() {
 
     // [START maps_3d_marker_graphics_glyph]
     // A marker with a custom SVG glyph and white background.
+    // When copying this code snippet, use the absolute URL to the hosted image:
+    // const glyphImgUrl = 'https://maps-docs-team.web.app/samples/3d-marker-graphics/dist/images/192px.svg';
+    // For local development in this repository, use Vite's import.meta.url:
     const glyphImgUrl = new URL('images/192px.svg', import.meta.url);
     const glyphSvgPinElement = new PinElement({
         background: 'white',

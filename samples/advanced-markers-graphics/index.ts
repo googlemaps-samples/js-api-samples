@@ -40,6 +40,9 @@ async function init() {
     // [START maps_advanced_markers_graphics_png]
     // A marker with a with a URL pointing to a PNG.
     const beachFlagImg = document.createElement('img');
+    // When copying this code snippet, use the absolute URL to the hosted image:
+    // beachFlagImg.src = 'https://maps-docs-team.web.app/samples/advanced-markers-graphics/dist/beachflag.png';
+    // For local development in this repository, use Vite's import.meta.url:
     beachFlagImg.src = new URL('./public/beachflag.png', import.meta.url).href;
 
     const beachFlagMarker = new AdvancedMarkerElement({
@@ -54,6 +57,9 @@ async function init() {
 
     // [START maps_advanced_markers_graphics_svg_glyph]
     // A marker with a custom SVG glyph.
+    // When copying this code snippet, use the absolute URL to the hosted image:
+    // const glyphImgSrc = 'https://maps-docs-team.web.app/samples/advanced-markers-graphics/dist/google_logo_g.svg';
+    // For local development in this repository, use Vite's import.meta.url:
     const glyphImgSrc = new URL('./public/google_logo_g.svg', import.meta.url);
 
     const glyphSvgPinElement = new PinElement({
