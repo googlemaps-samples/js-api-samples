@@ -12,7 +12,9 @@ async function init() {
 
     const innerMap = mapElement.innerMap;
 
-    innerMap.data.loadGeoJson('google.json');
+    innerMap.data.loadGeoJson(
+        new URL('./public/google.json', import.meta.url).href
+    );
 }
 
 void init();

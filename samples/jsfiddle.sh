@@ -32,18 +32,12 @@ cp "${SCRIPT_DIR}/${NAME}/index.js" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.j
 cp "${SCRIPT_DIR}/${NAME}/index.html" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
 cp "${SCRIPT_DIR}/${NAME}/style.css" "${DIST_DIR}/samples/${NAME}/jsfiddle/demo.css"
 
-# Copy the public folder if one is found (graphics, other static files).
-if [ -d "public" ] && [ "$(ls -A public)" ]; then
-  cp -r public/* "${DOCS_DIR}/"
-fi
-
-# Copy the src folder if one is found (.js, .json, anything parseable by Vite).
-if [ -d "src" ] && [ "$(ls -A src)" ]; then
-  cp -r src/* "${DOCS_DIR}/"
-fi
-
 pushd "${DIST_DIR}/samples/${NAME}/jsfiddle"
 
+echo "Replace import.meta.url with hosted paths in ${DIST_DIR}/samples/${NAME}/jsfiddle/demo.js"
+perl -0777 -pi -e "s/new URL\(\s*[\x27\x22\x60]\.\/public\/([^\x27\x22\x60]+)[\x27\x22\x60],\s*import\.meta\.url\s*\)(\.href|\.toString\(\))?/\`https:\/\/maps-docs-team\.web\.app\/samples\/${NAME}\/dist\/\1\`/g" demo.js
+echo "Replace local HTML asset paths with hosted paths in ${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
+perl -0777 -pi -e "s#src=\"\./(img|public|icons)/#src=\"https://maps-docs-team.web.app/samples/${NAME}/dist/\\1/#g" demo.html
 # Remove region tags from files by type, since they all have different comment conventions.
 # We use a conditional here since sed behaves differently on Linux.
 echo "Remove region tags from ${DIST_DIR}/samples/${NAME}/jsfiddle/demo.js"
@@ -53,7 +47,7 @@ sed -i.sed-back "s#/\* \[START .*] \*/##g" "demo.js" && rm *.sed-back
 sed -i.sed-back "s#/\* \[END .*] \*/##g" "demo.js"  && rm *.sed-back
 
 
-echo "Remove region tags from ${DIST_DIR}/samples/${NAME}/jsfiddle/demo.html"
+perl -0777 -pi -e "s#src=\"\./([^\"]+\.(png|svg|jpg|jpeg|gif|json|geojson))\"#src=\"https://maps-docs-team.web.app/samples/${NAME}/dist/\\1\"#g" demo.html
 sed -i.sed-back "s/<!--[[:space:]]*\[START .*\][[:space:]]*-->//g" "demo.html" && rm *.sed-back
 sed -i.sed-back "s/<!--[[:space:]]*\[END .*\][[:space:]]*-->//g" "demo.html" && rm *.sed-back
 

@@ -25,12 +25,8 @@ cp "${SCRIPT_DIR}/${NAME}/index.js" "${DOCS_DIR}/index.js"
 cp "${SCRIPT_DIR}/${NAME}/index.html" "${DOCS_DIR}/index.html"
 cp "${SCRIPT_DIR}/${NAME}/style.css" "${DOCS_DIR}/style.css"
 
-# Copy the public folder if one is found (graphics, other static files).
-if [ -d "public" ] && [ "$(ls -A public)" ]; then
-  cp -r public/* "${DOCS_DIR}/"
-fi
+# Replace import.meta.url with hosted paths
+perl -0777 -pi -e "s/new URL\(\s*[\\x27\\x22\\x60]\\.\\/public\\/([^\\x27\\x22\\x60]+)[\\x27\\x22\\x60],\s*import\\.meta\\.url\s*\)(\\.href|\\.toString\(\))?/\`https:\\/\\/maps-docs-team\\.web\\.app\\/samples\\/${NAME}\\/dist\\/\\1\`/g" "${DOCS_DIR}/index.ts" "${DOCS_DIR}/index.js"
 
-# Copy the src folder if one is found (.js, .json, anything parseable by Vite).
-if [ -d "src" ] && [ "$(ls -A src)" ]; then
-  cp -r src/* "${DOCS_DIR}/"
-fi
+# Replace local HTML asset paths with hosted paths
+perl -0777 -pi -e "s#src=\"\./([^\"]+\.(png|svg|jpg|jpeg|gif|json|geojson))\"#src=\"https://maps-docs-team.web.app/samples/${NAME}/dist/\1\"#g" "${DOCS_DIR}/index.html"

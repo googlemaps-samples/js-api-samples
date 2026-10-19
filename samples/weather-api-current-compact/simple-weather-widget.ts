@@ -151,7 +151,7 @@ class SimpleWeatherWidget extends HTMLElement {
                     <span id="temperature" class="temperature"></span>
                 </div>
                 <div id="rain-details" class="rain-details">
-                    <img src="/icons/rain-probability-white.svg" alt="Rain Probability Icon">
+                    <img src=${new URL('./public/icons/rain-probability-white.svg', import.meta.url).href} alt="Rain Probability Icon">
                     <span id="rain-probability"></span>
                     <span id="rain-qpf"></span>
                 </div>
@@ -222,7 +222,10 @@ class SimpleWeatherWidget extends HTMLElement {
             iconSrc = `${iconBaseUri}.svg`;
         } else {
             // Fallback to a default local icon if iconBaseUri is not available
-            iconSrc = '/icons/cloud-cover-white.svg';
+            iconSrc = new URL(
+                './public/icons/cloud-cover-white.svg',
+                import.meta.url
+            ).href;
         }
 
         iconElement.style.display = 'none'; // Explicitly hide the icon before setting src
