@@ -7,7 +7,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 // [START maps_weather_api_compact]
-import './simple-weather-widget'; // Import the custom element
+import { SimpleWeatherWidget } from './simple-weather-widget'; // Import the custom element
 
 const CURRENT_CONDITIONS_API_URL =
     'https://weather.googleapis.com/v1/currentConditions:lookup'; // Current Conditions API endpoint.
