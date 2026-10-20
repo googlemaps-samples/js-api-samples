@@ -1,0 +1,15 @@
+{
+  "name": "@js-api-samples/marker-clustering-custom",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "bash ../build-single.sh",
+    "test": "tsc && npm run build:vite --workspace=.",
+    "start": "tsc && vite build --config ../../vite.config.js --base './' && vite --config ../../vite.config.js",
+    "build:vite": "vite build --config ../../vite.config.js --base './'",
+    "preview": "vite preview --config ../../vite.config.js"
+  },
+  "author": "Google LLC",
+  "devDependencies": {
+    "@googlemaps/markerclusterer": "^2.6.1"
+  }
+}
