@@ -7,7 +7,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-class SimpleWeatherWidget extends HTMLElement {
+export class SimpleWeatherWidget extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
