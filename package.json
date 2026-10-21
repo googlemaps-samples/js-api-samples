@@ -41,7 +41,7 @@
     "@loaders.gl/core": "^4.5.4",
     "@loaders.gl/kml": "^4.5.4",
     "@vis.gl/react-google-maps": "1.10.1",
-    "dotenv": "^18.0.1",
+    "dotenv": "^18.0.8",
     "react": "^19.2.8",
     "react-dom": "^19.3.0"
   },
