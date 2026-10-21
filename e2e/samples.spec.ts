@@ -216,6 +216,10 @@ foldersToTest.forEach((sampleFolder) => {
             // Wait for the page DOM to load; this does NOT include the Google Maps APIs.
             await page.waitForLoadState('domcontentloaded', { timeout: 500 });
 
+            if (sampleFolder === 'programmatic-load-button') {
+                await page.click('#wrapper');
+            }
+
             // Wait for Google Maps to load.
             await page.waitForFunction(
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
