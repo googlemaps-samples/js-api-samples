@@ -14,14 +14,14 @@
     "samples/*"
   ],
   "devDependencies": {
-    "@eslint/css": "^2.0.0",
+    "@eslint/css": "^2.0.1",
     "@eslint/js": "^10.0.1",
-    "@eslint/json": "^2.1.0",
+    "@eslint/json": "^2.1.1",
     "@eslint/markdown": "^8.0.3",
-    "@playwright/test": "^1.63.0",
+    "@playwright/test": "^1.64.1",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/google.maps": "^3.66.3",
-    "@types/node": "^26.6.4",
+    "@types/node": "^26.6.5",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.3.0",
     "eslint": "^10.8.1",
@@ -41,7 +41,7 @@
     "@loaders.gl/core": "^4.5.4",
     "@loaders.gl/kml": "^4.5.4",
     "@vis.gl/react-google-maps": "1.10.1",
-    "dotenv": "^18.0.1",
+    "dotenv": "^18.0.8",
     "react": "^19.2.8",
     "react-dom": "^19.3.0"
   },
