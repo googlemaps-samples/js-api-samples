@@ -144,7 +144,10 @@ let debounceTimeout: number | undefined;
 
 async function init() {
     try {
-        const { Map } = await google.maps.importLibrary('maps');
+        const [{ event }, { Map }] = await Promise.all([
+            google.maps.importLibrary('core'),
+            google.maps.importLibrary('maps'),
+        ]);
 
         const mapOptions: google.maps.MapOptions = {
             center: { lat: 48.862, lng: 2.342 },
@@ -169,7 +172,7 @@ async function init() {
             }
         });
 
-        google.maps.event.addListenerOnce(map, 'projection_changed', () => {
+        event.addListenerOnce(map, 'projection_changed', () => {
             // [START maps_drawing_terradraw_modes]
 
             draw = new TerraDraw({
@@ -369,8 +372,8 @@ async function init() {
                         (uploadInput as HTMLInputElement).click();
                     };
 
-                    (uploadInput as HTMLInputElement).onchange = (event) => {
-                        const file = (event.target as HTMLInputElement)
+                    (uploadInput as HTMLInputElement).onchange = (evt) => {
+                        const file = (evt.target as HTMLInputElement)
                             .files?.[0];
                         if (file) {
                             const reader = new FileReader();
@@ -576,8 +579,8 @@ async function init() {
                 return [x / count, y / count];
             }
 
-            document.addEventListener('keydown', (event) => {
-                if (event.key === 'r' && selectedFeatureId) {
+            document.addEventListener('keydown', (evt) => {
+                if (evt.key === 'r' && selectedFeatureId) {
                     const features = draw.getSnapshot();
                     const selectedFeature = features.find(
                         (f) => f.id === selectedFeatureId
