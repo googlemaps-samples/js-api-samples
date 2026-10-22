@@ -4,17 +4,9 @@
     "target": "esnext",
     "strict": true,
     "noImplicitAny": false,
-    "lib": [
-      "es2015",
-      "esnext",
-      "es6",
-      "dom",
-      "dom.iterable"
-    ],
+    "lib": ["es2015", "esnext", "es6", "dom", "dom.iterable"],
     "moduleResolution": "bundler",
     "jsx": "preserve",
-    "types": [
-      "@types/google.maps"
-    ]
+    "types": ["@types/google.maps"]
   }
 }
