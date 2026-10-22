@@ -65,7 +65,10 @@ async function initGallPeters(): Promise<google.maps.ImageMapType> {
 
             if (y < 0 || y >= scale) return '';
 
-            return `gall-peters_${String(zoom)}_${String(x)}_${String(y)}.png`;
+            return new URL(
+                `./public/gall-peters_${String(zoom)}_${String(x)}_${String(y)}.png`,
+                import.meta.url
+            ).href;
         },
         tileSize: new Size(GALL_PETERS_RANGE_X, GALL_PETERS_RANGE_Y),
         minZoom: 0,
