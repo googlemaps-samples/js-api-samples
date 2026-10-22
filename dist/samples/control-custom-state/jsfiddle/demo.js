@@ -19,19 +19,19 @@ async function init() {
     innerMap = mapElement.innerMap;
 
     // Get the button UI elements.
-    const setCenterButton = document.getElementById('btnCenterMap');
-    const resetCenterButton = document.getElementById('btnSetCenter');
+    const centerMapButton = document.getElementById('btnCenterMap');
+    const setCenterButton = document.getElementById('btnSetCenter');
 
     // Set up the click event listener for the 'Center Map' button. Set the map
     // to the currently stored center.
-    setCenterButton.addEventListener('click', () => {
+    centerMapButton.addEventListener('click', () => {
         const currentCenter = center;
         innerMap.setCenter(currentCenter);
     });
 
     // Set up the click event listener for 'Set Center': Set the center of
     // the control to the current center of the map.
-    resetCenterButton.addEventListener('click', () => {
+    setCenterButton.addEventListener('click', () => {
         const newCenter = innerMap.getCenter();
 
         if (newCenter) {
