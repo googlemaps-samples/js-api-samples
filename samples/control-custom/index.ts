@@ -11,7 +11,7 @@ const chicago = { lat: 41.85, lng: -87.65 };
 //Get the gmp-map element
 const mapElement = document.querySelector('gmp-map') as google.maps.MapElement;
 
-async function initMap() {
+async function init() {
     const { Map } = (await google.maps.importLibrary(
         'maps'
     )) as typeof google.maps;
@@ -27,5 +27,5 @@ async function initMap() {
   });
 }
 
-initMap();
-//[END maps_control_custom]
+void init();
+// [END maps_control_custom]
