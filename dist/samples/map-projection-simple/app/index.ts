@@ -1,6 +1,6 @@
 /**
  * @license
- * Copyright 2019 Google LLC. All Rights Reserved.
+ * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -22,7 +22,7 @@ async function init() {
     });
 
     // Set the Gall-Peters map type.
-    void initGallPeters();
+    const gallPetersMapType = await initGallPeters();
     innerMap.mapTypes.set('gallPeters', gallPetersMapType);
     innerMap.setMapTypeId('gallPeters');
 
@@ -30,12 +30,7 @@ async function init() {
     const coordsDiv = document.getElementById('coords')!;
 
     innerMap.addListener('mousemove', (event: google.maps.MapMouseEvent) => {
-        coordsDiv.textContent =
-            'lat: ' +
-            Math.round(event.latLng!.lat()) +
-            ', ' +
-            'lng: ' +
-            Math.round(event.latLng!.lng());
+        coordsDiv.textContent = `lat: ${String(Math.round(event.latLng!.lat()))}, lng: ${String(Math.round(event.latLng!.lng()))}`;
     });
 
     // Add some markers to the map.
@@ -48,9 +43,7 @@ async function init() {
     innerMap.data.addGeoJson(cities);
 }
 
-let gallPetersMapType: google.maps.ImageMapType;
-
-async function initGallPeters() {
+async function initGallPeters(): Promise<google.maps.ImageMapType> {
     const [{ ImageMapType }, { Size, Point, LatLng }] = await Promise.all([
         google.maps.importLibrary('maps'),
         google.maps.importLibrary('core'),
@@ -60,7 +53,7 @@ async function initGallPeters() {
     const GALL_PETERS_RANGE_Y = 512;
 
     // Fetch Gall-Peters tiles stored locally on our server.
-    gallPetersMapType = new ImageMapType({
+    const gallPetersMapType = new ImageMapType({
         getTileUrl(coord, zoom) {
             const scale = 1 << zoom;
 
@@ -72,7 +65,7 @@ async function initGallPeters() {
 
             if (y < 0 || y >= scale) return '';
 
-            return 'gall-peters_' + zoom + '_' + x + '_' + y + '.png';
+            return `gall-peters_${String(zoom)}_${String(x)}_${String(y)}.png`;
         },
         tileSize: new Size(GALL_PETERS_RANGE_X, GALL_PETERS_RANGE_Y),
         minZoom: 0,
@@ -100,6 +93,8 @@ async function initGallPeters() {
             );
         },
     };
+
+    return gallPetersMapType;
 }
 
 // GeoJSON, describing the locations and names of some cities.

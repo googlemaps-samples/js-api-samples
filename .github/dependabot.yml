@@ -14,10 +14,20 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm"
+  # Maintain weekly dependency update schedule without an artificial cooldown delay
+  - package-ecosystem: "npm" # zizmor: ignore[dependabot-cooldown]
     directory: "/"
     schedule:
       interval: "weekly"
     ignore:
       - dependency-name: "three"
       - dependency-name: "@types/three"
+    groups:
+      deckgl:
+        patterns:
+          - "@deck.gl/*"
+
+  - package-ecosystem: "github-actions" # zizmor: ignore[dependabot-cooldown]
+    directory: "/"
+    schedule:
+      interval: "weekly"

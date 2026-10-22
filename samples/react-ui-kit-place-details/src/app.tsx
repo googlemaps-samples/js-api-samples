@@ -12,7 +12,7 @@ import { APIProvider, useMapsLibrary } from '@vis.gl/react-google-maps';
 
 import './styles.css';
 
-const API_KEY = 'AIzaSyA6myHzS10YXdcazAFalmXvDkrYCp5cLc8';
+const API_KEY = 'GOOGLE_MAPS_API_KEY';
 
 interface PlaceDetailsProps {
     placeId: string;

@@ -2,6 +2,20 @@
   "hosting": {
     "public": "dist",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    "nodeVersion": "22"
+    "nodeVersion": "22",
+    "headers": [
+      {
+        "source": "**/*.@(json|geojson|png|jpg|jpeg|gif|svg|csv|kml|kmz)",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          }
+        ]
+      }
+    ]
+  },
+  "firestore": {
+    "rules": "firestore.rules"
   }
 }

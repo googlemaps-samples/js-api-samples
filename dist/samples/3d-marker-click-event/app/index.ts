@@ -21,7 +21,6 @@ async function init() {
     const map = new Map3DElement({
         ...originalCamera,
         mode: 'SATELLITE',
-        gestureHandling: 'COOPERATIVE',
     });
 
     // Create the interactive marker and set the attributes.

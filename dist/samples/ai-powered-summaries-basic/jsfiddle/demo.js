@@ -81,7 +81,7 @@ async function getPlaceDetails() {
     innerMap.setCenter(place.location);
 
     // Handle marker click.
-    marker.addListener('gmp-click', () => {
+    marker.addEventListener('gmp-click', () => {
         showInfoWindow(marker, place, content);
     });
 

@@ -43,7 +43,12 @@ async function init(): Promise<void> {
         async ({ placePrediction }) => {
             const place = placePrediction.toPlace();
             await place.fetchFields({
-                fields: ['displayName', 'formattedAddress', 'location'],
+                fields: [
+                    'displayName',
+                    'formattedAddress',
+                    'location',
+                    'viewport',
+                ],
             });
 
             // If the place has a geometry, then present it on a map.

@@ -1,0 +1,74 @@
+/*
+ * @license
+ * Copyright 2026 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/* [START maps_ui_kit_advanced_place_details] */
+
+// Use querySelector to select elements for interaction.
+/* [START maps_ui_kit_advanced_place_details_query_selector] */
+const map = document.querySelector<google.maps.MapElement>('gmp-map')!;
+const placeDetails = document.querySelector<
+    HTMLElement & { place?: google.maps.places.Place }
+>('gmp-advanced-place-details')!;
+const placeDetailsRequest = document.querySelector<HTMLElement>(
+    'gmp-place-details-place-request'
+)!;
+const marker = document.querySelector<google.maps.marker.AdvancedMarkerElement>(
+    'gmp-advanced-marker'
+)!;
+/* [END maps_ui_kit_advanced_place_details_query_selector] */
+
+async function init(): Promise<void> {
+    // Request needed libraries.
+    await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('places'),
+    ]);
+
+    // Hide the map type control.
+    map.innerMap.setOptions({ mapTypeControl: false });
+
+    // Function to update map and marker based on place details
+    const updateMapAndMarker = () => {
+        if (placeDetails.place?.location) {
+            map.innerMap.panTo(placeDetails.place.location);
+            map.innerMap.setZoom(16); // Set zoom after panning if needed
+            marker.position = placeDetails.place.location;
+            marker.collisionBehavior = 'REQUIRED_AND_HIDES_OPTIONAL';
+            marker.style.display = 'block';
+        }
+    };
+
+    // Set up map once widget is loaded.
+    placeDetails.addEventListener('gmp-load', () => {
+        updateMapAndMarker();
+    });
+
+    /* [START maps_ui_kit_advanced_place_details_event] */
+    // Add an event listener to handle clicks.
+    map.innerMap.addListener(
+        'click',
+        (event: google.maps.MapMouseEvent | google.maps.IconMouseEvent) => {
+            marker.position = null;
+            event.stop();
+            if ('placeId' in event && event.placeId) {
+                // Fire when the user clicks a POI.
+                placeDetailsRequest.setAttribute(
+                    'place',
+                    `places/${event.placeId}`
+                );
+                updateMapAndMarker();
+            } else {
+                // Fire when the user clicks the map (not on a POI).
+                console.log('No place was selected.');
+                marker.style.display = 'none';
+            }
+        }
+    );
+}
+/* [END maps_ui_kit_advanced_place_details_event] */
+
+void init();
+/* [END maps_ui_kit_advanced_place_details] */

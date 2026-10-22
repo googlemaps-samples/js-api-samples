@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 // [START maps_3d_camera_position]
-async function initMap(): Promise<void> {
+async function init(): Promise<void> {
     // Declare the needed libraries.
     await google.maps.importLibrary('maps3d');
 
@@ -148,5 +148,5 @@ async function initMap(): Promise<void> {
     setTimeout(updateUI, 500);
 }
 
-void initMap();
+void init();
 // [END maps_3d_camera_position]

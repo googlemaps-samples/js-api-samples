@@ -124,7 +124,7 @@ async function init() {
     });
     document.body.append(map);
 
-    // 2. Create Layers
+    // 2. Create the layers
 
     // Polyline: Prinsengracht canal route (flat, orange)
     canalPolyline = new Polyline3DElement({

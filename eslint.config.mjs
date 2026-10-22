@@ -8,7 +8,13 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 import stylistic from '@stylistic/eslint-plugin';
 
 export default defineConfig([
-    globalIgnores(['**/dist/*', 'samples/*/*.js', '**/package-lock.json']),
+    globalIgnores([
+        '**/dist/*',
+        'samples/*/*.js',
+        '**/package-lock.json',
+        '**/playwright-report/*',
+        '**/test-results/*',
+    ]),
     {
         files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
         plugins: { js },

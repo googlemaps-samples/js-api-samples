@@ -16,16 +16,29 @@ echo "PROJECT_ROOT: ${PROJECT_ROOT}"
 
 DOCS_DIR="${PROJECT_ROOT}/dist/samples/${NAME}/docs"
 
-# Create two new folders.
-mkdir -p ${DOCS_DIR}/src
+# Create new folders.
+mkdir -p "${DOCS_DIR}/src"
 
 # Copy files
-cp "${SCRIPT_DIR}/${NAME}/src/app.js" "${DOCS_DIR}/src/app.js"
-cp "${SCRIPT_DIR}/${NAME}/src/app.tsx" "${DOCS_DIR}/src/app.tsx"
-cp "${SCRIPT_DIR}/${NAME}/src/styles.css" "${DOCS_DIR}/src/styles.css"
-cp "${SCRIPT_DIR}/${NAME}/index.html" "${DOCS_DIR}/index.html"
+if [ -f "${SCRIPT_DIR}/${NAME}/dist/app.js" ]; then
+  cp "${SCRIPT_DIR}/${NAME}/dist/app.js" "${DOCS_DIR}/app.js"
+fi
 
-# Copy the data folder if one is found.
-if [ -d "public" ] && [ "$(ls -A public)" ]; then
-  cp -r public/* "${DOCS_DIR}/"
+if [ -f "${SCRIPT_DIR}/${NAME}/src/app.tsx" ]; then
+  cp "${SCRIPT_DIR}/${NAME}/src/app.tsx" "${DOCS_DIR}/src/app.tsx"
+fi
+
+if [ -f "${SCRIPT_DIR}/${NAME}/style.css" ]; then
+  cp "${SCRIPT_DIR}/${NAME}/style.css" "${DOCS_DIR}/style.css"
+elif [ -f "${SCRIPT_DIR}/${NAME}/src/styles.css" ]; then
+  cp "${SCRIPT_DIR}/${NAME}/src/styles.css" "${DOCS_DIR}/style.css"
+fi
+
+if [ -f "${SCRIPT_DIR}/${NAME}/index.html" ]; then
+  cp "${SCRIPT_DIR}/${NAME}/index.html" "${DOCS_DIR}/index.html"
+fi
+
+# Copy the public folder if one is found (graphics, other static files).
+if [ -d "${SCRIPT_DIR}/${NAME}/public" ] && [ "$(ls -A ${SCRIPT_DIR}/${NAME}/public)" ]; then
+  cp -r "${SCRIPT_DIR}/${NAME}/public/"* "${DOCS_DIR}/"
 fi

@@ -16,7 +16,6 @@ async function init() {
         center: { lat: 47.6094, lng: -122.339, altitude: 0 },
         range: 1000,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     for (const [lng, lat] of positions) {

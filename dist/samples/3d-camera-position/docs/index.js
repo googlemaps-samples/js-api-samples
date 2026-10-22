@@ -1,14 +1,16 @@
-"use strict";
+'use strict';
 /*
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
  * SPDX-License-Identifier: Apache-2.0
  */
 // [START maps_3d_camera_position]
-async function initMap() {
+async function init() {
     // Declare the needed libraries.
     await google.maps.importLibrary('maps3d');
+
     const map3DElement = document.querySelector('gmp-map-3d');
+
     // Elements from HTML
     const headingSlider = document.getElementById('heading');
     const tiltSlider = document.getElementById('tilt');
@@ -17,6 +19,7 @@ async function initMap() {
     const lngSlider = document.getElementById('lng');
     const fovSlider = document.getElementById('fov');
     const rollSlider = document.getElementById('roll');
+
     const headingVal = document.getElementById('heading-val');
     const tiltVal = document.getElementById('tilt-val');
     const rangeVal = document.getElementById('range-val');
@@ -25,8 +28,10 @@ async function initMap() {
     const rollVal = document.getElementById('roll-val');
     const codeElem = document.getElementById('generated-code');
     const copyBtn = document.getElementById('copy-btn');
+
     let currentAltitude = 30;
     let isUserInteracting = false;
+
     // Update values on UI when the map changes.
     const updateUI = () => {
         const heading = map3DElement.heading?.toFixed(0) ?? '0';
@@ -38,11 +43,13 @@ async function initMap() {
         const roll = map3DElement.roll?.toFixed(0) ?? '0';
         const center = map3DElement.center;
         const mode = map3DElement.mode;
+
         headingVal.textContent = heading;
         tiltVal.textContent = tilt;
         rangeVal.textContent = range;
         fovVal.textContent = fov;
         rollVal.textContent = roll;
+
         if (!isUserInteracting) {
             fovSlider.value = fov;
             headingSlider.value = heading;
@@ -50,16 +57,20 @@ async function initMap() {
             rangeSlider.value = Math.min(10000, parseFloat(range)).toString();
             rollSlider.value = roll;
         }
+
         if (center) {
             const lat = center.lat.toFixed(4);
             const lng = center.lng.toFixed(4);
             const alt = currentAltitude.toFixed(0);
+
             latSlider.value = lat;
             lngSlider.value = lng;
             altitudeVal.textContent = alt;
+
             codeElem.textContent = `<gmp-map-3d center="${lat},${lng},${alt}" mode="${mode}" tilt="${tilt}" range="${range}" heading="${heading}" fov="${fov}" roll="${roll}"></gmp-map-3d>`;
         }
     };
+
     // Copy generated HTML to clipboard.
     copyBtn.addEventListener('click', () => {
         void navigator.clipboard.writeText(codeElem.textContent || '');
@@ -68,15 +79,18 @@ async function initMap() {
             copyBtn.textContent = 'Copy HTML';
         }, 2000);
     });
+
     // Listen to slider changes using event delegation.
     const panel = document.querySelector('.panel');
+
     panel.addEventListener('input', (e) => {
         const target = e.target;
-        if (target.tagName !== 'INPUT')
-            return;
+        if (target.tagName !== 'INPUT') return;
+
         isUserInteracting = true;
         const prop = target.name;
         const val = parseFloat(target.value);
+
         if (prop === 'lat') {
             const currentCenter = map3DElement.center;
             if (currentCenter) {
@@ -86,8 +100,7 @@ async function initMap() {
                     altitude: currentCenter.altitude,
                 };
             }
-        }
-        else if (prop === 'lng') {
+        } else if (prop === 'lng') {
             const currentCenter = map3DElement.center;
             if (currentCenter) {
                 map3DElement.center = {
@@ -96,8 +109,7 @@ async function initMap() {
                     altitude: currentCenter.altitude,
                 };
             }
-        }
-        else if (prop === 'altitude') {
+        } else if (prop === 'altitude') {
             currentAltitude = val;
             const currentCenter = map3DElement.center;
             if (currentCenter) {
@@ -107,32 +119,32 @@ async function initMap() {
                     altitude: val,
                 };
             }
-        }
-        else if (prop === 'tilt') {
+        } else if (prop === 'tilt') {
             map3DElement.tilt = Math.max(0, val);
-        }
-        else if (prop === 'fov') {
+        } else if (prop === 'fov') {
             map3DElement.fov = Math.min(80, Math.max(5, val));
-        }
-        else {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } else {
             map3DElement[prop] = val;
         }
         updateUI();
     });
+
     panel.addEventListener('change', (e) => {
         const target = e.target;
         if (target.tagName === 'INPUT') {
             isUserInteracting = false;
         }
     });
+
     // Update UI on camera change events.
     map3DElement.addEventListener('gmp-headingchange', updateUI);
     map3DElement.addEventListener('gmp-tiltchange', updateUI);
     map3DElement.addEventListener('gmp-rangechange', updateUI);
     map3DElement.addEventListener('gmp-fovchange', updateUI);
+
     // Initial UI sync
     setTimeout(updateUI, 500);
 }
-void initMap();
+
+void init();
 // [END maps_3d_camera_position]

@@ -19,7 +19,6 @@ async function init() {
         range: 6605.57279990986,
         mapId: 'bcce776b92de1336e22c569f', // Styles are associated with map IDs.
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     document.body.append(map);

@@ -1,0 +1,63 @@
+'use strict';
+/*
+ * @license
+ * Copyright 2026 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// Use querySelector to select elements for interaction.
+
+const map = document.querySelector('gmp-map');
+const placeDetails = document.querySelector('gmp-advanced-place-details');
+const placeDetailsRequest = document.querySelector(
+    'gmp-place-details-place-request'
+);
+const marker = document.querySelector('gmp-advanced-marker');
+
+async function init() {
+    // Request needed libraries.
+    await Promise.all([
+        google.maps.importLibrary('maps'),
+        google.maps.importLibrary('marker'),
+        google.maps.importLibrary('places'),
+    ]);
+
+    // Hide the map type control.
+    map.innerMap.setOptions({ mapTypeControl: false });
+
+    // Function to update map and marker based on place details
+    const updateMapAndMarker = () => {
+        if (placeDetails.place?.location) {
+            map.innerMap.panTo(placeDetails.place.location);
+            map.innerMap.setZoom(16); // Set zoom after panning if needed
+            marker.position = placeDetails.place.location;
+            marker.collisionBehavior = 'REQUIRED_AND_HIDES_OPTIONAL';
+            marker.style.display = 'block';
+        }
+    };
+
+    // Set up map once widget is loaded.
+    placeDetails.addEventListener('gmp-load', () => {
+        updateMapAndMarker();
+    });
+
+    // Add an event listener to handle clicks.
+    map.innerMap.addListener('click', (event) => {
+        marker.position = null;
+        event.stop();
+        if ('placeId' in event && event.placeId) {
+            // Fire when the user clicks a POI.
+            placeDetailsRequest.setAttribute(
+                'place',
+                `places/${event.placeId}`
+            );
+            updateMapAndMarker();
+        } else {
+            // Fire when the user clicks the map (not on a POI).
+            console.log('No place was selected.');
+            marker.style.display = 'none';
+        }
+    });
+}
+
+void init();

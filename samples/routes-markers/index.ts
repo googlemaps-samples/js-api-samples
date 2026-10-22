@@ -67,40 +67,51 @@ async function getDirections() {
         if (index === 0) {
             return {
                 ...defaultOptions,
+                title: 'Origin',
                 map: innerMap,
+                gmpClickable: true,
                 content: new PinElement({
                     glyphText: (index + 1).toString(),
                     glyphColor: 'white',
                     background: 'green',
                     borderColor: 'green',
+                    scale: 1.5,
                 }),
             };
         }
 
+        // [START maps_routes_markers_style_maker_intermediate]
         // Style all intermediate waypoints.
         if (!(index === 0 || index === totalMarkers - 1)) {
             return {
                 ...defaultOptions,
+                title: `Waypoint ${(index + 1).toString()}`, // Provide label for screenreaders
                 map: innerMap,
+                gmpClickable: true, // Make marker focusable and allow keyboard navigation
                 content: new PinElement({
                     glyphText: (index + 1).toString(),
                     glyphColor: 'white',
                     background: 'blue',
                     borderColor: 'blue',
+                    scale: 1.5, // Increase size for better visibilty
                 }),
             };
         }
+        // [END maps_routes_markers_style_maker_intermediate]
 
         // Style the destination waypoint.
         if (index === totalMarkers - 1) {
             return {
                 ...defaultOptions,
+                title: 'Destination',
                 map: innerMap,
+                gmpClickable: true,
                 content: new PinElement({
                     glyphText: (index + 1).toString(),
                     glyphColor: 'white',
                     background: 'red',
                     borderColor: 'red',
+                    scale: 1.5,
                 }),
             };
         }

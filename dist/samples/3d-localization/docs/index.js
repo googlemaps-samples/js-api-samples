@@ -21,7 +21,6 @@ async function init() {
         language: 'ZH',
         region: 'CN',
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     document.body.append(map);

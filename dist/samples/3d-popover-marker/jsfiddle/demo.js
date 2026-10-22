@@ -15,7 +15,6 @@ async function init() {
         tilt: 74,
         heading: 38,
         mode: 'HYBRID',
-        gestureHandling: 'COOPERATIVE',
     });
 
     // Popovers can only be added to interactive Markers
