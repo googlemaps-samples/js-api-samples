@@ -41,29 +41,29 @@ const PlaceDetails = ({ placeId }: PlaceDetailsProps) => {
         // Append the place request to the place details element.
         placeDetails.appendChild(placeRequest);
 
-        // Create and append the content config and its children.
-        const contentConfig = document.createElement(
-            'gmp-place-content-config'
+        // Append the content elements directly to the place details element.
+        placeDetails.insertAdjacentHTML(
+            'beforeend',
+            `
+                <gmp-place-name></gmp-place-name>
+                <gmp-place-address></gmp-place-address>
+                <gmp-place-rating></gmp-place-rating>
+                <gmp-place-type></gmp-place-type>
+                <gmp-place-price></gmp-place-price>
+                <gmp-place-accessible-entrance-icon></gmp-place-accessible-entrance-icon>
+                <gmp-place-opening-hours></gmp-place-opening-hours>
+                <gmp-place-website></gmp-place-website>
+                <gmp-place-phone-number></gmp-place-phone-number>
+                <gmp-place-summary></gmp-place-summary>
+                <gmp-place-type-specific-highlights></gmp-place-type-specific-highlights>
+                <gmp-place-reviews></gmp-place-reviews>
+                <gmp-place-feature-list></gmp-place-feature-list>
+                <gmp-place-media lightbox-preferred></gmp-place-media>
+                <gmp-place-attribution
+                    light-scheme-color="gray"
+                    dark-scheme-color="white"></gmp-place-attribution>
+            `
         );
-        contentConfig.innerHTML = `
-      <gmp-place-address></gmp-place-address>
-      <gmp-place-rating></gmp-place-rating>
-      <gmp-place-type></gmp-place-type>
-      <gmp-place-price></gmp-place-price>
-      <gmp-place-accessible-entrance-icon></gmp-place-accessible-entrance-icon>
-      <gmp-place-opening-hours></gmp-place-opening-hours>
-      <gmp-place-website></gmp-place-website>
-      <gmp-place-phone-number></gmp-place-phone-number>
-      <gmp-place-summary></gmp-place-summary>
-      <gmp-place-type-specific-highlights></gmp-place-type-specific-highlights>
-      <gmp-place-reviews></gmp-place-reviews>
-      <gmp-place-feature-list></gmp-place-feature-list>
-      <gmp-place-media lightbox-preferred></gmp-place-media>
-      <gmp-place-attribution
-        light-scheme-color="gray"
-        dark-scheme-color="white"></gmp-place-attribution>
-    `;
-        placeDetails.appendChild(contentConfig);
 
         // Append the place details element to the container.
         containerRef.current.innerHTML = ''; // Clear previous content
