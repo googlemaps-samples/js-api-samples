@@ -175,7 +175,7 @@ async function init() {
             request.routeModifiers!.vehicleInfo = {
                 emissionType: formData.get(
                     'emission_type'
-                ) as google.maps.routes.VehicleEmissionType,
+                ) as google.maps.routes.VehicleEmissionTypeString,
             };
         }
 
@@ -186,7 +186,8 @@ async function init() {
             transitPreference.allowedTransitModes = Array.from(
                 selectedTransitModes,
                 (input) =>
-                    (input as HTMLInputElement).value as google.maps.TransitMode
+                    (input as HTMLInputElement)
+                        .value as google.maps.TransitModeString
             );
             transitPreference.routingPreference =
                 (formData.get('transit_preference') as string) === ''
