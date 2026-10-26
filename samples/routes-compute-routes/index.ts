@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
 // [START maps_routes_compute_routes]
 let markers: google.maps.marker.AdvancedMarkerElement[] = [];
 let polylines: google.maps.Polyline[] = [];
@@ -264,7 +262,6 @@ async function init() {
                           strokeOpacity: 0.5,
                           strokeWeight: 8,
                       },
-                colorScheme: map.innerMap.get('colorScheme'),
             })
         );
 
