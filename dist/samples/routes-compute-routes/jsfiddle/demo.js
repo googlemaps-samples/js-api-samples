@@ -239,7 +239,6 @@ async function init() {
                           strokeOpacity: 0.5,
                           strokeWeight: 8,
                       },
-                colorScheme: map.innerMap.get('colorScheme'),
             })
         );
 
