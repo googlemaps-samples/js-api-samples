@@ -206,12 +206,12 @@ fi
 
 set -e
 
-bash ../jsfiddle.sh "$NAME"
+node ../generate-snippets.js "$NAME" --jsfiddle
 bash ../app.sh "$NAME"
 if [ -f "src/app.tsx" ] || [ -f "src/app.jsx" ] || [ -f "src/app.js" ]; then
   bash ../react-docs.sh "$NAME"
 else
-  bash ../docs.sh "$NAME"
+  node ../generate-snippets.js "$NAME" --docs
 fi
 npm run build:vite --workspace=. 
 bash ../dist.sh "$NAME"
