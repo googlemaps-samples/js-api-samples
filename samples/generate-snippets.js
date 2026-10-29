@@ -63,32 +63,26 @@ function rewriteHtmlAssets(content) {
 }
 
 /**
- * Removes `[START ...]` and `[END ...]` region tags from JS/TS content.
+ * Removes region tags from JS/TS content.
  */
 function stripJsRegionTags(content) {
     return content
-        .replace(/\/\/ \[START [^\n\r]*\]/g, '')
-        .replace(/\/\/ \[END [^\n\r]*\]/g, '')
-        .replace(/\/\* \[START [^\n\r]*\] \*\//g, '')
-        .replace(/\/\* \[END [^\n\r]*\] \*\//g, '');
+        .replace(/\/\/ \[(?:START|END) [^\n\r]*\]/g, '')
+        .replace(/\/\* \[(?:START|END) [^\n\r]*\] \*\//g, '');
 }
 
 /**
- * Removes `<!-- [START ...] -->` and `<!-- [END ...] -->` region tags from HTML content.
+ * Removes region tags from HTML content.
  */
 function stripHtmlRegionTags(content) {
-    return content
-        .replace(/<!--\s*\[START [^\n\r]*\]\s*-->/g, '')
-        .replace(/<!--\s*\[END [^\n\r]*\]\s*-->/g, '');
+    return content.replace(/<!--\s*\[(?:START|END) [^\n\r]*\]\s*-->/g, '');
 }
 
 /**
- * Removes `/* [START maps_...] * /` and `/* [END maps_...] * /` region tags from CSS content.
+ * Removes region tags from CSS content.
  */
 function stripCssRegionTags(content) {
-    return content
-        .replace(/\/\* \[START maps_[^\n\r]*\] \*\//g, '')
-        .replace(/\/\* \[END maps_[^\n\r]*\] \*\//g, '');
+    return content.replace(/\/\* \[(?:START|END) maps_[^\n\r]*\] \*\//g, '');
 }
 
 /**
