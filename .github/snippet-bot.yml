@@ -3,4 +3,3 @@ ignoreFiles:
   - "samples/*.sh"
   - "samples/*.js"
   - "samples/generate-snippets.js"
-ni
