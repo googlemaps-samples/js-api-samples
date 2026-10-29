@@ -34,7 +34,7 @@ async function init() {
     toggleButton.addEventListener('click', () => {
         isDarkMode = !isDarkMode;
         // Override the system setting by switching to light or dark mode.
-        map.setAttribute('color-scheme', isDarkMode ? 'DARK' : 'LIGHT');
+        map.colorScheme = isDarkMode ? 'DARK' : 'LIGHT';
         updateButtonText();
     });
 
