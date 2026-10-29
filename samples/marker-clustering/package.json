@@ -10,6 +10,6 @@
   },
   "author": "Google LLC",
   "dependencies": {
-    "@googlemaps/markerclusterer": "^2.6.1"
+    "@googlemaps/markerclusterer": "^2.6.2"
   }
 }
