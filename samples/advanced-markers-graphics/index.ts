@@ -46,7 +46,7 @@ async function init() {
         position: { lat: 37.434, lng: -122.082 },
         title: 'A marker using a custom PNG Image',
         anchorLeft: '0px',
-        anchorTop: '100%',
+        anchorTop: '-100%',
     });
     beachFlagMarker.append(beachFlagImg);
     mapElement.append(beachFlagMarker);
