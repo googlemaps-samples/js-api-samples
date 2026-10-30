@@ -19,7 +19,10 @@ async function init() {
     //   http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
     const script = document.createElement('script');
 
-    script.setAttribute('src', 'quakes.geo.js');
+    script.setAttribute(
+        'src',
+        new URL('./public/quakes.geo.js', import.meta.url).href
+    );
 
     document.getElementsByTagName('head')[0].appendChild(script);
 }
@@ -31,6 +34,7 @@ function earthquakeDataLoad(data: any) {
     innerMap.data.addGeoJson(data);
 }
 
-window.earthquakeDataLoad = earthquakeDataLoad;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(window as any).earthquakeDataLoad = earthquakeDataLoad;
 void init();
 // [END maps_layer_data_quakes_simple]

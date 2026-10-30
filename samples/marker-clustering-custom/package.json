@@ -11,5 +11,6 @@
   "author": "Google LLC",
   "devDependencies": {
     "@googlemaps/markerclusterer": "^2.6.1"
-  }
+  },
+  "buildRevision": 1
 }

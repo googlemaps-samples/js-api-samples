@@ -23,7 +23,9 @@ async function init() {
     // [START maps_3d_marker_graphics_png]
     // A marker with a with a URL pointing to a PNG.
     const beachFlagImg = document.createElement('img');
-    beachFlagImg.src = String(new URL('images/beachflag.png', import.meta.url));
+    beachFlagImg.src = String(
+        new URL('./public/beachflag.png', import.meta.url)
+    );
 
     const beachFlagMarker = new Marker3DElement({
         position: { lat: 37.434, lng: -122.082 },
@@ -37,7 +39,7 @@ async function init() {
 
     // [START maps_3d_marker_graphics_glyph]
     // A marker with a custom SVG glyph and white background.
-    const glyphImgUrl = new URL('images/192px.svg', import.meta.url);
+    const glyphImgUrl = new URL('./public/192px.svg', import.meta.url);
     const glyphSvgPinElement = new PinElement({
         background: 'white',
         glyphSrc: new URL(glyphImgUrl),

@@ -14,5 +14,6 @@
   "devDependencies": {
     "apache-arrow": "^21.2.0"
   },
-  "author": "Google LLC"
+  "author": "Google LLC",
+  "buildRevision": 1
 }

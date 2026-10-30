@@ -2,10 +2,10 @@
   "name": "@js-api-samples/control-custom",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsc && bash ../jsfiddle.sh control-custom && bash ../app.sh control-custom && bash ../docs.sh control-custom && npm run build:vite --workspace=. && bash ../dist.sh control-custom",
-    "test": "tsc && npm run build:vite --workspace=.",
+    "build": "bash ../build-single.sh",
     "start": "tsc && vite build --config ../../vite.config.js --base './' && vite --config ../../vite.config.js",
     "build:vite": "vite build --config ../../vite.config.js --base './'",
     "preview": "vite preview"
-  }
+  },
+  "buildRevision": 1
 }

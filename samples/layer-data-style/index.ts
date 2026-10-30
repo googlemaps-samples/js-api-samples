@@ -18,7 +18,9 @@ async function init() {
     // [START maps_layer_data_style_script_snippet_load]
     // Load GeoJSON.
     event.addListenerOnce(innerMap, 'idle', () => {
-        innerMap.data.loadGeoJson('google.json');
+        innerMap.data.loadGeoJson(
+            new URL('./public/google.json', import.meta.url).href
+        );
     });
     // [END maps_layer_data_style_script_snippet_load]
 

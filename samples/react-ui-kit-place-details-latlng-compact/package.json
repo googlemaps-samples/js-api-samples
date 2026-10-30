@@ -10,5 +10,5 @@
     "preview": "vite preview --config ../../vite.config.js"
   },
   "author": "Google LLC",
-  "buildRevision": 1
+  "buildRevision": 2
 }
