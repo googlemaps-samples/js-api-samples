@@ -92,7 +92,7 @@ function stripHtmlApiKey(content) {
     return content
         .replace(/^[ \t]*key:\s*"GOOGLE_MAPS_API_KEY",?[ \t]*\r?\n/gm, '')
         .replace(/&key=GOOGLE_MAPS_API_KEY/g, '')
-        .replace(/key=GOOGLE_MAPS_API_KEY&/g, '')
+        .replace(/\?key=GOOGLE_MAPS_API_KEY&/g, '?')
         .replace(/\?key=GOOGLE_MAPS_API_KEY/g, '');
 }
 
