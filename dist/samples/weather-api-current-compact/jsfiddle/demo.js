@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import './simple-weather-widget'; // Import the custom element
+import './simple-weather-widget';
 
 const CURRENT_CONDITIONS_API_URL =
     'https://weather.googleapis.com/v1/currentConditions:lookup'; // Current Conditions API endpoint.

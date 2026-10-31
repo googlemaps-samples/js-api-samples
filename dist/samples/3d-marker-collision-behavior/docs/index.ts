@@ -60,7 +60,7 @@ dropdown.addEventListener('change', drawMap);
 function drawMap() {
     for (const marker of markers) {
         marker.collisionBehavior =
-            dropdown.value as google.maps.CollisionBehavior;
+            dropdown.value as google.maps.CollisionBehaviorString;
     }
 }
 
