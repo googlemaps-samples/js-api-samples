@@ -1,0 +1,43 @@
+/*
+ * @license
+ * Copyright 2026 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* [START maps_3d_map_ui_controls] */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+gmp-map-3d {
+    height: 100%;
+    width: 100%;
+}
+
+.toggle-button {
+    background: rgb(235, 235, 235);
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.toggle-button:hover {
+    background-color: #007bff;
+    color: white;
+}
+/* [END maps_3d_map_ui_controls] */
