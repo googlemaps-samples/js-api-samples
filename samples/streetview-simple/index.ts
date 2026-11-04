@@ -17,7 +17,7 @@ async function init(): Promise<void> {
     const innerMap = mapElement.innerMap;
 
     // Get the center of the map.
-    const position = mapElement.center as google.maps.LatLngLiteral;
+    const position = mapElement.center as google.maps.LatLng;
 
     // Create a new StreetViewPanorama, set its position, and attach it to the map.
     const panorama = new StreetViewPanorama(document.getElementById('pano')!, {

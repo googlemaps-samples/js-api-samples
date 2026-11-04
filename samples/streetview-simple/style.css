@@ -11,11 +11,14 @@ body {
     padding: 0;
 }
 
+body {
+    display: flex;
+}
+
 gmp-map,
 #pano {
-    float: left;
+    flex: 1;
     height: 100%;
-    width: 50%;
 }
 
 /* [END maps_streetview_simple] */
