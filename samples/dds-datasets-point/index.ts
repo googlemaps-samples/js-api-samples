@@ -118,7 +118,6 @@ function makeLegend() {
     };
 
     const legend = document.getElementById('legend');
-    legend!.id = 'legend';
     const title = document.createElement('div');
     title.innerText = 'Fur Colors';
     title.classList.add('title');
@@ -126,7 +125,7 @@ function makeLegend() {
 
     for (const color of Object.keys(colors) as Iterable<keyof typeof colors>) {
         const wrapper = document.createElement('div');
-        wrapper.id = 'container';
+        wrapper.classList.add('legend-row');
         const box = document.createElement('div');
         box.style.backgroundColor = colors[color][0];
         if (colors[color][1]) {
