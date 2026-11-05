@@ -5,6 +5,8 @@
  */
 
 // [START maps_3d_marker_graphics]
+const ASSET_BASE_URL = new URL('./public/', import.meta.url);
+
 async function init() {
     const [{ Map3DElement, Marker3DElement }, { PinElement }, { Place }] =
         await Promise.all([
@@ -23,9 +25,7 @@ async function init() {
     // [START maps_3d_marker_graphics_png]
     // A marker with a with a URL pointing to a PNG.
     const beachFlagImg = document.createElement('img');
-    beachFlagImg.src = String(
-        new URL('./public/beachflag.png', import.meta.url)
-    );
+    beachFlagImg.src = String(new URL('./beachflag.png', ASSET_BASE_URL));
 
     const beachFlagMarker = new Marker3DElement({
         position: { lat: 37.434, lng: -122.082 },
@@ -39,7 +39,7 @@ async function init() {
 
     // [START maps_3d_marker_graphics_glyph]
     // A marker with a custom SVG glyph and white background.
-    const glyphImgUrl = new URL('./public/192px.svg', import.meta.url);
+    const glyphImgUrl = new URL('./192px.svg', ASSET_BASE_URL);
     const glyphSvgPinElement = new PinElement({
         background: 'white',
         glyphSrc: new URL(glyphImgUrl),

@@ -5,6 +5,8 @@
  */
 
 // [START maps_layer_data_style]
+const ASSET_BASE_URL = new URL('./public/', import.meta.url);
+
 async function init() {
     const [{ event }] = await Promise.all([
         google.maps.importLibrary('core'),
@@ -19,7 +21,7 @@ async function init() {
     // Load GeoJSON.
     event.addListenerOnce(innerMap, 'idle', () => {
         innerMap.data.loadGeoJson(
-            new URL('./public/google.json', import.meta.url).href
+            new URL('./google.json', ASSET_BASE_URL).href
         );
     });
     // [END maps_layer_data_style_script_snippet_load]

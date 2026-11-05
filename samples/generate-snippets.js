@@ -41,12 +41,12 @@ if (
 const hostedBaseUrl = `https://maps-docs-team.web.app/samples/${sampleName}/dist`;
 
 /**
- * Replaces `new URL('./public/...', import.meta.url)` expressions with hosted asset URLs.
+ * Replaces `const ASSET_BASE_URL = ...` with the hosted asset base URL.
  */
 function rewriteJsAssets(content) {
     return content.replace(
-        /new URL\(\s*['"`]\.\/public\/([^'"`]+)['"`],\s*import\.meta\.url\s*\)(?:\.href|\.toString\(\))?/g,
-        `\`${hostedBaseUrl}/$1\``
+        /(const ASSET_BASE_URL =).*/g,
+        `$1 new URL('${hostedBaseUrl}/');`
     );
 }
 

@@ -5,6 +5,8 @@
  */
 
 // [START maps_layer_data_quakes_red]
+const ASSET_BASE_URL = new URL('./public/', import.meta.url);
+
 let innerMap: google.maps.Map;
 
 async function init() {
@@ -22,10 +24,7 @@ async function init() {
     //   http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
     const script = document.createElement('script');
 
-    script.setAttribute(
-        'src',
-        new URL('./public/quakes.geo.js', import.meta.url).href
-    );
+    script.setAttribute('src', new URL('./quakes.geo.js', ASSET_BASE_URL).href);
 
     document.getElementsByTagName('head')[0].appendChild(script);
 
