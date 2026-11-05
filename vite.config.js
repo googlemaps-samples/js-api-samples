@@ -37,14 +37,14 @@ export default defineConfig(({ command }) => {
                             apiKey
                         );
                     }
+                    const publicUrlRegex =
+                        /new URL\(['"]\.\/public\/['"],\s*import\.meta\.url\)/g;
                     if (
                         command === 'build' &&
-                        transformed.includes(
-                            "new URL('./public/', import.meta.url)"
-                        )
+                        publicUrlRegex.test(transformed)
                     ) {
                         transformed = transformed.replace(
-                            /new URL\('\.\/public\/',\s*import\.meta\.url\)/g,
+                            publicUrlRegex,
                             "new URL(/* @vite-ignore */ '../', import.meta.url)"
                         );
                     }

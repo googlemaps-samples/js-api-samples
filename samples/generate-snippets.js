@@ -54,12 +54,10 @@ function rewriteJsAssets(content) {
  * Replaces local relative HTML `src="./..."` asset attributes with hosted asset URLs.
  */
 function rewriteHtmlAssets(content) {
-    return content
-        .replace(/src="\.\/(img|public|icons)\//g, `src="${hostedBaseUrl}/$1/`)
-        .replace(
-            /src="\.\/([^"]+\.(png|svg|jpg|jpeg|gif|json|geojson))"/g,
-            `src="${hostedBaseUrl}/$1"`
-        );
+    return content.replace(
+        /src="\.\/(?:public\/)?([^"]+\.(png|svg|jpg|jpeg|gif|json|geojson))"/g,
+        `src="${hostedBaseUrl}/$1"`
+    );
 }
 
 /**
