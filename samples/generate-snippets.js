@@ -97,6 +97,21 @@ function stripHtmlApiKey(content) {
 }
 
 /**
+ * Removes local `./style.css` and `./index.js` references from HTML content for JSFiddle.
+ */
+function stripHtmlLocalResources(content) {
+    return content
+        .replace(
+            /^[ \t]*<link\b[^>]*\bhref=['"](?:\.\/)?style\.css['"][^>]*>[ \t]*\r?\n?/gim,
+            ''
+        )
+        .replace(
+            /^[ \t]*<script\b[^>]*\bsrc=['"](?:\.\/)?index\.(?:js|ts)['"][^>]*><\/script>[ \t]*\r?\n?/gim,
+            ''
+        );
+}
+
+/**
  * Generates documentation snippet files in `dist/samples/<name>/docs`.
  */
 function generateDocs() {
@@ -164,6 +179,7 @@ async function generateJsFiddle() {
         content = rewriteHtmlAssets(content);
         content = stripHtmlRegionTags(content);
         content = stripHtmlApiKey(content);
+        content = stripHtmlLocalResources(content);
         content = await prettier.format(content, {
             ...prettierConfig,
             filepath: demoHtmlPath,
