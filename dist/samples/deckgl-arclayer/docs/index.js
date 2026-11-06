@@ -8,6 +8,8 @@
 import { GoogleMapsOverlay } from '@deck.gl/google-maps';
 import { ArcLayer } from '@deck.gl/layers';
 
+const ASSET_BASE_URL = new URL('https://maps-docs-team.web.app/samples/deckgl-arclayer/dist/');
+
 async function init() {
     // Request needed libraries.
     await google.maps.importLibrary('maps');
@@ -22,8 +24,8 @@ async function init() {
 
     // Set the path to the GeoJSON data file.
     const dataUrl = new URL(
-        './public/ne_10m_airports.geojson',
-        import.meta.url
+        './ne_10m_airports.geojson',
+        ASSET_BASE_URL
     ).toString();
 
     const flightsLayer = new ArcLayer({

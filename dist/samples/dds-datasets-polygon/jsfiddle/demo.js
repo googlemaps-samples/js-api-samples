@@ -9,25 +9,25 @@ const mapElement = document.querySelector('gmp-map');
 let innerMap;
 
 const styleOptions = {
-    strokeColor: 'green',
-    strokeWeight: 2,
-    strokeOpacity: 1,
-    fillColor: 'green',
-    fillOpacity: 0.3,
+  strokeColor: 'green',
+  strokeWeight: 2,
+  strokeOpacity: 1,
+  fillColor: 'green',
+  fillOpacity: 0.3,
 };
 
 async function init() {
-    // Request needed libraries.
-    await google.maps.importLibrary('maps');
+  // Request needed libraries.
+  await google.maps.importLibrary('maps');
 
-    // Get the inner map.
-    innerMap = mapElement.innerMap;
+  // Get the inner map.
+  innerMap = mapElement.innerMap;
 
-    // Dataset ID for NYC park data.
-    const datasetId = 'a75dd002-ad20-4fe6-af60-27cd2ed636b4';
+  // Dataset ID for NYC park data.
+  const datasetId = 'a75dd002-ad20-4fe6-af60-27cd2ed636b4';
 
-    const datasetLayer = innerMap.getDatasetFeatureLayer(datasetId);
-    datasetLayer.style = styleOptions;
+  const datasetLayer = innerMap.getDatasetFeatureLayer(datasetId);
+  datasetLayer.style = styleOptions;
 }
 
 void init();

@@ -6,17 +6,17 @@
  */
 
 async function init() {
-    //  Request the needed libraries.
-    await google.maps.importLibrary('maps');
+  //  Request the needed libraries.
+  await google.maps.importLibrary('maps');
 
-    const mapElement = document.querySelector('gmp-map');
+  const mapElement = document.querySelector('gmp-map');
 
-    const innerMap = mapElement.innerMap;
+  const innerMap = mapElement.innerMap;
 
-    innerMap.setOptions({
-        // Disable the default UI.
-        disableDefaultUI: true,
-    });
+  innerMap.setOptions({
+    // Disable the default UI.
+    disableDefaultUI: true,
+  });
 }
 
 void init();

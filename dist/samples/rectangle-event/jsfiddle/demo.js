@@ -15,56 +15,56 @@ let innerMap;
 let infoWindow;
 
 async function init() {
-    const { Rectangle, InfoWindow } = await google.maps.importLibrary('maps');
+  const { Rectangle, InfoWindow } = await google.maps.importLibrary('maps');
 
-    const mapElement = document.querySelector('gmp-map');
-    innerMap = mapElement.innerMap;
+  const mapElement = document.querySelector('gmp-map');
+  innerMap = mapElement.innerMap;
 
-    const bounds = {
-        north: 44.599,
-        south: 44.49,
-        east: -78.443,
-        west: -78.649,
-    };
+  const bounds = {
+    north: 44.599,
+    south: 44.49,
+    east: -78.443,
+    west: -78.649,
+  };
 
-    // Define the rectangle and set its editable property to true.
-    rectangle = new Rectangle({
-        bounds,
-        editable: true,
-        draggable: true,
-    });
+  // Define the rectangle and set its editable property to true.
+  rectangle = new Rectangle({
+    bounds,
+    editable: true,
+    draggable: true,
+  });
 
-    rectangle.setMap(innerMap);
+  rectangle.setMap(innerMap);
 
-    // Add an event listener on the rectangle.
-    rectangle.addListener('bounds_changed', showNewRect);
+  // Add an event listener on the rectangle.
+  rectangle.addListener('bounds_changed', showNewRect);
 
-    // Define an info window on the map.
-    infoWindow = new InfoWindow();
+  // Define an info window on the map.
+  infoWindow = new InfoWindow();
 }
 
 /** Show the new coordinates for the rectangle in an info window. */
 function showNewRect() {
-    const ne = rectangle.getBounds().getNorthEast();
-    const sw = rectangle.getBounds().getSouthWest();
+  const ne = rectangle.getBounds().getNorthEast();
+  const sw = rectangle.getBounds().getSouthWest();
 
-    const contentString =
-        '<b>Rectangle moved.</b><br>' +
-        'New north-east corner: ' +
-        ne.lat() +
-        ', ' +
-        ne.lng() +
-        '<br>' +
-        'New south-west corner: ' +
-        sw.lat() +
-        ', ' +
-        sw.lng();
+  const contentString =
+    '<b>Rectangle moved.</b><br>' +
+    'New north-east corner: ' +
+    ne.lat() +
+    ', ' +
+    ne.lng() +
+    '<br>' +
+    'New south-west corner: ' +
+    sw.lat() +
+    ', ' +
+    sw.lng();
 
-    // Set the info window's content and position.
-    infoWindow.setContent(contentString);
-    infoWindow.setPosition(ne);
+  // Set the info window's content and position.
+  infoWindow.setContent(contentString);
+  infoWindow.setPosition(ne);
 
-    infoWindow.open(innerMap);
+  infoWindow.open(innerMap);
 }
 
 void init();

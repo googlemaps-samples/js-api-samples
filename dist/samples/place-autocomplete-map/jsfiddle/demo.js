@@ -11,77 +11,72 @@ let innerMap;
 let marker;
 let infoWindow;
 async function init() {
-    // Request needed libraries.
-    const [{ AdvancedMarkerElement }, { InfoWindow }] = await Promise.all([
-        google.maps.importLibrary('marker'),
-        google.maps.importLibrary('maps'),
-        google.maps.importLibrary('places'),
-    ]);
+  // Request needed libraries.
+  const [{ AdvancedMarkerElement }, { InfoWindow }] = await Promise.all([
+    google.maps.importLibrary('marker'),
+    google.maps.importLibrary('maps'),
+    google.maps.importLibrary('places'),
+  ]);
 
-    // Get the inner map.
-    innerMap = mapElement.innerMap;
-    innerMap.setOptions({
-        mapTypeControl: false,
-    });
+  // Get the inner map.
+  innerMap = mapElement.innerMap;
+  innerMap.setOptions({
+    mapTypeControl: false,
+  });
 
-    // Use the bounds_changed event to restrict results to the current map bounds.
-    innerMap.addListener('bounds_changed', () => {
-        placeAutocomplete.locationRestriction = innerMap.getBounds();
-    });
+  // Use the bounds_changed event to restrict results to the current map bounds.
+  innerMap.addListener('bounds_changed', () => {
+    placeAutocomplete.locationRestriction = innerMap.getBounds();
+  });
 
-    // Create the marker and infoWindow.
-    marker = new AdvancedMarkerElement({
-        map: innerMap,
-    });
+  // Create the marker and infoWindow.
+  marker = new AdvancedMarkerElement({
+    map: innerMap,
+  });
 
-    infoWindow = new InfoWindow();
+  infoWindow = new InfoWindow();
 
-    // Add the gmp-select listener, and display the results on the map.
-    placeAutocomplete.addEventListener(
-        'gmp-select',
-        async ({ placePrediction }) => {
-            const place = placePrediction.toPlace();
-            await place.fetchFields({
-                fields: [
-                    'displayName',
-                    'formattedAddress',
-                    'location',
-                    'viewport',
-                ],
-            });
+  // Add the gmp-select listener, and display the results on the map.
+  placeAutocomplete.addEventListener(
+    'gmp-select',
+    async ({ placePrediction }) => {
+      const place = placePrediction.toPlace();
+      await place.fetchFields({
+        fields: ['displayName', 'formattedAddress', 'location', 'viewport'],
+      });
 
-            // If the place has a geometry, then present it on a map.
-            if (place.viewport) {
-                innerMap.fitBounds(place.viewport);
-            } else {
-                innerMap.setCenter(place.location);
-                innerMap.setZoom(17);
-            }
+      // If the place has a geometry, then present it on a map.
+      if (place.viewport) {
+        innerMap.fitBounds(place.viewport);
+      } else {
+        innerMap.setCenter(place.location);
+        innerMap.setZoom(17);
+      }
 
-            const content = document.createElement('div');
-            const nameText = document.createElement('span');
-            nameText.textContent = place.displayName ?? 'No name';
-            content.appendChild(nameText);
-            content.appendChild(document.createElement('br'));
-            const addressText = document.createElement('span');
-            addressText.textContent = place.formattedAddress ?? 'No address';
-            content.appendChild(addressText);
+      const content = document.createElement('div');
+      const nameText = document.createElement('span');
+      nameText.textContent = place.displayName ?? 'No name';
+      content.appendChild(nameText);
+      content.appendChild(document.createElement('br'));
+      const addressText = document.createElement('span');
+      addressText.textContent = place.formattedAddress ?? 'No address';
+      content.appendChild(addressText);
 
-            updateInfoWindow(content, place.location);
-            marker.position = place.location;
-        }
-    );
+      updateInfoWindow(content, place.location);
+      marker.position = place.location;
+    }
+  );
 }
 
 // Helper function to create an info window.
 function updateInfoWindow(content, center) {
-    infoWindow.setContent(content);
-    infoWindow.setPosition(center);
-    infoWindow.open({
-        map: innerMap,
-        anchor: marker,
-        shouldFocus: false,
-    });
+  infoWindow.setContent(content);
+  infoWindow.setPosition(center);
+  infoWindow.open({
+    map: innerMap,
+    anchor: marker,
+    shouldFocus: false,
+  });
 }
 
 void init();
