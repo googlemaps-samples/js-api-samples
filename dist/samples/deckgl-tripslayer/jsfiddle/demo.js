@@ -7,62 +7,66 @@
 import { GoogleMapsOverlay } from '@deck.gl/google-maps';
 import { TripsLayer } from '@deck.gl/geo-layers';
 
+const ASSET_BASE_URL = new URL(
+  'https://maps-docs-team.web.app/samples/deckgl-tripslayer/dist/'
+);
+
 // Set the path to the GeoJSON data file.
-const DATA_URL = new URL('./public/trips-v7.json', import.meta.url).toString();
+const DATA_URL = new URL('./trips-v7.json', ASSET_BASE_URL).toString();
 
 const LOOP_LENGTH = 1800;
 const VENDOR_COLORS = [
-    [255, 0, 0], // vendor #0
-    [0, 0, 255], // vendor #1
+  [255, 0, 0], // vendor #0
+  [0, 0, 255], // vendor #1
 ];
 
 async function init() {
-    // Request needed libraries.
-    await google.maps.importLibrary('maps');
+  // Request needed libraries.
+  await google.maps.importLibrary('maps');
 
-    // Get the gmp-map element.
-    const mapElement = document.querySelector('gmp-map');
+  // Get the gmp-map element.
+  const mapElement = document.querySelector('gmp-map');
 
-    // Get the inner map.
-    const innerMap = mapElement.innerMap;
+  // Get the inner map.
+  const innerMap = mapElement.innerMap;
 
-    innerMap.setTilt(45);
+  innerMap.setTilt(45);
 
-    let currentTime = 0;
-    const props = {
-        id: 'trips',
-        data: DATA_URL,
-        getPath: (d) => d.path,
-        getTimestamps: (d) => d.timestamps,
-        getColor: (d) => VENDOR_COLORS[d.vendor],
-        opacity: 1,
-        widthMinPixels: 2,
-        trailLength: 180,
-        currentTime,
-        shadowEnabled: false,
-    };
+  let currentTime = 0;
+  const props = {
+    id: 'trips',
+    data: DATA_URL,
+    getPath: (d) => d.path,
+    getTimestamps: (d) => d.timestamps,
+    getColor: (d) => VENDOR_COLORS[d.vendor],
+    opacity: 1,
+    widthMinPixels: 2,
+    trailLength: 180,
+    currentTime,
+    shadowEnabled: false,
+  };
 
-    const googleMapsOverlayProps = {};
-    const overlay = new GoogleMapsOverlay(googleMapsOverlayProps);
+  const googleMapsOverlayProps = {};
+  const overlay = new GoogleMapsOverlay(googleMapsOverlayProps);
 
-    const animate = () => {
-        currentTime = (currentTime + 1) % LOOP_LENGTH;
+  const animate = () => {
+    currentTime = (currentTime + 1) % LOOP_LENGTH;
 
-        const tripsLayer = new TripsLayer({
-            ...props,
-            currentTime,
-        });
+    const tripsLayer = new TripsLayer({
+      ...props,
+      currentTime,
+    });
 
-        overlay.setProps({
-            layers: [tripsLayer],
-        });
-
-        window.requestAnimationFrame(animate);
-    };
+    overlay.setProps({
+      layers: [tripsLayer],
+    });
 
     window.requestAnimationFrame(animate);
+  };
 
-    overlay.setMap(innerMap);
+  window.requestAnimationFrame(animate);
+
+  overlay.setMap(innerMap);
 }
 
 void init();

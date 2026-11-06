@@ -6,21 +6,20 @@
 -->
 
 <html>
-    <head>
-        <title>3d-map-nadir-view</title>
+  <head>
+    <title>3d-map-nadir-view</title>
 
-        <link rel="stylesheet" type="text/css" href="./style.css" />
-        <script
-            async
-            src="https://maps.googleapis.com/maps/api/js?loading=async&key=GOOGLE_MAPS_API_KEY&libraries=maps3d"></script>
-    </head>
-    <body>
-        <gmp-map-3d
-            center="37.803,-122.448,0"
-            range="2500"
-            tilt="0"
-            heading="0"
-            mode="roadmap">
-        </gmp-map-3d>
-    </body>
+    <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?loading=async&libraries=maps3d"></script>
+  </head>
+  <body>
+    <gmp-map-3d
+      center="37.803,-122.448,0"
+      range="2500"
+      tilt="0"
+      heading="0"
+      mode="roadmap">
+    </gmp-map-3d>
+  </body>
 </html>

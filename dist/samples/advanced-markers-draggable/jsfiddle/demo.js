@@ -8,29 +8,29 @@
 const mapElement = document.querySelector('gmp-map');
 
 async function init() {
-    // Request needed libraries.
-    const [{ InfoWindow }, { AdvancedMarkerElement }] = await Promise.all([
-        google.maps.importLibrary('maps'),
-        google.maps.importLibrary('marker'),
-    ]);
+  // Request needed libraries.
+  const [{ InfoWindow }, { AdvancedMarkerElement }] = await Promise.all([
+    google.maps.importLibrary('maps'),
+    google.maps.importLibrary('marker'),
+  ]);
 
-    const infoWindow = new InfoWindow();
+  const infoWindow = new InfoWindow();
 
-    const draggableMarker = new AdvancedMarkerElement({
-        position: { lat: 37.39094933041195, lng: -122.02503913145092 },
-        gmpDraggable: true,
-        title: 'This marker is draggable.',
-    });
-    mapElement.append(draggableMarker);
+  const draggableMarker = new AdvancedMarkerElement({
+    position: { lat: 37.39094933041195, lng: -122.02503913145092 },
+    gmpDraggable: true,
+    title: 'This marker is draggable.',
+  });
+  mapElement.append(draggableMarker);
 
-    draggableMarker.addEventListener('gmp-dragend', () => {
-        const position = draggableMarker.position;
-        infoWindow.close();
-        infoWindow.setContent(
-            `Pin dropped at: ${String(position.lat)}, ${String(position.lng)}`
-        );
-        infoWindow.open(draggableMarker.map, draggableMarker);
-    });
+  draggableMarker.addEventListener('gmp-dragend', () => {
+    const position = draggableMarker.position;
+    infoWindow.close();
+    infoWindow.setContent(
+      `Pin dropped at: ${String(position.lat)}, ${String(position.lng)}`
+    );
+    infoWindow.open(draggableMarker.map, draggableMarker);
+  });
 }
 
 void init();

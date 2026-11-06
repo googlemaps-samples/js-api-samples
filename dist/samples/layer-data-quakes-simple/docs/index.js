@@ -1,4 +1,3 @@
-'use strict';
 /**
  * @license
  * Copyright 2019 Google LLC. All Rights Reserved.
@@ -6,6 +5,8 @@
  */
 
 // [START maps_layer_data_quakes_simple]
+const ASSET_BASE_URL = new URL('https://maps-docs-team.web.app/samples/layer-data-quakes-simple/dist/');
+
 let innerMap;
 
 async function init() {
@@ -20,7 +21,7 @@ async function init() {
     //   http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
     const script = document.createElement('script');
 
-    script.setAttribute('src', 'quakes.geo.js');
+    script.setAttribute('src', new URL('./quakes.geo.js', ASSET_BASE_URL).href);
 
     document.getElementsByTagName('head')[0].appendChild(script);
 }
@@ -33,4 +34,5 @@ function earthquakeDataLoad(data) {
 
 window.earthquakeDataLoad = earthquakeDataLoad;
 void init();
+export {};
 // [END maps_layer_data_quakes_simple]
