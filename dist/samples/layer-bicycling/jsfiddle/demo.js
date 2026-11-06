@@ -6,14 +6,14 @@
  */
 
 async function init() {
-    const { BicyclingLayer } = await google.maps.importLibrary('maps');
+  const { BicyclingLayer } = await google.maps.importLibrary('maps');
 
-    const mapElement = document.querySelector('gmp-map');
-    const innerMap = mapElement.innerMap;
+  const mapElement = document.querySelector('gmp-map');
+  const innerMap = mapElement.innerMap;
 
-    const bikeLayer = new BicyclingLayer();
+  const bikeLayer = new BicyclingLayer();
 
-    bikeLayer.setMap(innerMap);
+  bikeLayer.setMap(innerMap);
 }
 
 void init();

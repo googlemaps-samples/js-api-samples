@@ -6,33 +6,33 @@
  */
 
 async function init() {
-    const { Map3DElement } = await google.maps.importLibrary('maps3d');
+  const { Map3DElement } = await google.maps.importLibrary('maps3d');
 
-    const map = new Map3DElement({
-        center: {
-            lat: 51.5007,
-            lng: -0.1246,
-            altitude: 0,
-        },
-        range: 2000,
-        tilt: 60,
-        heading: 0,
-        mode: 'ROADMAP',
-        // Hide the default UI controls.
-        defaultUIHidden: true,
-    });
+  const map = new Map3DElement({
+    center: {
+      lat: 51.5007,
+      lng: -0.1246,
+      altitude: 0,
+    },
+    range: 2000,
+    tilt: 60,
+    heading: 0,
+    mode: 'ROADMAP',
+    // Hide the default UI controls.
+    defaultUIHidden: true,
+  });
 
-    document.body.append(map);
+  document.body.append(map);
 
-    const toggleButton = document.getElementById('toggle-button');
+  const toggleButton = document.getElementById('toggle-button');
 
-    toggleButton.addEventListener('click', () => {
-        // Toggle the visibility of the default UI controls.
-        map.defaultUIHidden = !map.defaultUIHidden;
-        toggleButton.textContent = map.defaultUIHidden
-            ? 'Show UI controls'
-            : 'Hide UI controls';
-    });
+  toggleButton.addEventListener('click', () => {
+    // Toggle the visibility of the default UI controls.
+    map.defaultUIHidden = !map.defaultUIHidden;
+    toggleButton.textContent = map.defaultUIHidden
+      ? 'Show UI controls'
+      : 'Hide UI controls';
+  });
 }
 
 void init();

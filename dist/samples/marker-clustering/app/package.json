@@ -9,7 +9,5 @@
     "preview": "vite preview --config ../../vite.config.js"
   },
   "author": "Google LLC",
-  "dependencies": {
-    "@googlemaps/markerclusterer": "^2.6.2"
-  }
+  "buildRevision": 1
 }

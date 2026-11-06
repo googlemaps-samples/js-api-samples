@@ -14,5 +14,6 @@
   "license": "MIT",
   "dependencies": {
     "@googlemaps/js-api-loader": "^2.1.3"
-  }
+  },
+  "buildRevision": 1
 }

@@ -5,6 +5,8 @@
  */
 
 // [START maps_streetview_overlays]
+const ASSET_BASE_URL = new URL('https://maps-docs-team.web.app/samples/streetview-overlays/dist/');
+
 let panorama;
 let innerMap;
 
@@ -27,13 +29,13 @@ async function init() {
         .addEventListener('click', toggleStreetView);
 
     const cafeIcon = document.createElement('img');
-    cafeIcon.src = new URL('./public/cafe_icon.svg', import.meta.url).href;
+    cafeIcon.src = new URL('./cafe_icon.svg', ASSET_BASE_URL).href;
 
     const dollarIcon = document.createElement('img');
-    dollarIcon.src = new URL('./public/bank_icon.svg', import.meta.url).href;
+    dollarIcon.src = new URL('./bank_icon.svg', ASSET_BASE_URL).href;
 
     const busIcon = document.createElement('img');
-    busIcon.src = new URL('./public/bus_icon.svg', import.meta.url).href;
+    busIcon.src = new URL('./bus_icon.svg', ASSET_BASE_URL).href;
 
     // Set up the markers on the map
     new Marker({
