@@ -12,14 +12,6 @@ async function init(): Promise<void> {
         google.maps.importLibrary('core'),
     ]);
 
-    // Set up Street View and initially set it visible. Register the
-    // custom panorama provider function. Set the StreetView to display
-    // the custom panorama 'reception' which we check for below.
-    const panorama = new StreetViewPanorama(document.getElementById('map')!, {
-        pano: 'reception',
-        visible: true,
-    });
-
     // Construct the appropriate StreetViewPanoramaData given
     // the passed pano IDs.
     function getCustomPanorama(
@@ -47,6 +39,14 @@ async function init(): Promise<void> {
         }
         return null;
     }
+
+    // Set up Street View and initially set it visible. Register the
+    // custom panorama provider function. Set the StreetView to display
+    // the custom panorama 'reception' which we check for below.
+    const panorama = new StreetViewPanorama(document.getElementById('map')!, {
+        pano: 'reception',
+        visible: true,
+    });
 
     panorama.registerPanoProvider(getCustomPanorama);
 }
