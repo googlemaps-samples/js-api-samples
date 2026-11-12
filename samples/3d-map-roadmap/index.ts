@@ -18,37 +18,17 @@ async function init() {
         tilt: 65,
         heading: 0,
         mode: 'ROADMAP',
-        internalUsageAttributionIds: ['gmp_git_jsapisamples_v1_3d-rendering'],
+        // Hide the default UI controls, since this sample has its own mode selector.
+        defaultUIHidden: true,
     });
 
     document.body.append(map);
 
-    // Create the controls container
-    const controls = document.createElement('div');
-    controls.id = 'controls';
-    controls.classList.add('map-mode-control');
-
-    // Create the select element
-    const selector = document.createElement('select');
-    selector.id = 'map-mode';
-
-    const modes = ['ROADMAP', 'SATELLITE', 'HYBRID'];
-    modes.forEach((modeName) => {
-        const option = document.createElement('option');
-        option.value = modeName;
-        option.textContent = modeName;
-        if (modeName === 'ROADMAP') {
-            option.selected = true;
-        }
-        selector.appendChild(option);
+    // Change the map mode when a new option is selected.
+    const selector = document.getElementById('map-mode') as HTMLSelectElement;
+    selector.addEventListener('change', () => {
+        map.mode = selector.value as google.maps.maps3d.MapModeString;
     });
-
-    selector.addEventListener('change', function () {
-        map.mode = this.value as google.maps.maps3d.MapModeString;
-    });
-
-    controls.appendChild(selector);
-    document.body.appendChild(controls);
 }
 
 void init();

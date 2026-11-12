@@ -8,49 +8,49 @@
 const mapElement = document.querySelector('gmp-map');
 
 async function init() {
-    // Request needed libraries.
-    const [{ AdvancedMarkerElement }] = await Promise.all([
-        google.maps.importLibrary('marker'),
-        google.maps.importLibrary('maps'),
-    ]);
+  // Request needed libraries.
+  const [{ AdvancedMarkerElement }] = await Promise.all([
+    google.maps.importLibrary('marker'),
+    google.maps.importLibrary('maps'),
+  ]);
 
-    const markerOptions = [
-        {
-            position: { lat: 37.4239163, lng: -122.094 },
-            title: 'This marker is visible at zoom level 15 and higher.',
-            minZoom: 14,
-        },
-        {
-            position: { lat: 37.4245, lng: -122.096 },
-            title: 'This marker is visible at zoom level 16 and higher.',
-            minZoom: 15,
-        },
-        {
-            position: { lat: 37.4249, lng: -122.095 },
-            title: 'This marker is visible at zoom level 17 and higher.',
-            minZoom: 16,
-        },
-        {
-            position: { lat: 37.425, lng: -122.0955 },
-            title: 'This marker is visible at zoom level 18 and higher.',
-            minZoom: 17,
-        },
-    ];
+  const markerOptions = [
+    {
+      position: { lat: 37.4239163, lng: -122.094 },
+      title: 'This marker is visible at zoom level 15 and higher.',
+      minZoom: 14,
+    },
+    {
+      position: { lat: 37.4245, lng: -122.096 },
+      title: 'This marker is visible at zoom level 16 and higher.',
+      minZoom: 15,
+    },
+    {
+      position: { lat: 37.4249, lng: -122.095 },
+      title: 'This marker is visible at zoom level 17 and higher.',
+      minZoom: 16,
+    },
+    {
+      position: { lat: 37.425, lng: -122.0955 },
+      title: 'This marker is visible at zoom level 18 and higher.',
+      minZoom: 17,
+    },
+  ];
 
-    const markers = [];
-    for (const { position, title } of markerOptions) {
-        const marker = new AdvancedMarkerElement({ position, title });
-        mapElement.append(marker);
-        markers.push(marker);
+  const markers = [];
+  for (const { position, title } of markerOptions) {
+    const marker = new AdvancedMarkerElement({ position, title });
+    mapElement.append(marker);
+    markers.push(marker);
+  }
+
+  mapElement.innerMap.addListener('zoom_changed', () => {
+    const zoom = mapElement.innerMap.getZoom();
+    for (let i = 0; i < markers.length; i++) {
+      const { position, minZoom } = markerOptions[i];
+      markers[i].position = zoom > minZoom ? position : null;
     }
-
-    mapElement.innerMap.addListener('zoom_changed', () => {
-        const zoom = mapElement.innerMap.getZoom();
-        for (let i = 0; i < markers.length; i++) {
-            const { position, minZoom } = markerOptions[i];
-            markers[i].position = zoom > minZoom ? position : null;
-        }
-    });
+  });
 }
 
 void init();

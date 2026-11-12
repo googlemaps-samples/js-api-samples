@@ -26,9 +26,10 @@ body {
         Arial,
         sans-serif;
     overflow: hidden;
+    /* Top center avoids the default UI controls and Google attribution. */
     position: absolute;
     left: 50%;
-    bottom: 5px;
+    top: 5px;
     transform: translateX(-50%);
     border: 1px solid white;
     border-radius: 2px;

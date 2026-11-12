@@ -9,25 +9,25 @@
 // of the map controls.
 
 async function init() {
-    //  Request the needed libraries.
-    const [{ MapTypeControlStyle, MapTypeId }, { ControlPosition }] =
-        await Promise.all([
-            google.maps.importLibrary('maps'),
-            google.maps.importLibrary('core'),
-        ]);
+  //  Request the needed libraries.
+  const [{ MapTypeControlStyle, MapTypeId }, { ControlPosition }] =
+    await Promise.all([
+      google.maps.importLibrary('maps'),
+      google.maps.importLibrary('core'),
+    ]);
 
-    const mapElement = document.querySelector('gmp-map');
+  const mapElement = document.querySelector('gmp-map');
 
-    const innerMap = mapElement.innerMap;
+  const innerMap = mapElement.innerMap;
 
-    innerMap.setOptions({
-        mapTypeControl: true,
-        mapTypeControlOptions: {
-            style: MapTypeControlStyle.DROPDOWN_MENU,
-            mapTypeIds: [MapTypeId.ROADMAP, MapTypeId.TERRAIN],
-            position: ControlPosition.TOP_CENTER,
-        },
-    });
+  innerMap.setOptions({
+    mapTypeControl: true,
+    mapTypeControlOptions: {
+      style: MapTypeControlStyle.DROPDOWN_MENU,
+      mapTypeIds: [MapTypeId.ROADMAP, MapTypeId.TERRAIN],
+      position: ControlPosition.TOP_CENTER,
+    },
+  });
 }
 
 void init();
