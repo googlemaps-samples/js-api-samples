@@ -6,19 +6,19 @@
  */
 
 async function init() {
-    await google.maps.importLibrary('places');
-    await customElements.whenDefined('gmp-advanced-place-list');
-    const listElement = document.querySelector('gmp-advanced-place-list');
+  await google.maps.importLibrary('places');
+  await customElements.whenDefined('gmp-advanced-place-list');
+  const listElement = document.querySelector('gmp-advanced-place-list');
 
-    if (listElement) {
-        listElement.addEventListener('gmp-error', (e) => {
-            const customEvent = e;
-            console.error(
-                'Failed to load places: ',
-                customEvent.detail.errors ?? customEvent
-            );
-        });
-    }
+  if (listElement) {
+    listElement.addEventListener('gmp-error', (e) => {
+      const customEvent = e;
+      console.error(
+        'Failed to load places: ',
+        customEvent.detail.errors ?? customEvent
+      );
+    });
+  }
 }
 
 void init();

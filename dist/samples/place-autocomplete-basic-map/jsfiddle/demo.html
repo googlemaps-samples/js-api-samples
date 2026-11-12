@@ -6,43 +6,46 @@
 -->
 
 <html>
-    <head>
-        <title>Basic Place Autocomplete map</title>
+  <head>
+    <title>Basic Place Autocomplete map</title>
 
-        <link rel="stylesheet" type="text/css" href="./style.css" />
-        <script type="module" src="./index.js"></script>
-        <script>
-            // prettier-ignore
-            (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
-                key: "GOOGLE_MAPS_API_KEY"
+    <script>
+      // prettier-ignore
+      (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
             });
-        </script>
-    </head>
-    <body>
-        <gmp-map
-            zoom="12"
-            center="37.4220656,-122.0840897"
-            map-id="DEMO_MAP_ID">
-            <gmp-basic-place-autocomplete
-                slot="control-inline-start-block-start"></gmp-basic-place-autocomplete>
-        </gmp-map>
+    </script>
+  </head>
+  <body>
+    <gmp-map zoom="12" center="37.4220656,-122.0840897" map-id="DEMO_MAP_ID">
+      <gmp-basic-place-autocomplete
+        slot="control-inline-start-block-start"></gmp-basic-place-autocomplete>
+    </gmp-map>
 
-        <!-- Use inline styles to configure the Place Details Compact element because
+    <!-- Use inline styles to configure the Place Details Compact element because
      it will be placed within the info window, and info window content is inside 
      the shadow DOM when using <gmp-map> -->
-        <gmp-place-details-compact
-            orientation="horizontal"
-            style="
-                width: 400px;
-                display: none;
-                border: none;
-                padding: 0;
-                margin: 0;
-                background-color: transparent;
-                color-scheme: light;
-            ">
-            <gmp-place-details-place-request></gmp-place-details-place-request>
-            <gmp-place-standard-content></gmp-place-standard-content>
-        </gmp-place-details-compact>
-    </body>
+    <gmp-place-details-compact
+      orientation="horizontal"
+      style="
+        width: 400px;
+        display: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        background-color: transparent;
+        color-scheme: light;
+      ">
+      <gmp-place-details-place-request></gmp-place-details-place-request>
+      <gmp-place-media lightbox-preferred></gmp-place-media>
+      <gmp-place-name></gmp-place-name>
+      <gmp-place-rating></gmp-place-rating>
+      <gmp-place-type></gmp-place-type>
+      <gmp-place-price></gmp-place-price>
+      <gmp-place-accessible-entrance-icon></gmp-place-accessible-entrance-icon>
+      <gmp-place-open-now-status></gmp-place-open-now-status>
+      <gmp-place-attribution
+        light-scheme-color="gray"
+        dark-scheme-color="white"></gmp-place-attribution>
+    </gmp-place-details-compact>
+  </body>
 </html>

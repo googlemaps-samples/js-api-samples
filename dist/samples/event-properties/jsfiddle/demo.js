@@ -6,22 +6,22 @@
  */
 
 async function init() {
-    // Request needed libraries.
-    const { InfoWindow } = await google.maps.importLibrary('maps');
+  // Request needed libraries.
+  const { InfoWindow } = await google.maps.importLibrary('maps');
 
-    const mapElement = document.querySelector('gmp-map');
-    const innerMap = mapElement.innerMap;
+  const mapElement = document.querySelector('gmp-map');
+  const innerMap = mapElement.innerMap;
 
-    const infoWindow = new InfoWindow({
-        content: 'Change the zoom level',
-        position: mapElement.center,
-    });
+  const infoWindow = new InfoWindow({
+    content: 'Change the zoom level',
+    position: mapElement.center,
+  });
 
-    infoWindow.open(innerMap);
+  infoWindow.open(innerMap);
 
-    innerMap.addListener('zoom_changed', () => {
-        infoWindow.setContent('Zoom: ' + innerMap.getZoom());
-    });
+  innerMap.addListener('zoom_changed', () => {
+    infoWindow.setContent('Zoom: ' + innerMap.getZoom());
+  });
 }
 
 void init();

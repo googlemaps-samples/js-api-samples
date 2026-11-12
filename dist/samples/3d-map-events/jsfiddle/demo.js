@@ -8,21 +8,21 @@
 const mapElement = document.querySelector('gmp-map-3d');
 
 async function init() {
-    // Import the needed libraries.
-    await google.maps.importLibrary('maps3d');
+  // Import the needed libraries.
+  await google.maps.importLibrary('maps3d');
 
-    const events = [...document.querySelectorAll('div > p')].map(
-        (i) => i.textContent
-    );
-    for (const event of events) {
-        mapElement?.addEventListener(event, () => {
-            const eventElement = document.querySelector(`#${event}`);
-            eventElement?.classList.add('active');
-            setTimeout(() => {
-                eventElement?.classList.remove('active');
-            }, 1000);
-        });
-    }
+  const events = [...document.querySelectorAll('div > p')].map(
+    (i) => i.textContent
+  );
+  for (const event of events) {
+    mapElement?.addEventListener(event, () => {
+      const eventElement = document.querySelector(`#${event}`);
+      eventElement?.classList.add('active');
+      setTimeout(() => {
+        eventElement?.classList.remove('active');
+      }, 1000);
+    });
+  }
 }
 
 void init();

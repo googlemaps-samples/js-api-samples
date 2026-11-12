@@ -10,34 +10,35 @@
  */
 html,
 map {
-    height: 100%;
+  height: 100%;
 }
 body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 .textContainer {
-    background-color: #4d90fe;
-    box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
-    margin: 10px;
-    font:
-        400 18px Roboto,
-        Arial,
-        sans-serif;
-    overflow: hidden;
-    position: absolute;
-    left: 50%;
-    bottom: 5px;
-    transform: translateX(-50%);
-    border: 1px solid white;
-    border-radius: 2px;
-    padding: 5px;
-    z-index: 1000;
+  background-color: #4d90fe;
+  box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+  font:
+    400 18px Roboto,
+    Arial,
+    sans-serif;
+  overflow: hidden;
+  /* Top center avoids the default UI controls and Google attribution. */
+  position: absolute;
+  left: 50%;
+  top: 5px;
+  transform: translateX(-50%);
+  border: 1px solid white;
+  border-radius: 2px;
+  padding: 5px;
+  z-index: 1000;
 }
 
 .text {
-    color: white;
-    font-size: 1em;
-    text-align: center;
+  color: white;
+  font-size: 1em;
+  text-align: center;
 }

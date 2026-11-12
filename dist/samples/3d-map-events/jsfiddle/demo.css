@@ -6,25 +6,25 @@
 
 html,
 body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 body {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 gmp-map-3d {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 .myaside {
-    flex-basis: 25%;
-    font-family:
-        Droid Sans Mono,
-        monospace;
-    font-size: 15px;
-    padding: 2px;
+  flex-basis: 25%;
+  font-family:
+    Droid Sans Mono,
+    monospace;
+  font-size: 15px;
+  padding: 2px;
 }
 .myaside > p.active {
-    background-color: #9cf;
+  background-color: #9cf;
 }

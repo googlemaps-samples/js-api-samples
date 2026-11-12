@@ -13,91 +13,87 @@ let datasetLayer;
 
 // Note, 'globalid' is an attribute in this Dataset.
 function handleClick(event) {
-    if (event.features) {
-        lastClickedFeatureIds = event.features.map(
-            (f) => f.datasetAttributes.globalid
-        );
-    }
-    datasetLayer.style = applyStyle;
+  if (event.features) {
+    lastClickedFeatureIds = event.features.map(
+      (f) => f.datasetAttributes.globalid
+    );
+  }
+  datasetLayer.style = applyStyle;
 }
 
 function handleMouseMove(event) {
-    if (event.features) {
-        lastInteractedFeatureIds = event.features.map(
-            (f) => f.datasetAttributes.globalid
-        );
-    }
-    datasetLayer.style = applyStyle;
+  if (event.features) {
+    lastInteractedFeatureIds = event.features.map(
+      (f) => f.datasetAttributes.globalid
+    );
+  }
+  datasetLayer.style = applyStyle;
 }
 
 async function init() {
-    // Request needed libraries.
-    await google.maps.importLibrary('maps');
+  // Request needed libraries.
+  await google.maps.importLibrary('maps');
 
-    // Get the inner map.
-    innerMap = mapElement.innerMap;
+  // Get the inner map.
+  innerMap = mapElement.innerMap;
 
-    // Dataset ID for NYC park data.
-    const datasetId = 'a75dd002-ad20-4fe6-af60-27cd2ed636b4';
+  // Dataset ID for NYC park data.
+  const datasetId = 'a75dd002-ad20-4fe6-af60-27cd2ed636b4';
 
-    datasetLayer = innerMap.getDatasetFeatureLayer(datasetId);
-    datasetLayer.style = applyStyle;
+  datasetLayer = innerMap.getDatasetFeatureLayer(datasetId);
+  datasetLayer.style = applyStyle;
 
-    datasetLayer.addListener('click', handleClick);
-    datasetLayer.addListener('mousemove', handleMouseMove);
+  datasetLayer.addListener('click', handleClick);
+  datasetLayer.addListener('mousemove', handleMouseMove);
 
-    // Map event listener.
-    innerMap.addListener('mousemove', () => {
-        // If the map gets a mousemove, that means there are no feature layers
-        // with listeners registered under the mouse, so we clear the last
-        // interacted feature ids.
-        if (lastInteractedFeatureIds?.length) {
-            lastInteractedFeatureIds = [];
-            datasetLayer.style = applyStyle;
-        }
-    });
+  // Map event listener.
+  innerMap.addListener('mousemove', () => {
+    // If the map gets a mousemove, that means there are no feature layers
+    // with listeners registered under the mouse, so we clear the last
+    // interacted feature ids.
+    if (lastInteractedFeatureIds?.length) {
+      lastInteractedFeatureIds = [];
+      datasetLayer.style = applyStyle;
+    }
+  });
 }
 
 const styleDefault = {
-    strokeColor: 'green',
-    strokeWeight: 2.0,
-    strokeOpacity: 1.0,
-    fillColor: 'green',
-    fillOpacity: 0.3,
+  strokeColor: 'green',
+  strokeWeight: 2.0,
+  strokeOpacity: 1.0,
+  fillColor: 'green',
+  fillOpacity: 0.3,
 };
 
 const styleClicked = {
-    ...styleDefault,
-    strokeColor: 'blue',
-    fillColor: 'blue',
-    fillOpacity: 0.5,
+  ...styleDefault,
+  strokeColor: 'blue',
+  fillColor: 'blue',
+  fillOpacity: 0.5,
 };
 
 const styleMouseMove = {
-    ...styleDefault,
-    strokeWeight: 4.0,
+  ...styleDefault,
+  strokeWeight: 4.0,
 };
 
 function applyStyle(params) {
-    const datasetFeature = params.feature;
+  const datasetFeature = params.feature;
 
-    // Note, 'globalid' is an attribute in this dataset.
-    if (
-        lastClickedFeatureIds.includes(
-            datasetFeature.datasetAttributes.globalid
-        )
-    ) {
-        return styleClicked;
-    }
+  // Note, 'globalid' is an attribute in this dataset.
+  if (
+    lastClickedFeatureIds.includes(datasetFeature.datasetAttributes.globalid)
+  ) {
+    return styleClicked;
+  }
 
-    if (
-        lastInteractedFeatureIds.includes(
-            datasetFeature.datasetAttributes.globalid
-        )
-    ) {
-        return styleMouseMove;
-    }
-    return styleDefault;
+  if (
+    lastInteractedFeatureIds.includes(datasetFeature.datasetAttributes.globalid)
+  ) {
+    return styleMouseMove;
+  }
+  return styleDefault;
 }
 
 void init();

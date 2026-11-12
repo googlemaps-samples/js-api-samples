@@ -14,8 +14,10 @@ interface Data {
     timestamps: number[];
 }
 
+const ASSET_BASE_URL = new URL('./public/', import.meta.url);
+
 // Set the path to the GeoJSON data file.
-const DATA_URL = new URL('./public/trips-v7.json', import.meta.url).toString();
+const DATA_URL = new URL('./trips-v7.json', ASSET_BASE_URL).toString();
 
 const LOOP_LENGTH = 1800;
 const VENDOR_COLORS: Color[] = [
