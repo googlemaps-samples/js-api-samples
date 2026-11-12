@@ -17,90 +17,90 @@ let address2Field;
 let postalField;
 
 async function init() {
-    await google.maps.importLibrary('places');
+  await google.maps.importLibrary('places');
 
-    placeAutocomplete = document.querySelector('gmp-place-autocomplete');
-    address1Field = document.querySelector('#address1');
-    address2Field = document.querySelector('#address2');
-    postalField = document.querySelector('#postcode');
-    const saveButton = document.querySelector('.my-button');
+  placeAutocomplete = document.querySelector('gmp-place-autocomplete');
+  address1Field = document.querySelector('#address1');
+  address2Field = document.querySelector('#address2');
+  postalField = document.querySelector('#postcode');
+  const saveButton = document.querySelector('.my-button');
 
-    placeAutocomplete.focus();
+  placeAutocomplete.focus();
 
-    // Handle user selection on the autocomplete widget.
-    placeAutocomplete.addEventListener('gmp-select', ({ placePrediction }) => {
-        void fillInAddress(placePrediction);
-    });
+  // Handle user selection on the autocomplete widget.
+  placeAutocomplete.addEventListener('gmp-select', ({ placePrediction }) => {
+    void fillInAddress(placePrediction);
+  });
 
-    saveButton.addEventListener('click', () => {
-        // Display a message when the Save button is clicked.
-        alert('In a real application, this would save the address details.');
-    });
+  saveButton.addEventListener('click', () => {
+    // Display a message when the Save button is clicked.
+    alert('In a real application, this would save the address details.');
+  });
 }
 
 async function fillInAddress(placePrediction) {
-    // The placePrediction object does not have all the details needed
-    // for the form, so we'll call fetchFields to get the place details.
-    const place = placePrediction.toPlace();
-    await place.fetchFields({ fields: ['addressComponents'] });
+  // The placePrediction object does not have all the details needed
+  // for the form, so we'll call fetchFields to get the place details.
+  const place = placePrediction.toPlace();
+  await place.fetchFields({ fields: ['addressComponents'] });
 
-    let address1 = '';
-    let address2 = '';
-    let postcode = '';
+  let address1 = '';
+  let address2 = '';
+  let postcode = '';
 
-    if (!place.addressComponents) {
-        return;
+  if (!place.addressComponents) {
+    return;
+  }
+
+  // Populate form fields with address component data.
+  // The field is only updated if the types array includes
+  // the specified type-value.
+  for (const component of place.addressComponents) {
+    if (component.types.includes('street_address')) {
+      address1 = `${component.longText} ${address1}`;
     }
 
-    // Populate form fields with address component data.
-    // The field is only updated if the types array includes
-    // the specified type-value.
-    for (const component of place.addressComponents) {
-        if (component.types.includes('street_address')) {
-            address1 = `${component.longText} ${address1}`;
-        }
-
-        if (component.types.includes('street_number')) {
-            address1 = `${component.longText} ${address1}`;
-        }
-
-        if (component.types.includes('route')) {
-            address1 += component.shortText;
-        }
-
-        if (component.types.includes('postal_code')) {
-            postcode = `${component.longText}${postcode}`;
-        }
-
-        if (component.types.includes('postal_code_suffix')) {
-            postcode = `${postcode}-${component.longText}`;
-        }
-
-        if (component.types.includes('subpremise')) {
-            address2 += component.longText;
-        }
-
-        if (component.types.includes('locality')) {
-            document.querySelector('#locality').value = component.longText;
-        }
-
-        if (component.types.includes('administrative_area_level_1')) {
-            document.querySelector('#state').value = component.shortText;
-        }
-
-        if (component.types.includes('country')) {
-            document.querySelector('#country').value = component.longText;
-        }
+    if (component.types.includes('street_number')) {
+      address1 = `${component.longText} ${address1}`;
     }
 
-    address1Field.value = address1;
-    address2Field.value = address2;
-    postalField.value = postcode;
+    if (component.types.includes('route')) {
+      address1 += component.shortText;
+    }
 
-    // After filling the form with address components from the Autocomplete
-    // prediction, set cursor focus on the second address line to encourage
-    // entry of subpremise information such as apartment, unit, or floor number.
-    address2Field.focus();
+    if (component.types.includes('postal_code')) {
+      postcode = `${component.longText}${postcode}`;
+    }
+
+    if (component.types.includes('postal_code_suffix')) {
+      postcode = `${postcode}-${component.longText}`;
+    }
+
+    if (component.types.includes('subpremise')) {
+      address2 += component.longText;
+    }
+
+    if (component.types.includes('locality')) {
+      document.querySelector('#locality').value = component.longText;
+    }
+
+    if (component.types.includes('administrative_area_level_1')) {
+      document.querySelector('#state').value = component.shortText;
+    }
+
+    if (component.types.includes('country')) {
+      document.querySelector('#country').value = component.longText;
+    }
+  }
+
+  address1Field.value = address1;
+  address2Field.value = address2;
+  postalField.value = postcode;
+
+  // After filling the form with address components from the Autocomplete
+  // prediction, set cursor focus on the second address line to encourage
+  // entry of subpremise information such as apartment, unit, or floor number.
+  address2Field.focus();
 }
 
 void init();

@@ -6,19 +6,17 @@
 -->
 
 <html>
-    <head>
-        <title>Add a Map using HTML</title>
+  <head>
+    <title>Add a Map using HTML</title>
 
-        <link rel="stylesheet" type="text/css" href="./style.css" />
-        <script type="module" src="./index.js"></script>
-        <script
-            async
-            src="https://maps.googleapis.com/maps/api/js?loading=async&key=GOOGLE_MAPS_API_KEY&libraries=maps,marker"></script>
-    </head>
-    <body>
-        <gmp-map
-            center="37.4220656,-122.0840897"
-            zoom="10"
-            style="height: 500px"></gmp-map>
-    </body>
+    <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?loading=async&libraries=maps,marker"></script>
+  </head>
+  <body>
+    <gmp-map
+      center="37.4220656,-122.0840897"
+      zoom="10"
+      style="height: 500px"></gmp-map>
+  </body>
 </html>

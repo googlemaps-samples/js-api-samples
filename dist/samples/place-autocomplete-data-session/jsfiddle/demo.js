@@ -17,128 +17,127 @@ let tokenCount = 0;
 
 // Create an initial request body.
 const request = {
-    input: '',
-    includedPrimaryTypes: [
-        'restaurant',
-        'cafe',
-        'museum',
-        'park',
-        'botanical_garden',
-    ],
+  input: '',
+  includedPrimaryTypes: [
+    'restaurant',
+    'cafe',
+    'museum',
+    'park',
+    'botanical_garden',
+  ],
 };
 
 async function init() {
-    await google.maps.importLibrary('maps');
-    innerMap = mapElement.innerMap;
-    innerMap.setOptions({
-        mapTypeControl: false,
-    });
+  await google.maps.importLibrary('maps');
+  innerMap = mapElement.innerMap;
+  innerMap.setOptions({
+    mapTypeControl: false,
+  });
 
-    // Update request center and bounds when the map bounds change.
-    innerMap.addListener('bounds_changed', () => {
-        request.locationRestriction = innerMap.getBounds();
-        request.origin = innerMap.getCenter();
-    });
+  // Update request center and bounds when the map bounds change.
+  innerMap.addListener('bounds_changed', () => {
+    request.locationRestriction = innerMap.getBounds();
+    request.origin = innerMap.getCenter();
+  });
 
-    inputElement.addEventListener('input', makeAutocompleteRequest);
+  inputElement.addEventListener('input', makeAutocompleteRequest);
 }
 
 async function makeAutocompleteRequest(inputEvent) {
-    // To avoid race conditions, store the request ID and compare after the request.
-    const requestId = ++newestRequestId;
+  // To avoid race conditions, store the request ID and compare after the request.
+  const requestId = ++newestRequestId;
 
-    const { AutocompleteSuggestion } =
-        await google.maps.importLibrary('places');
+  const { AutocompleteSuggestion } = await google.maps.importLibrary('places');
 
-    if (!inputEvent.target?.value) {
-        titleElement.textContent = '';
-        resultsContainerElement.replaceChildren();
-        return;
-    }
-
-    // Add the latest char sequence to the request.
-    request.input = inputEvent.target.value;
-
-    // Fetch autocomplete suggestions and show them in a list.
-    const { suggestions } =
-        await AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
-
-    // If the request has been superseded by a newer request, do not render the output.
-    if (requestId !== newestRequestId) return;
-
-    titleElement.innerText = `Place predictions for "${request.input}"`;
-
-    // Clear the list first.
+  if (!inputEvent.target?.value) {
+    titleElement.textContent = '';
     resultsContainerElement.replaceChildren();
+    return;
+  }
 
-    for (const suggestion of suggestions) {
-        const placePrediction = suggestion.placePrediction;
+  // Add the latest char sequence to the request.
+  request.input = inputEvent.target.value;
 
-        if (!placePrediction) {
-            continue;
-        }
+  // Fetch autocomplete suggestions and show them in a list.
+  const { suggestions } =
+    await AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
 
-        // Create a link for the place, add an event handler to fetch the place.
-        // We are using a button element to take advantage of its a11y capabilities.
-        const placeButton = document.createElement('button');
-        placeButton.addEventListener('click', () => {
-            void onPlaceSelected(placePrediction.toPlace());
-        });
+  // If the request has been superseded by a newer request, do not render the output.
+  if (requestId !== newestRequestId) return;
 
-        placeButton.textContent = placePrediction.text.toString();
-        placeButton.classList.add('place-button');
+  titleElement.innerText = `Place predictions for "${request.input}"`;
 
-        // Create a new list item element.
-        const li = document.createElement('li');
-        li.appendChild(placeButton);
-        resultsContainerElement.appendChild(li);
+  // Clear the list first.
+  resultsContainerElement.replaceChildren();
+
+  for (const suggestion of suggestions) {
+    const placePrediction = suggestion.placePrediction;
+
+    if (!placePrediction) {
+      continue;
     }
+
+    // Create a link for the place, add an event handler to fetch the place.
+    // We are using a button element to take advantage of its a11y capabilities.
+    const placeButton = document.createElement('button');
+    placeButton.addEventListener('click', () => {
+      void onPlaceSelected(placePrediction.toPlace());
+    });
+
+    placeButton.textContent = placePrediction.text.toString();
+    placeButton.classList.add('place-button');
+
+    // Create a new list item element.
+    const li = document.createElement('li');
+    li.appendChild(placeButton);
+    resultsContainerElement.appendChild(li);
+  }
 }
 
 // Event handler for clicking on a suggested place.
 async function onPlaceSelected(place) {
-    const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+  const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
-    await place.fetchFields({
-        fields: ['displayName', 'formattedAddress', 'location'],
-    });
+  await place.fetchFields({
+    fields: ['displayName', 'formattedAddress', 'location'],
+  });
 
-    resultsContainerElement.textContent = `${place.displayName}: ${place.formattedAddress}`;
-    titleElement.textContent = 'Selected Place:';
-    inputElement.value = '';
+  resultsContainerElement.textContent = `${place.displayName}: ${place.formattedAddress}`;
+  titleElement.textContent = 'Selected Place:';
+  inputElement.value = '';
 
-    await refreshToken();
+  await refreshToken();
 
-    // Remove the previous marker, if it exists.
-    if (marker) {
-        marker.remove();
-    }
+  // Remove the previous marker, if it exists.
+  if (marker) {
+    marker.remove();
+  }
 
-    // Create a new marker.
-    marker = new AdvancedMarkerElement({
-        map: innerMap,
-        position: place.location,
-        title: place.displayName,
-    });
+  // Create a new marker.
+  marker = new AdvancedMarkerElement({
+    map: innerMap,
+    position: place.location,
+    title: place.displayName,
+  });
 
-    // Center the map on the selected place.
-    if (place.location) {
-        innerMap.setCenter(place.location);
-        innerMap.setZoom(15);
-    }
+  // Center the map on the selected place.
+  if (place.location) {
+    innerMap.setCenter(place.location);
+    innerMap.setZoom(15);
+  }
 }
 
 // Helper function to refresh the session token.
 async function refreshToken() {
-    const { AutocompleteSessionToken } =
-        await google.maps.importLibrary('places');
+  const { AutocompleteSessionToken } =
+    await google.maps.importLibrary('places');
 
-    // Increment the token counter.
-    tokenCount++;
+  // Increment the token counter.
+  tokenCount++;
 
-    // Create a new session token and add it to the request.
-    request.sessionToken = new AutocompleteSessionToken();
-    tokenStatusElement.textContent = `Session token count: ${tokenCount}`;
+  // Create a new session token and add it to the request.
+  request.sessionToken = new AutocompleteSessionToken();
+  tokenStatusElement.textContent = `Session token count: ${tokenCount}`;
 }
 
 void init();

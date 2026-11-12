@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
 // [START maps_routes_compute_routes]
 let markers: google.maps.marker.AdvancedMarkerElement[] = [];
 let polylines: google.maps.Polyline[] = [];
@@ -175,7 +173,7 @@ async function init() {
             request.routeModifiers!.vehicleInfo = {
                 emissionType: formData.get(
                     'emission_type'
-                ) as google.maps.routes.VehicleEmissionType,
+                ) as google.maps.routes.VehicleEmissionTypeString,
             };
         }
 
@@ -186,7 +184,8 @@ async function init() {
             transitPreference.allowedTransitModes = Array.from(
                 selectedTransitModes,
                 (input) =>
-                    (input as HTMLInputElement).value as google.maps.TransitMode
+                    (input as HTMLInputElement)
+                        .value as google.maps.TransitModeString
             );
             transitPreference.routingPreference =
                 (formData.get('transit_preference') as string) === ''
@@ -263,7 +262,6 @@ async function init() {
                           strokeOpacity: 0.5,
                           strokeWeight: 8,
                       },
-                colorScheme: map.innerMap.get('colorScheme'),
             })
         );
 

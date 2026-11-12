@@ -9,35 +9,35 @@ let innerMap;
 const mapElement = document.querySelector('gmp-map');
 
 let center = {
-    lat: 41.85,
-    lng: -87.65,
+  lat: 41.85,
+  lng: -87.65,
 };
 
 async function init() {
-    await google.maps.importLibrary('maps');
+  await google.maps.importLibrary('maps');
 
-    innerMap = mapElement.innerMap;
+  innerMap = mapElement.innerMap;
 
-    // Get the button UI elements.
-    const centerMapButton = document.getElementById('btnCenterMap');
-    const setCenterButton = document.getElementById('btnSetCenter');
+  // Get the button UI elements.
+  const centerMapButton = document.getElementById('btnCenterMap');
+  const setCenterButton = document.getElementById('btnSetCenter');
 
-    // Set up the click event listener for the 'Center Map' button. Set the map
-    // to the currently stored center.
-    centerMapButton.addEventListener('click', () => {
-        const currentCenter = center;
-        innerMap.setCenter(currentCenter);
-    });
+  // Set up the click event listener for the 'Center Map' button. Set the map
+  // to the currently stored center.
+  centerMapButton.addEventListener('click', () => {
+    const currentCenter = center;
+    innerMap.setCenter(currentCenter);
+  });
 
-    // Set up the click event listener for 'Set Center': Set the center of
-    // the control to the current center of the map.
-    setCenterButton.addEventListener('click', () => {
-        const newCenter = innerMap.getCenter();
+  // Set up the click event listener for 'Set Center': Set the center of
+  // the control to the current center of the map.
+  setCenterButton.addEventListener('click', () => {
+    const newCenter = innerMap.getCenter();
 
-        if (newCenter) {
-            center = newCenter;
-        }
-    });
+    if (newCenter) {
+      center = newCenter;
+    }
+  });
 }
 
 void init();

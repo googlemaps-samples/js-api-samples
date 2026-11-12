@@ -7,8 +7,10 @@
 import { GoogleMapsOverlay } from '@deck.gl/google-maps';
 import { TripsLayer } from '@deck.gl/geo-layers';
 
+const ASSET_BASE_URL = new URL('https://maps-docs-team.web.app/samples/deckgl-tripslayer/dist/');
+
 // Set the path to the GeoJSON data file.
-const DATA_URL = new URL('./public/trips-v7.json', import.meta.url).toString();
+const DATA_URL = new URL('./trips-v7.json', ASSET_BASE_URL).toString();
 
 const LOOP_LENGTH = 1800;
 const VENDOR_COLORS = [

@@ -6,17 +6,17 @@
  */
 
 async function init() {
-    await google.maps.importLibrary('maps3d');
+  await google.maps.importLibrary('maps3d');
 
-    const map3DElement = document.querySelector('gmp-map-3d');
+  const map3DElement = document.querySelector('gmp-map-3d');
 
-    // Restrict the position of the camera to the specified bounds.
-    map3DElement.bounds = {
-        south: -48.3,
-        west: 163.56,
-        north: -32.86,
-        east: -180,
-    };
+  // Restrict the position of the camera to the specified bounds.
+  map3DElement.bounds = {
+    south: -48.3,
+    west: 163.56,
+    north: -32.86,
+    east: -180,
+  };
 }
 
 void init();
