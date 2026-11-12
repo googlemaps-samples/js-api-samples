@@ -4,76 +4,80 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+const ASSET_BASE_URL = new URL(
+  'https://maps-docs-team.web.app/samples/streetview-overlays/dist/'
+);
+
 let panorama;
 let innerMap;
 
 async function init() {
-    // Request needed libraries.
-    const [{ Marker }] = await Promise.all([
-        google.maps.importLibrary('marker'),
-        google.maps.importLibrary('maps'),
-    ]);
+  // Request needed libraries.
+  const [{ Marker }] = await Promise.all([
+    google.maps.importLibrary('marker'),
+    google.maps.importLibrary('maps'),
+  ]);
 
-    // Set the location of Astor Place.
-    const astorPlace = { lat: 40.729884, lng: -73.990988 };
+  // Set the location of Astor Place.
+  const astorPlace = { lat: 40.729884, lng: -73.990988 };
 
-    const mapElement = document.querySelector('gmp-map');
+  const mapElement = document.querySelector('gmp-map');
 
-    innerMap = mapElement.innerMap;
+  innerMap = mapElement.innerMap;
 
-    document
-        .getElementById('streetview-toggle-button')
-        .addEventListener('click', toggleStreetView);
+  document
+    .getElementById('streetview-toggle-button')
+    .addEventListener('click', toggleStreetView);
 
-    const cafeIcon = document.createElement('img');
-    cafeIcon.src = new URL('./public/cafe_icon.svg', import.meta.url).href;
+  const cafeIcon = document.createElement('img');
+  cafeIcon.src = new URL('./cafe_icon.svg', ASSET_BASE_URL).href;
 
-    const dollarIcon = document.createElement('img');
-    dollarIcon.src = new URL('./public/bank_icon.svg', import.meta.url).href;
+  const dollarIcon = document.createElement('img');
+  dollarIcon.src = new URL('./bank_icon.svg', ASSET_BASE_URL).href;
 
-    const busIcon = document.createElement('img');
-    busIcon.src = new URL('./public/bus_icon.svg', import.meta.url).href;
+  const busIcon = document.createElement('img');
+  busIcon.src = new URL('./bus_icon.svg', ASSET_BASE_URL).href;
 
-    // Set up the markers on the map
-    new Marker({
-        position: { lat: 40.730031, lng: -73.991428 },
-        map: innerMap,
-        title: 'Cafe',
-        icon: cafeIcon.src,
-    });
+  // Set up the markers on the map
+  new Marker({
+    position: { lat: 40.730031, lng: -73.991428 },
+    map: innerMap,
+    title: 'Cafe',
+    icon: cafeIcon.src,
+  });
 
-    new Marker({
-        position: { lat: 40.729681, lng: -73.991138 },
-        map: innerMap,
-        title: 'Bank',
-        icon: dollarIcon.src,
-    });
+  new Marker({
+    position: { lat: 40.729681, lng: -73.991138 },
+    map: innerMap,
+    title: 'Bank',
+    icon: dollarIcon.src,
+  });
 
-    new Marker({
-        position: { lat: 40.729559, lng: -73.990741 },
-        map: innerMap,
-        title: 'Bus Stop',
-        icon: busIcon.src,
-    });
+  new Marker({
+    position: { lat: 40.729559, lng: -73.990741 },
+    map: innerMap,
+    title: 'Bus Stop',
+    icon: busIcon.src,
+  });
 
-    // We get the map's default panorama and set up some defaults.
-    // Note that we don't yet set it visible.
-    panorama = innerMap.getStreetView(); // TODO fix type
-    panorama.setPosition(astorPlace);
-    panorama.setPov({
-        heading: 265,
-        pitch: 0,
-    });
+  // We get the map's default panorama and set up some defaults.
+  // Note that we don't yet set it visible.
+  panorama = innerMap.getStreetView(); // TODO fix type
+  panorama.setPosition(astorPlace);
+  panorama.setPov({
+    heading: 265,
+    pitch: 0,
+  });
 }
 
 function toggleStreetView() {
-    const toggle = panorama.getVisible();
+  const toggle = panorama.getVisible();
 
-    if (!toggle) {
-        panorama.setVisible(true);
-    } else {
-        panorama.setVisible(false);
-    }
+  if (!toggle) {
+    panorama.setVisible(true);
+  } else {
+    panorama.setVisible(false);
+  }
 }
 
 void init();

@@ -10,63 +10,58 @@ let innerMap;
 let infoWindow;
 
 async function init() {
-    const { InfoWindow } = await google.maps.importLibrary('maps');
+  const { InfoWindow } = await google.maps.importLibrary('maps');
 
-    innerMap = mapElement.innerMap;
-    infoWindow = new InfoWindow();
-    void getPlaceDetails();
+  innerMap = mapElement.innerMap;
+  infoWindow = new InfoWindow();
+  void getPlaceDetails();
 }
 
 async function getPlaceDetails() {
-    const [{ Place }, { AdvancedMarkerElement }] = await Promise.all([
-        google.maps.importLibrary('places'),
-        google.maps.importLibrary('marker'),
-    ]);
+  const [{ Place }, { AdvancedMarkerElement }] = await Promise.all([
+    google.maps.importLibrary('places'),
+    google.maps.importLibrary('marker'),
+  ]);
 
-    // Use place ID to create a new Place instance.
-    const place = new Place({
-        id: 'ChIJyYB_SZVU2YARR-I1Jjf08F0', // San Diego Zoo
-    });
+  // Use place ID to create a new Place instance.
+  const place = new Place({
+    id: 'ChIJyYB_SZVU2YARR-I1Jjf08F0', // San Diego Zoo
+  });
 
-    // Call fetchFields, passing the desired data fields.
-    await place.fetchFields({
-        fields: [
-            'displayName',
-            'formattedAddress',
-            'location',
-            'googleMapsURI',
-        ],
-    });
+  // Call fetchFields, passing the desired data fields.
+  await place.fetchFields({
+    fields: ['displayName', 'formattedAddress', 'location', 'googleMapsURI'],
+  });
 
-    // Add an Advanced Marker
-    const marker = new AdvancedMarkerElement({
-        map: innerMap,
-        position: place.location,
-        title: place.displayName,
-    });
+  // Add an Advanced Marker
+  const marker = new AdvancedMarkerElement({
+    map: innerMap,
+    position: place.location,
+    title: place.displayName,
+  });
 
-    // Assemble the info window content.
-    const content = document.createElement('div');
-    const address = document.createElement('div');
-    const placeId = document.createElement('div');
-    address.textContent = place.formattedAddress || '';
-    placeId.textContent = place.id;
-    content.append(placeId, address);
+  // Assemble the info window content.
+  const content = document.createElement('div');
+  const address = document.createElement('div');
+  const placeId = document.createElement('div');
+  address.textContent = place.formattedAddress || '';
+  placeId.textContent = place.id;
+  content.append(placeId, address);
 
-    if (place.googleMapsURI) {
-        const link = document.createElement('a');
-        link.href = place.googleMapsURI;
-        link.target = '_blank';
-        link.textContent = 'View Details on Google Maps';
-        content.appendChild(link);
-    }
+  if (place.googleMapsURI) {
+    const link = document.createElement('a');
+    link.href = place.googleMapsURI;
+    link.target = '_blank';
+    link.textContent = 'View Details on Google Maps';
+    content.appendChild(link);
+  }
 
-    // Display an info window.
-    infoWindow.setHeaderContent(place.displayName);
-    infoWindow.setContent(content);
-    infoWindow.open({
-        anchor: marker,
-    });
+  // Display an info window.
+  infoWindow.setHeaderContent(place.displayName);
+  infoWindow.setContent(content);
+  infoWindow.open({
+    anchor: marker,
+  });
 }
 
 void init();

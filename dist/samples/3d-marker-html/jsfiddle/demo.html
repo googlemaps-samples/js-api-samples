@@ -6,25 +6,22 @@
 -->
 
 <html>
-    <head>
-        <title>3D Marker HTML</title>
-        <link rel="stylesheet" type="text/css" href="./style.css" />
-        <script
-            async
-            src="https://maps.googleapis.com/maps/api/js?loading=async&key=GOOGLE_MAPS_API_KEY&libraries=maps3d"></script>
-    </head>
-    <body>
-        <gmp-map-3d
-            center="40.7489,-73.9680,0"
-            heading="315"
-            tilt="65"
-            range="800"
-            mode="SATELLITE">
-            <gmp-marker position="40.7489,-73.9680" title="UN Headquarters">
-                <div class="custom-marker">
-                    United Nations Secretariat Building
-                </div>
-            </gmp-marker>
-        </gmp-map-3d>
-    </body>
+  <head>
+    <title>3D Marker HTML</title>
+    <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?loading=async&libraries=maps3d"></script>
+  </head>
+  <body>
+    <gmp-map-3d
+      center="40.7489,-73.9680,0"
+      heading="315"
+      tilt="65"
+      range="800"
+      mode="SATELLITE">
+      <gmp-marker position="40.7489,-73.9680" title="UN Headquarters">
+        <div class="custom-marker">United Nations Secretariat Building</div>
+      </gmp-marker>
+    </gmp-map-3d>
+  </body>
 </html>
