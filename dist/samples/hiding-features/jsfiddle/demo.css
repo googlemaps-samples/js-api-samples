@@ -9,24 +9,24 @@
  */
 html,
 body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .map-control {
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    margin: 10px;
-    padding: 5px;
-    font-family: Roboto, sans-serif;
-    font-size: small;
-    display: block;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin: 10px;
+  padding: 5px;
+  font-family: Roboto, sans-serif;
+  font-size: small;
+  display: block;
 }
 
 .selector-control {
-    font-size: 14px;
-    line-height: 30px;
-    vertical-align: baseline;
+  font-size: 14px;
+  line-height: 30px;
+  vertical-align: baseline;
 }

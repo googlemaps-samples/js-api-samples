@@ -10,22 +10,22 @@ import { setOptions, importLibrary } from '@googlemaps/js-api-loader';
 const API_KEY = 'GOOGLE_MAPS_API_KEY';
 
 async function init() {
-    // Set loader options.
-    setOptions({
-        key: API_KEY,
-    });
+  // Set loader options.
+  setOptions({
+    key: API_KEY,
+  });
 
-    // Load the Maps library.
-    const { Map } = await importLibrary('maps');
+  // Load the Maps library.
+  const { Map } = await importLibrary('maps');
 
-    // Set map options.
-    const mapOptions = {
-        center: { lat: 48.8566, lng: 2.3522 },
-        zoom: 3,
-    };
+  // Set map options.
+  const mapOptions = {
+    center: { lat: 48.8566, lng: 2.3522 },
+    zoom: 3,
+  };
 
-    // Declare the map.
-    new Map(document.getElementById('map'), mapOptions);
+  // Declare the map.
+  new Map(document.getElementById('map'), mapOptions);
 }
 
 void init();

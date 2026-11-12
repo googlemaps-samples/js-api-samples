@@ -28,8 +28,9 @@ body {
     font-size: 16px;
     border-radius: 4px;
     cursor: pointer;
+    /* Top center avoids the default UI controls and Google attribution. */
     position: fixed;
-    bottom: 10px;
+    top: 10px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
