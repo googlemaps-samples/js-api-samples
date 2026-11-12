@@ -11,116 +11,116 @@ let innerMap;
 
 // Initialize and add the map.
 async function init() {
-    //  Request the needed libraries.
-    const [{ event }] = await Promise.all([
-        google.maps.importLibrary('core'),
-        google.maps.importLibrary('maps'),
-    ]);
+  //  Request the needed libraries.
+  const [{ event }] = await Promise.all([
+    google.maps.importLibrary('core'),
+    google.maps.importLibrary('maps'),
+  ]);
 
-    innerMap = mapElement.innerMap;
-    innerMap.setOptions({
-        mapTypeControl: false,
-        mapId: 'DEMO_MAP_ID',
-    });
+  innerMap = mapElement.innerMap;
+  innerMap.setOptions({
+    mapTypeControl: false,
+    mapId: 'DEMO_MAP_ID',
+  });
 
-    // Call the function after the map is loaded.
-    event.addListenerOnce(innerMap, 'idle', () => {
-        void getDirections();
-    });
+  // Call the function after the map is loaded.
+  event.addListenerOnce(innerMap, 'idle', () => {
+    void getDirections();
+  });
 }
 
 async function getDirections() {
-    // Request the needed libraries.
-    const [{ Route }, { PinElement }] = await Promise.all([
-        google.maps.importLibrary('routes'),
-        google.maps.importLibrary('marker'),
-    ]);
+  // Request the needed libraries.
+  const [{ Route }, { PinElement }] = await Promise.all([
+    google.maps.importLibrary('routes'),
+    google.maps.importLibrary('marker'),
+  ]);
 
-    // Define routes request with an intermediate stop.
-    const request = {
-        origin: 'Parking lot, Christmas Tree Point Rd, San Francisco, CA 94131',
-        destination: '100 Spinnaker Dr, Sausalito, CA 94965', // We're having a yummy lunch!
-        intermediates: [{ location: '300 Finley Rd San Francisco, CA 94129' }], // But first, we golf!
-        travelMode: 'DRIVING',
-        fields: ['path', 'legs', 'viewport'],
-    };
+  // Define routes request with an intermediate stop.
+  const request = {
+    origin: 'Parking lot, Christmas Tree Point Rd, San Francisco, CA 94131',
+    destination: '100 Spinnaker Dr, Sausalito, CA 94965', // We're having a yummy lunch!
+    intermediates: [{ location: '300 Finley Rd San Francisco, CA 94129' }], // But first, we golf!
+    travelMode: 'DRIVING',
+    fields: ['path', 'legs', 'viewport'],
+  };
 
-    // Call computeRoutes to get the directions.
-    const result = await Route.computeRoutes(request);
-    if (!result.routes || result.routes.length === 0) {
-        console.warn('No routes found');
-        return;
+  // Call computeRoutes to get the directions.
+  const result = await Route.computeRoutes(request);
+  if (!result.routes || result.routes.length === 0) {
+    console.warn('No routes found');
+    return;
+  }
+
+  // Alter style based on marker index.
+  function markerOptionsMaker(defaultOptions, waypointMarkerDetails) {
+    const { index, totalMarkers } = waypointMarkerDetails;
+
+    // Style the origin waypoint.
+    if (index === 0) {
+      return {
+        ...defaultOptions,
+        title: 'Origin',
+        map: innerMap,
+        gmpClickable: true,
+        content: new PinElement({
+          glyphText: (index + 1).toString(),
+          glyphColor: 'white',
+          background: 'green',
+          borderColor: 'green',
+          scale: 1.5,
+        }),
+      };
     }
 
-    // Alter style based on marker index.
-    function markerOptionsMaker(defaultOptions, waypointMarkerDetails) {
-        const { index, totalMarkers } = waypointMarkerDetails;
-
-        // Style the origin waypoint.
-        if (index === 0) {
-            return {
-                ...defaultOptions,
-                title: 'Origin',
-                map: innerMap,
-                gmpClickable: true,
-                content: new PinElement({
-                    glyphText: (index + 1).toString(),
-                    glyphColor: 'white',
-                    background: 'green',
-                    borderColor: 'green',
-                    scale: 1.5,
-                }),
-            };
-        }
-
-        // Style all intermediate waypoints.
-        if (!(index === 0 || index === totalMarkers - 1)) {
-            return {
-                ...defaultOptions,
-                title: `Waypoint ${(index + 1).toString()}`, // Provide label for screenreaders
-                map: innerMap,
-                gmpClickable: true, // Make marker focusable and allow keyboard navigation
-                content: new PinElement({
-                    glyphText: (index + 1).toString(),
-                    glyphColor: 'white',
-                    background: 'blue',
-                    borderColor: 'blue',
-                    scale: 1.5, // Increase size for better visibilty
-                }),
-            };
-        }
-
-        // Style the destination waypoint.
-        if (index === totalMarkers - 1) {
-            return {
-                ...defaultOptions,
-                title: 'Destination',
-                map: innerMap,
-                gmpClickable: true,
-                content: new PinElement({
-                    glyphText: (index + 1).toString(),
-                    glyphColor: 'white',
-                    background: 'red',
-                    borderColor: 'red',
-                    scale: 1.5,
-                }),
-            };
-        }
-
-        return { ...defaultOptions, map: innerMap };
+    // Style all intermediate waypoints.
+    if (!(index === 0 || index === totalMarkers - 1)) {
+      return {
+        ...defaultOptions,
+        title: `Waypoint ${(index + 1).toString()}`, // Provide label for screenreaders
+        map: innerMap,
+        gmpClickable: true, // Make marker focusable and allow keyboard navigation
+        content: new PinElement({
+          glyphText: (index + 1).toString(),
+          glyphColor: 'white',
+          background: 'blue',
+          borderColor: 'blue',
+          scale: 1.5, // Increase size for better visibilty
+        }),
+      };
     }
 
-    await result.routes[0].createWaypointAdvancedMarkers(markerOptionsMaker);
+    // Style the destination waypoint.
+    if (index === totalMarkers - 1) {
+      return {
+        ...defaultOptions,
+        title: 'Destination',
+        map: innerMap,
+        gmpClickable: true,
+        content: new PinElement({
+          glyphText: (index + 1).toString(),
+          glyphColor: 'white',
+          background: 'red',
+          borderColor: 'red',
+          scale: 1.5,
+        }),
+      };
+    }
 
-    // Fit the map to the route.
-    innerMap.fitBounds(result.routes[0].viewport);
-    innerMap.setHeading(270);
+    return { ...defaultOptions, map: innerMap };
+  }
 
-    // Create polylines and add them to the map.
-    mapPolylines = result.routes[0].createPolylines();
-    mapPolylines.forEach((polyline) => {
-        polyline.setMap(innerMap);
-    });
+  await result.routes[0].createWaypointAdvancedMarkers(markerOptionsMaker);
+
+  // Fit the map to the route.
+  innerMap.fitBounds(result.routes[0].viewport);
+  innerMap.setHeading(270);
+
+  // Create polylines and add them to the map.
+  mapPolylines = result.routes[0].createPolylines();
+  mapPolylines.forEach((polyline) => {
+    polyline.setMap(innerMap);
+  });
 }
 
 void init();

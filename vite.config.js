@@ -4,7 +4,7 @@ import { resolve } from 'path';
 
 dotenv.config({ path: resolve(import.meta.dirname, '.env') });
 
-export default defineConfig(() => {
+export default defineConfig(({ command }) => {
     const projectRepoRoot = resolve(import.meta.dirname);
     const workspaceDir = process.cwd();
     const isSample =
@@ -30,9 +30,27 @@ export default defineConfig(() => {
                 name: 'code-transform',
                 enforce: 'pre',
                 transform(code) {
-                    if (code.includes('GOOGLE_MAPS_API_KEY')) {
+                    let transformed = code;
+                    if (transformed.includes('GOOGLE_MAPS_API_KEY')) {
+                        transformed = transformed.replace(
+                            /GOOGLE_MAPS_API_KEY/g,
+                            apiKey
+                        );
+                    }
+                    const publicUrlRegex =
+                        /new URL\(['"]\.\/public\/['"],\s*import\.meta\.url\)/g;
+                    if (
+                        command === 'build' &&
+                        publicUrlRegex.test(transformed)
+                    ) {
+                        transformed = transformed.replace(
+                            publicUrlRegex,
+                            "new URL(/* @vite-ignore */ '../', import.meta.url)"
+                        );
+                    }
+                    if (transformed !== code) {
                         return {
-                            code: code.replace(/GOOGLE_MAPS_API_KEY/g, apiKey),
+                            code: transformed,
                             map: null,
                         };
                     }

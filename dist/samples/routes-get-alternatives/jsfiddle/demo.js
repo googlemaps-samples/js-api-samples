@@ -11,88 +11,88 @@ let innerMap;
 
 // Initialize and add the map.
 async function init() {
-    //  Request the needed libraries.
-    const [{ event }] = await Promise.all([
-        google.maps.importLibrary('core'),
-        google.maps.importLibrary('maps'),
-    ]);
+  //  Request the needed libraries.
+  const [{ event }] = await Promise.all([
+    google.maps.importLibrary('core'),
+    google.maps.importLibrary('maps'),
+  ]);
 
-    innerMap = mapElement.innerMap;
-    innerMap.setOptions({
-        mapTypeControl: false,
-        mapId: 'DEMO_MAP_ID',
-    });
+  innerMap = mapElement.innerMap;
+  innerMap.setOptions({
+    mapTypeControl: false,
+    mapId: 'DEMO_MAP_ID',
+  });
 
-    // Call the function after the map is loaded.
-    event.addListenerOnce(innerMap, 'idle', () => {
-        void getDirections();
-    });
+  // Call the function after the map is loaded.
+  event.addListenerOnce(innerMap, 'idle', () => {
+    void getDirections();
+  });
 }
 
 async function getDirections() {
-    // Request the needed libraries.
-    const [{ Route, RouteLabel }] = await Promise.all([
-        google.maps.importLibrary('routes'),
-    ]);
+  // Request the needed libraries.
+  const [{ Route, RouteLabel }] = await Promise.all([
+    google.maps.importLibrary('routes'),
+  ]);
 
-    // Build a request.
-    const request = {
-        origin: 'San Francisco, CA',
-        destination: 'Sunset Dr Pacific Grove, CA 93950',
-        travelMode: 'DRIVING',
-        computeAlternativeRoutes: true,
-        fields: ['path', 'routeLabels', 'viewport'], // Request the routeLabels field.
-    };
+  // Build a request.
+  const request = {
+    origin: 'San Francisco, CA',
+    destination: 'Sunset Dr Pacific Grove, CA 93950',
+    travelMode: 'DRIVING',
+    computeAlternativeRoutes: true,
+    fields: ['path', 'routeLabels', 'viewport'], // Request the routeLabels field.
+  };
 
-    // Call computeRoutes to get the directions.
-    const result = await Route.computeRoutes(request);
-    if (!result.routes || result.routes.length === 0) {
-        console.warn('No routes found');
-        return;
+  // Call computeRoutes to get the directions.
+  const result = await Route.computeRoutes(request);
+  if (!result.routes || result.routes.length === 0) {
+    console.warn('No routes found');
+    return;
+  }
+
+  let primaryRoute;
+
+  for (const route of result.routes) {
+    // Save the primary route for last so it's drawn on top.
+    if (
+      // Check for the default route.
+      route.routeLabels?.includes(RouteLabel.DEFAULT_ROUTE)
+    ) {
+      primaryRoute = route;
+    } else {
+      drawRoute(route, false);
     }
+  }
 
-    let primaryRoute;
+  if (primaryRoute) {
+    drawRoute(primaryRoute, true);
+    await primaryRoute.createWaypointAdvancedMarkers({ map: innerMap });
+    innerMap.fitBounds(primaryRoute.viewport, 50);
+    innerMap.setHeading(70);
+  }
 
-    for (const route of result.routes) {
-        // Save the primary route for last so it's drawn on top.
-        if (
-            // Check for the default route.
-            route.routeLabels?.includes(RouteLabel.DEFAULT_ROUTE)
-        ) {
-            primaryRoute = route;
-        } else {
-            drawRoute(route, false);
-        }
-    }
-
-    if (primaryRoute) {
-        drawRoute(primaryRoute, true);
-        await primaryRoute.createWaypointAdvancedMarkers({ map: innerMap });
-        innerMap.fitBounds(primaryRoute.viewport, 50);
-        innerMap.setHeading(70);
-    }
-
-    // Display the raw JSON for the result in the console.
-    console.log(`Response:\n ${JSON.stringify(result, null, 2)}`);
+  // Display the raw JSON for the result in the console.
+  console.log(`Response:\n ${JSON.stringify(result, null, 2)}`);
 }
 
 function drawRoute(route, isPrimaryRoute) {
-    mapPolylines.push(
-        ...route.createPolylines({
-            polylineOptions: isPrimaryRoute
-                ? {
-                      map: innerMap,
-                      strokeWeight: 5,
-                  }
-                : {
-                      map: innerMap,
-                      strokeColor: '#669DF6',
-                      strokeOpacity: 0.5,
-                      strokeWeight: 5,
-                  },
-            colorScheme: innerMap.get('colorScheme'),
-        })
-    );
+  mapPolylines.push(
+    ...route.createPolylines({
+      polylineOptions: isPrimaryRoute
+        ? {
+            map: innerMap,
+            strokeWeight: 5,
+          }
+        : {
+            map: innerMap,
+            strokeColor: '#669DF6',
+            strokeOpacity: 0.5,
+            strokeWeight: 5,
+          },
+      colorScheme: innerMap.get('colorScheme'),
+    })
+  );
 }
 
 void init();

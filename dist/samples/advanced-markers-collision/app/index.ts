@@ -36,7 +36,7 @@ async function init(): Promise<void> {
     select.listen('MDCSelect:change', () => {
         markers.forEach((marker) => {
             marker.collisionBehavior =
-                select.value as google.maps.CollisionBehavior;
+                select.value as google.maps.CollisionBehaviorString;
         });
     });
 

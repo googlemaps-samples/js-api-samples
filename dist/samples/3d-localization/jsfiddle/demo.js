@@ -6,23 +6,23 @@
  */
 
 async function init() {
-    const { Map3DElement } = await google.maps.importLibrary('maps3d');
+  const { Map3DElement } = await google.maps.importLibrary('maps3d');
 
-    const map = new Map3DElement({
-        center: {
-            lat: 49.75371685807847,
-            lng: -123.13227141171181,
-            altitude: 30,
-        },
-        tilt: 50.64793990040634,
-        heading: 44.480020261589154,
-        range: 51618.36056532338,
-        language: 'ZH',
-        region: 'CN',
-        mode: 'HYBRID',
-    });
+  const map = new Map3DElement({
+    center: {
+      lat: 49.75371685807847,
+      lng: -123.13227141171181,
+      altitude: 30,
+    },
+    tilt: 50.64793990040634,
+    heading: 44.480020261589154,
+    range: 51618.36056532338,
+    language: 'ZH',
+    region: 'CN',
+    mode: 'HYBRID',
+  });
 
-    document.body.append(map);
+  document.body.append(map);
 }
 
 void init();

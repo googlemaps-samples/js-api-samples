@@ -6,23 +6,23 @@
  */
 
 async function init() {
-    // Request needed libraries.
-    const [{ AdvancedMarkerElement }] = await Promise.all([
-        google.maps.importLibrary('marker'),
-        google.maps.importLibrary('maps'),
-    ]);
+  // Request needed libraries.
+  const [{ AdvancedMarkerElement }] = await Promise.all([
+    google.maps.importLibrary('marker'),
+    google.maps.importLibrary('maps'),
+  ]);
 
-    const mapElement = document.querySelector('gmp-map');
-    const innerMap = mapElement.innerMap;
+  const mapElement = document.querySelector('gmp-map');
+  const innerMap = mapElement.innerMap;
 
-    innerMap.addListener('click', (event) => {
-        if (!event.latLng) return;
-        new AdvancedMarkerElement({
-            position: event.latLng,
-            map: innerMap,
-        });
-        innerMap.panTo(event.latLng);
+  innerMap.addListener('click', (event) => {
+    if (!event.latLng) return;
+    new AdvancedMarkerElement({
+      position: event.latLng,
+      map: innerMap,
     });
+    innerMap.panTo(event.latLng);
+  });
 }
 
 void init();
