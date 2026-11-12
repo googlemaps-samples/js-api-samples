@@ -5,6 +5,8 @@
  */
 
 // [START maps_advanced_markers_graphics]
+const ASSET_BASE_URL = new URL('./public/', import.meta.url);
+
 async function init() {
     // Request needed libraries.
     const [{ AdvancedMarkerElement, PinElement }, { Place }] =
@@ -40,13 +42,13 @@ async function init() {
     // [START maps_advanced_markers_graphics_png]
     // A marker with a with a URL pointing to a PNG.
     const beachFlagImg = document.createElement('img');
-    beachFlagImg.src = new URL('./public/beachflag.png', import.meta.url).href;
+    beachFlagImg.src = new URL('./beachflag.png', ASSET_BASE_URL).href;
 
     const beachFlagMarker = new AdvancedMarkerElement({
         position: { lat: 37.434, lng: -122.082 },
         title: 'A marker using a custom PNG Image',
         anchorLeft: '0px',
-        anchorTop: '100%',
+        anchorTop: '-100%',
     });
     beachFlagMarker.append(beachFlagImg);
     mapElement.append(beachFlagMarker);
@@ -54,7 +56,7 @@ async function init() {
 
     // [START maps_advanced_markers_graphics_svg_glyph]
     // A marker with a custom SVG glyph.
-    const glyphImgSrc = new URL('./public/google_logo_g.svg', import.meta.url);
+    const glyphImgSrc = new URL('./google_logo_g.svg', ASSET_BASE_URL);
 
     const glyphSvgPinElement = new PinElement({
         glyphSrc: glyphImgSrc,

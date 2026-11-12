@@ -6,116 +6,116 @@
  */
 
 async function init() {
-    const [
-        { Map3DElement, Marker3DElement, Label3DElement },
-        { PinElement, CollisionBehavior },
-    ] = await Promise.all([
-        google.maps.importLibrary('maps3d'),
-        google.maps.importLibrary('marker'),
-    ]);
+  const [
+    { Map3DElement, Marker3DElement, Label3DElement },
+    { PinElement, CollisionBehavior },
+  ] = await Promise.all([
+    google.maps.importLibrary('maps3d'),
+    google.maps.importLibrary('marker'),
+  ]);
 
-    const map = new Map3DElement({
-        center: { lat: 37.4176, lng: -122.02, altitude: 0 },
-        tilt: 67.5,
-        range: 7000,
-        mode: 'SATELLITE',
-    });
+  const map = new Map3DElement({
+    center: { lat: 37.4176, lng: -122.02, altitude: 0 },
+    tilt: 67.5,
+    range: 7000,
+    mode: 'SATELLITE',
+  });
 
-    // Change the border color.
-    const pinBorder = new PinElement({
-        borderColor: '#FFFFFF',
-    });
-    const markerWithBorder = new Marker3DElement({
-        position: { lat: 37.415, lng: -122.035 },
-    });
-    markerWithBorder.append(pinBorder);
+  // Change the border color.
+  const pinBorder = new PinElement({
+    borderColor: '#FFFFFF',
+  });
+  const markerWithBorder = new Marker3DElement({
+    position: { lat: 37.415, lng: -122.035 },
+  });
+  markerWithBorder.append(pinBorder);
 
-    // Add a label.
-    const markerWithLabel = new Marker3DElement({
-        position: { lat: 37.419, lng: -122.03 },
-        label: 'Simple label',
-    });
+  // Add a label.
+  const markerWithLabel = new Marker3DElement({
+    position: { lat: 37.419, lng: -122.03 },
+    label: 'Simple label',
+  });
 
-    // Adjust the scale.
-    const pinScaled = new PinElement({
-        scale: 1.5,
-    });
-    const markerWithScale = new Marker3DElement({
-        position: { lat: 37.419, lng: -122.02 },
-    });
-    markerWithScale.append(pinScaled);
+  // Adjust the scale.
+  const pinScaled = new PinElement({
+    scale: 1.5,
+  });
+  const markerWithScale = new Marker3DElement({
+    position: { lat: 37.419, lng: -122.02 },
+  });
+  markerWithScale.append(pinScaled);
 
-    // Change the glyph color.
-    const pinGlyph = new PinElement({
-        glyphColor: 'white',
-    });
-    const markerWithGlyphColor = new Marker3DElement({
-        position: { lat: 37.415, lng: -122.025 },
-    });
-    markerWithGlyphColor.append(pinGlyph);
+  // Change the glyph color.
+  const pinGlyph = new PinElement({
+    glyphColor: 'white',
+  });
+  const markerWithGlyphColor = new Marker3DElement({
+    position: { lat: 37.415, lng: -122.025 },
+  });
+  markerWithGlyphColor.append(pinGlyph);
 
-    // Change many elements together and extrude marker.
-    const pinTextGlyph = new PinElement({
-        background: '#F0F6FC',
-        glyphText: 'E',
-        glyphColor: 'red',
-        borderColor: '#0000FF',
-    });
-    const markerWithGlyphText = new Marker3DElement({
-        position: { lat: 37.415, lng: -122.015, altitude: 50 },
-        extruded: true,
-        altitudeMode: 'RELATIVE_TO_GROUND',
-    });
-    markerWithGlyphText.append(pinTextGlyph);
+  // Change many elements together and extrude marker.
+  const pinTextGlyph = new PinElement({
+    background: '#F0F6FC',
+    glyphText: 'E',
+    glyphColor: 'red',
+    borderColor: '#0000FF',
+  });
+  const markerWithGlyphText = new Marker3DElement({
+    position: { lat: 37.415, lng: -122.015, altitude: 50 },
+    extruded: true,
+    altitudeMode: 'RELATIVE_TO_GROUND',
+  });
+  markerWithGlyphText.append(pinTextGlyph);
 
-    // Change a marker's altitude and add an extrusion.
-    const extrudedMarker = new Marker3DElement({
-        position: { lat: 37.4239163, lng: -122.0947209, altitude: 100 },
-        altitudeMode: 'RELATIVE_TO_GROUND',
-        extruded: true,
-    });
+  // Change a marker's altitude and add an extrusion.
+  const extrudedMarker = new Marker3DElement({
+    position: { lat: 37.4239163, lng: -122.0947209, altitude: 100 },
+    altitudeMode: 'RELATIVE_TO_GROUND',
+    extruded: true,
+  });
 
-    // Hide the glyph.
-    const pinNoGlyph = new PinElement({
-        glyphText: '',
-    });
-    const markerWithNoGlyph = new Marker3DElement({
-        position: { lat: 37.415, lng: -122.005 },
-    });
-    markerWithNoGlyph.append(pinNoGlyph);
+  // Hide the glyph.
+  const pinNoGlyph = new PinElement({
+    glyphText: '',
+  });
+  const markerWithNoGlyph = new Marker3DElement({
+    position: { lat: 37.415, lng: -122.005 },
+  });
+  markerWithNoGlyph.append(pinNoGlyph);
 
-    // Change the background color.
-    const pinBackground = new PinElement({
-        background: '#FBBC04',
-    });
+  // Change the background color.
+  const pinBackground = new PinElement({
+    background: '#FBBC04',
+  });
 
-    const markerWithBackground = new Marker3DElement({
-        position: { lat: 37.419, lng: -122.01 },
-    });
-    markerWithBackground.append(pinBackground);
+  const markerWithBackground = new Marker3DElement({
+    position: { lat: 37.419, lng: -122.01 },
+  });
+  markerWithBackground.append(pinBackground);
 
-    const markerWithIndependentLabel = new Marker3DElement({
-        position: { lat: 37.423, lng: -122.015 },
-    });
-    markerWithIndependentLabel.id = 'marker-1';
-    const label = new Label3DElement({
-        collisionBehavior: CollisionBehavior.OPTIONAL_AND_HIDES_LOWER_PRIORITY,
-        for: 'marker-1',
-    });
-    label.append('Independent label example');
-    map.append(markerWithIndependentLabel);
-    map.append(label);
+  const markerWithIndependentLabel = new Marker3DElement({
+    position: { lat: 37.423, lng: -122.015 },
+  });
+  markerWithIndependentLabel.id = 'marker-1';
+  const label = new Label3DElement({
+    collisionBehavior: CollisionBehavior.OPTIONAL_AND_HIDES_LOWER_PRIORITY,
+    for: 'marker-1',
+  });
+  label.append('Independent label example');
+  map.append(markerWithIndependentLabel);
+  map.append(label);
 
-    map.append(markerWithLabel);
-    map.append(markerWithScale);
-    map.append(markerWithBackground);
-    map.append(markerWithBorder);
-    map.append(markerWithGlyphColor);
-    map.append(markerWithGlyphText);
-    map.append(markerWithNoGlyph);
-    map.append(extrudedMarker);
+  map.append(markerWithLabel);
+  map.append(markerWithScale);
+  map.append(markerWithBackground);
+  map.append(markerWithBorder);
+  map.append(markerWithGlyphColor);
+  map.append(markerWithGlyphText);
+  map.append(markerWithNoGlyph);
+  map.append(extrudedMarker);
 
-    document.body.append(map);
+  document.body.append(map);
 }
 
 void init();

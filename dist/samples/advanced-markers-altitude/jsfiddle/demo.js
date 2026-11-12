@@ -8,35 +8,35 @@
 const mapElement = document.querySelector('gmp-map');
 
 async function init() {
-    // Request needed libraries.
-    const [{ AdvancedMarkerElement, PinElement }] = await Promise.all([
-        google.maps.importLibrary('marker'),
-        google.maps.importLibrary('maps'),
-    ]);
+  // Request needed libraries.
+  const [{ AdvancedMarkerElement, PinElement }] = await Promise.all([
+    google.maps.importLibrary('marker'),
+    google.maps.importLibrary('maps'),
+  ]);
 
-    mapElement.innerMap.setOptions({
-        tilt: 67.5,
-        heading: 45,
-    });
+  mapElement.innerMap.setOptions({
+    tilt: 67.5,
+    heading: 45,
+  });
 
-    const pin = new PinElement({
-        background: '#4b2e83',
-        borderColor: '#b7a57a',
-        glyphColor: '#b7a57a',
-        scale: 2.0,
-    });
+  const pin = new PinElement({
+    background: '#4b2e83',
+    borderColor: '#b7a57a',
+    glyphColor: '#b7a57a',
+    scale: 2.0,
+  });
 
-    const marker = new AdvancedMarkerElement({
-        // Set altitude to 20 meters above the ground.
-        position: {
-            lat: 47.65170843460547,
-            lng: -122.30754,
-            altitude: 20,
-        },
-    });
-    marker.append(pin);
+  const marker = new AdvancedMarkerElement({
+    // Set altitude to 20 meters above the ground.
+    position: {
+      lat: 47.65170843460547,
+      lng: -122.30754,
+      altitude: 20,
+    },
+  });
+  marker.append(pin);
 
-    mapElement.append(marker);
+  mapElement.append(marker);
 }
 
 void init();

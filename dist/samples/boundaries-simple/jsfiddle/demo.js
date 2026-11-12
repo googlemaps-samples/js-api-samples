@@ -13,36 +13,36 @@
 let featureLayer;
 
 async function init() {
-    // Request needed libraries.
-    await google.maps.importLibrary('maps');
+  // Request needed libraries.
+  await google.maps.importLibrary('maps');
 
-    // Get the gmp-map element.
-    const mapElement = document.querySelector('gmp-map');
+  // Get the gmp-map element.
+  const mapElement = document.querySelector('gmp-map');
 
-    // Get the inner map.
-    const innerMap = mapElement.innerMap;
+  // Get the inner map.
+  const innerMap = mapElement.innerMap;
 
-    // Get the feature layer.
-    featureLayer = innerMap.getFeatureLayer('LOCALITY');
+  // Get the feature layer.
+  featureLayer = innerMap.getFeatureLayer('LOCALITY');
 
-    // Define a style with purple fill and border.
-    const featureStyleOptions = {
-        strokeColor: '#810FCB',
-        strokeOpacity: 1.0,
-        strokeWeight: 3.0,
-        fillColor: '#810FCB',
-        fillOpacity: 0.5,
-    };
+  // Define a style with purple fill and border.
+  const featureStyleOptions = {
+    strokeColor: '#810FCB',
+    strokeOpacity: 1.0,
+    strokeWeight: 3.0,
+    fillColor: '#810FCB',
+    fillOpacity: 0.5,
+  };
 
-    // Apply the style to a single boundary.
-    featureLayer.style = (options) => {
-        const feature = options.feature;
-        if (feature.placeId === 'ChIJ0zQtYiWsVHkRk8lRoB1RNPo') {
-            // Hana, HI
-            return featureStyleOptions;
-        }
-        return null;
-    };
+  // Apply the style to a single boundary.
+  featureLayer.style = (options) => {
+    const feature = options.feature;
+    if (feature.placeId === 'ChIJ0zQtYiWsVHkRk8lRoB1RNPo') {
+      // Hana, HI
+      return featureStyleOptions;
+    }
+    return null;
+  };
 }
 
 void init();
