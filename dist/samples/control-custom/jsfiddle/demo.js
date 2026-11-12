@@ -6,17 +6,22 @@
  */
 
 const chicago = { lat: 41.85, lng: -87.65 };
+
 // Get the gmp-map element
 const mapElement = document.querySelector('gmp-map');
+
 async function init() {
-    await google.maps.importLibrary('maps');
-    // Get the inner map.
-    const innerMap = mapElement.innerMap;
-    // Get the button element from the HTML
-    const centerButton = document.getElementById('btnCenterMap');
-    // Move the event listener here
-    centerButton.addEventListener('click', () => {
-        innerMap.setCenter(chicago);
-    });
+  await google.maps.importLibrary('maps');
+
+  // Get the inner map.
+  const innerMap = mapElement.innerMap;
+
+  // Get the button element from the HTML
+  const centerButton = document.getElementById('btnCenterMap');
+  // Move the event listener here
+  centerButton.addEventListener('click', () => {
+    innerMap.setCenter(chicago);
+  });
 }
+
 void init();

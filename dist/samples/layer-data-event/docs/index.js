@@ -1,4 +1,3 @@
-'use strict';
 /**
  * @license
  * Copyright 2026 Google LLC. All Rights Reserved.
@@ -6,6 +5,8 @@
  */
 
 // [START maps_layer_data_event]
+const ASSET_BASE_URL = new URL('https://maps-docs-team.web.app/samples/layer-data-event/dist/');
+
 async function init() {
     await google.maps.importLibrary('maps');
 
@@ -14,7 +15,7 @@ async function init() {
     const innerMap = mapElement.innerMap;
 
     // Load GeoJSON.
-    innerMap.data.loadGeoJson('google.json');
+    innerMap.data.loadGeoJson(new URL('./google.json', ASSET_BASE_URL).href);
 
     // Add some style.
     innerMap.data.setStyle((feature) => {
@@ -34,4 +35,5 @@ async function init() {
 }
 
 void init();
+export {};
 // [END maps_layer_data_event]

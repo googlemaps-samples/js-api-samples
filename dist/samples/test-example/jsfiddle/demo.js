@@ -18,28 +18,28 @@ let innerMap;
 let center;
 
 async function init() {
-    //  Request the needed libraries.
-    const [{ AdvancedMarkerElement }] = await Promise.all([
-        google.maps.importLibrary('marker'),
-        google.maps.importLibrary('maps'),
-    ]);
+  //  Request the needed libraries.
+  const [{ AdvancedMarkerElement }] = await Promise.all([
+    google.maps.importLibrary('marker'),
+    google.maps.importLibrary('maps'),
+  ]);
 
-    // Get the inner map from the gmp-map element.
-    innerMap = mapElement.innerMap;
-    innerMap.setOptions({
-        mapTypeControl: false,
-    });
+  // Get the inner map from the gmp-map element.
+  innerMap = mapElement.innerMap;
+  innerMap.setOptions({
+    mapTypeControl: false,
+  });
 
-    // Get the lat/lng from the inner map.
-    center = innerMap.getCenter();
+  // Get the lat/lng from the inner map.
+  center = innerMap.getCenter();
 
-    // Add a marker, positioned at Uluru.
-    new AdvancedMarkerElement({
-        map: innerMap,
-        position: center,
-        title: 'Uluru',
-    });
+  // Add a marker, positioned at Uluru.
+  new AdvancedMarkerElement({
+    map: innerMap,
+    position: center,
+    title: 'Uluru',
+  });
 
-    console.log('May there be peace.');
+  console.log('May there be peace.');
 }
 void init();

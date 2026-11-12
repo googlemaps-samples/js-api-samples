@@ -6,16 +6,16 @@
  */
 
 async function init() {
-    //  Request the needed libraries.
-    await google.maps.importLibrary('maps');
+  //  Request the needed libraries.
+  await google.maps.importLibrary('maps');
 
-    const mapElement = document.querySelector('gmp-map');
+  const mapElement = document.querySelector('gmp-map');
 
-    const innerMap = mapElement.innerMap;
+  const innerMap = mapElement.innerMap;
 
-    innerMap.setOptions({
-        cameraControl: false,
-        scaleControl: true,
-    });
+  innerMap.setOptions({
+    cameraControl: false,
+    scaleControl: true,
+  });
 }
 void init();

@@ -7,43 +7,47 @@
 import { GoogleMapsOverlay } from '@deck.gl/google-maps';
 import { ArcLayer } from '@deck.gl/layers';
 
+const ASSET_BASE_URL = new URL(
+  'https://maps-docs-team.web.app/samples/deckgl-arclayer/dist/'
+);
+
 async function init() {
-    // Request needed libraries.
-    await google.maps.importLibrary('maps');
+  // Request needed libraries.
+  await google.maps.importLibrary('maps');
 
-    // Get the gmp-map element.
-    const mapElement = document.querySelector('gmp-map');
+  // Get the gmp-map element.
+  const mapElement = document.querySelector('gmp-map');
 
-    // Get the inner map.
-    const innerMap = mapElement.innerMap;
+  // Get the inner map.
+  const innerMap = mapElement.innerMap;
 
-    innerMap.setTilt(30); // Set tilt after map initialization.
+  innerMap.setTilt(30); // Set tilt after map initialization.
 
-    // Set the path to the GeoJSON data file.
-    const dataUrl = new URL(
-        './public/ne_10m_airports.geojson',
-        import.meta.url
-    ).toString();
+  // Set the path to the GeoJSON data file.
+  const dataUrl = new URL(
+    './ne_10m_airports.geojson',
+    ASSET_BASE_URL
+  ).toString();
 
-    const flightsLayer = new ArcLayer({
-        id: 'flights',
-        data: dataUrl,
+  const flightsLayer = new ArcLayer({
+    id: 'flights',
+    data: dataUrl,
 
-        dataTransform: (data) =>
-            data.features.filter((f) => f.properties.scalerank < 4),
-        getSourcePosition: () => [14.42076, 50.08804], // Prague
-        getTargetPosition: (f) => f.geometry.coordinates,
-        getSourceColor: [0, 128, 200],
-        getTargetColor: [0, 0, 80],
-        getWidth: 1,
-    });
+    dataTransform: (data) =>
+      data.features.filter((f) => f.properties.scalerank < 4),
+    getSourcePosition: () => [14.42076, 50.08804], // Prague
+    getTargetPosition: (f) => f.geometry.coordinates,
+    getSourceColor: [0, 128, 200],
+    getTargetColor: [0, 0, 80],
+    getWidth: 1,
+  });
 
-    const overlay = new GoogleMapsOverlay({
-        interleaved: false,
-        layers: [flightsLayer],
-    });
+  const overlay = new GoogleMapsOverlay({
+    interleaved: false,
+    layers: [flightsLayer],
+  });
 
-    overlay.setMap(innerMap);
+  overlay.setMap(innerMap);
 }
 
 void init();

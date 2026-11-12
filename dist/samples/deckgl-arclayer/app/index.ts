@@ -13,6 +13,8 @@ import { GoogleMapsOverlay } from '@deck.gl/google-maps';
 import { ArcLayer } from '@deck.gl/layers';
 import type * as GeoJSON from 'geojson';
 
+const ASSET_BASE_URL = new URL('./public/', import.meta.url);
+
 interface Properties {
     scalerank: number;
 }
@@ -32,8 +34,8 @@ async function init() {
 
     // Set the path to the GeoJSON data file.
     const dataUrl = new URL(
-        './public/ne_10m_airports.geojson',
-        import.meta.url
+        './ne_10m_airports.geojson',
+        ASSET_BASE_URL
     ).toString();
 
     const flightsLayer = new ArcLayer<Feature>({

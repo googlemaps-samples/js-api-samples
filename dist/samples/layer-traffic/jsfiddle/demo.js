@@ -6,14 +6,14 @@
  */
 
 async function init() {
-    const { TrafficLayer } = await google.maps.importLibrary('maps');
+  const { TrafficLayer } = await google.maps.importLibrary('maps');
 
-    const mapElement = document.querySelector('gmp-map');
-    const innerMap = mapElement.innerMap;
+  const mapElement = document.querySelector('gmp-map');
+  const innerMap = mapElement.innerMap;
 
-    const trafficLayer = new TrafficLayer();
+  const trafficLayer = new TrafficLayer();
 
-    trafficLayer.setMap(innerMap);
+  trafficLayer.setMap(innerMap);
 }
 
 void init();

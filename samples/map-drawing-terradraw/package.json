@@ -13,5 +13,6 @@
     "terra-draw": "^1.36.0",
     "terra-draw-google-maps-adapter": "^1.7.0"
   },
-  "author": "Google LLC"
+  "author": "Google LLC",
+  "buildRevision": 1
 }

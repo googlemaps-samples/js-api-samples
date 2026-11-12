@@ -8,6 +8,7 @@
 // This example defines an image map type using the Gall-Peters
 // projection.
 // https://en.wikipedia.org/wiki/Gall%E2%80%93Peters_projection
+const ASSET_BASE_URL = new URL('https://maps-docs-team.web.app/samples/map-projection-simple/dist/');
 const mapElement = document.querySelector('gmp-map')!;
 let innerMap: google.maps.Map;
 
@@ -65,7 +66,10 @@ async function initGallPeters(): Promise<google.maps.ImageMapType> {
 
             if (y < 0 || y >= scale) return '';
 
-            return `gall-peters_${String(zoom)}_${String(x)}_${String(y)}.png`;
+            return new URL(
+                `./gall-peters_${String(zoom)}_${String(x)}_${String(y)}.png`,
+                ASSET_BASE_URL
+            ).href;
         },
         tileSize: new Size(GALL_PETERS_RANGE_X, GALL_PETERS_RANGE_Y),
         minZoom: 0,

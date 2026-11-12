@@ -19,41 +19,52 @@ gmp-map-3d {
     width: 100%;
 }
 
+/* Position the selector where the default map mode control would be. */
 .map-mode-control {
     position: fixed;
-    bottom: 125px;
-    right: 0px;
+    top: 16px;
+    right: 16px;
+    z-index: 1;
     display: flex;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 8px;
+    gap: 8px;
+    padding: 6px 6px 6px 14px;
+    background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(8px);
-    z-index: 1;
+    box-shadow:
+        0 1px 2px rgba(60, 64, 67, 0.3),
+        0 2px 6px 2px rgba(60, 64, 67, 0.15);
+}
+
+.map-mode-control label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #3c4043;
 }
 
 .map-mode-control select {
-    font-size: 13px;
-    padding: 4px 8px;
+    appearance: none;
+    padding: 6px 32px 6px 12px;
+    font-family: inherit;
+    font-size: 14px;
+    color: #202124;
+    background-color: #fff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%235f6368' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+    background-size: 20px;
     border: 1px solid #dadce0;
     border-radius: 6px;
-    background-color: white;
-    color: #3c4043;
     cursor: pointer;
-    outline: none;
-    transition:
-        border-color 0.2s,
-        box-shadow 0.2s;
 }
 
 .map-mode-control select:hover {
-    border-color: #1a73e8;
+    background-color: #f8f9fa;
 }
 
-.map-mode-control select:focus {
-    border-color: #1a73e8;
-    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+.map-mode-control select:focus-visible {
+    outline: 2px solid #1a73e8;
+    outline-offset: 1px;
 }
 
 /* [END maps_3d_map_roadmap] */
