@@ -47,20 +47,20 @@ const PlaceDetails = ({ lat, lng }: PlaceDetailsProps) => {
         // Append the location request to the place details element.
         placeDetails.appendChild(locationRequest);
 
-        // Create and append the content config and its children.
-        const contentConfig = document.createElement(
-            'gmp-place-content-config'
+        // Append the content elements directly to the place details element.
+        placeDetails.insertAdjacentHTML(
+            'beforeend',
+            `
+                <gmp-place-name></gmp-place-name>
+                <gmp-place-media lightbox-preferred></gmp-place-media>
+                <gmp-place-rating></gmp-place-rating>
+                <gmp-place-type></gmp-place-type>
+                <gmp-place-price></gmp-place-price>
+                <gmp-place-accessible-entrance-icon></gmp-place-accessible-entrance-icon>
+                <gmp-place-open-now-status></gmp-place-open-now-status>
+                <gmp-place-attribution></gmp-place-attribution>
+            `
         );
-        contentConfig.innerHTML = `
-      <gmp-place-media lightbox-preferred></gmp-place-media>
-      <gmp-place-rating></gmp-place-rating>
-      <gmp-place-type></gmp-place-type>
-      <gmp-place-price></gmp-place-price>
-      <gmp-place-accessible-entrance-icon></gmp-place-accessible-entrance-icon>
-      <gmp-place-open-now-status></gmp-place-open-now-status>
-      <gmp-place-attribution></gmp-place-attribution>
-    `;
-        placeDetails.appendChild(contentConfig);
 
         // Append the place details element to the container.
         containerRef.current.innerHTML = ''; // Clear previous content
