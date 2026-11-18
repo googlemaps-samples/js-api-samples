@@ -61,7 +61,7 @@ body {
     border-radius: 8px;
 }
 
-#legend #container {
+#legend .legend-row {
     margin: 0.5em;
     display: flex;
 }
