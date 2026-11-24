@@ -9,7 +9,7 @@
     "preview": "vite preview --config ../../vite.config.js"
   },
   "dependencies": {
-    "@tmcw/togeojson": "^7.1.2"
+    "@tmcw/togeojson": "^7.1.4"
   },
   "devDependencies": {
     "apache-arrow": "^21.2.0"
