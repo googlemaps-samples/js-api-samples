@@ -1,0 +1,1 @@
+html,body{height:100%;margin:0;padding:0}body{display:flex}#pano{flex:1;height:100%}#floating-panel{box-sizing:border-box;text-align:left;background-color:#fff;flex:1;height:100%;padding:5px 5px 5px 10px;font-family:Roboto,sans-serif;line-height:30px;overflow:auto}
