@@ -1,0 +1,33 @@
+/**
+ * @license
+ * Copyright 2026 Google LLC. All Rights Reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+}
+
+#pano {
+  flex: 1;
+  height: 100%;
+}
+
+#floating-panel {
+  flex: 1;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: #fff;
+  padding: 5px 5px 5px 10px;
+  text-align: left;
+  font-family: Roboto, sans-serif;
+  line-height: 30px;
+  overflow: auto;
+}
